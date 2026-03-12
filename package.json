@@ -1,0 +1,57 @@
+{
+  "name": "@yourscope/data-grid",
+  "version": "0.1.0",
+  "description": "A React library for rendering JSON as a table or code snippet, with full theme customization.",
+  "keywords": [
+    "react",
+    "data-grid",
+    "json",
+    "table",
+    "visualization",
+    "design-system"
+  ],
+  "license": "MIT",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.es.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.cjs.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "type-check": "tsc --noEmit",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "peerDependencies": {
+    "react": ">=17",
+    "react-dom": ">=17"
+  },
+  "devDependencies": {
+    "@storybook/addon-essentials": "^8.6.18",
+    "@storybook/addon-interactions": "^8.6.18",
+    "@storybook/addon-onboarding": "^8.6.18",
+    "@storybook/blocks": "^8.6.18",
+    "@storybook/react": "^8.6.18",
+    "@storybook/react-vite": "^8.6.18",
+    "@storybook/test": "^8.6.18",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "storybook": "^8.6.18",
+    "typescript": "^5.5.3",
+    "vite": "^5.4.1",
+    "vite-plugin-dts": "^4.0.2"
+  }
+}
