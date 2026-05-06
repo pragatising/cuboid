@@ -1,0 +1,136 @@
+.IconButton {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  border: solid var(--cube-sizes-borderWidth-thin) transparent;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+
+.IconButton:focus-visible {
+  outline: 4px solid var(--cube-colors-functional-foreground-link);
+  outline-offset: 2px;
+}
+
+.IconButton:disabled,
+.IconButton[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+.IconButton--size-xs {
+  width: var(--cube-control-extra-small-size);
+  height: var(--cube-control-extra-small-size);
+  min-width: var(--cube-control-extra-small-size);
+  border-radius: var(--cube-control-extra-small-borderRadius);
+}
+
+.IconButton__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+}
+
+.IconButton__icon > :global(svg) {
+  width: 100%;
+  height: 100%;
+}
+
+/* default + unselected */
+.IconButton--outlined.IconButton--unselected {
+  color: var(--cube-iconButton-outlined-unselected-fg-rest);
+  background-color: var(--cube-iconButton-outlined-unselected-bg-rest);
+  border-color: var(--cube-iconButton-outlined-unselected-border-rest);
+}
+.IconButton--outlined.IconButton--unselected:not(:disabled):not([aria-disabled="true"]):hover {
+  color: var(--cube-iconButton-outlined-unselected-fg-hover);
+  background-color: var(--cube-iconButton-outlined-unselected-bg-hover);
+  border-color: var(--cube-iconButton-outlined-unselected-border-hover);
+}
+.IconButton--outlined.IconButton--unselected:not(:disabled):not([aria-disabled="true"]):active {
+  color: var(--cube-iconButton-outlined-unselected-fg-pressed);
+  background-color: var(--cube-iconButton-outlined-unselected-bg-pressed);
+  border-color: var(--cube-iconButton-outlined-unselected-border-pressed);
+}
+.IconButton--outlined.IconButton--unselected:disabled,
+.IconButton--outlined.IconButton--unselected[aria-disabled="true"] {
+  color: var(--cube-iconButton-outlined-unselected-fg-disabled);
+  background-color: var(--cube-iconButton-outlined-unselected-bg-disabled);
+  border-color: var(--cube-iconButton-outlined-unselected-border-disabled);
+}
+
+/* default + selected */
+.IconButton--outlined.IconButton--selected {
+  color: var(--cube-iconButton-outlined-selected-fg-rest);
+  background-color: var(--cube-iconButton-outlined-selected-bg-rest);
+  border-color: var(--cube-iconButton-outlined-selected-border-rest);
+}
+.IconButton--outlined.IconButton--selected:not(:disabled):not([aria-disabled="true"]):hover {
+  color: var(--cube-iconButton-outlined-selected-fg-hover);
+  background-color: var(--cube-iconButton-outlined-selected-bg-hover);
+  border-color: var(--cube-iconButton-outlined-selected-border-hover);
+}
+.IconButton--outlined.IconButton--selected:not(:disabled):not([aria-disabled="true"]):active {
+  color: var(--cube-iconButton-outlined-selected-fg-pressed);
+  background-color: var(--cube-iconButton-outlined-selected-bg-pressed);
+  border-color: var(--cube-iconButton-outlined-selected-border-pressed);
+}
+.IconButton--outlined.IconButton--selected:disabled,
+.IconButton--outlined.IconButton--selected[aria-disabled="true"] {
+  color: var(--cube-iconButton-outlined-selected-fg-disabled);
+  background-color: var(--cube-iconButton-outlined-selected-bg-disabled);
+  border-color: var(--cube-iconButton-outlined-selected-border-disabled);
+}
+
+/* subtle + unselected */
+.IconButton--ghost.IconButton--unselected {
+  color: var(--cube-iconButton-ghost-unselected-fg-rest);
+  background-color: var(--cube-iconButton-ghost-unselected-bg-rest);
+  border-color: var(--cube-iconButton-ghost-unselected-border-rest);
+}
+.IconButton--ghost.IconButton--unselected:not(:disabled):not([aria-disabled="true"]):hover {
+  color: var(--cube-iconButton-ghost-unselected-fg-hover);
+  background-color: var(--cube-iconButton-ghost-unselected-bg-hover);
+  border-color: var(--cube-iconButton-ghost-unselected-border-hover);
+}
+.IconButton--ghost.IconButton--unselected:not(:disabled):not([aria-disabled="true"]):active {
+  color: var(--cube-iconButton-ghost-unselected-fg-pressed);
+  background-color: var(--cube-iconButton-ghost-unselected-bg-pressed);
+  border-color: var(--cube-iconButton-ghost-unselected-border-pressed);
+}
+.IconButton--ghost.IconButton--unselected:disabled,
+.IconButton--ghost.IconButton--unselected[aria-disabled="true"] {
+  color: var(--cube-iconButton-ghost-unselected-fg-disabled);
+  background-color: var(--cube-iconButton-ghost-unselected-bg-disabled);
+  border-color: var(--cube-iconButton-ghost-unselected-border-disabled);
+}
+
+/* subtle + selected */
+.IconButton--ghost.IconButton--selected {
+  color: var(--cube-iconButton-ghost-selected-fg-rest);
+  background-color: var(--cube-iconButton-ghost-selected-bg-rest);
+  border-color: var(--cube-iconButton-ghost-selected-border-rest);
+}
+.IconButton--ghost.IconButton--selected:not(:disabled):not([aria-disabled="true"]):hover {
+  color: var(--cube-iconButton-ghost-selected-fg-hover);
+  background-color: var(--cube-iconButton-ghost-selected-bg-hover);
+  border-color: var(--cube-iconButton-ghost-selected-border-hover);
+}
+.IconButton--ghost.IconButton--selected:not(:disabled):not([aria-disabled="true"]):active {
+  color: var(--cube-iconButton-ghost-selected-fg-pressed);
+  background-color: var(--cube-iconButton-ghost-selected-bg-pressed);
+  border-color: var(--cube-iconButton-ghost-selected-border-pressed);
+}
+.IconButton--ghost.IconButton--selected:disabled,
+.IconButton--ghost.IconButton--selected[aria-disabled="true"] {
+  color: var(--cube-iconButton-ghost-selected-fg-disabled);
+  background-color: var(--cube-iconButton-ghost-selected-bg-disabled);
+  border-color: var(--cube-iconButton-ghost-selected-border-disabled);
+}

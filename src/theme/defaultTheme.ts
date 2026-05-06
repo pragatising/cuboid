@@ -1,6 +1,6 @@
 import type { ThemeTokens } from "./types";
-import themeGenerated from "./defaultTheme.generated.json";
-import baseGenerated from "./baseTheme.generated.json";
+import themeGenerated from "./output/theme.json";
+import baseGenerated from "./output/base.json";
 
 // ── Primitive palette ────────────────────────────────────────────────────────
 // Generated from tokens/base/light.json via `npm run tokens:theme`.
@@ -12,6 +12,8 @@ const buttonPrimary = themeGenerated.buttonPrimary;
 const buttonSecondary = themeGenerated.buttonSecondary;
 const buttonDanger = themeGenerated.buttonDanger;
 const buttonRounded = themeGenerated.buttonRounded;
+const iconButtonColors = themeGenerated.iconButton;
+const tooltipColors = themeGenerated.tooltipColors;
 const generatedSizes = themeGenerated.sizes;
 const generatedTypography = themeGenerated.typography as ThemeTokens["typography"];
 
@@ -33,7 +35,11 @@ export const defaultTheme: ThemeTokens = {
         rounded: buttonRounded,
       },
 
+      iconButton: iconButtonColors,
+
       syntax: generatedFunctional.syntax,
+
+      tooltip: tooltipColors,
     },
   },
 

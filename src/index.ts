@@ -8,6 +8,12 @@ export type { TextProps, TextVariant, TextColor } from "./components/core/Text";
 export { Button } from "./components/core/Button";
 export type { ButtonProps, ButtonShape, ButtonSize, ButtonVariant } from "./components/core/Button";
 
+export { IconButton } from "./components/core/IconButton";
+export type { IconButtonProps, IconButtonSize, IconButtonVariant } from "./components/core/IconButton";
+
+export { Tooltip } from "./components/core/Tooltip";
+export type { TooltipProps, TooltipPlacement } from "./components/core/Tooltip";
+
 // ── Data components ───────────────────────────────────────────────────────────
 export { CodeSnippet } from "./components/CodeSnippet";
 export type { CodeSnippetProps } from "./components/CodeSnippet";
@@ -41,4 +47,7 @@ export type {
   TextTokens,
   Sizes,
   SpaceKey,
+  TooltipSurfaceColors,
+  TooltipLayoutTokens,
+  IconButtonFunctionalColors,
 } from "./theme/types";

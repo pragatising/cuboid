@@ -1,0 +1,65 @@
+.Root {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.Panel {
+  position: absolute;
+  z-index: 1000;
+  box-sizing: border-box;
+  margin: 0;
+  text-align: left;
+  font-family: var(--cube-typography-fontFamily-base);
+  font-size: var(--cube-typography-text-caption-fontSize);
+  font-weight: var(--cube-typography-text-caption-fontWeight);
+  line-height: var(--cube-typography-text-caption-lineHeight);
+  color: var(--cube-tooltip-fg);
+  background-color: var(--cube-tooltip-bg);
+  border: solid var(--cube-sizes-borderWidth-thin) var(--cube-tooltip-border);
+  border-radius: var(--cube-tooltip-borderRadius);
+  padding: var(--cube-tooltip-paddingBlock) var(--cube-tooltip-paddingInline);
+  box-shadow: var(--cube-tooltip-shadow);
+  pointer-events: none;
+}
+
+.Panel--compact {
+  max-width: var(--cube-tooltip-maxWidthSingleLine);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.Panel--expanded {
+  max-width: var(--cube-tooltip-maxWidth);
+  white-space: normal;
+}
+
+/* Placement — gap between trigger and panel (Figma spacing) */
+.Panel--bottom {
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: var(--cube-tooltip-gap);
+}
+
+.Panel--top {
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: var(--cube-tooltip-gap);
+}
+
+.Panel--left {
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-right: var(--cube-tooltip-gap);
+}
+
+.Panel--right {
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: var(--cube-tooltip-gap);
+}

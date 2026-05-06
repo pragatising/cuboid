@@ -2,7 +2,7 @@
 /**
  * Merge tokens/base/light.json, tokens/functional/colors/globals.json,
  * and every .json file under tokens/functional/components/ (recursive); resolve
- * {token.path} refs; write src/theme/defaultTheme.generated.json.
+ * {token.path} refs; write src/theme/output/theme.json (+ base scales in output/base.json).
  *
  * Usage: node scripts/build-theme.mjs
  */
@@ -168,8 +168,9 @@ function main() {
   const typographyPath = path.join(ROOT, "tokens/functional/typography/theme.tokens.json");
   const componentsDir = path.join(ROOT, "tokens/functional/components");
   const functionalSizeDir = path.join(ROOT, "tokens/functional/size");
-  const outPath = path.join(ROOT, "src/theme/defaultTheme.generated.json");
-  const baseOutPath = path.join(ROOT, "src/theme/baseTheme.generated.json");
+  const themeOutputDir = path.join(ROOT, "src/theme/output");
+  const outPath = path.join(themeOutputDir, "theme.json");
+  const baseOutPath = path.join(themeOutputDir, "base.json");
 
   if (!fs.existsSync(lightPath)) {
     console.error(`Missing ${lightPath}`);
@@ -295,6 +296,82 @@ function main() {
     borderColor: btnRounded.borderColor,
     fgColor: btnRounded.fgColor,
   };
+
+  const tipColor = uColor?.tooltip;
+  if (
+    !isPlain(tipColor) ||
+    typeof tipColor.background !== "string" ||
+    typeof tipColor.border !== "string" ||
+    typeof tipColor.foreground !== "string"
+  ) {
+    console.error(
+      "Expected resolved color.tooltip.{background,border,foreground} (from tokens/functional/components/tooltip/tooltip.json)"
+    );
+    process.exit(1);
+  }
+
+  const tooltipColors = {
+    background: tipColor.background,
+    border: tipColor.border,
+    foreground: tipColor.foreground,
+  };
+
+  const ib = uColor?.iconButton;
+  const ibLayers = ["bgColor", "borderColor", "fgColor"];
+  const ibStates = ["rest", "hover", "pressed", "disabled"];
+  /** Token keys under each variant; `base` maps to theme/CSS segment `unselected`. */
+  const ibTokenModes = ["base", "selected"];
+  const validateIconButtonInteractive = (block, label) => {
+    if (!isPlain(block)) {
+      console.error(`Expected ${label}`);
+      process.exit(1);
+    }
+    for (const layer of ibLayers) {
+      if (!isPlain(block[layer])) {
+        console.error(`Expected ${label}.${layer}`);
+        process.exit(1);
+      }
+      for (const s of ibStates) {
+        if (typeof block[layer][s] !== "string") {
+          console.error(`Expected ${label}.${layer}.${s} to be a string`);
+          process.exit(1);
+        }
+      }
+    }
+  };
+  if (!isPlain(ib)) {
+    console.error(
+      "Expected resolved color.iconButton (merge of tokens/functional/components/icon-button/*.json — one file per variant, like button/)"
+    );
+    process.exit(1);
+  }
+  /**
+   * Pattern: color.iconButton.<variant>.<base|selected>.<bgColor|borderColor|fgColor>.<rest|hover|pressed|disabled>
+   * Variants are any key on `iconButton` (no hardcoded list). Theme + CSS keep `unselected` for the base appearance.
+   */
+  const iconButton = {};
+  for (const variantName of Object.keys(ib)) {
+    const v = ib[variantName];
+    if (!isPlain(v)) {
+      console.error(`Expected color.iconButton.${variantName} to be an object with base and selected`);
+      process.exit(1);
+    }
+    for (const k of Object.keys(v)) {
+      if (!ibTokenModes.includes(k)) {
+        console.error(
+          `Unexpected key color.iconButton.${variantName}.${k} — only ${ibTokenModes.join(", ")} are allowed`
+        );
+        process.exit(1);
+      }
+    }
+    if (!isPlain(v.base) || !isPlain(v.selected)) {
+      console.error(`Expected color.iconButton.${variantName}.base and .selected (each: bgColor, borderColor, fgColor)`);
+      process.exit(1);
+    }
+    validateIconButtonInteractive(v.base, `color.iconButton.${variantName}.base`);
+    validateIconButtonInteractive(v.selected, `color.iconButton.${variantName}.selected`);
+    iconButton[variantName] = { unselected: v.base, selected: v.selected };
+  }
 
   // Alias-map tokens: color.bg / color.fg / color.border → ThemeTokens.colors.functional.*
   const bg = uColor?.bg?.gray;
@@ -555,6 +632,27 @@ function main() {
   }
   const space = Object.fromEntries(spaceKeys.map((k) => [k, spaceScale[k]]));
 
+  const tipLayout = uSize?.tooltip;
+  if (!isPlain(tipLayout)) {
+    console.error("Expected resolved size.tooltip.* (from tokens/functional/size/tooltip.json)");
+    process.exit(1);
+  }
+  const tooltipLayout = {
+    gap: tipLayout.gap,
+    borderRadius: tipLayout.borderRadius,
+    paddingInline: tipLayout.paddingInline,
+    paddingBlock: tipLayout.paddingBlock,
+    maxWidth: tipLayout.maxWidth,
+    maxWidthSingleLine: tipLayout.maxWidthSingleLine,
+    boxShadow: tipLayout.boxShadow,
+  };
+  for (const [k, v] of Object.entries(tooltipLayout)) {
+    if (typeof v !== "string") {
+      console.error(`Expected tooltipLayout.${k} to be a string`);
+      process.exit(1);
+    }
+  }
+
   const typography = {
     ...uRootConverted.typography,
     button: buttonTypography,
@@ -575,20 +673,21 @@ function main() {
       borderRadius,
       borderWidth,
       control: controlSizes,
+      tooltip: tooltipLayout,
     },
     buttonPrimary,
     buttonSecondary,
     buttonDanger,
     buttonRounded,
+    tooltipColors,
+    iconButton,
   };
 
-  fs.mkdirSync(path.dirname(outPath), { recursive: true });
+  fs.mkdirSync(themeOutputDir, { recursive: true });
   fs.writeFileSync(outPath, JSON.stringify(payload, null, 2) + "\n", "utf8");
   console.log(`Wrote ${outPath}`);
 
-  // Base palette is intentionally kept separate so it isn't exposed in the
-  // consumer-facing default theme artifact.
-  fs.mkdirSync(path.dirname(baseOutPath), { recursive: true });
+  // Base scales live in a sibling file so theme.json stays smaller (functional + layout only).
   fs.writeFileSync(baseOutPath, JSON.stringify(base, null, 2) + "\n", "utf8");
   console.log(`Wrote ${baseOutPath}`);
 }

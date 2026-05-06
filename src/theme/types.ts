@@ -123,6 +123,25 @@ export interface ButtonFunctionalColors {
   rounded: ButtonVariantInteractiveColors;
 }
 
+/**
+ * Per-variant icon button colors for theme/CSS (`unselected` = token `base`).
+ * Token path: `color.iconButton.<variant>.<base|selected>.<bgColor|borderColor|fgColor>.<interaction>`.
+ */
+export interface IconButtonAppearanceColors {
+  unselected: ButtonVariantInteractiveColors;
+  selected: ButtonVariantInteractiveColors;
+}
+
+/** Variant names come from token keys under `color.iconButton` (build does not hardcode them). */
+export type IconButtonFunctionalColors = Record<string, IconButtonAppearanceColors>;
+
+/** Tooltip surface (Figma `colors/gray/13` fill, inverse text) */
+export interface TooltipSurfaceColors {
+  background: string;
+  border: string;
+  foreground: string;
+}
+
 export interface FunctionalColors {
   background: BackgroundColors;
   foreground: ForegroundColors;
@@ -130,6 +149,8 @@ export interface FunctionalColors {
   syntax: SyntaxColors;
   /** Component-scoped colors — start with primary; other variants follow the same shape */
   button: ButtonFunctionalColors;
+  iconButton: IconButtonFunctionalColors;
+  tooltip: TooltipSurfaceColors;
 }
 
 export interface Colors {
@@ -260,11 +281,23 @@ export interface ControlSizesTokens {
   large: ControlSizeStopTokens;
 }
 
+export interface TooltipLayoutTokens {
+  /** Offset between trigger and tooltip surface */
+  gap: string;
+  borderRadius: string;
+  paddingInline: string;
+  paddingBlock: string;
+  maxWidth: string;
+  maxWidthSingleLine: string;
+  boxShadow: string;
+}
+
 export interface Sizes {
   space: SpaceTokens;
   borderRadius: BorderRadiusTokens;
   borderWidth: BorderWidthTokens;
   control: ControlSizesTokens;
+  tooltip: TooltipLayoutTokens;
 }
 
 // Convenience alias for space token keys (used by Stack gap/padding props)

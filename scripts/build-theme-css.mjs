@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Generate a CSS variables file from src/theme/defaultTheme.generated.json.
+ * Generate a CSS variables file from src/theme/output/theme.json.
  *
  * This is the CSS bridge that lets component styles (CSS Modules) consume tokens
  * without injecting per-instance inline CSS variables.
@@ -13,8 +13,8 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, "..");
 
-const INPUT = path.join(ROOT, "src/theme/defaultTheme.generated.json");
-const OUTPUT = path.join(ROOT, "src/theme/defaultTheme.css");
+const INPUT = path.join(ROOT, "src/theme/output/theme.json");
+const OUTPUT = path.join(ROOT, "src/theme/output/theme.css");
 
 const PREFIX = "--cube";
 
@@ -71,6 +71,17 @@ function main() {
     }
   }
 
+  set("tooltip-gap", t.sizes?.tooltip?.gap);
+  set("tooltip-bg", t.tooltipColors?.background);
+  set("tooltip-border", t.tooltipColors?.border);
+  set("tooltip-fg", t.tooltipColors?.foreground);
+  set("tooltip-borderRadius", t.sizes?.tooltip?.borderRadius);
+  set("tooltip-paddingInline", t.sizes?.tooltip?.paddingInline);
+  set("tooltip-paddingBlock", t.sizes?.tooltip?.paddingBlock);
+  set("tooltip-maxWidth", t.sizes?.tooltip?.maxWidth);
+  set("tooltip-maxWidthSingleLine", t.sizes?.tooltip?.maxWidthSingleLine);
+  set("tooltip-shadow", t.sizes?.tooltip?.boxShadow);
+
   // Functional colors (Button, Text, shared UI)
   set("colors-functional-background-muted", t.colors?.functional?.background?.muted);
   const fg = t.colors?.functional?.foreground;
@@ -94,6 +105,23 @@ function main() {
       set(`button-${variantKey}-bg-${state}`, v?.bgColor?.[state]);
       set(`button-${variantKey}-fg-${state}`, v?.fgColor?.[state]);
       set(`button-${variantKey}-border-${state}`, v?.borderColor?.[state]);
+    }
+  }
+
+  const ib = t.iconButton;
+  if (ib && typeof ib === "object") {
+    for (const styleKey of Object.keys(ib).sort()) {
+      const styleBlock = ib[styleKey];
+      if (!styleBlock || typeof styleBlock !== "object") continue;
+      for (const selKey of ["unselected", "selected"]) {
+        const v = styleBlock[selKey];
+        if (!v || typeof v !== "object") continue;
+        for (const state of ["rest", "hover", "pressed", "disabled"]) {
+          set(`iconButton-${styleKey}-${selKey}-bg-${state}`, v?.bgColor?.[state]);
+          set(`iconButton-${styleKey}-${selKey}-fg-${state}`, v?.fgColor?.[state]);
+          set(`iconButton-${styleKey}-${selKey}-border-${state}`, v?.borderColor?.[state]);
+        }
+      }
     }
   }
 

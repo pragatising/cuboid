@@ -1,0 +1,9 @@
+{
+  "color": {
+    "tooltip": {
+      "background": { "value": "{base.color.scale.gray.13}" },
+      "border": { "value": "{color.canvas.transparent}" },
+      "foreground": { "value": "{color.fg.neutral.1}" }
+    }
+  }
+}

@@ -5,4 +5,10 @@ export { Text } from "./Text";
 export type { TextProps, TextVariant, TextColor } from "./Text";
 
 export { Button } from "./Button";
-export type { ButtonProps, ButtonSize, ButtonVariant } from "./Button";
+export type { ButtonProps, ButtonShape, ButtonSize, ButtonVariant } from "./Button";
+
+export { IconButton } from "./IconButton";
+export type { IconButtonProps, IconButtonSize, IconButtonVariant } from "./IconButton";
+
+export { Tooltip } from "./Tooltip";
+export type { TooltipProps, TooltipPlacement } from "./Tooltip";
