@@ -1,0 +1,27 @@
+{
+  "color": {
+    "button": {
+      "danger": {
+        "bgColor": {
+          "rest": { "value": "{base.color.scale.red.10}" },
+          "hover": { "value": "{base.color.scale.red.11}" },
+          "pressed": { "value": "{base.color.scale.red.12}" },
+          "disabled": { "value": "{color.bg.gray.light.04}" }
+        },
+        "borderColor": {
+          "rest": { "value": "{base.color.scale.red.10}" },
+          "hover": { "value": "{base.color.scale.red.10}" },
+          "pressed": { "value": "{base.color.scale.red.10}" },
+          "disabled": { "value": "{color.border.gray.1}" }
+        },
+        "fgColor": {
+          "rest": { "value": "{color.fg.neutral.1}" },
+          "hover": { "value": "{color.fg.neutral.1}" },
+          "pressed": { "value": "{color.fg.neutral.1}" },
+          "disabled": { "value": "{color.fg.neutral.3}" }
+        }
+      }
+    }
+  }
+}
+

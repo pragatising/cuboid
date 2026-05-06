@@ -1,148 +1,143 @@
-import React, { useState } from "react";
+import React from "react";
 import { useTheme } from "../../../theme/ThemeContext";
-import type { DataGridTheme } from "../../../theme/types";
+import type { CubeTheme, ThemeTokens } from "../../../theme/types";
+import styles from "./Button.module.css";
 
-export type ButtonSize = "sm" | "md" | "lg";
-export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
+export type ButtonSize = "xs" | "sm" | "md" | "lg";
+export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger" | "rounded";
+/** `rounded` = pill radius; use with any `variant`, or use `variant="rounded"` for Figma neutral pill. */
+export type ButtonShape = "default" | "rounded";
+
+type ControlStop = keyof ThemeTokens["sizes"]["control"];
+
+const SIZE_TO_CONTROL: Record<ButtonSize, ControlStop> = {
+  xs: "extraSmall",
+  sm: "small",
+  md: "medium",
+  lg: "large",
+};
 
 export interface ButtonProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "children"> {
   size?: ButtonSize;
   variant?: ButtonVariant;
+  /** Pill / stadium shape (Figma control `style: rounded`) */
+  shape?: ButtonShape;
+  /** If true, the button fills the container width */
+  block?: boolean;
   /** Icon placed before the label */
   leadingIcon?: React.ReactNode;
   /** Icon placed after the label */
   trailingIcon?: React.ReactNode;
   /** Override any theme tokens */
-  theme?: DataGridTheme;
+  theme?: CubeTheme;
   children?: React.ReactNode;
 }
 
-/**
- * Button sizes (all heights use border-box):
- *
- *  sm  paddingX=7   paddingY=3   lineHeight=16  → 24px total
- *  md  paddingX=11  paddingY=5   lineHeight=20  → 32px total
- *  lg  paddingX=15  paddingY=9   lineHeight=20  → 40px total
- *
- * Size values live in theme.components.button — never hardcode here.
- */
+function decorateIcon(icon: React.ReactNode) {
+  if (!React.isValidElement(icon)) return icon;
+  return React.cloneElement(icon as React.ReactElement<any>, {
+    "aria-hidden": true,
+    focusable: false,
+    ...((icon as any).props ?? {}),
+  });
+}
+
 export function Button({
-  size = "md",
-  variant = "primary",
+  size = "sm",
+  variant = "secondary",
+  shape = "default",
+  block = false,
   leadingIcon,
   trailingIcon,
   theme,
   children,
   disabled,
   style,
-  onMouseEnter,
-  onMouseLeave,
-  onMouseDown,
-  onMouseUp,
   ...rest
 }: ButtonProps) {
   const tokens = useTheme(theme);
-  const [hovered, setHovered] = useState(false);
-  const [pressed, setPressed] = useState(false);
+  const pill =
+    shape === "rounded" || variant === "rounded";
 
-  const { functional } = tokens.colors;
-  const sz = tokens.components.button[size];
-  const thin = tokens.sizes.borderWidth.thin;
+  const className = [
+    styles.Button,
+    variant === "primary" && styles["Button--primary"],
+    variant === "secondary" && styles["Button--secondary"],
+    variant === "ghost" && styles["Button--ghost"],
+    variant === "danger" && styles["Button--danger"],
+    variant === "rounded" && styles["Button--rounded"],
+    size === "xs" && styles["Button--size-xs"],
+    size === "sm" && styles["Button--size-sm"],
+    size === "md" && styles["Button--size-md"],
+    size === "lg" && styles["Button--size-lg"],
+    pill && styles["Button--shape-rounded"],
+    block && styles["Button--block"],
+    rest.className,
+  ]
+    .filter(Boolean)
+    .join(" ");
 
-  type VariantStyle = {
-    background: string;
-    color: string;
-    border: string;
-    opacity?: number;
-  };
+  // Default theme: consume generated CSS vars on :root (no inline vars).
+  // Local `theme` overrides: re-bind the same `--cube-*` names the module reads.
+  const inlineVars = theme
+    ? (() => {
+        const { functional } = tokens.colors;
+        const stop = SIZE_TO_CONTROL[size];
+        const cssSeg = stop.replace(/[A-Z]/g, (ch) => `-${ch.toLowerCase()}`);
+        const c = tokens.sizes.control[stop];
+        const typo = tokens.typography.button[stop];
 
-  const primary = functional.button.primary;
-  const secondary = functional.button.secondary;
-  const primaryState = disabled
-    ? "disabled"
-    : pressed
-      ? "pressed"
-      : hovered
-        ? "hover"
-        : "rest";
-  const secondaryState = primaryState;
+        const out: Record<string, string> = {
+          [`--cube-control-${cssSeg}-gap`]: c.gap,
+          [`--cube-control-${cssSeg}-size`]: c.size,
+          [`--cube-control-${cssSeg}-borderRadius`]: c.borderRadius,
+          [`--cube-control-${cssSeg}-paddingBlock`]: c.paddingBlock,
+          [`--cube-control-${cssSeg}-paddingInline-condensed`]: c.paddingInline.condensed,
+          [`--cube-control-${cssSeg}-paddingInline-normal`]: c.paddingInline.normal,
+          [`--cube-control-${cssSeg}-paddingInline-spacious`]: c.paddingInline.spacious,
+          [`--cube-typography-button-${cssSeg}-fontSize`]: typo.fontSize,
+          [`--cube-typography-button-${cssSeg}-lineHeight`]: typo.lineHeight,
+          "--cube-typography-fontFamily-base": tokens.typography.fontFamily.base,
+          "--cube-sizes-borderRadius-full": tokens.sizes.borderRadius.full,
+          "--cube-sizes-borderWidth-thin": tokens.sizes.borderWidth.thin,
+          "--cube-colors-functional-background-muted": functional.background.muted,
+          "--cube-colors-functional-foreground-default": functional.foreground.default,
+          "--cube-colors-functional-foreground-disabled": functional.foreground.disabled,
+          "--cube-colors-functional-foreground-link": functional.foreground.link,
+        };
 
-  const variantMap: Record<ButtonVariant, VariantStyle> = {
-    primary: {
-      background: primary.bgColor[primaryState],
-      color: primary.fgColor[primaryState],
-      border: `${thin} solid ${primary.borderColor[primaryState]}`,
-    },
-    secondary: {
-      background: secondary.bgColor[secondaryState],
-      color: secondary.fgColor[secondaryState],
-      border: `${thin} solid ${secondary.borderColor[secondaryState]}`,
-    },
-    ghost: {
-      background: hovered && !disabled ? functional.background.muted : "transparent",
-      color: functional.foreground.default,
-      border: `${thin} solid transparent`,
-    },
-    danger: {
-      background: hovered && !disabled ? functional.danger.bgHover : functional.danger.bg,
-      color: functional.danger.fg,
-      border: `${thin} solid transparent`,
-    },
-  };
+        const states = ["rest", "hover", "pressed", "disabled"] as const;
+        for (const vKey of ["primary", "secondary", "danger", "rounded"] as const) {
+          const bv = functional.button[vKey];
+          for (const s of states) {
+            out[`--cube-button-${vKey}-bg-${s}`] = bv.bgColor[s];
+            out[`--cube-button-${vKey}-fg-${s}`] = bv.fgColor[s];
+            out[`--cube-button-${vKey}-border-${s}`] = bv.borderColor[s];
+          }
+        }
 
-  const vs = variantMap[variant];
+        return out as React.CSSProperties;
+      })()
+    : undefined;
 
   return (
     <button
       disabled={disabled}
-      onMouseEnter={(e) => { setHovered(true); onMouseEnter?.(e); }}
-      onMouseLeave={(e) => { setHovered(false); setPressed(false); onMouseLeave?.(e); }}
-      onMouseDown={(e) => {
-        if (!disabled) setPressed(true);
-        onMouseDown?.(e);
-      }}
-      onMouseUp={(e) => {
-        setPressed(false);
-        onMouseUp?.(e);
-      }}
-      style={{
-        display: "inline-flex",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: sz.iconGap,
-        height: sz.height,
-        paddingTop: sz.paddingY,
-        paddingBottom: sz.paddingY,
-        paddingLeft: sz.paddingX,
-        paddingRight: sz.paddingX,
-        boxSizing: "border-box",
-        fontSize: sz.fontSize,
-        lineHeight: sz.lineHeight,
-        fontFamily: tokens.typography.fontFamily.base,
-        fontWeight: tokens.typography.fontWeight.medium,
-        borderRadius: tokens.sizes.borderRadius.md,
-        cursor: disabled ? "not-allowed" : "pointer",
-        opacity: disabled && variant !== "primary" ? 0.5 : 1,
-        transition:
-          "background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease, opacity 0.12s ease",
-        whiteSpace: "nowrap",
-        textDecoration: "none",
-        outline: "none",
-        ...vs,
-        ...style,
-      }}
+      type={rest.type ?? "button"}
+      className={className}
+      style={{ ...(style ?? {}), ...(inlineVars ?? {}) }}
       {...rest}
     >
       {leadingIcon && (
-        <span style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
-          {leadingIcon}
+        <span className={styles.Button__leadingVisual}>
+          {decorateIcon(leadingIcon)}
         </span>
       )}
       {children}
       {trailingIcon && (
-        <span style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
-          {trailingIcon}
+        <span className={styles.Button__trailingVisual}>
+          {decorateIcon(trailingIcon)}
         </span>
       )}
     </button>

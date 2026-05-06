@@ -1,14 +1,15 @@
 {
-  "name": "@yourscope/data-grid",
+  "name": "@yourscope/cube",
   "version": "0.1.0",
-  "description": "A React library for rendering JSON as a table or code snippet, with full theme customization.",
+  "description": "Cube — React components and design tokens for data views, tables, and themed UI.",
   "keywords": [
     "react",
-    "data-grid",
+    "cube",
+    "design-system",
     "json",
     "table",
     "visualization",
-    "design-system"
+    "tokens"
   ],
   "license": "MIT",
   "main": "dist/index.cjs.js",
@@ -33,7 +34,9 @@
     "build-storybook": "storybook build",
     "tokens:functional-colors": "node scripts/flatten-functional-colors.mjs",
     "tokens:functional-typography": "node scripts/flatten-functional-typography.mjs",
-    "tokens:theme": "node scripts/build-theme.mjs",
+    "tokens:typography-theme": "node scripts/build-typography-theme.mjs",
+    "pretokens:theme": "node scripts/build-typography-theme.mjs",
+    "tokens:theme": "node scripts/build-theme.mjs && node scripts/build-theme-css.mjs",
     "prebuild": "npm run tokens:theme"
   },
   "peerDependencies": {

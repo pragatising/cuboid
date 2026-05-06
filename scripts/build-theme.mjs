@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Merge tokens/base/light.json, tokens/functional/colors/globals.json,
- * and all tokens/functional/components/**.tokens.json files; resolve
+ * and every .json file under tokens/functional/components/ (recursive); resolve
  * {token.path} refs; write src/theme/defaultTheme.generated.json.
  *
  * Usage: node scripts/build-theme.mjs
@@ -21,6 +21,27 @@ const BASE_SCALE_ALIASES = {
   purples: "purple",
 };
 
+const PX_TO_REM_BASE = Number(process.env.SIZE_BASE_PX ?? 16);
+if (!Number.isFinite(PX_TO_REM_BASE) || PX_TO_REM_BASE <= 0) {
+  console.error(`Invalid SIZE_BASE_PX: ${process.env.SIZE_BASE_PX}`);
+  process.exit(1);
+}
+
+function pxStringToRem(val) {
+  if (typeof val === "number") {
+    const rem = val / PX_TO_REM_BASE;
+    const rounded = Math.round(rem * 10000) / 10000;
+    return `${rounded}rem`;
+  }
+  if (typeof val !== "string") return val;
+  const m = val.match(/^(\d+(?:\.\d+)?)px$/);
+  if (!m) return val;
+  const px = Number(m[1]);
+  const rem = px / PX_TO_REM_BASE;
+  const rounded = Math.round(rem * 10000) / 10000;
+  return `${rounded}rem`;
+}
+
 function deepMerge(a, b) {
   if (!isPlain(a)) return b;
   if (!isPlain(b)) return b;
@@ -29,6 +50,15 @@ function deepMerge(a, b) {
     if (isPlain(v) && isPlain(out[k])) out[k] = deepMerge(out[k], v);
     else out[k] = v;
   }
+  return out;
+}
+
+/** Convert any plain "<number>px" strings to rem recursively. */
+function convertPxToRemDeep(node) {
+  if (typeof node === "string") return pxStringToRem(node);
+  if (!isPlain(node)) return node;
+  const out = {};
+  for (const [k, v] of Object.entries(node)) out[k] = convertPxToRemDeep(v);
   return out;
 }
 
@@ -77,13 +107,15 @@ function collectUnresolved(node, prefix = []) {
   return list;
 }
 
-/** Collapse { value: "x" } leaves to plain strings (and recurse). */
+/** Collapse { value: x } leaves to primitives (and recurse). */
 function unwrap(node) {
   if (!isPlain(node)) return node;
   if (
     Object.keys(node).length === 1 &&
-    typeof node.value === "string" &&
-    !node.value.startsWith("{")
+    (typeof node.value === "string" ||
+      typeof node.value === "number" ||
+      typeof node.value === "boolean") &&
+    (typeof node.value !== "string" || !node.value.startsWith("{"))
   ) {
     return node.value;
   }
@@ -99,7 +131,7 @@ function walkTokenFiles(dir, acc = []) {
   for (const ent of fs.readdirSync(dir, { withFileTypes: true })) {
     const p = path.join(dir, ent.name);
     if (ent.isDirectory()) walkTokenFiles(p, acc);
-    else if (ent.name.endsWith(".tokens.json")) acc.push(p);
+    else if (ent.name.endsWith(".json")) acc.push(p);
   }
   return acc;
 }
@@ -131,11 +163,13 @@ function themeBaseFromUnwrappedScale(scaleObj) {
 
 function main() {
   const lightPath = path.join(ROOT, "tokens/base/light.json");
-  const baseSizePath = path.join(ROOT, "tokens/base/size.json");
   const globalsPath = path.join(ROOT, "tokens/functional/colors/globals.json");
+  const rawTypographyPath = path.join(ROOT, "tokens/functional/typography/typography.json");
+  const typographyPath = path.join(ROOT, "tokens/functional/typography/theme.tokens.json");
   const componentsDir = path.join(ROOT, "tokens/functional/components");
   const functionalSizeDir = path.join(ROOT, "tokens/functional/size");
   const outPath = path.join(ROOT, "src/theme/defaultTheme.generated.json");
+  const baseOutPath = path.join(ROOT, "src/theme/baseTheme.generated.json");
 
   if (!fs.existsSync(lightPath)) {
     console.error(`Missing ${lightPath}`);
@@ -147,17 +181,16 @@ function main() {
   }
 
   const light = JSON.parse(fs.readFileSync(lightPath, "utf8"));
-  const baseSize = fs.existsSync(baseSizePath)
-    ? JSON.parse(fs.readFileSync(baseSizePath, "utf8"))
-    : null;
   const globals = JSON.parse(fs.readFileSync(globalsPath, "utf8"));
+  const rawTypography = fs.existsSync(rawTypographyPath)
+    ? JSON.parse(fs.readFileSync(rawTypographyPath, "utf8"))
+    : null;
+  const typographyThemeFile = fs.existsSync(typographyPath)
+    ? JSON.parse(fs.readFileSync(typographyPath, "utf8"))
+    : null;
 
   if (!isPlain(light.base)) {
     console.error("light.json: expected top-level base");
-    process.exit(1);
-  }
-  if (baseSize && !isPlain(baseSize.base)) {
-    console.error("size.json: expected top-level base");
     process.exit(1);
   }
   if (!isPlain(globals.color)) {
@@ -173,6 +206,10 @@ function main() {
     }
   }
 
+  const mergedTypography = isPlain(typographyThemeFile?.typography)
+    ? typographyThemeFile.typography
+    : null;
+
   let functionalSize = {};
   for (const file of walkJsonFiles(functionalSizeDir)) {
     const doc = JSON.parse(fs.readFileSync(file, "utf8"));
@@ -182,9 +219,10 @@ function main() {
   }
 
   const root = {
-    base: deepMerge(light.base, baseSize?.base ?? {}),
+    base: light.base,
     color: mergedColor,
     size: functionalSize,
+    typography: mergedTypography ?? {},
   };
 
   let resolved = root;
@@ -202,9 +240,10 @@ function main() {
   }
 
   const uRoot = unwrap(resolved);
-  const uBase = uRoot.base;
-  const uColor = uRoot.color;
-  const uSize = uRoot.size;
+  const uRootConverted = convertPxToRemDeep(uRoot);
+  const uBase = uRootConverted.base;
+  const uColor = uRootConverted.color;
+  const uSize = uRootConverted.size;
 
   const scale = uBase?.color?.scale;
   const base = isPlain(scale) ? themeBaseFromUnwrappedScale(scale) : {};
@@ -231,6 +270,30 @@ function main() {
     bgColor: btnSecondary.bgColor,
     borderColor: btnSecondary.borderColor,
     fgColor: btnSecondary.fgColor,
+  };
+
+  const btnDanger = uColor?.button?.danger;
+  if (!isPlain(btnDanger) || !isPlain(btnDanger.bgColor)) {
+    console.error("Expected resolved color.button.danger with bgColor, borderColor, fgColor");
+    process.exit(1);
+  }
+
+  const buttonDanger = {
+    bgColor: btnDanger.bgColor,
+    borderColor: btnDanger.borderColor,
+    fgColor: btnDanger.fgColor,
+  };
+
+  const btnRounded = uColor?.button?.rounded;
+  if (!isPlain(btnRounded) || !isPlain(btnRounded.bgColor)) {
+    console.error("Expected resolved color.button.rounded with bgColor, borderColor, fgColor");
+    process.exit(1);
+  }
+
+  const buttonRounded = {
+    bgColor: btnRounded.bgColor,
+    borderColor: btnRounded.borderColor,
+    fgColor: btnRounded.fgColor,
   };
 
   // Alias-map tokens: color.bg / color.fg / color.border → ThemeTokens.colors.functional.*
@@ -323,12 +386,13 @@ function main() {
   const control = uSize?.size?.control;
   const sizesOk =
     isPlain(control) &&
+    isPlain(control.extraSmall) &&
     isPlain(control.small) &&
     isPlain(control.medium) &&
     isPlain(control.large);
   if (!sizesOk) {
     console.error(
-      "Expected resolved size.control.{small,medium,large} (from tokens/functional/size/size.json)"
+      "Expected resolved size.control.{extraSmall,small,medium,large} (from tokens/functional/size/size.json)"
     );
     process.exit(1);
   }
@@ -343,33 +407,106 @@ function main() {
     return cur;
   };
 
-  // Map control sizes → ThemeTokens.components.button.{sm,md,lg}
-  // Use paddingInline.condensed as the canonical paddingX.
-  const buttonSizeBase = {
-    sm: {
-      height: pick(control.small, "size"),
-      paddingX: pick(control.small, "paddingInline.normal"),
-      paddingY: pick(control.small, "paddingBlock"),
-      iconGap: pick(control.small, "gap"),
+  const rawBtn = rawTypography?.button;
+  if (
+    !isPlain(rawBtn) ||
+    !isPlain(rawBtn.extraSmall) ||
+    !isPlain(rawBtn.small) ||
+    !isPlain(rawBtn.medium) ||
+    !isPlain(rawBtn.large)
+  ) {
+    console.error(
+      "Expected raw typography button.{extraSmall,small,medium,large} (from tokens/functional/typography/typography.json)"
+    );
+    process.exit(1);
+  }
+  const buttonTypography = {
+    extraSmall: {
+      fontSize: pxStringToRem(rawBtn.extraSmall.fontSize?.value) ?? "0.6875rem",
+      lineHeight: pxStringToRem(rawBtn.extraSmall.lineHeight?.value) ?? "0.875rem",
     },
-    md: {
-      height: pick(control.medium, "size"),
-      paddingX: pick(control.medium, "paddingInline.condensed"),
-      paddingY: pick(control.medium, "paddingBlock"),
-      iconGap: pick(control.medium, "gap"),
+    small: {
+      fontSize: pxStringToRem(rawBtn.small.fontSize?.value) ?? "0.75rem",
+      lineHeight: pxStringToRem(rawBtn.small.lineHeight?.value) ?? "1rem",
     },
-    lg: {
-      height: pick(control.large, "size"),
-      paddingX: pick(control.large, "paddingInline.condensed"),
-      paddingY: pick(control.large, "paddingBlock"),
-      iconGap: pick(control.large, "gap"),
+    medium: {
+      fontSize: pxStringToRem(rawBtn.medium.fontSize?.value) ?? "0.875rem",
+      lineHeight: pxStringToRem(rawBtn.medium.lineHeight?.value) ?? "1.25rem",
+    },
+    large: {
+      fontSize: pxStringToRem(rawBtn.large.fontSize?.value) ?? "1rem",
+      lineHeight: pxStringToRem(rawBtn.large.lineHeight?.value) ?? "1.25rem",
     },
   };
 
-  for (const [k, v] of Object.entries(buttonSizeBase)) {
-    for (const field of ["height", "paddingX", "paddingY", "iconGap"]) {
-      if (typeof v[field] !== "string") {
-        console.error(`Expected buttonSizeBase.${k}.${field} to be a string`);
+  for (const stop of ["extraSmall", "small", "medium", "large"]) {
+    for (const field of ["fontSize", "lineHeight"]) {
+      if (typeof buttonTypography[stop][field] !== "string") {
+        console.error(`Expected buttonTypography.${stop}.${field} to be a string`);
+        process.exit(1);
+      }
+    }
+  }
+
+  /** Expose resolved functional control sizes on the theme (single source for buttons, inputs, etc.). */
+  const controlSizes = {
+    extraSmall: {
+      size: pick(control.extraSmall, "size"),
+      borderRadius: pick(control.extraSmall, "borderRadius"),
+      gap: pick(control.extraSmall, "gap"),
+      paddingBlock: pick(control.extraSmall, "paddingBlock"),
+      paddingInline: {
+        condensed: pick(control.extraSmall, "paddingInline.condensed"),
+        normal: pick(control.extraSmall, "paddingInline.normal"),
+        spacious: pick(control.extraSmall, "paddingInline.spacious"),
+      },
+    },
+    small: {
+      size: pick(control.small, "size"),
+      borderRadius: pick(control.small, "borderRadius"),
+      gap: pick(control.small, "gap"),
+      paddingBlock: pick(control.small, "paddingBlock"),
+      paddingInline: {
+        condensed: pick(control.small, "paddingInline.condensed"),
+        normal: pick(control.small, "paddingInline.normal"),
+        spacious: pick(control.small, "paddingInline.spacious"),
+      },
+    },
+    medium: {
+      size: pick(control.medium, "size"),
+      borderRadius: pick(control.medium, "borderRadius"),
+      gap: pick(control.medium, "gap"),
+      paddingBlock: pick(control.medium, "paddingBlock"),
+      paddingInline: {
+        condensed: pick(control.medium, "paddingInline.condensed"),
+        normal: pick(control.medium, "paddingInline.normal"),
+        spacious: pick(control.medium, "paddingInline.spacious"),
+      },
+    },
+    large: {
+      size: pick(control.large, "size"),
+      borderRadius: pick(control.large, "borderRadius"),
+      gap: pick(control.large, "gap"),
+      paddingBlock: pick(control.large, "paddingBlock"),
+      paddingInline: {
+        condensed: pick(control.large, "paddingInline.condensed"),
+        normal: pick(control.large, "paddingInline.normal"),
+        spacious: pick(control.large, "paddingInline.spacious"),
+      },
+    },
+  };
+
+  for (const stop of ["extraSmall", "small", "medium", "large"]) {
+    const c = controlSizes[stop];
+    for (const field of ["size", "borderRadius", "gap", "paddingBlock"]) {
+      if (typeof c[field] !== "string") {
+        console.error(`Expected controlSizes.${stop}.${field} to be a string`);
+        process.exit(1);
+      }
+    }
+    for (const k of ["condensed", "normal", "spacious"]) {
+      if (typeof c.paddingInline[k] !== "string") {
+        console.error(`Expected controlSizes.${stop}.paddingInline.${k} to be a string`);
         process.exit(1);
       }
     }
@@ -408,8 +545,23 @@ function main() {
     }
   }
 
+  const spaceScale = uSize?.space;
+  const spaceKeys = ["1", "2", "3", "4", "5", "6", "8", "10", "12"];
+  if (!isPlain(spaceScale) || !spaceKeys.every((k) => typeof spaceScale[k] === "string")) {
+    console.error(
+      `Expected resolved size.space.{${spaceKeys.join(",")}} (from tokens/functional/size/space.json)`
+    );
+    process.exit(1);
+  }
+  const space = Object.fromEntries(spaceKeys.map((k) => [k, spaceScale[k]]));
+
+  const typography = {
+    ...uRootConverted.typography,
+    button: buttonTypography,
+  };
+
   const payload = {
-    base,
+    typography,
     colors: {
       functional: {
         background,
@@ -419,17 +571,26 @@ function main() {
       },
     },
     sizes: {
+      space,
       borderRadius,
       borderWidth,
+      control: controlSizes,
     },
     buttonPrimary,
     buttonSecondary,
-    buttonSizeBase,
+    buttonDanger,
+    buttonRounded,
   };
 
   fs.mkdirSync(path.dirname(outPath), { recursive: true });
   fs.writeFileSync(outPath, JSON.stringify(payload, null, 2) + "\n", "utf8");
   console.log(`Wrote ${outPath}`);
+
+  // Base palette is intentionally kept separate so it isn't exposed in the
+  // consumer-facing default theme artifact.
+  fs.mkdirSync(path.dirname(baseOutPath), { recursive: true });
+  fs.writeFileSync(baseOutPath, JSON.stringify(base, null, 2) + "\n", "utf8");
+  console.log(`Wrote ${baseOutPath}`);
 }
 
 main();

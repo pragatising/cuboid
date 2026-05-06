@@ -6,10 +6,7 @@ export { Text } from "./components/core/Text";
 export type { TextProps, TextVariant, TextColor } from "./components/core/Text";
 
 export { Button } from "./components/core/Button";
-export type { ButtonProps, ButtonSize, ButtonVariant } from "./components/core/Button";
-
-export { IconButton } from "./components/core/IconButton";
-export type { IconButtonProps, IconButtonSize, IconButtonVariant } from "./components/core/IconButton";
+export type { ButtonProps, ButtonShape, ButtonSize, ButtonVariant } from "./components/core/Button";
 
 // ── Data components ───────────────────────────────────────────────────────────
 export { CodeSnippet } from "./components/CodeSnippet";
@@ -29,7 +26,7 @@ export {
   getFigmaLightMergedTokens,
 } from "./theme/figma/buildFigmaTheme";
 export type {
-  DataGridTheme,
+  CubeTheme,
   ThemeTokens,
   Colors,
   BaseColors,
@@ -38,16 +35,10 @@ export type {
   BackgroundColors,
   ForegroundColors,
   BorderColors,
-  ShadowTokens,
   SyntaxColors,
   Typography,
   TextStyle,
   TextTokens,
   Sizes,
   SpaceKey,
-  ComponentTokens,
-  ButtonComponentTokens,
-  ButtonSizeTokens,
-  IconButtonComponentTokens,
-  IconButtonSizeTokens,
 } from "./theme/types";

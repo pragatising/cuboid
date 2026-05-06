@@ -57,23 +57,6 @@ export interface BorderColors {
   neutral: { muted: string; emphasis: string };
 }
 
-// ── Functional: shadows ───────────────────────────────────────────────────────
-
-export interface ShadowTokens {
-  resting: {
-    xsmall: string;
-    small: string;
-    medium: string;
-  };
-  floating: {
-    small: string;
-    medium: string;
-    large: string;
-    xlarge: string;
-  };
-  inset: string;
-}
-
 // ── Functional: syntax (prettylights) ────────────────────────────────────────
 
 export interface SyntaxColors {
@@ -118,17 +101,6 @@ export interface SyntaxColors {
   rowHoverBg: string;
 }
 
-// ── Functional: danger ────────────────────────────────────────────────────────
-
-export interface DangerColors {
-  bg: string;          // solid danger background (e.g. red button fill)
-  bgHover: string;     // hover state of solid danger background
-  bgMuted: string;     // subtle danger surface (e.g. ghost danger hover)
-  fg: string;          // text/icon on a solid danger background (usually white)
-  fgOnSubtle: string;  // danger-coloured text on a light background
-  border: string;      // danger border (e.g. outlined danger button)
-}
-
 /** Maps to Figma component tokens: button / {variant} / bgColor | borderColor | fgColor */
 export interface ButtonVariantStateColors {
   rest: string;
@@ -146,15 +118,16 @@ export interface ButtonVariantInteractiveColors {
 export interface ButtonFunctionalColors {
   primary: ButtonVariantInteractiveColors;
   secondary: ButtonVariantInteractiveColors;
+  danger: ButtonVariantInteractiveColors;
+  /** Pill-style control; maps to Figma `button/rounded/*` */
+  rounded: ButtonVariantInteractiveColors;
 }
 
 export interface FunctionalColors {
   background: BackgroundColors;
   foreground: ForegroundColors;
   border: BorderColors;
-  shadow: ShadowTokens;
   syntax: SyntaxColors;
-  danger: DangerColors;
   /** Component-scoped colors — start with primary; other variants follow the same shape */
   button: ButtonFunctionalColors;
 }
@@ -214,12 +187,26 @@ export interface TextTokens {
   inlineCode: TextStyle;   // for <code> inline
 }
 
+/** Button label metrics per control size (from typography tokens). */
+export interface ButtonTypographyStop {
+  fontSize: string;
+  lineHeight: string;
+}
+
+export interface ButtonTypography {
+  extraSmall: ButtonTypographyStop;
+  small: ButtonTypographyStop;
+  medium: ButtonTypographyStop;
+  large: ButtonTypographyStop;
+}
+
 export interface Typography {
   fontFamily: FontFamilyTokens;
   fontSize: FontSizeTokens;
   fontWeight: FontWeightTokens;
   lineHeight: LineHeightTokens;
   text: TextTokens;
+  button: ButtonTypography;
 }
 
 // ── Sizes ─────────────────────────────────────────────────────────────────────
@@ -249,59 +236,39 @@ export interface BorderWidthTokens {
   thick: string;  // 2px
 }
 
+/** Shared control geometry (button, input, etc.) — from functional size tokens. */
+export interface ControlPaddingInlineTokens {
+  condensed: string;
+  normal: string;
+  spacious: string;
+}
+
+export interface ControlSizeStopTokens {
+  /** Outer height (border-box) */
+  size: string;
+  /** Corner radius for this control stop (buttons, inputs, etc.) */
+  borderRadius: string;
+  gap: string;
+  paddingBlock: string;
+  paddingInline: ControlPaddingInlineTokens;
+}
+
+export interface ControlSizesTokens {
+  extraSmall: ControlSizeStopTokens;
+  small: ControlSizeStopTokens;
+  medium: ControlSizeStopTokens;
+  large: ControlSizeStopTokens;
+}
+
 export interface Sizes {
   space: SpaceTokens;
   borderRadius: BorderRadiusTokens;
   borderWidth: BorderWidthTokens;
+  control: ControlSizesTokens;
 }
 
 // Convenience alias for space token keys (used by Stack gap/padding props)
 export type SpaceKey = keyof SpaceTokens;
-
-// ── Component size compositions ───────────────────────────────────────────────
-
-/**
- * A single button size — all values derived so that height = paddingY*2 + lineHeight + border*2.
- *
- *  sm → 3 + 16 + 3 + 2(border) = 24 px
- *  md → 5 + 20 + 5 + 2(border) = 32 px
- *  lg → 9 + 20 + 9 + 2(border) = 40 px
- */
-export interface ButtonSizeTokens {
-  height: string;       // total outer height (border-box)
-  paddingX: string;     // horizontal inner padding
-  paddingY: string;     // vertical inner padding
-  fontSize: string;     // label font-size
-  lineHeight: string;   // label line-height (px string)
-  iconGap: string;      // gap between leading/trailing icon and label
-}
-
-export interface ButtonComponentTokens {
-  sm: ButtonSizeTokens;
-  md: ButtonSizeTokens;
-  lg: ButtonSizeTokens;
-}
-
-/**
- * A single icon-button size — centered via flex so icon lives inside the total size.
- *
- *  sm → 16px icon, 4px padding each side  → 24px outer
- *  md → 20px icon, 6px padding each side  → 32px outer
- */
-export interface IconButtonSizeTokens {
-  size: string;      // width and height of the button (border-box)
-  iconSize: string;  // width and height of the svg inside
-}
-
-export interface IconButtonComponentTokens {
-  sm: IconButtonSizeTokens;
-  md: IconButtonSizeTokens;
-}
-
-export interface ComponentTokens {
-  button: ButtonComponentTokens;
-  iconButton: IconButtonComponentTokens;
-}
 
 // ── Full resolved theme (all values present) ──────────────────────────────────
 
@@ -309,11 +276,10 @@ export interface ThemeTokens {
   colors: Colors;
   typography: Typography;
   sizes: Sizes;
-  components: ComponentTokens;
 }
 
 /**
  * What consumers pass to <ThemeProvider theme={...}> or the component theme prop.
  * Any deeply-nested subset is valid — missing keys fall back to the default theme.
  */
-export type DataGridTheme = DeepPartial<ThemeTokens>;
+export type CubeTheme = DeepPartial<ThemeTokens>;

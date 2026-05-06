@@ -1,6 +1,6 @@
 import React, { CSSProperties } from "react";
 import { useTheme } from "../../../theme/ThemeContext";
-import type { DataGridTheme, SpaceKey } from "../../../theme/types";
+import type { CubeTheme, SpaceKey } from "../../../theme/types";
 
 export interface StackProps {
   /** HTML element or component to render as (default: div) */
@@ -18,7 +18,7 @@ export interface StackProps {
   /** Allow children to wrap */
   wrap?: boolean;
   /** Override any theme tokens */
-  theme?: DataGridTheme;
+  theme?: CubeTheme;
   style?: CSSProperties;
   className?: string;
   children?: React.ReactNode;

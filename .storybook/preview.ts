@@ -1,4 +1,5 @@
 import type { Preview } from "@storybook/react";
+import "../src/theme/defaultTheme.css";
 
 // Inter is loaded via .storybook/preview-head.html (injected into the iframe <head>).
 // In production, consumers load Inter themselves — see README for options.

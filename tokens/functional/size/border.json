@@ -23,16 +23,16 @@
   },
   "borderRadius": {
     "small": {
-      "value": "{base.size.4}"
+      "value": "{size.space.4}"
     },
     "medium": {
-      "value": "{base.size.8}"
+      "value": "{size.space.8}"
     },
     "large": {
-      "value": "{base.size.16}"
+      "value": "{size.space.16}"
     },
     "xlarge": {
-      "value": "{base.size.24}"
+      "value": "{size.space.24}"
     },
     "full": {
       "value": "9999px"

@@ -1,0 +1,193 @@
+.Button {
+  appearance: none;
+  user-select: none;
+  vertical-align: middle;
+  align-items: center;
+  justify-content: center;
+  display: inline-flex;
+  box-sizing: border-box;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  font-family: var(--cube-typography-fontFamily-base);
+  font-weight: 500;
+  border: solid var(--cube-sizes-borderWidth-thin) transparent;
+  background: none;
+  box-shadow: none;
+  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease, opacity 120ms ease;
+}
+
+.Button:hover {
+  text-decoration: none;
+}
+
+.Button:focus-visible {
+  outline: 4px solid var(--cube-colors-functional-foreground-link);
+  outline-offset: 2px;
+}
+
+.Button:disabled,
+.Button[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+/* Variant states are defined per-variant below (Primer-style). */
+
+/* Variants */
+.Button--primary {
+  color: var(--cube-button-primary-fg-rest);
+  background-color: var(--cube-button-primary-bg-rest);
+  border-color: var(--cube-button-primary-border-rest);
+}
+.Button--primary:not(:disabled):not([aria-disabled="true"]):hover {
+  color: var(--cube-button-primary-fg-hover);
+  background-color: var(--cube-button-primary-bg-hover);
+  border-color: var(--cube-button-primary-border-hover);
+}
+.Button--primary:not(:disabled):not([aria-disabled="true"]):active {
+  color: var(--cube-button-primary-fg-pressed);
+  background-color: var(--cube-button-primary-bg-pressed);
+  border-color: var(--cube-button-primary-border-pressed);
+}
+.Button--primary:disabled {
+  color: var(--cube-button-primary-fg-disabled);
+  background-color: var(--cube-button-primary-bg-disabled);
+  border-color: var(--cube-button-primary-border-disabled);
+}
+
+.Button--secondary {
+  color: var(--cube-button-secondary-fg-rest);
+  background-color: var(--cube-button-secondary-bg-rest);
+  border-color: var(--cube-button-secondary-border-rest);
+}
+.Button--secondary:not(:disabled):not([aria-disabled="true"]):hover {
+  color: var(--cube-button-secondary-fg-hover);
+  background-color: var(--cube-button-secondary-bg-hover);
+  border-color: var(--cube-button-secondary-border-hover);
+}
+.Button--secondary:not(:disabled):not([aria-disabled="true"]):active {
+  color: var(--cube-button-secondary-fg-pressed);
+  background-color: var(--cube-button-secondary-bg-pressed);
+  border-color: var(--cube-button-secondary-border-pressed);
+}
+.Button--secondary:disabled {
+  color: var(--cube-button-secondary-fg-disabled);
+  background-color: var(--cube-button-secondary-bg-disabled);
+  border-color: var(--cube-button-secondary-border-disabled);
+}
+
+.Button--danger {
+  color: var(--cube-button-danger-fg-rest);
+  background-color: var(--cube-button-danger-bg-rest);
+  border-color: var(--cube-button-danger-border-rest);
+}
+.Button--danger:not(:disabled):not([aria-disabled="true"]):hover {
+  color: var(--cube-button-danger-fg-hover);
+  background-color: var(--cube-button-danger-bg-hover);
+  border-color: var(--cube-button-danger-border-hover);
+}
+.Button--danger:not(:disabled):not([aria-disabled="true"]):active {
+  color: var(--cube-button-danger-fg-pressed);
+  background-color: var(--cube-button-danger-bg-pressed);
+  border-color: var(--cube-button-danger-border-pressed);
+}
+.Button--danger:disabled {
+  color: var(--cube-button-danger-fg-disabled);
+  background-color: var(--cube-button-danger-bg-disabled);
+  border-color: var(--cube-button-danger-border-disabled);
+}
+
+/* Rounded (Figma `button/rounded/*`) — neutral pill colors; radius from `.Button--shape-rounded` */
+.Button--rounded {
+  color: var(--cube-button-rounded-fg-rest);
+  background-color: var(--cube-button-rounded-bg-rest);
+  border-color: var(--cube-button-rounded-border-rest);
+}
+.Button--rounded:not(:disabled):not([aria-disabled="true"]):hover {
+  color: var(--cube-button-rounded-fg-hover);
+  background-color: var(--cube-button-rounded-bg-hover);
+  border-color: var(--cube-button-rounded-border-hover);
+}
+.Button--rounded:not(:disabled):not([aria-disabled="true"]):active {
+  color: var(--cube-button-rounded-fg-pressed);
+  background-color: var(--cube-button-rounded-bg-pressed);
+  border-color: var(--cube-button-rounded-border-pressed);
+}
+.Button--rounded:disabled {
+  color: var(--cube-button-rounded-fg-disabled);
+  background-color: var(--cube-button-rounded-bg-disabled);
+  border-color: var(--cube-button-rounded-border-disabled);
+}
+
+.Button--ghost {
+  color: var(--cube-colors-functional-foreground-default);
+  background-color: transparent;
+  border-color: transparent;
+}
+.Button--ghost:not(:disabled):not([aria-disabled="true"]):hover {
+  background-color: var(--cube-colors-functional-background-muted);
+}
+.Button--ghost:not(:disabled):not([aria-disabled="true"]):active {
+  background-color: var(--cube-colors-functional-background-muted);
+}
+.Button--ghost:disabled {
+  color: var(--cube-colors-functional-foreground-disabled);
+}
+
+/* Sizes — geometry from shared control tokens; label metrics from typography.button */
+.Button--size-xs {
+  gap: var(--cube-control-extra-small-gap);
+  height: var(--cube-control-extra-small-size);
+  padding-block: var(--cube-control-extra-small-paddingBlock);
+  padding-inline: var(--cube-control-extra-small-paddingInline-normal);
+  border-radius: var(--cube-control-extra-small-borderRadius);
+  font-size: var(--cube-typography-button-extra-small-fontSize);
+  line-height: var(--cube-typography-button-extra-small-lineHeight);
+}
+
+.Button--size-sm {
+  gap: var(--cube-control-small-gap);
+  height: var(--cube-control-small-size);
+  padding-block: var(--cube-control-small-paddingBlock);
+  padding-inline: var(--cube-control-small-paddingInline-normal);
+  border-radius: var(--cube-control-small-borderRadius);
+  font-size: var(--cube-typography-button-small-fontSize);
+  line-height: var(--cube-typography-button-small-lineHeight);
+}
+
+.Button--size-md {
+  gap: var(--cube-control-medium-gap);
+  height: var(--cube-control-medium-size);
+  padding-block: var(--cube-control-medium-paddingBlock);
+  padding-inline: var(--cube-control-medium-paddingInline-condensed);
+  border-radius: var(--cube-control-medium-borderRadius);
+  font-size: var(--cube-typography-button-medium-fontSize);
+  line-height: var(--cube-typography-button-medium-lineHeight);
+}
+
+.Button--size-lg {
+  gap: var(--cube-control-large-gap);
+  height: var(--cube-control-large-size);
+  padding-block: var(--cube-control-large-paddingBlock);
+  padding-inline: var(--cube-control-large-paddingInline-condensed);
+  border-radius: var(--cube-control-large-borderRadius);
+  font-size: var(--cube-typography-button-large-fontSize);
+  line-height: var(--cube-typography-button-large-lineHeight);
+}
+
+/* Pill radius for any variant (primary/secondary/ghost/danger + Figma `style: rounded`) */
+.Button--shape-rounded {
+  border-radius: var(--cube-sizes-borderRadius-full);
+}
+
+.Button--block {
+  width: 100%;
+}
+
+.Button__leadingVisual,
+.Button__trailingVisual {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+

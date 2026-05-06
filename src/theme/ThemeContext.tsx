@@ -1,12 +1,12 @@
 import React, { createContext, useContext } from "react";
-import type { ThemeTokens, DataGridTheme } from "./types";
+import type { ThemeTokens, CubeTheme } from "./types";
 import { defaultTheme } from "./defaultTheme";
 import { deepMerge } from "./utils";
 
 const ThemeContext = createContext<ThemeTokens>(defaultTheme);
 
 export interface ThemeProviderProps {
-  theme?: DataGridTheme;
+  theme?: CubeTheme;
   children: React.ReactNode;
 }
 
@@ -14,7 +14,7 @@ export interface ThemeProviderProps {
  * Wrap your app (or a subtree) to apply a custom theme to all components inside.
  *
  * @example
- * <ThemeProvider theme={{ colors: { functional: { background: { default: '#0f172a' } } } }}>
+ * <ThemeProvider theme={{ colors: { functional: { background: { default: "#0f172a" } } } }}>
  *   <JsonViewer data={myData} />
  * </ThemeProvider>
  */
@@ -30,7 +30,7 @@ export function ThemeProvider({ theme, children }: ThemeProviderProps) {
  * Internal hook used by components to read the resolved theme.
  * A per-component `theme` prop is deep-merged on top of the context theme.
  */
-export function useTheme(localTheme?: DataGridTheme): ThemeTokens {
+export function useTheme(localTheme?: CubeTheme): ThemeTokens {
   const contextTheme = useContext(ThemeContext);
   if (!localTheme) return contextTheme;
   return deepMerge(contextTheme, localTheme as Partial<ThemeTokens>);

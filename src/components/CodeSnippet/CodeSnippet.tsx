@@ -1,11 +1,11 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { useTheme } from "../../theme/ThemeContext";
-import type { DataGridTheme } from "../../theme/types";
+import type { CubeTheme } from "../../theme/types";
 import { buildLines, getAllCollapsiblePaths } from "./tokenizer";
 import type { TokenType } from "./tokenizer";
 
-const SCROLL_CLASS = "dg-cs-scroll";
-const SCROLL_STYLE_ID = "dg-cs-scroll-styles";
+const SCROLL_CLASS = "cube-cs-scroll";
+const SCROLL_STYLE_ID = "cube-cs-scroll-styles";
 const SCROLL_CSS = `
   .${SCROLL_CLASS}::-webkit-scrollbar { width: 4px; height: 4px; }
   .${SCROLL_CLASS}::-webkit-scrollbar-track { background: transparent; }
@@ -59,7 +59,7 @@ export interface CodeSnippetProps {
    */
   maxHeight?: string;
   /** Override any theme tokens for this instance */
-  theme?: DataGridTheme;
+  theme?: CubeTheme;
   /** Accessible label for the code region */
   "aria-label"?: string;
 }

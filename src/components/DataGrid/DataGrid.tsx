@@ -1,16 +1,14 @@
-import React from "react";
-import type { DataGridTheme } from "../../theme/types";
+import type { CubeTheme } from "../../theme/types";
 
 export interface DataGridProps {
-  /** The JSON data to render as a table */
+  /** JSON-serializable row data (shape TBD) */
   data: unknown;
   /** Override any theme tokens for this instance */
-  theme?: DataGridTheme;
+  theme?: CubeTheme;
 }
 
 /**
- * Renders JSON data as an HTML table.
- * Implementation TBD — requirements coming soon.
+ * Table-style JSON viewer — implementation TBD.
  */
 export function DataGrid({ data }: DataGridProps) {
   return (

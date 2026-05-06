@@ -23,7 +23,7 @@ export default defineConfig(({ mode }) => {
     build: {
       lib: {
         entry: resolve(__dirname, "src/index.ts"),
-        name: "DataGrid",
+        name: "Cube",
         formats: ["es", "cjs"],
         fileName: (format) => `index.${format}.js`,
       },

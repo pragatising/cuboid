@@ -1,5 +1,5 @@
 import React from "react";
-import type { DataGridTheme } from "../../theme/types";
+import type { CubeTheme } from "../../theme/types";
 
 export type JsonViewerMode = "table" | "code";
 
@@ -9,7 +9,7 @@ export interface JsonViewerProps {
   /** Which view to start in (defaults to "code") */
   defaultMode?: JsonViewerMode;
   /** Override any theme tokens for this instance */
-  theme?: DataGridTheme;
+  theme?: CubeTheme;
 }
 
 /**

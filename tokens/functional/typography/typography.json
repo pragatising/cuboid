@@ -138,5 +138,51 @@
           "value": 32
         }
       }
+  },
+  "button": {
+    "extraSmall": {
+      "fontSize": {
+        "value": 11
+      },
+      "lineHeight": {
+        "value": 14
+      },
+      "weight": {
+        "value": 500
+      }
+    },
+    "small": {
+      "fontSize": {
+        "value": 12
+      },
+      "lineHeight": {
+        "value": 16
+      },
+      "weight": {
+        "value": 500
+      }
+    },
+    "medium": {
+      "fontSize": {
+        "value": 14
+      },
+      "lineHeight": {
+        "value": 20
+      },
+      "weight": {
+        "value": 500
+      }
+    },
+    "large": {
+      "fontSize": {
+        "value": 16
+      },
+      "lineHeight": {
+        "value": 24
+      },
+      "weight": {
+        "value": 500
+      }
+    }
   }
 }

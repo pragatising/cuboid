@@ -5,6 +5,9 @@ node_modules/
 dist/
 storybook-static/
 
+# Generated token artifacts
+tokens/functional/typography/theme.tokens.json
+
 # Cursor rules (kept local)
 .cursor/rules/
 
