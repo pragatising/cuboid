@@ -30,7 +30,11 @@
     "preview": "vite preview",
     "type-check": "tsc --noEmit",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "tokens:functional-colors": "node scripts/flatten-functional-colors.mjs",
+    "tokens:functional-typography": "node scripts/flatten-functional-typography.mjs",
+    "tokens:theme": "node scripts/build-theme.mjs",
+    "prebuild": "npm run tokens:theme"
   },
   "peerDependencies": {
     "react": ">=17",

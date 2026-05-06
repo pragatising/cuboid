@@ -129,6 +129,25 @@ export interface DangerColors {
   border: string;      // danger border (e.g. outlined danger button)
 }
 
+/** Maps to Figma component tokens: button / {variant} / bgColor | borderColor | fgColor */
+export interface ButtonVariantStateColors {
+  rest: string;
+  hover: string;
+  pressed: string;
+  disabled: string;
+}
+
+export interface ButtonVariantInteractiveColors {
+  bgColor: ButtonVariantStateColors;
+  borderColor: ButtonVariantStateColors;
+  fgColor: ButtonVariantStateColors;
+}
+
+export interface ButtonFunctionalColors {
+  primary: ButtonVariantInteractiveColors;
+  secondary: ButtonVariantInteractiveColors;
+}
+
 export interface FunctionalColors {
   background: BackgroundColors;
   foreground: ForegroundColors;
@@ -136,6 +155,8 @@ export interface FunctionalColors {
   shadow: ShadowTokens;
   syntax: SyntaxColors;
   danger: DangerColors;
+  /** Component-scoped colors — start with primary; other variants follow the same shape */
+  button: ButtonFunctionalColors;
 }
 
 export interface Colors {

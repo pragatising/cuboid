@@ -1,0 +1,142 @@
+{
+    "fontStack": {
+      "system": {
+        "value": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji'"
+      },
+      "sansSerif": {
+        "value": "Inter"
+      },
+      "monospace": {
+        "value": "'Mona Sans Mono', monospace"
+      }
+    },
+    "heading": {
+      "fontFamily": {
+        "value": "Inter"
+      },
+      "weight": {
+        "400": {
+          "value": 400
+        },
+        "500": {
+          "value": 500
+        },
+        "600": {
+          "value": 600
+        },
+        "700": {
+          "value": 600
+        }
+      },
+      "lineHeight": {
+        "12": {
+          "value": 12
+        },
+        "16": {
+          "value": 16
+        },
+        "20": {
+          "value": 20
+        },
+        "24": {
+          "value": 24
+        },
+        "32": {
+          "value": 32
+        }
+      }
+    },
+    "body": {
+      "fontFamily": {
+        "value": "Inter"
+      }
+    },
+    "text": {
+      "sizes": {
+        "xs": {
+          "value": 12
+        },
+        "sm": {
+          "value": 14
+        },
+        "md": {
+          "value": 20
+        },
+        "lg": {
+          "value": 24
+        },
+        "xl": {
+          "value": 32
+        }
+      },
+      "weight": {
+        "400": {
+          "value": 400
+        },
+        "500": {
+          "value": 500
+        },
+        "600": {
+          "value": 600
+        },
+        "700": {
+          "value": 700
+        }
+      },
+      "subhead": {
+        "size": {
+          "sm": {
+            "value": 12
+          },
+          "md": {
+            "value": 14
+          }
+        },
+        "weight": {
+          "400": {
+            "value": 400
+          },
+          "500": {
+            "value": 500
+          },
+          "600": {
+            "value": 600
+          }
+        },
+        "lineHeight": {
+          "12": {
+            "value": 12
+          },
+          "16": {
+            "value": 16
+          },
+          "20": {
+            "value": 20
+          },
+          "12 2": {
+            "value": 12
+          },
+          "16 2": {
+            "value": 16
+          },
+          "20 2": {
+            "value": 20
+          }
+        }
+      },
+      "lineHeight": {
+        "16": {
+          "value": 16
+        },
+        "20": {
+          "value": 20
+        },
+        "24": {
+          "value": 24
+        },
+        "32": {
+          "value": 32
+        }
+      }
+  }
+}

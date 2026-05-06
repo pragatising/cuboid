@@ -1,0 +1,37 @@
+{
+  "size": {
+    "control": {
+      "small": {
+        "size": { "value": "{base.size.24}" },
+        "gap": { "value": "{base.size.8}" },
+        "paddingInline": {
+          "condensed": { "value": "{base.size.8}" },
+          "normal": { "value": "{base.size.12}" },
+          "spacious": { "value": "{base.size.24}" }
+        },
+        "paddingBlock": { "value": "{base.size.6}" }
+      },
+      "medium": {
+        "size": { "value": "{base.size.32}" },
+        "gap": { "value": "{base.size.12}" },
+        "paddingInline": {
+          "condensed": { "value": "{base.size.12}" },
+          "normal": { "value": "{base.size.16}" },
+          "spacious": { "value": "{base.size.24}" }
+        },
+        "paddingBlock": { "value": "{base.size.8}" }
+      },
+      "large": {
+        "size": { "value": "{base.size.40}" },
+        "gap": { "value": "{base.size.16}" },
+        "paddingInline": {
+          "condensed": { "value": "{base.size.16}" },
+          "normal": { "value": "{base.size.20}" },
+          "spacious": { "value": "{base.size.24}" }
+        },
+        "paddingBlock": { "value": "{base.size.12}" }
+      }
+    }
+  }
+}
+

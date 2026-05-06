@@ -1,4 +1,5 @@
 import type { ThemeTokens } from "./types";
+import themeGenerated from "./defaultTheme.generated.json";
 
 const mono =
   "ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace";
@@ -9,40 +10,8 @@ const sansSerif =
   "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif";
 
 // ── Primitive palette ────────────────────────────────────────────────────────
-// Extract as a standalone const so functional tokens can reference stops by
-// name (base.red[5]) instead of repeating hex literals everywhere.
-const base = {
-  gray: {
-    0: "#f6f8fa", 1: "#eaeef2", 2: "#d0d7de", 3: "#afb8c1",
-    4: "#8c959f", 5: "#6e7781", 6: "#57606a", 7: "#424a53",
-    8: "#32383f", 9: "#24292f",
-  },
-  blue: {
-    0: "#ddf4ff", 1: "#cae8ff", 2: "#a5d6ff", 3: "#79c0ff",
-    4: "#58a6ff", 5: "#388bfd", 6: "#1f6feb", 7: "#1158c7",
-    8: "#0d419d", 9: "#051d4d",
-  },
-  green: {
-    0: "#dafbe1", 1: "#aceebb", 2: "#6fdd8b", 3: "#4ac26b",
-    4: "#2da44e", 5: "#1a7f37", 6: "#116329", 7: "#044f1e",
-    8: "#003d16", 9: "#002d11",
-  },
-  red: {
-    0: "#ffebe9", 1: "#ffcecb", 2: "#ffaba8", 3: "#ff8182",
-    4: "#fa4549", 5: "#cf222e", 6: "#a40e26", 7: "#82071e",
-    8: "#660018", 9: "#4c0014",
-  },
-  orange: {
-    0: "#fff1e5", 1: "#ffd8b5", 2: "#ffb77c", 3: "#fb8f44",
-    4: "#e16f24", 5: "#bc4c00", 6: "#953800", 7: "#762c00",
-    8: "#5c2200", 9: "#471700",
-  },
-  purple: {
-    0: "#fbefff", 1: "#ecd8ff", 2: "#d8b9ff", 3: "#c297ff",
-    4: "#a475f9", 5: "#8250df", 6: "#6639ba", 7: "#512a97",
-    8: "#3e1f79", 9: "#2e1461",
-  },
-} as const;
+// Generated from tokens/base/light.json via `npm run tokens:theme`.
+const base = themeGenerated.base as ThemeTokens["colors"]["base"];
 
 // Colors that fall between palette stops (GitHub Primer specifics).
 // Named so they're easy to update when switching palettes.
@@ -63,6 +32,12 @@ const misc = {
   syntaxString:       "#B96516",  // burnt orange, between orange[4] and orange[5]
 } as const;
 
+const buttonPrimary = themeGenerated.buttonPrimary;
+const buttonSecondary = themeGenerated.buttonSecondary;
+const buttonSizeBase = themeGenerated.buttonSizeBase;
+const generatedSizes = themeGenerated.sizes;
+const generatedFunctional = themeGenerated.colors.functional;
+
 export const defaultTheme: ThemeTokens = {
   // ── Colors ─────────────────────────────────────────────────────────────────
   colors: {
@@ -70,42 +45,9 @@ export const defaultTheme: ThemeTokens = {
 
     // Functional tokens — components reference these, never the base scale directly
     functional: {
-      background: {
-        default:     misc.white,
-        muted:       base.gray[0],
-        inset:       base.gray[0],
-        emphasis:    base.gray[9],
-        disabled:    base.gray[0],
-        transparent: "transparent",
-        inverse:     base.gray[9],
-        neutral: {
-          muted:    base.gray[1],
-          emphasis: base.gray[5],
-        },
-      },
-
-      foreground: {
-        default:    misc.foregroundDefault,
-        muted:      misc.foregroundMuted,
-        onEmphasis: misc.white,
-        disabled:   base.gray[4],
-        link:       misc.link,
-        white:      misc.white,
-        neutral:    base.gray[5],
-      },
-
-      border: {
-        default:     base.gray[2],
-        muted:       misc.borderMuted,
-        emphasis:    misc.borderEmphasis,
-        disabled:    misc.borderMuted,
-        transparent: "transparent",
-        translucent: misc.borderTranslucent,
-        neutral: {
-          muted:    base.gray[2],
-          emphasis: base.gray[5],
-        },
-      },
+      background: generatedFunctional.background,
+      foreground: generatedFunctional.foreground,
+      border: generatedFunctional.border,
 
       shadow: {
         resting: {
@@ -131,44 +73,12 @@ export const defaultTheme: ThemeTokens = {
         border:     base.red[5],
       },
 
-      syntax: {
-        comment:                      base.gray[5],
-        key:                          misc.syntaxKey,
-        constant:                     misc.syntaxConstant,
-        constantOtherReferenceLink:   misc.syntaxConstantLink,
-        entity:                       base.purple[5],
-        entityTag:                    base.green[6],
-        keyword:                      base.red[5],
-        string:                       misc.syntaxString,
-        stringRegexp:                 base.green[6],
-        variable:                     base.orange[6],
-        brackethighlighterAngle:      base.gray[6],
-        brackethighlighterUnmatched:  base.red[7],
-        carriageReturnBg:             base.red[5],
-        carriageReturnText:           base.gray[0],
-        invalidIllegalText:           base.gray[0],
-        invalidIllegalBg:             base.red[7],
-        markupBold:                   base.gray[9],
-        markupItalic:                 base.gray[9],
-        markupHeading:                misc.syntaxConstant,
-        markupList:                   base.green[6],
-        markupInsertedBg:             base.green[0],
-        markupInsertedText:           base.green[6],
-        markupDeletedBg:              base.red[0],
-        markupDeletedText:            base.red[7],
-        markupChangedBg:              base.orange[1],
-        markupChangedText:            base.orange[6],
-        nullLiteral:                  base.gray[4],
-        // Both true and false share this colour — purple is the IDE convention
-        // for boolean literals. We deliberately avoid green/red because true/false
-        // carry no inherent positive/negative meaning in arbitrary data.
-        booleanLiteral:               base.purple[5],
-        bracket:                      misc.syntaxBracket,
-        stringUrl:                    misc.link,
-        stringEmail:                  misc.link,
-        stringUuid:                   base.gray[5],
-        rowHoverBg:                   base.gray[0],
+      button: {
+        primary: buttonPrimary,
+        secondary: buttonSecondary,
       },
+
+      syntax: generatedFunctional.syntax,
     },
   },
 
@@ -229,17 +139,8 @@ export const defaultTheme: ThemeTokens = {
       10: "2.5rem",   // 40px
       12: "3rem",     // 48px
     },
-    borderRadius: {
-      sm:   "0.25rem",   // 4px
-      md:   "0.375rem",  // 6px
-      lg:   "0.5rem",    // 8px
-      xl:   "0.75rem",   // 12px
-      full: "9999px",    // pill — intentionally px
-    },
-    borderWidth: {
-      thin:  "1px",  // intentionally px — thinner than 1rem
-      thick: "2px",
-    },
+    borderRadius: generatedSizes.borderRadius,
+    borderWidth: generatedSizes.borderWidth,
   },
 
   // ── Component size compositions ─────────────────────────────────────────────
@@ -250,9 +151,21 @@ export const defaultTheme: ThemeTokens = {
   //  lg  → 0.5625rem*2 + 1.25rem  + 2px border ≈ 40px total
   components: {
     button: {
-      sm: { height: "1.5rem",  paddingX: "0.4375rem", paddingY: "0.1875rem", fontSize: "0.75rem",  lineHeight: "1rem",    iconGap: "0.25rem"  },
-      md: { height: "2rem",    paddingX: "0.6875rem", paddingY: "0.3125rem", fontSize: "0.875rem", lineHeight: "1.25rem", iconGap: "0.375rem" },
-      lg: { height: "2.5rem",  paddingX: "0.9375rem", paddingY: "0.5625rem", fontSize: "1rem",     lineHeight: "1.25rem", iconGap: "0.5rem"   },
+      sm: {
+        ...buttonSizeBase.sm,
+        fontSize: "0.75rem",
+        lineHeight: "1rem",
+      },
+      md: {
+        ...buttonSizeBase.md,
+        fontSize: "0.875rem",
+        lineHeight: "1.25rem",
+      },
+      lg: {
+        ...buttonSizeBase.lg,
+        fontSize: "1rem",
+        lineHeight: "1.25rem",
+      },
     },
     iconButton: {
       sm: { size: "1.5rem",  iconSize: "1rem"    },  // 24px outer, 16px icon

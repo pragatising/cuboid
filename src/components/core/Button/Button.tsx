@@ -38,13 +38,17 @@ export function Button({
   style,
   onMouseEnter,
   onMouseLeave,
+  onMouseDown,
+  onMouseUp,
   ...rest
 }: ButtonProps) {
   const tokens = useTheme(theme);
   const [hovered, setHovered] = useState(false);
+  const [pressed, setPressed] = useState(false);
 
   const { functional } = tokens.colors;
   const sz = tokens.components.button[size];
+  const thin = tokens.sizes.borderWidth.thin;
 
   type VariantStyle = {
     background: string;
@@ -53,28 +57,37 @@ export function Button({
     opacity?: number;
   };
 
-  const active = hovered && !disabled;
+  const primary = functional.button.primary;
+  const secondary = functional.button.secondary;
+  const primaryState = disabled
+    ? "disabled"
+    : pressed
+      ? "pressed"
+      : hovered
+        ? "hover"
+        : "rest";
+  const secondaryState = primaryState;
 
   const variantMap: Record<ButtonVariant, VariantStyle> = {
     primary: {
-      background: active ? functional.foreground.default : functional.background.emphasis,
-      color: functional.foreground.onEmphasis,
-      border: `${tokens.sizes.borderWidth.thin} solid transparent`,
+      background: primary.bgColor[primaryState],
+      color: primary.fgColor[primaryState],
+      border: `${thin} solid ${primary.borderColor[primaryState]}`,
     },
     secondary: {
-      background: active ? functional.background.muted : functional.background.default,
-      color: functional.foreground.default,
-      border: `${tokens.sizes.borderWidth.thin} solid ${functional.border.default}`,
+      background: secondary.bgColor[secondaryState],
+      color: secondary.fgColor[secondaryState],
+      border: `${thin} solid ${secondary.borderColor[secondaryState]}`,
     },
     ghost: {
-      background: active ? functional.background.muted : "transparent",
+      background: hovered && !disabled ? functional.background.muted : "transparent",
       color: functional.foreground.default,
-      border: `${tokens.sizes.borderWidth.thin} solid transparent`,
+      border: `${thin} solid transparent`,
     },
     danger: {
-      background: active ? functional.danger.bgHover : functional.danger.bg,
+      background: hovered && !disabled ? functional.danger.bgHover : functional.danger.bg,
       color: functional.danger.fg,
-      border: `${tokens.sizes.borderWidth.thin} solid transparent`,
+      border: `${thin} solid transparent`,
     },
   };
 
@@ -84,7 +97,15 @@ export function Button({
     <button
       disabled={disabled}
       onMouseEnter={(e) => { setHovered(true); onMouseEnter?.(e); }}
-      onMouseLeave={(e) => { setHovered(false); onMouseLeave?.(e); }}
+      onMouseLeave={(e) => { setHovered(false); setPressed(false); onMouseLeave?.(e); }}
+      onMouseDown={(e) => {
+        if (!disabled) setPressed(true);
+        onMouseDown?.(e);
+      }}
+      onMouseUp={(e) => {
+        setPressed(false);
+        onMouseUp?.(e);
+      }}
       style={{
         display: "inline-flex",
         alignItems: "center",
@@ -102,8 +123,9 @@ export function Button({
         fontWeight: tokens.typography.fontWeight.medium,
         borderRadius: tokens.sizes.borderRadius.md,
         cursor: disabled ? "not-allowed" : "pointer",
-        opacity: disabled ? 0.5 : 1,
-        transition: "background-color 0.12s ease, opacity 0.12s ease",
+        opacity: disabled && variant !== "primary" ? 0.5 : 1,
+        transition:
+          "background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease, opacity 0.12s ease",
         whiteSpace: "nowrap",
         textDecoration: "none",
         outline: "none",
