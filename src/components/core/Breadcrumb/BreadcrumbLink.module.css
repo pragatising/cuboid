@@ -1,0 +1,36 @@
+.BreadcrumbLink {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  max-width: 100%;
+  padding: var(--cube-breadcrumb-item-paddingBlock) var(--cube-breadcrumb-item-paddingInline);
+  border-radius: var(--cube-breadcrumb-item-borderRadius);
+  border: none;
+  font-family: var(--cube-typography-fontFamily-base);
+  font-size: var(--cube-typography-text-body-medium-fontSize);
+  font-weight: 400;
+  line-height: var(--cube-typography-text-body-medium-lineHeight);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+
+/* Color per state. `font-size` repeated on `a` only — Storybook docs overrides anchor sizing. */
+a.BreadcrumbLink.BreadcrumbLink--link,
+a.BreadcrumbLink.BreadcrumbLink--link:link,
+a.BreadcrumbLink.BreadcrumbLink--link:visited {
+  color: var(--cube-breadcrumb-link-fg-rest);
+  background-color: var(--cube-breadcrumb-link-bg-rest);
+  font-size: var(--cube-typography-text-body-medium-fontSize);
+}
+
+a.BreadcrumbLink.BreadcrumbLink--link:hover {
+  color: var(--cube-breadcrumb-link-fg-hover);
+  background-color: var(--cube-breadcrumb-link-bg-hover);
+}
+
+span.BreadcrumbLink.BreadcrumbLink--active {
+  color: var(--cube-breadcrumb-link-fg-active);
+  background-color: var(--cube-breadcrumb-link-bg-active);
+  cursor: default;
+}

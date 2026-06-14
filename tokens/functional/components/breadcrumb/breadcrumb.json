@@ -1,0 +1,28 @@
+{
+  "breadcrumb": {
+    "color": {
+      "link": {
+        "fgColor": {
+          "rest": { "value": "{color.text.muted}" },
+          "hover": { "value": "{color.text.muted}" },
+          "active": { "value": "{color.text.contrast}" }
+        },
+        "bgColor": {
+          "rest": { "value": "{color.canvas.transparent}" },
+          "hover": { "value": "{color.bg.gray.light.03}" },
+          "active": { "value": "{color.canvas.transparent}" }
+        }
+      },
+      "separator": {
+        "fgColor": { "value": "{color.text.muted}" }
+      }
+    },
+    "sizes": {
+      "gap": { "value": "{size.space.2}" },
+      "itemPaddingInline": { "value": "{size.space.8}" },
+      "itemPaddingBlock": { "value": "{size.space.2}" },
+      "itemBorderRadius": { "value": "{size.space.8}" },
+      "separatorWidth": { "value": "{size.space.10}" }
+    }
+  }
+}

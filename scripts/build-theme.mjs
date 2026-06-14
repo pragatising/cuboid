@@ -200,10 +200,20 @@ function main() {
   }
 
   let mergedColor = { ...globals.color };
+  /** Component-owned size fragments merged into `root.size` (e.g. `tooltip.sizes` → `sizes.tooltip`). */
+  let componentLayoutMerge = {};
   for (const file of walkTokenFiles(componentsDir)) {
     const doc = JSON.parse(fs.readFileSync(file, "utf8"));
     if (isPlain(doc.color)) {
       mergedColor = deepMerge(mergedColor, doc.color);
+    }
+    if (isPlain(doc.tooltip)) {
+      if (isPlain(doc.tooltip.color)) {
+        mergedColor = deepMerge(mergedColor, { tooltip: doc.tooltip.color });
+      }
+      if (isPlain(doc.tooltip.sizes)) {
+        componentLayoutMerge = deepMerge(componentLayoutMerge, { tooltip: doc.tooltip.sizes });
+      }
     }
   }
 
@@ -218,6 +228,7 @@ function main() {
     // Merge size tokens into one namespace
     functionalSize = deepMerge(functionalSize, doc);
   }
+  functionalSize = deepMerge(functionalSize, componentLayoutMerge);
 
   const root = {
     base: light.base,
@@ -305,7 +316,7 @@ function main() {
     typeof tipColor.foreground !== "string"
   ) {
     console.error(
-      "Expected resolved color.tooltip.{background,border,foreground} (from tokens/functional/components/tooltip/tooltip.json)"
+      "Expected resolved color.tooltip.{background,border,foreground} (from tooltip.color in components/tooltip/tooltip.json)"
     );
     process.exit(1);
   }
@@ -466,10 +477,11 @@ function main() {
     isPlain(control.extraSmall) &&
     isPlain(control.small) &&
     isPlain(control.medium) &&
-    isPlain(control.large);
+    isPlain(control.large) &&
+    isPlain(control.iconButton);
   if (!sizesOk) {
     console.error(
-      "Expected resolved size.control.{extraSmall,small,medium,large} (from tokens/functional/size/size.json)"
+      "Expected resolved size.control.{extraSmall,small,medium,large,iconButton} (from tokens/functional/size/size.json)"
     );
     process.exit(1);
   }
@@ -634,7 +646,9 @@ function main() {
 
   const tipLayout = uSize?.tooltip;
   if (!isPlain(tipLayout)) {
-    console.error("Expected resolved size.tooltip.* (from tokens/functional/size/tooltip.json)");
+    console.error(
+      "Expected resolved size.tooltip.* (from tooltip.sizes in components/tooltip/tooltip.json)"
+    );
     process.exit(1);
   }
   const tooltipLayout = {
@@ -651,6 +665,24 @@ function main() {
       console.error(`Expected tooltipLayout.${k} to be a string`);
       process.exit(1);
     }
+  }
+
+  const ibSize = control.iconButton;
+  const ibSizeStops = ["extraSmall", "small", "medium", "large"];
+  const iconButtonSizes = {};
+  for (const stop of ibSizeStops) {
+    const row = ibSize[stop];
+    if (!isPlain(row)) {
+      console.error(`Expected size.control.iconButton.${stop} (tokens/functional/size/size.json)`);
+      process.exit(1);
+    }
+    for (const k of ["size", "borderRadius", "icon"]) {
+      if (typeof row[k] !== "string") {
+        console.error(`Expected size.control.iconButton.${stop}.${k} to be a string`);
+        process.exit(1);
+      }
+    }
+    iconButtonSizes[stop] = { size: row.size, borderRadius: row.borderRadius, icon: row.icon };
   }
 
   const typography = {
@@ -674,6 +706,7 @@ function main() {
       borderWidth,
       control: controlSizes,
       tooltip: tooltipLayout,
+      iconButton: iconButtonSizes,
     },
     buttonPrimary,
     buttonSecondary,

@@ -50,4 +50,6 @@ export type {
   TooltipSurfaceColors,
   TooltipLayoutTokens,
   IconButtonFunctionalColors,
+  IconButtonSizesTokens,
+  IconButtonSizeStopTokens,
 } from "./theme/types";

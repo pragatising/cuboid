@@ -1,0 +1,19 @@
+{
+  "siteHeader": {
+    "color": {
+      "background": { "value": "{color.canvas.default}" },
+      "border": { "value": "{color.canvas.transparent}" },
+      "divider": { "value": "{color.text.subtle}" }
+    },
+    "sizes": {
+      "height": { "value": "{size.space.48}" },
+      "paddingInlineStart": { "value": "{size.space.16}" },
+      "paddingInlineEnd": { "value": "{size.space.8}" },
+      "paddingBlock": { "value": "{size.space.8}" },
+      "leadingGap": { "value": "{size.space.4}" },
+      "trailingGap": { "value": "{size.space.8}" },
+      "dividerHeight": { "value": "15px" },
+      "dividerWidth": { "value": "{size.space.1}" }
+    }
+  }
+}

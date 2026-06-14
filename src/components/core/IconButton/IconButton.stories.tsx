@@ -87,7 +87,7 @@ export const Playground: Story = {
     children: <StarIcon />,
   },
   argTypes: {
-    size: { control: "radio", options: ["xs"] },
+    size: { control: "radio", options: ["xs", "sm", "md", "lg"] },
     variant: { control: "radio", options: ["outlined", "ghost"] },
     selected: { control: "boolean" },
     disabled: { control: "boolean" },

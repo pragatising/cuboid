@@ -25,7 +25,7 @@
   --cube-button-primary-fg-pressed: #FFFFFF;
   --cube-button-primary-fg-rest: #FFFFFF;
   --cube-button-rounded-bg-disabled: #F4F4F2;
-  --cube-button-rounded-bg-hover: #F9F9F8;
+  --cube-button-rounded-bg-hover: #E2E1DD;
   --cube-button-rounded-bg-pressed: #EFEEEA;
   --cube-button-rounded-bg-rest: #EFEEEA;
   --cube-button-rounded-border-disabled: rgba(0,0,0,0);
@@ -84,6 +84,9 @@
   --cube-control-small-paddingInline-normal: 0.75rem;
   --cube-control-small-paddingInline-spacious: 1.5rem;
   --cube-control-small-size: 1.75rem;
+  --cube-iconButton-extra-small-borderRadius: 0.375rem;
+  --cube-iconButton-extra-small-icon: 1rem;
+  --cube-iconButton-extra-small-size: 1.5rem;
   --cube-iconButton-ghost-selected-bg-disabled: #F4F4F2;
   --cube-iconButton-ghost-selected-bg-hover: #CBDEFF;
   --cube-iconButton-ghost-selected-bg-pressed: #DFEAFD;
@@ -108,6 +111,12 @@
   --cube-iconButton-ghost-unselected-fg-hover: #474746;
   --cube-iconButton-ghost-unselected-fg-pressed: #474746;
   --cube-iconButton-ghost-unselected-fg-rest: #474746;
+  --cube-iconButton-large-borderRadius: 0.5rem;
+  --cube-iconButton-large-icon: 1.5rem;
+  --cube-iconButton-large-size: 2.5rem;
+  --cube-iconButton-medium-borderRadius: 0.5rem;
+  --cube-iconButton-medium-icon: 1.25rem;
+  --cube-iconButton-medium-size: 2rem;
   --cube-iconButton-outlined-selected-bg-disabled: #F4F4F2;
   --cube-iconButton-outlined-selected-bg-hover: #C4DAFF;
   --cube-iconButton-outlined-selected-bg-pressed: #CBDEFF;
@@ -132,6 +141,9 @@
   --cube-iconButton-outlined-unselected-fg-hover: #474746;
   --cube-iconButton-outlined-unselected-fg-pressed: #474746;
   --cube-iconButton-outlined-unselected-fg-rest: #474746;
+  --cube-iconButton-small-borderRadius: 0.375rem;
+  --cube-iconButton-small-icon: 1rem;
+  --cube-iconButton-small-size: 1.75rem;
   --cube-sizes-borderRadius-full: 624.9375rem;
   --cube-sizes-borderRadius-md: 0.5rem;
   --cube-sizes-borderWidth-thin: max(1px, 0.0625rem);

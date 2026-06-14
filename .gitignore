@@ -8,8 +8,9 @@ storybook-static/
 # Generated token artifacts
 tokens/functional/typography/theme.tokens.json
 
-# Cursor rules (kept local)
+# Cursor rules & agent skills (kept local)
 .cursor/rules/
+.cursor/skills/
 
 # macOS
 .DS_Store

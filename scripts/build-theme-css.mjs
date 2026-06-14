@@ -140,6 +140,14 @@ function main() {
     set(`control-${seg}-paddingInline-spacious`, c?.paddingInline?.spacious);
   }
 
+  for (const stop of controlStops) {
+    const seg = controlStopCssSegment(stop);
+    const ib = t.sizes?.iconButton?.[stop];
+    set(`iconButton-${seg}-size`, ib?.size);
+    set(`iconButton-${seg}-borderRadius`, ib?.borderRadius);
+    set(`iconButton-${seg}-icon`, ib?.icon);
+  }
+
   // Button label typography (per control stop)
   for (const stop of controlStops) {
     const seg = controlStopCssSegment(stop);

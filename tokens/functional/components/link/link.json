@@ -1,0 +1,18 @@
+{
+  "color": {
+    "link": {
+      "inline": {
+        "fgColor": {
+          "rest": { "value": "{color.fg.link.default}" },
+          "hover": { "value": "{color.fg.link.hover}" }
+        }
+      },
+      "standalone": {
+        "fgColor": {
+          "rest": { "value": "{color.fg.link.default}" },
+          "hover": { "value": "{color.fg.link.hover}" }
+        }
+      }
+    }
+  }
+}

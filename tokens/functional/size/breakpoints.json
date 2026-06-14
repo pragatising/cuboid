@@ -1,0 +1,6 @@
+{
+  "breakpoint": {
+    "md": { "value": "768px" },
+    "lg": { "value": "1012px" }
+  }
+}

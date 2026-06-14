@@ -44,6 +44,28 @@
           "spacious": { "value": "{size.space.24}" }
         },
         "paddingBlock": { "value": "{size.space.12}" }
+      },
+      "iconButton": {
+        "extraSmall": {
+          "size": { "value": "{size.size.control.extraSmall.size}" },
+          "borderRadius": { "value": "{size.size.control.extraSmall.borderRadius}" },
+          "icon": { "value": "{size.space.16}" }
+        },
+        "small": {
+          "size": { "value": "{size.size.control.small.size}" },
+          "borderRadius": { "value": "{size.size.control.small.borderRadius}" },
+          "icon": { "value": "{size.space.16}" }
+        },
+        "medium": {
+          "size": { "value": "{size.size.control.medium.size}" },
+          "borderRadius": { "value": "{size.size.control.medium.borderRadius}" },
+          "icon": { "value": "{size.space.20}" }
+        },
+        "large": {
+          "size": { "value": "{size.size.control.large.size}" },
+          "borderRadius": { "value": "{size.size.control.large.borderRadius}" },
+          "icon": { "value": "{size.space.24}" }
+        }
       }
     }
   }

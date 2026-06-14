@@ -1,0 +1,61 @@
+.Link {
+  cursor: pointer;
+  transition: color 120ms ease;
+}
+
+.Link:focus-visible {
+  outline: 4px solid var(--cube-colors-functional-foreground-link);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* In prose — inherit surrounding font metrics */
+.Link--inline {
+  display: inline;
+  font: inherit;
+  letter-spacing: inherit;
+}
+
+a.Link.Link--inline,
+a.Link.Link--inline:visited {
+  color: var(--cube-link-inline-fg-rest);
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+}
+
+a.Link.Link--inline:not([aria-disabled="true"]):hover {
+  color: var(--cube-link-inline-fg-hover);
+  text-decoration: underline;
+}
+
+/* Nav / footer / contact links */
+.Link--standalone {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+  font-family: var(--cube-typography-fontFamily-base);
+  font-size: var(--cube-typography-text-body-medium-fontSize);
+  font-weight: var(--cube-typography-text-body-medium-fontWeight);
+  line-height: var(--cube-typography-text-body-medium-lineHeight);
+}
+
+a.Link.Link--standalone,
+a.Link.Link--standalone:visited {
+  color: var(--cube-link-standalone-fg-rest);
+  text-decoration: underline;
+  text-underline-offset: 0.125em;
+}
+
+a.Link.Link--standalone:not([aria-disabled="true"]):hover {
+  color: var(--cube-link-standalone-fg-hover);
+  text-decoration: underline;
+}
+
+.Link[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.Link__externalIcon {
+  flex-shrink: 0;
+}

@@ -1,0 +1,33 @@
+.Icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+}
+
+.Icon--size-xs {
+  width: var(--cube-iconButton-extra-small-icon);
+  height: var(--cube-iconButton-extra-small-icon);
+}
+
+.Icon--size-sm {
+  width: var(--cube-iconButton-small-icon);
+  height: var(--cube-iconButton-small-icon);
+}
+
+.Icon--size-md {
+  width: var(--cube-iconButton-medium-icon);
+  height: var(--cube-iconButton-medium-icon);
+}
+
+.Icon--size-lg {
+  width: var(--cube-iconButton-large-icon);
+  height: var(--cube-iconButton-large-icon);
+}
+
+.Icon > :global(svg) {
+  width: 100%;
+  height: 100%;
+  display: block;
+}

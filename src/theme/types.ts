@@ -292,12 +292,29 @@ export interface TooltipLayoutTokens {
   boxShadow: string;
 }
 
+/** Icon-only control geometry — hit target, radius, glyph; no padding/gap (`size.control.iconButton` in `tokens/functional/size/size.json`). */
+export interface IconButtonSizeStopTokens {
+  /** Border-box width/height of the control */
+  size: string;
+  borderRadius: string;
+  /** Icon / visual glyph box (width & height) */
+  icon: string;
+}
+
+export interface IconButtonSizesTokens {
+  extraSmall: IconButtonSizeStopTokens;
+  small: IconButtonSizeStopTokens;
+  medium: IconButtonSizeStopTokens;
+  large: IconButtonSizeStopTokens;
+}
+
 export interface Sizes {
   space: SpaceTokens;
   borderRadius: BorderRadiusTokens;
   borderWidth: BorderWidthTokens;
   control: ControlSizesTokens;
   tooltip: TooltipLayoutTokens;
+  iconButton: IconButtonSizesTokens;
 }
 
 // Convenience alias for space token keys (used by Stack gap/padding props)

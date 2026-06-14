@@ -1,0 +1,18 @@
+{
+  "pill": {
+    "sizes": {
+      "sm": {
+        "paddingInline": { "value": "{size.space.8}" },
+        "paddingBlock": { "value": "{size.space.2}" },
+        "borderRadius": { "value": "{size.space.4}" },
+        "gap": { "value": "{size.space.4}" }
+      },
+      "md": {
+        "paddingInline": { "value": "{size.space.12}" },
+        "paddingBlock": { "value": "{size.space.4}" },
+        "borderRadius": { "value": "{size.space.6}" },
+        "gap": { "value": "{size.space.6}" }
+      }
+    }
+  }
+}

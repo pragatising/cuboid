@@ -23,19 +23,59 @@
   cursor: not-allowed;
 }
 
+/* Geometry from sizes.iconButton.* — hit target + radius + glyph only (no padding tokens). */
 .IconButton--size-xs {
-  width: var(--cube-control-extra-small-size);
-  height: var(--cube-control-extra-small-size);
-  min-width: var(--cube-control-extra-small-size);
-  border-radius: var(--cube-control-extra-small-borderRadius);
+  width: var(--cube-iconButton-extra-small-size);
+  height: var(--cube-iconButton-extra-small-size);
+  min-width: var(--cube-iconButton-extra-small-size);
+  border-radius: var(--cube-iconButton-extra-small-borderRadius);
+}
+
+.IconButton--size-sm {
+  width: var(--cube-iconButton-small-size);
+  height: var(--cube-iconButton-small-size);
+  min-width: var(--cube-iconButton-small-size);
+  border-radius: var(--cube-iconButton-small-borderRadius);
+}
+
+.IconButton--size-md {
+  width: var(--cube-iconButton-medium-size);
+  height: var(--cube-iconButton-medium-size);
+  min-width: var(--cube-iconButton-medium-size);
+  border-radius: var(--cube-iconButton-medium-borderRadius);
+}
+
+.IconButton--size-lg {
+  width: var(--cube-iconButton-large-size);
+  height: var(--cube-iconButton-large-size);
+  min-width: var(--cube-iconButton-large-size);
+  border-radius: var(--cube-iconButton-large-borderRadius);
 }
 
 .IconButton__icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 1rem;
-  height: 1rem;
+}
+
+.IconButton--size-xs .IconButton__icon {
+  width: var(--cube-iconButton-extra-small-icon);
+  height: var(--cube-iconButton-extra-small-icon);
+}
+
+.IconButton--size-sm .IconButton__icon {
+  width: var(--cube-iconButton-small-icon);
+  height: var(--cube-iconButton-small-icon);
+}
+
+.IconButton--size-md .IconButton__icon {
+  width: var(--cube-iconButton-medium-icon);
+  height: var(--cube-iconButton-medium-icon);
+}
+
+.IconButton--size-lg .IconButton__icon {
+  width: var(--cube-iconButton-large-icon);
+  height: var(--cube-iconButton-large-icon);
 }
 
 .IconButton__icon > :global(svg) {

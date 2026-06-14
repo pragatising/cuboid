@@ -8,12 +8,22 @@ import styles from "./IconButton.module.css";
 
 /** Keys of `color.iconButton` in tokens / `theme.json` — add a variant in JSON + matching CSS module class `IconButton--<name>`. */
 export type IconButtonVariant = keyof typeof themeOutput.iconButton;
-export type IconButtonSize = "xs";
+export type IconButtonSize = "xs" | "sm" | "md" | "lg";
 
-type ControlStop = keyof ThemeTokens["sizes"]["control"];
+type IconButtonStop = keyof ThemeTokens["sizes"]["iconButton"];
 
-const SIZE_TO_CONTROL: Record<IconButtonSize, ControlStop> = {
+const SIZE_TO_STOP: Record<IconButtonSize, IconButtonStop> = {
   xs: "extraSmall",
+  sm: "small",
+  md: "medium",
+  lg: "large",
+};
+
+const SIZE_CLASS: Record<IconButtonSize, string> = {
+  xs: styles["IconButton--size-xs"],
+  sm: styles["IconButton--size-sm"],
+  md: styles["IconButton--size-md"],
+  lg: styles["IconButton--size-lg"],
 };
 
 const IB_STATES = ["rest", "hover", "pressed", "disabled"] as const;
@@ -48,6 +58,7 @@ export interface IconButtonProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "children"> {
   /** Icon only — pass a single SVG or element using `currentColor` for fills. */
   children: React.ReactNode;
+  /** Maps to `sizes.iconButton` (hit area, radius, icon glyph — no label padding). */
   size?: IconButtonSize;
   variant?: IconButtonVariant;
   /** Selected / toggled visual state (sets `aria-pressed` when not `undefined`) */
@@ -94,7 +105,7 @@ export function IconButton({
     styles.IconButton,
     variantClass,
     selectionClass,
-    size === "xs" && styles["IconButton--size-xs"],
+    SIZE_CLASS[size],
     userClassName,
   ]
     .filter(Boolean)
@@ -103,12 +114,13 @@ export function IconButton({
   const inlineVars = theme
     ? (() => {
         const { functional } = tokens.colors;
-        const stop = SIZE_TO_CONTROL[size];
+        const stop = SIZE_TO_STOP[size];
         const cssSeg = stop.replace(/[A-Z]/g, (ch) => `-${ch.toLowerCase()}`);
-        const c = tokens.sizes.control[stop];
+        const geom = tokens.sizes.iconButton[stop];
         return {
-          [`--cube-control-${cssSeg}-size`]: c.size,
-          [`--cube-control-${cssSeg}-borderRadius`]: c.borderRadius,
+          [`--cube-iconButton-${cssSeg}-size`]: geom.size,
+          [`--cube-iconButton-${cssSeg}-borderRadius`]: geom.borderRadius,
+          [`--cube-iconButton-${cssSeg}-icon`]: geom.icon,
           "--cube-sizes-borderWidth-thin": tokens.sizes.borderWidth.thin,
           "--cube-colors-functional-foreground-link": functional.foreground.link,
           ...iconButtonCssVars(functional.iconButton),
