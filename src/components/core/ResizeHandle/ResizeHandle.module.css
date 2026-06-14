@@ -1,0 +1,48 @@
+.ResizeHandle {
+  position: absolute;
+  z-index: 1;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  touch-action: none;
+}
+
+.ResizeHandle--vertical {
+  top: 0;
+  bottom: 0;
+  width: var(--cube-resizeHandle-hitArea, 0.5rem);
+  cursor: col-resize;
+}
+
+.ResizeHandle--horizontal {
+  left: 0;
+  right: 0;
+  height: var(--cube-resizeHandle-hitArea, 0.5rem);
+  cursor: row-resize;
+}
+
+.ResizeHandle--edgeStart {
+  left: 0;
+  transform: translateX(-50%);
+}
+
+.ResizeHandle--edgeEnd {
+  right: 0;
+  transform: translateX(50%);
+}
+
+.ResizeHandle--edgeTop {
+  top: 0;
+  transform: translateY(-50%);
+}
+
+.ResizeHandle--edgeBottom {
+  bottom: 0;
+  transform: translateY(50%);
+}
+
+.ResizeHandle:focus-visible {
+  outline: 2px solid var(--cube-color-focus, #0969da);
+  outline-offset: 1px;
+}
