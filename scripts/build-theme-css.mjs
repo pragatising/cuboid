@@ -198,7 +198,51 @@ function main() {
   const shadows = t.shadows;
   if (shadows) {
     set(`shadow-popover`, shadows.popover);
+    set(`shadow-popoverElevated`, shadows.popoverElevated);
     set(`shadow-sheet`, shadows.sheet);
+  }
+
+  const popoverColors = t.popoverColors;
+  if (popoverColors) {
+    set(`popover-bg`, popoverColors.background);
+  }
+
+  const popoverSizes = t.sizes?.popover;
+  if (popoverSizes) {
+    set(`popover-gap`, popoverSizes.gap);
+    set(`popover-borderRadius`, popoverSizes.borderRadius);
+    set(`popover-minWidth`, popoverSizes.minWidth);
+    set(`popover-maxWidth`, popoverSizes.maxWidth);
+  }
+
+  const actionMenuColors = t.actionMenuColors;
+  if (actionMenuColors) {
+    const itemBg = actionMenuColors.item?.bgColor;
+    const itemFg = actionMenuColors.item?.fgColor;
+    if (itemBg) {
+      for (const state of ["rest", "hover", "pressed", "disabled"]) {
+        set(`actionMenu-item-bg-${state}`, itemBg[state]);
+      }
+      for (const state of ["rest", "pressed"]) {
+        set(`actionMenu-item-bg-selected-${state}`, itemBg.selected?.[state]);
+      }
+    }
+    if (itemFg) {
+      for (const state of ["rest", "pressed", "disabled", "selected", "subtext"]) {
+        set(`actionMenu-item-fg-${state}`, itemFg[state]);
+      }
+    }
+    set(`actionMenu-section-fg`, actionMenuColors.section?.fgColor);
+    set(`actionMenu-divider-fg`, actionMenuColors.divider?.fgColor);
+  }
+
+  const actionMenuSizes = t.sizes?.actionMenu;
+  if (actionMenuSizes) {
+    emitNestedStringVars(actionMenuSizes.item, [], "actionMenu-item", set);
+    emitNestedStringVars(actionMenuSizes.list, [], "actionMenu-list", set);
+    emitNestedStringVars(actionMenuSizes.section, [], "actionMenu-section", set);
+    emitNestedStringVars(actionMenuSizes.header, [], "actionMenu-header", set);
+    emitNestedStringVars(actionMenuSizes.footer, [], "actionMenu-footer", set);
   }
 
   const pillColors = t.pillColors;

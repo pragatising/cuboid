@@ -355,6 +355,42 @@
       "padding": "1rem",
       "bottomCornerRadius": "1rem"
     },
+    "popover": {
+      "gap": "0.25rem",
+      "borderRadius": "0.5rem",
+      "minWidth": "10rem",
+      "maxWidth": "20rem"
+    },
+    "actionMenu": {
+      "item": {
+        "minHeight": "1.875rem",
+        "paddingInline": "0.75rem",
+        "paddingBlock": "0.3125rem",
+        "borderRadius": "0.375rem",
+        "slotGap": "1rem",
+        "subtextGap": "0.25rem",
+        "iconSize": "1.25rem",
+        "subtextIconSize": "1rem"
+      },
+      "list": {
+        "paddingInline": "0.25rem",
+        "paddingBlock": "0.5rem",
+        "itemGap": "0.25rem",
+        "sectionGap": "0.5rem"
+      },
+      "section": {
+        "paddingInline": "0.75rem",
+        "paddingBlock": "0.125rem"
+      },
+      "header": {
+        "paddingInline": "1rem",
+        "paddingBlockStart": "0.75rem",
+        "paddingBlockEnd": "1rem"
+      },
+      "footer": {
+        "padding": "1rem"
+      }
+    },
     "resizeHandle": {
       "hitArea": "0.5rem"
     },
@@ -1625,8 +1661,39 @@
   "sheetColors": {
     "background": "#FFFFFF"
   },
+  "popoverColors": {
+    "background": "#FFFFFF"
+  },
+  "actionMenuColors": {
+    "item": {
+      "bgColor": {
+        "rest": "#FFFFFF",
+        "hover": "#F9F9F8",
+        "pressed": "#F4F4F2",
+        "disabled": "#F4F4F2",
+        "selected": {
+          "rest": "#F4F4F2",
+          "pressed": "#EFEEEA"
+        }
+      },
+      "fgColor": {
+        "rest": "#888783",
+        "pressed": "#474746",
+        "disabled": "#ABA9A5",
+        "selected": "#474746",
+        "subtext": "#888783"
+      }
+    },
+    "section": {
+      "fgColor": "#474746"
+    },
+    "divider": {
+      "fgColor": "#EFEEEA"
+    }
+  },
   "shadows": {
     "popover": "0 0 0 1px rgba(42, 28, 0, 0.07), 0 20px 24px 0 rgba(25, 25, 25, 0.05), 0 5px 8px 0 rgba(25, 25, 25, 0.03)",
+    "popoverElevated": "0 0 0 1px rgba(42, 28, 0, 0.10), 0 24px 32px 0 rgba(25, 25, 25, 0.08), 0 8px 12px 0 rgba(25, 25, 25, 0.05)",
     "sheet": "0 0 0 1px rgba(42, 28, 0, 0.07), 0 20px 24px 0 rgba(25, 25, 25, 0.05), 0 5px 8px 0 rgba(25, 25, 25, 0.03)"
   },
   "globalColors": {

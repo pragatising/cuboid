@@ -57,7 +57,7 @@ export function GraphCard({
           // ── Visual defaults from theme ──────────────────────────────────────
           background:    tokens.colors.functional.background.default,
           border:        `${tokens.sizes.borderWidth.thin} solid ${tokens.colors.functional.border.muted}`,
-          borderRadius:  tokens.sizes.borderRadius.lg,          // 8px
+          borderRadius:  tokens.sizes.borderRadius.md,          // 8px
           boxShadow:     "none",
 
           // ── Layout ─────────────────────────────────────────────────────────

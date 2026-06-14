@@ -290,6 +290,22 @@ function main() {
         componentLayoutMerge = deepMerge(componentLayoutMerge, { sheet: doc.sheet.sizes });
       }
     }
+    if (isPlain(doc.popover)) {
+      if (isPlain(doc.popover.color)) {
+        mergedColor = deepMerge(mergedColor, { popover: doc.popover.color });
+      }
+      if (isPlain(doc.popover.sizes)) {
+        componentLayoutMerge = deepMerge(componentLayoutMerge, { popover: doc.popover.sizes });
+      }
+    }
+    if (isPlain(doc.actionMenu)) {
+      if (isPlain(doc.actionMenu.color)) {
+        mergedColor = deepMerge(mergedColor, { actionMenu: doc.actionMenu.color });
+      }
+      if (isPlain(doc.actionMenu.sizes)) {
+        componentLayoutMerge = deepMerge(componentLayoutMerge, { actionMenu: doc.actionMenu.sizes });
+      }
+    }
   }
 
   const mergedTypography = isPlain(typographyThemeFile?.typography)
@@ -569,6 +585,64 @@ function main() {
   }
   const sheetColors = {
     background: sheetColor.background,
+  };
+
+  const popoverColor = uColor?.popover;
+  if (!isPlain(popoverColor) || typeof popoverColor.background !== "string") {
+    console.error(
+      "Expected resolved color.popover.background (tokens/functional/components/popover/popover.json)"
+    );
+    process.exit(1);
+  }
+  const popoverColors = {
+    background: popoverColor.background,
+  };
+
+  const actionMenuColor = uColor?.actionMenu;
+  const amItemBg = actionMenuColor?.item?.bgColor;
+  const amItemFg = actionMenuColor?.item?.fgColor;
+  const amSectionFg = actionMenuColor?.section?.fgColor;
+  const amDividerFg = actionMenuColor?.divider?.fgColor;
+  const amBgStates = ["rest", "hover", "pressed", "disabled"];
+  const amSelectedBgStates = ["rest", "pressed"];
+  const amFgStates = ["rest", "pressed", "disabled", "selected", "subtext"];
+  if (
+    !isPlain(amItemBg) ||
+    !amBgStates.every((s) => typeof amItemBg[s] === "string") ||
+    !isPlain(amItemBg.selected) ||
+    !amSelectedBgStates.every((s) => typeof amItemBg.selected[s] === "string") ||
+    !isPlain(amItemFg) ||
+    !amFgStates.every((s) => typeof amItemFg[s] === "string") ||
+    typeof amSectionFg !== "string" ||
+    typeof amDividerFg !== "string"
+  ) {
+    console.error(
+      "Expected resolved color.actionMenu.{item.bgColor,item.fgColor,section.fgColor,divider.fgColor} (tokens/functional/components/action-menu/action-menu.json)"
+    );
+    process.exit(1);
+  }
+  const actionMenuColors = {
+    item: {
+      bgColor: {
+        rest: amItemBg.rest,
+        hover: amItemBg.hover,
+        pressed: amItemBg.pressed,
+        disabled: amItemBg.disabled,
+        selected: {
+          rest: amItemBg.selected.rest,
+          pressed: amItemBg.selected.pressed,
+        },
+      },
+      fgColor: {
+        rest: amItemFg.rest,
+        pressed: amItemFg.pressed,
+        disabled: amItemFg.disabled,
+        selected: amItemFg.selected,
+        subtext: amItemFg.subtext,
+      },
+    },
+    section: { fgColor: amSectionFg },
+    divider: { fgColor: amDividerFg },
   };
 
   const tipColor = uColor?.tooltip;
@@ -1152,7 +1226,76 @@ function main() {
     hitArea: resizeHandleSrc.hitArea,
   };
 
-  const shadowKeys = ["popover", "sheet"];
+  const popoverLayoutSrc = uSize?.popover;
+  if (!isPlain(popoverLayoutSrc)) {
+    console.error(
+      "Expected resolved size.popover.* (from popover.sizes in components/popover/popover.json)"
+    );
+    process.exit(1);
+  }
+  const popoverLayoutKeys = ["gap", "borderRadius", "minWidth", "maxWidth"];
+  const popoverLayout = {};
+  for (const key of popoverLayoutKeys) {
+    if (typeof popoverLayoutSrc[key] !== "string") {
+      console.error(`Expected size.popover.${key} to be a string`);
+      process.exit(1);
+    }
+    popoverLayout[key] = popoverLayoutSrc[key];
+  }
+
+  const actionMenuLayoutSrc = uSize?.actionMenu;
+  if (!isPlain(actionMenuLayoutSrc)) {
+    console.error(
+      "Expected resolved size.actionMenu.* (from action-menu.sizes in components/action-menu/action-menu.json)"
+    );
+    process.exit(1);
+  }
+  const actionMenuItemKeys = [
+    "minHeight",
+    "paddingInline",
+    "paddingBlock",
+    "borderRadius",
+    "slotGap",
+    "subtextGap",
+    "iconSize",
+    "subtextIconSize",
+  ];
+  const actionMenuListKeys = ["paddingInline", "paddingBlock", "itemGap", "sectionGap"];
+  const actionMenuSectionKeys = ["paddingInline", "paddingBlock"];
+  const actionMenuHeaderKeys = ["paddingInline", "paddingBlockStart", "paddingBlockEnd"];
+  const actionMenuFooterKeys = ["padding"];
+  const pickLayoutBlock = (block, keys, label) => {
+    if (!isPlain(block)) {
+      console.error(`Expected ${label}`);
+      process.exit(1);
+    }
+    const out = {};
+    for (const key of keys) {
+      if (typeof block[key] !== "string") {
+        console.error(`Expected ${label}.${key} to be a string`);
+        process.exit(1);
+      }
+      out[key] = block[key];
+    }
+    return out;
+  };
+  const actionMenuSizes = {
+    item: pickLayoutBlock(actionMenuLayoutSrc.item, actionMenuItemKeys, "size.actionMenu.item"),
+    list: pickLayoutBlock(actionMenuLayoutSrc.list, actionMenuListKeys, "size.actionMenu.list"),
+    section: pickLayoutBlock(
+      actionMenuLayoutSrc.section,
+      actionMenuSectionKeys,
+      "size.actionMenu.section"
+    ),
+    header: pickLayoutBlock(
+      actionMenuLayoutSrc.header,
+      actionMenuHeaderKeys,
+      "size.actionMenu.header"
+    ),
+    footer: pickLayoutBlock(actionMenuLayoutSrc.footer, actionMenuFooterKeys, "size.actionMenu.footer"),
+  };
+
+  const shadowKeys = ["popover", "popoverElevated", "sheet"];
   if (!isPlain(uShadows) || !shadowKeys.every((k) => typeof uShadows[k] === "string")) {
     console.error(
       `Expected resolved shadows.{${shadowKeys.join(",")}} (from tokens/functional/shadows/shadows.json)`
@@ -1190,6 +1333,8 @@ function main() {
       breadcrumb: breadcrumbSizes,
       siteHeader: siteHeaderSizes,
       sheet: sheetSizes,
+      popover: popoverLayout,
+      actionMenu: actionMenuSizes,
       resizeHandle: resizeHandleSizes,
       zIndex,
     },
@@ -1206,6 +1351,8 @@ function main() {
     siteHeaderColors,
     overlayColors,
     sheetColors,
+    popoverColors,
+    actionMenuColors,
     shadows,
     globalColors,
   };

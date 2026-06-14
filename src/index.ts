@@ -54,6 +54,18 @@ export type {
   ResizeHandleEdge,
 } from "./components/core/ResizeHandle";
 
+export { Popover } from "./components/core/Popover";
+export type { PopoverProps, PopoverPlacement, PopoverElevation } from "./components/core/Popover";
+
+export { ActionMenu, ActionMenuItem, ActionMenuList } from "./components/core/ActionMenu";
+export type {
+  ActionMenuProps,
+  ActionMenuItemProps,
+  ActionMenuListProps,
+  ActionMenuListRegionProps,
+  ActionMenuListSectionProps,
+} from "./components/core/ActionMenu";
+
 // ── Data components ───────────────────────────────────────────────────────────
 export { CodeSnippet } from "./components/CodeSnippet";
 export type { CodeSnippetProps } from "./components/CodeSnippet";
@@ -107,6 +119,17 @@ export type {
   SheetFunctionalColors,
   SheetSizesTokens,
   SheetWidthStopTokens,
+  PopoverFunctionalColors,
+  PopoverLayoutTokens,
+  ActionMenuFunctionalColors,
+  ActionMenuItemBgColors,
+  ActionMenuItemFgColors,
+  ActionMenuItemSizeTokens,
+  ActionMenuListSizeTokens,
+  ActionMenuSectionSizeTokens,
+  ActionMenuHeaderSizeTokens,
+  ActionMenuFooterSizeTokens,
+  ActionMenuSizesTokens,
   ResizeHandleSizesTokens,
   ShadowTokens,
   SiteHeaderFunctionalColors,

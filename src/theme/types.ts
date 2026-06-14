@@ -242,6 +242,81 @@ export interface SheetFunctionalColors {
   background: string;
 }
 
+export interface PopoverFunctionalColors {
+  background: string;
+}
+
+export interface ActionMenuItemBgColors {
+  rest: string;
+  hover: string;
+  pressed: string;
+  disabled: string;
+  selected: {
+    rest: string;
+    pressed: string;
+  };
+}
+
+export interface ActionMenuItemFgColors {
+  rest: string;
+  pressed: string;
+  disabled: string;
+  selected: string;
+  subtext: string;
+}
+
+export interface ActionMenuFunctionalColors {
+  item: {
+    bgColor: ActionMenuItemBgColors;
+    fgColor: ActionMenuItemFgColors;
+  };
+  section: { fgColor: string };
+  divider: { fgColor: string };
+}
+
+export interface ActionMenuItemSizeTokens {
+  minHeight: string;
+  paddingInline: string;
+  paddingBlock: string;
+  borderRadius: string;
+  slotGap: string;
+  subtextGap: string;
+  iconSize: string;
+  subtextIconSize: string;
+}
+
+export interface ActionMenuListSizeTokens {
+  paddingInline: string;
+  paddingBlock: string;
+  /** Gap between rows within a section (and bare items in the list). */
+  itemGap: string;
+  /** Extra spacing between section groups — applied in addition to `itemGap`. */
+  sectionGap: string;
+}
+
+export interface ActionMenuSectionSizeTokens {
+  paddingInline: string;
+  paddingBlock: string;
+}
+
+export interface ActionMenuHeaderSizeTokens {
+  paddingInline: string;
+  paddingBlockStart: string;
+  paddingBlockEnd: string;
+}
+
+export interface ActionMenuFooterSizeTokens {
+  padding: string;
+}
+
+export interface ActionMenuSizesTokens {
+  item: ActionMenuItemSizeTokens;
+  list: ActionMenuListSizeTokens;
+  section: ActionMenuSectionSizeTokens;
+  header: ActionMenuHeaderSizeTokens;
+  footer: ActionMenuFooterSizeTokens;
+}
+
 export type PillSurface = "filled" | "bordered";
 
 /** Matches Figma Pill intensity property. */
@@ -280,6 +355,8 @@ export interface FunctionalColors {
   siteHeader: SiteHeaderFunctionalColors;
   overlay: OverlayFunctionalColors;
   sheet: SheetFunctionalColors;
+  popover: PopoverFunctionalColors;
+  actionMenu: ActionMenuFunctionalColors;
   pill: PillFunctionalColors;
   tooltip: TooltipSurfaceColors;
 }
@@ -464,6 +541,14 @@ export interface ControlSizesTokens {
   large: ControlSizeStopTokens;
 }
 
+export interface PopoverLayoutTokens {
+  /** Offset between trigger and panel surface */
+  gap: string;
+  borderRadius: string;
+  minWidth: string;
+  maxWidth: string;
+}
+
 export interface TooltipLayoutTokens {
   /** Offset between trigger and tooltip surface */
   gap: string;
@@ -547,6 +632,7 @@ export interface ResizeHandleSizesTokens {
 
 export interface ShadowTokens {
   popover: string;
+  popoverElevated: string;
   sheet: string;
 }
 
@@ -563,6 +649,8 @@ export interface Sizes {
   breadcrumb: BreadcrumbSizesTokens;
   siteHeader: SiteHeaderSizesTokens;
   sheet: SheetSizesTokens;
+  popover: PopoverLayoutTokens;
+  actionMenu: ActionMenuSizesTokens;
   resizeHandle: ResizeHandleSizesTokens;
   zIndex: ZIndexTokens;
 }

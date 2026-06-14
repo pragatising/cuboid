@@ -51,3 +51,15 @@ export type {
   ResizeHandleOrientation,
   ResizeHandleEdge,
 } from "./ResizeHandle";
+
+export { Popover } from "./Popover";
+export type { PopoverProps, PopoverPlacement, PopoverElevation } from "./Popover";
+
+export { ActionMenu, ActionMenuItem, ActionMenuList } from "./ActionMenu";
+export type {
+  ActionMenuProps,
+  ActionMenuItemProps,
+  ActionMenuListProps,
+  ActionMenuListRegionProps,
+  ActionMenuListSectionProps,
+} from "./ActionMenu";
