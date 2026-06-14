@@ -18,6 +18,21 @@ export type { TooltipProps, TooltipPlacement } from "./components/core/Tooltip";
 export { Icon } from "./components/core/Icon";
 export type { IconProps, IconSize } from "./components/core/Icon";
 
+export {
+  ArrowBackIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  CloseIcon,
+  ExpandMoreIcon,
+  HomeIcon,
+  MenuIcon,
+  OpenInNewIcon,
+  SearchIcon,
+  SettingsIcon,
+  iconManifest,
+} from "./icons";
+export type { IconName, IconManifestEntry } from "./icons";
+
 export { Link } from "./components/core/Link";
 export type { LinkProps, LinkVariant } from "./components/core/Link";
 
@@ -65,6 +80,19 @@ export type {
   ActionMenuListRegionProps,
   ActionMenuListSectionProps,
 } from "./components/core/ActionMenu";
+
+export { Sidebar, useSidebar } from "./components/core/Sidebar";
+export type {
+  SidebarProps,
+  SidebarEdge,
+  SidebarRegionProps,
+  SidebarToggleProps,
+  SidebarWidth,
+  SidebarWidthStop,
+} from "./components/core/Sidebar";
+
+export { SplitLayout } from "./components/core/SplitLayout";
+export type { SplitLayoutProps, SplitLayoutMainProps } from "./components/core/SplitLayout";
 
 // ── Data components ───────────────────────────────────────────────────────────
 export { CodeSnippet } from "./components/CodeSnippet";

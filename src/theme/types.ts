@@ -242,6 +242,11 @@ export interface SheetFunctionalColors {
   background: string;
 }
 
+export interface SidebarFunctionalColors {
+  background: string;
+  border: string;
+}
+
 export interface PopoverFunctionalColors {
   background: string;
 }
@@ -355,6 +360,7 @@ export interface FunctionalColors {
   siteHeader: SiteHeaderFunctionalColors;
   overlay: OverlayFunctionalColors;
   sheet: SheetFunctionalColors;
+  sidebar: SidebarFunctionalColors;
   popover: PopoverFunctionalColors;
   actionMenu: ActionMenuFunctionalColors;
   pill: PillFunctionalColors;
@@ -626,6 +632,15 @@ export interface SheetSizesTokens {
   bottomCornerRadius: string;
 }
 
+export interface SidebarSizesTokens {
+  width: SheetWidthStopTokens;
+  widthMinimized: string;
+  minWidth: string;
+  maxWidth: string;
+  padding: string;
+  footerPadding: string;
+}
+
 export interface ResizeHandleSizesTokens {
   hitArea: string;
 }
@@ -649,6 +664,7 @@ export interface Sizes {
   breadcrumb: BreadcrumbSizesTokens;
   siteHeader: SiteHeaderSizesTokens;
   sheet: SheetSizesTokens;
+  sidebar: SidebarSizesTokens;
   popover: PopoverLayoutTokens;
   actionMenu: ActionMenuSizesTokens;
   resizeHandle: ResizeHandleSizesTokens;

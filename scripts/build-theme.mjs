@@ -306,6 +306,14 @@ function main() {
         componentLayoutMerge = deepMerge(componentLayoutMerge, { actionMenu: doc.actionMenu.sizes });
       }
     }
+    if (isPlain(doc.sidebar)) {
+      if (isPlain(doc.sidebar.color)) {
+        mergedColor = deepMerge(mergedColor, { sidebar: doc.sidebar.color });
+      }
+      if (isPlain(doc.sidebar.sizes)) {
+        componentLayoutMerge = deepMerge(componentLayoutMerge, { sidebar: doc.sidebar.sizes });
+      }
+    }
   }
 
   const mergedTypography = isPlain(typographyThemeFile?.typography)
@@ -585,6 +593,22 @@ function main() {
   }
   const sheetColors = {
     background: sheetColor.background,
+  };
+
+  const sidebarColor = uColor?.sidebar;
+  if (
+    !isPlain(sidebarColor) ||
+    typeof sidebarColor.background !== "string" ||
+    typeof sidebarColor.border !== "string"
+  ) {
+    console.error(
+      "Expected resolved color.sidebar.background and color.sidebar.border (tokens/functional/components/sidebar/sidebar.json)"
+    );
+    process.exit(1);
+  }
+  const sidebarColors = {
+    background: sidebarColor.background,
+    border: sidebarColor.border,
   };
 
   const popoverColor = uColor?.popover;
@@ -1215,6 +1239,34 @@ function main() {
     sheetSizes[key] = sheetLayoutSrc[key];
   }
 
+  const sidebarLayoutSrc = uSize?.sidebar;
+  if (!isPlain(sidebarLayoutSrc)) {
+    console.error("Expected resolved size.sidebar.* (from sidebar.sizes in components/sidebar/sidebar.json)");
+    process.exit(1);
+  }
+  const sidebarWidthSrc = sidebarLayoutSrc.width;
+  const sidebarWidthStops = ["sm", "md", "lg"];
+  if (
+    !isPlain(sidebarWidthSrc) ||
+    !sidebarWidthStops.every((k) => typeof sidebarWidthSrc[k] === "string")
+  ) {
+    console.error(
+      `Expected resolved size.sidebar.width.{${sidebarWidthStops.join(",")}} (from sidebar.json)`
+    );
+    process.exit(1);
+  }
+  const sidebarScalarKeys = ["widthMinimized", "minWidth", "maxWidth", "padding", "footerPadding"];
+  const sidebarSizes = {
+    width: Object.fromEntries(sidebarWidthStops.map((k) => [k, sidebarWidthSrc[k]])),
+  };
+  for (const key of sidebarScalarKeys) {
+    if (typeof sidebarLayoutSrc[key] !== "string") {
+      console.error(`Expected size.sidebar.${key} to be a string`);
+      process.exit(1);
+    }
+    sidebarSizes[key] = sidebarLayoutSrc[key];
+  }
+
   const resizeHandleSrc = uSize?.resizeHandle;
   if (!isPlain(resizeHandleSrc) || typeof resizeHandleSrc.hitArea !== "string") {
     console.error(
@@ -1333,6 +1385,7 @@ function main() {
       breadcrumb: breadcrumbSizes,
       siteHeader: siteHeaderSizes,
       sheet: sheetSizes,
+      sidebar: sidebarSizes,
       popover: popoverLayout,
       actionMenu: actionMenuSizes,
       resizeHandle: resizeHandleSizes,
@@ -1351,6 +1404,7 @@ function main() {
     siteHeaderColors,
     overlayColors,
     sheetColors,
+    sidebarColors,
     popoverColors,
     actionMenuColors,
     shadows,

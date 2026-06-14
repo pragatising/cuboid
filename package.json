@@ -30,6 +30,10 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "type-check": "tsc --noEmit",
+    "check:icons": "node scripts/check-icon-imports.mjs",
+    "icons:extract": "node scripts/extract-figma-icons.mjs",
+    "icons:sync": "node scripts/sync-icons.mjs",
+    "icons": "npm run icons:extract && npm run icons:sync && npm run check:icons",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "tokens:functional-colors": "node scripts/flatten-functional-colors.mjs",
@@ -60,5 +64,8 @@
     "typescript": "^5.5.3",
     "vite": "^5.4.1",
     "vite-plugin-dts": "^4.0.2"
+  },
+  "dependencies": {
+    "@material-symbols-svg/react": "^0.9.0"
   }
 }

@@ -190,6 +190,24 @@ function main() {
     set(`sheet-bottomCornerRadius`, sheetSizes.bottomCornerRadius);
   }
 
+  const sidebarColors = t.sidebarColors;
+  if (sidebarColors) {
+    set(`sidebar-bg`, sidebarColors.background);
+    set(`sidebar-border`, sidebarColors.border);
+  }
+
+  const sidebarSizes = t.sizes?.sidebar;
+  if (sidebarSizes) {
+    set(`sidebar-width-sm`, sidebarSizes.width?.sm);
+    set(`sidebar-width-md`, sidebarSizes.width?.md);
+    set(`sidebar-width-lg`, sidebarSizes.width?.lg);
+    set(`sidebar-widthMinimized`, sidebarSizes.widthMinimized);
+    set(`sidebar-minWidth`, sidebarSizes.minWidth);
+    set(`sidebar-maxWidth`, sidebarSizes.maxWidth);
+    set(`sidebar-padding`, sidebarSizes.padding);
+    set(`sidebar-footerPadding`, sidebarSizes.footerPadding);
+  }
+
   const resizeHandleSizes = t.sizes?.resizeHandle;
   if (resizeHandleSizes) {
     set(`resizeHandle-hitArea`, resizeHandleSizes.hitArea);

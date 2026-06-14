@@ -49,12 +49,12 @@
         "extraSmall": {
           "size": { "value": "{size.size.control.extraSmall.size}" },
           "borderRadius": { "value": "{size.size.control.extraSmall.borderRadius}" },
-          "icon": { "value": "{size.space.16}" }
+          "icon": { "value": "{size.space.18}" }
         },
         "small": {
           "size": { "value": "{size.size.control.small.size}" },
           "borderRadius": { "value": "{size.size.control.small.borderRadius}" },
-          "icon": { "value": "{size.space.16}" }
+          "icon": { "value": "{size.space.20}" }
         },
         "medium": {
           "size": { "value": "{size.size.control.medium.size}" },

@@ -1,4 +1,5 @@
 import React from "react";
+import { CheckIcon, ChevronRightIcon } from "../../../icons/material";
 import { useTheme } from "../../../theme/ThemeContext";
 import type { CubeTheme } from "../../../theme/types";
 import { actionMenuCssVars } from "./actionMenuCssVars";
@@ -14,6 +15,8 @@ export interface ActionMenuItemProps
   /** @default true when `selected` */
   showSelectionCheck?: boolean;
   leadingIcon?: React.ReactNode;
+  /** Icon-only row — hides the label; use `aria-label` or string `children` for the accessible name. */
+  iconOnly?: boolean;
   /** Renders a trailing chevron for submenu affordance. */
   hasSubmenu?: boolean;
   trailingIcon?: React.ReactNode;
@@ -31,50 +34,6 @@ function decorateIcon(icon: React.ReactNode, className: string) {
   });
 }
 
-function SelectionCheckIcon() {
-  return (
-    <svg
-      className={styles.SelectionCheck}
-      width="20"
-      height="20"
-      viewBox="0 0 20 20"
-      fill="none"
-      aria-hidden
-      focusable={false}
-    >
-      <path
-        d="M6.5 10.2 8.8 12.5 13.5 7.5"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function SubmenuChevronIcon() {
-  return (
-    <svg
-      className={styles.SubmenuChevron}
-      width="20"
-      height="20"
-      viewBox="0 0 20 20"
-      fill="none"
-      aria-hidden
-      focusable={false}
-    >
-      <path
-        d="M8 6.5 12 10l-4 3.5"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 /** Single row in an `ActionMenuList` — maps to Figma `ActionMenuItem`. */
 export function ActionMenuItem({
   children,
@@ -83,6 +42,7 @@ export function ActionMenuItem({
   selected = false,
   showSelectionCheck,
   leadingIcon,
+  iconOnly = false,
   hasSubmenu = false,
   trailingIcon,
   keepOpenOnSelect = false,
@@ -90,15 +50,21 @@ export function ActionMenuItem({
   className,
   disabled,
   type = "button",
+  "aria-label": ariaLabel,
   ...rest
 }: ActionMenuItemProps) {
   const tokens = useTheme(theme);
   const showCheck = selected && showSelectionCheck !== false;
 
+  const resolvedAriaLabel = iconOnly
+    ? (ariaLabel ?? (typeof children === "string" ? children : undefined))
+    : ariaLabel;
+
   const classNames = [
     styles.ActionMenuItem,
     selected ? styles["ActionMenuItem--selected"] : null,
     subtext ? styles["ActionMenuItem--withSubtext"] : null,
+    iconOnly ? styles["ActionMenuItem--iconOnly"] : null,
     className,
   ]
     .filter(Boolean)
@@ -115,6 +81,7 @@ export function ActionMenuItem({
       disabled={disabled}
       aria-disabled={disabled || undefined}
       aria-checked={selected || undefined}
+      aria-label={resolvedAriaLabel}
       data-keep-open={keepOpenOnSelect ? "true" : undefined}
       {...rest}
     >
@@ -123,19 +90,21 @@ export function ActionMenuItem({
           <span className={styles.IconSlot}>{decorateIcon(leadingIcon, styles.IconSlot)}</span>
         ) : null}
 
-        <span className={styles.Content}>
-          <span className={styles.Label}>{children}</span>
-          {subtext ? (
-            <span className={styles.SubtextRow}>
-              {subtextIcon ? (
-                <span className={styles.SubtextIconSlot}>
-                  {decorateIcon(subtextIcon, styles.SubtextIconSlot)}
-                </span>
-              ) : null}
-              <span className={styles.Subtext}>{subtext}</span>
-            </span>
-          ) : null}
-        </span>
+        {!iconOnly ? (
+          <span className={styles.Content}>
+            <span className={styles.Label}>{children}</span>
+            {subtext ? (
+              <span className={styles.SubtextRow}>
+                {subtextIcon ? (
+                  <span className={styles.SubtextIconSlot}>
+                    {decorateIcon(subtextIcon, styles.SubtextIconSlot)}
+                  </span>
+                ) : null}
+                <span className={styles.Subtext}>{subtext}</span>
+              </span>
+            ) : null}
+          </span>
+        ) : null}
 
         {trailingIcon ? (
           <span className={styles.TrailingSlot}>
@@ -145,13 +114,13 @@ export function ActionMenuItem({
 
         {hasSubmenu ? (
           <span className={styles.TrailingSlot}>
-            <SubmenuChevronIcon />
+            <ChevronRightIcon />
           </span>
         ) : null}
 
         {showCheck ? (
           <span className={styles.TrailingSlot}>
-            <SelectionCheckIcon />
+            <CheckIcon />
           </span>
         ) : null}
       </span>

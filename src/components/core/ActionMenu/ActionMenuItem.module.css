@@ -82,6 +82,17 @@
   min-height: auto;
 }
 
+.ActionMenuItem--iconOnly {
+  width: auto;
+}
+
+.ActionMenuItem--iconOnly .ActionMenuItemInner {
+  justify-content: center;
+  gap: 0;
+  width: var(--cube-actionMenu-item-min-height);
+  padding-inline: var(--cube-actionMenu-item-padding-block);
+}
+
 .IconSlot,
 .TrailingSlot {
   display: inline-flex;
@@ -141,7 +152,3 @@
   white-space: nowrap;
 }
 
-.SelectionCheck,
-.SubmenuChevron {
-  display: block;
-}

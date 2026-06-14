@@ -1,28 +1,11 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Title, Primary, Controls, Subtitle } from "@storybook/blocks";
+import { ArrowBackIcon, MenuIcon, SearchIcon } from "../../../icons/material";
 import { Button } from "../Button";
 import { Breadcrumbs } from "../Breadcrumb";
 import { IconButton } from "../IconButton";
 import { SiteHeader, SiteHeaderDivider } from "./SiteHeader";
-
-const MenuIcon = () => (
-  <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden focusable={false}>
-    <path d="M2 4h12v1.5H2V4Zm0 3.25h12v1.5H2V7.25Zm0 3.25h12V12H2v-1.5Z" />
-  </svg>
-);
-
-const BackIcon = () => (
-  <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden focusable={false}>
-    <path d="M7.78 3.22a.75.75 0 0 1 0 1.06L4.56 7.5H13a.75.75 0 0 1 0 1.5H4.56l3.22 3.22a.75.75 0 1 1-1.06 1.06l-4.5-4.5a.75.75 0 0 1 0-1.06l4.5-4.5a.75.75 0 0 1 1.06 0Z" />
-  </svg>
-);
-
-const SearchIcon = () => (
-  <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden focusable={false}>
-    <path d="M7 2.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9ZM1 7a6 6 0 1 0 10.74 3.76l2.56 2.56a.75.75 0 1 0 1.06-1.06l-2.56-2.56A6 6 0 0 0 1 7Z" />
-  </svg>
-);
 
 const meta: Meta<typeof SiteHeader> = {
   title: "Core/SiteHeader",
@@ -76,7 +59,7 @@ const meta: Meta<typeof SiteHeader> = {
               leading={
                 <>
                   <IconButton aria-label="Go back" variant="ghost" size="sm">
-                    <BackIcon />
+                    <ArrowBackIcon />
                   </IconButton>
                   <SiteHeaderDivider />
                   <Breadcrumbs items={[{ label: "Record details" }]} />

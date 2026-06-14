@@ -19,6 +19,7 @@ const breadcrumbColors = themeGenerated.breadcrumbColors;
 const siteHeaderColors = themeGenerated.siteHeaderColors;
 const overlayColors = themeGenerated.overlayColors;
 const sheetColors = themeGenerated.sheetColors;
+const sidebarColors = themeGenerated.sidebarColors;
 const popoverColors = themeGenerated.popoverColors;
 const actionMenuColors = themeGenerated.actionMenuColors;
 const pillColors = themeGenerated.pillColors;
@@ -60,6 +61,8 @@ export const defaultTheme: ThemeTokens = {
       overlay: overlayColors,
 
       sheet: sheetColors,
+
+      sidebar: sidebarColors,
 
       popover: popoverColors,
 

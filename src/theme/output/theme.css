@@ -282,7 +282,7 @@
   --cube-control-small-paddingInline-spacious: 1.5rem;
   --cube-control-small-size: 1.75rem;
   --cube-iconButton-extra-small-borderRadius: 0.375rem;
-  --cube-iconButton-extra-small-icon: 1rem;
+  --cube-iconButton-extra-small-icon: 1.125rem;
   --cube-iconButton-extra-small-size: 1.5rem;
   --cube-iconButton-ghost-selected-bg-disabled: #F4F4F2;
   --cube-iconButton-ghost-selected-bg-hover: #CBDEFF;
@@ -339,7 +339,7 @@
   --cube-iconButton-outlined-unselected-fg-pressed: #474746;
   --cube-iconButton-outlined-unselected-fg-rest: #474746;
   --cube-iconButton-small-borderRadius: 0.375rem;
-  --cube-iconButton-small-icon: 1rem;
+  --cube-iconButton-small-icon: 1.25rem;
   --cube-iconButton-small-size: 1.75rem;
   --cube-link-inline-fg-hover: #ABA9A5;
   --cube-link-inline-fg-rest: #525252;
@@ -950,6 +950,16 @@
   --cube-sheet-width-lg: 35rem;
   --cube-sheet-width-md: 25rem;
   --cube-sheet-width-sm: 20rem;
+  --cube-sidebar-bg: #FFFFFF;
+  --cube-sidebar-border: #EFEEEA;
+  --cube-sidebar-footerPadding: 0.5rem;
+  --cube-sidebar-maxWidth: 30rem;
+  --cube-sidebar-minWidth: 12.5rem;
+  --cube-sidebar-padding: 0.5rem;
+  --cube-sidebar-width-lg: 20rem;
+  --cube-sidebar-width-md: 17rem;
+  --cube-sidebar-width-sm: 15rem;
+  --cube-sidebar-widthMinimized: 5.6rem;
   --cube-siteHeader-bg: #FFFFFF;
   --cube-siteHeader-border: #ffffff00;
   --cube-siteHeader-divider-fg: #ABA9A5;
