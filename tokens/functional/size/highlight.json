@@ -1,0 +1,7 @@
+{
+  "highlight": {
+    "paddingInline": { "value": "{size.space.2}" },
+    "paddingBlock": { "value": "0" },
+    "borderRadius": { "value": "{size.space.2}" }
+  }
+}

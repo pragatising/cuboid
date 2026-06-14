@@ -1,0 +1,7 @@
+.Container {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--container-maxWidth);
+  margin-inline: var(--container-marginInline);
+  padding-inline: var(--container-paddingInline);
+}

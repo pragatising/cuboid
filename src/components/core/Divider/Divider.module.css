@@ -1,0 +1,14 @@
+.Divider {
+  box-sizing: border-box;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.Divider--horizontal {
+  display: block;
+  width: 100%;
+  height: var(--divider-thickness);
+  background-color: var(--divider-color);
+}

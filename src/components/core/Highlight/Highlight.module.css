@@ -1,0 +1,13 @@
+.Highlight {
+  display: inline;
+  font: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  color: var(--cube-highlight-fg);
+  background-color: var(--cube-highlight-bg);
+  padding-inline: var(--cube-highlight-paddingInline);
+  padding-block: var(--cube-highlight-paddingBlock);
+  border-radius: var(--cube-highlight-borderRadius);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}

@@ -1,0 +1,34 @@
+{
+  "highlight": {
+    "color": {
+      "none": {
+        "bgColor": { "value": "{color.canvas.transparent}" },
+        "fgColor": { "value": "{color.fg.neutral.4}" }
+      },
+      "neutral": {
+        "bgColor": { "value": "{color.bg.gray.light.03}" },
+        "fgColor": { "value": "{color.fg.neutral.6}" }
+      },
+      "green": {
+        "bgColor": { "value": "{base.color.scale.green.0}" },
+        "fgColor": { "value": "{color.fg.neutral.6}" }
+      },
+      "blue": {
+        "bgColor": { "value": "{base.color.scale.blue.1}" },
+        "fgColor": { "value": "{color.fg.neutral.6}" }
+      },
+      "yellow": {
+        "bgColor": { "value": "{base.color.scale.yellow.2}" },
+        "fgColor": { "value": "{color.fg.neutral.6}" }
+      },
+      "orange": {
+        "bgColor": { "value": "{base.color.scale.orange.1}" },
+        "fgColor": { "value": "{color.fg.neutral.6}" }
+      },
+      "red": {
+        "bgColor": { "value": "{base.color.scale.red.3}" },
+        "fgColor": { "value": "{color.fg.neutral.6}" }
+      }
+    }
+  }
+}

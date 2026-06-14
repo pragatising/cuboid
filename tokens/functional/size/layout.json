@@ -1,0 +1,8 @@
+{
+  "layout": {
+    "pageMaxWidth": { "value": "56rem" },
+    "contentMaxWidth": { "value": "40rem" },
+    "sectionLabelWidth": { "value": "clamp(6.5rem, 25%, 10rem)" },
+    "pagePaddingInline": { "value": "{size.space.20}" }
+  }
+}
