@@ -1,0 +1,61 @@
+{
+  "actionMenu": {
+    "color": {
+      "item": {
+        "bgColor": {
+          "rest": { "value": "{color.canvas.default}" },
+          "hover": { "value": "{color.bg.gray.light.02}" },
+          "pressed": { "value": "{color.bg.gray.light.03}" },
+          "disabled": { "value": "{color.bg.gray.light.03}" },
+          "selected": {
+            "rest": { "value": "{color.bg.gray.light.03}" },
+            "pressed": { "value": "{color.bg.gray.light.04}" }
+          }
+        },
+        "fgColor": {
+          "rest": { "value": "{color.text.muted}" },
+          "pressed": { "value": "{color.text.contrast}" },
+          "disabled": { "value": "{color.text.subtle}" },
+          "selected": { "value": "{color.text.contrast}" },
+          "subtext": { "value": "{color.text.muted}" }
+        }
+      },
+      "section": {
+        "fgColor": { "value": "{color.text.contrast}" }
+      },
+      "divider": {
+        "fgColor": { "value": "{color.bg.gray.light.04}" }
+      }
+    },
+    "sizes": {
+      "item": {
+        "minHeight": { "value": "30px" },
+        "paddingInline": { "value": "{size.space.12}" },
+        "paddingBlock": { "value": "{size.space.5}" },
+        "borderRadius": { "value": "{size.space.6}" },
+        "slotGap": { "value": "{size.space.16}" },
+        "subtextGap": { "value": "{size.space.4}" },
+        "iconSize": { "value": "{size.space.20}" },
+        "subtextIconSize": { "value": "{size.space.16}" }
+      },
+      "list": {
+        "paddingInline": { "value": "{size.space.4}" },
+        "paddingBlock": { "value": "{size.space.8}" },
+        "itemGap": { "value": "{size.space.4}" },
+        "sectionGap": { "value": "{size.space.8}" }
+      },
+      "section": {
+        "paddingInline": { "value": "{size.space.12}" },
+        "paddingBlock": { "value": "{size.space.2}" }
+      },
+      "header": {
+        "paddingInline": { "value": "{size.space.16}" },
+        "paddingBlockStart": { "value": "{size.space.12}" },
+        "paddingBlockEnd": { "value": "{size.space.16}" }
+      },
+      "footer": {
+        "padding": { "value": "{size.space.16}" }
+      }
+    }
+  }
+}

@@ -1,0 +1,66 @@
+.ActionMenuList {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.ListItems {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cube-actionMenu-list-item-gap);
+  padding: var(--cube-actionMenu-list-padding-block) var(--cube-actionMenu-list-padding-inline);
+}
+
+.Header {
+  padding: var(--cube-actionMenu-header-padding-block-start)
+    var(--cube-actionMenu-header-padding-inline)
+    var(--cube-actionMenu-header-padding-block-end);
+}
+
+.HeaderDivider {
+  height: 1px;
+  margin-top: var(--cube-actionMenu-header-padding-block-end);
+  background-color: var(--cube-actionMenu-divider-fg);
+}
+
+.Footer {
+  padding: var(--cube-actionMenu-footer-padding);
+  border-top: 1px solid var(--cube-actionMenu-divider-fg);
+}
+
+.Section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cube-actionMenu-list-item-gap);
+}
+
+/*
+ * Section spacing: `ListItems` gap handles itemGap between all children.
+ * Add (sectionGap - itemGap) before each section that follows another block
+ * so section groups breathe more than rows within a section.
+ * Future: `ActionMenuList.Divider` can replace/add to this between groups.
+ */
+.ListItems > * + .Section {
+  margin-block-start: calc(
+    var(--cube-actionMenu-list-section-gap) - var(--cube-actionMenu-list-item-gap)
+  );
+}
+
+.SectionLabel {
+  padding: var(--cube-actionMenu-section-padding-block)
+    var(--cube-actionMenu-section-padding-inline);
+  font-family: var(--cube-typography-fontFamily-base);
+  font-size: var(--cube-typography-text-caption-fontSize);
+  font-weight: 600;
+  line-height: var(--cube-typography-text-caption-lineHeight);
+  color: var(--cube-actionMenu-section-fg);
+  white-space: nowrap;
+}
+
+.SectionItems {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cube-actionMenu-list-item-gap);
+}

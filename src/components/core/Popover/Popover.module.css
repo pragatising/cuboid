@@ -1,0 +1,25 @@
+.Root {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.Panel {
+  position: fixed;
+  z-index: var(--cube-z-index-popover, 700);
+  box-sizing: border-box;
+  margin: 0;
+  min-width: var(--cube-popover-minWidth);
+  max-width: var(--cube-popover-maxWidth);
+  background-color: var(--cube-popover-bg);
+  border-radius: var(--cube-popover-borderRadius);
+  box-shadow: var(--cube-popover-shadow);
+  overflow: hidden;
+}
+
+.Panel--elevation-3x {
+  box-shadow: var(--cube-popover-shadow, var(--cube-shadow-popover));
+}
+
+.Panel--elevation-4x {
+  box-shadow: var(--cube-popover-shadow, var(--cube-shadow-popoverElevated));
+}
