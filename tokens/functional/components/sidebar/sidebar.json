@@ -1,0 +1,20 @@
+{
+  "sidebar": {
+    "color": {
+      "background": { "value": "{color.canvas.default}" },
+      "border": { "value": "{color.border.gray.1}" }
+    },
+    "sizes": {
+      "width": {
+        "sm": { "value": "240px" },
+        "md": { "value": "272px" },
+        "lg": { "value": "320px" }
+      },
+      "widthMinimized": { "value": "5.6rem" },
+      "minWidth": { "value": "200px" },
+      "maxWidth": { "value": "480px" },
+      "padding": { "value": "{size.space.8}" },
+      "footerPadding": { "value": "{size.space.8}" }
+    }
+  }
+}

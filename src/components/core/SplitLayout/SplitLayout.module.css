@@ -1,0 +1,12 @@
+.SplitLayout {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.SplitLayout__main {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+}

@@ -1,0 +1,84 @@
+.Sidebar {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  background-color: var(--cube-sidebar-bg);
+  transition: width 0.2s ease;
+}
+
+.Sidebar--left {
+  border-inline-end: 1px solid var(--cube-sidebar-border);
+}
+
+.Sidebar--right {
+  border-inline-start: 1px solid var(--cube-sidebar-border);
+}
+
+.Sidebar--resizable {
+  transition: none;
+}
+
+.Sidebar__header {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--cube-sidebar-padding);
+  padding: var(--cube-sidebar-padding);
+}
+
+.Sidebar[data-collapsed="true"] .Sidebar__header {
+  justify-content: center;
+}
+
+.Sidebar__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  padding: 0 var(--cube-sidebar-padding);
+}
+
+/** Icon-only rail — center direct children; apps hide labels via useSidebar(). */
+.Sidebar[data-collapsed="true"] .Sidebar__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-inline: var(--cube-sidebar-padding);
+}
+
+.Sidebar[data-collapsed="true"] .Sidebar__body > * {
+  width: fit-content;
+  max-width: 100%;
+}
+
+.Sidebar__footer {
+  flex-shrink: 0;
+  padding: var(--cube-sidebar-footer-padding);
+}
+
+.Sidebar__toggle {
+  flex-shrink: 0;
+}
+
+.Sidebar__toggle--floating {
+  position: absolute;
+  top: var(--cube-sidebar-padding);
+  inset-inline-end: var(--cube-sidebar-padding);
+  z-index: 1;
+}
+
+.Sidebar[data-collapsed="true"] .Sidebar__toggle--floating {
+  inset-inline-end: auto;
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+}
+
+.Sidebar[data-collapsed="true"] .Sidebar__footer {
+  display: flex;
+  justify-content: center;
+  padding-inline: var(--cube-sidebar-padding);
+}

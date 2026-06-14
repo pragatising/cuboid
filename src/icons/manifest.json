@@ -1,0 +1,2486 @@
+{
+  "account": {
+    "source": "material-rounded",
+    "export": "AccountIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "account-circle",
+    "filled": false
+  },
+  "account_balance": {
+    "source": "material-rounded",
+    "export": "AccountBalanceIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "account-balance",
+    "filled": false
+  },
+  "account-fill": {
+    "source": "material-rounded",
+    "export": "AccountIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "account-circle",
+    "filled": true
+  },
+  "acute": {
+    "source": "material-rounded",
+    "export": "AcuteIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "acute",
+    "filled": false
+  },
+  "add-tag": {
+    "source": "material-rounded",
+    "export": "AddTagIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "sell",
+    "filled": false
+  },
+  "add-tag-fill": {
+    "source": "material-rounded",
+    "export": "AddTagIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "sell",
+    "filled": true
+  },
+  "adjust": {
+    "source": "material-rounded",
+    "export": "AdjustIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "adjust",
+    "filled": false
+  },
+  "airport_shuttle": {
+    "source": "material-rounded",
+    "export": "AirportShuttleIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "airport-shuttle",
+    "filled": false
+  },
+  "alt_route": {
+    "source": "material-rounded",
+    "export": "AltRouteIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "alt-route",
+    "filled": false
+  },
+  "app_spark": {
+    "source": "material-rounded",
+    "export": "AppSparkIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "apps",
+    "filled": false
+  },
+  "application": {
+    "source": "material-rounded",
+    "export": "ApplicationIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "widgets",
+    "filled": false
+  },
+  "application-fill": {
+    "source": "material-rounded",
+    "export": "ApplicationIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "widgets",
+    "filled": true
+  },
+  "apps": {
+    "source": "material-rounded",
+    "export": "AppsIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "apps",
+    "filled": false
+  },
+  "apps-user management": {
+    "source": "material-rounded",
+    "export": "AppsUserManagementIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "manage-accounts",
+    "filled": false
+  },
+  "apps-user management-fill": {
+    "source": "material-rounded",
+    "export": "AppsUserManagementIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "manage-accounts",
+    "filled": true
+  },
+  "arrow_split": {
+    "source": "material-rounded",
+    "export": "ArrowSplitIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "call-split",
+    "filled": false
+  },
+  "arrow-backward": {
+    "source": "material-rounded",
+    "export": "ArrowBackwardIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "arrow-back",
+    "filled": false
+  },
+  "arrow-circle-up": {
+    "source": "material-rounded",
+    "export": "ArrowCircleUpIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "arrow-circle-up",
+    "filled": false
+  },
+  "arrow-downward": {
+    "source": "material-rounded",
+    "export": "ArrowDownwardIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "arrow-downward",
+    "filled": false
+  },
+  "arrow-drop-down": {
+    "source": "material-rounded",
+    "export": "ArrowDropDownIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "arrow-drop-down",
+    "filled": false
+  },
+  "arrow-drop-left": {
+    "source": "material-rounded",
+    "export": "ArrowDropLeftIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "arrow-left",
+    "filled": false
+  },
+  "arrow-drop-right": {
+    "source": "material-rounded",
+    "export": "ArrowDropRightIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "arrow-right",
+    "filled": false
+  },
+  "arrow-drop-up": {
+    "source": "material-rounded",
+    "export": "ArrowDropUpIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "arrow-drop-up",
+    "filled": false
+  },
+  "arrow-forward": {
+    "source": "material-rounded",
+    "export": "ArrowForwardIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "arrow-forward",
+    "filled": false
+  },
+  "arrow-upward": {
+    "source": "material-rounded",
+    "export": "ArrowUpwardIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "arrow-upward",
+    "filled": false
+  },
+  "article": {
+    "source": "material-rounded",
+    "export": "ArticleIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "article",
+    "filled": false
+  },
+  "article_person": {
+    "source": "material-rounded",
+    "export": "ArticlePersonIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "article-person",
+    "filled": false
+  },
+  "article_shortcut": {
+    "source": "material-rounded",
+    "export": "ArticleShortcutIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "article-shortcut",
+    "filled": false
+  },
+  "attachment": {
+    "source": "material-rounded",
+    "export": "AttachmentIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "attachment",
+    "filled": false
+  },
+  "bookmark": {
+    "source": "material-rounded",
+    "export": "BookmarkIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "bookmark",
+    "filled": false
+  },
+  "bookmark-fill": {
+    "source": "material-rounded",
+    "export": "BookmarkIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "bookmark",
+    "filled": true
+  },
+  "border_all": {
+    "source": "material-rounded",
+    "export": "BorderAllIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "border-all",
+    "filled": false
+  },
+  "brand-awareness": {
+    "source": "material-rounded",
+    "export": "BrandAwarenessIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "brand-awareness",
+    "filled": false
+  },
+  "brightness": {
+    "source": "material-rounded",
+    "export": "BrightnessIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "brightness-medium",
+    "filled": false
+  },
+  "bug-report": {
+    "source": "material-rounded",
+    "export": "BugReportIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "bug-report",
+    "filled": false
+  },
+  "cake": {
+    "source": "material-rounded",
+    "export": "CakeIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "cake",
+    "filled": false
+  },
+  "calendar": {
+    "source": "material-rounded",
+    "export": "CalendarIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "calendar-month",
+    "filled": false
+  },
+  "calendar-fill": {
+    "source": "material-rounded",
+    "export": "CalendarIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "calendar-month",
+    "filled": true
+  },
+  "call": {
+    "source": "material-rounded",
+    "export": "CallIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "call",
+    "filled": false
+  },
+  "camera": {
+    "source": "material-rounded",
+    "export": "CameraIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "camera",
+    "filled": false
+  },
+  "camera-fill": {
+    "source": "material-rounded",
+    "export": "CameraIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "camera",
+    "filled": true
+  },
+  "celebration": {
+    "source": "material-rounded",
+    "export": "CelebrationIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "celebration",
+    "filled": false
+  },
+  "chat": {
+    "source": "material-rounded",
+    "export": "ChatIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "chat",
+    "filled": false
+  },
+  "chat-fill": {
+    "source": "material-rounded",
+    "export": "ChatIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "chat",
+    "filled": true
+  },
+  "check": {
+    "source": "material-rounded",
+    "export": "CheckIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "check",
+    "filled": false
+  },
+  "check_circle_unread": {
+    "source": "material-rounded",
+    "export": "CheckCircleUnreadIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "mark-chat-unread",
+    "filled": false
+  },
+  "checkbook": {
+    "source": "material-rounded",
+    "export": "CheckbookIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "checkbook",
+    "filled": false
+  },
+  "chevron-down": {
+    "source": "material-rounded",
+    "export": "ChevronDownIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "keyboard-arrow-down",
+    "filled": false
+  },
+  "chevron-left": {
+    "source": "material-rounded",
+    "export": "ChevronLeftIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "chevron-left",
+    "filled": false
+  },
+  "chevron-right": {
+    "source": "material-rounded",
+    "export": "ChevronRightIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "chevron-right",
+    "filled": false
+  },
+  "chevron-up": {
+    "source": "material-rounded",
+    "export": "ChevronUpIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "keyboard-arrow-up",
+    "filled": false
+  },
+  "chips": {
+    "source": "material-rounded",
+    "export": "ChipsIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "chips",
+    "filled": false
+  },
+  "circle": {
+    "source": "material-rounded",
+    "export": "CircleIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "circle",
+    "filled": false
+  },
+  "circle_circle": {
+    "source": "material-rounded",
+    "export": "CircleCircleIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "circle",
+    "filled": false
+  },
+  "circle-add": {
+    "source": "material-rounded",
+    "export": "CircleAddIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "add-circle",
+    "filled": false
+  },
+  "circle-add-fill": {
+    "source": "material-rounded",
+    "export": "CircleAddIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "add-circle",
+    "filled": true
+  },
+  "circle-check": {
+    "source": "material-rounded",
+    "export": "CircleCheckIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "check-circle",
+    "filled": false
+  },
+  "circle-check-fill": {
+    "source": "material-rounded",
+    "export": "CircleCheckIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "check-circle",
+    "filled": true
+  },
+  "circle-denied": {
+    "source": "material-rounded",
+    "export": "CircleDeniedIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "do-not-disturb-on",
+    "filled": false
+  },
+  "circle-denied-fill": {
+    "source": "material-rounded",
+    "export": "CircleDeniedIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "do-not-disturb-on",
+    "filled": true
+  },
+  "close": {
+    "source": "material-rounded",
+    "export": "CloseIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "close",
+    "filled": false
+  },
+  "cloud_download": {
+    "source": "material-rounded",
+    "export": "CloudDownloadIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "cloud-download",
+    "filled": false
+  },
+  "code": {
+    "source": "material-rounded",
+    "export": "CodeIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "code",
+    "filled": false
+  },
+  "code-fill": {
+    "source": "material-rounded",
+    "export": "CodeIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "code",
+    "filled": true
+  },
+  "collapse": {
+    "source": "material-rounded",
+    "export": "CollapseIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "collapse-all",
+    "filled": false
+  },
+  "collapse-sheet": {
+    "source": "material-rounded",
+    "export": "CollapseSheetIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "close-fullscreen",
+    "filled": false
+  },
+  "comment": {
+    "source": "material-rounded",
+    "export": "CommentIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "comment",
+    "filled": false
+  },
+  "contract-edit": {
+    "source": "material-rounded",
+    "export": "ContractEditIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "contract-edit",
+    "filled": false
+  },
+  "convert_to_text": {
+    "source": "material-rounded",
+    "export": "ConvertToTextIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "convert-to-text",
+    "filled": false
+  },
+  "copy": {
+    "source": "material-rounded",
+    "export": "CopyIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "content-copy",
+    "filled": false
+  },
+  "copy-fill": {
+    "source": "material-rounded",
+    "export": "CopyIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "content-copy",
+    "filled": true
+  },
+  "cottage": {
+    "source": "material-rounded",
+    "export": "CottageIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "cottage",
+    "filled": false
+  },
+  "credit-card": {
+    "source": "material-rounded",
+    "export": "CreditCardIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "credit-card",
+    "filled": false
+  },
+  "credit-worthy": {
+    "source": "material-rounded",
+    "export": "CreditWorthyIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "credit-score",
+    "filled": false
+  },
+  "crop_square": {
+    "source": "material-rounded",
+    "export": "CropSquareIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "crop-square",
+    "filled": false
+  },
+  "crown": {
+    "source": "material-rounded",
+    "export": "CrownIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "crown",
+    "filled": false
+  },
+  "dangerous": {
+    "source": "material-rounded",
+    "export": "DangerousIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "dangerous",
+    "filled": false
+  },
+  "data-object": {
+    "source": "material-rounded",
+    "export": "DataObjectIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "data-object",
+    "filled": false
+  },
+  "database": {
+    "source": "material-rounded",
+    "export": "DatabaseIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "database",
+    "filled": false
+  },
+  "deblur": {
+    "source": "material-rounded",
+    "export": "DeblurIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "deblur",
+    "filled": false
+  },
+  "delete": {
+    "source": "material-rounded",
+    "export": "DeleteIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "delete",
+    "filled": false
+  },
+  "delete-fill": {
+    "source": "material-rounded",
+    "export": "DeleteIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "delete",
+    "filled": true
+  },
+  "delivery_truck_speed": {
+    "source": "material-rounded",
+    "export": "DeliveryTruckSpeedIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "delivery-truck-speed",
+    "filled": false
+  },
+  "deployed-code": {
+    "source": "material-rounded",
+    "export": "DeployedCodeIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "deployed-code",
+    "filled": false
+  },
+  "directions_car": {
+    "source": "material-rounded",
+    "export": "DirectionsCarIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "directions-car",
+    "filled": false
+  },
+  "discover_tune": {
+    "source": "material-rounded",
+    "export": "DiscoverTuneIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "tune",
+    "filled": false
+  },
+  "dock_to_bottom": {
+    "source": "material-rounded",
+    "export": "DockToBottomIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "dock-to-bottom",
+    "filled": false
+  },
+  "dock_to_left": {
+    "source": "material-rounded",
+    "export": "DockToLeftIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "dock-to-left",
+    "filled": false
+  },
+  "dock_to_right": {
+    "source": "material-rounded",
+    "export": "DockToRightIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "dock-to-right",
+    "filled": false
+  },
+  "docs": {
+    "source": "material-rounded",
+    "export": "DocsIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "docs",
+    "filled": false
+  },
+  "document": {
+    "source": "material-rounded",
+    "export": "DocumentIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "description",
+    "filled": false
+  },
+  "document-fill": {
+    "source": "material-rounded",
+    "export": "DocumentIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "description",
+    "filled": true
+  },
+  "dollar": {
+    "source": "material-rounded",
+    "export": "DollarIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "attach-money",
+    "filled": false
+  },
+  "dollar-fill": {
+    "source": "material-rounded",
+    "export": "DollarIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "attach-money",
+    "filled": true
+  },
+  "dollar-input": {
+    "source": "material-rounded",
+    "export": "DollarInputIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "attach-money",
+    "filled": false
+  },
+  "dot-indicator": {
+    "source": "material-rounded",
+    "export": "DotIndicatorIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "fiber-manual-record",
+    "filled": false
+  },
+  "download": {
+    "source": "material-rounded",
+    "export": "DownloadIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "download",
+    "filled": false
+  },
+  "download-fill": {
+    "source": "material-rounded",
+    "export": "DownloadIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "download",
+    "filled": true
+  },
+  "downloading": {
+    "source": "material-rounded",
+    "export": "DownloadingIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "downloading",
+    "filled": false
+  },
+  "drag-handle": {
+    "source": "material-rounded",
+    "export": "DragHandleIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "drag-handle",
+    "filled": false
+  },
+  "drag-indicator": {
+    "source": "material-rounded",
+    "export": "DragIndicatorIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "drag-indicator",
+    "filled": false
+  },
+  "edit": {
+    "source": "material-rounded",
+    "export": "EditIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "edit",
+    "filled": false
+  },
+  "edit-fill": {
+    "source": "material-rounded",
+    "export": "EditIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "edit",
+    "filled": true
+  },
+  "eligibility-rule": {
+    "source": "material-rounded",
+    "export": "EligibilityRuleIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "rule",
+    "filled": false
+  },
+  "emergency_home": {
+    "source": "material-rounded",
+    "export": "EmergencyHomeIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "emergency-home",
+    "filled": false
+  },
+  "emoji_objects": {
+    "source": "material-rounded",
+    "export": "EmojiObjectsIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "emoji-objects",
+    "filled": false
+  },
+  "energy_program_saving": {
+    "source": "material-rounded",
+    "export": "EnergyProgramSavingIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "energy-savings-leaf",
+    "filled": false
+  },
+  "equalizer": {
+    "source": "material-rounded",
+    "export": "EqualizerIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "equalizer",
+    "filled": false
+  },
+  "error": {
+    "source": "material-rounded",
+    "export": "ErrorIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "error",
+    "filled": false
+  },
+  "error-fill": {
+    "source": "material-rounded",
+    "export": "ErrorIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "error",
+    "filled": true
+  },
+  "expand": {
+    "source": "material-rounded",
+    "export": "ExpandIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "expand-all",
+    "filled": false
+  },
+  "expand-circle-down": {
+    "source": "material-rounded",
+    "export": "ExpandCircleDownIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "expand-circle-down",
+    "filled": false
+  },
+  "expand-circle-down-fill": {
+    "source": "material-rounded",
+    "export": "ExpandCircleDownIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "expand-circle-down",
+    "filled": true
+  },
+  "expand-circle-up": {
+    "source": "material-rounded",
+    "export": "ExpandCircleUpIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "expand-circle-up",
+    "filled": false
+  },
+  "expand-circle-up-fill": {
+    "source": "material-rounded",
+    "export": "ExpandCircleUpIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "expand-circle-up",
+    "filled": true
+  },
+  "expand-sheet": {
+    "source": "material-rounded",
+    "export": "ExpandSheetIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "open-in-full",
+    "filled": false
+  },
+  "fields": {
+    "source": "material-rounded",
+    "export": "FieldsIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "view-column",
+    "filled": false
+  },
+  "first_page": {
+    "source": "material-rounded",
+    "export": "FirstPageIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "first-page",
+    "filled": false
+  },
+  "flag": {
+    "source": "material-rounded",
+    "export": "FlagIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "flag",
+    "filled": false
+  },
+  "flag_2": {
+    "source": "material-rounded",
+    "export": "Flag2Icon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "flag-2",
+    "filled": false
+  },
+  "flip": {
+    "source": "material-rounded",
+    "export": "FlipIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "flip",
+    "filled": false
+  },
+  "folder": {
+    "source": "material-rounded",
+    "export": "FolderIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "folder",
+    "filled": false
+  },
+  "folder-fill": {
+    "source": "material-rounded",
+    "export": "FolderIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "folder",
+    "filled": true
+  },
+  "format_italic": {
+    "source": "material-rounded",
+    "export": "FormatItalicIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "format-italic",
+    "filled": false
+  },
+  "format_list_numbered": {
+    "source": "material-rounded",
+    "export": "FormatListNumberedIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "format-list-numbered",
+    "filled": false
+  },
+  "format-align-center": {
+    "source": "material-rounded",
+    "export": "FormatAlignCenterIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "format-align-center",
+    "filled": false
+  },
+  "format-align-left": {
+    "source": "material-rounded",
+    "export": "FormatAlignLeftIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "format-align-left",
+    "filled": false
+  },
+  "format-align-right": {
+    "source": "material-rounded",
+    "export": "FormatAlignRightIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "format-align-right",
+    "filled": false
+  },
+  "format-bold": {
+    "source": "material-rounded",
+    "export": "FormatBoldIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "format-bold",
+    "filled": false
+  },
+  "format-list-bulleted": {
+    "source": "material-rounded",
+    "export": "FormatListBulletedIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "format-list-bulleted",
+    "filled": false
+  },
+  "format-underlined": {
+    "source": "material-rounded",
+    "export": "FormatUnderlinedIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "format-underlined",
+    "filled": false
+  },
+  "forward_media": {
+    "source": "material-rounded",
+    "export": "ForwardMediaIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "forward-media",
+    "filled": false
+  },
+  "frame_spark": {
+    "source": "material-rounded",
+    "export": "FrameSparkIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "frame-inspect",
+    "filled": false
+  },
+  "function": {
+    "source": "material-rounded",
+    "export": "FunctionIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "function",
+    "filled": false
+  },
+  "gite": {
+    "source": "material-rounded",
+    "export": "GiteIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "gite",
+    "filled": false
+  },
+  "help": {
+    "source": "material-rounded",
+    "export": "HelpIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "help",
+    "filled": false
+  },
+  "help-fill": {
+    "source": "material-rounded",
+    "export": "HelpIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "help",
+    "filled": true
+  },
+  "history": {
+    "source": "material-rounded",
+    "export": "HistoryIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "history",
+    "filled": false
+  },
+  "home": {
+    "source": "material-rounded",
+    "export": "HomeIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "home",
+    "filled": false
+  },
+  "home-fill": {
+    "source": "material-rounded",
+    "export": "HomeIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "home",
+    "filled": true
+  },
+  "id-verify": {
+    "source": "material-rounded",
+    "export": "IdVerifyIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "id-card",
+    "filled": false
+  },
+  "image": {
+    "source": "material-rounded",
+    "export": "ImageIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "image",
+    "filled": false
+  },
+  "image-fill": {
+    "source": "material-rounded",
+    "export": "ImageIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "image",
+    "filled": true
+  },
+  "in_home_mode": {
+    "source": "material-rounded",
+    "export": "InHomeModeIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "home-app-logo",
+    "filled": false
+  },
+  "jamboard_kiosk": {
+    "source": "material-rounded",
+    "export": "JamboardKioskIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "jamboard-kiosk",
+    "filled": false
+  },
+  "kid_star": {
+    "source": "material-rounded",
+    "export": "KidStarIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "kid-star",
+    "filled": false
+  },
+  "label": {
+    "source": "material-rounded",
+    "export": "LabelIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "label",
+    "filled": false
+  },
+  "label-fill": {
+    "source": "material-rounded",
+    "export": "LabelIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "label",
+    "filled": true
+  },
+  "laptop_mac": {
+    "source": "material-rounded",
+    "export": "LaptopMacIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "laptop-mac",
+    "filled": false
+  },
+  "laptop_windows": {
+    "source": "material-rounded",
+    "export": "LaptopWindowsIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "laptop-windows",
+    "filled": false
+  },
+  "lightbulb": {
+    "source": "material-rounded",
+    "export": "LightbulbIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "lightbulb",
+    "filled": false
+  },
+  "lightbulb-fill": {
+    "source": "material-rounded",
+    "export": "LightbulbIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "lightbulb",
+    "filled": true
+  },
+  "link": {
+    "source": "material-rounded",
+    "export": "LinkIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "link",
+    "filled": false
+  },
+  "lock": {
+    "source": "material-rounded",
+    "export": "LockIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "lock",
+    "filled": false
+  },
+  "lock-fill": {
+    "source": "material-rounded",
+    "export": "LockIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "lock",
+    "filled": true
+  },
+  "log-in": {
+    "source": "material-rounded",
+    "export": "LogInIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "login",
+    "filled": false
+  },
+  "log-out": {
+    "source": "material-rounded",
+    "export": "LogOutIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "logout",
+    "filled": false
+  },
+  "logo": {
+    "source": "material-rounded",
+    "export": "LogoIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "token",
+    "filled": false
+  },
+  "logo-fill": {
+    "source": "material-rounded",
+    "export": "LogoIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "token",
+    "filled": true
+  },
+  "mail": {
+    "source": "material-rounded",
+    "export": "MailIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "mail",
+    "filled": false
+  },
+  "mail-fill": {
+    "source": "material-rounded",
+    "export": "MailIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "mail",
+    "filled": true
+  },
+  "map-pin": {
+    "source": "material-rounded",
+    "export": "MapPinIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "location-on",
+    "filled": false
+  },
+  "map-pin-fill": {
+    "source": "material-rounded",
+    "export": "MapPinIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "location-on",
+    "filled": true
+  },
+  "margin": {
+    "source": "material-rounded",
+    "export": "MarginIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "margin",
+    "filled": false
+  },
+  "mark-email-unread": {
+    "source": "material-rounded",
+    "export": "MarkEmailUnreadIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "mark-email-unread",
+    "filled": false
+  },
+  "menu": {
+    "source": "material-rounded",
+    "export": "MenuIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "menu",
+    "filled": false
+  },
+  "message": {
+    "source": "material-rounded",
+    "export": "MessageIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "chat",
+    "filled": false
+  },
+  "mic": {
+    "source": "material-rounded",
+    "export": "MicIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "mic",
+    "filled": false
+  },
+  "minus": {
+    "source": "material-rounded",
+    "export": "MinusIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "remove",
+    "filled": false
+  },
+  "mobile_2": {
+    "source": "material-rounded",
+    "export": "Mobile2Icon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "mobile-2",
+    "filled": false
+  },
+  "money_bag": {
+    "source": "material-rounded",
+    "export": "MoneyBagIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "money-bag",
+    "filled": false
+  },
+  "more-horiz": {
+    "source": "material-rounded",
+    "export": "MoreHorizIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "more-horiz",
+    "filled": false
+  },
+  "more-vert": {
+    "source": "material-rounded",
+    "export": "MoreVertIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "more-vert",
+    "filled": false
+  },
+  "motion_photos_paused": {
+    "source": "material-rounded",
+    "export": "MotionPhotosPausedIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "motion-photos-paused",
+    "filled": false
+  },
+  "motion_play": {
+    "source": "material-rounded",
+    "export": "MotionPlayIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "motion-play",
+    "filled": false
+  },
+  "nest_eco_leaf": {
+    "source": "material-rounded",
+    "export": "NestEcoLeafIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "nest-eco-leaf",
+    "filled": false
+  },
+  "new_window": {
+    "source": "material-rounded",
+    "export": "NewWindowIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "open-in-new",
+    "filled": false
+  },
+  "news": {
+    "source": "material-rounded",
+    "export": "NewsIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "news",
+    "filled": false
+  },
+  "notes": {
+    "source": "material-rounded",
+    "export": "NotesIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "notes",
+    "filled": false
+  },
+  "notifications": {
+    "source": "material-rounded",
+    "export": "NotificationsIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "notifications",
+    "filled": false
+  },
+  "notifications-fill": {
+    "source": "material-rounded",
+    "export": "NotificationsIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "notifications",
+    "filled": true
+  },
+  "numbers": {
+    "source": "material-rounded",
+    "export": "NumbersIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "numbers",
+    "filled": false
+  },
+  "page_footer": {
+    "source": "material-rounded",
+    "export": "PageFooterIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "page-footer",
+    "filled": false
+  },
+  "passkey": {
+    "source": "material-rounded",
+    "export": "PasskeyIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "passkey",
+    "filled": false
+  },
+  "pending": {
+    "source": "material-rounded",
+    "export": "PendingIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "pending",
+    "filled": false
+  },
+  "pending-fill": {
+    "source": "material-rounded",
+    "export": "PendingIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "pending",
+    "filled": true
+  },
+  "percent": {
+    "source": "material-rounded",
+    "export": "PercentIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "percent",
+    "filled": false
+  },
+  "percent_discount": {
+    "source": "material-rounded",
+    "export": "PercentDiscountIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "percent-discount",
+    "filled": false
+  },
+  "percent-input": {
+    "source": "material-rounded",
+    "export": "PercentInputIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "percent",
+    "filled": false
+  },
+  "person": {
+    "source": "material-rounded",
+    "export": "PersonIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "person",
+    "filled": false
+  },
+  "person-add": {
+    "source": "material-rounded",
+    "export": "PersonAddIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "person-add",
+    "filled": false
+  },
+  "person-add-fill": {
+    "source": "material-rounded",
+    "export": "PersonAddIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "person-add",
+    "filled": true
+  },
+  "person-fill": {
+    "source": "material-rounded",
+    "export": "PersonIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "person",
+    "filled": true
+  },
+  "play_circle": {
+    "source": "material-rounded",
+    "export": "PlayCircleIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "play-circle",
+    "filled": false
+  },
+  "play-arrow": {
+    "source": "material-rounded",
+    "export": "PlayArrowIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "play-arrow",
+    "filled": false
+  },
+  "plus": {
+    "source": "material-rounded",
+    "export": "PlusIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "add",
+    "filled": false
+  },
+  "primary-color": {
+    "source": "material-rounded",
+    "export": "PrimaryColorIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "palette",
+    "filled": false
+  },
+  "priority": {
+    "source": "material-rounded",
+    "export": "PriorityIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "priority-high",
+    "filled": false
+  },
+  "productivity": {
+    "source": "material-rounded",
+    "export": "ProductivityIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "productivity",
+    "filled": false
+  },
+  "release_alert": {
+    "source": "material-rounded",
+    "export": "ReleaseAlertIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "release-alert",
+    "filled": false
+  },
+  "reply": {
+    "source": "material-rounded",
+    "export": "ReplyIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "reply",
+    "filled": false
+  },
+  "report-box": {
+    "source": "material-rounded",
+    "export": "ReportBoxIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "inventory-2",
+    "filled": false
+  },
+  "report-box-fill": {
+    "source": "material-rounded",
+    "export": "ReportBoxIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "inventory-2",
+    "filled": true
+  },
+  "restart-alt": {
+    "source": "material-rounded",
+    "export": "RestartAltIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "restart-alt",
+    "filled": false
+  },
+  "roofing": {
+    "source": "material-rounded",
+    "export": "RoofingIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "roofing",
+    "filled": false
+  },
+  "rotate_left": {
+    "source": "material-rounded",
+    "export": "RotateLeftIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "rotate-left",
+    "filled": false
+  },
+  "savings": {
+    "source": "material-rounded",
+    "export": "SavingsIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "savings",
+    "filled": false
+  },
+  "savings-fill": {
+    "source": "material-rounded",
+    "export": "SavingsIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "savings",
+    "filled": true
+  },
+  "scan": {
+    "source": "material-rounded",
+    "export": "ScanIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "document-scanner",
+    "filled": false
+  },
+  "schedule": {
+    "source": "material-rounded",
+    "export": "ScheduleIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "schedule",
+    "filled": false
+  },
+  "school": {
+    "source": "material-rounded",
+    "export": "SchoolIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "school",
+    "filled": false
+  },
+  "science": {
+    "source": "material-rounded",
+    "export": "ScienceIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "science",
+    "filled": false
+  },
+  "search": {
+    "source": "material-rounded",
+    "export": "SearchIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "search",
+    "filled": false
+  },
+  "security": {
+    "source": "material-rounded",
+    "export": "SecurityIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "security",
+    "filled": false
+  },
+  "send": {
+    "source": "material-rounded",
+    "export": "SendIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "send",
+    "filled": false
+  },
+  "send-fill": {
+    "source": "material-rounded",
+    "export": "SendIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "send",
+    "filled": true
+  },
+  "settings": {
+    "source": "material-rounded",
+    "export": "SettingsIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "settings",
+    "filled": false
+  },
+  "settings_backup_restore": {
+    "source": "material-rounded",
+    "export": "SettingsBackupRestoreIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "settings-backup-restore",
+    "filled": false
+  },
+  "shield-person": {
+    "source": "material-rounded",
+    "export": "ShieldPersonIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "shield-person",
+    "filled": false
+  },
+  "shopping": {
+    "source": "material-rounded",
+    "export": "ShoppingIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "shopping-bag",
+    "filled": false
+  },
+  "shopping_bag_speed": {
+    "source": "material-rounded",
+    "export": "ShoppingBagSpeedIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "shopping-bag-speed",
+    "filled": false
+  },
+  "shopping-fill": {
+    "source": "material-rounded",
+    "export": "ShoppingIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "shopping-bag",
+    "filled": true
+  },
+  "siren": {
+    "source": "material-rounded",
+    "export": "SirenIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "crisis-alert",
+    "filled": false
+  },
+  "sort": {
+    "source": "material-rounded",
+    "export": "SortIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "sort",
+    "filled": false
+  },
+  "sort-default": {
+    "source": "material-rounded",
+    "export": "SortDefaultIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "sort",
+    "filled": false
+  },
+  "stack": {
+    "source": "material-rounded",
+    "export": "StackIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "stack",
+    "filled": false
+  },
+  "stethoscope": {
+    "source": "material-rounded",
+    "export": "StethoscopeIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "stethoscope",
+    "filled": false
+  },
+  "sticky_note": {
+    "source": "material-rounded",
+    "export": "StickyNoteIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "sticky-note-2",
+    "filled": false
+  },
+  "sticky_note_2": {
+    "source": "material-rounded",
+    "export": "StickyNote2Icon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "sticky-note",
+    "filled": false
+  },
+  "stop_circle": {
+    "source": "material-rounded",
+    "export": "StopCircleIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "stop-circle",
+    "filled": false
+  },
+  "storefront": {
+    "source": "material-rounded",
+    "export": "StorefrontIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "storefront",
+    "filled": false
+  },
+  "strikethrough_s": {
+    "source": "material-rounded",
+    "export": "StrikethroughSIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "strikethrough-s",
+    "filled": false
+  },
+  "stylus_fountain_pen": {
+    "source": "material-rounded",
+    "export": "StylusFountainPenIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "stylus-fountain-pen",
+    "filled": false
+  },
+  "stylus_highlighter": {
+    "source": "material-rounded",
+    "export": "StylusHighlighterIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "stylus-highlighter",
+    "filled": false
+  },
+  "stylus_note": {
+    "source": "material-rounded",
+    "export": "StylusNoteIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "stylus-note",
+    "filled": false
+  },
+  "swap_vert": {
+    "source": "material-rounded",
+    "export": "SwapVertIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "swap-vert",
+    "filled": false
+  },
+  "table": {
+    "source": "material-rounded",
+    "export": "TableIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "table",
+    "filled": false
+  },
+  "table-fill": {
+    "source": "material-rounded",
+    "export": "TableIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "table",
+    "filled": true
+  },
+  "tag": {
+    "source": "material-rounded",
+    "export": "TagIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "tag",
+    "filled": false
+  },
+  "text": {
+    "source": "material-rounded",
+    "export": "TextIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "text-fields",
+    "filled": false
+  },
+  "text_compare": {
+    "source": "material-rounded",
+    "export": "TextCompareIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "text-compare",
+    "filled": false
+  },
+  "text-snippet": {
+    "source": "material-rounded",
+    "export": "TextSnippetIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "text-snippet",
+    "filled": false
+  },
+  "text-snippet-fill": {
+    "source": "material-rounded",
+    "export": "TextSnippetIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "text-snippet",
+    "filled": true
+  },
+  "theme": {
+    "source": "material-rounded",
+    "export": "ThemeIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "dark-mode",
+    "filled": false
+  },
+  "theme-fill": {
+    "source": "material-rounded",
+    "export": "ThemeIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "dark-mode",
+    "filled": true
+  },
+  "thermostat_carbon": {
+    "source": "material-rounded",
+    "export": "ThermostatCarbonIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "thermostat-carbon",
+    "filled": false
+  },
+  "thought": {
+    "source": "material-rounded",
+    "export": "ThoughtIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "psychology",
+    "filled": false
+  },
+  "thumb-down": {
+    "source": "material-rounded",
+    "export": "ThumbDownIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "thumb-down",
+    "filled": false
+  },
+  "thumb-up": {
+    "source": "material-rounded",
+    "export": "ThumbUpIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "thumb-up",
+    "filled": false
+  },
+  "timer": {
+    "source": "material-rounded",
+    "export": "TimerIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "timer",
+    "filled": false
+  },
+  "timer-filled": {
+    "source": "material-rounded",
+    "export": "TimerIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "timer",
+    "filled": true
+  },
+  "tips": {
+    "source": "material-rounded",
+    "export": "TipsIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "lightbulb",
+    "filled": false
+  },
+  "tips-fill": {
+    "source": "material-rounded",
+    "export": "TipsIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "lightbulb",
+    "filled": true
+  },
+  "toggle-on": {
+    "source": "material-rounded",
+    "export": "ToggleOnIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "toggle-on",
+    "filled": false
+  },
+  "tooltip-info": {
+    "source": "material-rounded",
+    "export": "TooltipInfoIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "info",
+    "filled": false
+  },
+  "tooltip-info-filled": {
+    "source": "material-rounded",
+    "export": "TooltipInfoIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "info",
+    "filled": true
+  },
+  "travel_explore": {
+    "source": "material-rounded",
+    "export": "TravelExploreIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "travel-explore",
+    "filled": false
+  },
+  "triangle_down": {
+    "source": "material-rounded",
+    "export": "TriangleDownIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "arrow-drop-down",
+    "filled": false
+  },
+  "triangle_up": {
+    "source": "material-rounded",
+    "export": "TriangleUpIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "arrow-drop-up",
+    "filled": false
+  },
+  "unfold-less": {
+    "source": "material-rounded",
+    "export": "UnfoldLessIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "unfold-less",
+    "filled": false
+  },
+  "unfold-more": {
+    "source": "material-rounded",
+    "export": "UnfoldMoreIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "unfold-more",
+    "filled": false
+  },
+  "upload": {
+    "source": "material-rounded",
+    "export": "UploadIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "upload",
+    "filled": false
+  },
+  "upload-cloud": {
+    "source": "material-rounded",
+    "export": "UploadCloudIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "cloud-upload",
+    "filled": false
+  },
+  "upload-cloud-fill": {
+    "source": "material-rounded",
+    "export": "UploadCloudIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "cloud-upload",
+    "filled": true
+  },
+  "upload-fill": {
+    "source": "material-rounded",
+    "export": "UploadIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "upload",
+    "filled": true
+  },
+  "variable-add": {
+    "source": "material-rounded",
+    "export": "VariableAddIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "variable-add",
+    "filled": false
+  },
+  "verified": {
+    "source": "material-rounded",
+    "export": "VerifiedIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "verified",
+    "filled": false
+  },
+  "view_kanban": {
+    "source": "material-rounded",
+    "export": "ViewKanbanIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "view-kanban",
+    "filled": false
+  },
+  "view-new-window": {
+    "source": "material-rounded",
+    "export": "ViewNewWindowIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "open-in-new",
+    "filled": false
+  },
+  "visibility-off": {
+    "source": "material-rounded",
+    "export": "VisibilityOffIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "visibility-off",
+    "filled": false
+  },
+  "visibility-off-fill": {
+    "source": "material-rounded",
+    "export": "VisibilityOffIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "visibility-off",
+    "filled": true
+  },
+  "visibility-on": {
+    "source": "material-rounded",
+    "export": "VisibilityOnIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "visibility",
+    "filled": false
+  },
+  "visibility-on-fill": {
+    "source": "material-rounded",
+    "export": "VisibilityOnIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "visibility",
+    "filled": true
+  },
+  "wand_stars": {
+    "source": "material-rounded",
+    "export": "WandStarsIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "wand-stars",
+    "filled": false
+  },
+  "warning": {
+    "source": "material-rounded",
+    "export": "WarningIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "warning",
+    "filled": false
+  },
+  "warning-fill": {
+    "source": "material-rounded",
+    "export": "WarningIcon",
+    "category": "Header",
+    "style": "rounded",
+    "weight": 400,
+    "materialSlug": "warning",
+    "filled": true
+  }
+}
