@@ -12,6 +12,9 @@ export type { DividerProps, DividerColor } from "./components/core/Divider";
 export { Callout } from "./components/core/Callout";
 export type { CalloutProps } from "./components/core/Callout";
 
+export { Highlight } from "./components/core/Highlight";
+export type { HighlightProps, HighlightColor } from "./components/core/Highlight";
+
 export { Text } from "./components/core/Text";
 export type { TextProps, TextVariant, TextColor } from "./components/core/Text";
 

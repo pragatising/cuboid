@@ -135,6 +135,21 @@ function main() {
     set(`link-${variantKey}-fg-hover`, v?.hover);
   }
 
+  const highlightColors = t.highlightColors;
+  if (highlightColors) {
+    for (const shade of Object.keys(highlightColors)) {
+      set(`highlight-${shade}-bg`, highlightColors[shade]?.bgColor);
+      set(`highlight-${shade}-fg`, highlightColors[shade]?.fgColor);
+    }
+  }
+
+  const highlightSizes = t.sizes?.highlight;
+  if (highlightSizes) {
+    set(`highlight-paddingInline`, highlightSizes.paddingInline);
+    set(`highlight-paddingBlock`, highlightSizes.paddingBlock);
+    set(`highlight-borderRadius`, highlightSizes.borderRadius);
+  }
+
   const breadcrumbLink = t.breadcrumbColors?.link;
   if (breadcrumbLink) {
     for (const state of ["rest", "hover", "active"]) {

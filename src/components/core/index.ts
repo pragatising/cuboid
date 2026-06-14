@@ -10,6 +10,9 @@ export type { DividerProps, DividerColor } from "./Divider";
 export { Callout } from "./Callout";
 export type { CalloutProps } from "./Callout";
 
+export { Highlight } from "./Highlight";
+export type { HighlightProps, HighlightColor } from "./Highlight";
+
 export { Text } from "./Text";
 export type { TextProps, TextVariant, TextColor } from "./Text";
 

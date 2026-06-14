@@ -226,6 +226,11 @@
       "sectionLabelWidth": "clamp(6.5rem, 25%, 10rem)",
       "pagePaddingInline": "1.25rem"
     },
+    "highlight": {
+      "paddingInline": "0.125rem",
+      "paddingBlock": "0",
+      "borderRadius": "0.125rem"
+    },
     "borderRadius": {
       "sm": "0.25rem",
       "md": "0.5rem",
@@ -534,6 +539,36 @@
     "standalone": {
       "rest": "#525252",
       "hover": "#ABA9A5"
+    }
+  },
+  "highlightColors": {
+    "none": {
+      "bgColor": "#ffffff00",
+      "fgColor": "#6F6F6D"
+    },
+    "neutral": {
+      "bgColor": "#F4F4F2",
+      "fgColor": "#2D2D2D"
+    },
+    "green": {
+      "bgColor": "#F0F9EF",
+      "fgColor": "#2D2D2D"
+    },
+    "blue": {
+      "bgColor": "#EEF4FF",
+      "fgColor": "#2D2D2D"
+    },
+    "yellow": {
+      "bgColor": "#FFF0CD",
+      "fgColor": "#2D2D2D"
+    },
+    "orange": {
+      "bgColor": "#FEE8D8",
+      "fgColor": "#2D2D2D"
+    },
+    "red": {
+      "bgColor": "#FFD9D5",
+      "fgColor": "#2D2D2D"
     }
   },
   "pillColors": {

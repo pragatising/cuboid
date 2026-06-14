@@ -15,6 +15,7 @@ const buttonDanger = themeGenerated.buttonDanger;
 const buttonRounded = themeGenerated.buttonRounded;
 const iconButtonColors = themeGenerated.iconButton;
 const linkColors = themeGenerated.linkColors;
+const highlightColors = themeGenerated.highlightColors;
 const breadcrumbColors = themeGenerated.breadcrumbColors;
 const siteHeaderColors = themeGenerated.siteHeaderColors;
 const overlayColors = themeGenerated.overlayColors;
@@ -53,6 +54,8 @@ export const defaultTheme: ThemeTokens = {
       iconButton: iconButtonColors,
 
       link: linkColors,
+
+      highlight: highlightColors,
 
       breadcrumb: breadcrumbColors,
 

@@ -347,6 +347,22 @@ export interface PillSizesTokens {
   md: PillSizeStopTokens;
 }
 
+export interface HighlightColorRecipe {
+  bgColor: string;
+  fgColor: string;
+}
+
+/** Shade keys from Figma `HighlightedText` — `none` is plain muted text without a tint. */
+export type HighlightColor = "none" | "neutral" | "green" | "blue" | "yellow" | "orange" | "red";
+
+export type HighlightFunctionalColors = Record<HighlightColor, HighlightColorRecipe>;
+
+export interface HighlightSizesTokens {
+  paddingInline: string;
+  paddingBlock: string;
+  borderRadius: string;
+}
+
 export interface FunctionalColors {
   background: BackgroundColors;
   foreground: ForegroundColors;
@@ -356,6 +372,7 @@ export interface FunctionalColors {
   button: ButtonFunctionalColors;
   iconButton: IconButtonFunctionalColors;
   link: LinkFunctionalColors;
+  highlight: HighlightFunctionalColors;
   breadcrumb: BreadcrumbFunctionalColors;
   siteHeader: SiteHeaderFunctionalColors;
   overlay: OverlayFunctionalColors;
@@ -664,6 +681,7 @@ export interface Sizes {
   space: SpaceTokens;
   stack: { gap: StackGapTokens; padding: StackPaddingTokens };
   layout: LayoutTokens;
+  highlight: HighlightSizesTokens;
   borderRadius: BorderRadiusTokens;
   borderWidth: BorderWidthTokens;
   breakpoints: BreakpointTokens;

@@ -314,6 +314,11 @@ function main() {
         componentLayoutMerge = deepMerge(componentLayoutMerge, { sidebar: doc.sidebar.sizes });
       }
     }
+    if (isPlain(doc.highlight)) {
+      if (isPlain(doc.highlight.color)) {
+        mergedColor = deepMerge(mergedColor, { highlight: doc.highlight.color });
+      }
+    }
   }
 
   const mergedTypography = isPlain(typographyThemeFile?.typography)
@@ -521,6 +526,27 @@ function main() {
     inline: linkInline.fgColor,
     standalone: linkStandalone.fgColor,
   };
+
+  const highlightColorRoot = uColor?.highlight;
+  if (!isPlain(highlightColorRoot)) {
+    console.error(
+      "Expected resolved color.highlight (tokens/functional/components/highlight/highlight.json)"
+    );
+    process.exit(1);
+  }
+  const highlightShades = ["none", "neutral", "green", "blue", "yellow", "orange", "red"];
+  const highlightColors = {};
+  for (const shade of highlightShades) {
+    const block = highlightColorRoot[shade];
+    if (!isPlain(block) || typeof block.bgColor !== "string" || typeof block.fgColor !== "string") {
+      console.error(`Expected color.highlight.${shade}.{bgColor,fgColor} to be strings`);
+      process.exit(1);
+    }
+    highlightColors[shade] = {
+      bgColor: block.bgColor,
+      fgColor: block.fgColor,
+    };
+  }
 
   const breadcrumbLink = uColor?.breadcrumb?.link;
   const breadcrumbSeparator = uColor?.breadcrumb?.separator;
@@ -1094,6 +1120,23 @@ function main() {
     layoutSizes[key] = layoutLayoutSrc[key];
   }
 
+  const highlightLayoutSrc = uSize?.highlight;
+  if (!isPlain(highlightLayoutSrc)) {
+    console.error(
+      "Expected resolved size.highlight.* (from tokens/functional/size/highlight.json)"
+    );
+    process.exit(1);
+  }
+  const highlightLayoutKeys = ["paddingInline", "paddingBlock", "borderRadius"];
+  const highlightSizes = {};
+  for (const key of highlightLayoutKeys) {
+    if (typeof highlightLayoutSrc[key] !== "string") {
+      console.error(`Expected size.highlight.${key} to be a string`);
+      process.exit(1);
+    }
+    highlightSizes[key] = highlightLayoutSrc[key];
+  }
+
   const tipLayout = uSize?.tooltip;
   if (!isPlain(tipLayout)) {
     console.error(
@@ -1398,6 +1441,7 @@ function main() {
       space,
       stack: { gap: stackGap, padding: stackPadding },
       layout: layoutSizes,
+      highlight: highlightSizes,
       borderRadius,
       borderWidth,
       breakpoints,
@@ -1420,6 +1464,7 @@ function main() {
     buttonDanger,
     buttonRounded,
     linkColors,
+    highlightColors,
     pillColors,
     tooltipColors,
     iconButton,
