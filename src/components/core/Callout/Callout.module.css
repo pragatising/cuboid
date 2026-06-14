@@ -1,4 +1,4 @@
 .Callout {
-  background-color: var(--cube-colors-functional-background-inset);
+  background-color: var(--callout-bg);
   border-radius: var(--cube-sizes-borderRadius-md);
 }

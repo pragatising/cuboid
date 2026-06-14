@@ -102,6 +102,13 @@ export interface SyntaxColors {
 }
 
 /** Resolved palette from tokens/functional/colors/globals.json (color.* paths). */
+export type { GlobalColorPath } from "./globalColor";
+export {
+  resolveGlobalColor,
+  resolveGlobalColorOrCss,
+  GLOBAL_COLOR_PATH_EXAMPLES,
+} from "./globalColor";
+
 export interface GlobalSemanticColorPair {
   default: string;
   muted: string;
@@ -335,16 +342,12 @@ export interface PillIntensityColors {
 /** Keys are shade names (`gray`, `yellow`, …) from token files under `components/pill/`. */
 export type PillFunctionalColors = Record<string, Record<PillIntensity, PillIntensityColors>>;
 
-export interface PillSizeStopTokens {
+/** Chip geometry from `pill.json` (scales with inherited font size via em). */
+export interface PillLayoutTokens {
   paddingInline: string;
   paddingBlock: string;
   borderRadius: string;
   gap: string;
-}
-
-export interface PillSizesTokens {
-  sm: PillSizeStopTokens;
-  md: PillSizeStopTokens;
 }
 
 export interface HighlightColorRecipe {
@@ -453,18 +456,6 @@ export interface ButtonTypography {
   large: ButtonTypographyStop;
 }
 
-/** Pill label metrics per size stop (from typography tokens). */
-export interface PillTypographyStop {
-  fontSize: string;
-  lineHeight: string;
-  fontWeight: number;
-}
-
-export interface PillTypography {
-  sm: PillTypographyStop;
-  md: PillTypographyStop;
-}
-
 export interface Typography {
   fontFamily: FontFamilyTokens;
   fontSize: FontSizeTokens;
@@ -472,7 +463,6 @@ export interface Typography {
   lineHeight: LineHeightTokens;
   text: TextTokens;
   button: ButtonTypography;
-  pill: PillTypography;
 }
 
 // ── Sizes ─────────────────────────────────────────────────────────────────────
@@ -665,6 +655,23 @@ export interface LayoutTokens {
   pagePaddingInline: string;
 }
 
+/** Shared panel widths for sheet, sidebar, and similar overlays (from size/container.json). */
+export interface ContainerSizesTokens {
+  panelMinWidth: string;
+  sheetWidthSm: string;
+  sheetWidthMd: string;
+  sheetWidthLg: string;
+  sidebarWidthSm: string;
+  sidebarWidthMd: string;
+  sidebarWidthLg: string;
+  sidebarMinWidth: string;
+  sidebarMaxWidth: string;
+  tooltipMaxWidth: string;
+  tooltipMaxWidthSingleLine: string;
+  popoverMinWidth: string;
+  popoverMaxWidth: string;
+}
+
 export type LayoutWidth = "label" | "page" | "content" | "full" | "auto";
 
 export interface ResizeHandleSizesTokens {
@@ -675,19 +682,21 @@ export interface ShadowTokens {
   popover: string;
   popoverElevated: string;
   sheet: string;
+  tooltip: string;
 }
 
 export interface Sizes {
   space: SpaceTokens;
   stack: { gap: StackGapTokens; padding: StackPaddingTokens };
   layout: LayoutTokens;
+  container: ContainerSizesTokens;
   highlight: HighlightSizesTokens;
   borderRadius: BorderRadiusTokens;
   borderWidth: BorderWidthTokens;
   breakpoints: BreakpointTokens;
   control: ControlSizesTokens;
   tooltip: TooltipLayoutTokens;
-  pill: PillSizesTokens;
+  pill: PillLayoutTokens;
   iconButton: IconButtonSizesTokens;
   breadcrumb: BreadcrumbSizesTokens;
   siteHeader: SiteHeaderSizesTokens;

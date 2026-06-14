@@ -928,36 +928,11 @@ function main() {
   }
 
   const rawPill = rawTypography?.pill;
-  if (!isPlain(rawPill) || !isPlain(rawPill.sm) || !isPlain(rawPill.md)) {
+  if (rawPill !== undefined) {
     console.error(
-      "Expected raw typography pill.{sm,md} (from tokens/functional/typography/typography.json)"
+      "Remove typography.pill from tokens/functional/typography/typography.json — Pill inherits text styles."
     );
     process.exit(1);
-  }
-  const pillTypography = {
-    sm: {
-      fontSize: pxStringToRem(rawPill.sm.fontSize?.value) ?? "0.75rem",
-      lineHeight: pxStringToRem(rawPill.sm.lineHeight?.value) ?? "0.9375rem",
-      fontWeight: rawPill.sm.weight?.value ?? 400,
-    },
-    md: {
-      fontSize: pxStringToRem(rawPill.md.fontSize?.value) ?? "0.75rem",
-      lineHeight: pxStringToRem(rawPill.md.lineHeight?.value) ?? "1.125rem",
-      fontWeight: rawPill.md.weight?.value ?? 400,
-    },
-  };
-
-  for (const stop of ["sm", "md"]) {
-    for (const field of ["fontSize", "lineHeight"]) {
-      if (typeof pillTypography[stop][field] !== "string") {
-        console.error(`Expected pillTypography.${stop}.${field} to be a string`);
-        process.exit(1);
-      }
-    }
-    if (typeof pillTypography[stop].fontWeight !== "number") {
-      console.error(`Expected pillTypography.${stop}.fontWeight to be a number`);
-      process.exit(1);
-    }
   }
 
   /** Expose resolved functional control sizes on the theme (single source for buttons, inputs, etc.). */
@@ -1120,6 +1095,37 @@ function main() {
     layoutSizes[key] = layoutLayoutSrc[key];
   }
 
+  const containerLayoutKeys = [
+    "panelMinWidth",
+    "sheetWidthSm",
+    "sheetWidthMd",
+    "sheetWidthLg",
+    "sidebarWidthSm",
+    "sidebarWidthMd",
+    "sidebarWidthLg",
+    "sidebarMinWidth",
+    "sidebarMaxWidth",
+    "tooltipMaxWidth",
+    "tooltipMaxWidthSingleLine",
+    "popoverMinWidth",
+    "popoverMaxWidth",
+  ];
+  const containerLayoutSrc = uSize?.container;
+  if (!isPlain(containerLayoutSrc)) {
+    console.error(
+      "Expected resolved size.container.* (from tokens/functional/size/container.json)"
+    );
+    process.exit(1);
+  }
+  const containerSizes = {};
+  for (const key of containerLayoutKeys) {
+    if (typeof containerLayoutSrc[key] !== "string") {
+      console.error(`Expected size.container.${key} to be a string`);
+      process.exit(1);
+    }
+    containerSizes[key] = containerLayoutSrc[key];
+  }
+
   const highlightLayoutSrc = uSize?.highlight;
   if (!isPlain(highlightLayoutSrc)) {
     console.error(
@@ -1165,26 +1171,13 @@ function main() {
     console.error("Expected resolved size.pill.* (from pill.sizes in components/pill/pill.json)");
     process.exit(1);
   }
-  const pillSizeKeys = ["sm", "md"];
   const pillSizes = {};
-  for (const key of pillSizeKeys) {
-    const row = pillLayoutSrc[key];
-    if (!isPlain(row)) {
-      console.error(`Expected size.pill.${key}`);
+  for (const k of ["paddingInline", "paddingBlock", "borderRadius", "gap"]) {
+    if (typeof pillLayoutSrc[k] !== "string") {
+      console.error(`Expected size.pill.${k} to be a string`);
       process.exit(1);
     }
-    for (const k of ["paddingInline", "paddingBlock", "borderRadius", "gap"]) {
-      if (typeof row[k] !== "string") {
-        console.error(`Expected size.pill.${key}.${k} to be a string`);
-        process.exit(1);
-      }
-    }
-    pillSizes[key] = {
-      paddingInline: row.paddingInline,
-      paddingBlock: row.paddingBlock,
-      borderRadius: row.borderRadius,
-      gap: row.gap,
-    };
+    pillSizes[k] = pillLayoutSrc[k];
   }
 
   const ibSize = control.iconButton;
@@ -1412,7 +1405,7 @@ function main() {
     footer: pickLayoutBlock(actionMenuLayoutSrc.footer, actionMenuFooterKeys, "size.actionMenu.footer"),
   };
 
-  const shadowKeys = ["popover", "popoverElevated", "sheet"];
+  const shadowKeys = ["popover", "popoverElevated", "sheet", "tooltip"];
   if (!isPlain(uShadows) || !shadowKeys.every((k) => typeof uShadows[k] === "string")) {
     console.error(
       `Expected resolved shadows.{${shadowKeys.join(",")}} (from tokens/functional/shadows/shadows.json)`
@@ -1424,7 +1417,6 @@ function main() {
   const typography = {
     ...uRootConverted.typography,
     button: buttonTypography,
-    pill: pillTypography,
   };
 
   const payload = {
@@ -1441,6 +1433,7 @@ function main() {
       space,
       stack: { gap: stackGap, padding: stackPadding },
       layout: layoutSizes,
+      container: containerSizes,
       highlight: highlightSizes,
       borderRadius,
       borderWidth,

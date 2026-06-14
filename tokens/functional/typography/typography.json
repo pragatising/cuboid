@@ -184,29 +184,6 @@
         "value": 500
       }
     }
-  },
-  "pill": {
-    "sm": {
-      "fontSize": {
-        "value": 12
-      },
-      "lineHeight": {
-        "value": 15
-      },
-      "weight": {
-        "value": 400
-      }
-    },
-    "md": {
-      "fontSize": {
-        "value": 12
-      },
-      "lineHeight": {
-        "value": 18
-      },
-      "weight": {
-        "value": 400
-      }
-    }
   }
 }
+

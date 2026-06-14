@@ -35,11 +35,13 @@ export const Colors: Story = {
     const tokens = useTheme();
     return (
       <Stack gap="xs">
-        <Text color="default">default — primary reading text</Text>
-        <Text color="muted">muted — secondary / supporting text</Text>
+        <Text color="default">default — primary reading text (fg.neutral.6)</Text>
+        <Text color="muted">muted — secondary text (text.default)</Text>
+        <Text color="text.muted">text.muted — explicit global path</Text>
         <Text color="disabled">disabled — unavailable state</Text>
         <Text color="link">link — interactive text</Text>
         <Text color="neutral">neutral — label / meta text</Text>
+        <Text color="fg.blue.3">fg.blue.3 — global foreground scale</Text>
         {/* background.emphasis is the dark surface — text must be onEmphasis */}
         <div
           style={{

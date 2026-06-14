@@ -11,6 +11,9 @@ tokens/functional/typography/theme.tokens.json
 # Cursor IDE (local only — not published)
 .cursor/
 
+# Local planning docs (not published)
+docs/plans/
+
 # macOS
 .DS_Store
 

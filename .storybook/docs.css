@@ -45,38 +45,62 @@ body,
 }
 
 /* ── Custom docs sections (use in *.stories.tsx docs pages) ───────────────── */
+/*
+ * Vertical rhythm: stack gap md (= space.16, “4×” on the 4px grid) between sections.
+ * Token: --cube-stack-gap-md → tokens/functional/size/stack.json
+ */
 
 .cube-docs-section {
-  margin-top: 1.5rem;
+  margin-top: 0;
   font-size: var(--cube-typography-text-body-medium-fontSize);
+}
+
+.sbdocs-title + .cube-docs-section,
+.sbdocs-subtitle + .cube-docs-section,
+.sbdocs h2 + .cube-docs-section,
+.sbdocs-subtitle + .cube-docs-sections,
+.sbdocs-subtitle + .cube-docs-stack,
+.cube-docs-section + .cube-docs-section {
+  margin-top: var(--cube-stack-gap-md);
 }
 
 .cube-docs-section--wide {
   max-width: 40rem;
 }
 
-.cube-docs-section--last {
-  margin-bottom: 2rem;
+.cube-docs-section--last,
+.cube-docs-sections,
+.cube-docs-stack {
+  margin-bottom: var(--cube-stack-gap-lg);
 }
 
+.sbdocs h3.cube-docs-section__title,
 .cube-docs-section__title {
-  margin: 0 0 0.75rem;
+  margin: 0 0 var(--cube-stack-gap-sm);
+  font-family: var(--cube-typography-fontFamily-base);
   font-size: var(--cube-typography-text-body-medium-fontSize);
   font-weight: 600;
   line-height: var(--cube-typography-text-body-medium-lineHeight);
   color: var(--cube-colors-functional-foreground-default);
 }
 
-.cube-docs-stack {
+.cube-docs-stack,
+.cube-docs-sections {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--cube-stack-gap-md);
+}
+
+.cube-docs-stack > .cube-docs-section,
+.cube-docs-sections > .cube-docs-section {
+  margin-top: 0;
 }
 
 .cube-docs-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  align-items: center;
+  gap: var(--cube-stack-gap-sm, 0.75rem);
 }
 
 .cube-docs-list {
@@ -138,6 +162,29 @@ body,
 .sbdocs-preview,
 .sb-story {
   font-family: var(--cube-typography-fontFamily-base);
+}
+
+/* Storybook docs prose sets 16px on spans — restore Cuboid component typography */
+.sbdocs span.cube-Pill,
+.sbdocs a.cube-Pill {
+  font-size: var(--cube-typography-text-body-small-fontSize, 0.75rem);
+  font-weight: 500;
+  line-height: 1;
+}
+
+.sbdocs span.cube-Pill.cube-Pill--caption,
+.sbdocs a.cube-Pill.cube-Pill--caption {
+  font-size: var(--cube-typography-text-caption-fontSize, 0.75rem);
+}
+
+.sbdocs span.cube-Pill.cube-Pill--bodyMedium,
+.sbdocs a.cube-Pill.cube-Pill--bodyMedium {
+  font-size: var(--cube-typography-text-body-medium-fontSize, 0.875rem);
+}
+
+.sbdocs span.cube-Pill.cube-Pill--bodyLarge,
+.sbdocs a.cube-Pill.cube-Pill--bodyLarge {
+  font-size: var(--cube-typography-text-body-large-fontSize, 1.25rem);
 }
 
 /* Docs canvas — no dashed/solid preview frame (Storybook PreviewContainer chrome) */

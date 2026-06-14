@@ -13,13 +13,23 @@ const OUT_DIR = path.join(__dirname, "../tokens/functional/components/pill");
 
 const token = (value) => ({ value });
 
-/** fg stop keys per intensity (must exist under color.fg.<hue> in globals.json). */
+/** fg stop keys per intensity (must exist under color.fg.<fgHue> in globals.json). */
 const PILL_HUE_CONFIG = {
-  yellow: { extralight: 2, light: 3, bold: 4, extraBold: 5 },
-  green: { extralight: 2, light: 3, bold: 4, extraBold: 5 },
-  teal: { extralight: 1, light: 2, bold: 3, extraBold: 5 },
-  orange: { extralight: 3, light: 3, bold: 4, extraBold: 5 },
-  red: { extralight: 3, light: 3, bold: 4, extraBold: 5 },
+  yellow: { stops: { extralight: 2, light: 3, bold: 4, extraBold: 5 } },
+  green: { stops: { extralight: 2, light: 3, bold: 4, extraBold: 5 } },
+  teal: { stops: { extralight: 1, light: 2, bold: 3, extraBold: 5 } },
+  orange: { stops: { extralight: 3, light: 3, bold: 4, extraBold: 5 } },
+  red: { stops: { extralight: 3, light: 3, bold: 4, extraBold: 5 } },
+  blue: { stops: { extralight: 1, light: 2, bold: 3, extraBold: 5 } },
+  purple: { stops: { extralight: 2, light: 3, bold: 4, extraBold: 5 } },
+  lime: { stops: { extralight: 2, light: 3, bold: 4, extraBold: 5 } },
+  indigo: { stops: { extralight: 3, light: 3, bold: 4, extraBold: 5 } },
+  /** Pill shade `mag`; fg tokens live under color.fg.magenta, base scale is `mag`. */
+  mag: {
+    stops: { extralight: 1, light: 2, bold: 3, extraBold: 4 },
+    fgHue: "magenta",
+    bgHue: "mag",
+  },
 };
 
 const INTENSITIES = ["extralight", "light", "bold", "extraBold"];
@@ -35,15 +45,18 @@ const BG_BORDERED_REST = ["01", "01", "02", "01"];
 const BG_BORDERED_HOVER = ["02", "02", "03", "02"];
 const BG_BORDERED_PRESSED = ["03", "04", "04", "03"];
 
-function fg(hue, stop) {
-  return `{color.fg.${hue}.${stop}}`;
+function fg(fgHue, stop) {
+  return `{color.fg.${fgHue}.${stop}}`;
 }
 
-function bg(hue, stop) {
-  return `{base.color.scale.${hue}.${stop}}`;
+function bg(bgHue, stop) {
+  return `{base.color.scale.${bgHue}.${stop}}`;
 }
 
-function buildIntensity(hue, intensity, cfg) {
+function buildIntensity(shade, intensity, entry) {
+  const cfg = entry.stops;
+  const fgHue = entry.fgHue ?? shade;
+  const bgHue = entry.bgHue ?? shade;
   const [bgRest, bgHover, bgPressed, bgDisabled] = BG_REST[intensity];
   const fgRest = cfg[intensity];
   const fgHover = Math.min(fgRest + 1, cfg.extraBold);
@@ -52,9 +65,9 @@ function buildIntensity(hue, intensity, cfg) {
 
   const filled = {
     bgColor: {
-      rest: token(intensity === "extraBold" ? bg(hue, bgRest) : bg(hue, bgRest)),
-      hover: token(bg(hue, bgHover)),
-      pressed: token(bg(hue, bgPressed)),
+      rest: token(intensity === "extraBold" ? bg(bgHue, bgRest) : bg(bgHue, bgRest)),
+      hover: token(bg(bgHue, bgHover)),
+      pressed: token(bg(bgHue, bgPressed)),
       disabled: token("{color.bg.gray.light.03}"),
     },
     borderColor: {
@@ -65,13 +78,13 @@ function buildIntensity(hue, intensity, cfg) {
     },
     fgColor: {
       rest: token(
-        intensity === "extraBold" ? "{color.fg.neutral.1}" : fg(hue, fgRest)
+        intensity === "extraBold" ? "{color.fg.neutral.1}" : fg(fgHue, fgRest)
       ),
       hover: token(
-        intensity === "extraBold" ? "{color.fg.neutral.1}" : fg(hue, fgHover)
+        intensity === "extraBold" ? "{color.fg.neutral.1}" : fg(fgHue, fgHover)
       ),
       pressed: token(
-        intensity === "extraBold" ? "{color.fg.neutral.1}" : fg(hue, fgPressed)
+        intensity === "extraBold" ? "{color.fg.neutral.1}" : fg(fgHue, fgPressed)
       ),
       disabled: token("{color.fg.neutral.3}"),
     },
@@ -86,21 +99,21 @@ function buildIntensity(hue, intensity, cfg) {
     },
     borderColor: {
       rest: token(
-        intensity === "extraBold" ? bg(hue, "10") : bg(hue, String(Number(bgRest) + 3))
+        intensity === "extraBold" ? bg(bgHue, "10") : bg(bgHue, String(Number(bgRest) + 3))
       ),
       hover: token(
-        intensity === "extraBold" ? bg(hue, "11") : bg(hue, String(Number(bgRest) + 3))
+        intensity === "extraBold" ? bg(bgHue, "11") : bg(bgHue, String(Number(bgRest) + 3))
       ),
       pressed: token(
-        intensity === "extraBold" ? bg(hue, "11") : bg(hue, String(Number(bgRest) + 3))
+        intensity === "extraBold" ? bg(bgHue, "11") : bg(bgHue, String(Number(bgRest) + 3))
       ),
       disabled: token("{color.border.gray.1}"),
     },
     fgColor: {
-      rest: token(intensity === "extraBold" ? fg(hue, cfg.extraBold) : fg(hue, fgRest)),
-      hover: token(intensity === "extraBold" ? fg(hue, cfg.extraBold) : fg(hue, fgHover)),
+      rest: token(intensity === "extraBold" ? fg(fgHue, cfg.extraBold) : fg(fgHue, fgRest)),
+      hover: token(intensity === "extraBold" ? fg(fgHue, cfg.extraBold) : fg(fgHue, fgHover)),
       pressed: token(
-        intensity === "extraBold" ? fg(hue, Math.max(cfg.extraBold - 1, 3)) : fg(hue, fgPressed)
+        intensity === "extraBold" ? fg(fgHue, Math.max(cfg.extraBold - 1, 3)) : fg(fgHue, fgPressed)
       ),
       disabled: token("{color.fg.neutral.3}"),
     },
@@ -109,16 +122,16 @@ function buildIntensity(hue, intensity, cfg) {
   return { filled, bordered };
 }
 
-function buildHueFile(hue, cfg) {
-  const shade = {};
+function buildHueFile(shade, entry) {
+  const shadeBlock = {};
   for (const intensity of INTENSITIES) {
-    shade[intensity] = buildIntensity(hue, intensity, cfg);
+    shadeBlock[intensity] = buildIntensity(shade, intensity, entry);
   }
-  return { pill: { color: { [hue]: shade } } };
+  return { pill: { color: { [shade]: shadeBlock } } };
 }
 
-for (const [hue, cfg] of Object.entries(PILL_HUE_CONFIG)) {
-  const outPath = path.join(OUT_DIR, `${hue}.json`);
-  fs.writeFileSync(outPath, JSON.stringify(buildHueFile(hue, cfg), null, 2) + "\n", "utf8");
+for (const [shade, entry] of Object.entries(PILL_HUE_CONFIG)) {
+  const outPath = path.join(OUT_DIR, `${shade}.json`);
+  fs.writeFileSync(outPath, JSON.stringify(buildHueFile(shade, entry), null, 2) + "\n", "utf8");
   console.log(`Wrote ${outPath}`);
 }

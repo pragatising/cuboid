@@ -1,25 +1,58 @@
 import React from "react";
 import { useTheme } from "../../../theme/ThemeContext";
-import type { CubeTheme } from "../../../theme/types";
+import { resolveGlobalColorOrCss } from "../../../theme/globalColor";
+import type { CubeTheme, GlobalColorPath } from "../../../theme/types";
 import { Stack } from "../Stack";
 import styles from "./Callout.module.css";
 
+export type { GlobalColorPath as CalloutBackground };
+
 export interface CalloutProps {
+  /**
+   * Surface color from `colors.global` (dot-path), or any CSS color string.
+   * @default "canvas.inset"
+   * @example "canvas.inset" | "bg.gray.light.02" | "#eef6ff"
+   */
+  background?: GlobalColorPath;
   theme?: CubeTheme;
   className?: string;
   style?: React.CSSProperties;
   children?: React.ReactNode;
 }
 
+function calloutCssVars(
+  background: GlobalColorPath,
+  tokens: ReturnType<typeof useTheme>
+): Record<string, string> {
+  return {
+    "--callout-bg": resolveGlobalColorOrCss(background, tokens.colors.global, {
+      inset: "canvas.inset",
+      default: "bg.gray.light.01",
+      muted: "bg.gray.light.02",
+      emphasis: "bg.gray.dark.07",
+      transparent: "canvas.transparent",
+      inverse: "bg.gray.dark.07",
+      neutralMuted: "bg.gray.light.04",
+      neutralEmphasis: "bg.gray.dark.05",
+    }),
+  };
+}
+
 /** Inset block for blockquotes, notes, and asides. */
-export function Callout({ theme, className, style, children }: CalloutProps) {
-  useTheme(theme);
+export function Callout({
+  background = "canvas.inset",
+  theme,
+  className,
+  style,
+  children,
+}: CalloutProps) {
+  const tokens = useTheme(theme);
 
   return (
     <Stack
       padding="sm"
       className={[styles.Callout, className].filter(Boolean).join(" ")}
-      style={style}
+      style={{ ...calloutCssVars(background, tokens), ...style }}
     >
       {children}
     </Stack>

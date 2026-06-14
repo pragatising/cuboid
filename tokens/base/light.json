@@ -57,21 +57,21 @@
           "12": { "value": "#1D6B08" },
           "13": { "value": "#145502" }
         },
-        "purples": {
-          "0": { "value": "#F9ECFD" },
-          "1": { "value": "#FAE8FF" },
-          "2": { "value": "#F9E6FF" },
-          "3": { "value": "#F6D8FF" },
-          "4": { "value": "#E9BBFF" },
-          "5": { "value": "#EEB5FF" },
-          "6": { "value": "#ED9DFF" },
-          "7": { "value": "#E479FF" },
-          "8": { "value": "#E260FF" },
-          "9": { "value": "#D24EFA" },
-          "10": { "value": "#CA30F5" },
-          "11": { "value": "#BB1CEB" },
-          "12": { "value": "#A409CF" },
-          "13": { "value": "#8E03BC" }
+        "purple": {
+          "0": { "value": "#F7ECFD" },
+          "1": { "value": "#ECDAFA" },
+          "2": { "value": "#ECD2FA" },
+          "3": { "value": "#E3C1F6" },
+          "4": { "value": "#D9B2FA" },
+          "5": { "value": "#D7A7F7" },
+          "6": { "value": "#D385EF" },
+          "7": { "value": "#A854D2" },
+          "8": { "value": "#9035BD" },
+          "9": { "value": "#6F2EA8" },
+          "10": { "value": "#5B2589" },
+          "11": { "value": "#4A1D71" },
+          "12": { "value": "#3B1759" },
+          "13": { "value": "#2E1245" }
         },
         "indigo": {
           "0": { "value": "#F7F7FC" },

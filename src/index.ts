@@ -10,7 +10,7 @@ export { Divider } from "./components/core/Divider";
 export type { DividerProps, DividerColor } from "./components/core/Divider";
 
 export { Callout } from "./components/core/Callout";
-export type { CalloutProps } from "./components/core/Callout";
+export type { CalloutProps, CalloutBackground } from "./components/core/Callout";
 
 export { Highlight } from "./components/core/Highlight";
 export type { HighlightProps, HighlightColor } from "./components/core/Highlight";
@@ -49,7 +49,7 @@ export { Link } from "./components/core/Link";
 export type { LinkProps, LinkVariant } from "./components/core/Link";
 
 export { Pill } from "./components/core/Pill";
-export type { PillProps, PillShade } from "./components/core/Pill";
+export type { PillProps, PillShade, PillTextVariant } from "./components/core/Pill";
 
 export { BreadcrumbLink, Breadcrumbs } from "./components/core/Breadcrumb";
 export type {
@@ -151,8 +151,9 @@ export type {
   PillIntensity,
   PillIntensityColors,
   PillSurface,
-  PillSizesTokens,
-  PillSizeStopTokens,
+  PillLayoutTokens,
+  ContainerSizesTokens,
+  LayoutTokens,
   BreadcrumbFunctionalColors,
   BreadcrumbSizesTokens,
   OverlayFunctionalColors,
@@ -179,4 +180,10 @@ export type {
   GlobalTextColors,
   GlobalCanvasColors,
   GlobalSemanticColorPair,
+  GlobalColorPath,
 } from "./theme/types";
+export {
+  resolveGlobalColor,
+  resolveGlobalColorOrCss,
+  GLOBAL_COLOR_PATH_EXAMPLES,
+} from "./theme/globalColor";

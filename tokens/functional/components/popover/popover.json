@@ -6,8 +6,8 @@
     "sizes": {
       "gap": { "value": "{size.space.4}" },
       "borderRadius": { "value": "{size.borderRadius.medium}" },
-      "minWidth": { "value": "160px" },
-      "maxWidth": { "value": "320px" }
+      "minWidth": { "value": "{size.container.popoverMinWidth}" },
+      "maxWidth": { "value": "{size.container.popoverMaxWidth}" }
     }
   }
 }

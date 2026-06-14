@@ -1,0 +1,17 @@
+{
+  "container": {
+    "panelMinWidth": { "value": "{size.space.240}" },
+    "sheetWidthSm": { "value": "{size.space.320}" },
+    "sheetWidthMd": { "value": "{size.space.400}" },
+    "sheetWidthLg": { "value": "{size.space.560}" },
+    "sidebarWidthSm": { "value": "{size.container.panelMinWidth}" },
+    "sidebarWidthMd": { "value": "{size.space.272}" },
+    "sidebarWidthLg": { "value": "{size.container.sheetWidthSm}" },
+    "sidebarMinWidth": { "value": "{size.space.200}" },
+    "sidebarMaxWidth": { "value": "{size.space.480}" },
+    "tooltipMaxWidth": { "value": "{size.container.panelMinWidth}" },
+    "tooltipMaxWidthSingleLine": { "value": "{size.space.120}" },
+    "popoverMinWidth": { "value": "{size.space.160}" },
+    "popoverMaxWidth": { "value": "{size.container.sheetWidthSm}" }
+  }
+}

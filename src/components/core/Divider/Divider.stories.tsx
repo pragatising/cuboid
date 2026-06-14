@@ -16,7 +16,7 @@ const meta: Meta<typeof Divider> = {
         <>
           <Title />
           <Subtitle>
-            Horizontal rule using functional border tokens. Use between list rows, sections, or
+            Horizontal rule using global border tokens. Use between list rows, sections, or
             stacked content — not for vertical header separators (see{" "}
             <code>SiteHeaderDivider</code>).
           </Subtitle>
@@ -52,7 +52,10 @@ const meta: Meta<typeof Divider> = {
     },
   },
   argTypes: {
-    color: { control: "radio", options: ["default", "muted"] },
+    color: {
+      control: "select",
+      options: ["border.gray.2", "border.grayAlpha.2", "default", "muted"],
+    },
   },
 };
 
@@ -77,7 +80,7 @@ export const Muted: Story = {
       </Text>
       <Divider color="muted" />
       <Text variant="bodyMedium" color="muted">
-        Uses <code>colors.functional.border.muted</code>.
+        Uses <code>border.grayAlpha.2</code> (legacy alias: <code>color=&quot;muted&quot;</code>).
       </Text>
     </Stack>
   ),

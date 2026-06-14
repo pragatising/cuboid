@@ -17,7 +17,7 @@ const meta: Meta<typeof Callout> = {
           <Title />
           <Subtitle>
             Inset block for blockquotes, notes, and asides. Background from{" "}
-            <code>colors.functional.background.inset</code>; radius from{" "}
+            <code>colors.global</code> (default <code>canvas.inset</code>); radius from{" "}
             <code>sizes.borderRadius.md</code>.
           </Subtitle>
 
@@ -39,6 +39,20 @@ const meta: Meta<typeof Callout> = {
           <Controls />
         </>
       ),
+    },
+  },
+  argTypes: {
+    background: {
+      control: "select",
+      options: [
+        "canvas.inset",
+        "canvas.subtle",
+        "bg.gray.light.02",
+        "bg.gray.dark.07",
+        "inset",
+        "muted",
+        "emphasis",
+      ],
     },
   },
 };
@@ -93,7 +107,21 @@ export const Multiline: Story = {
   ),
 };
 
+export const MutedSurface: Story = {
+  name: "Muted background",
+  render: () => (
+    <Callout background="muted" style={{ maxWidth: "36rem" }}>
+      <Text variant="bodyMedium" color="muted">
+        Uses <code>background=&quot;muted&quot;</code> instead of the default inset.
+      </Text>
+    </Callout>
+  ),
+};
+
 export const Playground: Story = {
+  args: {
+    background: "inset",
+  },
   render: (args) => (
     <Callout {...args} style={{ maxWidth: "36rem" }}>
       <Text variant="bodyMedium" color="muted">

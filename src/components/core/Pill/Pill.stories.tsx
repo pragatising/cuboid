@@ -1,7 +1,6 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Title, Primary, Controls, Subtitle } from "@storybook/blocks";
-import { Stack } from "../Stack";
 import { Icon } from "../Icon";
 import { Pill, type PillIntensity, type PillShade } from "./Pill";
 import themeOutput from "../../../theme/output/theme.json";
@@ -24,7 +23,16 @@ const meta: Meta<typeof Pill> = {
     shade: { control: "select", options: PILL_SHADES },
     intensity: { control: "select", options: INTENSITIES },
     border: { control: "boolean" },
-    size: { control: "radio", options: ["sm", "md"] },
+    variant: {
+      control: "select",
+      options: [
+        undefined,
+        "caption",
+        "bodySmall",
+        "bodyMedium",
+        "bodyLarge",
+      ],
+    },
   },
   parameters: {
     layout: "padded",
@@ -33,100 +41,84 @@ const meta: Meta<typeof Pill> = {
         <>
           <Title />
           <Subtitle>
-            Maps to Figma Pill: <code>shade</code> ×{" "}
-            <code>intensity</code> ×{" "}
-            <code>border?</code>. Shades come from{" "}
-            <code>tokens/functional/components/pill/&lt;shade&gt;.json</code>.
+            Colored chip around text — <code>shade</code> ×{" "}
+            <code>intensity</code> × <code>border?</code>. Defaults to{" "}
+            <code>bodySmall</code> (12px, weight 500), 20px tall, 6px horizontal
+            padding — override with <code>variant</code> or{" "}
+            <code>theme=&#123;&#123; sizes: &#123; pill: … &#125; &#125;&#125;</code>.
           </Subtitle>
 
+          <div className="cube-docs-sections">
           <div className="cube-docs-section">
             <h3 className="cube-docs-section__title">Tokens &amp; shades</h3>
             <ul className="cube-docs-list">
               <li>
-                <strong>API:</strong>{" "}
-                <code>shade</code> ×{" "}
-                <code>intensity</code> ×{" "}
-                <code>border?</code> — maps to Figma Pill props.
+                <strong>Color:</strong> one file per shade under{" "}
+                <code>tokens/functional/components/pill/&lt;shade&gt;.json</code>.
               </li>
               <li>
-                <strong>Color tokens:</strong> one file per shade under{" "}
-                <code>tokens/functional/components/pill/&lt;shade&gt;.json</code>{" "}
-                (e.g. <code>gray.json</code>,{" "}
-                <code>yellow.json</code>). Path:{" "}
-                <code>
-                  color.pill.&lt;shade&gt;.&lt;intensity&gt;.&lt;filled|bordered&gt;.bgColor|borderColor|fgColor
-                </code>
-                .
+                <strong>Layout:</strong>{" "}
+                <code>pill.json</code> → padding, radius, gap from space tokens. Override via{" "}
+                <code>theme=&#123;&#123; sizes: &#123; pill: … &#125; &#125;&#125;</code>.
               </li>
               <li>
-                <strong>Layout tokens:</strong>{" "}
-                <code>pill.json</code> → sizes{" "}
-                <code>sm</code> / <code>md</code>{" "}
-                (padding, radius, gap only).
-              </li>
-              <li>
-                <strong>Typography:</strong>{" "}
-                <code>typography.pill.sm|md</code> in{" "}
-                <code>tokens/functional/typography/typography.json</code>{" "}
-                — not in <code>pill.json</code>.
-              </li>
-              <li>
-                <strong>Storybook shade control:</strong> options are derived from{" "}
-                <code>pillColors</code> keys in{" "}
-                <code>theme.json</code> after build — add a shade file,
-                then run <code>npm run tokens:theme</code>.
-              </li>
-              <li>
-                <strong>Scaffold new hues:</strong>{" "}
-                <code>node scripts/generate-pill-shade-tokens.mjs</code>{" "}
-                writes yellow/green/teal/orange/red from{" "}
-                <code>color.fg.*</code> +{" "}
-                <code>base.color.scale.*</code>.{" "}
-                <code>gray.json</code> is hand-authored (Figma source of truth);
-                sync other shades to Figma when values differ.
+                <strong>Typography:</strong> defaults to <code>bodySmall</code>{" "}
+                (12px, weight 500). Pass <code>variant</code> for other{" "}
+                <code>Text</code> sizes.
               </li>
             </ul>
           </div>
 
           <div className="cube-docs-section">
             <h3 className="cube-docs-section__title">Shades (light, filled)</h3>
-            <Stack direction="horizontal" gap="xs" wrap>
+            <div className="cube-docs-row">
               {PILL_SHADES.map((shade) => (
                 <Pill key={shade} shade={shade} intensity="light">
                   {shade}
                 </Pill>
               ))}
-            </Stack>
+            </div>
           </div>
 
           <div className="cube-docs-section">
             <h3 className="cube-docs-section__title">Gray × intensity (filled)</h3>
-            <Stack direction="horizontal" gap="xs" wrap>
+            <div className="cube-docs-row">
               {INTENSITIES.map((intensity) => (
                 <Pill key={intensity} shade="gray" intensity={intensity}>
                   {intensity}
                 </Pill>
               ))}
-            </Stack>
+            </div>
           </div>
 
           <div className="cube-docs-section">
             <h3 className="cube-docs-section__title">Gray × intensity (bordered)</h3>
-            <Stack direction="horizontal" gap="xs" wrap>
+            <div className="cube-docs-row">
               {INTENSITIES.map((intensity) => (
                 <Pill key={intensity} shade="gray" intensity={intensity} border>
                   {intensity}
                 </Pill>
               ))}
-            </Stack>
+            </div>
           </div>
 
           <div className="cube-docs-section">
-            <h3 className="cube-docs-section__title">Sizes</h3>
-            <Stack direction="horizontal" gap="xs" align="center">
-              <Pill size="sm">sm</Pill>
-              <Pill size="md">md</Pill>
-            </Stack>
+            <h3 className="cube-docs-section__title">Default (no props beyond label)</h3>
+            <Pill shade="gray" intensity="light" border>
+              Tag
+            </Pill>
+          </div>
+
+          <div className="cube-docs-section">
+            <h3 className="cube-docs-section__title">Alternate variant</h3>
+            <div className="cube-docs-row">
+              <Pill variant="caption" shade="purple" intensity="bold">
+                caption
+              </Pill>
+              <Pill variant="bodyMedium" shade="green" intensity="light" border>
+                bodyMedium
+              </Pill>
+            </div>
           </div>
 
           <div className="cube-docs-section">
@@ -135,7 +127,7 @@ const meta: Meta<typeof Pill> = {
               href="https://example.com"
               shade="gray"
               intensity="light"
-              size="md"
+              variant="bodySmall"
               trailingVisual={
                 <Icon size="xs">
                   <ExternalIcon />
@@ -144,6 +136,7 @@ const meta: Meta<typeof Pill> = {
             >
               Documentation
             </Pill>
+          </div>
           </div>
 
           <Primary />
@@ -161,7 +154,14 @@ export const Playground: Story = {
     shade: "gray",
     intensity: "light",
     border: false,
-    size: "sm",
     children: "Pill",
   },
+};
+
+export const WithBodyMedium: Story = {
+  render: () => (
+    <Pill variant="bodyMedium" shade="gray" intensity="light" border>
+      Larger label
+    </Pill>
+  ),
 };

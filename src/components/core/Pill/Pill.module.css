@@ -1,80 +1,99 @@
-.Pill {
+/* Layout + typography. Colors from theme.css ([data-cube-pill]) or --cube-pill-active-* when themed. */
+.cube-Pill {
   appearance: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
   margin: 0;
-  border: solid var(--cube-sizes-borderWidth-thin) transparent;
+  border-width: var(--cube-sizes-borderWidth-thin);
+  border-style: solid;
+  /* border-color from [data-cube-pill] in theme.css or --cube-pill-active-* when themed */
   font-family: var(--cube-typography-fontFamily-base);
+  font-size: var(--cube-typography-text-body-small-fontSize, 0.75rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: inherit;
   text-decoration: none;
   white-space: nowrap;
   cursor: default;
-  color: var(--cube-pill-active-fg-rest);
-  background-color: var(--cube-pill-active-bg-rest);
-  border-color: var(--cube-pill-active-border-rest);
+  gap: var(--cube-pill-gap);
+  padding: var(--cube-pill-paddingBlock) var(--cube-pill-paddingInline);
+  border-radius: var(--cube-pill-borderRadius);
   transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
 }
 
-a.Pill,
-a.Pill:visited {
-  color: var(--cube-pill-active-fg-rest);
-  background-color: var(--cube-pill-active-bg-rest);
-  border-color: var(--cube-pill-active-border-rest);
+.cube-Pill--caption {
+  font-size: var(--cube-typography-text-caption-fontSize, 0.75rem);
+  line-height: 1;
 }
 
-a.Pill,
-button.Pill {
+.cube-Pill--bodySmall {
+  font-size: var(--cube-typography-text-body-small-fontSize, 0.75rem);
+  line-height: 1;
+}
+
+.cube-Pill--bodyMedium {
+  font-size: var(--cube-typography-text-body-medium-fontSize, 0.875rem);
+  line-height: 1;
+}
+
+.cube-Pill--bodyLarge {
+  font-size: var(--cube-typography-text-body-large-fontSize, 1.25rem);
+  line-height: 1;
+}
+
+a.cube-Pill,
+button.cube-Pill {
   cursor: pointer;
 }
 
-.Pill:focus-visible {
+.cube-Pill:focus-visible {
   outline: 4px solid var(--cube-colors-functional-foreground-link);
   outline-offset: 2px;
 }
 
-a.Pill:not(:disabled):not([aria-disabled="true"]):hover,
-button.Pill:not(:disabled):not([aria-disabled="true"]):hover {
+.cube-Pill:disabled,
+.cube-Pill[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+/* Theme prop override — inline --cube-pill-active-* (same pattern as Button + theme) */
+.cube-Pill--themed {
+  color: var(--cube-pill-active-fg-rest);
+  background-color: var(--cube-pill-active-bg-rest);
+  border-color: var(--cube-pill-active-border-rest);
+}
+
+a.cube-Pill--themed:visited {
+  color: var(--cube-pill-active-fg-rest);
+  background-color: var(--cube-pill-active-bg-rest);
+  border-color: var(--cube-pill-active-border-rest);
+}
+
+a.cube-Pill--themed:not(:disabled):not([aria-disabled="true"]):hover,
+button.cube-Pill--themed:not(:disabled):not([aria-disabled="true"]):hover {
   color: var(--cube-pill-active-fg-hover);
   background-color: var(--cube-pill-active-bg-hover);
   border-color: var(--cube-pill-active-border-hover);
 }
 
-a.Pill:not(:disabled):not([aria-disabled="true"]):active,
-button.Pill:not(:disabled):not([aria-disabled="true"]):active {
+a.cube-Pill--themed:not(:disabled):not([aria-disabled="true"]):active,
+button.cube-Pill--themed:not(:disabled):not([aria-disabled="true"]):active {
   color: var(--cube-pill-active-fg-pressed);
   background-color: var(--cube-pill-active-bg-pressed);
   border-color: var(--cube-pill-active-border-pressed);
 }
 
-.Pill:disabled,
-.Pill[aria-disabled="true"] {
+.cube-Pill--themed:disabled,
+.cube-Pill--themed[aria-disabled="true"] {
   color: var(--cube-pill-active-fg-disabled);
   background-color: var(--cube-pill-active-bg-disabled);
   border-color: var(--cube-pill-active-border-disabled);
-  cursor: not-allowed;
 }
 
-.Pill--size-sm {
-  gap: var(--cube-pill-sm-gap);
-  padding: var(--cube-pill-sm-paddingBlock) var(--cube-pill-sm-paddingInline);
-  border-radius: var(--cube-pill-sm-borderRadius);
-  font-size: var(--cube-typography-pill-sm-fontSize);
-  font-weight: var(--cube-typography-pill-sm-fontWeight);
-  line-height: var(--cube-typography-pill-sm-lineHeight);
-}
-
-.Pill--size-md {
-  gap: var(--cube-pill-md-gap);
-  padding: var(--cube-pill-md-paddingBlock) var(--cube-pill-md-paddingInline);
-  border-radius: var(--cube-pill-md-borderRadius);
-  font-size: var(--cube-typography-pill-md-fontSize);
-  font-weight: var(--cube-typography-pill-md-fontWeight);
-  line-height: var(--cube-typography-pill-md-lineHeight);
-}
-
-.Pill__leadingVisual,
-.Pill__trailingVisual {
+.cube-Pill__leadingVisual,
+.cube-Pill__trailingVisual {
   display: inline-flex;
   align-items: center;
   flex-shrink: 0;

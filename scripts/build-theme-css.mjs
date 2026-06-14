@@ -23,6 +23,70 @@ function cssSegment(key) {
   return String(key).replace(/[A-Z]/g, (ch) => `-${ch.toLowerCase()}`);
 }
 
+/** Pill color states via data attribute — mirrors Button’s :root + CSS class pattern. */
+function emitPillSelectorRules(pillColors, lines) {
+  if (!pillColors || typeof pillColors !== "object") return;
+
+  lines.push("/* Pill colors — [data-cube-pill]; vars live on :root (see --cube-pill-* above) */");
+
+  for (const shade of Object.keys(pillColors).sort()) {
+    const shadeBlock = pillColors[shade];
+    if (!shadeBlock || typeof shadeBlock !== "object") continue;
+
+    for (const intensity of Object.keys(shadeBlock).sort()) {
+      const intensityBlock = shadeBlock[intensity];
+      if (!intensityBlock || typeof intensityBlock !== "object") continue;
+
+      for (const surface of ["filled", "bordered"]) {
+        const key = `${shade}-${intensity}-${surface}`;
+        const p = `--cube-pill-${key}`;
+
+        lines.push(`[data-cube-pill="${key}"] {`);
+        lines.push(`  color: var(${p}-fg-rest);`);
+        lines.push(`  background-color: var(${p}-bg-rest);`);
+        lines.push(`  border-color: var(${p}-border-rest);`);
+        lines.push(`}`);
+
+        lines.push(`a[data-cube-pill="${key}"]:visited {`);
+        lines.push(`  color: var(${p}-fg-rest);`);
+        lines.push(`  background-color: var(${p}-bg-rest);`);
+        lines.push(`  border-color: var(${p}-border-rest);`);
+        lines.push(`}`);
+
+        lines.push(
+          `a[data-cube-pill="${key}"]:not(:disabled):not([aria-disabled="true"]):hover,`
+        );
+        lines.push(
+          `button[data-cube-pill="${key}"]:not(:disabled):not([aria-disabled="true"]):hover {`
+        );
+        lines.push(`  color: var(${p}-fg-hover);`);
+        lines.push(`  background-color: var(${p}-bg-hover);`);
+        lines.push(`  border-color: var(${p}-border-hover);`);
+        lines.push(`}`);
+
+        lines.push(
+          `a[data-cube-pill="${key}"]:not(:disabled):not([aria-disabled="true"]):active,`
+        );
+        lines.push(
+          `button[data-cube-pill="${key}"]:not(:disabled):not([aria-disabled="true"]):active {`
+        );
+        lines.push(`  color: var(${p}-fg-pressed);`);
+        lines.push(`  background-color: var(${p}-bg-pressed);`);
+        lines.push(`  border-color: var(${p}-border-pressed);`);
+        lines.push(`}`);
+
+        lines.push(`[data-cube-pill="${key}"]:disabled,`);
+        lines.push(`[data-cube-pill="${key}"][aria-disabled="true"] {`);
+        lines.push(`  color: var(${p}-fg-disabled);`);
+        lines.push(`  background-color: var(${p}-bg-disabled);`);
+        lines.push(`  border-color: var(${p}-border-disabled);`);
+        lines.push(`}`);
+        lines.push("");
+      }
+    }
+  }
+}
+
 function emitNestedStringVars(obj, pathParts, prefix, set) {
   if (typeof obj === "string") {
     const name = [prefix, ...pathParts.map(cssSegment)].filter(Boolean).join("-");
@@ -73,6 +137,23 @@ function main() {
     set("layout-contentMaxWidth", layoutSizes.contentMaxWidth);
     set("layout-sectionLabelWidth", layoutSizes.sectionLabelWidth);
     set("layout-pagePaddingInline", layoutSizes.pagePaddingInline);
+  }
+
+  const containerSizes = t.sizes?.container;
+  if (containerSizes) {
+    set("container-panelMinWidth", containerSizes.panelMinWidth);
+    set("container-sheetWidthSm", containerSizes.sheetWidthSm);
+    set("container-sheetWidthMd", containerSizes.sheetWidthMd);
+    set("container-sheetWidthLg", containerSizes.sheetWidthLg);
+    set("container-sidebarWidthSm", containerSizes.sidebarWidthSm);
+    set("container-sidebarWidthMd", containerSizes.sidebarWidthMd);
+    set("container-sidebarWidthLg", containerSizes.sidebarWidthLg);
+    set("container-sidebarMinWidth", containerSizes.sidebarMinWidth);
+    set("container-sidebarMaxWidth", containerSizes.sidebarMaxWidth);
+    set("container-tooltipMaxWidth", containerSizes.tooltipMaxWidth);
+    set("container-tooltipMaxWidthSingleLine", containerSizes.tooltipMaxWidthSingleLine);
+    set("container-popoverMinWidth", containerSizes.popoverMinWidth);
+    set("container-popoverMaxWidth", containerSizes.popoverMaxWidth);
   }
 
   // Typography
@@ -241,6 +322,7 @@ function main() {
     set(`shadow-popover`, shadows.popover);
     set(`shadow-popoverElevated`, shadows.popoverElevated);
     set(`shadow-sheet`, shadows.sheet);
+    set(`shadow-tooltip`, shadows.tooltip);
   }
 
   const popoverColors = t.popoverColors;
@@ -316,13 +398,11 @@ function main() {
     }
   }
 
-  for (const sizeKey of ["sm", "md"]) {
-    const row = t.sizes?.pill?.[sizeKey];
-    set(`pill-${sizeKey}-paddingInline`, row?.paddingInline);
-    set(`pill-${sizeKey}-paddingBlock`, row?.paddingBlock);
-    set(`pill-${sizeKey}-borderRadius`, row?.borderRadius);
-    set(`pill-${sizeKey}-gap`, row?.gap);
-  }
+  const row = t.sizes?.pill;
+  set(`pill-paddingInline`, row?.paddingInline);
+  set(`pill-paddingBlock`, row?.paddingBlock);
+  set(`pill-borderRadius`, row?.borderRadius);
+  set(`pill-gap`, row?.gap);
 
   const ib = t.iconButton;
   if (ib && typeof ib === "object") {
@@ -372,13 +452,6 @@ function main() {
     set(`typography-button-${seg}-lineHeight`, b?.lineHeight);
   }
 
-  for (const stop of ["sm", "md"]) {
-    const p = t.typography?.pill?.[stop];
-    set(`typography-pill-${stop}-fontSize`, p?.fontSize);
-    set(`typography-pill-${stop}-lineHeight`, p?.lineHeight);
-    set(`typography-pill-${stop}-fontWeight`, p?.fontWeight);
-  }
-
   const lines = [];
   lines.push("/* AUTO-GENERATED by scripts/build-theme-css.mjs */");
   lines.push(":root {");
@@ -387,6 +460,7 @@ function main() {
   }
   lines.push("}");
   lines.push("");
+  emitPillSelectorRules(t.pillColors, lines);
 
   fs.mkdirSync(path.dirname(OUTPUT), { recursive: true });
   fs.writeFileSync(OUTPUT, lines.join("\n"), "utf8");

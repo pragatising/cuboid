@@ -1,19 +1,13 @@
 import React, { CSSProperties } from "react";
 import { useTheme } from "../../../theme/ThemeContext";
-import type { CubeTheme, TextTokens } from "../../../theme/types";
+import { resolveGlobalColorOrCss } from "../../../theme/globalColor";
+import type { CubeTheme, GlobalColorPath, TextTokens } from "../../../theme/types";
 import styles from "./Text.module.css";
 
 export type TextVariant = keyof TextTokens;
 
-/** Shorthand names for functional foreground tokens */
-export type TextColor =
-  | "default"
-  | "muted"
-  | "onEmphasis"
-  | "disabled"
-  | "link"
-  | "white"
-  | "neutral";
+/** @deprecated Use global paths — e.g. `text.muted` instead of `"muted"`. */
+export type TextColor = GlobalColorPath;
 
 /** Default HTML element for each text variant */
 const DEFAULT_ELEMENT: Record<TextVariant, React.ElementType> = {
@@ -44,30 +38,6 @@ const VARIANT_CLASS: Record<TextVariant, string> = {
   inlineCode: styles["Text--inline-code"],
 };
 
-const COLOR_CLASS: Record<TextColor, string> = {
-  default: styles["Text--color-default"],
-  muted: styles["Text--color-muted"],
-  onEmphasis: styles["Text--color-on-emphasis"],
-  disabled: styles["Text--color-disabled"],
-  link: styles["Text--color-link"],
-  white: styles["Text--color-white"],
-  neutral: styles["Text--color-neutral"],
-};
-
-const SEMANTIC_COLORS = new Set<TextColor>([
-  "default",
-  "muted",
-  "onEmphasis",
-  "disabled",
-  "link",
-  "white",
-  "neutral",
-]);
-
-function isSemanticTextColor(c: string): c is TextColor {
-  return SEMANTIC_COLORS.has(c as TextColor);
-}
-
 function textVariantToCssSeg(v: TextVariant): string {
   return v.replace(/[A-Z]/g, (ch) => `-${ch.toLowerCase()}`);
 }
@@ -78,11 +48,11 @@ export interface TextProps {
   /** Maps to a named text style from the theme */
   variant?: TextVariant;
   /**
-   * Functional foreground color name, or any raw CSS color string.
-   * @example "muted"       → theme.colors.functional.foreground.muted
-   * @example "#ff0000"     → used as-is
+   * Color from `colors.global` (dot-path), or any raw CSS color string.
+   * @default "fg.neutral.6"
+   * @example "text.muted" | "fg.blue.3" | "#ff0000"
    */
-  color?: TextColor | string;
+  color?: GlobalColorPath;
   align?: CSSProperties["textAlign"];
   /** Truncate with ellipsis on a single line */
   truncate?: boolean;
@@ -99,7 +69,7 @@ export interface TextProps {
 export function Text({
   as,
   variant = "bodyMedium",
-  color = "default",
+  color = "fg.neutral.6",
   align,
   truncate = false,
   theme,
@@ -110,12 +80,9 @@ export function Text({
   const tokens = useTheme(theme);
   const As = as ?? DEFAULT_ELEMENT[variant];
 
-  const semanticColor = typeof color === "string" && isSemanticTextColor(color);
-
   const classNames = [
     styles.Text,
     VARIANT_CLASS[variant],
-    semanticColor && COLOR_CLASS[color],
     truncate && styles["Text--truncate"],
     className,
   ]
@@ -124,17 +91,9 @@ export function Text({
 
   const inlineVars = theme
     ? (() => {
-        const fg = tokens.colors.functional.foreground;
         const out: Record<string, string> = {
           "--cube-typography-fontFamily-base": tokens.typography.fontFamily.base,
           "--cube-typography-fontFamily-mono": tokens.typography.fontFamily.mono,
-          "--cube-colors-functional-foreground-default": fg.default,
-          "--cube-colors-functional-foreground-muted": fg.muted,
-          "--cube-colors-functional-foreground-onEmphasis": fg.onEmphasis,
-          "--cube-colors-functional-foreground-disabled": fg.disabled,
-          "--cube-colors-functional-foreground-link": fg.link,
-          "--cube-colors-functional-foreground-white": fg.white,
-          "--cube-colors-functional-foreground-neutral": fg.neutral,
         };
         (Object.keys(tokens.typography.text) as TextVariant[]).forEach((v) => {
           const seg = textVariantToCssSeg(v);
@@ -150,13 +109,23 @@ export function Text({
       })()
     : undefined;
 
+  const resolvedColor = resolveGlobalColorOrCss(color, tokens.colors.global, {
+    default: "fg.neutral.6",
+    muted: "text.default",
+    onEmphasis: "fg.neutral.1",
+    disabled: "text.disabled",
+    link: "fg.link.default",
+    white: "fg.neutral.1",
+    neutral: "fg.neutral.5",
+  });
+
   return (
     <As
       className={classNames}
       style={{
         textAlign: align,
+        color: resolvedColor,
         ...inlineVars,
-        ...(!semanticColor && typeof color === "string" ? { color } : undefined),
         ...style,
       }}
     >

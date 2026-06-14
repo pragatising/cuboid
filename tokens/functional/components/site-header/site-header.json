@@ -12,7 +12,7 @@
       "paddingBlock": { "value": "{size.space.8}" },
       "leadingGap": { "value": "{size.space.4}" },
       "trailingGap": { "value": "{size.space.8}" },
-      "dividerHeight": { "value": "15px" },
+      "dividerHeight": { "value": "{size.space.15}" },
       "dividerWidth": { "value": "{size.space.1}" }
     }
   }

@@ -6,13 +6,13 @@
     },
     "sizes": {
       "width": {
-        "sm": { "value": "240px" },
-        "md": { "value": "272px" },
-        "lg": { "value": "320px" }
+        "sm": { "value": "{size.container.sidebarWidthSm}" },
+        "md": { "value": "{size.container.sidebarWidthMd}" },
+        "lg": { "value": "{size.container.sidebarWidthLg}" }
       },
       "widthMinimized": { "value": "5.6rem" },
-      "minWidth": { "value": "200px" },
-      "maxWidth": { "value": "480px" },
+      "minWidth": { "value": "{size.container.sidebarMinWidth}" },
+      "maxWidth": { "value": "{size.container.sidebarMaxWidth}" },
       "padding": { "value": "{size.space.8}" },
       "footerPadding": { "value": "{size.space.8}" }
     }

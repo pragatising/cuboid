@@ -10,29 +10,6 @@
   white-space: nowrap;
 }
 
-/* Semantic foreground (maps to theme functional colors) */
-.Text--color-default {
-  color: var(--cube-colors-functional-foreground-default);
-}
-.Text--color-muted {
-  color: var(--cube-colors-functional-foreground-muted);
-}
-.Text--color-on-emphasis {
-  color: var(--cube-colors-functional-foreground-onEmphasis);
-}
-.Text--color-disabled {
-  color: var(--cube-colors-functional-foreground-disabled);
-}
-.Text--color-link {
-  color: var(--cube-colors-functional-foreground-link);
-}
-.Text--color-white {
-  color: var(--cube-colors-functional-foreground-white);
-}
-.Text--color-neutral {
-  color: var(--cube-colors-functional-foreground-neutral);
-}
-
 /* Variants — metrics from typography.text.* */
 .Text--display {
   font-size: var(--cube-typography-text-display-fontSize);

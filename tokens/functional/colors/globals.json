@@ -109,11 +109,18 @@
         "5": { "value": "{base.color.scale.blue.14}" }
       },
       "purple": {
-        "1": { "value": "{base.color.scale.purples.9}" },
-        "2": { "value": "{base.color.scale.purples.10}" },
-        "3": { "value": "{base.color.scale.purples.11}" },
-        "4": { "value": "{base.color.scale.purples.12}" },
-        "5": { "value": "{base.color.scale.purples.13}" }
+        "1": { "value": "{base.color.scale.purple.9}" },
+        "2": { "value": "{base.color.scale.purple.10}" },
+        "3": { "value": "{base.color.scale.purple.11}" },
+        "4": { "value": "{base.color.scale.purple.12}" },
+        "5": { "value": "{base.color.scale.purple.13}" }
+      },
+      "lime": {
+        "1": { "value": "{base.color.scale.lime.9}" },
+        "2": { "value": "{base.color.scale.lime.10}" },
+        "3": { "value": "{base.color.scale.lime.11}" },
+        "4": { "value": "{base.color.scale.lime.12}" },
+        "5": { "value": "{base.color.scale.lime.13}" }
       }
     },
     "text": {
@@ -172,7 +179,7 @@
       "key": { "value": "#646CB8" },
       "constant": { "value": "#09B2B5" },
       "constantOtherReferenceLink": { "value": "#0a3069" },
-      "entity": { "value": "{base.color.scale.purples.5}" },
+      "entity": { "value": "{base.color.scale.purple.5}" },
       "entityTag": { "value": "{base.color.scale.green.6}" },
       "keyword": { "value": "{base.color.scale.red.5}" },
       "string": { "value": "#B96516" },
@@ -195,7 +202,7 @@
       "markupChangedBg": { "value": "{base.color.scale.orange.1}" },
       "markupChangedText": { "value": "{base.color.scale.orange.6}" },
       "nullLiteral": { "value": "{base.color.scale.gray.4}" },
-      "booleanLiteral": { "value": "{base.color.scale.purples.5}" },
+      "booleanLiteral": { "value": "{base.color.scale.purple.9}" },
       "bracket": { "value": "#E01280" },
       "stringUrl": { "value": "#0969da" },
       "stringEmail": { "value": "#0969da" },

@@ -5,6 +5,7 @@ import type {
   CubeTheme,
   PillIntensity,
   PillSurface,
+  TextTokens,
   ThemeTokens,
 } from "../../../theme/types";
 import themeOutput from "../../../theme/output/theme.json";
@@ -12,9 +13,25 @@ import styles from "./Pill.module.css";
 
 /** Shade keys from `pillColors` in theme.json — add `yellow.json`, etc. alongside `gray.json`. */
 export type PillShade = keyof typeof themeOutput.pillColors;
+export type PillTextVariant = keyof TextTokens;
 export type { PillIntensity, PillSurface };
 
 const PILL_STATES = ["rest", "hover", "pressed", "disabled"] as const;
+
+const VARIANT_CLASS: Partial<Record<PillTextVariant, string>> = {
+  caption: styles["cube-Pill--caption"],
+  bodySmall: styles["cube-Pill--bodySmall"],
+  bodyMedium: styles["cube-Pill--bodyMedium"],
+  bodyLarge: styles["cube-Pill--bodyLarge"],
+};
+
+/** Stable global names (CSS modules hash the module classes). */
+const VARIANT_GLOBAL_CLASS: Partial<Record<PillTextVariant, string>> = {
+  caption: "cube-Pill--caption",
+  bodySmall: "cube-Pill--bodySmall",
+  bodyMedium: "cube-Pill--bodyMedium",
+  bodyLarge: "cube-Pill--bodyLarge",
+};
 
 function recipeToActiveVars(recipe: ButtonVariantInteractiveColors): Record<string, string> {
   const out: Record<string, string> = {};
@@ -43,6 +60,15 @@ function resolvePillRecipe(
   return recipe;
 }
 
+function pillLayoutVars(geom: ThemeTokens["sizes"]["pill"]): Record<string, string> {
+  return {
+    "--cube-pill-paddingInline": geom.paddingInline,
+    "--cube-pill-paddingBlock": geom.paddingBlock,
+    "--cube-pill-borderRadius": geom.borderRadius,
+    "--cube-pill-gap": geom.gap,
+  };
+}
+
 export interface PillProps {
   /** Color family — maps to Figma `shade` (token file per shade). */
   shade?: PillShade;
@@ -50,12 +76,17 @@ export interface PillProps {
   intensity?: PillIntensity;
   /** When true, uses the `bordered` surface recipe (Figma `border?`). */
   border?: boolean;
+  /**
+   * Text size — defaults to `bodySmall` (12px). Override when the pill should match
+   * a different `Text` variant.
+   */
+  variant?: PillTextVariant;
   /** Render as static label, anchor, or a custom component (e.g. react-router `Link`). */
   as?: React.ElementType;
   href?: string;
-  size?: keyof ThemeTokens["sizes"]["pill"];
   leadingVisual?: React.ReactNode;
   trailingVisual?: React.ReactNode;
+  /** Override chip geometry (`sizes.pill`) or colors for this instance. */
   theme?: CubeTheme;
   className?: string;
   children?: React.ReactNode;
@@ -65,9 +96,9 @@ export function Pill({
   shade = "gray",
   intensity = "light",
   border = false,
+  variant = "bodySmall",
   as,
   href,
-  size = "sm",
   leadingVisual,
   trailingVisual,
   theme,
@@ -79,35 +110,32 @@ export function Pill({
   const tokens = useTheme(theme);
   const surface: PillSurface = border ? "bordered" : "filled";
   const Component: React.ElementType = as ?? (href ? "a" : "span");
+  const pillKey = `${shade}-${intensity}-${surface}`;
 
-  const recipe = resolvePillRecipe(tokens.colors.functional.pill, shade, intensity, surface);
-
-  const classNames = [styles.Pill, styles[`Pill--size-${size}`], className]
+  const classNames = [
+    "cube-Pill",
+    styles["cube-Pill"],
+    VARIANT_GLOBAL_CLASS[variant],
+    VARIANT_CLASS[variant],
+    theme && "cube-Pill--themed",
+    theme && styles["cube-Pill--themed"],
+    className,
+  ]
     .filter(Boolean)
     .join(" ");
 
-  const inlineVars = (() => {
-    const pillType = tokens.typography.pill[size];
-    const geom = tokens.sizes.pill[size];
-    const base: Record<string, string> = {
-      ...recipeToActiveVars(recipe),
-      [`--cube-pill-${size}-paddingInline`]: geom.paddingInline,
-      [`--cube-pill-${size}-paddingBlock`]: geom.paddingBlock,
-      [`--cube-pill-${size}-borderRadius`]: geom.borderRadius,
-      [`--cube-pill-${size}-gap`]: geom.gap,
-    };
-    if (theme) {
-      Object.assign(base, {
+  // Default: colors from theme.css via [data-cube-pill] (no inline state vars).
+  // With `theme` prop: re-bind --cube-pill-active-* like Button does for overrides.
+  const inlineVars = theme
+    ? ({
+        ...recipeToActiveVars(
+          resolvePillRecipe(tokens.colors.functional.pill, shade, intensity, surface)
+        ),
+        ...pillLayoutVars(tokens.sizes.pill),
         "--cube-sizes-borderWidth-thin": tokens.sizes.borderWidth.thin,
         "--cube-typography-fontFamily-base": tokens.typography.fontFamily.base,
-        [`--cube-typography-pill-${size}-fontSize`]: pillType.fontSize,
-        [`--cube-typography-pill-${size}-fontWeight`]: String(pillType.fontWeight),
-        [`--cube-typography-pill-${size}-lineHeight`]: pillType.lineHeight,
-        "--cube-colors-functional-foreground-link": tokens.colors.functional.foreground.link,
-      });
-    }
-    return base as React.CSSProperties;
-  })();
+      } as React.CSSProperties)
+    : undefined;
 
   const anchorProps =
     Component === "a" && href
@@ -117,12 +145,13 @@ export function Pill({
   return (
     <Component
       className={classNames}
-      style={{ ...(style ?? {}), ...inlineVars }}
+      data-cube-pill={theme ? undefined : pillKey}
+      style={{ ...(inlineVars ?? {}), ...(style ?? {}) }}
       {...anchorProps}
     >
-      {leadingVisual && <span className={styles.Pill__leadingVisual}>{leadingVisual}</span>}
+      {leadingVisual && <span className={styles["cube-Pill__leadingVisual"]}>{leadingVisual}</span>}
       {children}
-      {trailingVisual && <span className={styles.Pill__trailingVisual}>{trailingVisual}</span>}
+      {trailingVisual && <span className={styles["cube-Pill__trailingVisual"]}>{trailingVisual}</span>}
     </Component>
   );
 }

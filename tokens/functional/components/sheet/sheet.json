@@ -5,11 +5,11 @@
     },
     "sizes": {
       "width": {
-        "sm": { "value": "320px" },
-        "md": { "value": "400px" },
-        "lg": { "value": "560px" }
+        "sm": { "value": "{size.container.sheetWidthSm}" },
+        "md": { "value": "{size.container.sheetWidthMd}" },
+        "lg": { "value": "{size.container.sheetWidthLg}" }
       },
-      "minWidth": { "value": "240px" },
+      "minWidth": { "value": "{size.container.panelMinWidth}" },
       "maxWidth": { "value": "90vw" },
       "maxHeight": { "value": "90vh" },
       "padding": { "value": "{size.space.16}" },
