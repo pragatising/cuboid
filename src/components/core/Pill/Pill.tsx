@@ -43,8 +43,6 @@ function resolvePillRecipe(
   return recipe;
 }
 
-type PillElement = "span" | "a";
-
 export interface PillProps {
   /** Color family — maps to Figma `shade` (token file per shade). */
   shade?: PillShade;
@@ -52,8 +50,8 @@ export interface PillProps {
   intensity?: PillIntensity;
   /** When true, uses the `bordered` surface recipe (Figma `border?`). */
   border?: boolean;
-  /** Render as static label (`span`) or link (`a` when `href` is set). */
-  as?: PillElement;
+  /** Render as static label, anchor, or a custom component (e.g. react-router `Link`). */
+  as?: React.ElementType;
   href?: string;
   size?: keyof ThemeTokens["sizes"]["pill"];
   leadingVisual?: React.ReactNode;
@@ -112,7 +110,7 @@ export function Pill({
   })();
 
   const anchorProps =
-    Component === "a"
+    Component === "a" && href
       ? { href, ...(rest as React.AnchorHTMLAttributes<HTMLAnchorElement>) }
       : rest;
 

@@ -5,7 +5,28 @@ import { Icon } from "../Icon";
 import { OpenInNewIcon } from "../../../icons/material";
 import styles from "./Link.module.css";
 
-export type LinkVariant = keyof LinkFunctionalColors;
+export type LinkVariant = keyof LinkFunctionalColors | "inherit";
+
+type LinkOwnProps = {
+  /**
+   * `inline` — inside body copy; inherits font from parent.
+   * `standalone` — nav, footer, contact rows.
+   * `inherit` — composition wrapper (e.g. pill links); no underline, inherits color.
+   */
+  variant?: LinkVariant;
+  /** Opens in a new tab with `rel="noopener noreferrer"`. */
+  external?: boolean;
+  /** Show ↗ icon when `external` (default true). */
+  showExternalIcon?: boolean;
+  theme?: CubeTheme;
+  className?: string;
+  children: React.ReactNode;
+};
+
+export type LinkProps<E extends React.ElementType = "a"> = LinkOwnProps &
+  Omit<React.ComponentPropsWithoutRef<E>, keyof LinkOwnProps | "as"> & {
+    as?: E;
+  };
 
 function linkCssVars(link: LinkFunctionalColors): Record<string, string> {
   const out: Record<string, string> = {};
@@ -17,23 +38,21 @@ function linkCssVars(link: LinkFunctionalColors): Record<string, string> {
   return out;
 }
 
-export interface LinkProps
-  extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "children"> {
-  href: string;
-  /**
-   * `inline` — inside body copy; inherits font from parent.
-   * `standalone` — nav, footer, contact rows.
-   */
-  variant?: LinkVariant;
-  /** Opens in a new tab with `rel="noopener noreferrer"`. */
-  external?: boolean;
-  /** Show ↗ icon when `external` (default true). */
-  showExternalIcon?: boolean;
-  theme?: CubeTheme;
-  children: React.ReactNode;
+function linkInlineVars(tokens: ThemeTokens): React.CSSProperties {
+  const { functional } = tokens.colors;
+  const body = tokens.typography.text.bodyMedium;
+  return {
+    ...linkCssVars(functional.link),
+    "--cube-typography-fontFamily-base": tokens.typography.fontFamily.base,
+    "--cube-typography-text-body-medium-fontSize": body.fontSize,
+    "--cube-typography-text-body-medium-fontWeight": String(body.fontWeight),
+    "--cube-typography-text-body-medium-lineHeight": String(body.lineHeight),
+    "--cube-colors-functional-foreground-link": functional.foreground.link,
+  } as React.CSSProperties;
 }
 
-export function Link({
+export function Link<E extends React.ElementType = "a">({
+  as,
   href,
   variant = "standalone",
   external = false,
@@ -43,53 +62,45 @@ export function Link({
   className,
   target,
   rel,
+  style,
   ...rest
-}: LinkProps) {
+}: LinkProps<E>) {
   const tokens = useTheme(theme);
+  const Component = as ?? "a";
 
   const classNames = [
     styles.Link,
-    variant === "inline" ? styles["Link--inline"] : styles["Link--standalone"],
+    variant === "inline" && styles["Link--inline"],
+    variant === "standalone" && styles["Link--standalone"],
+    variant === "inherit" && styles["Link--inherit"],
     className,
   ]
     .filter(Boolean)
     .join(" ");
 
-  const inlineVars = theme
-    ? (() => {
-        const { functional } = tokens.colors;
-        const body = tokens.typography.text.bodyMedium;
-        return {
-          ...linkCssVars(functional.link),
-          "--cube-typography-fontFamily-base": tokens.typography.fontFamily.base,
-          "--cube-typography-text-body-medium-fontSize": body.fontSize,
-          "--cube-typography-text-body-medium-fontWeight": String(body.fontWeight),
-          "--cube-typography-text-body-medium-lineHeight": String(body.lineHeight),
-          "--cube-colors-functional-foreground-link": functional.foreground.link,
-        } as React.CSSProperties;
-      })()
-    : undefined;
+  const inlineVars = theme ? linkInlineVars(tokens) : undefined;
 
-  const resolvedTarget = external ? "_blank" : target;
-  const resolvedRel = external
-    ? [rel, "noopener", "noreferrer"].filter(Boolean).join(" ")
-    : rel;
+  const resolvedTarget = external && Component === "a" ? "_blank" : target;
+  const resolvedRel =
+    external && Component === "a"
+      ? [rel, "noopener", "noreferrer"].filter(Boolean).join(" ")
+      : rel;
+
+  const componentProps = {
+    className: classNames,
+    style: { ...inlineVars, ...style },
+    ...(Component === "a" ? { href, target: resolvedTarget, rel: resolvedRel } : {}),
+    ...rest,
+  } as React.ComponentPropsWithoutRef<E>;
 
   return (
-    <a
-      href={href}
-      className={classNames}
-      style={inlineVars}
-      target={resolvedTarget}
-      rel={resolvedRel}
-      {...rest}
-    >
+    <Component {...componentProps}>
       {children}
-      {external && showExternalIcon && (
+      {external && showExternalIcon && variant !== "inherit" && (
         <Icon size="xs" className={styles.Link__externalIcon}>
           <OpenInNewIcon />
         </Icon>
       )}
-    </a>
+    </Component>
   );
 }

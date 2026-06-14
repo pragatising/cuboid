@@ -341,6 +341,10 @@
   --cube-iconButton-small-borderRadius: 0.375rem;
   --cube-iconButton-small-icon: 1.25rem;
   --cube-iconButton-small-size: 1.75rem;
+  --cube-layout-contentMaxWidth: 40rem;
+  --cube-layout-pageMaxWidth: 56rem;
+  --cube-layout-pagePaddingInline: 1.25rem;
+  --cube-layout-sectionLabelWidth: clamp(6.5rem, 25%, 10rem);
   --cube-link-inline-fg-hover: #ABA9A5;
   --cube-link-inline-fg-rest: #525252;
   --cube-link-standalone-fg-hover: #ABA9A5;

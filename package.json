@@ -1,6 +1,6 @@
 {
   "name": "@sragatiping/cuboid",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Cube — React components and design tokens for data views, tables, and themed UI.",
   "keywords": [
     "react",
@@ -20,10 +20,13 @@
       "import": "./dist/index.es.js",
       "require": "./dist/index.cjs.js",
       "types": "./dist/index.d.ts"
-    }
+    },
+    "./style.css": "./dist/style.css",
+    "./theme.css": "./src/theme/output/theme.css"
   },
   "files": [
-    "dist"
+    "dist",
+    "src/theme/output/theme.css"
   ],
   "scripts": {
     "dev": "vite",

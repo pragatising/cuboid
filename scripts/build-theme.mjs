@@ -1072,6 +1072,28 @@ function main() {
   const stackGap = readStackScale(uSize?.stack?.gap, "gap");
   const stackPadding = readStackScale(uSize?.stack?.padding, "padding");
 
+  const layoutLayoutKeys = [
+    "pageMaxWidth",
+    "contentMaxWidth",
+    "sectionLabelWidth",
+    "pagePaddingInline",
+  ];
+  const layoutLayoutSrc = uSize?.layout;
+  if (!isPlain(layoutLayoutSrc)) {
+    console.error(
+      "Expected resolved size.layout.* (from tokens/functional/size/layout.json)"
+    );
+    process.exit(1);
+  }
+  const layoutSizes = {};
+  for (const key of layoutLayoutKeys) {
+    if (typeof layoutLayoutSrc[key] !== "string") {
+      console.error(`Expected size.layout.${key} to be a string`);
+      process.exit(1);
+    }
+    layoutSizes[key] = layoutLayoutSrc[key];
+  }
+
   const tipLayout = uSize?.tooltip;
   if (!isPlain(tipLayout)) {
     console.error(
@@ -1375,6 +1397,7 @@ function main() {
     sizes: {
       space,
       stack: { gap: stackGap, padding: stackPadding },
+      layout: layoutSizes,
       borderRadius,
       borderWidth,
       breakpoints,

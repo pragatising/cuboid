@@ -1,12 +1,18 @@
 import React, { CSSProperties } from "react";
 import { useTheme } from "../../../theme/ThemeContext";
-import type { CubeTheme, StackGap, StackPadding, ThemeTokens } from "../../../theme/types";
+import type {
+  CubeTheme,
+  LayoutWidth,
+  StackGap,
+  StackPadding,
+  ThemeTokens,
+} from "../../../theme/types";
 import { resolveResponsive, type Responsive } from "../../../utils/responsive";
 import styles from "./Stack.module.css";
 
 export type StackDirection = "horizontal" | "vertical";
 
-export type { StackGap, StackPadding };
+export type { StackGap, StackPadding, LayoutWidth };
 /** @deprecated Use `StackGap` or `StackPadding`. */
 export type { StackGap as StackSpacing };
 
@@ -29,6 +35,14 @@ export interface StackProps {
   justify?: Responsive<CSSProperties["justifyContent"]>;
   /** Allow children to wrap — responsive supported */
   wrap?: Responsive<boolean>;
+  /** Flex grow — `true` sets `flex: 1 1 0%` for fill-remaining-space columns */
+  grow?: boolean | number;
+  /** Flex shrink — `false` prevents a column from shrinking below its width */
+  shrink?: boolean | number;
+  /** Token-based width — `label` for section labels, `page` / `content` for max-width columns */
+  width?: LayoutWidth;
+  /** `0` enables text truncation inside horizontal flex rows */
+  minWidth?: 0;
   theme?: CubeTheme;
   style?: CSSProperties;
   className?: string;
@@ -60,6 +74,61 @@ function paddingToCss(
 function wrapToCss(wrap: boolean | undefined): CSSProperties["flexWrap"] {
   if (wrap === undefined) return undefined;
   return wrap ? "wrap" : "nowrap";
+}
+
+function layoutWidthToCss(
+  key: LayoutWidth | undefined,
+  layout: ThemeTokens["sizes"]["layout"]
+): string | undefined {
+  if (key === undefined) return undefined;
+  switch (key) {
+    case "label":
+      return layout.sectionLabelWidth;
+    case "page":
+      return layout.pageMaxWidth;
+    case "content":
+      return layout.contentMaxWidth;
+    case "full":
+      return "100%";
+    case "auto":
+      return "auto";
+    default:
+      return undefined;
+  }
+}
+
+function stackFlexStyle(
+  props: Pick<StackProps, "grow" | "shrink" | "width" | "minWidth">,
+  layout: ThemeTokens["sizes"]["layout"]
+): CSSProperties {
+  const style: CSSProperties = {};
+
+  if (props.grow === true) {
+    style.flex = "1 1 0%";
+  } else if (props.grow === false) {
+    style.flexGrow = 0;
+  } else if (typeof props.grow === "number") {
+    style.flexGrow = props.grow;
+  }
+
+  if (props.shrink === false) {
+    style.flexShrink = 0;
+  } else if (props.shrink === true) {
+    style.flexShrink = 1;
+  } else if (typeof props.shrink === "number") {
+    style.flexShrink = props.shrink;
+  }
+
+  const widthVal = layoutWidthToCss(props.width, layout);
+  if (widthVal !== undefined) {
+    style.width = widthVal;
+  }
+
+  if (props.minWidth === 0) {
+    style.minWidth = 0;
+  }
+
+  return style;
 }
 
 function stackCssVars(
@@ -114,6 +183,9 @@ function stackCssVars(
  * `padding`, `paddingBlock`, and `paddingInline` use the same stop names.
  * Directional padding props override the matching axis from `padding`.
  *
+ * Flex child sizing: `grow`, `shrink`, `width`, and `minWidth={0}` compose
+ * section rows and side-by-side columns without custom CSS.
+ *
  * Responsive: pass `{ sm, md, lg }` on layout props (mobile-first).
  * `sm` = default; `md` / `lg` override at `--cube-breakpoint-md` / `--cube-breakpoint-lg`.
  */
@@ -127,6 +199,10 @@ export function Stack({
   align,
   justify,
   wrap = false,
+  grow,
+  shrink,
+  width,
+  minWidth,
   theme,
   style,
   className,
@@ -150,6 +226,7 @@ export function Stack({
           justify,
           wrap,
         }),
+        ...stackFlexStyle({ grow, shrink, width, minWidth }, tokens.sizes.layout),
         ...style,
       }}
     >

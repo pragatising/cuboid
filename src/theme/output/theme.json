@@ -220,6 +220,12 @@
         "xxl": "3rem"
       }
     },
+    "layout": {
+      "pageMaxWidth": "56rem",
+      "contentMaxWidth": "40rem",
+      "sectionLabelWidth": "clamp(6.5rem, 25%, 10rem)",
+      "pagePaddingInline": "1.25rem"
+    },
     "borderRadius": {
       "sm": "0.25rem",
       "md": "0.5rem",

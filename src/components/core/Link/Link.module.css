@@ -16,14 +16,14 @@
   letter-spacing: inherit;
 }
 
-a.Link.Link--inline,
-a.Link.Link--inline:visited {
+.Link.Link--inline,
+.Link.Link--inline:visited {
   color: var(--cube-link-inline-fg-rest);
   text-decoration: underline;
   text-underline-offset: 0.3em;
 }
 
-a.Link.Link--inline:not([aria-disabled="true"]):hover {
+.Link.Link--inline:not([aria-disabled="true"]):hover {
   color: var(--cube-link-inline-fg-hover);
   text-decoration: underline;
 }
@@ -39,16 +39,29 @@ a.Link.Link--inline:not([aria-disabled="true"]):hover {
   line-height: var(--cube-typography-text-body-medium-lineHeight);
 }
 
-a.Link.Link--standalone,
-a.Link.Link--standalone:visited {
+.Link.Link--standalone,
+.Link.Link--standalone:visited {
   color: var(--cube-link-standalone-fg-rest);
   text-decoration: underline;
   text-underline-offset: 0.125em;
 }
 
-a.Link.Link--standalone:not([aria-disabled="true"]):hover {
+.Link.Link--standalone:not([aria-disabled="true"]):hover {
   color: var(--cube-link-standalone-fg-hover);
   text-decoration: underline;
+}
+
+/* Composition wrapper — pill rows, icon+label rows without link chrome */
+.Link--inherit {
+  display: inline-flex;
+  align-items: center;
+  color: inherit;
+  text-decoration: none;
+}
+
+.Link--inherit:not([aria-disabled="true"]):hover {
+  color: inherit;
+  text-decoration: none;
 }
 
 .Link[aria-disabled="true"] {

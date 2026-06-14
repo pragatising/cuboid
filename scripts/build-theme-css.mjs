@@ -67,6 +67,14 @@ function main() {
   emitNestedStringVars(t.sizes?.stack?.gap, [], "stack-gap", set);
   emitNestedStringVars(t.sizes?.stack?.padding, [], "stack-padding", set);
 
+  const layoutSizes = t.sizes?.layout;
+  if (layoutSizes) {
+    set("layout-pageMaxWidth", layoutSizes.pageMaxWidth);
+    set("layout-contentMaxWidth", layoutSizes.contentMaxWidth);
+    set("layout-sectionLabelWidth", layoutSizes.sectionLabelWidth);
+    set("layout-pagePaddingInline", layoutSizes.pagePaddingInline);
+  }
+
   // Typography
   set("typography-fontFamily-base", t.typography?.fontFamily?.base);
   set("typography-fontFamily-mono", t.typography?.fontFamily?.mono);

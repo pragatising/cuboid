@@ -641,6 +641,15 @@ export interface SidebarSizesTokens {
   footerPadding: string;
 }
 
+export interface LayoutTokens {
+  pageMaxWidth: string;
+  contentMaxWidth: string;
+  sectionLabelWidth: string;
+  pagePaddingInline: string;
+}
+
+export type LayoutWidth = "label" | "page" | "content" | "full" | "auto";
+
 export interface ResizeHandleSizesTokens {
   hitArea: string;
 }
@@ -654,6 +663,7 @@ export interface ShadowTokens {
 export interface Sizes {
   space: SpaceTokens;
   stack: { gap: StackGapTokens; padding: StackPaddingTokens };
+  layout: LayoutTokens;
   borderRadius: BorderRadiusTokens;
   borderWidth: BorderWidthTokens;
   breakpoints: BreakpointTokens;
