@@ -1,0 +1,29 @@
+.Overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--cube-z-index-overlay, 400);
+  border: none;
+  padding: 0;
+  margin: 0;
+  appearance: none;
+}
+
+.Overlay--modal {
+  background-color: var(--cube-overlay-modal-bg);
+  cursor: default;
+}
+
+.Overlay--sheet {
+  background-color: var(--cube-overlay-sheet-bg);
+  cursor: default;
+}
+
+.Overlay--none {
+  background-color: var(--cube-overlay-none-bg);
+  pointer-events: none;
+  cursor: default;
+}
+
+.Overlay--dismissible {
+  cursor: pointer;
+}

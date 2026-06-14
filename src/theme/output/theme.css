@@ -314,6 +314,9 @@
   --cube-link-inline-fg-rest: #525252;
   --cube-link-standalone-fg-hover: #ABA9A5;
   --cube-link-standalone-fg-rest: #525252;
+  --cube-overlay-modal-bg: rgba(58,58,57,0.2);
+  --cube-overlay-none-bg: #ffffff00;
+  --cube-overlay-sheet-bg: rgba(53,53,51,0.03);
   --cube-pill-gray-bold-bordered-bg-disabled: #F4F4F2;
   --cube-pill-gray-bold-bordered-bg-hover: #F4F4F2;
   --cube-pill-gray-bold-bordered-bg-pressed: #EFEEEA;
@@ -898,6 +901,18 @@
   --cube-pill-yellow-light-filled-fg-hover: #955C02;
   --cube-pill-yellow-light-filled-fg-pressed: #955C02;
   --cube-pill-yellow-light-filled-fg-rest: #AA6A01;
+  --cube-resizeHandle-hitArea: 0.5rem;
+  --cube-shadow-popover: 0 0 0 1px rgba(42, 28, 0, 0.07), 0 20px 24px 0 rgba(25, 25, 25, 0.05), 0 5px 8px 0 rgba(25, 25, 25, 0.03);
+  --cube-shadow-sheet: 0 0 0 1px rgba(42, 28, 0, 0.07), 0 20px 24px 0 rgba(25, 25, 25, 0.05), 0 5px 8px 0 rgba(25, 25, 25, 0.03);
+  --cube-sheet-bg: #FFFFFF;
+  --cube-sheet-bottomCornerRadius: 1rem;
+  --cube-sheet-maxHeight: 90vh;
+  --cube-sheet-maxWidth: 90vw;
+  --cube-sheet-minWidth: 15rem;
+  --cube-sheet-padding: 1rem;
+  --cube-sheet-width-lg: 35rem;
+  --cube-sheet-width-md: 25rem;
+  --cube-sheet-width-sm: 20rem;
   --cube-siteHeader-bg: #FFFFFF;
   --cube-siteHeader-border: #ffffff00;
   --cube-siteHeader-divider-fg: #ABA9A5;
@@ -989,4 +1004,15 @@
   --cube-typography-text-title-small-fontSize: 1.25rem;
   --cube-typography-text-title-small-fontWeight: 600;
   --cube-typography-text-title-small-lineHeight: 1.5;
+  --cube-z-index-base: 0;
+  --cube-z-index-dialog: 600;
+  --cube-z-index-dropdown: 300;
+  --cube-z-index-max: 9999;
+  --cube-z-index-overlay: 400;
+  --cube-z-index-popover: 700;
+  --cube-z-index-raised: 1;
+  --cube-z-index-sheet: 500;
+  --cube-z-index-sticky: 200;
+  --cube-z-index-toast: 900;
+  --cube-z-index-tooltip: 800;
 }

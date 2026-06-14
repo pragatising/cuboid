@@ -32,3 +32,22 @@ export type {
 
 export { SiteHeader, SiteHeaderDivider } from "./SiteHeader";
 export type { SiteHeaderProps, SiteHeaderDividerProps } from "./SiteHeader";
+
+export { Overlay } from "./Overlay";
+export type { OverlayProps, OverlayVariant } from "./Overlay";
+
+export { Sheet } from "./Sheet";
+export type {
+  SheetProps,
+  SheetEdge,
+  SheetRegionProps,
+  SheetWidth,
+  SheetWidthStop,
+} from "./Sheet";
+
+export { ResizeHandle } from "./ResizeHandle";
+export type {
+  ResizeHandleProps,
+  ResizeHandleOrientation,
+  ResizeHandleEdge,
+} from "./ResizeHandle";

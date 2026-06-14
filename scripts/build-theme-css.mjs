@@ -164,6 +164,43 @@ function main() {
     set(`siteHeader-divider-width`, siteHeaderSizes.dividerWidth);
   }
 
+  const overlayColors = t.overlayColors;
+  if (overlayColors) {
+    set(`overlay-modal-bg`, overlayColors.modal);
+    set(`overlay-sheet-bg`, overlayColors.sheet);
+    set(`overlay-none-bg`, overlayColors.none);
+  }
+
+  emitNestedStringVars(t.sizes?.zIndex, [], "z-index", set);
+
+  const sheetColors = t.sheetColors;
+  if (sheetColors) {
+    set(`sheet-bg`, sheetColors.background);
+  }
+
+  const sheetSizes = t.sizes?.sheet;
+  if (sheetSizes) {
+    set(`sheet-width-sm`, sheetSizes.width?.sm);
+    set(`sheet-width-md`, sheetSizes.width?.md);
+    set(`sheet-width-lg`, sheetSizes.width?.lg);
+    set(`sheet-minWidth`, sheetSizes.minWidth);
+    set(`sheet-maxWidth`, sheetSizes.maxWidth);
+    set(`sheet-maxHeight`, sheetSizes.maxHeight);
+    set(`sheet-padding`, sheetSizes.padding);
+    set(`sheet-bottomCornerRadius`, sheetSizes.bottomCornerRadius);
+  }
+
+  const resizeHandleSizes = t.sizes?.resizeHandle;
+  if (resizeHandleSizes) {
+    set(`resizeHandle-hitArea`, resizeHandleSizes.hitArea);
+  }
+
+  const shadows = t.shadows;
+  if (shadows) {
+    set(`shadow-popover`, shadows.popover);
+    set(`shadow-sheet`, shadows.sheet);
+  }
+
   const pillColors = t.pillColors;
   if (pillColors && typeof pillColors === "object") {
     for (const shade of Object.keys(pillColors).sort()) {

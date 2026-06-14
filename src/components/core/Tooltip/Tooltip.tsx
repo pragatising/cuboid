@@ -85,6 +85,7 @@ function tooltipCssVars(tokens: ThemeTokens): Record<string, string> {
     "--cube-tooltip-maxWidth": layout.maxWidth,
     "--cube-tooltip-maxWidthSingleLine": layout.maxWidthSingleLine,
     "--cube-tooltip-shadow": layout.boxShadow,
+    "--cube-z-index-tooltip": tokens.sizes.zIndex.tooltip,
     "--cube-sizes-borderWidth-thin": tokens.sizes.borderWidth.thin,
     "--cube-typography-fontFamily-base": tokens.typography.fontFamily.base,
     "--cube-typography-text-caption-fontSize": caption.fontSize,

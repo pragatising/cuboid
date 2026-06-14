@@ -232,6 +232,16 @@ export interface SiteHeaderFunctionalColors {
   divider: string;
 }
 
+export interface OverlayFunctionalColors {
+  modal: string;
+  sheet: string;
+  none: string;
+}
+
+export interface SheetFunctionalColors {
+  background: string;
+}
+
 export type PillSurface = "filled" | "bordered";
 
 /** Matches Figma Pill intensity property. */
@@ -268,6 +278,8 @@ export interface FunctionalColors {
   link: LinkFunctionalColors;
   breadcrumb: BreadcrumbFunctionalColors;
   siteHeader: SiteHeaderFunctionalColors;
+  overlay: OverlayFunctionalColors;
+  sheet: SheetFunctionalColors;
   pill: PillFunctionalColors;
   tooltip: TooltipSurfaceColors;
 }
@@ -498,6 +510,46 @@ export interface SiteHeaderSizesTokens {
   dividerWidth: string;
 }
 
+/** Shared stacking order for portaled / floating UI — one ladder for the whole system. */
+export interface ZIndexTokens {
+  base: string;
+  raised: string;
+  sticky: string;
+  dropdown: string;
+  overlay: string;
+  sheet: string;
+  dialog: string;
+  popover: string;
+  tooltip: string;
+  toast: string;
+  max: string;
+}
+
+export interface SheetWidthStopTokens {
+  sm: string;
+  md: string;
+  lg: string;
+}
+
+export interface SheetSizesTokens {
+  width: SheetWidthStopTokens;
+  minWidth: string;
+  maxWidth: string;
+  maxHeight: string;
+  padding: string;
+  /** Top corner radius token — used only when `edge="bottom"` and `roundedTop` is true. */
+  bottomCornerRadius: string;
+}
+
+export interface ResizeHandleSizesTokens {
+  hitArea: string;
+}
+
+export interface ShadowTokens {
+  popover: string;
+  sheet: string;
+}
+
 export interface Sizes {
   space: SpaceTokens;
   stack: { gap: StackGapTokens; padding: StackPaddingTokens };
@@ -510,6 +562,9 @@ export interface Sizes {
   iconButton: IconButtonSizesTokens;
   breadcrumb: BreadcrumbSizesTokens;
   siteHeader: SiteHeaderSizesTokens;
+  sheet: SheetSizesTokens;
+  resizeHandle: ResizeHandleSizesTokens;
+  zIndex: ZIndexTokens;
 }
 
 // Convenience alias for space token keys (used by Stack gap/padding props)
@@ -521,6 +576,7 @@ export interface ThemeTokens {
   colors: Colors;
   typography: Typography;
   sizes: Sizes;
+  shadows: ShadowTokens;
 }
 
 /**

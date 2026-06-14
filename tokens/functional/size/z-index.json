@@ -1,0 +1,15 @@
+{
+  "zIndex": {
+    "base": { "value": "0" },
+    "raised": { "value": "1" },
+    "sticky": { "value": "200" },
+    "dropdown": { "value": "300" },
+    "overlay": { "value": "400" },
+    "sheet": { "value": "500" },
+    "dialog": { "value": "600" },
+    "popover": { "value": "700" },
+    "tooltip": { "value": "800" },
+    "toast": { "value": "900" },
+    "max": { "value": "9999" }
+  }
+}

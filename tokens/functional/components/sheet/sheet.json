@@ -1,0 +1,19 @@
+{
+  "sheet": {
+    "color": {
+      "background": { "value": "{color.canvas.default}" }
+    },
+    "sizes": {
+      "width": {
+        "sm": { "value": "320px" },
+        "md": { "value": "400px" },
+        "lg": { "value": "560px" }
+      },
+      "minWidth": { "value": "240px" },
+      "maxWidth": { "value": "90vw" },
+      "maxHeight": { "value": "90vh" },
+      "padding": { "value": "{size.space.16}" },
+      "bottomCornerRadius": { "value": "{size.borderRadius.large}" }
+    }
+  }
+}

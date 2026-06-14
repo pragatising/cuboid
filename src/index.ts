@@ -35,6 +35,25 @@ export type {
 export { SiteHeader, SiteHeaderDivider } from "./components/core/SiteHeader";
 export type { SiteHeaderProps, SiteHeaderDividerProps } from "./components/core/SiteHeader";
 
+export { Overlay } from "./components/core/Overlay";
+export type { OverlayProps, OverlayVariant } from "./components/core/Overlay";
+
+export { Sheet } from "./components/core/Sheet";
+export type {
+  SheetProps,
+  SheetEdge,
+  SheetRegionProps,
+  SheetWidth,
+  SheetWidthStop,
+} from "./components/core/Sheet";
+
+export { ResizeHandle } from "./components/core/ResizeHandle";
+export type {
+  ResizeHandleProps,
+  ResizeHandleOrientation,
+  ResizeHandleEdge,
+} from "./components/core/ResizeHandle";
+
 // ── Data components ───────────────────────────────────────────────────────────
 export { CodeSnippet } from "./components/CodeSnippet";
 export type { CodeSnippetProps } from "./components/CodeSnippet";
@@ -68,6 +87,7 @@ export type {
   TextTokens,
   Sizes,
   SpaceKey,
+  ZIndexTokens,
   TooltipSurfaceColors,
   TooltipLayoutTokens,
   IconButtonFunctionalColors,
@@ -83,6 +103,12 @@ export type {
   PillSizeStopTokens,
   BreadcrumbFunctionalColors,
   BreadcrumbSizesTokens,
+  OverlayFunctionalColors,
+  SheetFunctionalColors,
+  SheetSizesTokens,
+  SheetWidthStopTokens,
+  ResizeHandleSizesTokens,
+  ShadowTokens,
   SiteHeaderFunctionalColors,
   SiteHeaderSizesTokens,
   BreakpointTokens,

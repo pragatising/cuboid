@@ -205,6 +205,7 @@ function main() {
   const typographyPath = path.join(ROOT, "tokens/functional/typography/theme.tokens.json");
   const componentsDir = path.join(ROOT, "tokens/functional/components");
   const functionalSizeDir = path.join(ROOT, "tokens/functional/size");
+  const functionalShadowsDir = path.join(ROOT, "tokens/functional/shadows");
   const themeOutputDir = path.join(ROOT, "src/theme/output");
   const outPath = path.join(themeOutputDir, "theme.json");
   const baseOutPath = path.join(themeOutputDir, "base.json");
@@ -276,6 +277,19 @@ function main() {
         componentLayoutMerge = deepMerge(componentLayoutMerge, { siteHeader: doc.siteHeader.sizes });
       }
     }
+    if (isPlain(doc.overlay)) {
+      if (isPlain(doc.overlay.color)) {
+        mergedColor = deepMerge(mergedColor, { overlay: doc.overlay.color });
+      }
+    }
+    if (isPlain(doc.sheet)) {
+      if (isPlain(doc.sheet.color)) {
+        mergedColor = deepMerge(mergedColor, { sheet: doc.sheet.color });
+      }
+      if (isPlain(doc.sheet.sizes)) {
+        componentLayoutMerge = deepMerge(componentLayoutMerge, { sheet: doc.sheet.sizes });
+      }
+    }
   }
 
   const mergedTypography = isPlain(typographyThemeFile?.typography)
@@ -291,10 +305,19 @@ function main() {
   }
   functionalSize = deepMerge(functionalSize, componentLayoutMerge);
 
+  let mergedShadows = {};
+  for (const file of walkJsonFiles(functionalShadowsDir)) {
+    const doc = JSON.parse(fs.readFileSync(file, "utf8"));
+    if (isPlain(doc.shadows)) {
+      mergedShadows = deepMerge(mergedShadows, doc.shadows);
+    }
+  }
+
   const root = {
     base: light.base,
     color: mergedColor,
     size: functionalSize,
+    shadows: mergedShadows,
     typography: mergedTypography ?? {},
   };
 
@@ -317,6 +340,7 @@ function main() {
   const uBase = uRootConverted.base;
   const uColor = uRootConverted.color;
   const uSize = uRootConverted.size;
+  const uShadows = uRootConverted.shadows;
 
   const scale = uBase?.color?.scale;
   const base = isPlain(scale) ? themeBaseFromUnwrappedScale(scale) : {};
@@ -516,6 +540,35 @@ function main() {
     background: siteHeaderColor.background,
     border: siteHeaderColor.border,
     divider: siteHeaderColor.divider,
+  };
+
+  const overlayColor = uColor?.overlay;
+  if (
+    !isPlain(overlayColor) ||
+    typeof overlayColor.modal !== "string" ||
+    typeof overlayColor.sheet !== "string" ||
+    typeof overlayColor.none !== "string"
+  ) {
+    console.error(
+      "Expected resolved color.overlay.{modal,sheet,none} (tokens/functional/components/overlay/overlay.json)"
+    );
+    process.exit(1);
+  }
+  const overlayColors = {
+    modal: overlayColor.modal,
+    sheet: overlayColor.sheet,
+    none: overlayColor.none,
+  };
+
+  const sheetColor = uColor?.sheet;
+  if (!isPlain(sheetColor) || typeof sheetColor.background !== "string") {
+    console.error(
+      "Expected resolved color.sheet.background (tokens/functional/components/sheet/sheet.json)"
+    );
+    process.exit(1);
+  }
+  const sheetColors = {
+    background: sheetColor.background,
   };
 
   const tipColor = uColor?.tooltip;
@@ -1038,6 +1091,76 @@ function main() {
     siteHeaderSizes[key] = siteHeaderLayoutSrc[key];
   }
 
+  const zIndexKeys = [
+    "base",
+    "raised",
+    "sticky",
+    "dropdown",
+    "overlay",
+    "sheet",
+    "dialog",
+    "popover",
+    "tooltip",
+    "toast",
+    "max",
+  ];
+  const zIndexSrc = uSize?.zIndex;
+  if (!isPlain(zIndexSrc) || !zIndexKeys.every((k) => typeof zIndexSrc[k] === "string")) {
+    console.error(
+      `Expected resolved size.zIndex.{${zIndexKeys.join(",")}} (from tokens/functional/size/z-index.json)`
+    );
+    process.exit(1);
+  }
+  const zIndex = Object.fromEntries(zIndexKeys.map((k) => [k, zIndexSrc[k]]));
+
+  const sheetLayoutSrc = uSize?.sheet;
+  if (!isPlain(sheetLayoutSrc)) {
+    console.error("Expected resolved size.sheet.* (from sheet.sizes in components/sheet/sheet.json)");
+    process.exit(1);
+  }
+  const sheetWidthSrc = sheetLayoutSrc.width;
+  const sheetWidthStops = ["sm", "md", "lg"];
+  if (
+    !isPlain(sheetWidthSrc) ||
+    !sheetWidthStops.every((k) => typeof sheetWidthSrc[k] === "string")
+  ) {
+    console.error(
+      `Expected resolved size.sheet.width.{${sheetWidthStops.join(",")}} (from sheet.json)`
+    );
+    process.exit(1);
+  }
+  const sheetScalarKeys = ["minWidth", "maxWidth", "maxHeight", "padding", "bottomCornerRadius"];
+  const sheetSizes = {
+    width: Object.fromEntries(sheetWidthStops.map((k) => [k, sheetWidthSrc[k]])),
+  };
+  for (const key of sheetScalarKeys) {
+    if (typeof sheetLayoutSrc[key] !== "string") {
+      console.error(`Expected size.sheet.${key} to be a string`);
+      process.exit(1);
+    }
+    sheetSizes[key] = sheetLayoutSrc[key];
+  }
+
+  const resizeHandleSrc = uSize?.resizeHandle;
+  if (!isPlain(resizeHandleSrc) || typeof resizeHandleSrc.hitArea !== "string") {
+    console.error(
+      "Expected resolved size.resizeHandle.hitArea (from tokens/functional/size/resize-handle.json)"
+    );
+    process.exit(1);
+  }
+  const resizeHandleSizes = {
+    hitArea: resizeHandleSrc.hitArea,
+  };
+
+  const shadowKeys = ["popover", "sheet"];
+  if (!isPlain(uShadows) || !shadowKeys.every((k) => typeof uShadows[k] === "string")) {
+    console.error(
+      `Expected resolved shadows.{${shadowKeys.join(",")}} (from tokens/functional/shadows/shadows.json)`
+    );
+    process.exit(1);
+  }
+  const shadows = Object.fromEntries(shadowKeys.map((k) => [k, uShadows[k]]));
+
   const typography = {
     ...uRootConverted.typography,
     button: buttonTypography,
@@ -1066,6 +1189,9 @@ function main() {
       iconButton: iconButtonSizes,
       breadcrumb: breadcrumbSizes,
       siteHeader: siteHeaderSizes,
+      sheet: sheetSizes,
+      resizeHandle: resizeHandleSizes,
+      zIndex,
     },
     buttonPrimary,
     buttonSecondary,
@@ -1078,6 +1204,9 @@ function main() {
     iconButton,
     breadcrumbColors,
     siteHeaderColors,
+    overlayColors,
+    sheetColors,
+    shadows,
     globalColors,
   };
 

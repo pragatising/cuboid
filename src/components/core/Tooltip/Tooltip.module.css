@@ -4,7 +4,7 @@
 }
 
 .Panel {
-  z-index: 1000;
+  z-index: var(--cube-z-index-tooltip, 800);
   box-sizing: border-box;
   margin: 0;
   text-align: left;

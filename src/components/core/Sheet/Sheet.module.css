@@ -1,0 +1,59 @@
+.Sheet {
+  position: fixed;
+  z-index: var(--cube-z-index-sheet, 500);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: var(--cube-sheet-bg);
+  box-shadow: var(--cube-shadow-sheet);
+  transition: transform 0.2s ease;
+}
+
+.Sheet--left,
+.Sheet--right {
+  top: 0;
+  bottom: 0;
+  max-width: var(--cube-sheet-maxWidth);
+}
+
+.Sheet--left {
+  left: 0;
+}
+
+.Sheet--right {
+  right: 0;
+}
+
+.Sheet--resizable {
+  position: fixed;
+}
+
+.Sheet--bottom {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  max-height: var(--cube-sheet-maxHeight);
+}
+
+.Sheet--bottom.Sheet--roundedTop {
+  border-radius: var(--cube-sheet-bottomCornerRadius)
+    var(--cube-sheet-bottomCornerRadius) 0 0;
+}
+
+.Sheet__header {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--cube-sheet-padding);
+  padding: var(--cube-sheet-padding);
+}
+
+.Sheet__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  padding: 0 var(--cube-sheet-padding) var(--cube-sheet-padding);
+}

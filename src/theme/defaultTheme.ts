@@ -17,10 +17,13 @@ const iconButtonColors = themeGenerated.iconButton;
 const linkColors = themeGenerated.linkColors;
 const breadcrumbColors = themeGenerated.breadcrumbColors;
 const siteHeaderColors = themeGenerated.siteHeaderColors;
+const overlayColors = themeGenerated.overlayColors;
+const sheetColors = themeGenerated.sheetColors;
 const pillColors = themeGenerated.pillColors;
 const tooltipColors = themeGenerated.tooltipColors;
 const globalColors = themeGenerated.globalColors;
 const generatedSizes = themeGenerated.sizes;
+const generatedShadows = themeGenerated.shadows;
 const generatedTypography = themeGenerated.typography as ThemeTokens["typography"];
 
 export const defaultTheme: ThemeTokens = {
@@ -52,6 +55,10 @@ export const defaultTheme: ThemeTokens = {
 
       siteHeader: siteHeaderColors,
 
+      overlay: overlayColors,
+
+      sheet: sheetColors,
+
       pill: pillColors,
 
       tooltip: tooltipColors,
@@ -65,4 +72,7 @@ export const defaultTheme: ThemeTokens = {
 
   // ── Sizes ───────────────────────────────────────────────────────────────────
   sizes: generatedSizes,
+
+  // ── Shadows ─────────────────────────────────────────────────────────────────
+  shadows: generatedShadows,
 };

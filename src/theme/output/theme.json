@@ -342,6 +342,34 @@
       "trailingGap": "0.5rem",
       "dividerHeight": "0.9375rem",
       "dividerWidth": "0.0625rem"
+    },
+    "sheet": {
+      "width": {
+        "sm": "20rem",
+        "md": "25rem",
+        "lg": "35rem"
+      },
+      "minWidth": "15rem",
+      "maxWidth": "90vw",
+      "maxHeight": "90vh",
+      "padding": "1rem",
+      "bottomCornerRadius": "1rem"
+    },
+    "resizeHandle": {
+      "hitArea": "0.5rem"
+    },
+    "zIndex": {
+      "base": "0",
+      "raised": "1",
+      "sticky": "200",
+      "dropdown": "300",
+      "overlay": "400",
+      "sheet": "500",
+      "dialog": "600",
+      "popover": "700",
+      "tooltip": "800",
+      "toast": "900",
+      "max": "9999"
     }
   },
   "buttonPrimary": {
@@ -1588,6 +1616,18 @@
     "background": "#FFFFFF",
     "border": "#ffffff00",
     "divider": "#ABA9A5"
+  },
+  "overlayColors": {
+    "modal": "rgba(58,58,57,0.2)",
+    "sheet": "rgba(53,53,51,0.03)",
+    "none": "#ffffff00"
+  },
+  "sheetColors": {
+    "background": "#FFFFFF"
+  },
+  "shadows": {
+    "popover": "0 0 0 1px rgba(42, 28, 0, 0.07), 0 20px 24px 0 rgba(25, 25, 25, 0.05), 0 5px 8px 0 rgba(25, 25, 25, 0.03)",
+    "sheet": "0 0 0 1px rgba(42, 28, 0, 0.07), 0 20px 24px 0 rgba(25, 25, 25, 0.05), 0 5px 8px 0 rgba(25, 25, 25, 0.03)"
   },
   "globalColors": {
     "primary": "#2D2D2D",
