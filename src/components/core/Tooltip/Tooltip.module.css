@@ -1,11 +1,9 @@
 .Root {
-  position: relative;
   display: inline-flex;
   vertical-align: middle;
 }
 
 .Panel {
-  position: absolute;
   z-index: 1000;
   box-sizing: border-box;
   margin: 0;
@@ -23,6 +21,10 @@
   pointer-events: none;
 }
 
+.Panel--fixed {
+  position: fixed;
+}
+
 .Panel--compact {
   max-width: var(--cube-tooltip-maxWidthSingleLine);
   overflow: hidden;
@@ -33,33 +35,4 @@
 .Panel--expanded {
   max-width: var(--cube-tooltip-maxWidth);
   white-space: normal;
-}
-
-/* Placement — gap between trigger and panel (Figma spacing) */
-.Panel--bottom {
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-top: var(--cube-tooltip-gap);
-}
-
-.Panel--top {
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-bottom: var(--cube-tooltip-gap);
-}
-
-.Panel--left {
-  right: 100%;
-  top: 50%;
-  transform: translateY(-50%);
-  margin-right: var(--cube-tooltip-gap);
-}
-
-.Panel--right {
-  left: 100%;
-  top: 50%;
-  transform: translateY(-50%);
-  margin-left: var(--cube-tooltip-gap);
 }

@@ -101,14 +101,11 @@ export function Button({
           "--cube-typography-fontFamily-base": tokens.typography.fontFamily.base,
           "--cube-sizes-borderRadius-full": tokens.sizes.borderRadius.full,
           "--cube-sizes-borderWidth-thin": tokens.sizes.borderWidth.thin,
-          "--cube-colors-functional-background-muted": functional.background.muted,
-          "--cube-colors-functional-foreground-default": functional.foreground.default,
-          "--cube-colors-functional-foreground-disabled": functional.foreground.disabled,
           "--cube-colors-functional-foreground-link": functional.foreground.link,
         };
 
         const states = ["rest", "hover", "pressed", "disabled"] as const;
-        for (const vKey of ["primary", "secondary", "danger", "rounded"] as const) {
+        for (const vKey of ["primary", "secondary", "ghost", "danger", "rounded"] as const) {
           const bv = functional.button[vKey];
           for (const s of states) {
             out[`--cube-button-${vKey}-bg-${s}`] = bv.bgColor[s];

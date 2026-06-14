@@ -1,51 +1,282 @@
+import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { useTheme } from "../../../theme/ThemeContext";
+import { Title, Primary, Controls, Subtitle } from "@storybook/blocks";
+import type { StackGap, StackPadding } from "../../../theme/types";
+import { Text } from "../Text";
 import { Stack } from "./Stack";
 
-/** Demo box that reads all its visual values from the theme */
-function Box({ label }: { label: string }) {
-  const tokens = useTheme();
+const STACK_GAP_OPTIONS: StackGap[] = [
+  "none",
+  "xxs",
+  "xs",
+  "sm",
+  "md",
+  "lg",
+  "xl",
+  "xxl",
+];
+
+const STACK_PADDING_OPTIONS: StackPadding[] = [
+  "none",
+  "xxs",
+  "xs",
+  "sm",
+  "md",
+  "lg",
+  "xl",
+  "xxl",
+];
+
+const demoBoxStyle: React.CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  minWidth: "2rem",
+  minHeight: "2rem",
+  padding: "0.25rem 0.5rem",
+  background: "var(--cube-color-bg-gray-light-03, #f4f4f2)",
+  border: "1px solid var(--cube-colors-functional-border-default, #d8d7d4)",
+  borderRadius: "0.375rem",
+  fontSize: "0.875rem",
+};
+
+const paddedContainerStyle: React.CSSProperties = {
+  background: "var(--cube-color-bg-gray-light-03, #f4f4f2)",
+  borderRadius: "0.375rem",
+};
+
+function GapScaleRow({ gap }: { gap: StackGap }) {
   return (
-    <div
-      style={{
-        background: tokens.colors.functional.background.muted,
-        border: `${tokens.sizes.borderWidth.thin} solid ${tokens.colors.functional.border.default}`,
-        borderRadius: tokens.sizes.borderRadius.md,
-        padding: `${tokens.sizes.space[2]} ${tokens.sizes.space[3]}`,
-        fontSize: tokens.typography.text.bodySmall.fontSize,
-        color: tokens.colors.functional.foreground.default,
-      }}
-    >
-      {label}
-    </div>
+    <Stack direction="horizontal" gap="sm" align="center">
+      <Text variant="bodySmall" color="muted" style={{ minWidth: "7.5rem" }}>
+        <code>gap=&quot;{gap}&quot;</code>
+      </Text>
+      <Stack direction="horizontal" gap={gap} align="center">
+        {["A", "B", "C"].map((label) => (
+          <div key={label} style={demoBoxStyle}>
+            {label}
+          </div>
+        ))}
+      </Stack>
+    </Stack>
+  );
+}
+
+function PaddingScaleRow({ padding }: { padding: StackPadding }) {
+  return (
+    <Stack direction="horizontal" gap="sm" align="stretch">
+      <Text variant="bodySmall" color="muted" style={{ minWidth: "7.5rem", alignSelf: "center" }}>
+        <code>padding=&quot;{padding}&quot;</code>
+      </Text>
+      <Stack padding={padding} style={paddedContainerStyle}>
+        <div style={demoBoxStyle}>Content</div>
+      </Stack>
+    </Stack>
   );
 }
 
 const meta: Meta<typeof Stack> = {
   title: "Core/Stack",
   component: Stack,
-  parameters: { layout: "padded" },
   tags: ["autodocs"],
+  parameters: {
+    layout: "padded",
+    docs: {
+      page: () => (
+        <>
+          <Title />
+          <Subtitle>
+            Flex layout primitive — <code>gap</code>, <code>padding</code>,{" "}
+            <code>paddingBlock</code>, <code>paddingInline</code>, <code>direction</code>,{" "}
+            <code>align</code>, <code>justify</code>, and <code>wrap</code>.{" "}
+            <code>gap</code> and <code>padding</code> each use{" "}
+            <code>none</code>, <code>xxs</code> … <code>xxl</code>. Each prop accepts a scalar or{" "}
+            <code>{`{ sm, md, lg }`}</code> for responsive layout (mobile-first).
+          </Subtitle>
+
+          <div className="cube-docs-section">
+            <h3 className="cube-docs-section__title">Gap scale</h3>
+            <Stack gap="sm">
+              {STACK_GAP_OPTIONS.map((gap) => (
+                <GapScaleRow key={gap} gap={gap} />
+              ))}
+            </Stack>
+          </div>
+
+          <div className="cube-docs-section">
+            <h3 className="cube-docs-section__title">Padding scale</h3>
+            <Stack gap="sm">
+              {STACK_PADDING_OPTIONS.map((padding) => (
+                <PaddingScaleRow key={padding} padding={padding} />
+              ))}
+            </Stack>
+          </div>
+
+          <div className="cube-docs-section">
+            <h3 className="cube-docs-section__title">Directional padding</h3>
+            <Stack gap="sm">
+              <Stack padding="md" style={paddedContainerStyle}>
+                <Text variant="bodyMedium">
+                  <code>padding=&quot;md&quot;</code> (all sides)
+                </Text>
+              </Stack>
+              <Stack padding="md" paddingInline="lg" style={paddedContainerStyle}>
+                <Text variant="bodyMedium">
+                  <code>padding=&quot;md&quot;</code>{" "}
+                  <code>paddingInline=&quot;lg&quot;</code>
+                </Text>
+              </Stack>
+              <Stack
+                paddingBlock="xs"
+                paddingInline="lg"
+                style={paddedContainerStyle}
+              >
+                <Text variant="bodyMedium">
+                  <code>paddingBlock=&quot;xs&quot;</code>{" "}
+                  <code>paddingInline=&quot;lg&quot;</code>
+                </Text>
+              </Stack>
+            </Stack>
+          </div>
+
+          <div className="cube-docs-section">
+            <h3 className="cube-docs-section__title">Responsive direction</h3>
+            <Text variant="bodySmall" color="muted">
+              Vertical below md, horizontal at md+ — resize the preview frame to see it change.
+            </Text>
+            <Stack direction={{ sm: "vertical", md: "horizontal" }} gap="xs" align="center">
+              <Text variant="bodyMedium">Label</Text>
+              <Text variant="bodyMedium">Value</Text>
+            </Stack>
+          </div>
+
+          <Primary />
+          <Controls />
+        </>
+      ),
+    },
+  },
+  argTypes: {
+    as: { control: false },
+    theme: { control: false },
+    style: { control: false },
+    className: { control: false },
+    children: { control: false },
+    direction: { control: "radio", options: ["vertical", "horizontal"] },
+    gap: { control: "select", options: STACK_GAP_OPTIONS },
+    padding: { control: "select", options: STACK_PADDING_OPTIONS },
+    paddingBlock: { control: "select", options: STACK_PADDING_OPTIONS },
+    paddingInline: { control: "select", options: STACK_PADDING_OPTIONS },
+    align: {
+      control: "select",
+      options: ["", "flex-start", "center", "flex-end", "stretch", "baseline"],
+    },
+    justify: {
+      control: "select",
+      options: ["", "flex-start", "center", "flex-end", "space-between", "space-around"],
+    },
+    wrap: { control: "boolean" },
+  },
 };
 export default meta;
 type Story = StoryObj<typeof Stack>;
 
+export const Playground: Story = {
+  args: {
+    direction: "vertical",
+    gap: "xs",
+    padding: "none",
+    align: "",
+    justify: "",
+    wrap: false,
+  },
+  render: ({ align, justify, ...args }) => (
+    <Stack {...args} align={align || undefined} justify={justify || undefined}>
+      <Text variant="bodyMedium">Item 1</Text>
+      <Text variant="bodyMedium">Item 2</Text>
+      <Text variant="bodyMedium">Item 3</Text>
+    </Stack>
+  ),
+};
+
+export const GapScale: Story = {
+  name: "Features / Gap scale",
+  render: () => (
+    <Stack gap="sm">
+      {STACK_GAP_OPTIONS.map((gap) => (
+        <GapScaleRow key={gap} gap={gap} />
+      ))}
+    </Stack>
+  ),
+};
+
+export const PaddingScale: Story = {
+  name: "Features / Padding scale",
+  render: () => (
+    <Stack gap="sm">
+      {STACK_PADDING_OPTIONS.map((padding) => (
+        <PaddingScaleRow key={padding} padding={padding} />
+      ))}
+    </Stack>
+  ),
+};
+
+export const DirectionalPadding: Story = {
+  name: "Features / Directional padding",
+  render: () => (
+    <Stack gap="sm">
+      <Stack padding="md" style={paddedContainerStyle}>
+        <Text variant="bodyMedium">
+          <code>padding=&quot;md&quot;</code> (all sides)
+        </Text>
+      </Stack>
+      <Stack padding="md" paddingInline="lg" style={paddedContainerStyle}>
+        <Text variant="bodyMedium">
+          <code>padding=&quot;md&quot;</code>{" "}
+          <code>paddingInline=&quot;lg&quot;</code>
+        </Text>
+      </Stack>
+      <Stack paddingBlock="xs" paddingInline="lg" style={paddedContainerStyle}>
+        <Text variant="bodyMedium">
+          <code>paddingBlock=&quot;xs&quot;</code>{" "}
+          <code>paddingInline=&quot;lg&quot;</code>
+        </Text>
+      </Stack>
+    </Stack>
+  ),
+};
+
+export const Responsive: Story = {
+  name: "Responsive (sm → md)",
+  render: () => (
+    <Stack
+      direction={{ sm: "vertical", md: "horizontal" }}
+      gap={{ sm: "xxs", md: "sm" }}
+      align={{ sm: "flex-start", md: "center" }}
+      justify={{ sm: "flex-start", md: "space-between" }}
+    >
+      <Text variant="bodyMedium">Title</Text>
+      <Text variant="bodyMedium">Supporting text</Text>
+    </Stack>
+  ),
+};
+
 export const Vertical: Story = {
   render: () => (
-    <Stack gap={3}>
-      <Box label="Item 1" />
-      <Box label="Item 2" />
-      <Box label="Item 3" />
+    <Stack gap="xs">
+      <Text variant="bodyMedium">Item 1</Text>
+      <Text variant="bodyMedium">Item 2</Text>
+      <Text variant="bodyMedium">Item 3</Text>
     </Stack>
   ),
 };
 
 export const Horizontal: Story = {
   render: () => (
-    <Stack direction="horizontal" gap={3} align="center">
-      <Box label="Left" />
-      <Box label="Center" />
-      <Box label="Right" />
+    <Stack direction="horizontal" gap="xs" align="center">
+      <Text variant="bodyMedium">Left</Text>
+      <Text variant="bodyMedium">Center</Text>
+      <Text variant="bodyMedium">Right</Text>
     </Stack>
   ),
 };
@@ -53,37 +284,28 @@ export const Horizontal: Story = {
 export const SpaceBetween: Story = {
   render: () => (
     <Stack direction="horizontal" justify="space-between" align="center">
-      <Box label="Leading" />
-      <Box label="Trailing" />
+      <Text variant="bodyMedium">Leading</Text>
+      <Text variant="bodyMedium">Trailing</Text>
     </Stack>
   ),
 };
 
 export const WithPadding: Story = {
-  render: () => {
-    const tokens = useTheme();
-    return (
-      <Stack
-        gap={4}
-        padding={5}
-        style={{
-          background: tokens.colors.functional.background.muted,
-          borderRadius: tokens.sizes.borderRadius.lg,
-          border: `${tokens.sizes.borderWidth.thin} solid ${tokens.colors.functional.border.default}`,
-        }}
-      >
-        <Box label="Padded item A" />
-        <Box label="Padded item B" />
-      </Stack>
-    );
-  },
+  render: () => (
+    <Stack gap="sm" padding="md" style={paddedContainerStyle}>
+      <Text variant="bodyMedium">Item A</Text>
+      <Text variant="bodyMedium">Item B</Text>
+    </Stack>
+  ),
 };
 
 export const Wrap: Story = {
   render: () => (
-    <Stack direction="horizontal" gap={2} wrap style={{ maxWidth: "18.75rem" }}>
+    <Stack direction="horizontal" gap="xxs" wrap style={{ maxWidth: "18.75rem" }}>
       {["One", "Two", "Three", "Four", "Five", "Six"].map((l) => (
-        <Box key={l} label={l} />
+        <Text key={l} variant="bodyMedium">
+          {l}
+        </Text>
       ))}
     </Stack>
   ),

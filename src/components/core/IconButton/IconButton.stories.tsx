@@ -21,7 +21,7 @@ const meta: Meta<typeof IconButton> = {
         <>
           <Title />
           <Subtitle>
-            Figma: StyledIconButton (outlined / ghost). Pass <code>tooltip</code> for hover/focus hints;
+            StyledIconButton (outlined / ghost). Pass <code>tooltip</code> for hover/focus hints;
             always set <code>aria-label</code> (or <code>aria-labelledby</code>) for the control name.
             With both <code>disabled</code> and <code>tooltip</code>, the control uses <code>aria-disabled</code> (not
             native <code>disabled</code>) so hover/focus still surface the tooltip.
@@ -29,11 +29,11 @@ const meta: Meta<typeof IconButton> = {
           <Primary />
           <Controls />
 
-          <div style={{ marginTop: 24 }}>
-            <h3 style={{ margin: "0 0 12px" }}>Matrix</h3>
-            <Stack gap={4}>
-              <Stack direction="horizontal" gap={3} align="center" wrap>
-                <span style={{ width: 72, fontSize: 12, opacity: 0.7 }}>outlined</span>
+          <div className="cube-docs-section">
+            <h3 className="cube-docs-section__title">Matrix</h3>
+            <Stack gap="sm">
+              <Stack direction="horizontal" gap="xs" align="center" wrap>
+                <span className="cube-docs-matrix-label">outlined</span>
                 <IconButton aria-label="Favorite" tooltip="Add to favorites" variant="outlined">
                   <StarIcon />
                 </IconButton>
@@ -49,8 +49,8 @@ const meta: Meta<typeof IconButton> = {
                   <StarIcon />
                 </IconButton>
               </Stack>
-              <Stack direction="horizontal" gap={3} align="center" wrap>
-                <span style={{ width: 72, fontSize: 12, opacity: 0.7 }}>ghost</span>
+              <Stack direction="horizontal" gap="xs" align="center" wrap>
+                <span className="cube-docs-matrix-label">ghost</span>
                 <IconButton aria-label="Favorite" tooltip="Add to favorites" variant="ghost">
                   <StarIcon />
                 </IconButton>
@@ -66,6 +66,17 @@ const meta: Meta<typeof IconButton> = {
                   <StarIcon />
                 </IconButton>
               </Stack>
+            </Stack>
+          </div>
+
+          <div className="cube-docs-section">
+            <h3 className="cube-docs-section__title">Sizes</h3>
+            <Stack direction="horizontal" gap="xs" align="center" wrap>
+              {(["xs", "sm", "md", "lg"] as const).map((size) => (
+                <IconButton key={size} size={size} aria-label={`Favorite (${size})`} variant="outlined">
+                  <StarIcon />
+                </IconButton>
+              ))}
             </Stack>
           </div>
         </>
@@ -94,9 +105,5 @@ export const Playground: Story = {
     tooltip: { control: "text" },
     onClick: { action: "clicked" },
   },
-  render: (args) => (
-    <div style={{ maxWidth: 420, padding: 16, border: "1px dashed #ddd" }}>
-      <IconButton {...args} />
-    </div>
-  ),
+  render: (args) => <IconButton {...args} />,
 };

@@ -101,6 +101,58 @@ export interface SyntaxColors {
   rowHoverBg: string;
 }
 
+/** Resolved palette from tokens/functional/colors/globals.json (color.* paths). */
+export interface GlobalSemanticColorPair {
+  default: string;
+  muted: string;
+}
+
+export interface GlobalTextColors {
+  contrast: string;
+  default: string;
+  muted: string;
+  subtle: string;
+  disabled: string;
+}
+
+export interface GlobalCanvasColors {
+  default: string;
+  modal: string;
+  inset: string;
+  insetStrong: string;
+  subtle: string;
+  transparent: string;
+  overlay: {
+    modal: string;
+    sheet: string;
+  };
+}
+
+export interface GlobalColors {
+  primary: string;
+  black: string;
+  white: string;
+  focus: string;
+  success: GlobalSemanticColorPair;
+  warning: GlobalSemanticColorPair;
+  error: GlobalSemanticColorPair;
+  info: GlobalSemanticColorPair;
+  fg: Record<string, Record<string, string>>;
+  text: GlobalTextColors;
+  canvas: GlobalCanvasColors;
+  border: {
+    gray: Record<string, string>;
+    grayAlpha: Record<string, string>;
+  };
+  bg: {
+    gray: {
+      light: Record<string, string>;
+      dark: Record<string, string>;
+    };
+  };
+  syntax: SyntaxColors;
+}
+
 /** Maps to Figma component tokens: button / {variant} / bgColor | borderColor | fgColor */
 export interface ButtonVariantStateColors {
   rest: string;
@@ -118,6 +170,7 @@ export interface ButtonVariantInteractiveColors {
 export interface ButtonFunctionalColors {
   primary: ButtonVariantInteractiveColors;
   secondary: ButtonVariantInteractiveColors;
+  ghost: ButtonVariantInteractiveColors;
   danger: ButtonVariantInteractiveColors;
   /** Pill-style control; maps to Figma `button/rounded/*` */
   rounded: ButtonVariantInteractiveColors;
@@ -142,6 +195,68 @@ export interface TooltipSurfaceColors {
   foreground: string;
 }
 
+/** Text link foreground — rest + hover only (`color.link.<variant>.fgColor`). */
+export interface LinkFgColors {
+  rest: string;
+  hover: string;
+}
+
+export interface LinkFunctionalColors {
+  inline: LinkFgColors;
+  standalone: LinkFgColors;
+}
+
+export interface BreadcrumbLinkStateColors {
+  rest: string;
+  hover: string;
+  active: string;
+}
+
+export interface BreadcrumbLinkColors {
+  bgColor: BreadcrumbLinkStateColors;
+  fgColor: BreadcrumbLinkStateColors;
+}
+
+export interface BreadcrumbSeparatorColors {
+  fgColor: string;
+}
+
+export interface BreadcrumbFunctionalColors {
+  link: BreadcrumbLinkColors;
+  separator: BreadcrumbSeparatorColors;
+}
+
+export interface SiteHeaderFunctionalColors {
+  background: string;
+  border: string;
+  divider: string;
+}
+
+export type PillSurface = "filled" | "bordered";
+
+/** Matches Figma Pill intensity property. */
+export type PillIntensity = "extralight" | "light" | "bold" | "extraBold";
+
+export interface PillIntensityColors {
+  filled: ButtonVariantInteractiveColors;
+  bordered: ButtonVariantInteractiveColors;
+}
+
+/** Keys are shade names (`gray`, `yellow`, …) from token files under `components/pill/`. */
+export type PillFunctionalColors = Record<string, Record<PillIntensity, PillIntensityColors>>;
+
+export interface PillSizeStopTokens {
+  paddingInline: string;
+  paddingBlock: string;
+  borderRadius: string;
+  gap: string;
+}
+
+export interface PillSizesTokens {
+  sm: PillSizeStopTokens;
+  md: PillSizeStopTokens;
+}
+
 export interface FunctionalColors {
   background: BackgroundColors;
   foreground: ForegroundColors;
@@ -150,12 +265,17 @@ export interface FunctionalColors {
   /** Component-scoped colors — start with primary; other variants follow the same shape */
   button: ButtonFunctionalColors;
   iconButton: IconButtonFunctionalColors;
+  link: LinkFunctionalColors;
+  breadcrumb: BreadcrumbFunctionalColors;
+  siteHeader: SiteHeaderFunctionalColors;
+  pill: PillFunctionalColors;
   tooltip: TooltipSurfaceColors;
 }
 
 export interface Colors {
   base: BaseColors;
   functional: FunctionalColors;
+  global: GlobalColors;
 }
 
 // ── Typography ────────────────────────────────────────────────────────────────
@@ -221,6 +341,18 @@ export interface ButtonTypography {
   large: ButtonTypographyStop;
 }
 
+/** Pill label metrics per size stop (from typography tokens). */
+export interface PillTypographyStop {
+  fontSize: string;
+  lineHeight: string;
+  fontWeight: number;
+}
+
+export interface PillTypography {
+  sm: PillTypographyStop;
+  md: PillTypographyStop;
+}
+
 export interface Typography {
   fontFamily: FontFamilyTokens;
   fontSize: FontSizeTokens;
@@ -228,6 +360,7 @@ export interface Typography {
   lineHeight: LineHeightTokens;
   text: TextTokens;
   button: ButtonTypography;
+  pill: PillTypography;
 }
 
 // ── Sizes ─────────────────────────────────────────────────────────────────────
@@ -255,6 +388,44 @@ export interface BorderRadiusTokens {
 export interface BorderWidthTokens {
   thin: string;   // 1px
   thick: string;  // 2px
+}
+
+/** Named scale for Stack `gap`. */
+export interface StackGapTokens {
+  none: string;
+  xxs: string;
+  xs: string;
+  sm: string;
+  md: string;
+  lg: string;
+  xl: string;
+  xxl: string;
+}
+
+/** Named scale for Stack `padding` / `paddingBlock` / `paddingInline`. */
+export interface StackPaddingTokens {
+  none: string;
+  xxs: string;
+  xs: string;
+  sm: string;
+  md: string;
+  lg: string;
+  xl: string;
+  xxl: string;
+}
+
+export type StackGap = keyof StackGapTokens;
+export type StackPadding = keyof StackPaddingTokens;
+
+/** @deprecated Use `StackGap` or `StackPadding` — gap and padding share the same stop names. */
+export type StackSpacing = StackGap;
+/** @deprecated Use `StackGapTokens` or `StackPaddingTokens`. */
+export type StackSpacingTokens = StackGapTokens;
+
+/** Min-width thresholds — `sm` is implicit (0); use in `@media (min-width: var(--cube-breakpoint-md))`. */
+export interface BreakpointTokens {
+  md: string;
+  lg: string;
 }
 
 /** Shared control geometry (button, input, etc.) — from functional size tokens. */
@@ -308,13 +479,37 @@ export interface IconButtonSizesTokens {
   large: IconButtonSizeStopTokens;
 }
 
+export interface BreadcrumbSizesTokens {
+  gap: string;
+  itemPaddingInline: string;
+  itemPaddingBlock: string;
+  itemBorderRadius: string;
+  separatorWidth: string;
+}
+
+export interface SiteHeaderSizesTokens {
+  height: string;
+  paddingInlineStart: string;
+  paddingInlineEnd: string;
+  paddingBlock: string;
+  leadingGap: string;
+  trailingGap: string;
+  dividerHeight: string;
+  dividerWidth: string;
+}
+
 export interface Sizes {
   space: SpaceTokens;
+  stack: { gap: StackGapTokens; padding: StackPaddingTokens };
   borderRadius: BorderRadiusTokens;
   borderWidth: BorderWidthTokens;
+  breakpoints: BreakpointTokens;
   control: ControlSizesTokens;
   tooltip: TooltipLayoutTokens;
+  pill: PillSizesTokens;
   iconButton: IconButtonSizesTokens;
+  breadcrumb: BreadcrumbSizesTokens;
+  siteHeader: SiteHeaderSizesTokens;
 }
 
 // Convenience alias for space token keys (used by Stack gap/padding props)

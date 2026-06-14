@@ -10,10 +10,16 @@ const generatedFunctional = themeGenerated.colors.functional;
 
 const buttonPrimary = themeGenerated.buttonPrimary;
 const buttonSecondary = themeGenerated.buttonSecondary;
+const buttonGhost = themeGenerated.buttonGhost;
 const buttonDanger = themeGenerated.buttonDanger;
 const buttonRounded = themeGenerated.buttonRounded;
 const iconButtonColors = themeGenerated.iconButton;
+const linkColors = themeGenerated.linkColors;
+const breadcrumbColors = themeGenerated.breadcrumbColors;
+const siteHeaderColors = themeGenerated.siteHeaderColors;
+const pillColors = themeGenerated.pillColors;
 const tooltipColors = themeGenerated.tooltipColors;
+const globalColors = themeGenerated.globalColors;
 const generatedSizes = themeGenerated.sizes;
 const generatedTypography = themeGenerated.typography as ThemeTokens["typography"];
 
@@ -28,19 +34,30 @@ export const defaultTheme: ThemeTokens = {
       foreground: generatedFunctional.foreground,
       border: generatedFunctional.border,
 
+      syntax: generatedFunctional.syntax,
+
       button: {
         primary: buttonPrimary,
         secondary: buttonSecondary,
+        ghost: buttonGhost,
         danger: buttonDanger,
         rounded: buttonRounded,
       },
 
       iconButton: iconButtonColors,
 
-      syntax: generatedFunctional.syntax,
+      link: linkColors,
+
+      breadcrumb: breadcrumbColors,
+
+      siteHeader: siteHeaderColors,
+
+      pill: pillColors,
 
       tooltip: tooltipColors,
     },
+
+    global: globalColors,
   },
 
   // ── Typography ──────────────────────────────────────────────────────────────

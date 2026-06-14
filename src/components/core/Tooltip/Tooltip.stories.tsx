@@ -17,46 +17,30 @@ const meta: Meta<typeof Tooltip> = {
           <Title />
           <Subtitle>
             Non-interactive floating label; styled with Cube tooltip tokens (Figma DS—AI).
+            Renders in a portal so it is not clipped by <code>overflow: hidden</code> ancestors.
           </Subtitle>
           <Primary />
           <Controls />
 
-          <div style={{ marginTop: 32, maxWidth: 640 }}>
-            <h3 style={{ margin: "0 0 12px", fontSize: 14 }}>Planned improvements</h3>
-            <p style={{ margin: "0 0 12px", fontSize: 13, opacity: 0.85 }}>
-              v1 keeps the implementation small. Track these as follow-ups for production
-              hardening:
-            </p>
-            <ul style={{ margin: 0, paddingLeft: 20, fontSize: 13, lineHeight: 1.5 }}>
+          <div className="cube-docs-section cube-docs-section--wide">
+            <h3 className="cube-docs-section__title">Notes</h3>
+            <ul className="cube-docs-list">
               <li>
-                <strong>Portal</strong> — render the tooltip surface in a portal when ancestors
-                use <code style={{ fontSize: 12 }}>overflow: hidden</code> so it is not clipped.
+                Pass an optional <code>theme</code> prop to rebind{" "}
+                <code>--cube-tooltip-*</code> CSS variables (same pattern as{" "}
+                <code>Button</code>).
               </li>
               <li>
-                <strong>Collision / flip</strong> — use viewport-aware positioning (e.g.{" "}
-                <a
-                  href="https://floating-ui.com/"
-                  target="_blank"
-                  rel="noreferrer"
-                >
+                Viewport collision / flip (e.g.{" "}
+                <a href="https://floating-ui.com/" target="_blank" rel="noreferrer">
                   Floating UI
                 </a>
-                ) so tooltips stay on-screen and flip edges when needed.
+                ) and touch-specific patterns are future hardening — not in v1.
               </li>
               <li>
-                <strong>Touch / long-press</strong> — hover-only tooltips are weak on touch; add a
-                deliberate pattern (long-press, tap-to-toggle, or inline help) if mobile matters.
-              </li>
-              <li>
-                <strong>Disabled triggers</strong> — native <code style={{ fontSize: 12 }}>disabled</code> on
-                buttons blocks hover in many browsers. <code style={{ fontSize: 12 }}>IconButton</code> uses{" "}
-                <code style={{ fontSize: 12 }}>aria-disabled</code> when <code style={{ fontSize: 12 }}>disabled</code>{" "}
-                and <code style={{ fontSize: 12 }}>tooltip</code> are both set.
-              </li>
-              <li>
-                <strong>Theme prop</strong> — optional <code style={{ fontSize: 12 }}>theme</code>{" "}
-                override that rebinds <code style={{ fontSize: 12 }}>--cube-tooltip-*</code> CSS
-                variables, matching <code style={{ fontSize: 12 }}>Button</code>.
+                For icon-only controls, prefer <code>IconButton</code>&apos;s{" "}
+                <code>tooltip</code> prop (handles{" "}
+                <code>aria-disabled</code> when disabled + tooltip).
               </li>
             </ul>
           </div>
@@ -104,10 +88,10 @@ export const LongText: Story = {
 export const WithIconButton: Story = {
   name: "With IconButton (built-in tooltip)",
   render: () => (
-    <p style={{ margin: 0, fontSize: 13, lineHeight: 1.5, maxWidth: 480 }}>
-      Prefer <code style={{ fontSize: 12 }}>IconButton</code>’s <code style={{ fontSize: 12 }}>tooltip</code> prop so
-      the trigger stays associated with <code style={{ fontSize: 12 }}>role=&quot;tooltip&quot;</code> and{" "}
-      <code style={{ fontSize: 12 }}>aria-describedby</code>. Example:
+    <p className="cube-docs-note">
+      Prefer <code>IconButton</code>’s <code>tooltip</code> prop so
+      the trigger stays associated with <code>role=&quot;tooltip&quot;</code> and{" "}
+      <code>aria-describedby</code>. Example:
       <span style={{ display: "inline-block", marginLeft: 8, verticalAlign: "middle" }}>
         <IconButton aria-label="Settings" tooltip="Open settings" variant="ghost">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden focusable={false}>
@@ -130,6 +114,19 @@ export const Placements: Story = {
           </Button>
         </Tooltip>
       ))}
+    </div>
+  ),
+};
+
+export const NotClippedByOverflow: Story = {
+  name: "Portal (overflow: hidden)",
+  render: () => (
+    <div style={{ overflow: "hidden", height: 72, padding: 12 }}>
+      <Tooltip content="Still visible — portaled to document.body" compact>
+        <Button variant="secondary" size="sm">
+          Hover inside clipped box
+        </Button>
+      </Tooltip>
     </div>
   ),
 };

@@ -14,7 +14,7 @@ type Story = StoryObj<typeof Text>;
 
 export const AllVariants: Story = {
   render: () => (
-    <Stack gap={4}>
+    <Stack gap="sm">
       <Text variant="display">Display</Text>
       <Text variant="titleLarge">Title Large</Text>
       <Text variant="titleMedium">Title Medium</Text>
@@ -34,7 +34,7 @@ export const Colors: Story = {
   render: () => {
     const tokens = useTheme();
     return (
-      <Stack gap={3}>
+      <Stack gap="xs">
         <Text color="default">default — primary reading text</Text>
         <Text color="muted">muted — secondary / supporting text</Text>
         <Text color="disabled">disabled — unavailable state</Text>

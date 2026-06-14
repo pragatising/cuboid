@@ -14,16 +14,17 @@ const meta: Meta<typeof Button> = {
       page: () => (
         <>
           <Title />
-          <Subtitle>Playground + visual variants reference</Subtitle>
-          <Primary />
-          <Controls />
+          <Subtitle>
+            Token-driven variants (Figma DS—AI). All colors from{" "}
+            <code>tokens/functional/components/button/</code>.
+          </Subtitle>
 
-          <div style={{ marginTop: 24 }}>
-            <h3 style={{ margin: "0 0 12px" }}>Variants</h3>
-            <Stack gap={4}>
+          <div className="cube-docs-section">
+            <h3 className="cube-docs-section__title">Variants</h3>
+            <Stack gap="sm">
               {(["xs", "sm", "md", "lg"] as const).map((size) => (
-                <Stack key={size} direction="horizontal" gap={3} align="center">
-                  <div style={{ width: 28, fontSize: 12, opacity: 0.7 }}>{size.toUpperCase()}</div>
+                <Stack key={size} direction="horizontal" gap="xs" align="center">
+                  <span className="cube-docs-matrix-label cube-docs-matrix-label--narrow">{size.toUpperCase()}</span>
                   <Button size={size} variant="primary">Primary</Button>
                   <Button size={size} variant="secondary">Secondary</Button>
                   <Button size={size} variant="ghost">Ghost</Button>
@@ -33,6 +34,33 @@ const meta: Meta<typeof Button> = {
               ))}
             </Stack>
           </div>
+
+          <div className="cube-docs-section">
+            <h3 className="cube-docs-section__title">Pill shape</h3>
+            <Stack direction="horizontal" gap="xs" align="center" wrap>
+              <Button size="sm" variant="primary" shape="rounded">
+                Primary pill
+              </Button>
+              <Button size="sm" variant="secondary" shape="rounded">
+                Secondary pill
+              </Button>
+              <Button size="sm" variant="ghost" shape="rounded">
+                Ghost pill
+              </Button>
+            </Stack>
+          </div>
+
+          <div className="cube-docs-section cube-docs-section--last">
+            <h3 className="cube-docs-section__title">Block</h3>
+            <div style={{ maxWidth: 280 }}>
+              <Button block variant="primary">
+                Full width
+              </Button>
+            </div>
+          </div>
+
+          <Primary />
+          <Controls />
         </>
       ),
     },
@@ -75,12 +103,10 @@ export const Playground: Story = {
     onClick: { action: "clicked" },
   },
   render: (args) => (
-    <div style={{ maxWidth: 420, padding: 16, border: "1px dashed #ddd" }}>
-      <Button
-        {...args}
-        leadingIcon={args.leadingIcon === "plus" ? <PlusIcon /> : undefined}
-        trailingIcon={args.trailingIcon === "chevronDown" ? <ChevronDownIcon /> : undefined}
-      />
-    </div>
+    <Button
+      {...args}
+      leadingIcon={args.leadingIcon === "plus" ? <PlusIcon /> : undefined}
+      trailingIcon={args.trailingIcon === "chevronDown" ? <ChevronDownIcon /> : undefined}
+    />
   ),
 };

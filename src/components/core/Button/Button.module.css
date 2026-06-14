@@ -120,18 +120,25 @@
 }
 
 .Button--ghost {
-  color: var(--cube-colors-functional-foreground-default);
-  background-color: transparent;
-  border-color: transparent;
+  color: var(--cube-button-ghost-fg-rest);
+  background-color: var(--cube-button-ghost-bg-rest);
+  border-color: var(--cube-button-ghost-border-rest);
 }
 .Button--ghost:not(:disabled):not([aria-disabled="true"]):hover {
-  background-color: var(--cube-colors-functional-background-muted);
+  color: var(--cube-button-ghost-fg-hover);
+  background-color: var(--cube-button-ghost-bg-hover);
+  border-color: var(--cube-button-ghost-border-hover);
 }
 .Button--ghost:not(:disabled):not([aria-disabled="true"]):active {
-  background-color: var(--cube-colors-functional-background-muted);
+  color: var(--cube-button-ghost-fg-pressed);
+  background-color: var(--cube-button-ghost-bg-pressed);
+  border-color: var(--cube-button-ghost-border-pressed);
 }
-.Button--ghost:disabled {
-  color: var(--cube-colors-functional-foreground-disabled);
+.Button--ghost:disabled,
+.Button--ghost[aria-disabled="true"] {
+  color: var(--cube-button-ghost-fg-disabled);
+  background-color: var(--cube-button-ghost-bg-disabled);
+  border-color: var(--cube-button-ghost-border-disabled);
 }
 
 /* Sizes — geometry from shared control tokens; label metrics from typography.button */

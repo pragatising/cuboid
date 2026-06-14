@@ -19,13 +19,24 @@ const OUTPUT = path.join(ROOT, "src/theme/output/theme.css");
 const PREFIX = "--cube";
 
 /** Theme keys like extraSmall → CSS segments like extra-small */
-function controlStopCssSegment(stop) {
-  return stop.replace(/[A-Z]/g, (ch) => `-${ch.toLowerCase()}`);
+function cssSegment(key) {
+  return String(key).replace(/[A-Z]/g, (ch) => `-${ch.toLowerCase()}`);
 }
 
-/** Text variant keys like titleLarge → title-large */
-function textVariantCssSegment(key) {
-  return key.replace(/[A-Z]/g, (ch) => `-${ch.toLowerCase()}`);
+function emitNestedStringVars(obj, pathParts, prefix, set) {
+  if (typeof obj === "string") {
+    const name = [prefix, ...pathParts.map(cssSegment)].filter(Boolean).join("-");
+    set(name, obj);
+    return;
+  }
+  if (!obj || typeof obj !== "object") return;
+  for (const [key, value] of Object.entries(obj)) {
+    emitNestedStringVars(value, [...pathParts, key], prefix, set);
+  }
+}
+
+function controlStopCssSegment(stop) {
+  return cssSegment(stop);
 }
 
 function main() {
@@ -51,6 +62,10 @@ function main() {
   set("sizes-borderRadius-md", t.sizes?.borderRadius?.md);
   set("sizes-borderRadius-full", t.sizes?.borderRadius?.full);
   set("sizes-borderWidth-thin", t.sizes?.borderWidth?.thin);
+  set("breakpoint-md", t.sizes?.breakpoints?.md);
+  set("breakpoint-lg", t.sizes?.breakpoints?.lg);
+  emitNestedStringVars(t.sizes?.stack?.gap, [], "stack-gap", set);
+  emitNestedStringVars(t.sizes?.stack?.padding, [], "stack-padding", set);
 
   // Typography
   set("typography-fontFamily-base", t.typography?.fontFamily?.base);
@@ -59,7 +74,7 @@ function main() {
   const textStyles = t.typography?.text;
   if (textStyles && typeof textStyles === "object") {
     for (const key of Object.keys(textStyles)) {
-      const seg = textVariantCssSegment(key);
+      const seg = cssSegment(key);
       const st = textStyles[key];
       if (!st || typeof st !== "object") continue;
       set(`typography-text-${seg}-fontSize`, st.fontSize);
@@ -82,21 +97,19 @@ function main() {
   set("tooltip-maxWidthSingleLine", t.sizes?.tooltip?.maxWidthSingleLine);
   set("tooltip-shadow", t.sizes?.tooltip?.boxShadow);
 
-  // Functional colors (Button, Text, shared UI)
-  set("colors-functional-background-muted", t.colors?.functional?.background?.muted);
-  const fg = t.colors?.functional?.foreground;
-  set("colors-functional-foreground-default", fg?.default);
-  set("colors-functional-foreground-muted", fg?.muted);
-  set("colors-functional-foreground-onEmphasis", fg?.onEmphasis);
-  set("colors-functional-foreground-disabled", fg?.disabled);
-  set("colors-functional-foreground-link", fg?.link);
-  set("colors-functional-foreground-white", fg?.white);
-  set("colors-functional-foreground-neutral", fg?.neutral);
+  // Functional colors (component-facing aliases)
+  emitNestedStringVars(t.colors?.functional?.background, [], "colors-functional-background", set);
+  emitNestedStringVars(t.colors?.functional?.foreground, [], "colors-functional-foreground", set);
+  emitNestedStringVars(t.colors?.functional?.border, [], "colors-functional-border", set);
+
+  // Global palette (tokens/functional/colors/globals.json → color.*)
+  emitNestedStringVars(t.globalColors, [], "color", set);
 
   // Button variant tokens
   for (const [variantKey, objKey] of [
     ["primary", "buttonPrimary"],
     ["secondary", "buttonSecondary"],
+    ["ghost", "buttonGhost"],
     ["danger", "buttonDanger"],
     ["rounded", "buttonRounded"],
   ]) {
@@ -106,6 +119,87 @@ function main() {
       set(`button-${variantKey}-fg-${state}`, v?.fgColor?.[state]);
       set(`button-${variantKey}-border-${state}`, v?.borderColor?.[state]);
     }
+  }
+
+  for (const variantKey of ["inline", "standalone"]) {
+    const v = t.linkColors?.[variantKey];
+    set(`link-${variantKey}-fg-rest`, v?.rest);
+    set(`link-${variantKey}-fg-hover`, v?.hover);
+  }
+
+  const breadcrumbLink = t.breadcrumbColors?.link;
+  if (breadcrumbLink) {
+    for (const state of ["rest", "hover", "active"]) {
+      set(`breadcrumb-link-bg-${state}`, breadcrumbLink.bgColor?.[state]);
+      set(`breadcrumb-link-fg-${state}`, breadcrumbLink.fgColor?.[state]);
+    }
+    set(`breadcrumb-separator-fg`, t.breadcrumbColors?.separator?.fgColor);
+  }
+
+  const breadcrumbSizes = t.sizes?.breadcrumb;
+  if (breadcrumbSizes) {
+    set(`breadcrumb-gap`, breadcrumbSizes.gap);
+    set(`breadcrumb-item-paddingInline`, breadcrumbSizes.itemPaddingInline);
+    set(`breadcrumb-item-paddingBlock`, breadcrumbSizes.itemPaddingBlock);
+    set(`breadcrumb-item-borderRadius`, breadcrumbSizes.itemBorderRadius);
+    set(`breadcrumb-separator-width`, breadcrumbSizes.separatorWidth);
+  }
+
+  const siteHeaderColors = t.siteHeaderColors;
+  if (siteHeaderColors) {
+    set(`siteHeader-bg`, siteHeaderColors.background);
+    set(`siteHeader-border`, siteHeaderColors.border);
+    set(`siteHeader-divider-fg`, siteHeaderColors.divider);
+  }
+
+  const siteHeaderSizes = t.sizes?.siteHeader;
+  if (siteHeaderSizes) {
+    set(`siteHeader-height`, siteHeaderSizes.height);
+    set(`siteHeader-paddingInlineStart`, siteHeaderSizes.paddingInlineStart);
+    set(`siteHeader-paddingInlineEnd`, siteHeaderSizes.paddingInlineEnd);
+    set(`siteHeader-paddingBlock`, siteHeaderSizes.paddingBlock);
+    set(`siteHeader-leadingGap`, siteHeaderSizes.leadingGap);
+    set(`siteHeader-trailingGap`, siteHeaderSizes.trailingGap);
+    set(`siteHeader-divider-height`, siteHeaderSizes.dividerHeight);
+    set(`siteHeader-divider-width`, siteHeaderSizes.dividerWidth);
+  }
+
+  const pillColors = t.pillColors;
+  if (pillColors && typeof pillColors === "object") {
+    for (const shade of Object.keys(pillColors).sort()) {
+      const shadeBlock = pillColors[shade];
+      if (!shadeBlock || typeof shadeBlock !== "object") continue;
+      for (const intensity of Object.keys(shadeBlock).sort()) {
+        const intensityBlock = shadeBlock[intensity];
+        if (!intensityBlock || typeof intensityBlock !== "object") continue;
+        for (const surface of ["filled", "bordered"]) {
+          const v = intensityBlock[surface];
+          if (!v || typeof v !== "object") continue;
+          for (const state of ["rest", "hover", "pressed", "disabled"]) {
+            set(
+              `pill-${shade}-${intensity}-${surface}-bg-${state}`,
+              v?.bgColor?.[state]
+            );
+            set(
+              `pill-${shade}-${intensity}-${surface}-fg-${state}`,
+              v?.fgColor?.[state]
+            );
+            set(
+              `pill-${shade}-${intensity}-${surface}-border-${state}`,
+              v?.borderColor?.[state]
+            );
+          }
+        }
+      }
+    }
+  }
+
+  for (const sizeKey of ["sm", "md"]) {
+    const row = t.sizes?.pill?.[sizeKey];
+    set(`pill-${sizeKey}-paddingInline`, row?.paddingInline);
+    set(`pill-${sizeKey}-paddingBlock`, row?.paddingBlock);
+    set(`pill-${sizeKey}-borderRadius`, row?.borderRadius);
+    set(`pill-${sizeKey}-gap`, row?.gap);
   }
 
   const ib = t.iconButton;
@@ -154,6 +248,13 @@ function main() {
     const b = t.typography?.button?.[stop];
     set(`typography-button-${seg}-fontSize`, b?.fontSize);
     set(`typography-button-${seg}-lineHeight`, b?.lineHeight);
+  }
+
+  for (const stop of ["sm", "md"]) {
+    const p = t.typography?.pill?.[stop];
+    set(`typography-pill-${stop}-fontSize`, p?.fontSize);
+    set(`typography-pill-${stop}-lineHeight`, p?.lineHeight);
+    set(`typography-pill-${stop}-fontWeight`, p?.fontWeight);
   }
 
   const lines = [];

@@ -161,6 +161,43 @@ function themeBaseFromUnwrappedScale(scaleObj) {
   return out;
 }
 
+/** Palette keys from tokens/functional/colors/globals.json (not component color.*). */
+const GLOBAL_COLOR_ROOT_KEYS = [
+  "primary",
+  "black",
+  "white",
+  "focus",
+  "success",
+  "warning",
+  "error",
+  "info",
+  "fg",
+  "text",
+  "canvas",
+  "border",
+  "bg",
+  "syntax",
+];
+
+function pickGlobalColors(color) {
+  const out = {};
+  for (const key of GLOBAL_COLOR_ROOT_KEYS) {
+    if (color[key] !== undefined) out[key] = color[key];
+  }
+  return out;
+}
+
+function assertGlobalColorLeaves(node, path) {
+  if (typeof node === "string") return;
+  if (!isPlain(node)) {
+    console.error(`Expected globalColors.${path} to resolve to a color string or nested object`);
+    process.exit(1);
+  }
+  for (const [k, v] of Object.entries(node)) {
+    assertGlobalColorLeaves(v, path ? `${path}.${k}` : k);
+  }
+}
+
 function main() {
   const lightPath = path.join(ROOT, "tokens/base/light.json");
   const globalsPath = path.join(ROOT, "tokens/functional/colors/globals.json");
@@ -213,6 +250,30 @@ function main() {
       }
       if (isPlain(doc.tooltip.sizes)) {
         componentLayoutMerge = deepMerge(componentLayoutMerge, { tooltip: doc.tooltip.sizes });
+      }
+    }
+    if (isPlain(doc.pill)) {
+      if (isPlain(doc.pill.color)) {
+        mergedColor = deepMerge(mergedColor, { pill: doc.pill.color });
+      }
+      if (isPlain(doc.pill.sizes)) {
+        componentLayoutMerge = deepMerge(componentLayoutMerge, { pill: doc.pill.sizes });
+      }
+    }
+    if (isPlain(doc.breadcrumb)) {
+      if (isPlain(doc.breadcrumb.color)) {
+        mergedColor = deepMerge(mergedColor, { breadcrumb: doc.breadcrumb.color });
+      }
+      if (isPlain(doc.breadcrumb.sizes)) {
+        componentLayoutMerge = deepMerge(componentLayoutMerge, { breadcrumb: doc.breadcrumb.sizes });
+      }
+    }
+    if (isPlain(doc.siteHeader)) {
+      if (isPlain(doc.siteHeader.color)) {
+        mergedColor = deepMerge(mergedColor, { siteHeader: doc.siteHeader.color });
+      }
+      if (isPlain(doc.siteHeader.sizes)) {
+        componentLayoutMerge = deepMerge(componentLayoutMerge, { siteHeader: doc.siteHeader.sizes });
       }
     }
   }
@@ -306,6 +367,155 @@ function main() {
     bgColor: btnRounded.bgColor,
     borderColor: btnRounded.borderColor,
     fgColor: btnRounded.fgColor,
+  };
+
+  const btnGhost = uColor?.button?.ghost;
+  if (!isPlain(btnGhost) || !isPlain(btnGhost.bgColor)) {
+    console.error("Expected resolved color.button.ghost with bgColor, borderColor, fgColor");
+    process.exit(1);
+  }
+
+  const buttonGhost = {
+    bgColor: btnGhost.bgColor,
+    borderColor: btnGhost.borderColor,
+    fgColor: btnGhost.fgColor,
+  };
+
+  const pillSurfaces = ["filled", "bordered"];
+  const pillStates = ["rest", "hover", "pressed", "disabled"];
+  const pillLayers = ["bgColor", "borderColor", "fgColor"];
+  const validatePillInteractive = (block, label) => {
+    if (!isPlain(block)) {
+      console.error(`Expected ${label}`);
+      process.exit(1);
+    }
+    for (const layer of pillLayers) {
+      if (!isPlain(block[layer])) {
+        console.error(`Expected ${label}.${layer}`);
+        process.exit(1);
+      }
+      for (const s of pillStates) {
+        if (typeof block[layer][s] !== "string") {
+          console.error(`Expected ${label}.${layer}.${s} to be a string`);
+          process.exit(1);
+        }
+      }
+    }
+  };
+
+  const pillRoot = uColor?.pill;
+  if (!isPlain(pillRoot)) {
+    console.error(
+      "Expected resolved color.pill (tokens/functional/components/pill/*.json — shade → intensity → filled|bordered)"
+    );
+    process.exit(1);
+  }
+
+  /**
+   * Pattern: color.pill.<shade>.<intensity>.<filled|bordered>.<bgColor|borderColor|fgColor>.<rest|hover|pressed|disabled>
+   * Shade files merge under color.pill (e.g. pill/gray.json). Add yellow.json the same way.
+   */
+  const pillColors = {};
+  for (const shade of Object.keys(pillRoot).sort()) {
+    const shadeBlock = pillRoot[shade];
+    if (!isPlain(shadeBlock)) {
+      console.error(`Expected color.pill.${shade} to be an object`);
+      process.exit(1);
+    }
+    pillColors[shade] = {};
+    for (const intensity of Object.keys(shadeBlock).sort()) {
+      const intensityBlock = shadeBlock[intensity];
+      if (!isPlain(intensityBlock)) {
+        console.error(`Expected color.pill.${shade}.${intensity} to be an object`);
+        process.exit(1);
+      }
+      pillColors[shade][intensity] = {};
+      for (const surface of pillSurfaces) {
+        if (!isPlain(intensityBlock[surface])) {
+          console.error(`Expected color.pill.${shade}.${intensity}.${surface}`);
+          process.exit(1);
+        }
+        validatePillInteractive(
+          intensityBlock[surface],
+          `color.pill.${shade}.${intensity}.${surface}`
+        );
+        pillColors[shade][intensity][surface] = {
+          bgColor: intensityBlock[surface].bgColor,
+          borderColor: intensityBlock[surface].borderColor,
+          fgColor: intensityBlock[surface].fgColor,
+        };
+      }
+    }
+  }
+
+  const linkStates = ["rest", "hover"];
+  const validateLinkFg = (block, label) => {
+    if (!isPlain(block?.fgColor)) {
+      console.error(`Expected ${label}.fgColor`);
+      process.exit(1);
+    }
+    for (const s of linkStates) {
+      if (typeof block.fgColor[s] !== "string") {
+        console.error(`Expected ${label}.fgColor.${s} to be a string`);
+        process.exit(1);
+      }
+    }
+  };
+  const linkInline = uColor?.link?.inline;
+  const linkStandalone = uColor?.link?.standalone;
+  if (!isPlain(linkInline) || !isPlain(linkStandalone)) {
+    console.error("Expected resolved color.link.{inline,standalone} (tokens/functional/components/link/link.json)");
+    process.exit(1);
+  }
+  validateLinkFg(linkInline, "color.link.inline");
+  validateLinkFg(linkStandalone, "color.link.standalone");
+  const linkColors = {
+    inline: linkInline.fgColor,
+    standalone: linkStandalone.fgColor,
+  };
+
+  const breadcrumbLink = uColor?.breadcrumb?.link;
+  const breadcrumbSeparator = uColor?.breadcrumb?.separator;
+  if (!isPlain(breadcrumbLink) || !isPlain(breadcrumbLink.bgColor) || !isPlain(breadcrumbLink.fgColor)) {
+    console.error(
+      "Expected resolved color.breadcrumb.link with bgColor, fgColor (tokens/functional/components/breadcrumb/breadcrumb.json)"
+    );
+    process.exit(1);
+  }
+  if (!isPlain(breadcrumbSeparator) || typeof breadcrumbSeparator.fgColor !== "string") {
+    console.error("Expected resolved color.breadcrumb.separator.fgColor");
+    process.exit(1);
+  }
+  const breadcrumbStates = ["rest", "hover", "active"];
+  for (const layer of ["bgColor", "fgColor"]) {
+    for (const s of breadcrumbStates) {
+      if (typeof breadcrumbLink[layer][s] !== "string") {
+        console.error(`Expected color.breadcrumb.link.${layer}.${s} to be a string`);
+        process.exit(1);
+      }
+    }
+  }
+  const breadcrumbColors = {
+    link: breadcrumbLink,
+    separator: breadcrumbSeparator,
+  };
+
+  const siteHeaderColor = uColor?.siteHeader;
+  if (
+    !isPlain(siteHeaderColor) ||
+    typeof siteHeaderColor.background !== "string" ||
+    typeof siteHeaderColor.border !== "string" ||
+    typeof siteHeaderColor.divider !== "string"
+  ) {
+    console.error(
+      "Expected resolved color.siteHeader.{background,border,divider} (tokens/functional/components/site-header/site-header.json)"
+    );
+    process.exit(1);
+  }
+  const siteHeaderColors = {
+    background: siteHeaderColor.background,
+    border: siteHeaderColor.border,
+    divider: siteHeaderColor.divider,
   };
 
   const tipColor = uColor?.tooltip;
@@ -471,6 +681,9 @@ function main() {
     }
   }
 
+  const globalColors = pickGlobalColors(uColor);
+  assertGlobalColorLeaves(globalColors, "globalColors");
+
   const control = uSize?.size?.control;
   const sizesOk =
     isPlain(control) &&
@@ -534,6 +747,39 @@ function main() {
         console.error(`Expected buttonTypography.${stop}.${field} to be a string`);
         process.exit(1);
       }
+    }
+  }
+
+  const rawPill = rawTypography?.pill;
+  if (!isPlain(rawPill) || !isPlain(rawPill.sm) || !isPlain(rawPill.md)) {
+    console.error(
+      "Expected raw typography pill.{sm,md} (from tokens/functional/typography/typography.json)"
+    );
+    process.exit(1);
+  }
+  const pillTypography = {
+    sm: {
+      fontSize: pxStringToRem(rawPill.sm.fontSize?.value) ?? "0.75rem",
+      lineHeight: pxStringToRem(rawPill.sm.lineHeight?.value) ?? "0.9375rem",
+      fontWeight: rawPill.sm.weight?.value ?? 400,
+    },
+    md: {
+      fontSize: pxStringToRem(rawPill.md.fontSize?.value) ?? "0.75rem",
+      lineHeight: pxStringToRem(rawPill.md.lineHeight?.value) ?? "1.125rem",
+      fontWeight: rawPill.md.weight?.value ?? 400,
+    },
+  };
+
+  for (const stop of ["sm", "md"]) {
+    for (const field of ["fontSize", "lineHeight"]) {
+      if (typeof pillTypography[stop][field] !== "string") {
+        console.error(`Expected pillTypography.${stop}.${field} to be a string`);
+        process.exit(1);
+      }
+    }
+    if (typeof pillTypography[stop].fontWeight !== "number") {
+      console.error(`Expected pillTypography.${stop}.fontWeight to be a number`);
+      process.exit(1);
     }
   }
 
@@ -634,6 +880,22 @@ function main() {
     }
   }
 
+  const breakpointSrc = uSize?.breakpoint;
+  if (
+    !isPlain(breakpointSrc) ||
+    typeof breakpointSrc.md !== "string" ||
+    typeof breakpointSrc.lg !== "string"
+  ) {
+    console.error(
+      "Expected resolved size.breakpoint.{md,lg} (from tokens/functional/size/breakpoints.json)"
+    );
+    process.exit(1);
+  }
+  const breakpoints = {
+    md: breakpointSrc.md,
+    lg: breakpointSrc.lg,
+  };
+
   const spaceScale = uSize?.space;
   const spaceKeys = ["1", "2", "3", "4", "5", "6", "8", "10", "12"];
   if (!isPlain(spaceScale) || !spaceKeys.every((k) => typeof spaceScale[k] === "string")) {
@@ -643,6 +905,21 @@ function main() {
     process.exit(1);
   }
   const space = Object.fromEntries(spaceKeys.map((k) => [k, spaceScale[k]]));
+
+  const stackScaleKeys = ["none", "xxs", "xs", "sm", "md", "lg", "xl", "xxl"];
+
+  function readStackScale(src, label) {
+    if (!isPlain(src) || !stackScaleKeys.every((k) => typeof src[k] === "string")) {
+      console.error(
+        `Expected resolved size.stack.${label}.{${stackScaleKeys.join(",")}} (from tokens/functional/size/stack.json)`
+      );
+      process.exit(1);
+    }
+    return Object.fromEntries(stackScaleKeys.map((k) => [k, src[k]]));
+  }
+
+  const stackGap = readStackScale(uSize?.stack?.gap, "gap");
+  const stackPadding = readStackScale(uSize?.stack?.padding, "padding");
 
   const tipLayout = uSize?.tooltip;
   if (!isPlain(tipLayout)) {
@@ -667,6 +944,33 @@ function main() {
     }
   }
 
+  const pillLayoutSrc = uSize?.pill;
+  if (!isPlain(pillLayoutSrc)) {
+    console.error("Expected resolved size.pill.* (from pill.sizes in components/pill/pill.json)");
+    process.exit(1);
+  }
+  const pillSizeKeys = ["sm", "md"];
+  const pillSizes = {};
+  for (const key of pillSizeKeys) {
+    const row = pillLayoutSrc[key];
+    if (!isPlain(row)) {
+      console.error(`Expected size.pill.${key}`);
+      process.exit(1);
+    }
+    for (const k of ["paddingInline", "paddingBlock", "borderRadius", "gap"]) {
+      if (typeof row[k] !== "string") {
+        console.error(`Expected size.pill.${key}.${k} to be a string`);
+        process.exit(1);
+      }
+    }
+    pillSizes[key] = {
+      paddingInline: row.paddingInline,
+      paddingBlock: row.paddingBlock,
+      borderRadius: row.borderRadius,
+      gap: row.gap,
+    };
+  }
+
   const ibSize = control.iconButton;
   const ibSizeStops = ["extraSmall", "small", "medium", "large"];
   const iconButtonSizes = {};
@@ -685,9 +989,59 @@ function main() {
     iconButtonSizes[stop] = { size: row.size, borderRadius: row.borderRadius, icon: row.icon };
   }
 
+  const breadcrumbLayoutSrc = uSize?.breadcrumb;
+  if (!isPlain(breadcrumbLayoutSrc)) {
+    console.error(
+      "Expected resolved size.breadcrumb.* (from breadcrumb.sizes in components/breadcrumb/breadcrumb.json)"
+    );
+    process.exit(1);
+  }
+  const breadcrumbLayoutKeys = [
+    "gap",
+    "itemPaddingInline",
+    "itemPaddingBlock",
+    "itemBorderRadius",
+    "separatorWidth",
+  ];
+  const breadcrumbSizes = {};
+  for (const key of breadcrumbLayoutKeys) {
+    if (typeof breadcrumbLayoutSrc[key] !== "string") {
+      console.error(`Expected size.breadcrumb.${key} to be a string`);
+      process.exit(1);
+    }
+    breadcrumbSizes[key] = breadcrumbLayoutSrc[key];
+  }
+
+  const siteHeaderLayoutSrc = uSize?.siteHeader;
+  if (!isPlain(siteHeaderLayoutSrc)) {
+    console.error(
+      "Expected resolved size.siteHeader.* (from siteHeader.sizes in components/site-header/site-header.json)"
+    );
+    process.exit(1);
+  }
+  const siteHeaderLayoutKeys = [
+    "height",
+    "paddingInlineStart",
+    "paddingInlineEnd",
+    "paddingBlock",
+    "leadingGap",
+    "trailingGap",
+    "dividerHeight",
+    "dividerWidth",
+  ];
+  const siteHeaderSizes = {};
+  for (const key of siteHeaderLayoutKeys) {
+    if (typeof siteHeaderLayoutSrc[key] !== "string") {
+      console.error(`Expected size.siteHeader.${key} to be a string`);
+      process.exit(1);
+    }
+    siteHeaderSizes[key] = siteHeaderLayoutSrc[key];
+  }
+
   const typography = {
     ...uRootConverted.typography,
     button: buttonTypography,
+    pill: pillTypography,
   };
 
   const payload = {
@@ -702,18 +1056,29 @@ function main() {
     },
     sizes: {
       space,
+      stack: { gap: stackGap, padding: stackPadding },
       borderRadius,
       borderWidth,
+      breakpoints,
       control: controlSizes,
       tooltip: tooltipLayout,
+      pill: pillSizes,
       iconButton: iconButtonSizes,
+      breadcrumb: breadcrumbSizes,
+      siteHeader: siteHeaderSizes,
     },
     buttonPrimary,
     buttonSecondary,
+    buttonGhost,
     buttonDanger,
     buttonRounded,
+    linkColors,
+    pillColors,
     tooltipColors,
     iconButton,
+    breadcrumbColors,
+    siteHeaderColors,
+    globalColors,
   };
 
   fs.mkdirSync(themeOutputDir, { recursive: true });
