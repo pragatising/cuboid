@@ -119,16 +119,10 @@ function countSubtreeLines(value: unknown): number {
 }
 
 // String subtype detection — applied to raw string values (before quoting).
-const RE_URL   = /^https?:\/\/[^\s"]+$/;
-const RE_EMAIL = /^[^\s@"]+@[^\s@"]+\.[^\s@"]+$/;
-// UUID v1–v5: 8-4-4-4-12 hex digits
-const RE_UUID  = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+import { classifyJsonString } from "../CodeBlock/syntax";
 
 function classifyString(raw: string): TokenType {
-  if (RE_URL.test(raw))   return "string_url";
-  if (RE_EMAIL.test(raw)) return "string_email";
-  if (RE_UUID.test(raw))  return "string_uuid";
-  return "string";
+  return classifyJsonString(raw);
 }
 
 /** Tokens that prefix a value — object key with colon only. Array items have no prefix. */

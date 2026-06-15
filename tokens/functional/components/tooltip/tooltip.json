@@ -3,7 +3,7 @@
     "color": {
       "background": { "value": "{base.color.scale.gray.13}" },
       "border": { "value": "{color.canvas.transparent}" },
-      "foreground": { "value": "{color.fg.neutral.1}" }
+      "foreground": { "value": "{color.fg.neutral.inverted}" }
     },
     "sizes": {
       "gap": { "value": "{size.space.2}" },

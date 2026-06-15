@@ -435,23 +435,16 @@ function main() {
   };
 
   const pillSurfaces = ["filled", "bordered"];
-  const pillStates = ["rest", "hover", "pressed", "disabled"];
   const pillLayers = ["bgColor", "borderColor", "fgColor"];
-  const validatePillInteractive = (block, label) => {
+  const validatePillSurface = (block, label) => {
     if (!isPlain(block)) {
       console.error(`Expected ${label}`);
       process.exit(1);
     }
     for (const layer of pillLayers) {
-      if (!isPlain(block[layer])) {
-        console.error(`Expected ${label}.${layer}`);
+      if (typeof block[layer] !== "string") {
+        console.error(`Expected ${label}.${layer} to be a string`);
         process.exit(1);
-      }
-      for (const s of pillStates) {
-        if (typeof block[layer][s] !== "string") {
-          console.error(`Expected ${label}.${layer}.${s} to be a string`);
-          process.exit(1);
-        }
       }
     }
   };
@@ -465,7 +458,7 @@ function main() {
   }
 
   /**
-   * Pattern: color.pill.<shade>.<intensity>.<filled|bordered>.<bgColor|borderColor|fgColor>.<rest|hover|pressed|disabled>
+   * Pattern: color.pill.<shade>.<intensity>.<filled|bordered>.<bgColor|borderColor|fgColor>
    * Shade files merge under color.pill (e.g. pill/gray.json). Add yellow.json the same way.
    */
   const pillColors = {};
@@ -488,7 +481,7 @@ function main() {
           console.error(`Expected color.pill.${shade}.${intensity}.${surface}`);
           process.exit(1);
         }
-        validatePillInteractive(
+        validatePillSurface(
           intensityBlock[surface],
           `color.pill.${shade}.${intensity}.${surface}`
         );
@@ -797,13 +790,13 @@ function main() {
   };
 
   const foreground = {
-    default: uColor.fg.neutral["6"],
-    muted: text?.default ?? uColor.fg.neutral["4"],
-    onEmphasis: uColor.fg.neutral["1"],
-    disabled: text?.disabled ?? uColor.fg.neutral["3"],
+    default: text?.default ?? uColor.fg.neutral.default,
+    muted: text?.muted ?? uColor.fg.neutral.muted,
+    onEmphasis: text?.inverted ?? uColor.fg.neutral.inverted,
+    disabled: text?.disabled ?? uColor.fg.neutral.disabled,
     link: uColor.fg.link.default,
-    white: uColor.fg.neutral["1"],
-    neutral: uColor.fg.neutral["5"],
+    white: uColor.fg.neutral.inverted,
+    neutral: uColor.fg.neutral.default,
   };
 
   const border = {

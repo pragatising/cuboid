@@ -1,14 +1,16 @@
 import type { Preview } from "@storybook/react";
 import { create, themes, typography as sbTypography } from "@storybook/theming";
 import "../src/theme/output/theme.css";
+import "../src/theme/output/components.css";
 import "./docs.css";
 
 /**
  * Preview iframe (canvas + docs content).
  *
  * Styling layers:
- * - theme.css  — Cube design tokens + component CSS variables
- * - docs.css   — Storybook docs prose, inline code, section utilities
+ * - theme.css       — globals, shadows, size, typography
+ * - components.css  — component color tokens + selector rules (e.g. pill)
+ * - docs.css        — Storybook docs prose, inline code, section utilities
  * - preview-head.html — Inter webfont (matches token base family)
  *
  * Storybook shell (sidebar) → manager.ts + managerHead in main.ts

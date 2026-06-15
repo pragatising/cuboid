@@ -22,11 +22,13 @@
       "types": "./dist/index.d.ts"
     },
     "./style.css": "./dist/style.css",
-    "./theme.css": "./src/theme/output/theme.css"
+    "./theme.css": "./src/theme/output/theme.css",
+    "./components.css": "./src/theme/output/components.css"
   },
   "files": [
     "dist",
-    "src/theme/output/theme.css"
+    "src/theme/output/theme.css",
+    "src/theme/output/components.css"
   ],
   "scripts": {
     "dev": "vite",
@@ -43,7 +45,7 @@
     "tokens:functional-typography": "node scripts/flatten-functional-typography.mjs",
     "tokens:typography-theme": "node scripts/build-typography-theme.mjs",
     "pretokens:theme": "node scripts/build-typography-theme.mjs",
-    "tokens:theme": "node scripts/build-theme.mjs && node scripts/build-theme-css.mjs",
+    "tokens:theme": "node scripts/build-theme.mjs && node scripts/build-theme-css.mjs && node scripts/build-component-theme-css.mjs",
     "prebuild": "npm run tokens:theme"
   },
   "peerDependencies": {

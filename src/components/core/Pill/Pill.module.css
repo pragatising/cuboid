@@ -1,4 +1,4 @@
-/* Layout + typography. Colors from theme.css ([data-cube-pill]) or --cube-pill-active-* when themed. */
+/* Layout + typography. Colors from components.css ([data-cube-pill]) or --cube-pill-active-* when themed. */
 .cube-Pill {
   appearance: none;
   display: inline-flex;
@@ -8,7 +8,6 @@
   margin: 0;
   border-width: var(--cube-sizes-borderWidth-thin);
   border-style: solid;
-  /* border-color from [data-cube-pill] in theme.css or --cube-pill-active-* when themed */
   font-family: var(--cube-typography-fontFamily-base);
   font-size: var(--cube-typography-text-body-small-fontSize, 0.75rem);
   font-weight: 500;
@@ -20,7 +19,6 @@
   gap: var(--cube-pill-gap);
   padding: var(--cube-pill-paddingBlock) var(--cube-pill-paddingInline);
   border-radius: var(--cube-pill-borderRadius);
-  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
 }
 
 .cube-Pill--caption {
@@ -58,38 +56,17 @@ button.cube-Pill {
   cursor: not-allowed;
 }
 
-/* Theme prop override — inline --cube-pill-active-* (same pattern as Button + theme) */
+/* Theme prop override */
 .cube-Pill--themed {
-  color: var(--cube-pill-active-fg-rest);
-  background-color: var(--cube-pill-active-bg-rest);
-  border-color: var(--cube-pill-active-border-rest);
+  color: var(--cube-pill-active-fg);
+  background-color: var(--cube-pill-active-bg);
+  border-color: var(--cube-pill-active-border);
 }
 
 a.cube-Pill--themed:visited {
-  color: var(--cube-pill-active-fg-rest);
-  background-color: var(--cube-pill-active-bg-rest);
-  border-color: var(--cube-pill-active-border-rest);
-}
-
-a.cube-Pill--themed:not(:disabled):not([aria-disabled="true"]):hover,
-button.cube-Pill--themed:not(:disabled):not([aria-disabled="true"]):hover {
-  color: var(--cube-pill-active-fg-hover);
-  background-color: var(--cube-pill-active-bg-hover);
-  border-color: var(--cube-pill-active-border-hover);
-}
-
-a.cube-Pill--themed:not(:disabled):not([aria-disabled="true"]):active,
-button.cube-Pill--themed:not(:disabled):not([aria-disabled="true"]):active {
-  color: var(--cube-pill-active-fg-pressed);
-  background-color: var(--cube-pill-active-bg-pressed);
-  border-color: var(--cube-pill-active-border-pressed);
-}
-
-.cube-Pill--themed:disabled,
-.cube-Pill--themed[aria-disabled="true"] {
-  color: var(--cube-pill-active-fg-disabled);
-  background-color: var(--cube-pill-active-bg-disabled);
-  border-color: var(--cube-pill-active-border-disabled);
+  color: var(--cube-pill-active-fg);
+  background-color: var(--cube-pill-active-bg);
+  border-color: var(--cube-pill-active-border);
 }
 
 .cube-Pill__leadingVisual,

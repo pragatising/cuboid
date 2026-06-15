@@ -15,10 +15,10 @@
           "disabled": { "value": "{color.canvas.transparent}" }
         },
         "fgColor": {
-          "rest": { "value": "{color.fg.neutral.5}" },
-          "hover": { "value": "{color.fg.neutral.5}" },
-          "pressed": { "value": "{color.fg.neutral.4}" },
-          "disabled": { "value": "{color.fg.neutral.3}" }
+          "rest": { "value": "{color.fg.neutral.default}" },
+          "hover": { "value": "{color.fg.neutral.default}" },
+          "pressed": { "value": "{color.fg.neutral.subtle}" },
+          "disabled": { "value": "{color.fg.neutral.disabled}" }
         }
       }
     }

@@ -3,9 +3,9 @@
     "button": {
       "danger": {
         "bgColor": {
-          "rest": { "value": "{base.color.scale.red.10}" },
-          "hover": { "value": "{base.color.scale.red.11}" },
-          "pressed": { "value": "{base.color.scale.red.12}" },
+          "rest": { "value": "{base.color.scale.red.9}" },
+          "hover": { "value": "{base.color.scale.red.10}" },
+          "pressed": { "value": "{base.color.scale.red.10}" },
           "disabled": { "value": "{color.bg.gray.light.04}" }
         },
         "borderColor": {
@@ -15,10 +15,10 @@
           "disabled": { "value": "{color.border.gray.1}" }
         },
         "fgColor": {
-          "rest": { "value": "{color.fg.neutral.1}" },
-          "hover": { "value": "{color.fg.neutral.1}" },
-          "pressed": { "value": "{color.fg.neutral.1}" },
-          "disabled": { "value": "{color.fg.neutral.3}" }
+          "rest": { "value": "{color.fg.neutral.inverted}" },
+          "hover": { "value": "{color.fg.neutral.inverted}" },
+          "pressed": { "value": "{color.fg.neutral.inverted}" },
+          "disabled": { "value": "{color.fg.neutral.disabled}" }
         }
       }
     }

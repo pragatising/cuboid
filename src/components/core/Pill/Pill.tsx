@@ -1,10 +1,10 @@
 import React from "react";
 import { useTheme } from "../../../theme/ThemeContext";
 import type {
-  ButtonVariantInteractiveColors,
   CubeTheme,
   PillIntensity,
   PillSurface,
+  PillSurfaceColors,
   TextTokens,
   ThemeTokens,
 } from "../../../theme/types";
@@ -15,8 +15,6 @@ import styles from "./Pill.module.css";
 export type PillShade = keyof typeof themeOutput.pillColors;
 export type PillTextVariant = keyof TextTokens;
 export type { PillIntensity, PillSurface };
-
-const PILL_STATES = ["rest", "hover", "pressed", "disabled"] as const;
 
 const VARIANT_CLASS: Partial<Record<PillTextVariant, string>> = {
   caption: styles["cube-Pill--caption"],
@@ -33,14 +31,12 @@ const VARIANT_GLOBAL_CLASS: Partial<Record<PillTextVariant, string>> = {
   bodyLarge: "cube-Pill--bodyLarge",
 };
 
-function recipeToActiveVars(recipe: ButtonVariantInteractiveColors): Record<string, string> {
-  const out: Record<string, string> = {};
-  for (const s of PILL_STATES) {
-    out[`--cube-pill-active-bg-${s}`] = recipe.bgColor[s];
-    out[`--cube-pill-active-fg-${s}`] = recipe.fgColor[s];
-    out[`--cube-pill-active-border-${s}`] = recipe.borderColor[s];
-  }
-  return out;
+function recipeToActiveVars(recipe: PillSurfaceColors): Record<string, string> {
+  return {
+    "--cube-pill-active-bg": recipe.bgColor,
+    "--cube-pill-active-fg": recipe.fgColor,
+    "--cube-pill-active-border": recipe.borderColor,
+  };
 }
 
 function resolvePillRecipe(
@@ -48,7 +44,7 @@ function resolvePillRecipe(
   shade: PillShade,
   intensity: PillIntensity,
   surface: PillSurface
-): ButtonVariantInteractiveColors {
+): PillSurfaceColors {
   const shadeBlock = pill[shade];
   const intensityBlock = shadeBlock?.[intensity];
   const recipe = intensityBlock?.[surface];
@@ -92,6 +88,7 @@ export interface PillProps {
   children?: React.ReactNode;
 }
 
+/** Static chip / tag — not a button; colors do not change on hover. */
 export function Pill({
   shade = "gray",
   intensity = "light",
@@ -124,8 +121,6 @@ export function Pill({
     .filter(Boolean)
     .join(" ");
 
-  // Default: colors from theme.css via [data-cube-pill] (no inline state vars).
-  // With `theme` prop: re-bind --cube-pill-active-* like Button does for overrides.
   const inlineVars = theme
     ? ({
         ...recipeToActiveVars(

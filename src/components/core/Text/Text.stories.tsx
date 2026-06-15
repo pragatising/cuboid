@@ -35,7 +35,7 @@ export const Colors: Story = {
     const tokens = useTheme();
     return (
       <Stack gap="xs">
-        <Text color="default">default — primary reading text (fg.neutral.6)</Text>
+        <Text color="default">default — primary reading text (fg.neutral.muted)</Text>
         <Text color="muted">muted — secondary text (text.default)</Text>
         <Text color="text.muted">text.muted — explicit global path</Text>
         <Text color="disabled">disabled — unavailable state</Text>

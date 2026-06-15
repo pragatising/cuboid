@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { CodeSnippet } from "./CodeSnippet";
-import deviceProfileReport from "./__fixtures__/device-profile-report";
+import devServerDiagnostics from "./__fixtures__/dev-server-diagnostics";
 
 const meta: Meta<typeof CodeSnippet> = {
   title: "Components/CodeSnippet",
@@ -19,39 +19,41 @@ const meta: Meta<typeof CodeSnippet> = {
 export default meta;
 type Story = StoryObj<typeof CodeSnippet>;
 
-/** Real-world shaped device profile report — all nodes expanded by default */
-export const DeviceProfileReport: Story = {
+/** Dev-server diagnostics snapshot — all nodes expanded by default */
+export const DevServerDiagnostics: Story = {
   args: {
-    data: deviceProfileReport,
+    data: devServerDiagnostics,
     defaultCollapsed: false,
     height: "600px",
   },
 };
 
-/** Same report starting fully collapsed — drill into sections individually */
-export const DeviceProfileCollapsed: Story = {
+/** Same snapshot starting fully collapsed — drill into sections individually */
+export const DevServerCollapsed: Story = {
   args: {
-    data: deviceProfileReport,
+    data: devServerDiagnostics,
     defaultCollapsed: true,
   },
 };
 
-/** Just the nested sections that benefit most from expand/collapse */
-export const PolicyDetails: Story = {
+/** Build output with chunk list — good for testing array expand/collapse */
+export const BuildOutput: Story = {
   args: {
-    data: deviceProfileReport.data.policy_details_api,
+    data: devServerDiagnostics.build,
   },
 };
 
-export const VelocityVariables: Story = {
+/** TypeScript compiler options — nested config object */
+export const TypeScriptConfig: Story = {
   args: {
-    data: deviceProfileReport.data.ng_variables,
+    data: devServerDiagnostics.typescript,
   },
 };
 
-export const KeyAttributes: Story = {
+/** Top-level project metadata — shallow object */
+export const ProjectMetadata: Story = {
   args: {
-    data: deviceProfileReport.keyAttributes,
+    data: devServerDiagnostics.project,
   },
 };
 
@@ -60,7 +62,7 @@ export const FullViewportHeight: Story = {
   parameters: { layout: "fullscreen" },
   render: () => (
     <div style={{ height: "100vh" }}>
-      <CodeSnippet data={deviceProfileReport} height="100%" />
+      <CodeSnippet data={devServerDiagnostics} height="100%" />
     </div>
   ),
 };
@@ -68,7 +70,7 @@ export const FullViewportHeight: Story = {
 /** Dark theme override */
 export const DarkTheme: Story = {
   args: {
-    data: deviceProfileReport,
+    data: devServerDiagnostics,
     defaultCollapsed: true,
     theme: {
       colors: {

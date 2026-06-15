@@ -107,23 +107,23 @@
         "default": "#FFFFFF",
         "muted": "#F9F9F8",
         "inset": "#F4F4F2",
-        "emphasis": "#2D2D2D",
+        "emphasis": "#474746",
         "disabled": "#F4F4F2",
         "transparent": "transparent",
-        "inverse": "#2D2D2D",
+        "inverse": "#474746",
         "neutral": {
           "muted": "#EFEEEA",
-          "emphasis": "#474746"
+          "emphasis": "#6F6F6D"
         }
       },
       "foreground": {
-        "default": "#2D2D2D",
-        "muted": "#6F6F6D",
+        "default": "#6F6F6D",
+        "muted": "#888783",
         "onEmphasis": "#FFFFFF",
-        "disabled": "#ABA9A5",
+        "disabled": "#D8D7D4",
         "link": "#525252",
         "white": "#FFFFFF",
-        "neutral": "#474746"
+        "neutral": "#6F6F6D"
       },
       "border": {
         "default": "#E2E1DD",
@@ -139,13 +139,13 @@
       },
       "syntax": {
         "comment": "#D8D7D4",
-        "key": "#646CB8",
-        "constant": "#09B2B5",
+        "key": "#6F6F6D",
+        "constant": "#3a80f9 ",
         "constantOtherReferenceLink": "#0a3069",
         "entity": "#D7A7F7",
         "entityTag": "#A2D794",
-        "keyword": "#FBC4C4",
-        "string": "#B96516",
+        "keyword": "#EF6262",
+        "string": "#EF6262",
         "stringRegexp": "#A2D794",
         "variable": "#FF8635",
         "brackethighlighterAngle": "#ABA9A5",
@@ -165,12 +165,17 @@
         "markupChangedBg": "#FEE8D8",
         "markupChangedText": "#FF8635",
         "nullLiteral": "#E2E1DD",
-        "booleanLiteral": "#6F2EA8",
+        "booleanLiteral": "#9035BD",
+        "numberLiteral": "#3a80f9 ",
         "bracket": "#E01280",
-        "stringUrl": "#0969da",
-        "stringEmail": "#0969da",
+        "bracketNested": "#9035BD",
+        "stringUrl": "#6565FA",
+        "stringEmail": "#6565FA",
         "stringUuid": "#D8D7D4",
-        "rowHoverBg": "#FFFFFF"
+        "rowHoverBg": "#F9F9F8",
+        "watchMark": "#518ff8",
+        "watchMarkHover": "#518ff8",
+        "watchRowBg": "#F4F8FF"
       }
     }
   },
@@ -443,7 +448,7 @@
       "rest": "#FFFFFF",
       "hover": "#FFFFFF",
       "pressed": "#FFFFFF",
-      "disabled": "#888783"
+      "disabled": "#D8D7D4"
     }
   },
   "buttonSecondary": {
@@ -460,10 +465,10 @@
       "disabled": "#EFEEEA"
     },
     "fgColor": {
-      "rest": "#474746",
-      "hover": "#474746",
-      "pressed": "#6F6F6D",
-      "disabled": "#888783"
+      "rest": "#6F6F6D",
+      "hover": "#6F6F6D",
+      "pressed": "#ABA9A5",
+      "disabled": "#D8D7D4"
     }
   },
   "buttonGhost": {
@@ -480,17 +485,17 @@
       "disabled": "#ffffff00"
     },
     "fgColor": {
-      "rest": "#2D2D2D",
-      "hover": "#2D2D2D",
-      "pressed": "#474746",
-      "disabled": "#888783"
+      "rest": "#888783",
+      "hover": "#888783",
+      "pressed": "#6F6F6D",
+      "disabled": "#D8D7D4"
     }
   },
   "buttonDanger": {
     "bgColor": {
-      "rest": "#DA2222",
-      "hover": "#D50606",
-      "pressed": "#B50D0D",
+      "rest": "#E74646",
+      "hover": "#DA2222",
+      "pressed": "#DA2222",
       "disabled": "#EFEEEA"
     },
     "borderColor": {
@@ -503,7 +508,7 @@
       "rest": "#FFFFFF",
       "hover": "#FFFFFF",
       "pressed": "#FFFFFF",
-      "disabled": "#888783"
+      "disabled": "#D8D7D4"
     }
   },
   "buttonRounded": {
@@ -520,10 +525,10 @@
       "disabled": "#ffffff00"
     },
     "fgColor": {
-      "rest": "#474746",
-      "hover": "#474746",
-      "pressed": "#6F6F6D",
-      "disabled": "#888783"
+      "rest": "#6F6F6D",
+      "hover": "#6F6F6D",
+      "pressed": "#ABA9A5",
+      "disabled": "#D8D7D4"
     }
   },
   "linkColors": {
@@ -539,1901 +544,581 @@
   "highlightColors": {
     "none": {
       "bgColor": "#ffffff00",
-      "fgColor": "#6F6F6D"
+      "fgColor": "#ABA9A5"
     },
     "neutral": {
       "bgColor": "#F4F4F2",
-      "fgColor": "#2D2D2D"
+      "fgColor": "#888783"
     },
     "green": {
       "bgColor": "#F0F9EF",
-      "fgColor": "#2D2D2D"
+      "fgColor": "#888783"
     },
     "blue": {
       "bgColor": "#EEF4FF",
-      "fgColor": "#2D2D2D"
+      "fgColor": "#888783"
     },
     "yellow": {
       "bgColor": "#FFF0CD",
-      "fgColor": "#2D2D2D"
+      "fgColor": "#888783"
     },
     "orange": {
       "bgColor": "#FEE8D8",
-      "fgColor": "#2D2D2D"
+      "fgColor": "#888783"
     },
     "red": {
       "bgColor": "#FFD9D5",
-      "fgColor": "#2D2D2D"
+      "fgColor": "#888783"
     }
   },
   "pillColors": {
     "blue": {
       "bold": {
         "filled": {
-          "bgColor": {
-            "rest": "#EAF2FF",
-            "hover": "#DFEAFD",
-            "pressed": "#DFEAFD",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#0959E3",
-            "hover": "#034FD2",
-            "pressed": "#034FD2",
-            "disabled": "#888783"
-          }
+          "bgColor": "#3a80f9 ",
+          "borderColor": "#ffffff00",
+          "fgColor": "#FFFFFF"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#F9F9F8",
-            "hover": "#F4F4F2",
-            "pressed": "#EFEEEA",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#C4DAFF",
-            "hover": "#C4DAFF",
-            "pressed": "#C4DAFF",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#0959E3",
-            "hover": "#034FD2",
-            "pressed": "#034FD2",
-            "disabled": "#888783"
-          }
+          "bgColor": "#3a80f9 ",
+          "borderColor": "#1d5ece",
+          "fgColor": "#FFFFFF"
         }
       },
       "extraBold": {
         "filled": {
-          "bgColor": {
-            "rest": "#1663E7",
-            "hover": "#2776FF",
-            "pressed": "#2776FF",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#FFFFFF",
-            "pressed": "#FFFFFF",
-            "disabled": "#888783"
-          }
+          "bgColor": "#1d5ece",
+          "borderColor": "#ffffff00",
+          "fgColor": "#FFFFFF"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#F9F9F8",
-            "pressed": "#F4F4F2",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#2776FF",
-            "hover": "#1663E7",
-            "pressed": "#1663E7",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#054BC5",
-            "hover": "#054BC5",
-            "pressed": "#034FD2",
-            "disabled": "#888783"
-          }
+          "bgColor": "#236ae5 ",
+          "borderColor": "#1d5ece",
+          "fgColor": "#FFFFFF"
         }
       },
       "extralight": {
         "filled": {
-          "bgColor": {
-            "rest": "#F4F8FF",
-            "hover": "#EEF4FF",
-            "pressed": "#EEF4FF",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#2776FF",
-            "hover": "#1663E7",
-            "pressed": "#1663E7",
-            "disabled": "#888783"
-          }
+          "bgColor": "#EEF4FF",
+          "borderColor": "#ffffff00",
+          "fgColor": "#1d5ece"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#F9F9F8",
-            "pressed": "#F4F4F2",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#DFEAFD",
-            "hover": "#DFEAFD",
-            "pressed": "#DFEAFD",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#2776FF",
-            "hover": "#1663E7",
-            "pressed": "#1663E7",
-            "disabled": "#888783"
-          }
+          "bgColor": "#EAF2FF",
+          "borderColor": "#C4DAFF",
+          "fgColor": "#1d5ece"
         }
       },
       "light": {
         "filled": {
-          "bgColor": {
-            "rest": "#EEF4FF",
-            "hover": "#EAF2FF",
-            "pressed": "#EAF2FF",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#1663E7",
-            "hover": "#0959E3",
-            "pressed": "#0959E3",
-            "disabled": "#888783"
-          }
+          "bgColor": "#DFEAFD",
+          "borderColor": "#ffffff00",
+          "fgColor": "#1d5ece"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#F9F9F8",
-            "pressed": "#EFEEEA",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#CBDEFF",
-            "hover": "#CBDEFF",
-            "pressed": "#CBDEFF",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#1663E7",
-            "hover": "#0959E3",
-            "pressed": "#0959E3",
-            "disabled": "#888783"
-          }
+          "bgColor": "#DFEAFD",
+          "borderColor": "#518ff8",
+          "fgColor": "#1d5ece"
         }
       }
     },
     "gray": {
       "bold": {
         "filled": {
-          "bgColor": {
-            "rest": "#E2E1DD",
-            "hover": "#D8D7D4",
-            "pressed": "#D8D7D4",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#2D2D2D",
-            "hover": "#2D2D2D",
-            "pressed": "#474746",
-            "disabled": "#888783"
-          }
+          "bgColor": "#888783",
+          "borderColor": "#ffffff00",
+          "fgColor": "#FFFFFF"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#F9F9F8",
-            "hover": "#F4F4F2",
-            "pressed": "#EFEEEA",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#D8D7D4",
-            "hover": "#D8D7D4",
-            "pressed": "#D8D7D4",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#2D2D2D",
-            "hover": "#2D2D2D",
-            "pressed": "#474746",
-            "disabled": "#888783"
-          }
+          "bgColor": "#6F6F6D",
+          "borderColor": "#474746",
+          "fgColor": "#FFFFFF"
         }
       },
       "extraBold": {
         "filled": {
-          "bgColor": {
-            "rest": "#2D2D2D",
-            "hover": "#3A3A39",
-            "pressed": "#3A3A39",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#FFFFFF",
-            "pressed": "#FFFFFF",
-            "disabled": "#888783"
-          }
+          "bgColor": "#474746",
+          "borderColor": "#ffffff00",
+          "fgColor": "#FFFFFF"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#F9F9F8",
-            "pressed": "#F4F4F2",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#474746",
-            "hover": "#3A3A39",
-            "pressed": "#3A3A39",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#2D2D2D",
-            "hover": "#2D2D2D",
-            "pressed": "#474746",
-            "disabled": "#888783"
-          }
+          "bgColor": "#474746",
+          "borderColor": "#474746",
+          "fgColor": "#FFFFFF"
         }
       },
       "extralight": {
         "filled": {
-          "bgColor": {
-            "rest": "#F9F9F8",
-            "hover": "#F4F4F2",
-            "pressed": "#F4F4F2",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#474746",
-            "hover": "#474746",
-            "pressed": "#6F6F6D",
-            "disabled": "#888783"
-          }
+          "bgColor": "#FFFFFF",
+          "borderColor": "#ffffff00",
+          "fgColor": "#6F6F6D"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#F9F9F8",
-            "pressed": "#F4F4F2",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#D8D7D4",
-            "hover": "#D8D7D4",
-            "pressed": "#D8D7D4",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#474746",
-            "hover": "#474746",
-            "pressed": "#6F6F6D",
-            "disabled": "#888783"
-          }
+          "bgColor": "#FFFFFF",
+          "borderColor": "#D8D7D4",
+          "fgColor": "#6F6F6D"
         }
       },
       "light": {
         "filled": {
-          "bgColor": {
-            "rest": "#EFEEEA",
-            "hover": "#E2E1DD",
-            "pressed": "#E2E1DD",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#474746",
-            "hover": "#2D2D2D",
-            "pressed": "#2D2D2D",
-            "disabled": "#888783"
-          }
+          "bgColor": "#F4F4F2",
+          "borderColor": "#ffffff00",
+          "fgColor": "#6F6F6D"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#F9F9F8",
-            "pressed": "#EFEEEA",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#D8D7D4",
-            "hover": "#D8D7D4",
-            "pressed": "#D8D7D4",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#474746",
-            "hover": "#474746",
-            "pressed": "#6F6F6D",
-            "disabled": "#888783"
-          }
+          "bgColor": "#F4F4F2",
+          "borderColor": "#D8D7D4",
+          "fgColor": "#6F6F6D"
         }
       }
     },
     "green": {
       "bold": {
         "filled": {
-          "bgColor": {
-            "rest": "#E2F1DE",
-            "hover": "#DCF1D5",
-            "pressed": "#DCF1D5",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#1D6B08",
-            "hover": "#145502",
-            "pressed": "#145502",
-            "disabled": "#888783"
-          }
+          "bgColor": "#6EBF57",
+          "borderColor": "#ffffff00",
+          "fgColor": "#FFFFFF"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#F9F9F8",
-            "hover": "#F4F4F2",
-            "pressed": "#EFEEEA",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#BAE3AF",
-            "hover": "#BAE3AF",
-            "pressed": "#BAE3AF",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#1D6B08",
-            "hover": "#145502",
-            "pressed": "#145502",
-            "disabled": "#888783"
-          }
+          "bgColor": "#6EBF57",
+          "borderColor": "#3f8d2a",
+          "fgColor": "#FFFFFF"
         }
       },
       "extraBold": {
         "filled": {
-          "bgColor": {
-            "rest": "#32821C",
-            "hover": "#3F9029",
-            "pressed": "#3F9029",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#FFFFFF",
-            "pressed": "#FFFFFF",
-            "disabled": "#888783"
-          }
+          "bgColor": "#3f8d2a",
+          "borderColor": "#ffffff00",
+          "fgColor": "#FFFFFF"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#F9F9F8",
-            "pressed": "#F4F4F2",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#3F9029",
-            "hover": "#32821C",
-            "pressed": "#32821C",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#145502",
-            "hover": "#145502",
-            "pressed": "#1D6B08",
-            "disabled": "#888783"
-          }
+          "bgColor": "#5ca647",
+          "borderColor": "#3f8d2a",
+          "fgColor": "#FFFFFF"
         }
       },
       "extralight": {
         "filled": {
-          "bgColor": {
-            "rest": "#F0F9EF",
-            "hover": "#E6F4E4",
-            "pressed": "#E6F4E4",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#3F9029",
-            "hover": "#32821C",
-            "pressed": "#32821C",
-            "disabled": "#888783"
-          }
+          "bgColor": "#E6F4E4",
+          "borderColor": "#ffffff00",
+          "fgColor": "#3f8d2a"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#F9F9F8",
-            "pressed": "#F4F4F2",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#DCF1D5",
-            "hover": "#DCF1D5",
-            "pressed": "#DCF1D5",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#3F9029",
-            "hover": "#32821C",
-            "pressed": "#32821C",
-            "disabled": "#888783"
-          }
+          "bgColor": "#E6F4E4",
+          "borderColor": "#BAE3AF",
+          "fgColor": "#3f8d2a"
         }
       },
       "light": {
         "filled": {
-          "bgColor": {
-            "rest": "#E6F4E4",
-            "hover": "#E2F1DE",
-            "pressed": "#E2F1DE",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#32821C",
-            "hover": "#1D6B08",
-            "pressed": "#1D6B08",
-            "disabled": "#888783"
-          }
+          "bgColor": "#E2F1DE",
+          "borderColor": "#ffffff00",
+          "fgColor": "#3f8d2a"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#F9F9F8",
-            "pressed": "#EFEEEA",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#CCEEC2",
-            "hover": "#CCEEC2",
-            "pressed": "#CCEEC2",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#32821C",
-            "hover": "#1D6B08",
-            "pressed": "#1D6B08",
-            "disabled": "#888783"
-          }
+          "bgColor": "#DCF1D5",
+          "borderColor": "#6EBF57",
+          "fgColor": "#3f8d2a"
         }
       }
     },
     "indigo": {
       "bold": {
         "filled": {
-          "bgColor": {
-            "rest": "#E8E8FF",
-            "hover": "#E2E2FF",
-            "pressed": "#E2E2FF",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#6565FA",
-            "hover": "#5757D6",
-            "pressed": "#5757D6",
-            "disabled": "#888783"
-          }
+          "bgColor": "#8686FF",
+          "borderColor": "#ffffff00",
+          "fgColor": "#FFFFFF"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#F9F9F8",
-            "hover": "#F4F4F2",
-            "pressed": "#EFEEEA",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#C1C1FF",
-            "hover": "#C1C1FF",
-            "pressed": "#C1C1FF",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#6565FA",
-            "hover": "#5757D6",
-            "pressed": "#5757D6",
-            "disabled": "#888783"
-          }
+          "bgColor": "#8686FF",
+          "borderColor": "#5454e1",
+          "fgColor": "#FFFFFF"
         }
       },
       "extraBold": {
         "filled": {
-          "bgColor": {
-            "rest": "#5757D6",
-            "hover": "#6565FA",
-            "pressed": "#6565FA",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#FFFFFF",
-            "pressed": "#FFFFFF",
-            "disabled": "#888783"
-          }
+          "bgColor": "#5454e1",
+          "borderColor": "#ffffff00",
+          "fgColor": "#FFFFFF"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#F9F9F8",
-            "pressed": "#F4F4F2",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#6565FA",
-            "hover": "#5757D6",
-            "pressed": "#5757D6",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#5757D6",
-            "hover": "#5757D6",
-            "pressed": "#6565FA",
-            "disabled": "#888783"
-          }
+          "bgColor": "#6565FA",
+          "borderColor": "#5454e1",
+          "fgColor": "#FFFFFF"
         }
       },
       "extralight": {
         "filled": {
-          "bgColor": {
-            "rest": "#F7F7FC",
-            "hover": "#F4F4FF",
-            "pressed": "#F4F4FF",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#6D6DFF",
-            "hover": "#6565FA",
-            "pressed": "#6565FA",
-            "disabled": "#888783"
-          }
+          "bgColor": "#F7F7FC",
+          "borderColor": "#ffffff00",
+          "fgColor": "#5454e1"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#F9F9F8",
-            "pressed": "#F4F4F2",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#E2E2FF",
-            "hover": "#E2E2FF",
-            "pressed": "#E2E2FF",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#6D6DFF",
-            "hover": "#6565FA",
-            "pressed": "#6565FA",
-            "disabled": "#888783"
-          }
+          "bgColor": "#F4F4FF",
+          "borderColor": "#C1C1FF",
+          "fgColor": "#5454e1"
         }
       },
       "light": {
         "filled": {
-          "bgColor": {
-            "rest": "#F4F4FF",
-            "hover": "#E8E8FF",
-            "pressed": "#E8E8FF",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#6D6DFF",
-            "hover": "#6565FA",
-            "pressed": "#6565FA",
-            "disabled": "#888783"
-          }
+          "bgColor": "#E8E8FF",
+          "borderColor": "#ffffff00",
+          "fgColor": "#5454e1"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#F9F9F8",
-            "pressed": "#EFEEEA",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#D4D4FF",
-            "hover": "#D4D4FF",
-            "pressed": "#D4D4FF",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#6D6DFF",
-            "hover": "#6565FA",
-            "pressed": "#6565FA",
-            "disabled": "#888783"
-          }
+          "bgColor": "#E8E8FF",
+          "borderColor": "#9D9DFF",
+          "fgColor": "#5454e1"
         }
       }
     },
     "lime": {
       "bold": {
         "filled": {
-          "bgColor": {
-            "rest": "#ECF6C2",
-            "hover": "#D5E68C",
-            "pressed": "#D5E68C",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#354002",
-            "hover": "#252D02",
-            "pressed": "#252D02",
-            "disabled": "#888783"
-          }
+          "bgColor": "#779204",
+          "borderColor": "#ffffff00",
+          "fgColor": "#FFFFFF"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#F9F9F8",
-            "hover": "#F4F4F2",
-            "pressed": "#EFEEEA",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#B2CD36",
-            "hover": "#B2CD36",
-            "pressed": "#B2CD36",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#354002",
-            "hover": "#252D02",
-            "pressed": "#252D02",
-            "disabled": "#888783"
-          }
+          "bgColor": "#779204",
+          "borderColor": "#4F6201",
+          "fgColor": "#FFFFFF"
         }
       },
       "extraBold": {
         "filled": {
-          "bgColor": {
-            "rest": "#4A5B01",
-            "hover": "#4F6201",
-            "pressed": "#4F6201",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#FFFFFF",
-            "pressed": "#FFFFFF",
-            "disabled": "#888783"
-          }
+          "bgColor": "#4F6201",
+          "borderColor": "#ffffff00",
+          "fgColor": "#FFFFFF"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#F9F9F8",
-            "pressed": "#F4F4F2",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#4F6201",
-            "hover": "#4A5B01",
-            "pressed": "#4A5B01",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#252D02",
-            "hover": "#252D02",
-            "pressed": "#354002",
-            "disabled": "#888783"
-          }
+          "bgColor": "#536601",
+          "borderColor": "#4F6201",
+          "fgColor": "#FFFFFF"
         }
       },
       "extralight": {
         "filled": {
-          "bgColor": {
-            "rest": "#F1F6F2",
-            "hover": "#F4F7E6",
-            "pressed": "#F4F7E6",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#4F6201",
-            "hover": "#4A5B01",
-            "pressed": "#4A5B01",
-            "disabled": "#888783"
-          }
+          "bgColor": "#F1F6F2",
+          "borderColor": "#ffffff00",
+          "fgColor": "#536601"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#F9F9F8",
-            "pressed": "#F4F4F2",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#D5E68C",
-            "hover": "#D5E68C",
-            "pressed": "#D5E68C",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#4F6201",
-            "hover": "#4A5B01",
-            "pressed": "#4A5B01",
-            "disabled": "#888783"
-          }
+          "bgColor": "#F4F7E6",
+          "borderColor": "#D5E68C",
+          "fgColor": "#4F6201"
         }
       },
       "light": {
         "filled": {
-          "bgColor": {
-            "rest": "#F4F7E6",
-            "hover": "#ECF6C2",
-            "pressed": "#ECF6C2",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#4A5B01",
-            "hover": "#354002",
-            "pressed": "#354002",
-            "disabled": "#888783"
-          }
+          "bgColor": "#ECF6C2",
+          "borderColor": "#ffffff00",
+          "fgColor": "#4F6201"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#F9F9F8",
-            "pressed": "#EFEEEA",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#C5DE59",
-            "hover": "#C5DE59",
-            "pressed": "#C5DE59",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#4A5B01",
-            "hover": "#354002",
-            "pressed": "#354002",
-            "disabled": "#888783"
-          }
+          "bgColor": "#D5E68C",
+          "borderColor": "#779204",
+          "fgColor": "#4F6201"
         }
       }
     },
     "mag": {
       "bold": {
         "filled": {
-          "bgColor": {
-            "rest": "#FFC2EA",
-            "hover": "#FFB5E6",
-            "pressed": "#FFB5E6",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#D2038A",
-            "hover": "#B00172",
-            "pressed": "#B00172",
-            "disabled": "#888783"
-          }
+          "bgColor": "#E63BAD",
+          "borderColor": "#ffffff00",
+          "fgColor": "#FFFFFF"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#F9F9F8",
-            "hover": "#F4F4F2",
-            "pressed": "#EFEEEA",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#FF9ADD",
-            "hover": "#FF9ADD",
-            "pressed": "#FF9ADD",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#D2038A",
-            "hover": "#B00172",
-            "pressed": "#B00172",
-            "disabled": "#888783"
-          }
+          "bgColor": "#EB3CB2",
+          "borderColor": "#c9178d",
+          "fgColor": "#FFFFFF"
         }
       },
       "extraBold": {
         "filled": {
-          "bgColor": {
-            "rest": "#D2038A",
-            "hover": "#E0159C",
-            "pressed": "#E0159C",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#FFFFFF",
-            "pressed": "#FFFFFF",
-            "disabled": "#888783"
-          }
+          "bgColor": "#c9178d",
+          "borderColor": "#ffffff00",
+          "fgColor": "#FFFFFF"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#F9F9F8",
-            "pressed": "#F4F4F2",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#E0159C",
-            "hover": "#D2038A",
-            "pressed": "#D2038A",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#B00172",
-            "hover": "#B00172",
-            "pressed": "#D2038A",
-            "disabled": "#888783"
-          }
+          "bgColor": "#d22799",
+          "borderColor": "#c9178d",
+          "fgColor": "#FFFFFF"
         }
       },
       "extralight": {
         "filled": {
-          "bgColor": {
-            "rest": "#FCE9F6",
-            "hover": "#FDD8F1",
-            "pressed": "#FDD8F1",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#EC2EAC",
-            "hover": "#E0159C",
-            "pressed": "#E0159C",
-            "disabled": "#888783"
-          }
+          "bgColor": "#FDD8F1",
+          "borderColor": "#ffffff00",
+          "fgColor": "#c9178d"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#F9F9F8",
-            "pressed": "#F4F4F2",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#FFB5E6",
-            "hover": "#FFB5E6",
-            "pressed": "#FFB5E6",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#EC2EAC",
-            "hover": "#E0159C",
-            "pressed": "#E0159C",
-            "disabled": "#888783"
-          }
+          "bgColor": "#FDD8F1",
+          "borderColor": "#FFB5E6",
+          "fgColor": "#c9178d"
         }
       },
       "light": {
         "filled": {
-          "bgColor": {
-            "rest": "#FDD8F1",
-            "hover": "#FFC2EA",
-            "pressed": "#FFC2EA",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#E0159C",
-            "hover": "#D2038A",
-            "pressed": "#D2038A",
-            "disabled": "#888783"
-          }
+          "bgColor": "#FFC2EA",
+          "borderColor": "#ffffff00",
+          "fgColor": "#c9178d"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#F9F9F8",
-            "pressed": "#EFEEEA",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#FFA2E0",
-            "hover": "#FFA2E0",
-            "pressed": "#FFA2E0",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#E0159C",
-            "hover": "#D2038A",
-            "pressed": "#D2038A",
-            "disabled": "#888783"
-          }
+          "bgColor": "#FDD8F1",
+          "borderColor": "#FF9ADD",
+          "fgColor": "#c9178d"
         }
       }
     },
     "orange": {
       "bold": {
         "filled": {
-          "bgColor": {
-            "rest": "#FFDDC5",
-            "hover": "#FFD4B3",
-            "pressed": "#FFD4B3",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#BD4B04",
-            "hover": "#953501",
-            "pressed": "#953501",
-            "disabled": "#888783"
-          }
+          "bgColor": "#F2711B",
+          "borderColor": "#ffffff00",
+          "fgColor": "#FFFFFF"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#F9F9F8",
-            "hover": "#F4F4F2",
-            "pressed": "#EFEEEA",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#FF9B61",
-            "hover": "#FF9B61",
-            "pressed": "#FF9B61",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#BD4B04",
-            "hover": "#953501",
-            "pressed": "#953501",
-            "disabled": "#888783"
-          }
+          "bgColor": "#F2711B",
+          "borderColor": "#BD4B04",
+          "fgColor": "#FFFFFF"
         }
       },
       "extraBold": {
         "filled": {
-          "bgColor": {
-            "rest": "#953501",
-            "hover": "#BD4B04",
-            "pressed": "#BD4B04",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#FFFFFF",
-            "pressed": "#FFFFFF",
-            "disabled": "#888783"
-          }
+          "bgColor": "#BD4B04",
+          "borderColor": "#ffffff00",
+          "fgColor": "#FFFFFF"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#F9F9F8",
-            "pressed": "#F4F4F2",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#BD4B04",
-            "hover": "#953501",
-            "pressed": "#953501",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#953501",
-            "hover": "#953501",
-            "pressed": "#BD4B04",
-            "disabled": "#888783"
-          }
+          "bgColor": "#C85700",
+          "borderColor": "#BD4B04",
+          "fgColor": "#FFFFFF"
         }
       },
       "extralight": {
         "filled": {
-          "bgColor": {
-            "rest": "#FFEFE6",
-            "hover": "#FEE8D8",
-            "pressed": "#FEE8D8",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#C85700",
-            "hover": "#BD4B04",
-            "pressed": "#BD4B04",
-            "disabled": "#888783"
-          }
+          "bgColor": "#FFEFE6",
+          "borderColor": "#ffffff00",
+          "fgColor": "#BD4B04"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#F9F9F8",
-            "pressed": "#F4F4F2",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#FFD4B3",
-            "hover": "#FFD4B3",
-            "pressed": "#FFD4B3",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#C85700",
-            "hover": "#BD4B04",
-            "pressed": "#BD4B04",
-            "disabled": "#888783"
-          }
+          "bgColor": "#FEE8D8",
+          "borderColor": "#FF9B61",
+          "fgColor": "#BD4B04"
         }
       },
       "light": {
         "filled": {
-          "bgColor": {
-            "rest": "#FEE8D8",
-            "hover": "#FFDDC5",
-            "pressed": "#FFDDC5",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#C85700",
-            "hover": "#BD4B04",
-            "pressed": "#BD4B04",
-            "disabled": "#888783"
-          }
+          "bgColor": "#FFDDC5",
+          "borderColor": "#ffffff00",
+          "fgColor": "#BD4B04"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#F9F9F8",
-            "pressed": "#EFEEEA",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#FFBA86",
-            "hover": "#FFBA86",
-            "pressed": "#FFBA86",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#C85700",
-            "hover": "#BD4B04",
-            "pressed": "#BD4B04",
-            "disabled": "#888783"
-          }
+          "bgColor": "#FFDDC5",
+          "borderColor": "#F2711B",
+          "fgColor": "#BD4B04"
         }
       }
     },
     "purple": {
       "bold": {
         "filled": {
-          "bgColor": {
-            "rest": "#ECD2FA",
-            "hover": "#E3C1F6",
-            "pressed": "#E3C1F6",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#3B1759",
-            "hover": "#2E1245",
-            "pressed": "#2E1245",
-            "disabled": "#888783"
-          }
+          "bgColor": "#9035BD",
+          "borderColor": "#ffffff00",
+          "fgColor": "#FFFFFF"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#F9F9F8",
-            "hover": "#F4F4F2",
-            "pressed": "#EFEEEA",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#D7A7F7",
-            "hover": "#D7A7F7",
-            "pressed": "#D7A7F7",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#3B1759",
-            "hover": "#2E1245",
-            "pressed": "#2E1245",
-            "disabled": "#888783"
-          }
+          "bgColor": "#9035BD",
+          "borderColor": "#5B2589",
+          "fgColor": "#FFFFFF"
         }
       },
       "extraBold": {
         "filled": {
-          "bgColor": {
-            "rest": "#4A1D71",
-            "hover": "#5B2589",
-            "pressed": "#5B2589",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#FFFFFF",
-            "pressed": "#FFFFFF",
-            "disabled": "#888783"
-          }
+          "bgColor": "#5B2589",
+          "borderColor": "#ffffff00",
+          "fgColor": "#FFFFFF"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#F9F9F8",
-            "pressed": "#F4F4F2",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#5B2589",
-            "hover": "#4A1D71",
-            "pressed": "#4A1D71",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#2E1245",
-            "hover": "#2E1245",
-            "pressed": "#3B1759",
-            "disabled": "#888783"
-          }
+          "bgColor": "#6F2EA8",
+          "borderColor": "#5B2589",
+          "fgColor": "#FFFFFF"
         }
       },
       "extralight": {
         "filled": {
-          "bgColor": {
-            "rest": "#F7ECFD",
-            "hover": "#ECDAFA",
-            "pressed": "#ECDAFA",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#5B2589",
-            "hover": "#4A1D71",
-            "pressed": "#4A1D71",
-            "disabled": "#888783"
-          }
+          "bgColor": "#faf5fd",
+          "borderColor": "#ffffff00",
+          "fgColor": "#5B2589"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#F9F9F8",
-            "pressed": "#F4F4F2",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#E3C1F6",
-            "hover": "#E3C1F6",
-            "pressed": "#E3C1F6",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#5B2589",
-            "hover": "#4A1D71",
-            "pressed": "#4A1D71",
-            "disabled": "#888783"
-          }
+          "bgColor": "#ECDAFA",
+          "borderColor": "#D7A7F7",
+          "fgColor": "#5B2589"
         }
       },
       "light": {
         "filled": {
-          "bgColor": {
-            "rest": "#ECDAFA",
-            "hover": "#ECD2FA",
-            "pressed": "#ECD2FA",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#4A1D71",
-            "hover": "#3B1759",
-            "pressed": "#3B1759",
-            "disabled": "#888783"
-          }
+          "bgColor": "#ECD2FA",
+          "borderColor": "#ffffff00",
+          "fgColor": "#5B2589"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#F9F9F8",
-            "pressed": "#EFEEEA",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#D9B2FA",
-            "hover": "#D9B2FA",
-            "pressed": "#D9B2FA",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#4A1D71",
-            "hover": "#3B1759",
-            "pressed": "#3B1759",
-            "disabled": "#888783"
-          }
+          "bgColor": "#E3C1F6",
+          "borderColor": "#A854D2",
+          "fgColor": "#5B2589"
         }
       }
     },
     "red": {
       "bold": {
         "filled": {
-          "bgColor": {
-            "rest": "#FFE6E2",
-            "hover": "#FFD9D5",
-            "pressed": "#FFD9D5",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#B50D0D",
-            "hover": "#930202",
-            "pressed": "#930202",
-            "disabled": "#888783"
-          }
+          "bgColor": "#EF6262",
+          "borderColor": "#ffffff00",
+          "fgColor": "#FFFFFF"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#F9F9F8",
-            "hover": "#F4F4F2",
-            "pressed": "#EFEEEA",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#FBC4C4",
-            "hover": "#FBC4C4",
-            "pressed": "#FBC4C4",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#B50D0D",
-            "hover": "#930202",
-            "pressed": "#930202",
-            "disabled": "#888783"
-          }
+          "bgColor": "#EF6262",
+          "borderColor": "#DA2222",
+          "fgColor": "#FFFFFF"
         }
       },
       "extraBold": {
         "filled": {
-          "bgColor": {
-            "rest": "#D50606",
-            "hover": "#DA2222",
-            "pressed": "#DA2222",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#FFFFFF",
-            "pressed": "#FFFFFF",
-            "disabled": "#888783"
-          }
+          "bgColor": "#DA2222",
+          "borderColor": "#ffffff00",
+          "fgColor": "#FFFFFF"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#F9F9F8",
-            "pressed": "#F4F4F2",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#DA2222",
-            "hover": "#D50606",
-            "pressed": "#D50606",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#930202",
-            "hover": "#930202",
-            "pressed": "#B50D0D",
-            "disabled": "#888783"
-          }
+          "bgColor": "#E74646",
+          "borderColor": "#DA2222",
+          "fgColor": "#FFFFFF"
         }
       },
       "extralight": {
         "filled": {
-          "bgColor": {
-            "rest": "#FFF6F5",
-            "hover": "#FCEDEB",
-            "pressed": "#FCEDEB",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#D50606",
-            "hover": "#B50D0D",
-            "pressed": "#B50D0D",
-            "disabled": "#888783"
-          }
+          "bgColor": "#FCEDEB",
+          "borderColor": "#ffffff00",
+          "fgColor": "#DA2222"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#F9F9F8",
-            "pressed": "#F4F4F2",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#FFD9D5",
-            "hover": "#FFD9D5",
-            "pressed": "#FFD9D5",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#D50606",
-            "hover": "#B50D0D",
-            "pressed": "#B50D0D",
-            "disabled": "#888783"
-          }
+          "bgColor": "#FFE6E2",
+          "borderColor": "#FFD9D5",
+          "fgColor": "#DA2222"
         }
       },
       "light": {
         "filled": {
-          "bgColor": {
-            "rest": "#FCEDEB",
-            "hover": "#FFE6E2",
-            "pressed": "#FFE6E2",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#D50606",
-            "hover": "#B50D0D",
-            "pressed": "#B50D0D",
-            "disabled": "#888783"
-          }
+          "bgColor": "#FFE6E2",
+          "borderColor": "#ffffff00",
+          "fgColor": "#DA2222"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#F9F9F8",
-            "pressed": "#EFEEEA",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#FDCEC8",
-            "hover": "#FDCEC8",
-            "pressed": "#FDCEC8",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#D50606",
-            "hover": "#B50D0D",
-            "pressed": "#B50D0D",
-            "disabled": "#888783"
-          }
+          "bgColor": "#FFD9D5",
+          "borderColor": "#F99090",
+          "fgColor": "#DA2222"
         }
       }
     },
     "teal": {
       "bold": {
         "filled": {
-          "bgColor": {
-            "rest": "#C9F0F7",
-            "hover": "#B2E8F0",
-            "pressed": "#B2E8F0",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#177E93",
-            "hover": "#07596A",
-            "pressed": "#07596A",
-            "disabled": "#888783"
-          }
+          "bgColor": "#2E98AD",
+          "borderColor": "#ffffff00",
+          "fgColor": "#FFFFFF"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#F9F9F8",
-            "hover": "#F4F4F2",
-            "pressed": "#EFEEEA",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#82E2EF",
-            "hover": "#82E2EF",
-            "pressed": "#82E2EF",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#177E93",
-            "hover": "#07596A",
-            "pressed": "#07596A",
-            "disabled": "#888783"
-          }
+          "bgColor": "#1B899E",
+          "borderColor": "#07596A",
+          "fgColor": "#FFFFFF"
         }
       },
       "extraBold": {
         "filled": {
-          "bgColor": {
-            "rest": "#05475C",
-            "hover": "#07596A",
-            "pressed": "#07596A",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#FFFFFF",
-            "pressed": "#FFFFFF",
-            "disabled": "#888783"
-          }
+          "bgColor": "#177E93",
+          "borderColor": "#ffffff00",
+          "fgColor": "#FFFFFF"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#F9F9F8",
-            "pressed": "#F4F4F2",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#07596A",
-            "hover": "#05475C",
-            "pressed": "#05475C",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#024E67",
-            "hover": "#024E67",
-            "pressed": "#07596A",
-            "disabled": "#888783"
-          }
+          "bgColor": "#177E93",
+          "borderColor": "#07596A",
+          "fgColor": "#FFFFFF"
         }
       },
       "extralight": {
         "filled": {
-          "bgColor": {
-            "rest": "#F0FBFF",
-            "hover": "#E2F7FF",
-            "pressed": "#E2F7FF",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#2E98AD",
-            "hover": "#1B899E",
-            "pressed": "#1B899E",
-            "disabled": "#888783"
-          }
+          "bgColor": "#F0FBFF",
+          "borderColor": "#ffffff00",
+          "fgColor": "#1B899E"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#F9F9F8",
-            "pressed": "#F4F4F2",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#B2E8F0",
-            "hover": "#B2E8F0",
-            "pressed": "#B2E8F0",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#2E98AD",
-            "hover": "#1B899E",
-            "pressed": "#1B899E",
-            "disabled": "#888783"
-          }
+          "bgColor": "#E2F7FF",
+          "borderColor": "#82E2EF",
+          "fgColor": "#1B899E"
         }
       },
       "light": {
         "filled": {
-          "bgColor": {
-            "rest": "#E2F7FF",
-            "hover": "#C9F0F7",
-            "pressed": "#C9F0F7",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#1B899E",
-            "hover": "#177E93",
-            "pressed": "#177E93",
-            "disabled": "#888783"
-          }
+          "bgColor": "#B2E8F0",
+          "borderColor": "#ffffff00",
+          "fgColor": "#1B899E"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#F9F9F8",
-            "pressed": "#EFEEEA",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#A1E9F1",
-            "hover": "#A1E9F1",
-            "pressed": "#A1E9F1",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#1B899E",
-            "hover": "#177E93",
-            "pressed": "#177E93",
-            "disabled": "#888783"
-          }
+          "bgColor": "#B2E8F0",
+          "borderColor": "#2E98AD",
+          "fgColor": "#1B899E"
         }
       }
     },
     "yellow": {
       "bold": {
         "filled": {
-          "bgColor": {
-            "rest": "#FFF0CD",
-            "hover": "#FCE6AE",
-            "pressed": "#FCE6AE",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#955C02",
-            "hover": "#7E4E01",
-            "pressed": "#7E4E01",
-            "disabled": "#888783"
-          }
+          "bgColor": "#D99904",
+          "borderColor": "#ffffff00",
+          "fgColor": "#FFFFFF"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#F9F9F8",
-            "hover": "#F4F4F2",
-            "pressed": "#EFEEEA",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#FFCD44",
-            "hover": "#FFCD44",
-            "pressed": "#FFCD44",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#955C02",
-            "hover": "#7E4E01",
-            "pressed": "#7E4E01",
-            "disabled": "#888783"
-          }
+          "bgColor": "#CF9202",
+          "borderColor": "#B57C02",
+          "fgColor": "#FFFFFF"
         }
       },
       "extraBold": {
         "filled": {
-          "bgColor": {
-            "rest": "#AA6A01",
-            "hover": "#B57C02",
-            "pressed": "#B57C02",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#FFFFFF",
-            "pressed": "#FFFFFF",
-            "disabled": "#888783"
-          }
+          "bgColor": "#B57C02",
+          "borderColor": "#ffffff00",
+          "fgColor": "#FFFFFF"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#F9F9F8",
-            "pressed": "#F4F4F2",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#B57C02",
-            "hover": "#AA6A01",
-            "pressed": "#AA6A01",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#7E4E01",
-            "hover": "#7E4E01",
-            "pressed": "#955C02",
-            "disabled": "#888783"
-          }
+          "bgColor": "#CF9202",
+          "borderColor": "#B57C02",
+          "fgColor": "#FFFFFF"
         }
       },
       "extralight": {
         "filled": {
-          "bgColor": {
-            "rest": "#FFFBF0",
-            "hover": "#FBF2D8",
-            "pressed": "#FBF2D8",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#B57C02",
-            "hover": "#AA6A01",
-            "pressed": "#AA6A01",
-            "disabled": "#888783"
-          }
+          "bgColor": "#FFFBF0",
+          "borderColor": "#ffffff00",
+          "fgColor": "#B57C02"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#F9F9F8",
-            "pressed": "#F4F4F2",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#FCE6AE",
-            "hover": "#FCE6AE",
-            "pressed": "#FCE6AE",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#B57C02",
-            "hover": "#AA6A01",
-            "pressed": "#AA6A01",
-            "disabled": "#888783"
-          }
+          "bgColor": "#FBF2D8",
+          "borderColor": "#FCE6AE",
+          "fgColor": "#B57C02"
         }
       },
       "light": {
         "filled": {
-          "bgColor": {
-            "rest": "#FBF2D8",
-            "hover": "#FFF0CD",
-            "pressed": "#FFF0CD",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#ffffff00",
-            "hover": "#ffffff00",
-            "pressed": "#ffffff00",
-            "disabled": "#ffffff00"
-          },
-          "fgColor": {
-            "rest": "#AA6A01",
-            "hover": "#955C02",
-            "pressed": "#955C02",
-            "disabled": "#888783"
-          }
+          "bgColor": "#FFF0CD",
+          "borderColor": "#ffffff00",
+          "fgColor": "#B57C02"
         },
         "bordered": {
-          "bgColor": {
-            "rest": "#FFFFFF",
-            "hover": "#F9F9F8",
-            "pressed": "#EFEEEA",
-            "disabled": "#F4F4F2"
-          },
-          "borderColor": {
-            "rest": "#FAD98E",
-            "hover": "#FAD98E",
-            "pressed": "#FAD98E",
-            "disabled": "#EFEEEA"
-          },
-          "fgColor": {
-            "rest": "#AA6A01",
-            "hover": "#955C02",
-            "pressed": "#955C02",
-            "disabled": "#888783"
-          }
+          "bgColor": "#FCE6AE",
+          "borderColor": "#E3A703",
+          "fgColor": "#B57C02"
         }
       }
     }
@@ -2459,10 +1144,10 @@
           "disabled": "#ffffff00"
         },
         "fgColor": {
-          "rest": "#474746",
-          "hover": "#474746",
-          "pressed": "#474746",
-          "disabled": "#888783"
+          "rest": "#6F6F6D",
+          "hover": "#6F6F6D",
+          "pressed": "#6F6F6D",
+          "disabled": "#D8D7D4"
         }
       },
       "selected": {
@@ -2479,10 +1164,10 @@
           "disabled": "#ffffff00"
         },
         "fgColor": {
-          "rest": "#2776FF",
-          "hover": "#2776FF",
-          "pressed": "#2776FF",
-          "disabled": "#888783"
+          "rest": "#1d5ece",
+          "hover": "#1d5ece",
+          "pressed": "#1d5ece",
+          "disabled": "#D8D7D4"
         }
       }
     },
@@ -2501,10 +1186,10 @@
           "disabled": "#E2E1DD"
         },
         "fgColor": {
-          "rest": "#474746",
-          "hover": "#474746",
-          "pressed": "#474746",
-          "disabled": "#888783"
+          "rest": "#6F6F6D",
+          "hover": "#6F6F6D",
+          "pressed": "#6F6F6D",
+          "disabled": "#D8D7D4"
         }
       },
       "selected": {
@@ -2515,16 +1200,16 @@
           "disabled": "#F4F4F2"
         },
         "borderColor": {
-          "rest": "#649DFF",
-          "hover": "#82B0FF",
-          "pressed": "#2776FF",
+          "rest": "#236ae5 ",
+          "hover": "#3a80f9 ",
+          "pressed": "#1d5ece",
           "disabled": "#EFEEEA"
         },
         "fgColor": {
-          "rest": "#2776FF",
-          "hover": "#2776FF",
-          "pressed": "#2776FF",
-          "disabled": "#888783"
+          "rest": "#1d5ece",
+          "hover": "#1d5ece",
+          "pressed": "#1d5ece",
+          "disabled": "#D8D7D4"
         }
       }
     }
@@ -2603,108 +1288,85 @@
     "primary": "#2D2D2D",
     "black": "#474746",
     "white": "#FFFFFF",
-    "focus": "#2776FF",
+    "focus": "#3a80f9 ",
     "success": {
-      "default": "#3F9029",
-      "muted": "#145502"
+      "default": "#3f8d2a",
+      "muted": "#6EBF57"
     },
     "warning": {
       "default": "#FFB404",
-      "muted": "#7E4E01"
+      "muted": "#D99904"
     },
     "error": {
-      "default": "#B50D0D",
-      "muted": "#930202"
+      "default": "#DA2222",
+      "muted": "#EF6262"
     },
     "info": {
-      "default": "#2776FF",
-      "muted": "#054BC5"
+      "default": "#1d5ece",
+      "muted": "#3a80f9 "
     },
     "fg": {
       "neutral": {
-        "1": "#FFFFFF",
-        "2": "#ABA9A5",
-        "3": "#888783",
-        "4": "#6F6F6D",
-        "5": "#474746",
-        "6": "#2D2D2D"
+        "inverted": "#FFFFFF",
+        "disabled": "#D8D7D4",
+        "subtle": "#ABA9A5",
+        "muted": "#888783",
+        "default": "#6F6F6D",
+        "contrast": "#474746"
       },
       "link": {
-        "extraDark": "#3A3A39",
+        "extraDark": "#474746",
         "default": "#525252",
         "hover": "#ABA9A5"
       },
       "green": {
-        "1": "#489E31",
-        "2": "#3F9029",
-        "3": "#32821C",
-        "4": "#1D6B08",
-        "5": "#145502"
+        "muted": "#6EBF57",
+        "contrast": "#3f8d2a"
       },
       "teal": {
-        "1": "#2E98AD",
-        "2": "#1B899E",
-        "3": "#177E93",
-        "4": "#07596A",
-        "5": "#024E67"
+        "muted": "#1B899E",
+        "contrast": "#1B899E"
       },
       "yellow": {
-        "1": "#CF9202",
-        "2": "#B57C02",
-        "3": "#AA6A01",
-        "4": "#955C02",
-        "5": "#7E4E01"
+        "muted": "#D99904",
+        "contrast": "#B57C02"
       },
       "orange": {
-        "3": "#C85700",
-        "4": "#BD4B04",
-        "5": "#953501"
+        "muted": "#D95903",
+        "contrast": "#BD4B04"
       },
       "red": {
-        "3": "#D50606",
-        "4": "#B50D0D",
-        "5": "#930202"
+        "muted": "#EF6262",
+        "contrast": "#DA2222"
       },
       "magenta": {
-        "1": "#EC2EAC",
-        "2": "#E0159C",
-        "3": "#D2038A",
-        "4": "#B00172"
+        "muted": "#EB3CB2",
+        "contrast": "#c9178d"
       },
       "indigo": {
-        "3": "#6D6DFF",
-        "4": "#6565FA",
-        "5": "#5757D6",
-        "6": "#5050C8"
+        "muted": "#8686FF",
+        "contrast": "#5454e1"
       },
       "blue": {
-        "1": "#2776FF",
-        "2": "#1663E7",
-        "3": "#0959E3",
-        "4": "#034FD2",
-        "5": "#054BC5"
+        "muted": "#3a80f9 ",
+        "contrast": "#1d5ece"
       },
       "purple": {
-        "1": "#6F2EA8",
-        "2": "#5B2589",
-        "3": "#4A1D71",
-        "4": "#3B1759",
-        "5": "#2E1245"
+        "muted": "#9035BD",
+        "contrast": "#5B2589"
       },
       "lime": {
-        "1": "#536601",
-        "2": "#4F6201",
-        "3": "#4A5B01",
-        "4": "#354002",
-        "5": "#252D02"
+        "muted": "#536601",
+        "contrast": "#4F6201"
       }
     },
     "text": {
-      "contrast": "#474746",
-      "default": "#6F6F6D",
-      "muted": "#888783",
+      "inverted": "#FFFFFF",
+      "disabled": "#D8D7D4",
       "subtle": "#ABA9A5",
-      "disabled": "#ABA9A5"
+      "muted": "#888783",
+      "default": "#6F6F6D",
+      "contrast": "#474746"
     },
     "canvas": {
       "default": "#FFFFFF",
@@ -2743,22 +1405,22 @@
           "06": "#D8D7D4"
         },
         "dark": {
-          "04": "#525252",
-          "05": "#474746",
-          "06": "#3A3A39",
-          "07": "#2D2D2D"
+          "04": "#888783",
+          "05": "#6F6F6D",
+          "06": "#525252",
+          "07": "#474746"
         }
       }
     },
     "syntax": {
       "comment": "#D8D7D4",
-      "key": "#646CB8",
-      "constant": "#09B2B5",
+      "key": "#6F6F6D",
+      "constant": "#3a80f9 ",
       "constantOtherReferenceLink": "#0a3069",
       "entity": "#D7A7F7",
       "entityTag": "#A2D794",
-      "keyword": "#FBC4C4",
-      "string": "#B96516",
+      "keyword": "#EF6262",
+      "string": "#EF6262",
       "stringRegexp": "#A2D794",
       "variable": "#FF8635",
       "brackethighlighterAngle": "#ABA9A5",
@@ -2778,12 +1440,17 @@
       "markupChangedBg": "#FEE8D8",
       "markupChangedText": "#FF8635",
       "nullLiteral": "#E2E1DD",
-      "booleanLiteral": "#6F2EA8",
+      "booleanLiteral": "#9035BD",
+      "numberLiteral": "#3a80f9 ",
       "bracket": "#E01280",
-      "stringUrl": "#0969da",
-      "stringEmail": "#0969da",
+      "bracketNested": "#9035BD",
+      "stringUrl": "#6565FA",
+      "stringEmail": "#6565FA",
       "stringUuid": "#D8D7D4",
-      "rowHoverBg": "#FFFFFF"
+      "rowHoverBg": "#F9F9F8",
+      "watchMark": "#518ff8",
+      "watchMarkHover": "#518ff8",
+      "watchRowBg": "#F4F8FF"
     }
   }
 }

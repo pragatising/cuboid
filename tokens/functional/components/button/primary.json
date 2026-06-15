@@ -32,16 +32,16 @@
         },
         "fgColor": {
           "rest": {
-            "value": "{color.fg.neutral.1}"
+            "value": "{color.fg.neutral.inverted}"
           },
           "hover": {
-            "value": "{color.fg.neutral.1}"
+            "value": "{color.fg.neutral.inverted}"
           },
           "pressed": {
-            "value": "{color.fg.neutral.1}"
+            "value": "{color.fg.neutral.inverted}"
           },
           "disabled": {
-            "value": "{color.fg.neutral.3}"
+            "value": "{color.fg.neutral.disabled}"
           }
         }
       }

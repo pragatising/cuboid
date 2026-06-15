@@ -46,9 +46,15 @@ body,
 
 /* ── Custom docs sections (use in *.stories.tsx docs pages) ───────────────── */
 /*
- * Vertical rhythm: stack gap md (= space.16, “4×” on the 4px grid) between sections.
- * Token: --cube-stack-gap-md → tokens/functional/size/stack.json
+ * Vertical rhythm: 5× (= space.40, 40px) between docs sections.
+ * Scale: 4× = 16px (stack gap md), 5× = 40px (space.40).
  */
+
+.cube-docs-section,
+.cube-docs-sections,
+.cube-docs-stack {
+  --cube-docs-section-gap: 40px;
+}
 
 .cube-docs-section {
   margin-top: 0;
@@ -59,9 +65,20 @@ body,
 .sbdocs-subtitle + .cube-docs-section,
 .sbdocs h2 + .cube-docs-section,
 .sbdocs-subtitle + .cube-docs-sections,
-.sbdocs-subtitle + .cube-docs-stack,
-.cube-docs-section + .cube-docs-section {
-  margin-top: var(--cube-stack-gap-md);
+.sbdocs-subtitle + .cube-docs-stack {
+  margin-top: var(--cube-docs-section-gap);
+}
+
+/* Divider centered in 40px gap: half spacing above and below the rule */
+.cube-docs-section:not(.cube-docs-section--last) {
+  padding-bottom: calc(var(--cube-docs-section-gap) / 2);
+  margin-bottom: calc(var(--cube-docs-section-gap) / 2);
+  border-bottom: var(--cube-sizes-borderWidth-thin) solid var(--cube-colors-functional-border-default);
+}
+
+.cube-docs-sections + .cube-docs-section,
+.cube-docs-stack + .cube-docs-section {
+  margin-top: 0;
 }
 
 .cube-docs-section--wide {
@@ -88,7 +105,7 @@ body,
 .cube-docs-sections {
   display: flex;
   flex-direction: column;
-  gap: var(--cube-stack-gap-md);
+  gap: 0;
 }
 
 .cube-docs-stack > .cube-docs-section,
@@ -119,9 +136,18 @@ body,
 }
 
 .cube-docs-matrix-label {
-  width: 4.5rem;
-  font-size: var(--cube-typography-text-body-small-fontSize);
+  display: inline-block;
+  flex-shrink: 0;
+  width: 5.5rem;
+  font-size: var(--cube-typography-text-body-medium-fontSize);
+  line-height: var(--cube-typography-text-body-medium-lineHeight);
   opacity: 0.7;
+}
+
+/* Storybook docs prose forces 16px on spans — keep matrix labels at 14px (bodyMedium) */
+.sbdocs span.cube-docs-matrix-label {
+  font-size: var(--cube-typography-text-body-medium-fontSize);
+  line-height: var(--cube-typography-text-body-medium-lineHeight);
 }
 
 .cube-docs-matrix-label--narrow {
@@ -140,9 +166,9 @@ body,
     Consolas, "Liberation Mono", "Courier New", monospace;
   font-size: var(--cube-typography-text-body-small-fontSize);
   font-weight: 500;
-  padding: 0.125rem 0.375rem;
-  border-radius: var(--cube-control-small-borderRadius);
-  border: var(--cube-sizes-borderWidth-thin) solid var(--cube-button-secondary-border-rest);
+  padding: var(--cube-space-2) var(--cube-space-6);
+  border-radius: var(--cube-sizes-borderRadius-sm);
+  border: var(--cube-sizes-borderWidth-thin) solid var(--cube-colors-functional-border-default);
   background-color: var(--cube-colors-functional-background-muted);
   color: var(--cube-colors-functional-foreground-neutral);
 }

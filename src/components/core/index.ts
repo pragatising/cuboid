@@ -4,6 +4,16 @@ export type { StackProps, StackGap, StackPadding, StackSpacing, LayoutWidth } fr
 export { Container } from "./Container";
 export type { ContainerProps, ContainerWidth } from "./Container";
 
+export { Box } from "./Box";
+export type {
+  BoxProps,
+  BoxBackground,
+  BoxBorder,
+  BoxBorderRadius,
+  BoxForeground,
+  BoxOverflow,
+} from "./Box";
+
 export { Divider } from "./Divider";
 export type { DividerProps, DividerColor } from "./Divider";
 

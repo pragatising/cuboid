@@ -87,10 +87,14 @@ export interface SyntaxColors {
   markupChangedBg: string;
   markupChangedText: string;
   nullLiteral: string;
+  /** JSON / numeric literal values — not identifiers (`variable`). */
+  numberLiteral: string;
   /** Both true and false — purple by default. Not red/green: value has no inherent sentiment. */
   booleanLiteral: string;
-  /** { } [ ] brackets and braces */
+  /** { } [ ] at nesting depth 0 */
   bracket: string;
+  /** { } [ ] at odd nesting depths (first level nested and below, alternating) */
+  bracketNested: string;
   /** String values that look like a URL */
   stringUrl: string;
   /** String values that look like an email address */
@@ -99,6 +103,12 @@ export interface SyntaxColors {
   stringUuid: string;
   /** Background tint applied to a row when the pointer hovers over it */
   rowHoverBg: string;
+  /** Gutter watchlist marker dot when line is watched */
+  watchMark: string;
+  /** Gutter watchlist dot preview on row hover (before click) */
+  watchMarkHover: string;
+  /** Row background when line is on the watchlist */
+  watchRowBg: string;
 }
 
 /** Resolved palette from tokens/functional/colors/globals.json (color.* paths). */
@@ -334,9 +344,15 @@ export type PillSurface = "filled" | "bordered";
 /** Matches Figma Pill intensity property. */
 export type PillIntensity = "extralight" | "light" | "bold" | "extraBold";
 
+export interface PillSurfaceColors {
+  bgColor: string;
+  fgColor: string;
+  borderColor: string;
+}
+
 export interface PillIntensityColors {
-  filled: ButtonVariantInteractiveColors;
-  bordered: ButtonVariantInteractiveColors;
+  filled: PillSurfaceColors;
+  bordered: PillSurfaceColors;
 }
 
 /** Keys are shade names (`gray`, `yellow`, …) from token files under `components/pill/`. */

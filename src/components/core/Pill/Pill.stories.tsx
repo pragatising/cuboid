@@ -2,11 +2,29 @@ import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Title, Primary, Controls, Subtitle } from "@storybook/blocks";
 import { Icon } from "../Icon";
+import { Stack } from "../Stack";
 import { Pill, type PillIntensity, type PillShade } from "./Pill";
 import themeOutput from "../../../theme/output/theme.json";
 
 const INTENSITIES: PillIntensity[] = ["extralight", "light", "bold", "extraBold"];
 const PILL_SHADES = Object.keys(themeOutput.pillColors).sort() as PillShade[];
+
+function PillIntensityMatrix({ border = false }: { border?: boolean }) {
+  return (
+    <Stack gap="sm">
+      {INTENSITIES.map((intensity) => (
+        <Stack key={intensity} direction="horizontal" gap="xs" align="center" wrap>
+          <span className="cube-docs-matrix-label">{intensity}</span>
+          {PILL_SHADES.map((shade) => (
+            <Pill key={shade} shade={shade} intensity={intensity} border={border}>
+              {shade}
+            </Pill>
+          ))}
+        </Stack>
+      ))}
+    </Stack>
+  );
+}
 
 const ExternalIcon = () => (
   <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden focusable={false}>
@@ -50,6 +68,20 @@ const meta: Meta<typeof Pill> = {
 
           <div className="cube-docs-sections">
           <div className="cube-docs-section">
+            <h3 className="cube-docs-section__title">
+              <code>shade</code> × <code>intensity</code> (filled)
+            </h3>
+            <PillIntensityMatrix />
+          </div>
+
+          <div className="cube-docs-section">
+            <h3 className="cube-docs-section__title">
+              <code>shade</code> × <code>intensity</code> (<code>border</code>)
+            </h3>
+            <PillIntensityMatrix border />
+          </div>
+
+          <div className="cube-docs-section">
             <h3 className="cube-docs-section__title">Tokens &amp; shades</h3>
             <ul className="cube-docs-list">
               <li>
@@ -70,58 +102,6 @@ const meta: Meta<typeof Pill> = {
           </div>
 
           <div className="cube-docs-section">
-            <h3 className="cube-docs-section__title">Shades (light, filled)</h3>
-            <div className="cube-docs-row">
-              {PILL_SHADES.map((shade) => (
-                <Pill key={shade} shade={shade} intensity="light">
-                  {shade}
-                </Pill>
-              ))}
-            </div>
-          </div>
-
-          <div className="cube-docs-section">
-            <h3 className="cube-docs-section__title">Gray × intensity (filled)</h3>
-            <div className="cube-docs-row">
-              {INTENSITIES.map((intensity) => (
-                <Pill key={intensity} shade="gray" intensity={intensity}>
-                  {intensity}
-                </Pill>
-              ))}
-            </div>
-          </div>
-
-          <div className="cube-docs-section">
-            <h3 className="cube-docs-section__title">Gray × intensity (bordered)</h3>
-            <div className="cube-docs-row">
-              {INTENSITIES.map((intensity) => (
-                <Pill key={intensity} shade="gray" intensity={intensity} border>
-                  {intensity}
-                </Pill>
-              ))}
-            </div>
-          </div>
-
-          <div className="cube-docs-section">
-            <h3 className="cube-docs-section__title">Default (no props beyond label)</h3>
-            <Pill shade="gray" intensity="light" border>
-              Tag
-            </Pill>
-          </div>
-
-          <div className="cube-docs-section">
-            <h3 className="cube-docs-section__title">Alternate variant</h3>
-            <div className="cube-docs-row">
-              <Pill variant="caption" shade="purple" intensity="bold">
-                caption
-              </Pill>
-              <Pill variant="bodyMedium" shade="green" intensity="light" border>
-                bodyMedium
-              </Pill>
-            </div>
-          </div>
-
-          <div className="cube-docs-section">
             <h3 className="cube-docs-section__title">As link</h3>
             <Pill
               href="https://example.com"
@@ -139,8 +119,10 @@ const meta: Meta<typeof Pill> = {
           </div>
           </div>
 
-          <Primary />
-          <Controls />
+          <div className="cube-docs-section cube-docs-section--last">
+            <Primary />
+            <Controls />
+          </div>
         </>
       ),
     },
@@ -156,6 +138,16 @@ export const Playground: Story = {
     border: false,
     children: "Pill",
   },
+};
+
+export const AllVariantsFilled: Story = {
+  name: "All variants (filled)",
+  render: () => <PillIntensityMatrix />,
+};
+
+export const AllVariantsBordered: Story = {
+  name: "All variants (bordered)",
+  render: () => <PillIntensityMatrix border />,
 };
 
 export const WithBodyMedium: Story = {

@@ -3,31 +3,31 @@
     "color": {
       "none": {
         "bgColor": { "value": "{color.canvas.transparent}" },
-        "fgColor": { "value": "{color.fg.neutral.4}" }
+        "fgColor": { "value": "{color.fg.neutral.subtle}" }
       },
       "neutral": {
         "bgColor": { "value": "{color.bg.gray.light.03}" },
-        "fgColor": { "value": "{color.fg.neutral.6}" }
+        "fgColor": { "value": "{color.fg.neutral.muted}" }
       },
       "green": {
         "bgColor": { "value": "{base.color.scale.green.0}" },
-        "fgColor": { "value": "{color.fg.neutral.6}" }
+        "fgColor": { "value": "{color.fg.neutral.muted}" }
       },
       "blue": {
         "bgColor": { "value": "{base.color.scale.blue.1}" },
-        "fgColor": { "value": "{color.fg.neutral.6}" }
+        "fgColor": { "value": "{color.fg.neutral.muted}" }
       },
       "yellow": {
         "bgColor": { "value": "{base.color.scale.yellow.2}" },
-        "fgColor": { "value": "{color.fg.neutral.6}" }
+        "fgColor": { "value": "{color.fg.neutral.muted}" }
       },
       "orange": {
         "bgColor": { "value": "{base.color.scale.orange.1}" },
-        "fgColor": { "value": "{color.fg.neutral.6}" }
+        "fgColor": { "value": "{color.fg.neutral.muted}" }
       },
       "red": {
         "bgColor": { "value": "{base.color.scale.red.3}" },
-        "fgColor": { "value": "{color.fg.neutral.6}" }
+        "fgColor": { "value": "{color.fg.neutral.muted}" }
       }
     }
   }

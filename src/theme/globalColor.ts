@@ -48,7 +48,7 @@ export const GLOBAL_COLOR_PATH_EXAMPLES = {
   text: ["text.default", "text.muted", "text.subtle", "text.contrast"],
   bg: ["bg.gray.light.01", "bg.gray.light.02", "bg.gray.dark.07"],
   border: ["border.gray.1", "border.gray.2", "border.grayAlpha.2"],
-  fg: ["fg.neutral.5", "fg.blue.3", "fg.green.2"],
+  fg: ["fg.neutral.default", "fg.blue.contrast", "fg.green.contrast"],
   semantic: [
     "primary",
     "success.default",

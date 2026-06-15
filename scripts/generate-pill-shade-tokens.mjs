@@ -1,7 +1,10 @@
 #!/usr/bin/env node
 /**
- * Generate pill/<shade>.json from hue config (mirrors gray.json structure).
- * Run after editing PILL_HUE_CONFIG; then `npm run tokens:theme`.
+ * Generate pill/<shade>.json — static chip/tag colors (no button-style states).
+ * Run: node scripts/generate-pill-shade-tokens.mjs && npm run tokens:theme
+ *
+ * Each surface has bgColor, fgColor, borderColor (single values).
+ * Intensity → filled bg on hue scale: extralight 0, light 2, bold 7, extraBold 9–12.
  */
 
 import fs from "fs";
@@ -13,20 +16,24 @@ const OUT_DIR = path.join(__dirname, "../tokens/functional/components/pill");
 
 const token = (value) => ({ value });
 
-/** fg stop keys per intensity (must exist under color.fg.<fgHue> in globals.json). */
 const PILL_HUE_CONFIG = {
-  yellow: { stops: { extralight: 2, light: 3, bold: 4, extraBold: 5 } },
-  green: { stops: { extralight: 2, light: 3, bold: 4, extraBold: 5 } },
-  teal: { stops: { extralight: 1, light: 2, bold: 3, extraBold: 5 } },
-  orange: { stops: { extralight: 3, light: 3, bold: 4, extraBold: 5 } },
-  red: { stops: { extralight: 3, light: 3, bold: 4, extraBold: 5 } },
-  blue: { stops: { extralight: 1, light: 2, bold: 3, extraBold: 5 } },
-  purple: { stops: { extralight: 2, light: 3, bold: 4, extraBold: 5 } },
-  lime: { stops: { extralight: 2, light: 3, bold: 4, extraBold: 5 } },
-  indigo: { stops: { extralight: 3, light: 3, bold: 4, extraBold: 5 } },
-  /** Pill shade `mag`; fg tokens live under color.fg.magenta, base scale is `mag`. */
+  gray: {
+    stops: { extralight: 5, light: 5, bold: 6, extraBold: 6 },
+    fgHue: "neutral",
+    bgHue: "gray",
+    isGray: true,
+  },
+  yellow: { stops: { extralight: 2, light: 3, bold: 3, extraBold: 5 } },
+  green: { stops: { extralight: 2, light: 3, bold: 3, extraBold: 5 } },
+  teal: { stops: { extralight: 1, light: 2, bold: 2, extraBold: 5 } },
+  orange: { stops: { extralight: 3, light: 3, bold: 3, extraBold: 5 } },
+  red: { stops: { extralight: 3, light: 3, bold: 3, extraBold: 5 } },
+  blue: { stops: { extralight: 1, light: 2, bold: 2, extraBold: 5 } },
+  purple: { stops: { extralight: 2, light: 3, bold: 3, extraBold: 5 } },
+  lime: { stops: { extralight: 2, light: 3, bold: 3, extraBold: 5 } },
+  indigo: { stops: { extralight: 3, light: 3, bold: 3, extraBold: 5 } },
   mag: {
-    stops: { extralight: 1, light: 2, bold: 3, extraBold: 4 },
+    stops: { extralight: 1, light: 2, bold: 2, extraBold: 4 },
     fgHue: "magenta",
     bgHue: "mag",
   },
@@ -34,89 +41,110 @@ const PILL_HUE_CONFIG = {
 
 const INTENSITIES = ["extralight", "light", "bold", "extraBold"];
 
-const BG_REST = {
-  extralight: ["0", "1", "1", "2"],
-  light: ["1", "2", "2", "3"],
-  bold: ["2", "3", "3", "4"],
-  extraBold: ["11", "10", "10", "11"],
+const BG_FILLED = {
+  extralight: "0",
+  light: "2",
+  bold: "7",
 };
 
-const BG_BORDERED_REST = ["01", "01", "02", "01"];
-const BG_BORDERED_HOVER = ["02", "02", "03", "02"];
-const BG_BORDERED_PRESSED = ["03", "04", "04", "03"];
+const EXTRA_BOLD_BG = {
+  gray: "12",
+  purple: "9",
+  indigo: "10",
+  blue: "10",
+  green: "10",
+  teal: "10",
+  orange: "10",
+  red: "10",
+  yellow: "10",
+  lime: "10",
+  mag: "10",
+};
+
+const BORDER_FILLED = {
+  extralight: "3",
+  light: "5",
+  bold: "8",
+};
+
+const EXTRA_BOLD_BORDER = {
+  gray: "10",
+  purple: "9",
+  indigo: "10",
+  blue: "10",
+  green: "10",
+  teal: "10",
+  orange: "10",
+  red: "10",
+  yellow: "10",
+  lime: "10",
+  mag: "10",
+};
+
+const BG_BORDERED = ["1", "1", "2", "1"];
+
+const NEUTRAL_FG_BY_STOP = {
+  4: "subtle",
+  5: "default",
+  6: "muted",
+};
+
+function fgSemantic(fgHue, stop) {
+  if (fgHue === "neutral") {
+    const key = NEUTRAL_FG_BY_STOP[stop] ?? "default";
+    return `{color.fg.neutral.${key}}`;
+  }
+  const n = Number(stop);
+  const role = n <= 3 ? "muted" : "contrast";
+  return `{color.fg.${fgHue}.${role}}`;
+}
 
 function fg(fgHue, stop) {
-  return `{color.fg.${fgHue}.${stop}}`;
+  return fgSemantic(fgHue, stop);
 }
 
 function bg(bgHue, stop) {
   return `{base.color.scale.${bgHue}.${stop}}`;
 }
 
+function filledBgStop(shade, intensity) {
+  if (intensity === "extraBold") {
+    return EXTRA_BOLD_BG[shade] ?? EXTRA_BOLD_BG.blue;
+  }
+  return BG_FILLED[intensity];
+}
+
+function borderedBorderStop(shade, intensity) {
+  if (intensity === "extraBold") {
+    return EXTRA_BOLD_BORDER[shade] ?? EXTRA_BOLD_BORDER.blue;
+  }
+  return BORDER_FILLED[intensity];
+}
+
 function buildIntensity(shade, intensity, entry) {
   const cfg = entry.stops;
   const fgHue = entry.fgHue ?? shade;
   const bgHue = entry.bgHue ?? shade;
-  const [bgRest, bgHover, bgPressed, bgDisabled] = BG_REST[intensity];
-  const fgRest = cfg[intensity];
-  const fgHover = Math.min(fgRest + 1, cfg.extraBold);
-  const fgPressed = Math.min(fgRest + 1, cfg.extraBold);
   const borderedIdx = INTENSITIES.indexOf(intensity);
+  const onDarkFilledBg = intensity === "extraBold" || intensity === "bold";
+  const fgStop = cfg[intensity];
 
   const filled = {
-    bgColor: {
-      rest: token(intensity === "extraBold" ? bg(bgHue, bgRest) : bg(bgHue, bgRest)),
-      hover: token(bg(bgHue, bgHover)),
-      pressed: token(bg(bgHue, bgPressed)),
-      disabled: token("{color.bg.gray.light.03}"),
-    },
-    borderColor: {
-      rest: token("{color.canvas.transparent}"),
-      hover: token("{color.canvas.transparent}"),
-      pressed: token("{color.canvas.transparent}"),
-      disabled: token("{color.canvas.transparent}"),
-    },
-    fgColor: {
-      rest: token(
-        intensity === "extraBold" ? "{color.fg.neutral.1}" : fg(fgHue, fgRest)
-      ),
-      hover: token(
-        intensity === "extraBold" ? "{color.fg.neutral.1}" : fg(fgHue, fgHover)
-      ),
-      pressed: token(
-        intensity === "extraBold" ? "{color.fg.neutral.1}" : fg(fgHue, fgPressed)
-      ),
-      disabled: token("{color.fg.neutral.3}"),
-    },
+    bgColor: token(bg(bgHue, filledBgStop(shade, intensity))),
+    borderColor: token("{color.canvas.transparent}"),
+    fgColor: token(onDarkFilledBg ? "{color.fg.neutral.inverted}" : fg(fgHue, fgStop)),
   };
 
   const bordered = {
-    bgColor: {
-      rest: token(`{color.bg.gray.light.${BG_BORDERED_REST[borderedIdx]}}`),
-      hover: token(`{color.bg.gray.light.${BG_BORDERED_HOVER[borderedIdx]}}`),
-      pressed: token(`{color.bg.gray.light.${BG_BORDERED_PRESSED[borderedIdx]}}`),
-      disabled: token("{color.bg.gray.light.03}"),
-    },
-    borderColor: {
-      rest: token(
-        intensity === "extraBold" ? bg(bgHue, "10") : bg(bgHue, String(Number(bgRest) + 3))
-      ),
-      hover: token(
-        intensity === "extraBold" ? bg(bgHue, "11") : bg(bgHue, String(Number(bgRest) + 3))
-      ),
-      pressed: token(
-        intensity === "extraBold" ? bg(bgHue, "11") : bg(bgHue, String(Number(bgRest) + 3))
-      ),
-      disabled: token("{color.border.gray.1}"),
-    },
-    fgColor: {
-      rest: token(intensity === "extraBold" ? fg(fgHue, cfg.extraBold) : fg(fgHue, fgRest)),
-      hover: token(intensity === "extraBold" ? fg(fgHue, cfg.extraBold) : fg(fgHue, fgHover)),
-      pressed: token(
-        intensity === "extraBold" ? fg(fgHue, Math.max(cfg.extraBold - 1, 3)) : fg(fgHue, fgPressed)
-      ),
-      disabled: token("{color.fg.neutral.3}"),
-    },
+    bgColor: token(bg("gray", BG_BORDERED[borderedIdx])),
+    borderColor: token(
+      entry.isGray && intensity !== "extraBold"
+        ? "{color.border.gray.3}"
+        : bg(bgHue, borderedBorderStop(shade, intensity))
+    ),
+    fgColor: token(
+      intensity === "extraBold" ? fg(fgHue, cfg.extraBold) : fg(fgHue, fgStop)
+    ),
   };
 
   return { filled, bordered };

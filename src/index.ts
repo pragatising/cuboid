@@ -6,6 +6,16 @@ export type { Breakpoint, Responsive } from "./utils/responsive";
 export { Container } from "./components/core/Container";
 export type { ContainerProps, ContainerWidth } from "./components/core/Container";
 
+export { Box } from "./components/core/Box";
+export type {
+  BoxProps,
+  BoxBackground,
+  BoxBorder,
+  BoxBorderRadius,
+  BoxForeground,
+  BoxOverflow,
+} from "./components/core/Box";
+
 export { Divider } from "./components/core/Divider";
 export type { DividerProps, DividerColor } from "./components/core/Divider";
 
@@ -150,6 +160,7 @@ export type {
   PillFunctionalColors,
   PillIntensity,
   PillIntensityColors,
+  PillSurfaceColors,
   PillSurface,
   PillLayoutTokens,
   ContainerSizesTokens,

@@ -1,5 +1,88 @@
 .Stack {
   display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+/* Direction */
+.Stack--direction-horizontal {
+  flex-direction: row;
+}
+.Stack--direction-vertical {
+  flex-direction: column;
+}
+
+/* Gap */
+.Stack--gap-none { gap: var(--cube-stack-gap-none); }
+.Stack--gap-xxs { gap: var(--cube-stack-gap-xxs); }
+.Stack--gap-xs { gap: var(--cube-stack-gap-xs); }
+.Stack--gap-sm { gap: var(--cube-stack-gap-sm); }
+.Stack--gap-md { gap: var(--cube-stack-gap-md); }
+.Stack--gap-lg { gap: var(--cube-stack-gap-lg); }
+.Stack--gap-xl { gap: var(--cube-stack-gap-xl); }
+.Stack--gap-xxl { gap: var(--cube-stack-gap-xxl); }
+
+/* Padding (all sides) */
+.Stack--padding-none { padding: var(--cube-stack-padding-none); }
+.Stack--padding-xxs { padding: var(--cube-stack-padding-xxs); }
+.Stack--padding-xs { padding: var(--cube-stack-padding-xs); }
+.Stack--padding-sm { padding: var(--cube-stack-padding-sm); }
+.Stack--padding-md { padding: var(--cube-stack-padding-md); }
+.Stack--padding-lg { padding: var(--cube-stack-padding-lg); }
+.Stack--padding-xl { padding: var(--cube-stack-padding-xl); }
+.Stack--padding-xxl { padding: var(--cube-stack-padding-xxl); }
+
+/* Padding block */
+.Stack--paddingBlock-none { padding-block: var(--cube-stack-padding-none); }
+.Stack--paddingBlock-xxs { padding-block: var(--cube-stack-padding-xxs); }
+.Stack--paddingBlock-xs { padding-block: var(--cube-stack-padding-xs); }
+.Stack--paddingBlock-sm { padding-block: var(--cube-stack-padding-sm); }
+.Stack--paddingBlock-md { padding-block: var(--cube-stack-padding-md); }
+.Stack--paddingBlock-lg { padding-block: var(--cube-stack-padding-lg); }
+.Stack--paddingBlock-xl { padding-block: var(--cube-stack-padding-xl); }
+.Stack--paddingBlock-xxl { padding-block: var(--cube-stack-padding-xxl); }
+
+/* Padding inline */
+.Stack--paddingInline-none { padding-inline: var(--cube-stack-padding-none); }
+.Stack--paddingInline-xxs { padding-inline: var(--cube-stack-padding-xxs); }
+.Stack--paddingInline-xs { padding-inline: var(--cube-stack-padding-xs); }
+.Stack--paddingInline-sm { padding-inline: var(--cube-stack-padding-sm); }
+.Stack--paddingInline-md { padding-inline: var(--cube-stack-padding-md); }
+.Stack--paddingInline-lg { padding-inline: var(--cube-stack-padding-lg); }
+.Stack--paddingInline-xl { padding-inline: var(--cube-stack-padding-xl); }
+.Stack--paddingInline-xxl { padding-inline: var(--cube-stack-padding-xxl); }
+
+/* Align */
+.Stack--align-stretch { align-items: stretch; }
+.Stack--align-center { align-items: center; }
+.Stack--align-start { align-items: flex-start; }
+.Stack--align-end { align-items: flex-end; }
+.Stack--align-baseline { align-items: baseline; }
+
+/* Justify */
+.Stack--justify-start { justify-content: flex-start; }
+.Stack--justify-center { justify-content: center; }
+.Stack--justify-end { justify-content: flex-end; }
+.Stack--justify-between { justify-content: space-between; }
+.Stack--justify-around { justify-content: space-around; }
+.Stack--justify-evenly { justify-content: space-evenly; }
+
+/* Wrap */
+.Stack--wrap-wrap { flex-wrap: wrap; }
+.Stack--wrap-nowrap { flex-wrap: nowrap; }
+
+/* Flex child sizing */
+.Stack--grow { flex: 1 1 0%; }
+.Stack--grow-0 { flex-grow: 0; }
+.Stack--shrink-0 { flex-shrink: 0; }
+.Stack--minWidth-0 { min-width: 0; }
+
+/* Width */
+.Stack--width-full { width: 100%; }
+.Stack--width-auto { width: auto; }
+
+/* ── Responsive tier overrides (inline --stack-* vars from Stack.tsx) ── */
+.Stack--responsive {
   flex-direction: var(--stack-direction-sm, column);
   gap: var(--stack-gap-sm);
   padding-block: var(--stack-padding-block-sm);
@@ -10,7 +93,7 @@
 }
 
 @media (min-width: var(--cube-breakpoint-md, 768px)) {
-  .Stack {
+  .Stack--responsive {
     flex-direction: var(--stack-direction-md, var(--stack-direction-sm, column));
     gap: var(--stack-gap-md, var(--stack-gap-sm));
     padding-block: var(--stack-padding-block-md, var(--stack-padding-block-sm));
@@ -22,7 +105,7 @@
 }
 
 @media (min-width: var(--cube-breakpoint-lg, 1012px)) {
-  .Stack {
+  .Stack--responsive {
     flex-direction: var(
       --stack-direction-lg,
       var(--stack-direction-md, var(--stack-direction-sm, column))

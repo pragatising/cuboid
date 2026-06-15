@@ -49,8 +49,8 @@ export interface TextProps {
   variant?: TextVariant;
   /**
    * Color from `colors.global` (dot-path), or any raw CSS color string.
-   * @default "fg.neutral.6"
-   * @example "text.muted" | "fg.blue.3" | "#ff0000"
+   * @default "fg.neutral.muted"
+   * @example "text.muted" | "fg.blue.contrast" | "#ff0000"
    */
   color?: GlobalColorPath;
   align?: CSSProperties["textAlign"];
@@ -69,7 +69,7 @@ export interface TextProps {
 export function Text({
   as,
   variant = "bodyMedium",
-  color = "fg.neutral.6",
+  color = "fg.neutral.muted",
   align,
   truncate = false,
   theme,
@@ -110,13 +110,13 @@ export function Text({
     : undefined;
 
   const resolvedColor = resolveGlobalColorOrCss(color, tokens.colors.global, {
-    default: "fg.neutral.6",
-    muted: "text.default",
-    onEmphasis: "fg.neutral.1",
+    default: "fg.neutral.muted",
+    muted: "text.muted",
+    onEmphasis: "fg.neutral.inverted",
     disabled: "text.disabled",
     link: "fg.link.default",
-    white: "fg.neutral.1",
-    neutral: "fg.neutral.5",
+    white: "fg.neutral.inverted",
+    neutral: "fg.neutral.default",
   });
 
   return (
