@@ -1,0 +1,219 @@
+.CodeSurface {
+  font-family: var(--cube-typography-text-code-block-fontFamily);
+  font-size: var(--cube-typography-text-code-block-fontSize);
+  line-height: var(--cube-typography-text-code-block-lineHeight);
+}
+
+.scroll {
+  overscroll-behavior: none;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.18) transparent;
+  user-select: text;
+  overflow-x: auto;
+  overflow-y: visible;
+}
+
+.scrollConstrained {
+  overflow-y: auto;
+}
+
+.row {
+  flex-shrink: 0;
+  height: 1.625rem;
+}
+
+.row:hover .gutter,
+.row:hover .content {
+  background: var(--cube-color-syntax-row-hover-bg);
+}
+
+.rowCollapsed .gutter,
+.rowCollapsed .content {
+  background: var(--cube-colors-functional-background-inset);
+}
+
+.rowCollapsed:hover .gutter,
+.rowCollapsed:hover .content {
+  background: var(--cube-color-syntax-row-hover-bg);
+}
+
+.rowWatched .gutter,
+.rowWatched .content {
+  background: var(--cube-color-syntax-watch-row-bg);
+}
+
+.rowWatched:hover .gutter,
+.rowWatched:hover .content {
+  background: var(--cube-color-syntax-watch-row-bg);
+}
+
+.gutter {
+  flex-shrink: 0;
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  user-select: none;
+  min-width: 2.4rem;
+  padding-left: var(--cube-space-12);
+  padding-right: var(--cube-space-10);
+  border-right: var(--cube-sizes-borderWidth-thin) solid
+    var(--cube-colors-functional-border-muted);
+  background: var(--cube-colors-functional-background-default);
+  transition: background-color 0.1s ease;
+}
+
+.lineNumber {
+  display: inline-block;
+  flex: 1;
+  min-width: 2ch;
+  text-align: right;
+  padding-right: var(--cube-space-8);
+  font-variant-numeric: tabular-nums;
+  color: var(--cube-colors-functional-foreground-muted);
+}
+
+.watchBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  flex-shrink: 0;
+  width: 0.875rem;
+  margin-right: var(--cube-space-6);
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.watchDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cube-color-syntax-watch-mark-hover);
+  opacity: 0;
+  transition:
+    opacity 0.12s ease,
+    background-color 0.12s ease;
+}
+
+.gutterWithWatch:hover .watchBtn:not(.watchBtnActive) .watchDot {
+  opacity: 0.7;
+}
+
+.watchBtnActive .watchDot {
+  background: var(--cube-color-syntax-watch-mark);
+  opacity: 1;
+}
+
+.collapseBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  flex-shrink: 0;
+  width: 1.25rem;
+  margin-left: var(--cube-space-6);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--cube-colors-functional-foreground-muted);
+}
+
+.collapseSpacer {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 1.25rem;
+  margin-left: var(--cube-space-6);
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+  padding-right: var(--cube-space-12);
+  padding-left: calc(
+    var(--cube-space-12) + var(--code-line-depth, 0) *
+      var(--code-surface-indent, 1.5rem)
+  );
+  background: var(--cube-colors-functional-background-default);
+  transition: background-color 0.1s ease;
+}
+
+.token {
+  white-space: pre;
+}
+
+.tokenLink {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.tokenLink:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.125em;
+}
+
+.tokenOperator {
+  color: var(--cube-colors-functional-foreground-muted);
+  padding-inline: var(--cube-space-6);
+}
+
+.tokenKey {
+  color: var(--cube-color-syntax-key);
+}
+
+.tokenString {
+  color: var(--cube-color-syntax-string);
+}
+
+.tokenStringUrl {
+  color: var(--cube-color-syntax-string-url);
+}
+
+.tokenStringEmail {
+  color: var(--cube-color-syntax-string-email);
+}
+
+.tokenStringUuid {
+  color: var(--cube-color-syntax-string-uuid);
+}
+
+.tokenNumber {
+  color: var(--cube-color-syntax-number-literal);
+}
+
+.tokenBoolean {
+  color: var(--cube-color-syntax-boolean-literal);
+}
+
+.tokenNull {
+  color: var(--cube-color-syntax-null-literal);
+}
+
+.tokenBracket {
+  color: var(--cube-color-syntax-bracket);
+}
+
+/* Alternating nested delimiter colours (even / odd nesting level). */
+.tokenBracketDepth0 {
+  color: var(--cube-color-syntax-bracket);
+}
+
+.tokenBracketDepth1 {
+  color: var(--cube-color-syntax-bracket-nested);
+}
+
+.tokenMuted {
+  color: var(--cube-colors-functional-foreground-muted);
+}
+
+.virtualWindow {
+  position: relative;
+}
+
+.virtualSlice {
+  position: absolute;
+  left: 0;
+  right: 0;
+}

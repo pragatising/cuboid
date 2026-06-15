@@ -1,0 +1,98 @@
+.Box {
+  border-style: solid;
+  border-width: 0;
+  border-color: transparent;
+}
+
+/* Background */
+.Box--bg-default {
+  background-color: var(--cube-colors-functional-background-default);
+}
+.Box--bg-muted {
+  background-color: var(--cube-colors-functional-background-muted);
+}
+.Box--bg-inset {
+  background-color: var(--cube-colors-functional-background-inset);
+}
+.Box--bg-emphasis {
+  background-color: var(--cube-colors-functional-background-emphasis);
+}
+.Box--bg-disabled {
+  background-color: var(--cube-colors-functional-background-disabled);
+}
+.Box--bg-transparent {
+  background-color: var(--cube-colors-functional-background-transparent);
+}
+.Box--bg-inverse {
+  background-color: var(--cube-colors-functional-background-inverse);
+}
+.Box--bg-neutralMuted {
+  background-color: var(--cube-colors-functional-background-neutral-muted);
+}
+.Box--bg-neutralEmphasis {
+  background-color: var(--cube-colors-functional-background-neutral-emphasis);
+}
+
+/* Border */
+.Box--border-default {
+  border-width: var(--cube-sizes-borderWidth-thin);
+  border-color: var(--cube-colors-functional-border-default);
+}
+.Box--border-muted {
+  border-width: var(--cube-sizes-borderWidth-thin);
+  border-color: var(--cube-colors-functional-border-muted);
+}
+
+/* Radius */
+.Box--radius-sm {
+  border-radius: var(--cube-sizes-borderRadius-sm);
+}
+.Box--radius-md {
+  border-radius: var(--cube-sizes-borderRadius-md);
+}
+.Box--radius-lg {
+  border-radius: var(--cube-sizes-borderRadius-lg);
+}
+.Box--radius-xl {
+  border-radius: var(--cube-sizes-borderRadius-xl);
+}
+.Box--radius-full {
+  border-radius: var(--cube-sizes-borderRadius-full);
+}
+
+/* Overflow */
+.Box--overflow-visible {
+  overflow: visible;
+}
+.Box--overflow-hidden {
+  overflow: hidden;
+}
+.Box--overflow-auto {
+  overflow: auto;
+}
+.Box--overflow-scroll {
+  overflow: scroll;
+}
+
+/* Foreground */
+.Box--fg-default {
+  color: var(--cube-colors-functional-foreground-default);
+}
+.Box--fg-muted {
+  color: var(--cube-colors-functional-foreground-muted);
+}
+.Box--fg-disabled {
+  color: var(--cube-colors-functional-foreground-disabled);
+}
+.Box--fg-onEmphasis {
+  color: var(--cube-colors-functional-foreground-on-emphasis);
+}
+.Box--fg-white {
+  color: var(--cube-colors-functional-foreground-white);
+}
+.Box--fg-neutral {
+  color: var(--cube-colors-functional-foreground-neutral);
+}
+.Box--fg-link {
+  color: var(--cube-colors-functional-foreground-link);
+}
