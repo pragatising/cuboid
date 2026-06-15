@@ -150,6 +150,7 @@ export {
   ApiResponseViewer,
   statusPillShade,
   statusReasonPhrase,
+  methodPillShade,
 } from "./components/ApiResponseViewer";
 export type {
   ApiResponseHeaders,

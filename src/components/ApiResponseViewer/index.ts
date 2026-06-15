@@ -4,4 +4,4 @@ export type {
   ApiResponseViewerProps,
   HttpMethod,
 } from "./ApiResponseViewer";
-export { statusPillShade, statusReasonPhrase } from "./status";
+export { statusPillShade, statusReasonPhrase, methodPillShade } from "./status";

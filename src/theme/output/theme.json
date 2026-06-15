@@ -173,6 +173,7 @@
         "stringEmail": "#6565FA",
         "stringUuid": "#D8D7D4",
         "rowHoverBg": "#F9F9F8",
+        "collapsedRowBg": "#FFFFFF",
         "watchMark": "#518ff8",
         "watchMarkHover": "#518ff8",
         "watchRowBg": "#F4F8FF"
@@ -1448,6 +1449,7 @@
       "stringEmail": "#6565FA",
       "stringUuid": "#D8D7D4",
       "rowHoverBg": "#F9F9F8",
+      "collapsedRowBg": "#FFFFFF",
       "watchMark": "#518ff8",
       "watchMarkHover": "#518ff8",
       "watchRowBg": "#F4F8FF"

@@ -24,7 +24,7 @@ export type TokenType =
   | "bracket"      // { } [ ]
   | "operator"     // : (key separator)
   | "punctuation"  // , (trailing comma)
-  | "ellipsis";    // … (shown when a node is collapsed)
+  | "ellipsis";    // … placeholder when a node is collapsed
 
 export interface Token {
   type: TokenType;
@@ -50,11 +50,6 @@ export interface CodeLine {
    * Drives which chevron is rendered (▶ vs ▼).
    */
   isCollapsed?: boolean;
-  /**
-   * "summary" rows are the `… N lines` placeholder emitted between the opening
-   * and closing bracket of a collapsed node. Rendered with a muted highlight.
-   */
-  kind?: "summary";
 }
 
 // ── Public API ────────────────────────────────────────────────────────────────
@@ -105,17 +100,6 @@ export function getAllCollapsiblePaths(
 
 function isPlainObject(v: unknown): v is Record<string, unknown> {
   return typeof v === "object" && v !== null && !Array.isArray(v);
-}
-
-/**
- * Count how many lines a subtree would produce when fully expanded.
- * Used to display "… N lines" in the summary row of a collapsed node.
- */
-function countSubtreeLines(value: unknown): number {
-  const lines: CodeLine[] = [];
-  const counter = { n: 1 };
-  walkValue(value, undefined, "__count__", 0, true, new Set(), lines, counter);
-  return lines.length;
 }
 
 // String subtype detection — applied to raw string values (before quoting).
@@ -220,14 +204,13 @@ function walkArray(
   }
 
   if (isCollapsed) {
-    const count = countSubtreeLines(value);
     lines.push({
       lineNumber: counter.n++,
       depth,
       tokens: [
         ...prefix,
         { type: "bracket", value: "[" },
-        { type: "ellipsis", value: ` … ${count} lines ` },
+        { type: "ellipsis", value: " … " },
         { type: "bracket", value: "]" },
         ...comma(isLast),
       ],
@@ -293,14 +276,13 @@ function walkObject(
   }
 
   if (isCollapsed) {
-    const count = countSubtreeLines(value);
     lines.push({
       lineNumber: counter.n++,
       depth,
       tokens: [
         ...prefix,
         { type: "bracket", value: "{" },
-        { type: "ellipsis", value: ` … ${count} lines ` },
+        { type: "ellipsis", value: " … " },
         { type: "bracket", value: "}" },
         ...comma(isLast),
       ],

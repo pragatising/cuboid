@@ -74,6 +74,7 @@
   --cube-color-syntax-brackethighlighter-unmatched: #F99090;
   --cube-color-syntax-carriage-return-bg: #FBC4C4;
   --cube-color-syntax-carriage-return-text: #FFFFFF;
+  --cube-color-syntax-collapsed-row-bg: #FFFFFF;
   --cube-color-syntax-comment: #888783;
   --cube-color-syntax-constant: #3a80f9 ;
   --cube-color-syntax-constant-other-reference-link: #0a3069;

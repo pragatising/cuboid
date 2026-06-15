@@ -187,6 +187,7 @@
       "stringEmail": { "value": "{base.color.scale.indigo.9}" },
       "stringUuid": { "value": "{base.color.scale.gray.5}" },
       "rowHoverBg": { "value": "{base.color.scale.gray.1}" },
+      "collapsedRowBg": { "value": "{base.color.scale.gray.0}" },
       "watchMark": { "value": "{base.color.scale.blue.7}" },
       "watchMarkHover": { "value": "{base.color.scale.blue.7}" },
       "watchRowBg": { "value": "{base.color.scale.blue.0}" }

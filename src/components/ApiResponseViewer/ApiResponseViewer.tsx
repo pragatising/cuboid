@@ -10,7 +10,7 @@ import { Text } from "../core/Text";
 import { ExpandMoreIcon } from "../../icons/material";
 import type { CubeTheme } from "../../theme/types";
 import styles from "./ApiResponseViewer.module.css";
-import { statusPillShade, statusReasonPhrase } from "./status";
+import { statusPillShade, statusReasonPhrase, methodPillShade } from "./status";
 
 export type HttpMethod =
   | "GET"
@@ -57,17 +57,28 @@ function ResponseHeadersPanel({
   theme?: CubeTheme;
 }) {
   return (
-    <Stack gap="xs" padding="sm" className={styles.headersPopover} theme={theme}>
-      <Text variant="caption" color="fg.neutral.muted" theme={theme}>
+    <Stack gap="sm" padding="sm" className={styles.headersPopover} theme={theme}>
+      <Text
+        variant="bodyMedium"
+        color="text.contrast"
+        style={{ fontWeight: 500 }}
+        theme={theme}
+      >
         Headers
       </Text>
       <dl className={styles.headers}>
         {entries.map(([name, value]) => (
           <div key={name} className={styles.headerEntry}>
-            <Text as="dt" variant="inlineCode" color="fg.neutral.default" theme={theme}>
+            <Text
+              as="dt"
+              variant="bodyMedium"
+              color="text.contrast"
+              style={{ fontWeight: 500 }}
+              theme={theme}
+            >
               {name}
             </Text>
-            <Text as="dd" variant="bodySmall" color="fg.neutral.muted" theme={theme}>
+            <Text as="dd" variant="bodyMedium" color="fg.neutral.muted" theme={theme}>
               {value}
             </Text>
           </div>
@@ -118,28 +129,56 @@ export function ApiResponseViewer({
         <Stack
           direction="horizontal"
           align="center"
-          gap="xs"
-          shrink={0}
+          gap="sm"
+          grow
           className={styles.summaryLeading}
           theme={theme}
         >
-          <Pill
-            shade={statusPillShade(status)}
-            intensity="bold"
-            variant="caption"
-            theme={theme}
-          >
-            {status}
-          </Pill>
-          <Text variant="caption" color="fg.neutral.muted" theme={theme}>
-            {statusReasonPhrase(status)}
-          </Text>
-
-          {method ? (
-            <Text as="span" variant="inlineCode" color="fg.neutral.default" theme={theme}>
-              {method}
+          {url ? (
+            <Text
+              as="span"
+              variant="bodyMedium"
+              color="fg.neutral.muted"
+              truncate
+              className={styles.url}
+              theme={theme}
+            >
+              {url}
             </Text>
           ) : null}
+
+          {method ? (
+            <Pill
+              shade={methodPillShade(method)}
+              intensity="light"
+              variant="caption"
+              className={styles.method}
+              theme={theme}
+            >
+              {method}
+            </Pill>
+          ) : null}
+
+          <Stack
+            direction="horizontal"
+            align="center"
+            gap="xs"
+            shrink={0}
+            className={styles.status}
+            theme={theme}
+          >
+            <Pill
+              shade={statusPillShade(status)}
+              intensity="bold"
+              variant="caption"
+              theme={theme}
+            >
+              {status}
+            </Pill>
+            <Text variant="bodyMedium" color="fg.neutral.muted" theme={theme}>
+              {statusReasonPhrase(status)}
+            </Text>
+          </Stack>
 
           {showHeaders ? (
             <Popover
@@ -164,23 +203,10 @@ export function ApiResponseViewer({
           ) : null}
         </Stack>
 
-        {url ? (
-          <Text
-            as="span"
-            variant="bodySmall"
-            color="fg.neutral.muted"
-            truncate
-            className={styles.url}
-            theme={theme}
-          >
-            {url}
-          </Text>
-        ) : null}
-
         {durationMs != null ? (
           <Text
             as="span"
-            variant="caption"
+            variant="bodyMedium"
             color="fg.neutral.muted"
             className={styles.duration}
             theme={theme}

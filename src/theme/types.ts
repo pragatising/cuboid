@@ -103,6 +103,8 @@ export interface SyntaxColors {
   stringUuid: string;
   /** Background tint applied to a row when the pointer hovers over it */
   rowHoverBg: string;
+  /** Background tint for a collapsed JSON node summary row */
+  collapsedRowBg: string;
   /** Gutter watchlist marker dot when line is watched */
   watchMark: string;
   /** Gutter watchlist dot preview on row hover (before click) */

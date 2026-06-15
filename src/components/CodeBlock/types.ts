@@ -26,5 +26,4 @@ export interface SurfaceLine {
    */
   collapseKey?: string;
   isCollapsed?: boolean;
-  kind?: "summary";
 }

@@ -93,6 +93,7 @@ export function syntaxColorsCubeOverride(tokens: ThemeTokens): Record<string, st
     "--cube-color-syntax-bracket": s.bracket,
     "--cube-color-syntax-bracket-nested": s.bracketNested,
     "--cube-color-syntax-row-hover-bg": s.rowHoverBg,
+    "--cube-color-syntax-collapsed-row-bg": s.collapsedRowBg,
     "--cube-color-syntax-watch-mark": s.watchMark,
     "--cube-color-syntax-watch-mark-hover": s.watchMarkHover,
     "--cube-color-syntax-watch-row-bg": s.watchRowBg,

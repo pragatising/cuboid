@@ -1,4 +1,5 @@
 import type { PillShade } from "../core/Pill";
+import type { HttpMethod } from "./ApiResponseViewer";
 
 const STATUS_PHRASES: Record<number, string> = {
   200: "OK",
@@ -17,6 +18,25 @@ const STATUS_PHRASES: Record<number, string> = {
   502: "Bad Gateway",
   503: "Service Unavailable",
 };
+
+/** Maps HTTP methods to pill shades — read vs write semantics (Postman-style). */
+export function methodPillShade(method: HttpMethod): PillShade {
+  switch (method) {
+    case "GET":
+    case "HEAD":
+      return "green";
+    case "POST":
+      return "orange";
+    case "PUT":
+      return "blue";
+    case "PATCH":
+      return "teal";
+    case "DELETE":
+      return "red";
+    case "OPTIONS":
+      return "gray";
+  }
+}
 
 /** Maps HTTP status code ranges to pill shades for quick visual scanning. */
 export function statusPillShade(status: number): PillShade {

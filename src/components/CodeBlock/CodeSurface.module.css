@@ -29,7 +29,7 @@
 
 .rowCollapsed .gutter,
 .rowCollapsed .content {
-  background: var(--cube-colors-functional-background-inset);
+  background: var(--cube-color-syntax-collapsed-row-bg);
 }
 
 .rowCollapsed:hover .gutter,
