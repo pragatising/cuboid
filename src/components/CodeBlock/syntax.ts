@@ -137,7 +137,7 @@ export function syntaxTokenClass(token: SurfaceToken | string): string {
   return TOKEN_CLASS[type] ?? styles.tokenMuted;
 }
 
-// ── JSON string link detection (shared with CodeSnippet tokenizer) ───────────
+// ── JSON string link detection (shared with tokenizer) ───────────
 
 /** Classified JSON string value token types. */
 export type JsonClassifiedStringType =

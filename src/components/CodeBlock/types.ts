@@ -1,6 +1,6 @@
 /**
  * Language-agnostic line model for CodeSurface.
- * Producers (JsonCodeView tokenizer, CodeBlock highlighters) build these;
+ * Producers (JsonCodeView {@link buildLines}, CodeBlock highlighters) build these;
  * CodeSurface only renders them.
  */
 

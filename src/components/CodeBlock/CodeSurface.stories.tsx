@@ -2,8 +2,8 @@ import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { CodeSurface } from "./CodeSurface";
 import type { SurfaceLine } from "./types";
-import { buildLines } from "../CodeSnippet/tokenizer";
-import devServerDiagnostics from "../CodeSnippet/__fixtures__/dev-server-diagnostics";
+import { buildLines } from "./tokenizer";
+import devServerDiagnostics from "./__fixtures__/dev-server-diagnostics";
 import { defaultTheme } from "../../theme/defaultTheme";
 
 const meta: Meta<typeof CodeSurface> = {

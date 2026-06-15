@@ -117,7 +117,26 @@ export { SplitLayout } from "./components/core/SplitLayout";
 export type { SplitLayoutProps, SplitLayoutMainProps } from "./components/core/SplitLayout";
 
 // ── Data components ───────────────────────────────────────────────────────────
+export {
+  CodeSurface,
+  JsonCodeView,
+  buildLines,
+  getAllCollapsiblePaths,
+} from "./components/CodeBlock";
+export type {
+  CodeSurfaceProps,
+  CodeSurfaceGutterIcons,
+  JsonCodeViewProps,
+  SurfaceLine,
+  SurfaceToken,
+  CodeLine,
+  Token,
+  TokenType,
+} from "./components/CodeBlock";
+
+/** @deprecated Use {@link JsonCodeView} */
 export { CodeSnippet } from "./components/CodeSnippet";
+/** @deprecated Use {@link JsonCodeViewProps} */
 export type { CodeSnippetProps } from "./components/CodeSnippet";
 
 export { DataGrid } from "./components/DataGrid";

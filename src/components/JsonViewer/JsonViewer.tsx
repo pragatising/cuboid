@@ -13,7 +13,7 @@ export interface JsonViewerProps {
 }
 
 /**
- * Top-level component that toggles between CodeSnippet and DataGrid views.
+ * Top-level component that toggles between JsonCodeView and DataGrid views.
  * Toggle UI and wiring TBD — requirements coming soon.
  */
 export function JsonViewer({ data, defaultMode = "code" }: JsonViewerProps) {

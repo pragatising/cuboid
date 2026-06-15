@@ -1,6 +1,15 @@
 export { CodeSurface } from "./CodeSurface";
 export type { CodeSurfaceProps, CodeSurfaceGutterIcons } from "./CodeSurface";
 
+export { JsonCodeView } from "./JsonCodeView";
+export type { JsonCodeViewProps } from "./JsonCodeView";
+
+export {
+  buildLines,
+  getAllCollapsiblePaths,
+} from "./tokenizer";
+export type { CodeLine, Token, TokenType } from "./tokenizer";
+
 export type { SurfaceLine, SurfaceToken } from "./types";
 
 export {
