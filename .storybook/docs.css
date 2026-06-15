@@ -159,6 +159,33 @@ body,
   opacity: 0.6;
 }
 
+.cube-docs-table-row--focus td {
+  background-color: var(--cube-colors-functional-background-neutral-muted, var(--cube-colors-functional-background-muted));
+}
+
+.cube-docs-table td:first-child,
+.cube-docs-table th:first-child {
+  text-align: left;
+}
+
+.cube-docs-table {
+  width: 100%;
+  max-width: 40rem;
+  border-collapse: collapse;
+}
+
+.cube-docs-table th,
+.cube-docs-table td {
+  padding: var(--cube-space-6) var(--cube-space-8);
+  border-bottom: var(--cube-sizes-borderWidth-thin) solid var(--cube-colors-functional-border-default);
+  vertical-align: top;
+}
+
+.cube-docs-table th {
+  font-weight: 600;
+  color: var(--cube-colors-functional-foreground-default);
+}
+
 /* ── Inline code chips ─────────────────────────────────────────────────────── */
 
 .sbdocs :not(pre) > code {

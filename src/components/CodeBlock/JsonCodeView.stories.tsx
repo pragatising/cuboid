@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
+import { Title, Primary, Controls, Subtitle } from "@storybook/blocks";
 import { JsonCodeView } from "./JsonCodeView";
+import {
+  CodeViewingArchitectureSection,
+  CodeViewingDocsSubtitle,
+} from "./CodeViewingDocs";
 import devServerDiagnostics from "./__fixtures__/dev-server-diagnostics";
 
 const meta: Meta<typeof JsonCodeView> = {
   title: "Components/CodeBlock/JsonCodeView",
   component: JsonCodeView,
-  parameters: { layout: "padded" },
   tags: ["autodocs"],
   argTypes: {
     defaultCollapsed: { control: "boolean" },
@@ -23,6 +27,22 @@ const meta: Meta<typeof JsonCodeView> = {
     data: { control: false },
     onWatchlistChange: { control: false },
     onLinkClick: { control: false },
+  },
+  parameters: {
+    layout: "padded",
+    docs: {
+      page: () => (
+        <>
+          <Title />
+          <Subtitle>
+            <CodeViewingDocsSubtitle focus="jsonCodeView" />
+          </Subtitle>
+          <CodeViewingArchitectureSection focus="jsonCodeView" />
+          <Primary />
+          <Controls />
+        </>
+      ),
+    },
   },
 };
 export default meta;

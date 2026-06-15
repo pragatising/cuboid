@@ -2,6 +2,10 @@
   min-width: 0;
 }
 
+.summaryLeading {
+  flex-shrink: 0;
+}
+
 .url {
   flex: 1 1 auto;
   min-width: 0;
@@ -10,6 +14,19 @@
 .duration {
   flex-shrink: 0;
   margin-inline-start: auto;
+}
+
+.headersTrigger {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.headersPopoverPanel {
+  min-width: min(24rem, calc(100vw - 2rem));
+}
+
+.headersPopover {
+  min-width: 0;
 }
 
 .headers {

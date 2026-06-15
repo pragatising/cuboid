@@ -2,9 +2,12 @@ import React, { useMemo } from "react";
 import { JsonCodeView, type JsonCodeViewProps } from "../CodeBlock";
 import { Box } from "../core/Box";
 import { Divider } from "../core/Divider";
+import { IconButton } from "../core/IconButton";
 import { Pill } from "../core/Pill";
+import { Popover } from "../core/Popover";
 import { Stack } from "../core/Stack";
 import { Text } from "../core/Text";
+import { ExpandMoreIcon } from "../../icons/material";
 import type { CubeTheme } from "../../theme/types";
 import styles from "./ApiResponseViewer.module.css";
 import { statusPillShade, statusReasonPhrase } from "./status";
@@ -46,6 +49,34 @@ function normalizeHeaders(
   return Object.entries(headers);
 }
 
+function ResponseHeadersPanel({
+  entries,
+  theme,
+}: {
+  entries: ReadonlyArray<readonly [string, string]>;
+  theme?: CubeTheme;
+}) {
+  return (
+    <Stack gap="xs" padding="sm" className={styles.headersPopover} theme={theme}>
+      <Text variant="caption" color="fg.neutral.muted" theme={theme}>
+        Headers
+      </Text>
+      <dl className={styles.headers}>
+        {entries.map(([name, value]) => (
+          <div key={name} className={styles.headerEntry}>
+            <Text as="dt" variant="inlineCode" color="fg.neutral.default" theme={theme}>
+              {name}
+            </Text>
+            <Text as="dd" variant="bodySmall" color="fg.neutral.muted" theme={theme}>
+              {value}
+            </Text>
+          </div>
+        ))}
+      </dl>
+    </Stack>
+  );
+}
+
 /**
  * HTTP response shell — status summary, optional headers, JSON body via
  * {@link JsonCodeView}. Intended for API debug panels and network inspectors.
@@ -84,7 +115,14 @@ export function ApiResponseViewer({
         className={styles.summary}
         theme={theme}
       >
-        <Stack direction="horizontal" align="center" gap="xs" shrink={0} theme={theme}>
+        <Stack
+          direction="horizontal"
+          align="center"
+          gap="xs"
+          shrink={0}
+          className={styles.summaryLeading}
+          theme={theme}
+        >
           <Pill
             shade={statusPillShade(status)}
             intensity="bold"
@@ -96,13 +134,35 @@ export function ApiResponseViewer({
           <Text variant="caption" color="fg.neutral.muted" theme={theme}>
             {statusReasonPhrase(status)}
           </Text>
-        </Stack>
 
-        {method ? (
-          <Text as="span" variant="inlineCode" color="fg.neutral.default" theme={theme}>
-            {method}
-          </Text>
-        ) : null}
+          {method ? (
+            <Text as="span" variant="inlineCode" color="fg.neutral.default" theme={theme}>
+              {method}
+            </Text>
+          ) : null}
+
+          {showHeaders ? (
+            <Popover
+              placement="bottom-start"
+              aria-label="Response headers"
+              theme={theme}
+              className={styles.headersTrigger}
+              contentClassName={styles.headersPopoverPanel}
+              trigger={
+                <IconButton
+                  aria-label="Response headers"
+                  variant="ghost"
+                  size="xs"
+                  theme={theme}
+                >
+                  <ExpandMoreIcon />
+                </IconButton>
+              }
+            >
+              <ResponseHeadersPanel entries={headerEntries} theme={theme} />
+            </Popover>
+          ) : null}
+        </Stack>
 
         {url ? (
           <Text
@@ -129,31 +189,6 @@ export function ApiResponseViewer({
           </Text>
         ) : null}
       </Stack>
-
-      {showHeaders ? (
-        <>
-          <Divider theme={theme} />
-          <Box background="neutralMuted" theme={theme}>
-            <Stack padding="sm" paddingInline="md" gap="xs" theme={theme}>
-              <Text variant="caption" color="fg.neutral.muted" theme={theme}>
-                Headers
-              </Text>
-              <dl className={styles.headers}>
-                {headerEntries.map(([name, value]) => (
-                  <div key={name} className={styles.headerEntry}>
-                    <Text as="dt" variant="inlineCode" color="fg.neutral.default" theme={theme}>
-                      {name}
-                    </Text>
-                    <Text as="dd" variant="bodySmall" color="fg.neutral.muted" theme={theme}>
-                      {value}
-                    </Text>
-                  </div>
-                ))}
-              </dl>
-            </Stack>
-          </Box>
-        </>
-      ) : null}
 
       <Divider theme={theme} />
 

@@ -1,17 +1,38 @@
+import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
+import { Title, Primary, Controls, Subtitle } from "@storybook/blocks";
 import { ApiResponseViewer } from "./ApiResponseViewer";
+import {
+  CodeViewingArchitectureSection,
+  CodeViewingDocsSubtitle,
+} from "../CodeBlock/CodeViewingDocs";
 import devServerDiagnostics from "../CodeBlock/__fixtures__/dev-server-diagnostics";
 
 const meta: Meta<typeof ApiResponseViewer> = {
   title: "Components/ApiResponseViewer",
   component: ApiResponseViewer,
-  parameters: { layout: "padded" },
   tags: ["autodocs"],
   argTypes: {
     body: { control: false },
     headers: { control: false },
     codeView: { control: false },
     theme: { control: false },
+  },
+  parameters: {
+    layout: "padded",
+    docs: {
+      page: () => (
+        <>
+          <Title />
+          <Subtitle>
+            <CodeViewingDocsSubtitle focus="apiResponseViewer" />
+          </Subtitle>
+          <CodeViewingArchitectureSection focus="apiResponseViewer" />
+          <Primary />
+          <Controls />
+        </>
+      ),
+    },
   },
 };
 export default meta;

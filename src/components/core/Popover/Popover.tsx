@@ -31,7 +31,7 @@ export interface PopoverProps {
   /** When omitted, open state is managed internally (toggle on trigger click). */
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
-  /** Anchor element — must be a single React element that accepts event props. */
+  /** Anchor control — positioned relative to Popover’s wrapper, not the child ref. */
   trigger: React.ReactElement;
   /** Panel content — menus, forms, or any interactive UI. */
   children: React.ReactNode;
@@ -154,6 +154,15 @@ function mergeRefs<T>(...refs: Array<React.Ref<T> | undefined>) {
   };
 }
 
+function focusableDescendant(root: HTMLElement | null): HTMLElement | null {
+  if (!root) return null;
+  return (
+    root.querySelector<HTMLElement>(
+      'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    ) ?? null
+  );
+}
+
 export function Popover({
   open: openProp,
   onOpenChange,
@@ -175,6 +184,8 @@ export function Popover({
 }: PopoverProps) {
   const tokens = useTheme(theme);
   const panelId = useId();
+  /** Wrapper around the trigger — always a DOM node for anchoring. */
+  const anchorRef = useRef<HTMLSpanElement>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
   const panelRef = useRef<HTMLDivElement | null>(null);
   const wasOpenRef = useRef(false);
@@ -194,7 +205,7 @@ export function Popover({
 
   useEffect(() => {
     if (wasOpenRef.current && !open && returnFocusOnClose) {
-      triggerRef.current?.focus();
+      (triggerRef.current ?? focusableDescendant(anchorRef.current))?.focus();
     }
     wasOpenRef.current = open;
   }, [open, returnFocusOnClose]);
@@ -209,7 +220,7 @@ export function Popover({
     : undefined;
 
   const updatePosition = useCallback(() => {
-    const el = triggerRef.current;
+    const el = anchorRef.current;
     if (!el) return;
     setFixedStyle(computeFixedPosition(el.getBoundingClientRect(), placement, gapPx));
   }, [gapPx, placement]);
@@ -235,7 +246,7 @@ export function Popover({
     function onPointerDown(event: PointerEvent) {
       const target = event.target as Node | null;
       if (!target) return;
-      if (triggerRef.current?.contains(target)) return;
+      if (anchorRef.current?.contains(target)) return;
       if (panelRef.current?.contains(target)) return;
       setOpen(false);
     }
@@ -319,7 +330,12 @@ export function Popover({
 
   return (
     <>
-      <span className={[styles.Root, className].filter(Boolean).join(" ")}>{triggerElement}</span>
+      <span
+        ref={anchorRef}
+        className={[styles.Root, className].filter(Boolean).join(" ")}
+      >
+        {triggerElement}
+      </span>
       {panel}
     </>
   );
