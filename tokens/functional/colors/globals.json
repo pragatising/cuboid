@@ -152,12 +152,12 @@
       }
     },
     "syntax": {
-      "comment": { "value": "{base.color.scale.gray.5}" },
+      "comment": { "value": "{base.color.scale.gray.7}" },
       "key": { "value": "{base.color.scale.gray.8}" },
       "constant": { "value": "{base.color.scale.blue.8}" },
       "constantOtherReferenceLink": { "value": "#0a3069" },
-      "entity": { "value": "{base.color.scale.purple.5}" },
-      "entityTag": { "value": "{base.color.scale.green.6}" },
+      "entity": { "value": "{base.color.scale.mag.9}" },
+      "entityTag": { "value": "{base.color.scale.mag.9}" },
       "keyword": { "value": "{base.color.scale.red.8}" },
       "string": { "value": "{base.color.scale.red.8}" },
       "stringRegexp": { "value": "{base.color.scale.green.6}" },

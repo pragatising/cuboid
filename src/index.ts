@@ -119,11 +119,15 @@ export type { SplitLayoutProps, SplitLayoutMainProps } from "./components/core/S
 // ── Data components ───────────────────────────────────────────────────────────
 export {
   CodeSurface,
+  CodeBlock,
   JsonCodeView,
   buildLines,
   getAllCollapsiblePaths,
+  highlightSource,
 } from "./components/CodeBlock";
 export type {
+  CodeBlockLanguage,
+  CodeBlockProps,
   CodeSurfaceProps,
   CodeSurfaceGutterIcons,
   JsonCodeViewProps,
@@ -141,6 +145,17 @@ export type { CodeSnippetProps } from "./components/CodeSnippet";
 
 export { DataGrid } from "./components/DataGrid";
 export type { DataGridProps } from "./components/DataGrid";
+
+export {
+  ApiResponseViewer,
+  statusPillShade,
+  statusReasonPhrase,
+} from "./components/ApiResponseViewer";
+export type {
+  ApiResponseHeaders,
+  ApiResponseViewerProps,
+  HttpMethod,
+} from "./components/ApiResponseViewer";
 
 export { JsonViewer } from "./components/JsonViewer";
 export type { JsonViewerProps, JsonViewerMode } from "./components/JsonViewer";

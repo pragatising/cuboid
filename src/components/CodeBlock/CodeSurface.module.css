@@ -208,6 +208,38 @@
   color: var(--cube-colors-functional-foreground-muted);
 }
 
+.tokenPlain {
+  color: var(--cube-colors-functional-foreground-default);
+}
+
+.tokenComment {
+  color: var(--cube-color-syntax-comment);
+}
+
+.tokenKeyword {
+  color: var(--cube-color-syntax-keyword);
+}
+
+.tokenConstant {
+  color: var(--cube-color-syntax-constant);
+}
+
+.tokenEntity {
+  color: var(--cube-color-syntax-entity);
+}
+
+.tokenEntityTag {
+  color: var(--cube-color-syntax-entity-tag);
+}
+
+.tokenVariable {
+  color: var(--cube-color-syntax-variable);
+}
+
+.tokenStringRegexp {
+  color: var(--cube-color-syntax-string-regexp);
+}
+
 .virtualWindow {
   position: relative;
 }

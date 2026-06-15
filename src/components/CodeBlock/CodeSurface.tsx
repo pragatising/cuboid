@@ -64,6 +64,12 @@ export interface CodeSurfaceProps {
   /** Called when the user toggles a watchlist marker in the gutter. Enables watchlist UI. */
   onWatchlistChange?: (watchlist: Set<number>) => void;
   theme?: CubeTheme;
+  /**
+   * `embedded` omits border and radius — use when nesting inside a parent shell
+   * (e.g. {@link ApiResponseViewer}).
+   * @default "default"
+   */
+  surfaceVariant?: "default" | "embedded";
   "aria-label"?: string;
 }
 
@@ -137,6 +143,7 @@ export function CodeSurface({
   defaultWatchlist,
   onWatchlistChange,
   theme,
+  surfaceVariant = "default",
   "aria-label": ariaLabel,
 }: CodeSurfaceProps) {
   const tokens = useTheme(theme);
@@ -348,8 +355,8 @@ export function CodeSurface({
     <Box
       role="region"
       aria-label={ariaLabel ?? "Code"}
-      border="default"
-      borderRadius="md"
+      border={surfaceVariant === "embedded" ? "none" : "default"}
+      borderRadius={surfaceVariant === "embedded" ? undefined : "md"}
       overflow="hidden"
       direction="vertical"
       gap="none"

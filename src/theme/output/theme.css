@@ -74,11 +74,11 @@
   --cube-color-syntax-brackethighlighter-unmatched: #F99090;
   --cube-color-syntax-carriage-return-bg: #FBC4C4;
   --cube-color-syntax-carriage-return-text: #FFFFFF;
-  --cube-color-syntax-comment: #D8D7D4;
+  --cube-color-syntax-comment: #888783;
   --cube-color-syntax-constant: #3a80f9 ;
   --cube-color-syntax-constant-other-reference-link: #0a3069;
-  --cube-color-syntax-entity: #D7A7F7;
-  --cube-color-syntax-entity-tag: #A2D794;
+  --cube-color-syntax-entity: #d22799;
+  --cube-color-syntax-entity-tag: #d22799;
   --cube-color-syntax-invalid-illegal-bg: #F99090;
   --cube-color-syntax-invalid-illegal-text: #FFFFFF;
   --cube-color-syntax-key: #6F6F6D;

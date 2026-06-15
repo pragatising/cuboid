@@ -1,0 +1,37 @@
+.summary {
+  min-width: 0;
+}
+
+.url {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.duration {
+  flex-shrink: 0;
+  margin-inline-start: auto;
+}
+
+.headers {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--cube-stack-gap-xs);
+}
+
+.headerEntry {
+  display: grid;
+  grid-template-columns: minmax(8rem, max-content) 1fr;
+  column-gap: var(--cube-stack-gap-sm);
+  align-items: baseline;
+}
+
+.headerEntry dd {
+  margin: 0;
+  min-width: 0;
+  word-break: break-word;
+}
+
+.body {
+  min-height: 0;
+}

@@ -1,8 +1,14 @@
 export { CodeSurface } from "./CodeSurface";
 export type { CodeSurfaceProps, CodeSurfaceGutterIcons } from "./CodeSurface";
 
+export { CodeBlock } from "./CodeBlock";
+export type { CodeBlockProps } from "./CodeBlock";
+
 export { JsonCodeView } from "./JsonCodeView";
 export type { JsonCodeViewProps } from "./JsonCodeView";
+
+export { highlightSource } from "./highlight";
+export type { CodeBlockLanguage } from "./highlight";
 
 export {
   buildLines,

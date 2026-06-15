@@ -138,12 +138,12 @@
         }
       },
       "syntax": {
-        "comment": "#D8D7D4",
+        "comment": "#888783",
         "key": "#6F6F6D",
         "constant": "#3a80f9 ",
         "constantOtherReferenceLink": "#0a3069",
-        "entity": "#D7A7F7",
-        "entityTag": "#A2D794",
+        "entity": "#d22799",
+        "entityTag": "#d22799",
         "keyword": "#EF6262",
         "string": "#EF6262",
         "stringRegexp": "#A2D794",
@@ -1413,12 +1413,12 @@
       }
     },
     "syntax": {
-      "comment": "#D8D7D4",
+      "comment": "#888783",
       "key": "#6F6F6D",
       "constant": "#3a80f9 ",
       "constantOtherReferenceLink": "#0a3069",
-      "entity": "#D7A7F7",
-      "entityTag": "#A2D794",
+      "entity": "#d22799",
+      "entityTag": "#d22799",
       "keyword": "#EF6262",
       "string": "#EF6262",
       "stringRegexp": "#A2D794",
