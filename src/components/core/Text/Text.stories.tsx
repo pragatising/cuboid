@@ -18,10 +18,14 @@ export const AllVariants: Story = {
       <Text variant="display">Display</Text>
       <Text variant="titleLarge">Title Large</Text>
       <Text variant="titleMedium">Title Medium</Text>
-      <Text variant="titleSmall">Title Small — 1rem / semibold / 1.5</Text>
+      <Text variant="titleSmall">Title Small — sm / semibold / 1.5</Text>
       <Text variant="subtitle">Subtitle</Text>
+      <Text variant="subheadXs">Subhead XS</Text>
+      <Text variant="subheadSm">Subhead SM</Text>
+      <Text variant="subheadMd">Subhead MD</Text>
       <Text variant="bodyLarge">Body Large</Text>
       <Text variant="bodyMedium">Body Medium</Text>
+      <Text variant="bodyStrong">Body Strong</Text>
       <Text variant="bodySmall">Body Small</Text>
       <Text variant="caption">Caption</Text>
       <Text variant="codeBlock">{"const x = { key: 'value' };"}</Text>

@@ -1,3 +1,4 @@
+import path from "node:path";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import dts from "vite-plugin-dts";
@@ -21,10 +22,14 @@ export default defineConfig(({ mode }) => {
     ],
     build: {
       lib: {
-        entry: "src/index.ts",
+        entry: {
+          index: path.resolve(__dirname, "src/index.ts"),
+          tokens: path.resolve(__dirname, "src/tokens.ts"),
+        },
         name: "Cube",
         formats: ["es", "cjs"],
-        fileName: (format) => `index.${format}.js`,
+        fileName: (format, entryName) =>
+          `${entryName}.${format === "es" ? "es" : "cjs"}.js`,
       },
       cssCodeSplit: false,
       rollupOptions: {

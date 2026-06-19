@@ -1,0 +1,8 @@
+{
+  "icon": {
+    "xs": { "value": "{size.space.16}" },
+    "sm": { "value": "{size.space.18}" },
+    "md": { "value": "{size.space.20}" },
+    "lg": { "value": "{size.space.24}" }
+  }
+}

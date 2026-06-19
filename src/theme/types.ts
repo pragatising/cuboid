@@ -360,12 +360,14 @@ export interface PillIntensityColors {
 /** Keys are shade names (`gray`, `yellow`, …) from token files under `components/pill/`. */
 export type PillFunctionalColors = Record<string, Record<PillIntensity, PillIntensityColors>>;
 
-/** Chip geometry from `pill.json` (scales with inherited font size via em). */
+/** Chip geometry from `pill.json`. */
 export interface PillLayoutTokens {
   paddingInline: string;
   paddingBlock: string;
   borderRadius: string;
   gap: string;
+  /** Fixed outer height — icons do not expand the chip. */
+  height: string;
 }
 
 export interface HighlightColorRecipe {
@@ -451,10 +453,15 @@ export interface TextTokens {
   display: TextStyle;
   titleLarge: TextStyle;
   titleMedium: TextStyle;
-  titleSmall: TextStyle;   // 1rem / semibold / 1.5 (matches Primer)
+  titleSmall: TextStyle;   // text.sizes.sm / semibold / normal
   subtitle: TextStyle;
+  /** From Figma `text.subhead.size.*` — section labels, nav groups, field legends. */
+  subheadXs: TextStyle;
+  subheadSm: TextStyle;
+  subheadMd: TextStyle;
   bodyLarge: TextStyle;
   bodyMedium: TextStyle;
+  bodyStrong: TextStyle;
   bodySmall: TextStyle;
   caption: TextStyle;
   codeBlock: TextStyle;    // for <pre> blocks
@@ -591,6 +598,14 @@ export interface TooltipLayoutTokens {
   boxShadow: string;
 }
 
+/** Standalone icon glyph sizes (`tokens/functional/size/icon.json`). */
+export interface IconSizesTokens {
+  xs: string;
+  sm: string;
+  md: string;
+  lg: string;
+}
+
 /** Icon-only control geometry — hit target, radius, glyph; no padding/gap (`size.control.iconButton` in `tokens/functional/size/size.json`). */
 export interface IconButtonSizeStopTokens {
   /** Border-box width/height of the control */
@@ -715,6 +730,7 @@ export interface Sizes {
   control: ControlSizesTokens;
   tooltip: TooltipLayoutTokens;
   pill: PillLayoutTokens;
+  icon: IconSizesTokens;
   iconButton: IconButtonSizesTokens;
   breadcrumb: BreadcrumbSizesTokens;
   siteHeader: SiteHeaderSizesTokens;

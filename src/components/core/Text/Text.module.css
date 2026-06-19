@@ -41,6 +41,24 @@
   line-height: var(--cube-typography-text-subtitle-lineHeight);
 }
 
+.Text--subhead-xs {
+  font-size: var(--cube-typography-text-subhead-xs-fontSize);
+  font-weight: var(--cube-typography-text-subhead-xs-fontWeight);
+  line-height: var(--cube-typography-text-subhead-xs-lineHeight);
+}
+
+.Text--subhead-sm {
+  font-size: var(--cube-typography-text-subhead-sm-fontSize);
+  font-weight: var(--cube-typography-text-subhead-sm-fontWeight);
+  line-height: var(--cube-typography-text-subhead-sm-lineHeight);
+}
+
+.Text--subhead-md {
+  font-size: var(--cube-typography-text-subhead-md-fontSize);
+  font-weight: var(--cube-typography-text-subhead-md-fontWeight);
+  line-height: var(--cube-typography-text-subhead-md-lineHeight);
+}
+
 .Text--body-large {
   font-size: var(--cube-typography-text-body-large-fontSize);
   font-weight: var(--cube-typography-text-body-large-fontWeight);
@@ -51,6 +69,12 @@
   font-size: var(--cube-typography-text-body-medium-fontSize);
   font-weight: var(--cube-typography-text-body-medium-fontWeight);
   line-height: var(--cube-typography-text-body-medium-lineHeight);
+}
+
+.Text--body-strong {
+  font-size: var(--cube-typography-text-body-strong-fontSize);
+  font-weight: var(--cube-typography-text-body-strong-fontWeight);
+  line-height: var(--cube-typography-text-body-strong-lineHeight);
 }
 
 .Text--body-small {

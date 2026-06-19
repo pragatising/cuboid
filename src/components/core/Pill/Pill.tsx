@@ -62,6 +62,7 @@ function pillLayoutVars(geom: ThemeTokens["sizes"]["pill"]): Record<string, stri
     "--cube-pill-paddingBlock": geom.paddingBlock,
     "--cube-pill-borderRadius": geom.borderRadius,
     "--cube-pill-gap": geom.gap,
+    "--cube-pill-height": geom.height,
   };
 }
 
@@ -81,6 +82,7 @@ export interface PillProps {
   as?: React.ElementType;
   href?: string;
   leadingVisual?: React.ReactNode;
+  /** Pass `<Icon size="…">` — pill height stays fixed regardless of icon size. */
   trailingVisual?: React.ReactNode;
   /** Override chip geometry (`sizes.pill`) or colors for this instance. */
   theme?: CubeTheme;
@@ -144,9 +146,13 @@ export function Pill({
       style={{ ...(inlineVars ?? {}), ...(style ?? {}) }}
       {...anchorProps}
     >
-      {leadingVisual && <span className={styles["cube-Pill__leadingVisual"]}>{leadingVisual}</span>}
+      {leadingVisual ? (
+        <span className={styles["cube-Pill__leadingVisual"]}>{leadingVisual}</span>
+      ) : null}
       {children}
-      {trailingVisual && <span className={styles["cube-Pill__trailingVisual"]}>{trailingVisual}</span>}
+      {trailingVisual ? (
+        <span className={styles["cube-Pill__trailingVisual"]}>{trailingVisual}</span>
+      ) : null}
     </Component>
   );
 }

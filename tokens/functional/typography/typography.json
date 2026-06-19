@@ -84,7 +84,11 @@
         }
       },
       "subhead": {
+        
         "size": {
+          "xs": {
+            "value": 10
+          },
           "sm": {
             "value": 12
           },

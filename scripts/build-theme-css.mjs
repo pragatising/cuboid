@@ -64,6 +64,13 @@ function emitFoundationSizeTokens(t, set) {
     set("container-popoverMinWidth", containerSizes.popoverMinWidth);
     set("container-popoverMaxWidth", containerSizes.popoverMaxWidth);
   }
+
+  const iconSizes = t.sizes?.icon;
+  if (iconSizes) {
+    for (const stop of ["xs", "sm", "md", "lg"]) {
+      set(`icon-${stop}`, iconSizes[stop]);
+    }
+  }
 }
 
 function emitTypographyTokens(t, set) {

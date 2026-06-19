@@ -1,18 +1,9 @@
 import React from "react";
 import { useTheme } from "../../../theme/ThemeContext";
-import type { CubeTheme, ThemeTokens } from "../../../theme/types";
+import type { CubeTheme, IconSizesTokens } from "../../../theme/types";
 import styles from "./Icon.module.css";
 
-export type IconSize = "xs" | "sm" | "md" | "lg";
-
-type IconStop = keyof ThemeTokens["sizes"]["iconButton"];
-
-const SIZE_TO_STOP: Record<IconSize, IconStop> = {
-  xs: "extraSmall",
-  sm: "small",
-  md: "medium",
-  lg: "large",
-};
+export type IconSize = keyof IconSizesTokens;
 
 const SIZE_CLASS: Record<IconSize, string> = {
   xs: styles["Icon--size-xs"],
@@ -35,14 +26,9 @@ export function Icon({ children, size = "sm", label, theme, className }: IconPro
   const tokens = useTheme(theme);
 
   const inlineVars = theme
-    ? (() => {
-        const stop = SIZE_TO_STOP[size];
-        const cssSeg = stop.replace(/[A-Z]/g, (ch) => `-${ch.toLowerCase()}`);
-        const geom = tokens.sizes.iconButton[stop];
-        return {
-          [`--cube-iconButton-${cssSeg}-icon`]: geom.icon,
-        } as React.CSSProperties;
-      })()
+    ? ({
+        [`--cube-icon-${size}`]: tokens.sizes.icon[size],
+      } as React.CSSProperties)
     : undefined;
 
   const classNameMerged = [styles.Icon, SIZE_CLASS[size], className].filter(Boolean).join(" ");

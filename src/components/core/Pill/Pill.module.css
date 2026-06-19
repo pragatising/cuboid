@@ -17,6 +17,9 @@
   white-space: nowrap;
   cursor: default;
   gap: var(--cube-pill-gap);
+  height: var(--cube-pill-height);
+  min-height: var(--cube-pill-height);
+  max-height: var(--cube-pill-height);
   padding: var(--cube-pill-paddingBlock) var(--cube-pill-paddingInline);
   border-radius: var(--cube-pill-borderRadius);
 }
@@ -74,4 +77,5 @@ a.cube-Pill--themed:visited {
   display: inline-flex;
   align-items: center;
   flex-shrink: 0;
+  max-height: 100%;
 }

@@ -18,7 +18,8 @@ const meta: Meta<typeof Icon> = {
           <Subtitle>
             Sized wrapper for SVG glyphs — import icons from <code>@yourscope/cube</code>{" "}
             (Material Symbols <strong>Rounded</strong>). Color inherits via{" "}
-            <code>currentColor</code>. Sizes map to <code>sizes.iconButton.*.icon</code>.
+            <code>currentColor</code>. Sizes map to <code>sizes.icon.*</code> (
+            <code>xs</code> 12px, <code>sm</code>/<code>md</code> 20px, <code>lg</code> 24px).
           </Subtitle>
 
           <div className="cube-docs-section">

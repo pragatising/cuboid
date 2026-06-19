@@ -1165,12 +1165,27 @@ function main() {
     process.exit(1);
   }
   const pillSizes = {};
-  for (const k of ["paddingInline", "paddingBlock", "borderRadius", "gap"]) {
+  for (const k of ["paddingInline", "paddingBlock", "borderRadius", "gap", "height"]) {
     if (typeof pillLayoutSrc[k] !== "string") {
       console.error(`Expected size.pill.${k} to be a string`);
       process.exit(1);
     }
     pillSizes[k] = pillLayoutSrc[k];
+  }
+
+  const iconRoot = uSize?.icon;
+  if (!isPlain(iconRoot)) {
+    console.error("Expected resolved size.icon.{xs,sm,md,lg} (from tokens/functional/size/icon.json)");
+    process.exit(1);
+  }
+  const iconStops = ["xs", "sm", "md", "lg"];
+  const iconSizes = {};
+  for (const stop of iconStops) {
+    if (typeof iconRoot[stop] !== "string") {
+      console.error(`Expected size.icon.${stop} to be a string`);
+      process.exit(1);
+    }
+    iconSizes[stop] = iconRoot[stop];
   }
 
   const ibSize = control.iconButton;
@@ -1434,6 +1449,7 @@ function main() {
       control: controlSizes,
       tooltip: tooltipLayout,
       pill: pillSizes,
+      icon: iconSizes,
       iconButton: iconButtonSizes,
       breadcrumb: breadcrumbSizes,
       siteHeader: siteHeaderSizes,

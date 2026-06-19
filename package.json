@@ -21,6 +21,11 @@
       "require": "./dist/index.cjs.js",
       "types": "./dist/index.d.ts"
     },
+    "./tokens": {
+      "import": "./dist/tokens.es.js",
+      "require": "./dist/tokens.cjs.js",
+      "types": "./dist/tokens.d.ts"
+    },
     "./style.css": "./dist/style.css",
     "./theme.css": "./src/theme/output/theme.css",
     "./components.css": "./src/theme/output/components.css"

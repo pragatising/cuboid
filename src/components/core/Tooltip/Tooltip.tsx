@@ -173,7 +173,9 @@ export function Tooltip({
   );
 
   const trigger = useMemo(() => {
-    return React.cloneElement(children, {
+    return React.cloneElement(
+      children as React.ReactElement<Record<string, unknown>>,
+      {
       ref: setTriggerRef,
       "aria-describedby": open ? tooltipId : undefined,
       onMouseEnter: (e: React.MouseEvent) => {
@@ -192,7 +194,8 @@ export function Tooltip({
         (children.props as { onBlur?: (ev: React.FocusEvent) => void }).onBlur?.(e);
         hide();
       },
-    });
+    }
+    );
   }, [children, hide, show, open, tooltipId, setTriggerRef]);
 
   const panelClass = [

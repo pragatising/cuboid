@@ -125,6 +125,7 @@ function emitComponentSizeTokens(t, set) {
   set("pill-paddingBlock", pillRow?.paddingBlock);
   set("pill-borderRadius", pillRow?.borderRadius);
   set("pill-gap", pillRow?.gap);
+  set("pill-height", pillRow?.height);
 
   set("tooltip-gap", t.sizes?.tooltip?.gap);
   set("tooltip-borderRadius", t.sizes?.tooltip?.borderRadius);

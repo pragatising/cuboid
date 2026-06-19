@@ -65,6 +65,23 @@ function token(v) {
   return { value: v };
 }
 
+function lineHeightRatio(fontPx, lhPx, fallback) {
+  if (Number.isFinite(fontPx) && Number.isFinite(lhPx) && fontPx > 0) {
+    return Math.round((lhPx / fontPx) * 10000) / 10000;
+  }
+  return fallback;
+}
+
+function subheadTextRole(raw, sizePath, lineHeightPath, weight, lineHeightFallback) {
+  const sizePx = leafValue(get(raw, sizePath));
+  const lhPx = leafValue(get(raw, lineHeightPath));
+  return {
+    fontSize: token(pxToRem(sizePx) ?? "0.875rem"),
+    fontWeight: token(weight),
+    lineHeight: token(lineHeightRatio(sizePx, lhPx, lineHeightFallback)),
+  };
+}
+
 function main() {
   if (!fs.existsSync(INPUT)) {
     console.error(`Missing input: ${INPUT}`);
@@ -123,6 +140,9 @@ function main() {
     relaxed: token(1.75),
   };
 
+  const subheadWeightSemibold =
+    leafValue(get(raw, "text.subhead.weight.600")) ?? fontWeight.semibold.value;
+
   const theme = {
     typography: {
       fontFamily: {
@@ -144,12 +164,12 @@ function main() {
           lineHeight: token(lineHeight.tight.value),
         },
         titleMedium: {
-          fontSize: token(fontSize.lg.value),
+          fontSize: token(fontSize.md.value),
           fontWeight: token(fontWeight.semibold.value),
           lineHeight: token(lineHeight.tight.value),
         },
         titleSmall: {
-          fontSize: token(fontSize.md.value),
+          fontSize: token(fontSize.sm.value),
           fontWeight: token(fontWeight.semibold.value),
           lineHeight: token(lineHeight.normal.value),
         },
@@ -158,6 +178,27 @@ function main() {
           fontWeight: token(fontWeight.regular.value),
           lineHeight: token(lineHeight.normal.value),
         },
+        subheadXs: subheadTextRole(
+          raw,
+          "text.subhead.size.xs",
+          "text.subhead.lineHeight.12",
+          subheadWeightSemibold,
+          lineHeight.tight.value
+        ),
+        subheadSm: subheadTextRole(
+          raw,
+          "text.subhead.size.sm",
+          "text.subhead.lineHeight.16",
+          subheadWeightSemibold,
+          lineHeight.normal.value
+        ),
+        subheadMd: subheadTextRole(
+          raw,
+          "text.subhead.size.md",
+          "text.subhead.lineHeight.20",
+          subheadWeightSemibold,
+          lineHeight.normal.value
+        ),
         bodyLarge: {
           fontSize: token(fontSize.md.value),
           fontWeight: token(fontWeight.regular.value),
@@ -166,6 +207,11 @@ function main() {
         bodyMedium: {
           fontSize: token(fontSize.sm.value),
           fontWeight: token(fontWeight.regular.value),
+          lineHeight: token(lineHeight.normal.value),
+        },
+        bodyStrong: {
+          fontSize: token(fontSize.sm.value),
+          fontWeight: token(fontWeight.semibold.value),
           lineHeight: token(lineHeight.normal.value),
         },
         bodySmall: {

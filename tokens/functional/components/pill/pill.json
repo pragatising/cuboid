@@ -4,7 +4,8 @@
       "paddingInline": { "value": "{size.space.6}" },
       "paddingBlock": { "value": "{size.space.3}" },
       "borderRadius": { "value": "{size.space.4}" },
-      "gap": { "value": "{size.space.4}" }
+      "gap": { "value": "{size.space.4}" },
+      "height": { "value": "{size.space.20}" }
     }
   }
 }

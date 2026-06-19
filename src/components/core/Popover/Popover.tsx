@@ -288,7 +288,9 @@ export function Popover({
   );
 
   const triggerElement = useMemo(() => {
-    return React.cloneElement(trigger, {
+    return React.cloneElement(
+      trigger as React.ReactElement<Record<string, unknown>>,
+      {
       ref: setTriggerRef,
       type:
         (trigger.props as { type?: string }).type ??
@@ -297,7 +299,8 @@ export function Popover({
       "aria-haspopup": triggerHasPopup,
       "aria-controls": open ? panelId : undefined,
       onClick: onTriggerClick,
-    });
+    }
+    );
   }, [open, onTriggerClick, panelId, setTriggerRef, trigger, triggerHasPopup]);
 
   const panelClass = [

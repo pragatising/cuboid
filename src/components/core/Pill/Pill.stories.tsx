@@ -1,8 +1,8 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Title, Primary, Controls, Subtitle } from "@storybook/blocks";
-import { Icon } from "../Icon";
 import { Stack } from "../Stack";
+import { Icon } from "../Icon";
 import { Pill, type PillIntensity, type PillShade } from "./Pill";
 import themeOutput from "../../../theme/output/theme.json";
 
@@ -97,6 +97,13 @@ const meta: Meta<typeof Pill> = {
                 <strong>Typography:</strong> defaults to <code>bodySmall</code>{" "}
                 (12px, weight 500). Pass <code>variant</code> for other{" "}
                 <code>Text</code> sizes.
+              </li>
+              <li>
+                <strong>Icons:</strong> <code>leadingVisual</code> /{" "}
+                <code>trailingVisual</code> — wrap glyphs in{" "}
+                <code>&lt;Icon size="xs" | "sm" | …&gt;</code>. Pill height is
+                fixed via <code>sizes.pill.height</code> (20px); icon size does
+                not expand the chip.
               </li>
             </ul>
           </div>

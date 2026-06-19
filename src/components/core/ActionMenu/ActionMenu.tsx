@@ -9,6 +9,7 @@ import { Popover } from "../Popover";
 import type { PopoverElevation, PopoverPlacement } from "../Popover";
 import type { CubeTheme } from "../../../theme/types";
 import { ActionMenuList } from "./ActionMenuList";
+import type { ActionMenuListProps } from "./ActionMenuList";
 import {
   focusInitialMenuItem,
   getEnabledMenuItems,
@@ -45,7 +46,11 @@ function mergeRefs<T>(...refs: Array<React.Ref<T> | undefined>) {
   };
 }
 
-function isActionMenuListElement(child: React.ReactNode): child is React.ReactElement {
+function isActionMenuListElement(
+  child: React.ReactNode
+): child is React.ReactElement<
+  ActionMenuListProps & React.RefAttributes<HTMLDivElement>
+> {
   return React.isValidElement(child) && child.type === ActionMenuList;
 }
 
@@ -110,7 +115,9 @@ export function ActionMenu({
   );
 
   const menuTrigger = useMemo(() => {
-    return React.cloneElement(trigger, {
+    return React.cloneElement(
+      trigger as React.ReactElement<Record<string, unknown>>,
+      {
       onKeyDown: (event: React.KeyboardEvent) => {
         (trigger.props as { onKeyDown?: (ev: React.KeyboardEvent) => void }).onKeyDown?.(event);
         if (event.defaultPrevented) return;
@@ -119,7 +126,8 @@ export function ActionMenu({
           setOpen(true);
         }
       },
-    });
+    }
+    );
   }, [open, setOpen, trigger]);
 
   const listProps = {

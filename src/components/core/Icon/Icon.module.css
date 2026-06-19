@@ -7,23 +7,23 @@
 }
 
 .Icon--size-xs {
-  width: var(--cube-iconButton-extra-small-icon);
-  height: var(--cube-iconButton-extra-small-icon);
+  width: var(--cube-icon-xs);
+  height: var(--cube-icon-xs);
 }
 
 .Icon--size-sm {
-  width: var(--cube-iconButton-small-icon);
-  height: var(--cube-iconButton-small-icon);
+  width: var(--cube-icon-sm);
+  height: var(--cube-icon-sm);
 }
 
 .Icon--size-md {
-  width: var(--cube-iconButton-medium-icon);
-  height: var(--cube-iconButton-medium-icon);
+  width: var(--cube-icon-md);
+  height: var(--cube-icon-md);
 }
 
 .Icon--size-lg {
-  width: var(--cube-iconButton-large-icon);
-  height: var(--cube-iconButton-large-icon);
+  width: var(--cube-icon-lg);
+  height: var(--cube-icon-lg);
 }
 
 .Icon > :global(svg) {
