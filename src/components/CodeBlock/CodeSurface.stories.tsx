@@ -137,7 +137,7 @@ export const WithWatchlist: Story = {
 /** Partial instance override — swaps surface tokens from the built theme (no ad-hoc hex). */
 export const InsetSurfaceOverride: Story = {
   render: () => {
-    const { background, border } = defaultTheme.colors.functional;
+    const { global } = defaultTheme.colors;
     const lines = buildLines(devServerDiagnostics.project, new Set());
     return (
       <CodeSurface
@@ -146,12 +146,18 @@ export const InsetSurfaceOverride: Story = {
         maxHeight="320px"
         theme={{
           colors: {
-            functional: {
-              background: {
-                default: background.inset,
+            global: {
+              bg: {
+                gray: {
+                  light: {
+                    "1": global.canvas.inset,
+                  },
+                },
               },
               border: {
-                muted: border.emphasis,
+                grayAlpha: {
+                  "2": global.border.gray["3"],
+                },
               },
             },
           },

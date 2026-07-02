@@ -23,7 +23,7 @@ const meta: Meta<typeof Link> = {
 
           <div className="cube-docs-section">
             <h3 className="cube-docs-section__title">Inline (in prose)</h3>
-            <Text variant="bodyMedium">
+            <Text role="body" size="sm">
               Read the{" "}
               <Link href="#getting-started" variant="inline">
                 getting started guide

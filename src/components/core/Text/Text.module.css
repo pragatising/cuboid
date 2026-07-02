@@ -10,35 +10,66 @@
   white-space: nowrap;
 }
 
-/* Variants — metrics from typography.text.* */
-.Text--display {
-  font-size: var(--cube-typography-text-display-fontSize);
-  font-weight: var(--cube-typography-text-display-fontWeight);
-  line-height: var(--cube-typography-text-display-lineHeight);
+/* heading — text.sizes.* + heading.weight/lineHeight from typography.json */
+.Text--heading-xs {
+  font-size: var(--cube-typography-text-heading-xs-fontSize);
+  font-weight: var(--cube-typography-text-heading-xs-fontWeight);
+  line-height: var(--cube-typography-text-heading-xs-lineHeight);
 }
 
-.Text--title-large {
-  font-size: var(--cube-typography-text-title-large-fontSize);
-  font-weight: var(--cube-typography-text-title-large-fontWeight);
-  line-height: var(--cube-typography-text-title-large-lineHeight);
+.Text--heading-sm {
+  font-size: var(--cube-typography-text-heading-sm-fontSize);
+  font-weight: var(--cube-typography-text-heading-sm-fontWeight);
+  line-height: var(--cube-typography-text-heading-sm-lineHeight);
 }
 
-.Text--title-medium {
-  font-size: var(--cube-typography-text-title-medium-fontSize);
-  font-weight: var(--cube-typography-text-title-medium-fontWeight);
-  line-height: var(--cube-typography-text-title-medium-lineHeight);
+.Text--heading-md {
+  font-size: var(--cube-typography-text-heading-md-fontSize);
+  font-weight: var(--cube-typography-text-heading-md-fontWeight);
+  line-height: var(--cube-typography-text-heading-md-lineHeight);
 }
 
-.Text--title-small {
-  font-size: var(--cube-typography-text-title-small-fontSize);
-  font-weight: var(--cube-typography-text-title-small-fontWeight);
-  line-height: var(--cube-typography-text-title-small-lineHeight);
+.Text--heading-lg {
+  font-size: var(--cube-typography-text-heading-lg-fontSize);
+  font-weight: var(--cube-typography-text-heading-lg-fontWeight);
+  line-height: var(--cube-typography-text-heading-lg-lineHeight);
 }
 
-.Text--subtitle {
-  font-size: var(--cube-typography-text-subtitle-fontSize);
-  font-weight: var(--cube-typography-text-subtitle-fontWeight);
-  line-height: var(--cube-typography-text-subtitle-lineHeight);
+.Text--heading-xl {
+  font-size: var(--cube-typography-text-heading-xl-fontSize);
+  font-weight: var(--cube-typography-text-heading-xl-fontWeight);
+  line-height: var(--cube-typography-text-heading-xl-lineHeight);
+}
+
+/* body — text.sizes.* + text.weight/lineHeight from typography.json */
+.Text--body-xs {
+  font-size: var(--cube-typography-text-body-xs-fontSize);
+  font-weight: var(--cube-typography-text-body-xs-fontWeight);
+  line-height: var(--cube-typography-text-body-xs-lineHeight);
+}
+
+.Text--body-sm {
+  font-size: var(--cube-typography-text-body-sm-fontSize);
+  font-weight: var(--cube-typography-text-body-sm-fontWeight);
+  line-height: var(--cube-typography-text-body-sm-lineHeight);
+}
+
+.Text--body-md {
+  font-size: var(--cube-typography-text-body-md-fontSize);
+  font-weight: var(--cube-typography-text-body-md-fontWeight);
+  line-height: var(--cube-typography-text-body-md-lineHeight);
+}
+
+.Text--body-lg {
+  font-size: var(--cube-typography-text-body-lg-fontSize);
+  font-weight: var(--cube-typography-text-body-lg-fontWeight);
+  line-height: var(--cube-typography-text-body-lg-lineHeight);
+}
+
+.Text--body-xl {
+  font-size: var(--cube-typography-text-body-xl-fontSize);
+  font-weight: var(--cube-typography-text-body-xl-fontWeight);
+  line-height: var(--cube-typography-text-body-xl-lineHeight);
 }
 
 .Text--subhead-xs {
@@ -57,36 +88,6 @@
   font-size: var(--cube-typography-text-subhead-md-fontSize);
   font-weight: var(--cube-typography-text-subhead-md-fontWeight);
   line-height: var(--cube-typography-text-subhead-md-lineHeight);
-}
-
-.Text--body-large {
-  font-size: var(--cube-typography-text-body-large-fontSize);
-  font-weight: var(--cube-typography-text-body-large-fontWeight);
-  line-height: var(--cube-typography-text-body-large-lineHeight);
-}
-
-.Text--body-medium {
-  font-size: var(--cube-typography-text-body-medium-fontSize);
-  font-weight: var(--cube-typography-text-body-medium-fontWeight);
-  line-height: var(--cube-typography-text-body-medium-lineHeight);
-}
-
-.Text--body-strong {
-  font-size: var(--cube-typography-text-body-strong-fontSize);
-  font-weight: var(--cube-typography-text-body-strong-fontWeight);
-  line-height: var(--cube-typography-text-body-strong-lineHeight);
-}
-
-.Text--body-small {
-  font-size: var(--cube-typography-text-body-small-fontSize);
-  font-weight: var(--cube-typography-text-body-small-fontWeight);
-  line-height: var(--cube-typography-text-body-small-lineHeight);
-}
-
-.Text--caption {
-  font-size: var(--cube-typography-text-caption-fontSize);
-  font-weight: var(--cube-typography-text-caption-fontWeight);
-  line-height: var(--cube-typography-text-caption-lineHeight);
 }
 
 .Text--code-block {

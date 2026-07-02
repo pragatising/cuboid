@@ -24,11 +24,11 @@ const meta: Meta<typeof Callout> = {
           <div className="cube-docs-section">
             <h3 className="cube-docs-section__title">Blockquote</h3>
             <Stack gap="md" style={{ maxWidth: "36rem" }}>
-              <Text variant="bodyMedium">
+              <Text role="body" size="sm">
                 Body copy can introduce a quoted or emphasized passage.
               </Text>
               <Callout>
-                <Text variant="bodyMedium" color="muted">
+                <Text role="body" size="sm" color="muted">
                   Minimising back &amp; forth between stimulus, cognition and action.
                 </Text>
               </Callout>
@@ -47,8 +47,8 @@ const meta: Meta<typeof Callout> = {
       options: [
         "canvas.inset",
         "canvas.subtle",
-        "bg.gray.light.02",
-        "bg.gray.dark.07",
+        "bg.gray.light.2",
+        "bg.gray.dark.7",
         "inset",
         "muted",
         "emphasis",
@@ -63,7 +63,7 @@ type Story = StoryObj<typeof Callout>;
 export const Default: Story = {
   render: () => (
     <Callout style={{ maxWidth: "36rem" }}>
-      <Text variant="bodyMedium" color="muted">
+      <Text role="body" size="sm" color="muted">
         A short note or pull quote set apart from the surrounding paragraph.
       </Text>
     </Callout>
@@ -74,17 +74,17 @@ export const InProse: Story = {
   name: "In prose",
   render: () => (
     <Stack gap="md" style={{ maxWidth: "36rem" }}>
-      <Text variant="bodyMedium">
+      <Text role="body" size="sm">
         T-shaped product designer, currently shaping data-intensive decision making — credit,
         verifications, underwriting, portfolio intelligence.
       </Text>
       <Callout>
-        <Text variant="bodyMedium" color="muted">
+        <Text role="body" size="sm" color="muted">
           Shipping code as well as designing directly in codebase with real data, API design,
           designing AI native components.
         </Text>
       </Callout>
-      <Text variant="bodyMedium">
+      <Text role="body" size="sm">
         Previously at Amount, Stride Build, Georgia Tech, and PwC.
       </Text>
     </Stack>
@@ -96,10 +96,10 @@ export const Multiline: Story = {
   render: () => (
     <Callout style={{ maxWidth: "36rem" }}>
       <Stack gap="xs">
-        <Text variant="bodyMedium" color="muted">
+        <Text role="body" size="sm" color="muted">
           Design approach spans systems thinking and craft at the interaction layer.
         </Text>
-        <Text variant="caption" color="muted">
+        <Text role="body" size="xs" color="muted">
           Zoomed out: ecosystems and parts. Zoomed in: stimulus → cognition → action.
         </Text>
       </Stack>
@@ -110,9 +110,9 @@ export const Multiline: Story = {
 export const MutedSurface: Story = {
   name: "Muted background",
   render: () => (
-    <Callout background="muted" style={{ maxWidth: "36rem" }}>
-      <Text variant="bodyMedium" color="muted">
-        Uses <code>background=&quot;muted&quot;</code> instead of the default inset.
+    <Callout background="bg.gray.light.2" style={{ maxWidth: "36rem" }}>
+      <Text role="body" size="sm" color="text.muted">
+        Uses <code>background=&quot;bg.gray.light.2&quot;</code> instead of the default inset.
       </Text>
     </Callout>
   ),
@@ -120,11 +120,11 @@ export const MutedSurface: Story = {
 
 export const Playground: Story = {
   args: {
-    background: "inset",
+    background: "canvas.inset",
   },
   render: (args) => (
     <Callout {...args} style={{ maxWidth: "36rem" }}>
-      <Text variant="bodyMedium" color="muted">
+      <Text role="body" size="sm" color="muted">
         Callout content goes here.
       </Text>
     </Callout>

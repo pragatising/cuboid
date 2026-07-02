@@ -3,12 +3,6 @@
   transition: color 120ms ease;
 }
 
-.Link:focus-visible {
-  outline: 4px solid var(--cube-colors-functional-foreground-link);
-  outline-offset: 2px;
-  border-radius: 2px;
-}
-
 /* In prose — inherit surrounding font metrics */
 .Link--inline {
   display: inline;
@@ -34,9 +28,9 @@
   align-items: center;
   gap: 0.25em;
   font-family: var(--cube-typography-fontFamily-base);
-  font-size: var(--cube-typography-text-body-medium-fontSize);
-  font-weight: var(--cube-typography-text-body-medium-fontWeight);
-  line-height: var(--cube-typography-text-body-medium-lineHeight);
+  font-size: var(--cube-typography-text-body-sm-fontSize);
+  font-weight: var(--cube-typography-text-body-sm-fontWeight);
+  line-height: var(--cube-typography-text-body-sm-lineHeight);
 }
 
 .Link.Link--standalone,

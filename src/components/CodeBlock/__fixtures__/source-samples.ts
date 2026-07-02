@@ -55,13 +55,13 @@ export const sampleCss = `.docs {
 }
 
 .docs h1 {
-  color: var(--cube-colors-functional-foreground-default);
+  color: var(--cube-color-text-default);
   font-size: 1.5rem;
 }
 
 .docs code {
   font-family: var(--cube-typography-text-inline-code-fontFamily);
-  background: var(--cube-colors-functional-background-neutral-muted);
+  background: var(--cube-color-bg-gray-light-4);
 }
 `;
 

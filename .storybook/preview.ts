@@ -19,8 +19,8 @@ import "./docs.css";
 const cubeFontBase =
   "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif";
 
-/** Matches --cube-typography-text-body-medium-fontSize (14px @ 16px root). */
-const bodyMediumPx = 14;
+/** Matches --cube-typography-text-body-sm-fontSize (14px @ 16px root). */
+const bodySmPx = 14;
 
 /** create() input types omit typography, but the returned theme uses it at runtime. */
 type DocsTheme = ReturnType<typeof create> & { typography: typeof sbTypography };
@@ -45,10 +45,10 @@ docsTheme.typography = {
   },
   size: {
     ...sbTypography.size,
-    s3: bodyMediumPx,
-    m1: bodyMediumPx,
-    m3: bodyMediumPx,
-    l1: bodyMediumPx,
+    s3: bodySmPx,
+    m1: bodySmPx,
+    m3: bodySmPx,
+    l1: bodySmPx,
   },
 };
 

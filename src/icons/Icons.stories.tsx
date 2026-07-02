@@ -47,8 +47,8 @@ export const Catalog: Story = {
               <IconComponent />
             </Icon>
             <Stack gap="xxs">
-              <Text variant="bodyMedium">{entry.export}</Text>
-              <Text variant="caption" color="muted">
+              <Text role="body" size="sm">{entry.export}</Text>
+              <Text role="body" size="xs" color="muted">
                 {name} · {entry.category} · {entry.source}
               </Text>
             </Stack>
@@ -67,7 +67,7 @@ export const Sizes: Story = {
           <Icon size={size}>
             <Icons.MenuIcon />
           </Icon>
-          <Text variant="caption" color="muted">
+          <Text role="body" size="xs" color="muted">
             {size}
           </Text>
         </Stack>

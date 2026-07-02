@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
-  height: 100%;
+  align-self: stretch;
   min-height: 0;
   overflow: hidden;
   background-color: var(--cube-sidebar-bg);
@@ -29,6 +29,12 @@
   align-items: center;
   gap: var(--cube-sidebar-padding);
   padding: var(--cube-sidebar-padding);
+}
+
+.Sidebar__header:has(.Sidebar__toggle--floating) {
+  min-height: calc(
+    var(--cube-sidebar-padding) * 2 + var(--cube-sizes-controlHeight-sm, 2rem)
+  );
 }
 
 .Sidebar[data-collapsed="true"] .Sidebar__header {
@@ -71,7 +77,8 @@
   z-index: 1;
 }
 
-.Sidebar[data-collapsed="true"] .Sidebar__toggle--floating {
+.Sidebar[data-collapsed="true"]
+  .Sidebar__toggle--floating:not(.Sidebar__toggle--floating-align-corner) {
   inset-inline-end: auto;
   inset-inline-start: 50%;
   transform: translateX(-50%);

@@ -46,10 +46,10 @@ export function BreadcrumbLink({
     ? ({
         ...breadcrumbCssVars(tokens.colors.functional.breadcrumb),
         "--cube-typography-fontFamily-base": tokens.typography.fontFamily.base,
-        "--cube-typography-text-body-medium-fontSize":
-          tokens.typography.text.bodyMedium.fontSize,
-        "--cube-typography-text-body-medium-lineHeight": String(
-          tokens.typography.text.bodyMedium.lineHeight
+        "--cube-typography-text-body-sm-fontSize":
+          tokens.typography.text.bodySm.fontSize,
+        "--cube-typography-text-body-sm-lineHeight": String(
+          tokens.typography.text.bodySm.lineHeight
         ),
         "--cube-breadcrumb-item-paddingInline": tokens.sizes.breadcrumb.itemPaddingInline,
         "--cube-breadcrumb-item-paddingBlock": tokens.sizes.breadcrumb.itemPaddingBlock,
@@ -71,7 +71,7 @@ export function BreadcrumbLink({
   }
 
   return (
-    <a className={classNames} style={inlineVars} href={href} {...rest}>
+    <a className={["cube-focusable", classNames].filter(Boolean).join(" ")} style={inlineVars} href={href} {...rest}>
       {children}
     </a>
   );

@@ -4,6 +4,7 @@ export type {
   SidebarEdge,
   SidebarRegionProps,
   SidebarToggleProps,
+  SidebarToggleFloatingAlign,
   SidebarWidth,
   SidebarWidthStop,
 } from "./Sidebar";

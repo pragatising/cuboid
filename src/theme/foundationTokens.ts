@@ -3,6 +3,7 @@ import type { FoundationTokenPath, FoundationTokens } from "./foundationTypes";
 
 const {
   space,
+  spaceScale,
   stack,
   layout,
   borderRadius,
@@ -20,6 +21,7 @@ export const foundationTokens: FoundationTokens = {
   typography,
   sizes: {
     space,
+    spaceScale,
     stack,
     layout,
     borderRadius,

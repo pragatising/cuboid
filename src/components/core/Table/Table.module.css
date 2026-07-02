@@ -1,0 +1,174 @@
+.TableRoot {
+  box-sizing: border-box;
+  width: 100%;
+  overflow: auto;
+  border: var(--cube-sizes-borderWidth-thin) solid var(--cube-table-container-border);
+  border-radius: var(--cube-table-borderRadius);
+}
+
+/* Density — spacious: 16px inline; 10px + 20px line + 10px = 40px row */
+.TableRoot--density-spacious {
+  --cube-table-cell-paddingInline: var(--cube-table-spacious-cell-paddingInline);
+  --cube-table-cell-paddingBlock: var(--cube-table-spacious-cell-paddingBlock);
+  --cube-table-rowHeight: var(--cube-table-spacious-rowHeight);
+}
+
+/* Density — dense: 12px inline; 6px + 20px line + 6px = 32px row */
+.TableRoot--density-dense {
+  --cube-table-cell-paddingInline: var(--cube-table-dense-cell-paddingInline);
+  --cube-table-cell-paddingBlock: var(--cube-table-dense-cell-paddingBlock);
+  --cube-table-rowHeight: var(--cube-table-dense-rowHeight);
+}
+
+.Table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  font-family: var(--cube-typography-fontFamily-base);
+}
+
+.TableHeader {
+  /* thead — cell styles on th */
+}
+
+.TableBody {
+  /* tbody — cell styles on td */
+}
+
+.TableRow {
+  /* tr */
+}
+
+/* lines=grid — full grid (default cell borders) */
+.TableRoot--lines-grid .TableHeadCell,
+.TableRoot--lines-grid .TableCell {
+  border-right: var(--cube-sizes-borderWidth-thin) solid var(--cube-table-header-border);
+  border-bottom: var(--cube-sizes-borderWidth-thin) solid var(--cube-table-header-border);
+}
+
+.TableRoot--lines-grid .TableCell {
+  border-right-color: var(--cube-table-body-border);
+  border-bottom-color: var(--cube-table-body-border);
+}
+
+.TableRoot--lines-grid .TableHeadCell:last-child,
+.TableRoot--lines-grid .TableCell:last-child {
+  border-right: none;
+}
+
+.TableRoot--lines-grid .TableBody .TableRow:last-child .TableCell {
+  border-bottom: none;
+}
+
+/* lines=rows — horizontal dividers only */
+.TableRoot--lines-rows .TableHeadCell,
+.TableRoot--lines-rows .TableCell {
+  border-right: none;
+  border-bottom: var(--cube-sizes-borderWidth-thin) solid var(--cube-table-header-border);
+}
+
+.TableRoot--lines-rows .TableCell {
+  border-bottom-color: var(--cube-table-body-border);
+}
+
+.TableRoot--lines-rows .TableBody .TableRow:last-child .TableCell {
+  border-bottom: none;
+}
+
+/* lines=none — borderless interior; outer frame on .TableRoot */
+.TableRoot--lines-none .TableHeadCell,
+.TableRoot--lines-none .TableCell {
+  border-right: none;
+  border-bottom: none;
+}
+
+.TableHeadCell {
+  box-sizing: border-box;
+  height: var(--cube-table-rowHeight);
+  padding: var(--cube-table-cell-paddingBlock) var(--cube-table-cell-paddingInline);
+  text-align: left;
+  vertical-align: middle;
+  font-size: var(--cube-typography-text-subhead-sm-fontSize);
+  font-weight: var(--cube-typography-text-subhead-sm-fontWeight);
+  line-height: var(--cube-typography-text-subhead-sm-lineHeight);
+  color: var(--cube-table-header-fg);
+  background-color: var(--cube-table-header-bg);
+}
+
+.TableHeadCell:last-child {
+  border-right: none;
+}
+
+.TableHeadCell--align-center {
+  text-align: center;
+}
+
+.TableHeadCell--align-right {
+  text-align: right;
+}
+
+.TableCell {
+  box-sizing: border-box;
+  padding: var(--cube-table-cell-paddingBlock) var(--cube-table-cell-paddingInline);
+  text-align: left;
+  vertical-align: middle;
+  font-size: var(--cube-typography-text-body-sm-fontSize);
+  font-weight: var(--cube-typography-text-body-sm-fontWeight);
+  line-height: var(--cube-typography-text-body-sm-lineHeight);
+  color: var(--cube-table-body-fg);
+  background-color: var(--cube-table-body-bg);
+}
+
+.TableCell--truncate,
+.TableCell--fixed {
+  height: var(--cube-table-rowHeight);
+  max-height: var(--cube-table-rowHeight);
+}
+
+.TableCell--wrap {
+  min-height: var(--cube-table-rowHeight);
+  height: auto;
+  max-height: none;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.TableCell--truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.TableCell--fixed {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.TableCell--align-center {
+  text-align: center;
+}
+
+.TableCell--align-right {
+  text-align: right;
+}
+
+.TableCell__inner {
+  display: block;
+  min-width: 0;
+}
+
+.TableCell--truncate .TableCell__inner,
+.TableCell--fixed .TableCell__inner {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.TableCell--wrap .TableCell__inner {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}

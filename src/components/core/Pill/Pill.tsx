@@ -5,30 +5,27 @@ import type {
   PillIntensity,
   PillSurface,
   PillSurfaceColors,
-  TextTokens,
   ThemeTokens,
 } from "../../../theme/types";
-import themeOutput from "../../../theme/output/theme.json";
+import { tokenOutput } from "../../../theme/tokenOutput";
 import styles from "./Pill.module.css";
 
-/** Shade keys from `pillColors` in theme.json — add `yellow.json`, etc. alongside `gray.json`. */
-export type PillShade = keyof typeof themeOutput.pillColors;
-export type PillTextVariant = keyof TextTokens;
+/** Shade keys from `token-output.json` — add `yellow.json`, etc. alongside `gray.json`. */
+export type PillShade = keyof typeof tokenOutput.pillColors;
+export type PillTextVariant = "bodyXs" | "bodySm" | "bodyMd";
 export type { PillIntensity, PillSurface };
 
-const VARIANT_CLASS: Partial<Record<PillTextVariant, string>> = {
-  caption: styles["cube-Pill--caption"],
-  bodySmall: styles["cube-Pill--bodySmall"],
-  bodyMedium: styles["cube-Pill--bodyMedium"],
-  bodyLarge: styles["cube-Pill--bodyLarge"],
+const VARIANT_CLASS: Record<PillTextVariant, string> = {
+  bodyXs: styles["cube-Pill--bodyXs"],
+  bodySm: styles["cube-Pill--bodySm"],
+  bodyMd: styles["cube-Pill--bodyMd"],
 };
 
 /** Stable global names (CSS modules hash the module classes). */
-const VARIANT_GLOBAL_CLASS: Partial<Record<PillTextVariant, string>> = {
-  caption: "cube-Pill--caption",
-  bodySmall: "cube-Pill--bodySmall",
-  bodyMedium: "cube-Pill--bodyMedium",
-  bodyLarge: "cube-Pill--bodyLarge",
+const VARIANT_GLOBAL_CLASS: Record<PillTextVariant, string> = {
+  bodyXs: "cube-Pill--bodyXs",
+  bodySm: "cube-Pill--bodySm",
+  bodyMd: "cube-Pill--bodyMd",
 };
 
 function recipeToActiveVars(recipe: PillSurfaceColors): Record<string, string> {
@@ -74,8 +71,8 @@ export interface PillProps {
   /** When true, uses the `bordered` surface recipe (Figma `border?`). */
   border?: boolean;
   /**
-   * Text size — defaults to `bodySmall` (12px). Override when the pill should match
-   * a different `Text` variant.
+   * Text size — defaults to `bodyXs` (12px). Override when the pill should match
+   * a different `Text` body size.
    */
   variant?: PillTextVariant;
   /** Render as static label, anchor, or a custom component (e.g. react-router `Link`). */
@@ -95,7 +92,7 @@ export function Pill({
   shade = "gray",
   intensity = "light",
   border = false,
-  variant = "bodySmall",
+  variant = "bodyXs",
   as,
   href,
   leadingVisual,
@@ -112,6 +109,7 @@ export function Pill({
   const pillKey = `${shade}-${intensity}-${surface}`;
 
   const classNames = [
+    "cube-focusable",
     "cube-Pill",
     styles["cube-Pill"],
     VARIANT_GLOBAL_CLASS[variant],

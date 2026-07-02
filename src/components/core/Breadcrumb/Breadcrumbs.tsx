@@ -32,10 +32,10 @@ export function Breadcrumbs({
         "--cube-breadcrumb-gap": tokens.sizes.breadcrumb.gap,
         "--cube-breadcrumb-separator-width": tokens.sizes.breadcrumb.separatorWidth,
         "--cube-breadcrumb-separator-fg": tokens.colors.functional.breadcrumb.separator.fgColor,
-        "--cube-typography-text-body-medium-fontSize":
-          tokens.typography.text.bodyMedium.fontSize,
-        "--cube-typography-text-body-medium-lineHeight": String(
-          tokens.typography.text.bodyMedium.lineHeight
+        "--cube-typography-text-body-sm-fontSize":
+          tokens.typography.text.bodySm.fontSize,
+        "--cube-typography-text-body-sm-lineHeight": String(
+          tokens.typography.text.bodySm.lineHeight
         ),
       } as React.CSSProperties)
     : undefined;

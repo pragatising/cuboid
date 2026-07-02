@@ -5,8 +5,8 @@
           "base": {
             "bgColor": {
               "rest": { "value": "{color.canvas.transparent}" },
-              "hover": { "value": "{color.bg.gray.light.04}" },
-              "pressed": { "value": "{color.bg.gray.light.04}" },
+              "hover": { "value": "{color.bg.gray.light.4}" },
+              "pressed": { "value": "{color.bg.gray.light.4}" },
               "disabled": { "value": "{color.canvas.transparent}" }
             },
             "borderColor": {
@@ -27,7 +27,7 @@
               "rest": { "value": "{base.color.scale.blue.3}" },
               "hover": { "value": "{base.color.scale.blue.4}" },
               "pressed": { "value": "{base.color.scale.blue.3}" },
-              "disabled": { "value": "{color.bg.gray.light.03}" }
+              "disabled": { "value": "{color.bg.gray.light.3}" }
             },
             "borderColor": {
               "rest": { "value": "{color.canvas.transparent}" },

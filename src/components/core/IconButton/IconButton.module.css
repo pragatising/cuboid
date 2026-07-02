@@ -13,11 +13,6 @@
   transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
 }
 
-.IconButton:focus-visible {
-  outline: 4px solid var(--cube-colors-functional-foreground-link);
-  outline-offset: 2px;
-}
-
 .IconButton:disabled,
 .IconButton[aria-disabled="true"] {
   cursor: not-allowed;

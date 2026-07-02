@@ -23,8 +23,8 @@
   flex-shrink: 0;
   width: var(--cube-breadcrumb-separator-width);
   text-align: center;
-  font-size: var(--cube-typography-text-body-medium-fontSize);
-  line-height: var(--cube-typography-text-body-medium-lineHeight);
+  font-size: var(--cube-typography-text-body-sm-fontSize);
+  line-height: var(--cube-typography-text-body-sm-lineHeight);
   color: var(--cube-breadcrumb-separator-fg);
   user-select: none;
 }

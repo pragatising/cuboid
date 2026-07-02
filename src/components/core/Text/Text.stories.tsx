@@ -15,21 +15,51 @@ type Story = StoryObj<typeof Text>;
 export const AllVariants: Story = {
   render: () => (
     <Stack gap="sm">
-      <Text variant="display">Display</Text>
-      <Text variant="titleLarge">Title Large</Text>
-      <Text variant="titleMedium">Title Medium</Text>
-      <Text variant="titleSmall">Title Small — sm / semibold / 1.5</Text>
-      <Text variant="subtitle">Subtitle</Text>
-      <Text variant="subheadXs">Subhead XS</Text>
-      <Text variant="subheadSm">Subhead SM</Text>
-      <Text variant="subheadMd">Subhead MD</Text>
-      <Text variant="bodyLarge">Body Large</Text>
-      <Text variant="bodyMedium">Body Medium</Text>
-      <Text variant="bodyStrong">Body Strong</Text>
-      <Text variant="bodySmall">Body Small</Text>
-      <Text variant="caption">Caption</Text>
-      <Text variant="codeBlock">{"const x = { key: 'value' };"}</Text>
-      <Text variant="inlineCode">inline code</Text>
+      <Text role="heading" size="xl">
+        Heading XL
+      </Text>
+      <Text role="heading" size="lg">
+        Heading LG
+      </Text>
+      <Text role="heading" size="md">
+        Heading MD
+      </Text>
+      <Text role="heading" size="sm">
+        Heading SM
+      </Text>
+      <Text role="subhead" size="md">
+        Subhead MD
+      </Text>
+      <Text role="subhead" size="sm">
+        Subhead SM
+      </Text>
+      <Text role="subhead" size="xs">
+        Subhead XS
+      </Text>
+      <Text role="body" size="lg">
+        Body LG
+      </Text>
+      <Text role="body" size="md">
+        Body MD
+      </Text>
+      <Text role="body" size="sm">
+        Body SM
+      </Text>
+      <Text role="body" size="sm" weight="semibold">
+        Body SM semibold (weight prop)
+      </Text>
+      <Text role="body" size="sm" weight="medium">
+        Body SM medium (500)
+      </Text>
+      <Text role="body" size="xs">
+        Body XS
+      </Text>
+      <Text role="code" code="block">
+        {"const x = { key: 'value' };"}
+      </Text>
+      <Text role="code" code="inline">
+        inline code
+      </Text>
     </Stack>
   ),
 };
@@ -46,10 +76,9 @@ export const Colors: Story = {
         <Text color="link">link — interactive text</Text>
         <Text color="neutral">neutral — label / meta text</Text>
         <Text color="fg.blue.3">fg.blue.3 — global foreground scale</Text>
-        {/* background.emphasis is the dark surface — text must be onEmphasis */}
         <div
           style={{
-            background: tokens.colors.functional.background.emphasis,
+            background: tokens.colors.global.bg.gray.dark["7"],
             padding: tokens.sizes.space[3],
             borderRadius: tokens.sizes.borderRadius.md,
           }}

@@ -4,8 +4,8 @@
       "ghost": {
         "bgColor": {
           "rest": { "value": "{color.canvas.transparent}" },
-          "hover": { "value": "{color.bg.gray.light.02}" },
-          "pressed": { "value": "{color.bg.gray.light.02}" },
+          "hover": { "value": "{color.bg.gray.light.2}" },
+          "pressed": { "value": "{color.bg.gray.light.2}" },
           "disabled": { "value": "{color.canvas.transparent}" }
         },
         "borderColor": {

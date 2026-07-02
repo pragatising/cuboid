@@ -59,9 +59,10 @@ function ResponseHeadersPanel({
   return (
     <Stack gap="sm" padding="sm" className={styles.headersPopover} theme={theme}>
       <Text
-        variant="bodyMedium"
+        role="body"
+        size="sm"
         color="text.contrast"
-        style={{ fontWeight: 500 }}
+        weight="medium"
         theme={theme}
       >
         Headers
@@ -71,14 +72,15 @@ function ResponseHeadersPanel({
           <div key={name} className={styles.headerEntry}>
             <Text
               as="dt"
-              variant="bodyMedium"
+              role="body"
+              size="sm"
               color="text.contrast"
-              style={{ fontWeight: 500 }}
+              weight="medium"
               theme={theme}
             >
               {name}
             </Text>
-            <Text as="dd" variant="bodyMedium" color="fg.neutral.muted" theme={theme}>
+            <Text as="dd" role="body" size="sm" color="fg.neutral.muted" theme={theme}>
               {value}
             </Text>
           </div>
@@ -110,7 +112,7 @@ export function ApiResponseViewer({
     <Box
       role="region"
       aria-label={ariaLabel ?? "API response"}
-      border="default"
+      borderColor="border.gray.2"
       borderRadius="md"
       overflow="hidden"
       direction="vertical"
@@ -137,7 +139,7 @@ export function ApiResponseViewer({
           {url ? (
             <Text
               as="span"
-              variant="bodyMedium"
+              role="body" size="sm"
               color="fg.neutral.muted"
               truncate
               className={styles.url}
@@ -151,7 +153,7 @@ export function ApiResponseViewer({
             <Pill
               shade={methodPillShade(method)}
               intensity="light"
-              variant="caption"
+              variant="bodyXs"
               className={styles.method}
               theme={theme}
             >
@@ -170,12 +172,12 @@ export function ApiResponseViewer({
             <Pill
               shade={statusPillShade(status)}
               intensity="bold"
-              variant="caption"
+              variant="bodyXs"
               theme={theme}
             >
               {status}
             </Pill>
-            <Text variant="bodyMedium" color="fg.neutral.muted" theme={theme}>
+            <Text role="body" size="sm" color="fg.neutral.muted" theme={theme}>
               {statusReasonPhrase(status)}
             </Text>
           </Stack>
@@ -206,7 +208,7 @@ export function ApiResponseViewer({
         {durationMs != null ? (
           <Text
             as="span"
-            variant="bodyMedium"
+            role="body" size="sm"
             color="fg.neutral.muted"
             className={styles.duration}
             theme={theme}

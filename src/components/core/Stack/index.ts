@@ -6,5 +6,11 @@ export type {
   StackPadding,
   StackSpacing,
   LayoutWidth,
+  StackPosition,
+  StackInset,
+  LayoutMaxWidth,
+  LayoutMaxHeight,
+  StackPointerEvents,
+  StackZIndex,
 } from "./Stack";
 export type { Breakpoint, Responsive } from "../../../utils/responsive";

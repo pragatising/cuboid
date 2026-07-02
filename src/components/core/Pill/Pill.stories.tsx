@@ -4,10 +4,10 @@ import { Title, Primary, Controls, Subtitle } from "@storybook/blocks";
 import { Stack } from "../Stack";
 import { Icon } from "../Icon";
 import { Pill, type PillIntensity, type PillShade } from "./Pill";
-import themeOutput from "../../../theme/output/theme.json";
+import { tokenOutput } from "../../../theme/tokenOutput";
 
 const INTENSITIES: PillIntensity[] = ["extralight", "light", "bold", "extraBold"];
-const PILL_SHADES = Object.keys(themeOutput.pillColors).sort() as PillShade[];
+const PILL_SHADES = Object.keys(tokenOutput.pillColors).sort() as PillShade[];
 
 function PillIntensityMatrix({ border = false }: { border?: boolean }) {
   return (
@@ -43,13 +43,7 @@ const meta: Meta<typeof Pill> = {
     border: { control: "boolean" },
     variant: {
       control: "select",
-      options: [
-        undefined,
-        "caption",
-        "bodySmall",
-        "bodyMedium",
-        "bodyLarge",
-      ],
+      options: [undefined, "bodyXs", "bodySm", "bodyMd"],
     },
   },
   parameters: {
@@ -61,7 +55,7 @@ const meta: Meta<typeof Pill> = {
           <Subtitle>
             Colored chip around text — <code>shade</code> ×{" "}
             <code>intensity</code> × <code>border?</code>. Defaults to{" "}
-            <code>bodySmall</code> (12px, weight 500), 20px tall, 6px horizontal
+            <code>bodyXs</code> (12px, weight 500), 20px tall, 6px horizontal
             padding — override with <code>variant</code> or{" "}
             <code>theme=&#123;&#123; sizes: &#123; pill: … &#125; &#125;&#125;</code>.
           </Subtitle>
@@ -94,7 +88,7 @@ const meta: Meta<typeof Pill> = {
                 <code>theme=&#123;&#123; sizes: &#123; pill: … &#125; &#125;&#125;</code>.
               </li>
               <li>
-                <strong>Typography:</strong> defaults to <code>bodySmall</code>{" "}
+                <strong>Typography:</strong> defaults to <code>bodyXs</code>{" "}
                 (12px, weight 500). Pass <code>variant</code> for other{" "}
                 <code>Text</code> sizes.
               </li>
@@ -114,7 +108,7 @@ const meta: Meta<typeof Pill> = {
               href="https://example.com"
               shade="gray"
               intensity="light"
-              variant="bodySmall"
+              variant="bodyXs"
               trailingVisual={
                 <Icon size="xs">
                   <ExternalIcon />
@@ -157,9 +151,9 @@ export const AllVariantsBordered: Story = {
   render: () => <PillIntensityMatrix border />,
 };
 
-export const WithBodyMedium: Story = {
+export const WithBodySm: Story = {
   render: () => (
-    <Pill variant="bodyMedium" shade="gray" intensity="light" border>
+    <Pill variant="bodySm" shade="gray" intensity="light" border>
       Larger label
     </Pill>
   ),

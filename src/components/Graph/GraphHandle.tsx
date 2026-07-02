@@ -183,8 +183,8 @@ export function GraphHandle({ id, side, size = 12, color, style }: GraphHandlePr
         side={side}
         size={size}
         dotColor={color ?? tokens.colors.base.blue[5]}
-        bgColor={tokens.colors.functional.background.default}
-        borderColor={tokens.colors.functional.border.default}
+        bgColor={tokens.colors.global.bg.gray.light["1"]}
+        borderColor={tokens.colors.global.border.gray["2"]}
         strokeWidth={parseFloat(tokens.sizes.borderWidth.thin)}
       />
     </div>

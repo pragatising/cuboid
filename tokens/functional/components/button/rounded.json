@@ -3,10 +3,10 @@
     "button": {
       "rounded": {
         "bgColor": {
-          "rest": { "value": "{color.bg.gray.light.04}" },
-          "hover": { "value": "{color.bg.gray.light.05}" },
-          "pressed": { "value": "{color.bg.gray.light.04}" },
-          "disabled": { "value": "{color.bg.gray.light.03}" }
+          "rest": { "value": "{color.bg.gray.light.4}" },
+          "hover": { "value": "{color.bg.gray.light.5}" },
+          "pressed": { "value": "{color.bg.gray.light.4}" },
+          "disabled": { "value": "{color.bg.gray.light.3}" }
         },
         "borderColor": {
           "rest": { "value": "{color.canvas.transparent}" },

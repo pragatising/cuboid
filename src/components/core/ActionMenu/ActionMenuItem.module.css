@@ -69,13 +69,13 @@
 .ActionMenuItem:focus-visible .ActionMenuItemInner {
   box-shadow:
     0 0 0 1px var(--cube-actionMenu-item-bg-rest, #fff),
-    0 0 0 3px var(--cube-color-focus, #2776ff);
+    0 0 0 var(--cube-focus-ring-width) var(--cube-color-focus);
 }
 
 .ActionMenuItem--selected:focus-visible .ActionMenuItemInner {
   box-shadow:
     0 0 0 1px var(--cube-actionMenu-item-bg-selected-rest, #f4f4f2),
-    0 0 0 3px var(--cube-color-focus, #2776ff);
+    0 0 0 var(--cube-focus-ring-width) var(--cube-color-focus);
 }
 
 .ActionMenuItem--withSubtext {
@@ -124,9 +124,9 @@
 
 .Label {
   font-family: var(--cube-typography-fontFamily-base);
-  font-size: var(--cube-typography-text-body-medium-fontSize);
-  font-weight: var(--cube-typography-text-body-medium-fontWeight);
-  line-height: var(--cube-typography-text-body-medium-lineHeight);
+  font-size: var(--cube-typography-text-body-sm-fontSize);
+  font-weight: var(--cube-typography-text-body-sm-fontWeight);
+  line-height: var(--cube-typography-text-body-sm-lineHeight);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -143,9 +143,9 @@
   flex: 1;
   min-width: 0;
   font-family: var(--cube-typography-fontFamily-base);
-  font-size: var(--cube-typography-text-caption-fontSize);
-  font-weight: var(--cube-typography-text-caption-fontWeight);
-  line-height: var(--cube-typography-text-caption-lineHeight);
+  font-size: var(--cube-typography-text-body-xs-fontSize);
+  font-weight: var(--cube-typography-text-body-xs-fontWeight);
+  line-height: var(--cube-typography-text-body-xs-lineHeight);
   color: var(--cube-actionMenu-item-fg-subtext);
   overflow: hidden;
   text-overflow: ellipsis;

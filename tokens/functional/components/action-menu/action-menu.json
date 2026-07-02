@@ -4,12 +4,12 @@
       "item": {
         "bgColor": {
           "rest": { "value": "{color.canvas.default}" },
-          "hover": { "value": "{color.bg.gray.light.02}" },
-          "pressed": { "value": "{color.bg.gray.light.03}" },
-          "disabled": { "value": "{color.bg.gray.light.03}" },
+          "hover": { "value": "{color.bg.gray.light.2}" },
+          "pressed": { "value": "{color.bg.gray.light.3}" },
+          "disabled": { "value": "{color.bg.gray.light.3}" },
           "selected": {
-            "rest": { "value": "{color.bg.gray.light.03}" },
-            "pressed": { "value": "{color.bg.gray.light.04}" }
+            "rest": { "value": "{color.bg.gray.light.3}" },
+            "pressed": { "value": "{color.bg.gray.light.4}" }
           }
         },
         "fgColor": {
@@ -24,7 +24,7 @@
         "fgColor": { "value": "{color.text.contrast}" }
       },
       "divider": {
-        "fgColor": { "value": "{color.bg.gray.light.04}" }
+        "fgColor": { "value": "{color.bg.gray.light.4}" }
       }
     },
     "sizes": {

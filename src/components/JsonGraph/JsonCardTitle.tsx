@@ -22,7 +22,7 @@ export function JsonCardTitle({ children, style }: JsonCardTitleProps) {
         fontWeight: tokens.typography.fontWeight.semibold,
         fontSize:   tokens.typography.fontSize.sm,           // 14px
         lineHeight: String(tokens.typography.lineHeight.normal),
-        color:      tokens.colors.functional.foreground.default,
+        color:      tokens.colors.global.text.default,
         padding:    `${tokens.sizes.space[1]} ${tokens.sizes.space[2]}`, // 4px 8px
         ...style,
       }}

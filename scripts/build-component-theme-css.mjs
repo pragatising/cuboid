@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Component token CSS — colors + component-specific selector rules.
- * Foundation tokens live in theme.css (globals, shadows, size, typography).
+ * Reads token-output.json. Foundation tokens live in theme.css.
  */
 
 import fs from "fs";
@@ -11,7 +11,7 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, "..");
 
-const INPUT = path.join(ROOT, "src/theme/output/theme.json");
+const INPUT = path.join(ROOT, "src/theme/output/token-output.json");
 const OUTPUT = path.join(ROOT, "src/theme/output/components.css");
 
 const PREFIX = "--cube";
@@ -60,6 +60,18 @@ function emitComponentSizeTokens(t, set) {
     set("breadcrumb-item-paddingBlock", breadcrumbSizes.itemPaddingBlock);
     set("breadcrumb-item-borderRadius", breadcrumbSizes.itemBorderRadius);
     set("breadcrumb-separator-width", breadcrumbSizes.separatorWidth);
+  }
+
+  const tableSizes = t.sizes?.table;
+  if (tableSizes) {
+    set("table-borderRadius", tableSizes.borderRadius);
+    for (const tier of ["dense", "spacious"]) {
+      const density = tableSizes.density?.[tier];
+      if (!density) continue;
+      set(`table-${tier}-cell-paddingInline`, density.cellPaddingInline);
+      set(`table-${tier}-cell-paddingBlock`, density.cellPaddingBlock);
+      set(`table-${tier}-rowHeight`, density.rowHeight);
+    }
   }
 
   const siteHeaderSizes = t.sizes?.siteHeader;
@@ -135,6 +147,13 @@ function emitComponentSizeTokens(t, set) {
   set("tooltip-maxWidthSingleLine", t.sizes?.tooltip?.maxWidthSingleLine);
   set("tooltip-shadow", t.sizes?.tooltip?.boxShadow);
 
+  const iconSizes = t.sizes?.icon;
+  if (iconSizes) {
+    for (const stop of ["xs", "sm", "md", "lg"]) {
+      set(`icon-${stop}`, iconSizes[stop]);
+    }
+  }
+
   const controlStops = ["extraSmall", "small", "medium", "large"];
   for (const stop of controlStops) {
     const seg = controlStopCssSegment(stop);
@@ -142,6 +161,7 @@ function emitComponentSizeTokens(t, set) {
     set(`control-${seg}-size`, c?.size);
     set(`control-${seg}-borderRadius`, c?.borderRadius);
     set(`control-${seg}-gap`, c?.gap);
+    set(`control-${seg}-icon`, c?.icon);
     set(`control-${seg}-paddingBlock`, c?.paddingBlock);
     set(`control-${seg}-paddingInline-condensed`, c?.paddingInline?.condensed);
     set(`control-${seg}-paddingInline-normal`, c?.paddingInline?.normal);
@@ -192,6 +212,19 @@ function emitPillSelectorRules(pillColors, lines) {
       }
     }
   }
+}
+
+function emitFocusRingRules(lines) {
+  lines.push("/* Focus ring — tokens: size/outline.json + color.focus in globals.json */");
+  lines.push(".cube-focusable:focus {");
+  lines.push("  outline: none;");
+  lines.push("}");
+  lines.push("");
+  lines.push(".cube-focusable:focus-visible {");
+  lines.push("  outline: var(--cube-focus-ring-width) solid var(--cube-color-focus);");
+  lines.push("  outline-offset: var(--cube-focus-ring-offset);");
+  lines.push("}");
+  lines.push("");
 }
 
 function main() {
@@ -245,6 +278,17 @@ function main() {
       set(`breadcrumb-link-fg-${state}`, breadcrumbLink.fgColor?.[state]);
     }
     set(`breadcrumb-separator-fg`, t.breadcrumbColors?.separator?.fgColor);
+  }
+
+  const tableColors = t.tableColors;
+  if (tableColors) {
+    set("table-header-bg", tableColors.header?.bgColor);
+    set("table-header-fg", tableColors.header?.fgColor);
+    set("table-header-border", tableColors.header?.borderColor);
+    set("table-body-bg", tableColors.body?.bgColor);
+    set("table-body-fg", tableColors.body?.fgColor);
+    set("table-body-border", tableColors.body?.borderColor);
+    set("table-container-border", tableColors.container?.borderColor);
   }
 
   const siteHeaderColors = t.siteHeaderColors;
@@ -349,6 +393,7 @@ function main() {
   lines.push("}");
   lines.push("");
   emitPillSelectorRules(t.pillColors, lines);
+  emitFocusRingRules(lines);
 
   fs.mkdirSync(path.dirname(OUTPUT), { recursive: true });
   fs.writeFileSync(OUTPUT, lines.join("\n"), "utf8");

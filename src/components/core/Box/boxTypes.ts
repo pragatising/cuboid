@@ -1,14 +1,12 @@
-import type { BackgroundColors, BorderRadiusTokens, ForegroundColors } from "../../../theme/types";
+import type { BorderRadiusTokens, GlobalColorPath } from "../../../theme/types";
 
-export type BoxBackground =
-  | Exclude<keyof BackgroundColors, "neutral">
-  | "neutralMuted"
-  | "neutralEmphasis";
-
-export type BoxBorder = "none" | "default" | "muted";
+export type { GlobalColorPath as BoxBackground };
+export type { GlobalColorPath as BoxBorderColor };
+export type { GlobalColorPath as BoxForeground };
 
 export type BoxBorderRadius = keyof BorderRadiusTokens;
 
-export type BoxForeground = keyof ForegroundColors;
-
 export type BoxOverflow = "visible" | "hidden" | "auto" | "scroll";
+
+/** @deprecated Use `SpaceToken` — alias kept for Box margin props. */
+export type { SpaceToken as BoxMargin } from "../../../utils/spaceToken";

@@ -2,18 +2,11 @@ import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Title, Primary, Controls, Subtitle } from "@storybook/blocks";
 import type { HighlightColor } from "../../../theme/types";
+import { tokenOutput } from "../../../theme/tokenOutput";
 import { Highlight } from "./Highlight";
 import { Text } from "../Text";
 
-const HIGHLIGHT_COLORS: HighlightColor[] = [
-  "none",
-  "green",
-  "blue",
-  "yellow",
-  "orange",
-  "red",
-  "neutral",
-];
+const HIGHLIGHT_COLORS = Object.keys(tokenOutput.highlightColors) as HighlightColor[];
 
 const meta: Meta<typeof Highlight> = {
   title: "Core/Highlight",
@@ -33,7 +26,7 @@ const meta: Meta<typeof Highlight> = {
 
           <div className="cube-docs-section">
             <h3 className="cube-docs-section__title">In prose</h3>
-            <Text variant="bodyMedium">
+            <Text role="body" size="sm">
               T-shaped designer working on{" "}
               <Highlight color="yellow">credit and underwriting</Highlight> at FIS.
             </Text>
@@ -62,7 +55,7 @@ export const Default: Story = {
 
 export const AllColors: Story = {
   render: () => (
-    <Text variant="bodyMedium">
+    <Text role="body" size="sm">
       {HIGHLIGHT_COLORS.map((color) => (
         <React.Fragment key={color}>
           <Highlight color={color}>text</Highlight>{" "}
@@ -74,7 +67,7 @@ export const AllColors: Story = {
 
 export const InSentence: Story = {
   render: () => (
-    <Text variant="bodyMedium">
+    <Text role="body" size="sm">
       Previously at <Highlight color="neutral">Amount</Highlight>, building{" "}
       <Highlight color="blue">portfolio intelligence</Highlight> workflows.
     </Text>

@@ -136,18 +136,18 @@
     "bg": {
       "gray": {
         "light": {
-          "01": { "value": "{base.color.scale.gray.0}" },
-          "02": { "value": "{base.color.scale.gray.1}" },
-          "03": { "value": "{base.color.scale.gray.2}" },
-          "04": { "value": "{base.color.scale.gray.3}" },
-          "05": { "value": "{base.color.scale.gray.4}" },
-          "06": { "value": "{base.color.scale.gray.5}" }
+          "1": { "value": "{base.color.scale.gray.0}" },
+          "2": { "value": "{base.color.scale.gray.1}" },
+          "3": { "value": "{base.color.scale.gray.2}" },
+          "4": { "value": "{base.color.scale.gray.3}" },
+          "5": { "value": "{base.color.scale.gray.4}" },
+          "6": { "value": "{base.color.scale.gray.5}" }
         },
         "dark": {
-          "04": { "value": "{base.color.scale.gray.7}" },
-          "05": { "value": "{base.color.scale.gray.8}" },
-          "06": { "value": "{base.color.scale.gray.9}" },
-          "07": { "value": "{base.color.scale.gray.10}" }
+          "4": { "value": "{base.color.scale.gray.7}" },
+          "5": { "value": "{base.color.scale.gray.8}" },
+          "6": { "value": "{base.color.scale.gray.9}" },
+          "7": { "value": "{base.color.scale.gray.10}" }
         }
       }
     },

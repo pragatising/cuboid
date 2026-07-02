@@ -9,7 +9,7 @@
   border-width: var(--cube-sizes-borderWidth-thin);
   border-style: solid;
   font-family: var(--cube-typography-fontFamily-base);
-  font-size: var(--cube-typography-text-body-small-fontSize, 0.75rem);
+  font-size: var(--cube-typography-text-body-xs-fontSize, 0.75rem);
   font-weight: 500;
   line-height: 1;
   letter-spacing: inherit;
@@ -24,34 +24,24 @@
   border-radius: var(--cube-pill-borderRadius);
 }
 
-.cube-Pill--caption {
-  font-size: var(--cube-typography-text-caption-fontSize, 0.75rem);
+.cube-Pill--bodyXs {
+  font-size: var(--cube-typography-text-body-xs-fontSize, 0.75rem);
   line-height: 1;
 }
 
-.cube-Pill--bodySmall {
-  font-size: var(--cube-typography-text-body-small-fontSize, 0.75rem);
+.cube-Pill--bodySm {
+  font-size: var(--cube-typography-text-body-sm-fontSize, 0.875rem);
   line-height: 1;
 }
 
-.cube-Pill--bodyMedium {
-  font-size: var(--cube-typography-text-body-medium-fontSize, 0.875rem);
-  line-height: 1;
-}
-
-.cube-Pill--bodyLarge {
-  font-size: var(--cube-typography-text-body-large-fontSize, 1.25rem);
+.cube-Pill--bodyMd {
+  font-size: var(--cube-typography-text-body-md-fontSize, 1.25rem);
   line-height: 1;
 }
 
 a.cube-Pill,
 button.cube-Pill {
   cursor: pointer;
-}
-
-.cube-Pill:focus-visible {
-  outline: 4px solid var(--cube-colors-functional-foreground-link);
-  outline-offset: 2px;
 }
 
 .cube-Pill:disabled,

@@ -355,7 +355,7 @@ export function CodeSurface({
     <Box
       role="region"
       aria-label={ariaLabel ?? "Code"}
-      border={surfaceVariant === "embedded" ? "none" : "default"}
+      borderColor={surfaceVariant === "embedded" ? undefined : "border.gray.2"}
       borderRadius={surfaceVariant === "embedded" ? undefined : "md"}
       overflow="hidden"
       direction="vertical"
@@ -367,7 +367,7 @@ export function CodeSurface({
       <Box
         ref={scrollRef}
         grow
-        background="default"
+        background="bg.gray.light.1"
         className={`${CODE_SURFACE_SCROLL_CLASS} ${styles.scroll} ${
           isConstrained ? styles.scrollConstrained : ""
         }`}

@@ -21,11 +21,6 @@
   text-decoration: none;
 }
 
-.Button:focus-visible {
-  outline: 4px solid var(--cube-colors-functional-foreground-link);
-  outline-offset: 2px;
-}
-
 .Button:disabled,
 .Button[aria-disabled="true"] {
   cursor: not-allowed;
@@ -152,6 +147,12 @@
   line-height: var(--cube-typography-button-extra-small-lineHeight);
 }
 
+.Button--size-xs .Button__leadingVisual > *,
+.Button--size-xs .Button__trailingVisual > * {
+  width: var(--cube-control-extra-small-icon);
+  height: var(--cube-control-extra-small-icon);
+}
+
 .Button--size-sm {
   gap: var(--cube-control-small-gap);
   height: var(--cube-control-small-size);
@@ -160,6 +161,12 @@
   border-radius: var(--cube-control-small-borderRadius);
   font-size: var(--cube-typography-button-small-fontSize);
   line-height: var(--cube-typography-button-small-lineHeight);
+}
+
+.Button--size-sm .Button__leadingVisual > *,
+.Button--size-sm .Button__trailingVisual > * {
+  width: var(--cube-control-small-icon);
+  height: var(--cube-control-small-icon);
 }
 
 .Button--size-md {
@@ -172,6 +179,12 @@
   line-height: var(--cube-typography-button-medium-lineHeight);
 }
 
+.Button--size-md .Button__leadingVisual > *,
+.Button--size-md .Button__trailingVisual > * {
+  width: var(--cube-control-medium-icon);
+  height: var(--cube-control-medium-icon);
+}
+
 .Button--size-lg {
   gap: var(--cube-control-large-gap);
   height: var(--cube-control-large-size);
@@ -180,6 +193,12 @@
   border-radius: var(--cube-control-large-borderRadius);
   font-size: var(--cube-typography-button-large-fontSize);
   line-height: var(--cube-typography-button-large-lineHeight);
+}
+
+.Button--size-lg .Button__leadingVisual > *,
+.Button--size-lg .Button__trailingVisual > * {
+  width: var(--cube-control-large-icon);
+  height: var(--cube-control-large-icon);
 }
 
 /* Pill radius for any variant (primary/secondary/ghost/danger + Figma `style: rounded`) */
@@ -196,5 +215,6 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
+  line-height: 0;
 }
 

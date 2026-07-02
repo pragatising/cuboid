@@ -17,6 +17,22 @@ export type { StackGap, StackPadding, LayoutWidth };
 /** @deprecated Use `StackGap` or `StackPadding`. */
 export type { StackGap as StackSpacing };
 
+/** CSS `position` values supported on Stack / Box. */
+export type StackPosition = "static" | "relative" | "absolute" | "fixed" | "sticky";
+
+/** Inset offset — stack padding token or `0`. */
+export type StackInset = StackPadding | 0;
+
+/** Token-backed max-width; `viewport` → `min(90vw, page max width)`. */
+export type LayoutMaxWidth = LayoutWidth | "viewport";
+
+/** Token-backed max-height. */
+export type LayoutMaxHeight = "viewport" | "full" | "auto";
+
+export type StackPointerEvents = "auto" | "none";
+
+export type StackZIndex = keyof ThemeTokens["sizes"]["zIndex"];
+
 export interface StackProps
   extends Omit<React.HTMLAttributes<HTMLElement>, "color"> {
   as?: React.ElementType;
@@ -32,6 +48,20 @@ export interface StackProps
   shrink?: boolean | number;
   width?: LayoutWidth;
   minWidth?: 0;
+  position?: StackPosition;
+  /** Shorthand inset on all sides — padding token or `0`. */
+  inset?: StackInset;
+  insetBlock?: StackInset;
+  insetInline?: StackInset;
+  top?: StackInset;
+  right?: StackInset;
+  bottom?: StackInset;
+  left?: StackInset;
+  maxWidth?: LayoutMaxWidth;
+  maxHeight?: LayoutMaxHeight;
+  pointerEvents?: StackPointerEvents;
+  /** Layer from theme `sizes.zIndex` (e.g. `dialog`, `overlay`). */
+  zIndex?: StackZIndex;
   theme?: CubeTheme;
   style?: CSSProperties;
   className?: string;
@@ -84,6 +114,115 @@ function layoutWidthToCss(
     default:
       return undefined;
   }
+}
+
+function insetToCss(
+  key: StackInset | undefined,
+  padding: ThemeTokens["sizes"]["stack"]["padding"] | undefined,
+): string | undefined {
+  if (key === undefined) return undefined;
+  if (key === 0) return "0";
+  return paddingToCss(key, padding);
+}
+
+function layoutMaxWidthToCss(
+  key: LayoutMaxWidth | undefined,
+  layout: ThemeTokens["sizes"]["layout"],
+): string | undefined {
+  if (key === undefined) return undefined;
+  if (key === "viewport") {
+    return `min(90vw, ${layout.pageMaxWidth})`;
+  }
+  return layoutWidthToCss(key, layout);
+}
+
+function layoutMaxHeightToCss(key: LayoutMaxHeight | undefined): string | undefined {
+  if (key === undefined) return undefined;
+  switch (key) {
+    case "viewport":
+      return "90vh";
+    case "full":
+      return "100%";
+    case "auto":
+      return "auto";
+    default:
+      return undefined;
+  }
+}
+
+function stackPositionStyle(
+  props: Pick<
+    StackProps,
+    | "position"
+    | "inset"
+    | "insetBlock"
+    | "insetInline"
+    | "top"
+    | "right"
+    | "bottom"
+    | "left"
+    | "maxWidth"
+    | "maxHeight"
+    | "pointerEvents"
+    | "zIndex"
+  >,
+  sizes: ThemeTokens["sizes"],
+): CSSProperties {
+  const style: CSSProperties = {};
+  const { stack, layout, zIndex: zIndexTokens } = sizes;
+
+  if (props.position !== undefined) {
+    style.position = props.position;
+  }
+
+  if (props.pointerEvents !== undefined) {
+    style.pointerEvents = props.pointerEvents;
+  }
+
+  if (props.zIndex !== undefined) {
+    style.zIndex = zIndexTokens[props.zIndex];
+  }
+
+  if (props.inset !== undefined) {
+    const value = insetToCss(props.inset, stack.padding);
+    if (value !== undefined) {
+      style.top = value;
+      style.right = value;
+      style.bottom = value;
+      style.left = value;
+    }
+  }
+
+  if (props.insetBlock !== undefined) {
+    const value = insetToCss(props.insetBlock, stack.padding);
+    if (value !== undefined) {
+      style.top = value;
+      style.bottom = value;
+    }
+  }
+
+  if (props.insetInline !== undefined) {
+    const value = insetToCss(props.insetInline, stack.padding);
+    if (value !== undefined) {
+      style.left = value;
+      style.right = value;
+    }
+  }
+
+  if (props.top !== undefined) style.top = insetToCss(props.top, stack.padding);
+  if (props.right !== undefined) style.right = insetToCss(props.right, stack.padding);
+  if (props.bottom !== undefined) style.bottom = insetToCss(props.bottom, stack.padding);
+  if (props.left !== undefined) style.left = insetToCss(props.left, stack.padding);
+
+  if (props.maxWidth !== undefined) {
+    style.maxWidth = layoutMaxWidthToCss(props.maxWidth, layout);
+  }
+
+  if (props.maxHeight !== undefined) {
+    style.maxHeight = layoutMaxHeightToCss(props.maxHeight);
+  }
+
+  return style;
 }
 
 function stackLayoutStyle(
@@ -320,6 +459,18 @@ export const Stack = forwardRef<HTMLElement, StackProps>(function Stack(
     shrink,
     width,
     minWidth,
+    position,
+    inset,
+    insetBlock,
+    insetInline,
+    top,
+    right,
+    bottom,
+    left,
+    maxWidth,
+    maxHeight,
+    pointerEvents,
+    zIndex,
     theme,
     style,
     className,
@@ -329,6 +480,21 @@ export const Stack = forwardRef<HTMLElement, StackProps>(function Stack(
   ref,
 ) {
   const tokens = useTheme(theme);
+
+  const positionProps = {
+    position,
+    inset,
+    insetBlock,
+    insetInline,
+    top,
+    right,
+    bottom,
+    left,
+    maxWidth,
+    maxHeight,
+    pointerEvents,
+    zIndex,
+  };
 
   const layoutProps = {
     direction,
@@ -361,6 +527,7 @@ export const Stack = forwardRef<HTMLElement, StackProps>(function Stack(
     : undefined;
 
   const layoutStyle = stackLayoutStyle(layoutProps, tokens.sizes.layout);
+  const positionStyle = stackPositionStyle(positionProps, tokens.sizes);
 
   return (
     <As
@@ -370,6 +537,7 @@ export const Stack = forwardRef<HTMLElement, StackProps>(function Stack(
         ...responsiveVars,
         ...themeOverride,
         ...layoutStyle,
+        ...positionStyle,
         ...style,
       }}
       {...rest}

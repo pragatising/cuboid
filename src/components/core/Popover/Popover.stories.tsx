@@ -61,7 +61,7 @@ export const Default: Story = {
       aria-label="Example popover"
     >
       <Stack gap="sm" padding="sm">
-        <Text variant="bodySmall">Any interactive content can go here.</Text>
+        <Text role="body" size="xs">Any interactive content can go here.</Text>
         <Button variant="primary" size="sm">
           Action
         </Button>
@@ -86,7 +86,7 @@ export const Controlled: Story = {
           aria-label="Controlled popover"
         >
           <Stack gap="xs" padding="sm">
-            <Text variant="bodySmall">Controlled via open / onOpenChange.</Text>
+            <Text role="body" size="xs">Controlled via open / onOpenChange.</Text>
             <Button variant="ghost" size="sm" onClick={() => setOpen(false)}>
               Dismiss
             </Button>
@@ -134,7 +134,7 @@ export const Placements: Story = {
           aria-label={`Placement ${placement}`}
         >
           <Stack padding="sm">
-            <Text variant="caption">{placement}</Text>
+            <Text role="body" size="xs">{placement}</Text>
           </Stack>
         </Popover>
       ))}
@@ -157,7 +157,7 @@ export const Elevation: Story = {
           aria-label={`Elevation ${elevation}`}
         >
           <Stack padding="sm">
-            <Text variant="bodySmall">
+            <Text role="body" size="xs">
               Shadow token: {elevation === "3x" ? "popover" : "popoverElevated"}
             </Text>
           </Stack>
@@ -180,7 +180,7 @@ export const NotClippedByOverflow: Story = {
         aria-label="Overflow test"
       >
         <Stack padding="sm">
-          <Text variant="caption">Still visible — portaled to document.body</Text>
+          <Text role="body" size="xs">Still visible — portaled to document.body</Text>
         </Stack>
       </Popover>
     </div>
