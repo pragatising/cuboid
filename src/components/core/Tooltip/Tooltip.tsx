@@ -73,7 +73,7 @@ function tooltipCssVars(tokens: ThemeTokens): Record<string, string> {
   const { functional } = tokens.colors;
   const tip = functional.tooltip;
   const layout = tokens.sizes.tooltip;
-  const caption = tokens.typography.text.caption;
+  const caption = tokens.typography.text.bodyXs;
   return {
     "--cube-tooltip-bg": tip.background,
     "--cube-tooltip-border": tip.border,
@@ -88,9 +88,9 @@ function tooltipCssVars(tokens: ThemeTokens): Record<string, string> {
     "--cube-z-index-tooltip": tokens.sizes.zIndex.tooltip,
     "--cube-sizes-borderWidth-thin": tokens.sizes.borderWidth.thin,
     "--cube-typography-fontFamily-base": tokens.typography.fontFamily.base,
-    "--cube-typography-text-caption-fontSize": caption.fontSize,
-    "--cube-typography-text-caption-fontWeight": String(caption.fontWeight),
-    "--cube-typography-text-caption-lineHeight": String(caption.lineHeight),
+    "--cube-typography-text-body-xs-fontSize": caption.fontSize,
+    "--cube-typography-text-body-xs-fontWeight": String(caption.fontWeight),
+    "--cube-typography-text-body-xs-lineHeight": String(caption.lineHeight),
   };
 }
 

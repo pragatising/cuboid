@@ -55,8 +55,8 @@ export function GraphCard({
           minWidth,
 
           // ── Visual defaults from theme ──────────────────────────────────────
-          background:    tokens.colors.functional.background.default,
-          border:        `${tokens.sizes.borderWidth.thin} solid ${tokens.colors.functional.border.muted}`,
+          background:    tokens.colors.global.bg.gray.light["1"],
+          border:        `${tokens.sizes.borderWidth.thin} solid ${tokens.colors.global.border.grayAlpha["2"]}`,
           borderRadius:  tokens.sizes.borderRadius.md,          // 8px
           boxShadow:     "none",
 

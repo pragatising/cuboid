@@ -2,7 +2,8 @@
 /**
  * Merge tokens/base/light.json, tokens/functional/colors/globals.json,
  * and every .json file under tokens/functional/components/ (recursive); resolve
- * {token.path} refs; write src/theme/output/theme.json (+ base scales in output/base.json).
+ * {token.path} refs; write src/theme/output/theme.json (foundation),
+ * token-output.json (component tokens), and base.json.
  *
  * Usage: node scripts/build-theme.mjs
  */
@@ -10,6 +11,7 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import { buildSpaceScaleFromPxSpace } from "./lib/spaceScale.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, "..");
@@ -208,6 +210,7 @@ function main() {
   const functionalShadowsDir = path.join(ROOT, "tokens/functional/shadows");
   const themeOutputDir = path.join(ROOT, "src/theme/output");
   const outPath = path.join(themeOutputDir, "theme.json");
+  const tokenOutPath = path.join(themeOutputDir, "token-output.json");
   const baseOutPath = path.join(themeOutputDir, "base.json");
 
   if (!fs.existsSync(lightPath)) {
@@ -267,6 +270,14 @@ function main() {
       }
       if (isPlain(doc.breadcrumb.sizes)) {
         componentLayoutMerge = deepMerge(componentLayoutMerge, { breadcrumb: doc.breadcrumb.sizes });
+      }
+    }
+    if (isPlain(doc.table)) {
+      if (isPlain(doc.table.color)) {
+        mergedColor = deepMerge(mergedColor, { table: doc.table.color });
+      }
+      if (isPlain(doc.table.sizes)) {
+        componentLayoutMerge = deepMerge(componentLayoutMerge, { table: doc.table.sizes });
       }
     }
     if (isPlain(doc.siteHeader)) {
@@ -527,7 +538,11 @@ function main() {
     );
     process.exit(1);
   }
-  const highlightShades = ["none", "neutral", "green", "blue", "yellow", "orange", "red"];
+  const highlightShades = Object.keys(highlightColorRoot).sort();
+  if (!highlightShades.length) {
+    console.error("Expected at least one color.highlight.* stop in highlight.json");
+    process.exit(1);
+  }
   const highlightColors = {};
   for (const shade of highlightShades) {
     const block = highlightColorRoot[shade];
@@ -565,6 +580,41 @@ function main() {
   const breadcrumbColors = {
     link: breadcrumbLink,
     separator: breadcrumbSeparator,
+  };
+
+  const tableHeader = uColor?.table?.header;
+  const tableBody = uColor?.table?.body;
+  const tableContainer = uColor?.table?.container;
+  if (
+    !isPlain(tableHeader) ||
+    typeof tableHeader.bgColor !== "string" ||
+    typeof tableHeader.fgColor !== "string" ||
+    typeof tableHeader.borderColor !== "string"
+  ) {
+    console.error(
+      "Expected resolved color.table.header.{bgColor,fgColor,borderColor} (tokens/functional/components/table/table.json)"
+    );
+    process.exit(1);
+  }
+  if (
+    !isPlain(tableBody) ||
+    typeof tableBody.bgColor !== "string" ||
+    typeof tableBody.fgColor !== "string" ||
+    typeof tableBody.borderColor !== "string"
+  ) {
+    console.error(
+      "Expected resolved color.table.body.{bgColor,fgColor,borderColor} (tokens/functional/components/table/table.json)"
+    );
+    process.exit(1);
+  }
+  if (!isPlain(tableContainer) || typeof tableContainer.borderColor !== "string") {
+    console.error("Expected resolved color.table.container.borderColor");
+    process.exit(1);
+  }
+  const tableColors = {
+    header: tableHeader,
+    body: tableBody,
+    container: tableContainer,
   };
 
   const siteHeaderColor = uColor?.siteHeader;
@@ -764,93 +814,6 @@ function main() {
     iconButton[variantName] = { unselected: v.base, selected: v.selected };
   }
 
-  // Alias-map tokens: color.bg / color.fg / color.border → ThemeTokens.colors.functional.*
-  const bg = uColor?.bg?.gray;
-  const fg = uColor?.fg;
-  const brd = uColor?.border;
-  const canvas = uColor?.canvas;
-  const text = uColor?.text;
-  if (!isPlain(bg) || !isPlain(fg) || !isPlain(brd) || !isPlain(canvas)) {
-    console.error("Expected resolved color.bg / color.fg / color.border / color.canvas in globals.json");
-    process.exit(1);
-  }
-
-  const background = {
-    default: uColor.bg.gray.light["01"],
-    muted: uColor.bg.gray.light["02"],
-    inset: uColor.canvas.inset,
-    emphasis: uColor.bg.gray.dark["07"],
-    disabled: uColor.bg.gray.light["03"],
-    transparent: "transparent",
-    inverse: uColor.bg.gray.dark["07"],
-    neutral: {
-      muted: uColor.bg.gray.light["04"],
-      emphasis: uColor.bg.gray.dark["05"],
-    },
-  };
-
-  const foreground = {
-    default: text?.default ?? uColor.fg.neutral.default,
-    muted: text?.muted ?? uColor.fg.neutral.muted,
-    onEmphasis: text?.inverted ?? uColor.fg.neutral.inverted,
-    disabled: text?.disabled ?? uColor.fg.neutral.disabled,
-    link: uColor.fg.link.default,
-    white: uColor.fg.neutral.inverted,
-    neutral: uColor.fg.neutral.default,
-  };
-
-  const border = {
-    default: uColor.border.gray["2"],
-    muted: uColor.border.grayAlpha["2"],
-    emphasis: uColor.border.gray["3"],
-    disabled: uColor.border.gray["1"],
-    transparent: "transparent",
-    translucent: uColor.border.grayAlpha["1"],
-    neutral: {
-      muted: uColor.border.gray["1"],
-      emphasis: uColor.border.gray["3"],
-    },
-  };
-
-  const syntax = uColor?.syntax;
-  if (!isPlain(syntax)) {
-    console.error("Expected resolved color.syntax in globals.json");
-    process.exit(1);
-  }
-
-  for (const [k, v] of Object.entries(background)) {
-    if (k === "neutral") continue;
-    if (typeof v !== "string") {
-      console.error(`Expected background.${k} to be a string`);
-      process.exit(1);
-    }
-  }
-  for (const [k, v] of Object.entries(background.neutral)) {
-    if (typeof v !== "string") {
-      console.error(`Expected background.neutral.${k} to be a string`);
-      process.exit(1);
-    }
-  }
-  for (const [k, v] of Object.entries(foreground)) {
-    if (typeof v !== "string") {
-      console.error(`Expected foreground.${k} to be a string`);
-      process.exit(1);
-    }
-  }
-  for (const [k, v] of Object.entries(border)) {
-    if (k === "neutral") continue;
-    if (typeof v !== "string") {
-      console.error(`Expected border.${k} to be a string`);
-      process.exit(1);
-    }
-  }
-  for (const [k, v] of Object.entries(border.neutral)) {
-    if (typeof v !== "string") {
-      console.error(`Expected border.neutral.${k} to be a string`);
-      process.exit(1);
-    }
-  }
-
   const globalColors = pickGlobalColors(uColor);
   assertGlobalColorLeaves(globalColors, "globalColors");
 
@@ -934,6 +897,7 @@ function main() {
       size: pick(control.extraSmall, "size"),
       borderRadius: pick(control.extraSmall, "borderRadius"),
       gap: pick(control.extraSmall, "gap"),
+      icon: pick(control.extraSmall, "icon"),
       paddingBlock: pick(control.extraSmall, "paddingBlock"),
       paddingInline: {
         condensed: pick(control.extraSmall, "paddingInline.condensed"),
@@ -945,6 +909,7 @@ function main() {
       size: pick(control.small, "size"),
       borderRadius: pick(control.small, "borderRadius"),
       gap: pick(control.small, "gap"),
+      icon: pick(control.small, "icon"),
       paddingBlock: pick(control.small, "paddingBlock"),
       paddingInline: {
         condensed: pick(control.small, "paddingInline.condensed"),
@@ -956,6 +921,7 @@ function main() {
       size: pick(control.medium, "size"),
       borderRadius: pick(control.medium, "borderRadius"),
       gap: pick(control.medium, "gap"),
+      icon: pick(control.medium, "icon"),
       paddingBlock: pick(control.medium, "paddingBlock"),
       paddingInline: {
         condensed: pick(control.medium, "paddingInline.condensed"),
@@ -967,6 +933,7 @@ function main() {
       size: pick(control.large, "size"),
       borderRadius: pick(control.large, "borderRadius"),
       gap: pick(control.large, "gap"),
+      icon: pick(control.large, "icon"),
       paddingBlock: pick(control.large, "paddingBlock"),
       paddingInline: {
         condensed: pick(control.large, "paddingInline.condensed"),
@@ -978,7 +945,7 @@ function main() {
 
   for (const stop of ["extraSmall", "small", "medium", "large"]) {
     const c = controlSizes[stop];
-    for (const field of ["size", "borderRadius", "gap", "paddingBlock"]) {
+    for (const field of ["size", "borderRadius", "gap", "icon", "paddingBlock"]) {
       if (typeof c[field] !== "string") {
         console.error(`Expected controlSizes.${stop}.${field} to be a string`);
         process.exit(1);
@@ -1041,15 +1008,37 @@ function main() {
     lg: breakpointSrc.lg,
   };
 
-  const spaceScale = uSize?.space;
-  const spaceKeys = ["1", "2", "3", "4", "5", "6", "8", "10", "12"];
-  if (!isPlain(spaceScale) || !spaceKeys.every((k) => typeof spaceScale[k] === "string")) {
-    console.error(
-      `Expected resolved size.space.{${spaceKeys.join(",")}} (from tokens/functional/size/space.json)`
-    );
+  const spaceScaleRaw = uSize?.space;
+  if (!isPlain(spaceScaleRaw)) {
+    console.error("Expected resolved size.space (from tokens/functional/size/space.json)");
     process.exit(1);
   }
-  const space = Object.fromEntries(spaceKeys.map((k) => [k, spaceScale[k]]));
+
+  const spacePxKeys = Object.keys(spaceScaleRaw)
+    .filter((k) => /^\d+$/.test(k))
+    .sort((a, b) => Number(a) - Number(b));
+
+  if (!spacePxKeys.length || typeof spaceScaleRaw["8"] !== "string") {
+    console.error("Expected size.space.8 (8px base) in space.json");
+    process.exit(1);
+  }
+
+  const space = Object.fromEntries(
+    spacePxKeys.map((k) => {
+      if (typeof spaceScaleRaw[k] !== "string") {
+        console.error(`Expected size.space.${k} to be a string`);
+        process.exit(1);
+      }
+      return [k, spaceScaleRaw[k]];
+    }),
+  );
+
+  const spaceScale = buildSpaceScaleFromPxSpace(space);
+
+  if (typeof spaceScale["1x"] !== "string") {
+    console.error("Expected 8pt spaceScale.1x from size.space.8");
+    process.exit(1);
+  }
 
   const stackScaleKeys = ["none", "xxs", "xs", "sm", "md", "lg", "xl", "xxl"];
 
@@ -1229,6 +1218,41 @@ function main() {
     breadcrumbSizes[key] = breadcrumbLayoutSrc[key];
   }
 
+  const tableLayoutSrc = uSize?.table;
+  if (!isPlain(tableLayoutSrc)) {
+    console.error(
+      "Expected resolved size.table.* (from table.sizes in components/table/table.json)"
+    );
+    process.exit(1);
+  }
+  if (typeof tableLayoutSrc.borderRadius !== "string") {
+    console.error("Expected size.table.borderRadius to be a string");
+    process.exit(1);
+  }
+  const tableDensityKeys = ["cellPaddingInline", "cellPaddingBlock", "rowHeight"];
+  const pickTableDensity = (block, label) => {
+    if (!isPlain(block)) {
+      console.error(`Expected size.table.density.${label}`);
+      process.exit(1);
+    }
+    const out = {};
+    for (const key of tableDensityKeys) {
+      if (typeof block[key] !== "string") {
+        console.error(`Expected size.table.density.${label}.${key} to be a string`);
+        process.exit(1);
+      }
+      out[key] = block[key];
+    }
+    return out;
+  };
+  const tableSizes = {
+    borderRadius: tableLayoutSrc.borderRadius,
+    density: {
+      dense: pickTableDensity(tableLayoutSrc.density?.dense, "dense"),
+      spacious: pickTableDensity(tableLayoutSrc.density?.spacious, "spacious"),
+    },
+  };
+
   const siteHeaderLayoutSrc = uSize?.siteHeader;
   if (!isPlain(siteHeaderLayoutSrc)) {
     console.error(
@@ -1344,6 +1368,28 @@ function main() {
     hitArea: resizeHandleSrc.hitArea,
   };
 
+  const focusRingSrc = uSize?.focusRing;
+  if (!isPlain(focusRingSrc)) {
+    console.error(
+      "Expected resolved size.focusRing.{width,offset} (from tokens/functional/size/outline.json)"
+    );
+    process.exit(1);
+  }
+  const focusRing = {
+    width:
+      typeof focusRingSrc.width === "number"
+        ? `${focusRingSrc.width}px`
+        : focusRingSrc.width,
+    offset:
+      typeof focusRingSrc.offset === "number"
+        ? `${focusRingSrc.offset}px`
+        : focusRingSrc.offset,
+  };
+  if (typeof focusRing.width !== "string" || typeof focusRing.offset !== "string") {
+    console.error("Expected size.focusRing.width and size.focusRing.offset to be px numbers or strings");
+    process.exit(1);
+  }
+
   const popoverLayoutSrc = uSize?.popover;
   if (!isPlain(popoverLayoutSrc)) {
     console.error(
@@ -1429,16 +1475,9 @@ function main() {
 
   const payload = {
     typography,
-    colors: {
-      functional: {
-        background,
-        foreground,
-        border,
-        syntax,
-      },
-    },
     sizes: {
       space,
+      spaceScale,
       stack: { gap: stackGap, padding: stackPadding },
       layout: layoutSizes,
       container: containerSizes,
@@ -1452,12 +1491,14 @@ function main() {
       icon: iconSizes,
       iconButton: iconButtonSizes,
       breadcrumb: breadcrumbSizes,
+      table: tableSizes,
       siteHeader: siteHeaderSizes,
       sheet: sheetSizes,
       sidebar: sidebarSizes,
       popover: popoverLayout,
       actionMenu: actionMenuSizes,
       resizeHandle: resizeHandleSizes,
+      focusRing,
       zIndex,
     },
     buttonPrimary,
@@ -1471,6 +1512,7 @@ function main() {
     tooltipColors,
     iconButton,
     breadcrumbColors,
+    tableColors,
     siteHeaderColors,
     overlayColors,
     sheetColors,
@@ -1481,11 +1523,76 @@ function main() {
     globalColors,
   };
 
-  fs.mkdirSync(themeOutputDir, { recursive: true });
-  fs.writeFileSync(outPath, JSON.stringify(payload, null, 2) + "\n", "utf8");
-  console.log(`Wrote ${outPath}`);
+  const componentColorKeys = [
+    "buttonPrimary",
+    "buttonSecondary",
+    "buttonGhost",
+    "buttonDanger",
+    "buttonRounded",
+    "linkColors",
+    "highlightColors",
+    "pillColors",
+    "tooltipColors",
+    "iconButton",
+    "breadcrumbColors",
+    "tableColors",
+    "siteHeaderColors",
+    "overlayColors",
+    "sheetColors",
+    "sidebarColors",
+    "popoverColors",
+    "actionMenuColors",
+  ];
 
-  // Base scales live in a sibling file so theme.json stays smaller (functional + layout only).
+  const foundationSizeKeys = [
+    "space",
+    "spaceScale",
+    "stack",
+    "layout",
+    "container",
+    "borderRadius",
+    "borderWidth",
+    "breakpoints",
+    "zIndex",
+    "focusRing",
+  ];
+
+  const componentSizeKeys = [
+    "highlight",
+    "control",
+    "tooltip",
+    "pill",
+    "icon",
+    "iconButton",
+    "breadcrumb",
+    "table",
+    "siteHeader",
+    "sheet",
+    "sidebar",
+    "popover",
+    "actionMenu",
+    "resizeHandle",
+  ];
+
+  const tokenOutput = {
+    ...Object.fromEntries(componentColorKeys.map((k) => [k, payload[k]])),
+    sizes: Object.fromEntries(componentSizeKeys.map((k) => [k, payload.sizes[k]])),
+  };
+
+  const foundation = {
+    typography: payload.typography,
+    sizes: Object.fromEntries(foundationSizeKeys.map((k) => [k, payload.sizes[k]])),
+    globalColors: payload.globalColors,
+    shadows: payload.shadows,
+  };
+
+  fs.mkdirSync(themeOutputDir, { recursive: true });
+  fs.writeFileSync(outPath, JSON.stringify(foundation, null, 2) + "\n", "utf8");
+  console.log(`Wrote ${outPath}`);
+  fs.writeFileSync(tokenOutPath, JSON.stringify(tokenOutput, null, 2) + "\n", "utf8");
+  console.log(`Wrote ${tokenOutPath}`);
+
+  // Base scales live in a sibling file so theme.json stays smaller (foundation only).
   fs.writeFileSync(baseOutPath, JSON.stringify(base, null, 2) + "\n", "utf8");
   console.log(`Wrote ${baseOutPath}`);
 }

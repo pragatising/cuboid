@@ -86,6 +86,7 @@ export function ResizeHandle({
   );
 
   const classNames = [
+    "cube-focusable",
     styles.ResizeHandle,
     styles[`ResizeHandle--${orientation}`],
     EDGE_CLASS[edge],

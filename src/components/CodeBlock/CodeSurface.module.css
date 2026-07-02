@@ -54,11 +54,11 @@
   z-index: 1;
   user-select: none;
   min-width: 2.4rem;
-  padding-left: var(--cube-space-12);
-  padding-right: var(--cube-space-10);
+  padding-left: var(--cube-space-1.5x);
+  padding-right: var(--cube-space-1.25x);
   border-right: var(--cube-sizes-borderWidth-thin) solid
-    var(--cube-colors-functional-border-muted);
-  background: var(--cube-colors-functional-background-default);
+    var(--cube-color-border-gray-alpha-2);
+  background: var(--cube-color-bg-gray-light-1);
   transition: background-color 0.1s ease;
 }
 
@@ -67,9 +67,9 @@
   flex: 1;
   min-width: 2ch;
   text-align: right;
-  padding-right: var(--cube-space-8);
+  padding-right: var(--cube-space-1x);
   font-variant-numeric: tabular-nums;
-  color: var(--cube-colors-functional-foreground-muted);
+  color: var(--cube-color-text-muted);
 }
 
 .watchBtn {
@@ -79,7 +79,7 @@
   align-self: stretch;
   flex-shrink: 0;
   width: 0.875rem;
-  margin-right: var(--cube-space-6);
+  margin-right: var(--cube-space-0.75x);
   padding: 0;
   border: none;
   background: transparent;
@@ -113,30 +113,30 @@
   align-self: stretch;
   flex-shrink: 0;
   width: 1.25rem;
-  margin-left: var(--cube-space-6);
+  margin-left: var(--cube-space-0.75x);
   background: none;
   border: none;
   padding: 0;
   cursor: pointer;
-  color: var(--cube-colors-functional-foreground-muted);
+  color: var(--cube-color-text-muted);
 }
 
 .collapseSpacer {
   display: inline-block;
   flex-shrink: 0;
   width: 1.25rem;
-  margin-left: var(--cube-space-6);
+  margin-left: var(--cube-space-0.75x);
 }
 
 .content {
   flex: 1;
   min-width: 0;
-  padding-right: var(--cube-space-12);
+  padding-right: var(--cube-space-1.5x);
   padding-left: calc(
-    var(--cube-space-12) + var(--code-line-depth, 0) *
+    var(--cube-space-1.5x) + var(--code-line-depth, 0) *
       var(--code-surface-indent, 1.5rem)
   );
-  background: var(--cube-colors-functional-background-default);
+  background: var(--cube-color-bg-gray-light-1);
   transition: background-color 0.1s ease;
 }
 
@@ -155,8 +155,8 @@
 }
 
 .tokenOperator {
-  color: var(--cube-colors-functional-foreground-muted);
-  padding-inline: var(--cube-space-6);
+  color: var(--cube-color-text-muted);
+  padding-inline: var(--cube-space-0.75x);
 }
 
 .tokenKey {
@@ -205,11 +205,11 @@
 }
 
 .tokenMuted {
-  color: var(--cube-colors-functional-foreground-muted);
+  color: var(--cube-color-text-muted);
 }
 
 .tokenPlain {
-  color: var(--cube-colors-functional-foreground-default);
+  color: var(--cube-color-text-default);
 }
 
 .tokenComment {

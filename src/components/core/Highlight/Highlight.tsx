@@ -32,7 +32,7 @@ function highlightCssVars(
 
 /**
  * Inline marker emphasis inside body copy. Renders semantic `<mark>` and inherits
- * surrounding font metrics — pair with {@link Text} `variant="bodyMedium"`.
+ * surrounding font metrics — pair with {@link Text} `role="body" size="sm"`.
  */
 export function Highlight({
   color = "yellow",

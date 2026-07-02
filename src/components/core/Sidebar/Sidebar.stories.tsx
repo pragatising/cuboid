@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Title, Primary, Controls, Subtitle } from "@storybook/blocks";
-import { HomeIcon, SettingsIcon } from "../../../icons/material";
+import { DockToLeftIcon, DockToRightIcon, HomeIcon, SettingsIcon } from "../../../icons/material";
 import { ActionMenuItem } from "../ActionMenu";
 import { Button } from "../Button";
 import { Icon } from "../Icon";
@@ -34,6 +34,11 @@ function SidebarNavItem({
   );
 }
 
+function DockToggleIcon() {
+  const { collapsed } = useSidebar();
+  return collapsed ? <DockToLeftIcon /> : <DockToRightIcon />;
+}
+
 function NavRail() {
   const { collapsed } = useSidebar();
 
@@ -62,7 +67,7 @@ function SidebarContent({
   return (
     <>
       <Sidebar.Header>
-        {!collapsed && <Text variant="titleSmall">Cube</Text>}
+        {!collapsed && <Text role="heading" size="sm">Cube</Text>}
         {showInternalToggle && <Sidebar.Toggle floating={floatingToggle} />}
       </Sidebar.Header>
       <Sidebar.Body>
@@ -70,7 +75,7 @@ function SidebarContent({
       </Sidebar.Body>
       <Sidebar.Footer>
         {!collapsed && (
-          <Text variant="caption" color="muted">
+          <Text role="body" size="xs" color="muted">
             Footer slot
           </Text>
         )}
@@ -108,10 +113,10 @@ function AppShell({
       </Sidebar>
       <SplitLayout.Main>
         <Stack gap="md" padding="lg">
-          <Text variant="titleMedium">Main content</Text>
-          <Text variant="bodyMedium" color="muted">
+          <Text role="heading" size="md">Main content</Text>
+          <Text role="body" size="sm" color="muted">
             Sidebar stays in document flow — unlike Sheet, it does not portal or scrim the page.
-            Collapsed rail width is <code>5.6rem</code>; nav rows use{" "}
+            Collapsed rail width is <code>3.6rem</code>; nav rows use{" "}
             <code>ActionMenuItem</code> (labeled expanded, <code>iconOnly</code> collapsed).
           </Text>
         </Stack>
@@ -135,7 +140,7 @@ const meta: Meta<typeof Sidebar> = {
             <code>tokens/functional/components/sidebar/</code>. Pair with{" "}
             <code>SplitLayout</code> for a full app frame. Nav demos compose{" "}
             <code>ActionMenuItem</code> — full row when expanded, <code>iconOnly</code> in the{" "}
-            <code>5.6rem</code> rail.
+            <code>3.6rem</code> rail.
           </Subtitle>
           <Primary />
           <Controls />
@@ -175,7 +180,7 @@ export const ExternalToggle: Story = {
             <Button onClick={() => setCollapsed((value) => !value)}>
               {collapsed ? "Expand sidebar" : "Collapse sidebar"}
             </Button>
-            <Text variant="bodyMedium" color="muted">
+            <Text role="body" size="sm" color="muted">
               Collapse can be driven from outside the sidebar via controlled{" "}
               <code>collapsed</code> / <code>onCollapsedChange</code>.
             </Text>
@@ -190,17 +195,44 @@ export const FloatingToggle: Story = {
   render: () => <AppShell showInternalToggle floatingToggle />,
 };
 
+export const DockToggleCorner: Story = {
+  render: function DockToggleCornerStory() {
+    return (
+      <SplitLayout>
+        <Sidebar aria-label="Primary" defaultCollapsed width="sm">
+          <Sidebar.Header>
+            <Sidebar.Toggle floating floatingAlign="corner">
+              <DockToggleIcon />
+            </Sidebar.Toggle>
+          </Sidebar.Header>
+          <Sidebar.Body>
+            <NavRail />
+          </Sidebar.Body>
+        </Sidebar>
+        <SplitLayout.Main>
+          <Stack gap="md" padding="lg">
+            <Text role="body" size="sm" color="muted">
+              Custom toggle icons via <code>Sidebar.Toggle</code> children.{" "}
+              <code>floatingAlign="corner"</code> keeps the control top-right when collapsed.
+            </Text>
+          </Stack>
+        </SplitLayout.Main>
+      </SplitLayout>
+    );
+  },
+};
+
 export const RightEdge: Story = {
   render: () => (
     <SplitLayout>
       <SplitLayout.Main>
         <Stack gap="md" padding="lg">
-          <Text variant="titleMedium">Main first</Text>
+          <Text role="heading" size="md">Main first</Text>
         </Stack>
       </SplitLayout.Main>
       <Sidebar aria-label="Secondary" edge="right" width="sm">
         <Sidebar.Header>
-          <Text variant="titleSmall">Panel</Text>
+          <Text role="heading" size="sm">Panel</Text>
           <Sidebar.Toggle />
         </Sidebar.Header>
         <Sidebar.Body>

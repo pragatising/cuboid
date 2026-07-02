@@ -6,8 +6,8 @@ import { Stack } from "../Stack";
 import { Text } from "../Text";
 
 const shellStyle: React.CSSProperties = {
-  background: "var(--cube-colors-functional-background-muted, #f9f9f8)",
-  outline: "1px dashed var(--cube-colors-functional-border-default, #e2e1dd)",
+  background: "var(--cube-color-bg-gray-light-2, #f9f9f8)",
+  outline: "1px dashed var(--cube-color-border-gray-2, #e2e1dd)",
   outlineOffset: "-1px",
 };
 
@@ -32,8 +32,8 @@ const meta: Meta<typeof Container> = {
             <div style={shellStyle}>
               <Container width="page">
                 <Stack paddingBlock="lg" gap="sm">
-                  <Text variant="titleSmall">Portfolio shell</Text>
-                  <Text variant="bodyMedium" color="muted">
+                  <Text role="heading" size="sm">Portfolio shell</Text>
+                  <Text role="body" size="sm" color="muted">
                     Use <code>width=&quot;page&quot;</code> for the site wrapper.
                   </Text>
                 </Stack>
@@ -47,7 +47,7 @@ const meta: Meta<typeof Container> = {
               <Container width="page">
                 <Stack paddingBlock="lg">
                   <Container width="content" paddingInline={false} center={false}>
-                    <Text variant="bodyMedium">
+                    <Text role="body" size="sm">
                       Narrow reading column via <code>width=&quot;content&quot;</code>.
                     </Text>
                   </Container>
@@ -82,8 +82,8 @@ export const PageWidth: Story = {
     <div style={shellStyle}>
       <Container width="page">
         <Stack paddingBlock="xl" gap="sm">
-          <Text variant="titleMedium">Page shell</Text>
-          <Text variant="bodyMedium" color="muted">
+          <Text role="heading" size="md">Page shell</Text>
+          <Text role="body" size="sm" color="muted">
             Max width from <code>layout.pageMaxWidth</code> (56rem). Centered with token padding.
           </Text>
         </Stack>
@@ -98,11 +98,11 @@ export const ContentWidth: Story = {
     <div style={shellStyle}>
       <Container width="page">
         <Stack paddingBlock="xl" gap="md">
-          <Text variant="titleSmall">Inside page shell</Text>
+          <Text role="heading" size="sm">Inside page shell</Text>
           <Container width="content" paddingInline={false} center={false}>
             <Stack gap="sm">
-              <Text variant="titleMedium">Article column</Text>
-              <Text variant="bodyMedium" color="muted">
+              <Text role="heading" size="md">Article column</Text>
+              <Text role="body" size="sm" color="muted">
                 Max width from <code>layout.contentMaxWidth</code> (40rem).
               </Text>
             </Stack>
@@ -119,7 +119,7 @@ export const FullWidth: Story = {
     <div style={shellStyle}>
       <Container width="full">
         <Stack paddingBlock="lg">
-          <Text variant="bodyMedium">
+          <Text role="body" size="sm">
             <code>width=&quot;full&quot;</code> — no max-width cap.
           </Text>
         </Stack>
@@ -134,8 +134,8 @@ export const MinHeightScreen: Story = {
     <div style={shellStyle}>
       <Container width="page" minHeight="screen">
         <Stack paddingBlock="lg" gap="sm">
-          <Text variant="titleSmall">Full viewport shell</Text>
-          <Text variant="bodyMedium" color="muted">
+          <Text role="heading" size="sm">Full viewport shell</Text>
+          <Text role="body" size="sm" color="muted">
             <code>minHeight=&quot;screen&quot;</code> sets <code>min-height: 100svh</code>.
           </Text>
         </Stack>
@@ -154,7 +154,7 @@ export const Playground: Story = {
     <div style={shellStyle}>
       <Container {...args}>
         <Stack paddingBlock="lg">
-          <Text variant="bodyMedium">{args.children}</Text>
+          <Text role="body" size="sm">{args.children}</Text>
         </Stack>
       </Container>
     </div>

@@ -24,9 +24,9 @@ const meta: Meta<typeof Divider> = {
           <div className="cube-docs-section">
             <h3 className="cube-docs-section__title">Default</h3>
             <Stack gap="sm">
-              <Text variant="bodyMedium">Section above</Text>
+              <Text role="body" size="sm">Section above</Text>
               <Divider />
-              <Text variant="bodyMedium">Section below</Text>
+              <Text role="body" size="sm">Section below</Text>
             </Stack>
           </div>
 
@@ -37,7 +37,7 @@ const meta: Meta<typeof Divider> = {
               {["First item", "Second item", "Third item"].map((label) => (
                 <Stack as="li" key={label} gap="none">
                   <Stack paddingBlock="sm">
-                    <Text variant="bodyMedium">{label}</Text>
+                    <Text role="body" size="sm">{label}</Text>
                   </Stack>
                   <Divider />
                 </Stack>
@@ -65,9 +65,9 @@ type Story = StoryObj<typeof Divider>;
 export const Default: Story = {
   render: () => (
     <Stack gap="sm">
-      <Text variant="bodyMedium">Content above the rule.</Text>
+      <Text role="body" size="sm">Content above the rule.</Text>
       <Divider />
-      <Text variant="bodyMedium">Content below the rule.</Text>
+      <Text role="body" size="sm">Content below the rule.</Text>
     </Stack>
   ),
 };
@@ -75,11 +75,11 @@ export const Default: Story = {
 export const Muted: Story = {
   render: () => (
     <Stack gap="sm">
-      <Text variant="bodyMedium" color="muted">
+      <Text role="body" size="sm" color="muted">
         Softer separation with <code>color=&quot;muted&quot;</code>.
       </Text>
       <Divider color="muted" />
-      <Text variant="bodyMedium" color="muted">
+      <Text role="body" size="sm" color="muted">
         Uses <code>border.grayAlpha.2</code> (legacy alias: <code>color=&quot;muted&quot;</code>).
       </Text>
     </Stack>
@@ -98,8 +98,8 @@ export const ListRows: Story = {
       ].map((item) => (
         <Stack as="li" key={item.title} gap="none">
           <Stack paddingBlock="sm" gap="xxs">
-            <Text variant="bodyMedium">{item.title}</Text>
-            <Text variant="caption" color="muted">
+            <Text role="body" size="sm">{item.title}</Text>
+            <Text role="body" size="xs" color="muted">
               {item.summary}
             </Text>
           </Stack>

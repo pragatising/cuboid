@@ -1,12 +1,17 @@
 #!/usr/bin/env node
 /**
- * Convert the raw typography export (px, Figma-ish structure) into a theme-shaped
- * typography token file that `scripts/build-theme.mjs` can merge + unwrap.
+ * Build theme-shaped typography tokens for `scripts/build-theme.mjs`.
  *
- * Input:  tokens/functional/typography/typography.json
- * Output: tokens/functional/typography/theme.tokens.json
+ * Input:  tokens/functional/typography/typography.json — Figma primitives (px)
+ * Output: tokens/functional/typography/theme.tokens.json — generated (gitignored)
  *
- * px → rem uses a 16px base by default (override with TYPOGRAPHY_BASE_PX).
+ * Text styles are inferred from typography.json:
+ *   - heading + size → text.sizes.{size} + heading.weight.* + heading.lineHeight[fontPx]
+ *   - body + size    → text.sizes.{size} + text.weight.* + text.lineHeight[fontPx]
+ *   - subhead + step → text.subhead.*
+ *   - code           → mono stack + xs / 0.875em
+ *
+ * px → rem uses a 16px base (override with TYPOGRAPHY_BASE_PX).
  */
 
 import fs from "fs";
@@ -16,8 +21,15 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, "..");
 
-const INPUT = path.join(ROOT, "tokens/functional/typography/typography.json");
+const TYPOGRAPHY_INPUT = path.join(ROOT, "tokens/functional/typography/typography.json");
 const OUTPUT = path.join(ROOT, "tokens/functional/typography/theme.tokens.json");
+
+const WEIGHT_SEMANTIC = {
+  "400": "regular",
+  "500": "medium",
+  "600": "semibold",
+  "700": "bold",
+};
 
 const BASE_PX = Number(process.env.TYPOGRAPHY_BASE_PX ?? 16);
 if (!Number.isFinite(BASE_PX) || BASE_PX <= 0) {
@@ -26,6 +38,11 @@ if (!Number.isFinite(BASE_PX) || BASE_PX <= 0) {
 }
 
 const isPlain = (x) => x !== null && typeof x === "object" && !Array.isArray(x);
+
+function fail(message) {
+  console.error(`build-typography-theme: ${message}`);
+  process.exit(1);
+}
 
 function get(obj, p) {
   const parts = p.split(".");
@@ -50,11 +67,14 @@ function pxToRem(px) {
   return `${rounded}rem`;
 }
 
+function capitalize(size) {
+  return size.charAt(0).toUpperCase() + size.slice(1);
+}
+
 function ensureQuotedFamily(name) {
   if (typeof name !== "string" || !name.trim()) return undefined;
   const trimmed = name.trim();
   if (trimmed.includes(" ") || trimmed.includes("-")) {
-    // keep already quoted names, otherwise wrap in single quotes
     if (trimmed.startsWith("'") || trimmed.startsWith("\"")) return trimmed;
     return `'${trimmed}'`;
   }
@@ -65,178 +85,194 @@ function token(v) {
   return { value: v };
 }
 
-function lineHeightRatio(fontPx, lhPx, fallback) {
+function lineHeightRatio(fontPx, lhPx, fallback = 1.5) {
   if (Number.isFinite(fontPx) && Number.isFinite(lhPx) && fontPx > 0) {
     return Math.round((lhPx / fontPx) * 10000) / 10000;
   }
   return fallback;
 }
 
-function subheadTextRole(raw, sizePath, lineHeightPath, weight, lineHeightFallback) {
-  const sizePx = leafValue(get(raw, sizePath));
-  const lhPx = leafValue(get(raw, lineHeightPath));
+function resolveRef(raw, refPath, label) {
+  const value = leafValue(get(raw, refPath));
+  if (value === undefined) fail(`Missing ${label} at typography.json → ${refPath}`);
+  return value;
+}
+
+/** Line-height px from typography.json — keys are font size px, values are line height px. */
+function mapLineHeightPx(lhTable, fontSizePx, label) {
+  if (!isPlain(lhTable)) fail(`Missing ${label} table`);
+
+  const key = String(fontSizePx);
+  const lhPx = leafValue(lhTable[key]);
+  if (!Number.isFinite(lhPx)) {
+    fail(`Missing ${label}.${key} for ${fontSizePx}px font (add "font px → line height px" entry)`);
+  }
+  return lhPx;
+}
+
+function buildFontSizeScale(raw) {
+  const sizes = get(raw, "text.sizes");
+  if (!isPlain(sizes)) fail("typography.json is missing text.sizes");
+
+  const fontSize = {};
+  for (const [key, node] of Object.entries(sizes)) {
+    const px = leafValue(node);
+    const rem = pxToRem(px);
+    if (!rem) fail(`Invalid px for text.sizes.${key}: ${px}`);
+    fontSize[key] = token(rem);
+  }
+
+  if (fontSize.xl) fontSize.xxl = token(fontSize.xl.value);
+
+  return fontSize;
+}
+
+function buildFontWeightScale(raw) {
+  const weights = get(raw, "text.weight");
+  if (!isPlain(weights)) fail("typography.json is missing text.weight");
+
+  const fontWeight = {};
+  for (const [key, node] of Object.entries(weights)) {
+    const value = leafValue(node);
+    if (!Number.isFinite(value)) fail(`Invalid weight for text.weight.${key}: ${value}`);
+    fontWeight[WEIGHT_SEMANTIC[key] ?? key] = token(value);
+  }
+
+  return fontWeight;
+}
+
+function buildRoleSizeStyle(raw, role, sizeKey, families) {
+  const fontSizePx = resolveRef(raw, `text.sizes.${sizeKey}`, `${role}.${sizeKey}.fontSize`);
+  const rem = pxToRem(fontSizePx);
+  if (!rem) fail(`Could not convert text.sizes.${sizeKey} (${fontSizePx}px) to rem`);
+
+  if (role === "heading") {
+    const fontWeight = resolveRef(raw, "heading.weight.600", `${role}.${sizeKey}.fontWeight`);
+    const lhPx = mapLineHeightPx(
+      get(raw, "heading.lineHeight"),
+      fontSizePx,
+      `heading.lineHeight for ${role}.${sizeKey}`,
+    );
+
+    return {
+      fontSize: token(rem),
+      fontWeight: token(fontWeight),
+      lineHeight: token(lineHeightRatio(fontSizePx, lhPx, 1.25)),
+    };
+  }
+
+  if (role === "body") {
+    const fontWeight = resolveRef(raw, "text.weight.400", `${role}.${sizeKey}.fontWeight`);
+    const lhPx = mapLineHeightPx(
+      get(raw, "text.lineHeight"),
+      fontSizePx,
+      `text.lineHeight for ${role}.${sizeKey}`,
+    );
+
+    return {
+      fontSize: token(rem),
+      fontWeight: token(fontWeight),
+      lineHeight: token(lineHeightRatio(fontSizePx, lhPx, 1.5)),
+    };
+  }
+
+  fail(`Unknown role "${role}"`);
+}
+
+function buildSubheadStyle(raw, step) {
+  const sizePath = `text.subhead.size.${step}`;
+  const weightPath = "text.subhead.weight.600";
+
+  const fontSizePx = resolveRef(raw, sizePath, `subhead.${step}.fontSize`);
+  const rem = pxToRem(fontSizePx);
+  if (!rem) fail(`Could not convert ${sizePath} to rem`);
+
+  const fontWeight = resolveRef(raw, weightPath, `subhead.${step}.fontWeight`);
+  const lhPx = mapLineHeightPx(
+    get(raw, "text.subhead.lineHeight"),
+    fontSizePx,
+    `text.subhead.lineHeight for subhead.${step}`,
+  );
+
   return {
-    fontSize: token(pxToRem(sizePx) ?? "0.875rem"),
-    fontWeight: token(weight),
-    lineHeight: token(lineHeightRatio(sizePx, lhPx, lineHeightFallback)),
+    fontSize: token(rem),
+    fontWeight: token(fontWeight),
+    lineHeight: token(lineHeightRatio(fontSizePx, lhPx, 1.5)),
   };
 }
 
-function main() {
-  if (!fs.existsSync(INPUT)) {
-    console.error(`Missing input: ${INPUT}`);
-    process.exit(1);
+function buildTextTokens(raw, families) {
+  const sizes = Object.keys(get(raw, "text.sizes") ?? {});
+  if (!sizes.length) fail("typography.json text.sizes is empty");
+
+  const text = {};
+
+  for (const size of sizes) {
+    text[`heading${capitalize(size)}`] = buildRoleSizeStyle(raw, "heading", size, families);
+    text[`body${capitalize(size)}`] = buildRoleSizeStyle(raw, "body", size, families);
   }
 
-  const raw = JSON.parse(fs.readFileSync(INPUT, "utf8"));
+  for (const step of ["xs", "sm", "md"]) {
+    text[`subhead${capitalize(step)}`] = buildSubheadStyle(raw, step);
+  }
+
+  const xsPx = resolveRef(raw, "text.sizes.xs", "codeBlock.fontSize");
+  const xsRem = pxToRem(xsPx);
+  text.codeBlock = {
+    fontSize: token(xsRem),
+    fontWeight: token(resolveRef(raw, "text.weight.400", "codeBlock.fontWeight")),
+    lineHeight: token(
+      lineHeightRatio(xsPx, mapLineHeightPx(get(raw, "text.lineHeight"), xsPx, "text.lineHeight for codeBlock"), 1.25),
+    ),
+    fontFamily: token(families.mono),
+  };
+
+  text.inlineCode = {
+    fontSize: token("0.875em"),
+    fontWeight: token(resolveRef(raw, "text.weight.400", "inlineCode.fontWeight")),
+    lineHeight: token(1.5),
+    fontFamily: token(families.mono),
+  };
+
+  return text;
+}
+
+function main() {
+  if (!fs.existsSync(TYPOGRAPHY_INPUT)) fail(`Missing ${TYPOGRAPHY_INPUT}`);
+
+  const raw = JSON.parse(fs.readFileSync(TYPOGRAPHY_INPUT, "utf8"));
 
   const systemStack = leafValue(get(raw, "fontStack.system"));
   const sans = leafValue(get(raw, "fontStack.sansSerif"));
   const mono = leafValue(get(raw, "fontStack.monospace"));
 
-  const baseFamily =
-    typeof sans === "string" && typeof systemStack === "string"
-      ? `${ensureQuotedFamily(sans)}, ${systemStack}`
-      : typeof systemStack === "string"
-        ? systemStack
-        : "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif";
-
-  const monoFamily =
-    typeof mono === "string"
-      ? mono
-      : "ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace";
-
-  const sizeXsPx = leafValue(get(raw, "text.sizes.xs"));
-  const sizeSmPx = leafValue(get(raw, "text.sizes.sm"));
-  const sizeMdPx = leafValue(get(raw, "text.sizes.md"));
-  const sizeLgPx = leafValue(get(raw, "text.sizes.lg"));
-  const sizeXlPx = leafValue(get(raw, "text.sizes.xl"));
-
-  // Map raw sizes to theme scale.
-  const fontSize = {
-    xs: token(pxToRem(sizeXsPx) ?? "0.75rem"),
-    sm: token(pxToRem(sizeSmPx) ?? "0.875rem"),
-    md: token(pxToRem(sizeMdPx) ?? "1rem"),
-    lg: token(pxToRem(sizeLgPx) ?? "1.25rem"),
-    xl: token(pxToRem(sizeXlPx) ?? "1.5rem"),
-    xxl: token(pxToRem(sizeXlPx) ?? "2rem"),
+  const families = {
+    base:
+      typeof sans === "string" && typeof systemStack === "string"
+        ? `${ensureQuotedFamily(sans)}, ${systemStack}`
+        : typeof systemStack === "string"
+          ? systemStack
+          : "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif",
+    mono:
+      typeof mono === "string"
+        ? mono
+        : "ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace",
   };
-
-  const weightRegular = leafValue(get(raw, "text.weight.400"));
-  const weightMedium = leafValue(get(raw, "text.weight.500"));
-  const weightSemibold = leafValue(get(raw, "text.weight.600"));
-  const weightBold = leafValue(get(raw, "text.weight.700"));
-
-  const fontWeight = {
-    regular: token(Number.isFinite(weightRegular) ? weightRegular : 400),
-    medium: token(Number.isFinite(weightMedium) ? weightMedium : 500),
-    semibold: token(Number.isFinite(weightSemibold) ? weightSemibold : 600),
-    bold: token(Number.isFinite(weightBold) ? weightBold : 700),
-  };
-
-  const lineHeight = {
-    tight: token(1.25),
-    normal: token(1.5),
-    relaxed: token(1.75),
-  };
-
-  const subheadWeightSemibold =
-    leafValue(get(raw, "text.subhead.weight.600")) ?? fontWeight.semibold.value;
 
   const theme = {
     typography: {
       fontFamily: {
-        base: token(baseFamily),
-        mono: token(monoFamily),
+        base: token(families.base),
+        mono: token(families.mono),
       },
-      fontSize,
-      fontWeight,
-      lineHeight,
-      text: {
-        display: {
-          fontSize: token(fontSize.xxl.value),
-          fontWeight: token(fontWeight.semibold.value),
-          lineHeight: token(lineHeight.tight.value),
-        },
-        titleLarge: {
-          fontSize: token(fontSize.xl.value),
-          fontWeight: token(fontWeight.semibold.value),
-          lineHeight: token(lineHeight.tight.value),
-        },
-        titleMedium: {
-          fontSize: token(fontSize.md.value),
-          fontWeight: token(fontWeight.semibold.value),
-          lineHeight: token(lineHeight.tight.value),
-        },
-        titleSmall: {
-          fontSize: token(fontSize.sm.value),
-          fontWeight: token(fontWeight.semibold.value),
-          lineHeight: token(lineHeight.normal.value),
-        },
-        subtitle: {
-          fontSize: token(fontSize.md.value),
-          fontWeight: token(fontWeight.regular.value),
-          lineHeight: token(lineHeight.normal.value),
-        },
-        subheadXs: subheadTextRole(
-          raw,
-          "text.subhead.size.xs",
-          "text.subhead.lineHeight.12",
-          subheadWeightSemibold,
-          lineHeight.tight.value
-        ),
-        subheadSm: subheadTextRole(
-          raw,
-          "text.subhead.size.sm",
-          "text.subhead.lineHeight.16",
-          subheadWeightSemibold,
-          lineHeight.normal.value
-        ),
-        subheadMd: subheadTextRole(
-          raw,
-          "text.subhead.size.md",
-          "text.subhead.lineHeight.20",
-          subheadWeightSemibold,
-          lineHeight.normal.value
-        ),
-        bodyLarge: {
-          fontSize: token(fontSize.md.value),
-          fontWeight: token(fontWeight.regular.value),
-          lineHeight: token(lineHeight.relaxed.value),
-        },
-        bodyMedium: {
-          fontSize: token(fontSize.sm.value),
-          fontWeight: token(fontWeight.regular.value),
-          lineHeight: token(lineHeight.normal.value),
-        },
-        bodyStrong: {
-          fontSize: token(fontSize.sm.value),
-          fontWeight: token(fontWeight.semibold.value),
-          lineHeight: token(lineHeight.normal.value),
-        },
-        bodySmall: {
-          fontSize: token(fontSize.xs.value),
-          fontWeight: token(fontWeight.regular.value),
-          lineHeight: token(lineHeight.normal.value),
-        },
-        caption: {
-          fontSize: token(fontSize.xs.value),
-          fontWeight: token(fontWeight.regular.value),
-          lineHeight: token(lineHeight.tight.value),
-        },
-        codeBlock: {
-          fontSize: token(fontSize.xs.value),
-          fontWeight: token(fontWeight.regular.value),
-          lineHeight: token(lineHeight.tight.value),
-          fontFamily: token(monoFamily),
-        },
-        inlineCode: {
-          fontSize: token("0.875em"),
-          fontWeight: token(fontWeight.regular.value),
-          lineHeight: token(lineHeight.normal.value),
-          fontFamily: token(monoFamily),
-        },
+      fontSize: buildFontSizeScale(raw),
+      fontWeight: buildFontWeightScale(raw),
+      lineHeight: {
+        tight: token(1.25),
+        normal: token(1.5),
+        relaxed: token(1.75),
       },
+      text: buildTextTokens(raw, families),
     },
   };
 
@@ -246,4 +282,3 @@ function main() {
 }
 
 main();
-

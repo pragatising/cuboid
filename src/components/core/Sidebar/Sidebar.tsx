@@ -52,9 +52,18 @@ export interface SidebarRegionProps {
   children?: React.ReactNode;
 }
 
+export type SidebarToggleFloatingAlign = "corner" | "center";
+
 export interface SidebarToggleProps {
   /** Pin the toggle to the top inner corner of the sidebar shell. */
   floating?: boolean;
+  /**
+   * Where the floating toggle sits when the rail is collapsed.
+   * @default "center"
+   */
+  floatingAlign?: SidebarToggleFloatingAlign;
+  /** Replace the default chevron icon(s). */
+  children?: React.ReactNode;
   /** Override the default expand/collapse label. */
   "aria-label"?: string;
   theme?: CubeTheme;
@@ -151,6 +160,8 @@ function CollapseIcon({ edge, collapsed }: { edge: SidebarEdge; collapsed: boole
 
 function SidebarToggle({
   floating = false,
+  floatingAlign = "center",
+  children,
   "aria-label": ariaLabel,
   theme,
   className,
@@ -164,6 +175,9 @@ function SidebarToggle({
       className={[
         styles.Sidebar__toggle,
         floating ? styles["Sidebar__toggle--floating"] : null,
+        floating && floatingAlign === "corner"
+          ? styles["Sidebar__toggle--floating-align-corner"]
+          : null,
         className,
       ]
         .filter(Boolean)
@@ -178,7 +192,7 @@ function SidebarToggle({
         theme={theme}
         onClick={toggleCollapsed}
       >
-        <CollapseIcon edge={edge} collapsed={collapsed} />
+        {children ?? <CollapseIcon edge={edge} collapsed={collapsed} />}
       </IconButton>
     </div>
   );

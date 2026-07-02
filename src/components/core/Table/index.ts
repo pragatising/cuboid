@@ -1,0 +1,25 @@
+export {
+  Table,
+  TableRoot,
+  TableElement,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHeadCell,
+  TableCell,
+  SimpleTable,
+} from "./Table";
+export type {
+  TableProps,
+  TableRootProps,
+  TableHeaderProps,
+  TableBodyProps,
+  TableRowProps,
+  TableHeadCellProps,
+  TableCellProps,
+  TableRowLayout,
+  TableCellAlign,
+  TableDensity,
+  TableLines,
+  SimpleTableProps,
+} from "./Table";

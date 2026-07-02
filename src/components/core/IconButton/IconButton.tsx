@@ -1,13 +1,13 @@
 import React from "react";
 import { useTheme } from "../../../theme/ThemeContext";
 import type { CubeTheme, IconButtonFunctionalColors, ThemeTokens } from "../../../theme/types";
-import themeOutput from "../../../theme/output/theme.json";
+import { tokenOutput } from "../../../theme/tokenOutput";
 import { Tooltip } from "../Tooltip";
 import type { TooltipPlacement } from "../Tooltip";
 import styles from "./IconButton.module.css";
 
-/** Keys of `color.iconButton` in tokens / `theme.json` — add a variant in JSON + matching CSS module class `IconButton--<name>`. */
-export type IconButtonVariant = keyof typeof themeOutput.iconButton;
+/** Keys of `iconButton` in `token-output.json` — add a variant in JSON + matching CSS module class `IconButton--<name>`. */
+export type IconButtonVariant = keyof typeof tokenOutput.iconButton;
 export type IconButtonSize = "xs" | "sm" | "md" | "lg";
 
 type IconButtonStop = keyof ThemeTokens["sizes"]["iconButton"];
@@ -102,6 +102,7 @@ export function IconButton({
   const variantClass = styleMap[`IconButton--${variant}`];
 
   const className = [
+    "cube-focusable",
     styles.IconButton,
     variantClass,
     selectionClass,
@@ -122,7 +123,6 @@ export function IconButton({
           [`--cube-iconButton-${cssSeg}-borderRadius`]: geom.borderRadius,
           [`--cube-iconButton-${cssSeg}-icon`]: geom.icon,
           "--cube-sizes-borderWidth-thin": tokens.sizes.borderWidth.thin,
-          "--cube-colors-functional-foreground-link": functional.foreground.link,
           ...iconButtonCssVars(functional.iconButton),
         } as React.CSSProperties;
       })()

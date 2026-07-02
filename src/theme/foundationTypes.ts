@@ -7,6 +7,10 @@ import type {
   LayoutTokens,
   ShadowTokens,
   SpaceTokens,
+  SpaceScaleTokens,
+  SpaceScale,
+  SpacePxKey,
+  SpaceToken,
   StackGapTokens,
   StackPaddingTokens,
   Typography,
@@ -19,6 +23,7 @@ export type FoundationTypography = Omit<Typography, "button">;
 /** Layout and spacing scales — not component geometry (control, pill, sheet, …). */
 export interface FoundationSizes {
   space: SpaceTokens;
+  spaceScale: SpaceScaleTokens;
   stack: { gap: StackGapTokens; padding: StackPaddingTokens };
   layout: LayoutTokens;
   borderRadius: BorderRadiusTokens;

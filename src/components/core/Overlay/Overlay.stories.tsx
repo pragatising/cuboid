@@ -27,7 +27,7 @@ function OverlayDemo({
       <Stack gap="sm">
         <Button onClick={() => setOpen(true)}>Show {variant} overlay</Button>
         <div style={demoPageStyle}>
-          <Text variant="bodyMedium">
+          <Text role="body" size="sm">
             Page content stays visible behind the scrim.{" "}
             {variant === "none"
               ? "The none variant is transparent and does not block clicks."

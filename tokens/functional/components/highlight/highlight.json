@@ -6,28 +6,36 @@
         "fgColor": { "value": "{color.fg.neutral.subtle}" }
       },
       "neutral": {
-        "bgColor": { "value": "{color.bg.gray.light.03}" },
-        "fgColor": { "value": "{color.fg.neutral.muted}" }
+        "bgColor": { "value": "{color.bg.gray.light.3}" },
+        "fgColor": { "value": "{color.fg.neutral.contrast}" }
       },
       "green": {
-        "bgColor": { "value": "{base.color.scale.green.0}" },
-        "fgColor": { "value": "{color.fg.neutral.muted}" }
+        "bgColor": { "value": "#dbf8d8" },
+        "fgColor": { "value": "{color.fg.neutral.contrast}" }
       },
       "blue": {
-        "bgColor": { "value": "{base.color.scale.blue.1}" },
-        "fgColor": { "value": "{color.fg.neutral.muted}" }
+        "bgColor": { "value": "#e1eafb" },
+        "fgColor": { "value": "{color.fg.neutral.contrast}" }
       },
       "yellow": {
-        "bgColor": { "value": "{base.color.scale.yellow.2}" },
-        "fgColor": { "value": "{color.fg.neutral.muted}" }
+        "bgColor": { "value": "#ffe100" },
+        "fgColor": { "value": "{color.fg.neutral.contrast}" }
       },
       "orange": {
         "bgColor": { "value": "{base.color.scale.orange.1}" },
-        "fgColor": { "value": "{color.fg.neutral.muted}" }
+        "fgColor": { "value": "{color.fg.neutral.contrast}" }
       },
       "red": {
         "bgColor": { "value": "{base.color.scale.red.3}" },
-        "fgColor": { "value": "{color.fg.neutral.muted}" }
+        "fgColor": { "value": "{color.fg.neutral.contrast}" }
+      },
+      "lime": {
+        "bgColor": { "value": "#cbff00" },
+        "fgColor": { "value": "{color.fg.neutral.contrast}" }
+      },
+      "purple": {
+        "bgColor": { "value": "#eeddff" },
+        "fgColor": { "value": "{color.fg.neutral.contrast}" }
       }
     }
   }

@@ -7,9 +7,9 @@
   border-radius: var(--cube-breadcrumb-item-borderRadius);
   border: none;
   font-family: var(--cube-typography-fontFamily-base);
-  font-size: var(--cube-typography-text-body-medium-fontSize);
+  font-size: var(--cube-typography-text-body-sm-fontSize);
   font-weight: 400;
-  line-height: var(--cube-typography-text-body-medium-lineHeight);
+  line-height: var(--cube-typography-text-body-sm-lineHeight);
   text-decoration: none;
   white-space: nowrap;
   transition: background-color 120ms ease, color 120ms ease;
@@ -21,7 +21,7 @@ a.BreadcrumbLink.BreadcrumbLink--link:link,
 a.BreadcrumbLink.BreadcrumbLink--link:visited {
   color: var(--cube-breadcrumb-link-fg-rest);
   background-color: var(--cube-breadcrumb-link-bg-rest);
-  font-size: var(--cube-typography-text-body-medium-fontSize);
+  font-size: var(--cube-typography-text-body-sm-fontSize);
 }
 
 a.BreadcrumbLink.BreadcrumbLink--link:hover {

@@ -1,6 +1,6 @@
 {
   "name": "@sragatiping/cuboid",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Cube — React components and design tokens for data views, tables, and themed UI.",
   "keywords": [
     "react",
@@ -28,12 +28,14 @@
     },
     "./style.css": "./dist/style.css",
     "./theme.css": "./src/theme/output/theme.css",
-    "./components.css": "./src/theme/output/components.css"
+    "./components.css": "./src/theme/output/components.css",
+    "./token-output.json": "./src/theme/output/token-output.json"
   },
   "files": [
     "dist",
     "src/theme/output/theme.css",
-    "src/theme/output/components.css"
+    "src/theme/output/components.css",
+    "src/theme/output/token-output.json"
   ],
   "scripts": {
     "dev": "vite",
@@ -65,17 +67,18 @@
     "@storybook/react": "^8.6.18",
     "@storybook/react-vite": "^8.6.18",
     "@storybook/test": "^8.6.18",
-    "@types/react": "^18.3.1",
-    "@types/react-dom": "^18.3.1",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^4.3.1",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
     "storybook": "^8.6.18",
     "typescript": "^5.5.3",
     "vite": "^5.4.1",
     "vite-plugin-dts": "^4.0.2"
   },
   "dependencies": {
-    "@material-symbols-svg/react": "^0.9.0"
+    "@material-symbols-svg/react": "^0.9.0",
+    "@tanstack/react-table": "^8.21.3"
   }
 }

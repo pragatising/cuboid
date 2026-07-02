@@ -118,7 +118,7 @@ export const WithHeaderAndFooter: Story = {
       <ActionMenuList.Header>
         <Stack direction="horizontal" gap="sm" style={{ alignItems: "center" }}>
           <span id="menu-header-title" style={{ flex: 1 }}>
-            <Text variant="bodySmall" style={{ fontWeight: 600 }}>
+            <Text role="body" size="xs" weight="semibold">
               Filter
             </Text>
           </span>

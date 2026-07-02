@@ -35,10 +35,10 @@ export function JsonFieldRow({ label, value, style }: JsonFieldRowProps) {
         ...style,
       }}
     >
-      <span style={{ ...text, color: tokens.colors.functional.foreground.default }}>
+      <span style={{ ...text, color: tokens.colors.global.text.default }}>
         {label}:
       </span>
-      <span style={{ ...text, color: tokens.colors.functional.foreground.muted }}>
+      <span style={{ ...text, color: tokens.colors.global.text.muted }}>
         {value}
       </span>
     </GraphRow>

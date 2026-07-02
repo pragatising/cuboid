@@ -3,17 +3,17 @@ import type { ActionMenuFunctionalColors, ThemeTokens } from "../../../theme/typ
 export function actionMenuCssVars(tokens: ThemeTokens): Record<string, string> {
   const { actionMenu } = tokens.colors.functional;
   const sizes = tokens.sizes.actionMenu;
-  const caption = tokens.typography.text.caption;
-  const body = tokens.typography.text.bodyMedium;
+  const caption = tokens.typography.text.bodyXs;
+  const body = tokens.typography.text.bodySm;
 
   const out: Record<string, string> = {
     "--cube-typography-fontFamily-base": tokens.typography.fontFamily.base,
-    "--cube-typography-text-body-medium-fontSize": body.fontSize,
-    "--cube-typography-text-body-medium-fontWeight": String(body.fontWeight),
-    "--cube-typography-text-body-medium-lineHeight": String(body.lineHeight),
-    "--cube-typography-text-caption-fontSize": caption.fontSize,
-    "--cube-typography-text-caption-fontWeight": String(caption.fontWeight),
-    "--cube-typography-text-caption-lineHeight": String(caption.lineHeight),
+    "--cube-typography-text-body-sm-fontSize": body.fontSize,
+    "--cube-typography-text-body-sm-fontWeight": String(body.fontWeight),
+    "--cube-typography-text-body-sm-lineHeight": String(body.lineHeight),
+    "--cube-typography-text-body-xs-fontSize": caption.fontSize,
+    "--cube-typography-text-body-xs-fontWeight": String(caption.fontWeight),
+    "--cube-typography-text-body-xs-lineHeight": String(caption.lineHeight),
     "--cube-color-focus": tokens.colors.global.focus,
   };
 

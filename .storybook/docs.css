@@ -9,38 +9,38 @@ body,
 .sbdocs,
 .sbdocs-content {
   font-family: var(--cube-typography-fontFamily-base);
-  font-size: var(--cube-typography-text-body-medium-fontSize);
-  font-weight: var(--cube-typography-text-body-medium-fontWeight);
-  line-height: var(--cube-typography-text-body-medium-lineHeight);
-  color: var(--cube-colors-functional-foreground-default);
+  font-size: var(--cube-typography-text-body-sm-fontSize);
+  font-weight: var(--cube-typography-text-body-sm-fontWeight);
+  line-height: var(--cube-typography-text-body-sm-lineHeight);
+  color: var(--cube-color-text-default);
   -webkit-font-smoothing: antialiased;
   box-shadow: none;
 }
 
 .sbdocs-title,
-.sbdocs h1,
-.sbdocs-content h1 {
-  font-size: var(--cube-typography-text-body-medium-fontSize);
+.sbdocs h1:not([class*="Text--"]),
+.sbdocs-content h1:not([class*="Text--"]) {
+  font-size: var(--cube-typography-text-body-sm-fontSize);
   font-weight: 600;
-  line-height: var(--cube-typography-text-body-medium-lineHeight);
+  line-height: var(--cube-typography-text-body-sm-lineHeight);
   letter-spacing: -0.01em;
   margin-bottom: 0.75rem;
 }
 
 .sbdocs-subtitle,
-.sbdocs h2,
-.sbdocs-content h2 {
-  font-size: var(--cube-typography-text-body-medium-fontSize);
-  font-weight: var(--cube-typography-text-body-medium-fontWeight);
-  line-height: var(--cube-typography-text-body-medium-lineHeight);
-  color: var(--cube-colors-functional-foreground-muted);
+.sbdocs h2:not([class*="Text--"]),
+.sbdocs-content h2:not([class*="Text--"]) {
+  font-size: var(--cube-typography-text-body-sm-fontSize);
+  font-weight: var(--cube-typography-text-body-sm-fontWeight);
+  line-height: var(--cube-typography-text-body-sm-lineHeight);
+  color: var(--cube-color-text-muted);
   margin-bottom: 0.75rem;
 }
 
-/* DocsContent styled wrapper — theme.size.s3; keep in sync with preview.ts bodyMediumPx */
+/* DocsContent styled wrapper — theme.size.s3; keep in sync with preview.ts bodySmPx */
 .sbdocs .sbdocs-content {
-  font-size: var(--cube-typography-text-body-medium-fontSize);
-  line-height: var(--cube-typography-text-body-medium-lineHeight);
+  font-size: var(--cube-typography-text-body-sm-fontSize);
+  line-height: var(--cube-typography-text-body-sm-lineHeight);
   
 }
 
@@ -58,7 +58,7 @@ body,
 
 .cube-docs-section {
   margin-top: 0;
-  font-size: var(--cube-typography-text-body-medium-fontSize);
+  font-size: var(--cube-typography-text-body-sm-fontSize);
 }
 
 .sbdocs-title + .cube-docs-section,
@@ -73,7 +73,7 @@ body,
 .cube-docs-section:not(.cube-docs-section--last) {
   padding-bottom: calc(var(--cube-docs-section-gap) / 2);
   margin-bottom: calc(var(--cube-docs-section-gap) / 2);
-  border-bottom: var(--cube-sizes-borderWidth-thin) solid var(--cube-colors-functional-border-default);
+  border-bottom: var(--cube-sizes-borderWidth-thin) solid var(--cube-color-border-gray-2);
 }
 
 .cube-docs-sections + .cube-docs-section,
@@ -95,10 +95,10 @@ body,
 .cube-docs-section__title {
   margin: 0 0 var(--cube-stack-gap-sm);
   font-family: var(--cube-typography-fontFamily-base);
-  font-size: var(--cube-typography-text-body-medium-fontSize);
+  font-size: var(--cube-typography-text-body-sm-fontSize);
   font-weight: 600;
-  line-height: var(--cube-typography-text-body-medium-lineHeight);
-  color: var(--cube-colors-functional-foreground-default);
+  line-height: var(--cube-typography-text-body-sm-lineHeight);
+  color: var(--cube-color-text-default);
 }
 
 .cube-docs-stack,
@@ -124,14 +124,14 @@ body,
   margin: 0;
   padding-left: 1.25rem;
   max-width: 40rem;
-  font-size: var(--cube-typography-text-body-medium-fontSize);
+  font-size: var(--cube-typography-text-body-sm-fontSize);
   line-height: 1.6;
 }
 
 .cube-docs-note {
   margin: 0;
   max-width: 30rem;
-  font-size: var(--cube-typography-text-body-medium-fontSize);
+  font-size: var(--cube-typography-text-body-sm-fontSize);
   line-height: 1.5;
 }
 
@@ -139,15 +139,15 @@ body,
   display: inline-block;
   flex-shrink: 0;
   width: 5.5rem;
-  font-size: var(--cube-typography-text-body-medium-fontSize);
-  line-height: var(--cube-typography-text-body-medium-lineHeight);
+  font-size: var(--cube-typography-text-body-sm-fontSize);
+  line-height: var(--cube-typography-text-body-sm-lineHeight);
   opacity: 0.7;
 }
 
-/* Storybook docs prose forces 16px on spans — keep matrix labels at 14px (bodyMedium) */
+/* Storybook docs prose forces 16px on spans — keep matrix labels at 14px (body sm) */
 .sbdocs span.cube-docs-matrix-label {
-  font-size: var(--cube-typography-text-body-medium-fontSize);
-  line-height: var(--cube-typography-text-body-medium-lineHeight);
+  font-size: var(--cube-typography-text-body-sm-fontSize);
+  line-height: var(--cube-typography-text-body-sm-lineHeight);
 }
 
 .cube-docs-matrix-label--narrow {
@@ -155,12 +155,12 @@ body,
 }
 
 .cube-docs-caption {
-  font-size: var(--cube-typography-text-body-small-fontSize);
+  font-size: var(--cube-typography-text-body-xs-fontSize);
   opacity: 0.6;
 }
 
 .cube-docs-table-row--focus td {
-  background-color: var(--cube-colors-functional-background-neutral-muted, var(--cube-colors-functional-background-muted));
+  background-color: var(--cube-color-bg-gray-light-4, var(--cube-color-bg-gray-light-2));
 }
 
 .cube-docs-table td:first-child,
@@ -176,14 +176,14 @@ body,
 
 .cube-docs-table th,
 .cube-docs-table td {
-  padding: var(--cube-space-6) var(--cube-space-8);
-  border-bottom: var(--cube-sizes-borderWidth-thin) solid var(--cube-colors-functional-border-default);
+  padding: var(--cube-space-0.75x) var(--cube-space-1x);
+  border-bottom: var(--cube-sizes-borderWidth-thin) solid var(--cube-color-border-gray-2);
   vertical-align: top;
 }
 
 .cube-docs-table th {
   font-weight: 600;
-  color: var(--cube-colors-functional-foreground-default);
+  color: var(--cube-color-text-default);
 }
 
 /* ── Inline code chips ─────────────────────────────────────────────────────── */
@@ -191,20 +191,20 @@ body,
 .sbdocs :not(pre) > code {
   font-family: var(--cube-typography-fontFamily-mono), ui-monospace, SFMono-Regular, Menlo, Monaco,
     Consolas, "Liberation Mono", "Courier New", monospace;
-  font-size: var(--cube-typography-text-body-small-fontSize);
+  font-size: var(--cube-typography-text-body-xs-fontSize);
   font-weight: 500;
-  padding: var(--cube-space-2) var(--cube-space-6);
+  padding: var(--cube-space-0.25x) var(--cube-space-0.75x);
   border-radius: var(--cube-sizes-borderRadius-sm);
-  border: var(--cube-sizes-borderWidth-thin) solid var(--cube-colors-functional-border-default);
-  background-color: var(--cube-colors-functional-background-muted);
-  color: var(--cube-colors-functional-foreground-neutral);
+  border: var(--cube-sizes-borderWidth-thin) solid var(--cube-color-border-gray-2);
+  background-color: var(--cube-color-bg-gray-light-2);
+  color: var(--cube-color-fg-neutral-default);
 }
 
 /* ── Autodocs props / controls tables ──────────────────────────────────────── */
 
 .sbdocs-table,
 .docblock-argstable {
-  font-size: var(--cube-typography-text-body-small-fontSize);
+  font-size: var(--cube-typography-text-body-xs-fontSize);
 }
 
 .sbdocs-table th,
@@ -220,24 +220,24 @@ body,
 /* Storybook docs prose sets 16px on spans — restore Cuboid component typography */
 .sbdocs span.cube-Pill,
 .sbdocs a.cube-Pill {
-  font-size: var(--cube-typography-text-body-small-fontSize, 0.75rem);
+  font-size: var(--cube-typography-text-body-xs-fontSize, 0.75rem);
   font-weight: 500;
   line-height: 1;
 }
 
-.sbdocs span.cube-Pill.cube-Pill--caption,
-.sbdocs a.cube-Pill.cube-Pill--caption {
-  font-size: var(--cube-typography-text-caption-fontSize, 0.75rem);
+.sbdocs span.cube-Pill.cube-Pill--bodyXs,
+.sbdocs a.cube-Pill.cube-Pill--bodyXs {
+  font-size: var(--cube-typography-text-body-xs-fontSize, 0.75rem);
 }
 
-.sbdocs span.cube-Pill.cube-Pill--bodyMedium,
-.sbdocs a.cube-Pill.cube-Pill--bodyMedium {
-  font-size: var(--cube-typography-text-body-medium-fontSize, 0.875rem);
+.sbdocs span.cube-Pill.cube-Pill--bodySm,
+.sbdocs a.cube-Pill.cube-Pill--bodySm {
+  font-size: var(--cube-typography-text-body-sm-fontSize, 0.875rem);
 }
 
-.sbdocs span.cube-Pill.cube-Pill--bodyLarge,
-.sbdocs a.cube-Pill.cube-Pill--bodyLarge {
-  font-size: var(--cube-typography-text-body-large-fontSize, 1.25rem);
+.sbdocs span.cube-Pill.cube-Pill--bodyMd,
+.sbdocs a.cube-Pill.cube-Pill--bodyMd {
+  font-size: var(--cube-typography-text-body-md-fontSize, 1.25rem);
 }
 
 /* Docs canvas — no dashed/solid preview frame (Storybook PreviewContainer chrome) */
@@ -255,6 +255,6 @@ body,
   box-shadow: none !important;
 }
 .docs-story {
-  border: 1px solid var(--cube-colors-functional-border-default);
+  border: 1px solid var(--cube-color-border-gray-2);
   border-radius: .4rem
 }

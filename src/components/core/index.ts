@@ -1,6 +1,22 @@
 export { Stack } from "./Stack";
 export type { StackProps, StackGap, StackPadding, StackSpacing, LayoutWidth } from "./Stack";
 
+export { Table, SimpleTable } from "./Table";
+export type {
+  TableProps,
+  TableRootProps,
+  TableHeaderProps,
+  TableBodyProps,
+  TableRowProps,
+  TableHeadCellProps,
+  TableCellProps,
+  TableRowLayout,
+  TableCellAlign,
+  TableDensity,
+  TableLines,
+  SimpleTableProps,
+} from "./Table";
+
 export { Container } from "./Container";
 export type { ContainerProps, ContainerWidth } from "./Container";
 
@@ -8,7 +24,7 @@ export { Box } from "./Box";
 export type {
   BoxProps,
   BoxBackground,
-  BoxBorder,
+  BoxBorderColor,
   BoxBorderRadius,
   BoxForeground,
   BoxOverflow,
@@ -24,7 +40,7 @@ export { Highlight } from "./Highlight";
 export type { HighlightProps, HighlightColor } from "./Highlight";
 
 export { Text } from "./Text";
-export type { TextProps, TextVariant, TextColor } from "./Text";
+export type { TextProps, TextColor, TextRole, TextSize, TextTokenKey, TextWeight } from "./Text";
 
 export { Button } from "./Button";
 export type { ButtonProps, ButtonShape, ButtonSize, ButtonVariant } from "./Button";

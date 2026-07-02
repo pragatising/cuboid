@@ -41,7 +41,7 @@ export function JsonObjectRow({ label, children, style }: JsonObjectRowProps) {
           fontFamily: tokens.typography.fontFamily.base,
           fontSize:   tokens.typography.fontSize.sm,
           lineHeight: String(tokens.typography.lineHeight.normal),
-          color:      tokens.colors.functional.foreground.default,
+          color:      tokens.colors.global.text.default,
           flex:       1,
         }}
       >

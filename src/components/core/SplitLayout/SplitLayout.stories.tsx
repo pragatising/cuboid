@@ -23,13 +23,13 @@ export const WithSidebar: Story = {
     <SplitLayout>
       <Sidebar aria-label="Primary" width="sm">
         <Sidebar.Body>
-          <Text variant="bodyMedium">Sidebar</Text>
+          <Text role="body" size="sm">Sidebar</Text>
         </Sidebar.Body>
       </Sidebar>
       <SplitLayout.Main>
         <Stack gap="md" padding="lg">
-          <Text variant="titleMedium">Main</Text>
-          <Text variant="bodyMedium" color="muted">
+          <Text role="heading" size="md">Main</Text>
+          <Text role="body" size="sm" color="muted">
             Flex row shell — sidebar does not shrink; main grows and can scroll independently.
           </Text>
         </Stack>

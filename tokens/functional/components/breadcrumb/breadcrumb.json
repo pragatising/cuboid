@@ -9,7 +9,7 @@
         },
         "bgColor": {
           "rest": { "value": "{color.canvas.transparent}" },
-          "hover": { "value": "{color.bg.gray.light.03}" },
+          "hover": { "value": "{color.bg.gray.light.3}" },
           "active": { "value": "{color.canvas.transparent}" }
         }
       },

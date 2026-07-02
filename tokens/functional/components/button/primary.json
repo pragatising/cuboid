@@ -13,7 +13,7 @@
             "value": "{base.color.scale.gray.13}"
           },
           "disabled": {
-            "value": "{color.bg.gray.light.04}"
+            "value": "{color.bg.gray.light.4}"
           }
         },
         "borderColor": {

@@ -4,10 +4,10 @@
       "outlined": {
         "base": {
           "bgColor": {
-            "rest": { "value": "{color.bg.gray.light.01}" },
-            "hover": { "value": "{color.bg.gray.light.02}" },
-            "pressed": { "value": "{color.bg.gray.light.04}" },
-            "disabled": { "value": "{color.bg.gray.light.04}" }
+            "rest": { "value": "{color.bg.gray.light.1}" },
+            "hover": { "value": "{color.bg.gray.light.2}" },
+            "pressed": { "value": "{color.bg.gray.light.4}" },
+            "disabled": { "value": "{color.bg.gray.light.4}" }
           },
           "borderColor": {
             "rest": { "value": "{color.border.gray.3}" },
@@ -27,7 +27,7 @@
             "rest": { "value": "{base.color.scale.blue.2}" },
             "hover": { "value": "{base.color.scale.blue.5}" },
             "pressed": { "value": "{base.color.scale.blue.4}" },
-            "disabled": { "value": "{color.bg.gray.light.03}" }
+            "disabled": { "value": "{color.bg.gray.light.3}" }
           },
           "borderColor": {
             "rest": { "value": "{base.color.scale.blue.9}" },

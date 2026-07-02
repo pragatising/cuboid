@@ -6,7 +6,7 @@
           "rest": { "value": "{base.color.scale.red.9}" },
           "hover": { "value": "{base.color.scale.red.10}" },
           "pressed": { "value": "{base.color.scale.red.10}" },
-          "disabled": { "value": "{color.bg.gray.light.04}" }
+          "disabled": { "value": "{color.bg.gray.light.4}" }
         },
         "borderColor": {
           "rest": { "value": "{base.color.scale.red.10}" },

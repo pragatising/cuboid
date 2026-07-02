@@ -10,7 +10,7 @@
         "md": { "value": "{size.container.sidebarWidthMd}" },
         "lg": { "value": "{size.container.sidebarWidthLg}" }
       },
-      "widthMinimized": { "value": "5.6rem" },
+      "widthMinimized": { "value": "3.6rem" },
       "minWidth": { "value": "{size.container.sidebarMinWidth}" },
       "maxWidth": { "value": "{size.container.sidebarMaxWidth}" },
       "padding": { "value": "{size.space.8}" },

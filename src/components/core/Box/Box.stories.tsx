@@ -16,14 +16,20 @@ const meta: Meta<typeof Box> = {
         <>
           <Title />
           <Subtitle>
-            Styled surface + flex layout — background, border, and radius from functional
-            tokens; gap, padding, and direction from Stack.
+            Styled surface + flex layout — colors from global token paths; gap,
+            padding, and direction from Stack.
           </Subtitle>
 
           <div className="cube-docs-section">
             <h3 className="cube-docs-section__title">Bordered panel</h3>
-            <Box border="default" borderRadius="lg" background="default" padding="md" style={{ maxWidth: "24rem" }}>
-              <Text variant="bodyMedium">
+            <Box
+              borderColor="border.gray.2"
+              borderRadius="lg"
+              background="bg.gray.light.1"
+              padding="md"
+              style={{ maxWidth: "24rem" }}
+            >
+              <Text role="body" size="sm">
                 Default background, default border, large radius.
               </Text>
             </Box>
@@ -41,9 +47,9 @@ type Story = StoryObj<typeof Box>;
 
 export const Playground: Story = {
   args: {
-    border: "default",
+    borderColor: "border.gray.2",
     borderRadius: "lg",
-    background: "default",
+    background: "bg.gray.light.1",
     padding: "md",
     children: "Content",
   },
@@ -51,8 +57,13 @@ export const Playground: Story = {
 
 export const InsetSurface: Story = {
   render: () => (
-    <Box border="muted" borderRadius="md" background="inset" padding="sm">
-      <Text variant="bodySmall" color="text.muted">
+    <Box
+      borderColor="border.grayAlpha.2"
+      borderRadius="md"
+      background="canvas.inset"
+      padding="sm"
+    >
+      <Text role="body" size="xs" color="text.muted">
         Inset background with muted border — similar to nested JSON rows.
       </Text>
     </Box>
@@ -61,12 +72,20 @@ export const InsetSurface: Story = {
 
 export const HorizontalLayout: Story = {
   render: () => (
-    <Box border="default" borderRadius="lg" background="default" padding="sm" direction="horizontal" gap="sm" align="center">
-      <Box background="inset" borderRadius="sm" padding="xs">
-        <Text variant="caption">A</Text>
+    <Box
+      borderColor="border.gray.2"
+      borderRadius="lg"
+      background="bg.gray.light.1"
+      padding="sm"
+      direction="horizontal"
+      gap="sm"
+      align="center"
+    >
+      <Box background="canvas.inset" borderRadius="sm" padding="xs">
+        <Text role="body" size="xs">A</Text>
       </Box>
-      <Box background="inset" borderRadius="sm" padding="xs">
-        <Text variant="caption">B</Text>
+      <Box background="canvas.inset" borderRadius="sm" padding="xs">
+        <Text role="body" size="xs">B</Text>
       </Box>
     </Box>
   ),
@@ -75,10 +94,16 @@ export const HorizontalLayout: Story = {
 export const NestedInStack: Story = {
   render: () => (
     <Stack gap="md" style={{ maxWidth: "20rem" }}>
-      <Text variant="titleSmall">API response</Text>
-      <Box border="default" borderRadius="lg" overflow="hidden" direction="vertical" gap="none">
-        <Box background="default" padding="sm">
-          <Text variant="codeBlock" as="div">
+      <Text role="heading" size="sm">API response</Text>
+      <Box
+        borderColor="border.gray.2"
+        borderRadius="lg"
+        overflow="hidden"
+        direction="vertical"
+        gap="none"
+      >
+        <Box background="bg.gray.light.1" padding="sm">
+          <Text role="code" code="block" as="div">
             {'{ "status": "ok" }'}
           </Text>
         </Box>

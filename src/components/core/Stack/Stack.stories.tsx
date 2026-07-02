@@ -34,21 +34,21 @@ const demoBoxStyle: React.CSSProperties = {
   minWidth: "2rem",
   minHeight: "2rem",
   padding: "0.25rem 0.5rem",
-  background: "var(--cube-color-bg-gray-light-03, #f4f4f2)",
-  border: "1px solid var(--cube-colors-functional-border-default, #d8d7d4)",
+  background: "var(--cube-color-bg-gray-light-3, #f4f4f2)",
+  border: "1px solid var(--cube-color-border-gray-2, #d8d7d4)",
   borderRadius: "0.375rem",
   fontSize: "0.875rem",
 };
 
 const paddedContainerStyle: React.CSSProperties = {
-  background: "var(--cube-color-bg-gray-light-03, #f4f4f2)",
+  background: "var(--cube-color-bg-gray-light-3, #f4f4f2)",
   borderRadius: "0.375rem",
 };
 
 function GapScaleRow({ gap }: { gap: StackGap }) {
   return (
     <Stack direction="horizontal" gap="sm" align="center">
-      <Text variant="bodySmall" color="muted" style={{ minWidth: "7.5rem" }}>
+      <Text role="body" size="xs" color="muted" style={{ minWidth: "7.5rem" }}>
         <code>gap=&quot;{gap}&quot;</code>
       </Text>
       <Stack direction="horizontal" gap={gap} align="center">
@@ -65,7 +65,7 @@ function GapScaleRow({ gap }: { gap: StackGap }) {
 function PaddingScaleRow({ padding }: { padding: StackPadding }) {
   return (
     <Stack direction="horizontal" gap="sm" align="stretch">
-      <Text variant="bodySmall" color="muted" style={{ minWidth: "7.5rem", alignSelf: "center" }}>
+      <Text role="body" size="xs" color="muted" style={{ minWidth: "7.5rem", alignSelf: "center" }}>
         <code>padding=&quot;{padding}&quot;</code>
       </Text>
       <Stack padding={padding} style={paddedContainerStyle}>
@@ -116,12 +116,12 @@ const meta: Meta<typeof Stack> = {
             <h3 className="cube-docs-section__title">Directional padding</h3>
             <Stack gap="sm">
               <Stack padding="md" style={paddedContainerStyle}>
-                <Text variant="bodyMedium">
+                <Text role="body" size="sm">
                   <code>padding=&quot;md&quot;</code> (all sides)
                 </Text>
               </Stack>
               <Stack padding="md" paddingInline="lg" style={paddedContainerStyle}>
-                <Text variant="bodyMedium">
+                <Text role="body" size="sm">
                   <code>padding=&quot;md&quot;</code>{" "}
                   <code>paddingInline=&quot;lg&quot;</code>
                 </Text>
@@ -131,7 +131,7 @@ const meta: Meta<typeof Stack> = {
                 paddingInline="lg"
                 style={paddedContainerStyle}
               >
-                <Text variant="bodyMedium">
+                <Text role="body" size="sm">
                   <code>paddingBlock=&quot;xs&quot;</code>{" "}
                   <code>paddingInline=&quot;lg&quot;</code>
                 </Text>
@@ -141,12 +141,12 @@ const meta: Meta<typeof Stack> = {
 
           <div className="cube-docs-section">
             <h3 className="cube-docs-section__title">Responsive direction</h3>
-            <Text variant="bodySmall" color="muted">
+            <Text role="body" size="xs" color="muted">
               Vertical below md, horizontal at md+ — resize the preview frame to see it change.
             </Text>
             <Stack direction={{ sm: "vertical", md: "horizontal" }} gap="xs" align="center">
-              <Text variant="bodyMedium">Label</Text>
-              <Text variant="bodyMedium">Value</Text>
+              <Text role="body" size="sm">Label</Text>
+              <Text role="body" size="sm">Value</Text>
             </Stack>
           </div>
 
@@ -192,9 +192,9 @@ export const Playground: Story = {
   },
   render: ({ align, justify, ...args }) => (
     <Stack {...args} align={align || undefined} justify={justify || undefined}>
-      <Text variant="bodyMedium">Item 1</Text>
-      <Text variant="bodyMedium">Item 2</Text>
-      <Text variant="bodyMedium">Item 3</Text>
+      <Text role="body" size="sm">Item 1</Text>
+      <Text role="body" size="sm">Item 2</Text>
+      <Text role="body" size="sm">Item 3</Text>
     </Stack>
   ),
 };
@@ -226,18 +226,18 @@ export const DirectionalPadding: Story = {
   render: () => (
     <Stack gap="sm">
       <Stack padding="md" style={paddedContainerStyle}>
-        <Text variant="bodyMedium">
+        <Text role="body" size="sm">
           <code>padding=&quot;md&quot;</code> (all sides)
         </Text>
       </Stack>
       <Stack padding="md" paddingInline="lg" style={paddedContainerStyle}>
-        <Text variant="bodyMedium">
+        <Text role="body" size="sm">
           <code>padding=&quot;md&quot;</code>{" "}
           <code>paddingInline=&quot;lg&quot;</code>
         </Text>
       </Stack>
       <Stack paddingBlock="xs" paddingInline="lg" style={paddedContainerStyle}>
-        <Text variant="bodyMedium">
+        <Text role="body" size="sm">
           <code>paddingBlock=&quot;xs&quot;</code>{" "}
           <code>paddingInline=&quot;lg&quot;</code>
         </Text>
@@ -255,8 +255,8 @@ export const Responsive: Story = {
       align={{ sm: "flex-start", md: "center" }}
       justify={{ sm: "flex-start", md: "space-between" }}
     >
-      <Text variant="bodyMedium">Title</Text>
-      <Text variant="bodyMedium">Supporting text</Text>
+      <Text role="body" size="sm">Title</Text>
+      <Text role="body" size="sm">Supporting text</Text>
     </Stack>
   ),
 };
@@ -264,9 +264,9 @@ export const Responsive: Story = {
 export const Vertical: Story = {
   render: () => (
     <Stack gap="xs">
-      <Text variant="bodyMedium">Item 1</Text>
-      <Text variant="bodyMedium">Item 2</Text>
-      <Text variant="bodyMedium">Item 3</Text>
+      <Text role="body" size="sm">Item 1</Text>
+      <Text role="body" size="sm">Item 2</Text>
+      <Text role="body" size="sm">Item 3</Text>
     </Stack>
   ),
 };
@@ -274,9 +274,9 @@ export const Vertical: Story = {
 export const Horizontal: Story = {
   render: () => (
     <Stack direction="horizontal" gap="xs" align="center">
-      <Text variant="bodyMedium">Left</Text>
-      <Text variant="bodyMedium">Center</Text>
-      <Text variant="bodyMedium">Right</Text>
+      <Text role="body" size="sm">Left</Text>
+      <Text role="body" size="sm">Center</Text>
+      <Text role="body" size="sm">Right</Text>
     </Stack>
   ),
 };
@@ -284,8 +284,8 @@ export const Horizontal: Story = {
 export const SpaceBetween: Story = {
   render: () => (
     <Stack direction="horizontal" justify="space-between" align="center">
-      <Text variant="bodyMedium">Leading</Text>
-      <Text variant="bodyMedium">Trailing</Text>
+      <Text role="body" size="sm">Leading</Text>
+      <Text role="body" size="sm">Trailing</Text>
     </Stack>
   ),
 };
@@ -293,8 +293,8 @@ export const SpaceBetween: Story = {
 export const WithPadding: Story = {
   render: () => (
     <Stack gap="sm" padding="md" style={paddedContainerStyle}>
-      <Text variant="bodyMedium">Item A</Text>
-      <Text variant="bodyMedium">Item B</Text>
+      <Text role="body" size="sm">Item A</Text>
+      <Text role="body" size="sm">Item B</Text>
     </Stack>
   ),
 };
@@ -303,7 +303,7 @@ export const Wrap: Story = {
   render: () => (
     <Stack direction="horizontal" gap="xxs" wrap style={{ maxWidth: "18.75rem" }}>
       {["One", "Two", "Three", "Four", "Five", "Six"].map((l) => (
-        <Text key={l} variant="bodyMedium">
+        <Text key={l} role="body" size="sm">
           {l}
         </Text>
       ))}

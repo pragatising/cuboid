@@ -1,0 +1,10 @@
+{
+  "focusRing": {
+    "width": {
+      "value": 3
+    },
+    "offset": {
+      "value": 2
+    }
+  } 
+}

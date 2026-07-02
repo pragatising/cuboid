@@ -5,6 +5,7 @@
         "size": { "value": "{size.space.24}" },
         "borderRadius": { "value": "{size.space.6}" },
         "gap": { "value": "{size.space.8}" },
+        "icon": { "value": "{size.size.control.iconButton.extraSmall.icon}" },
         "paddingInline": {
           "condensed": { "value": "{size.space.8}" },
           "normal": { "value": "{size.space.12}" },
@@ -16,6 +17,7 @@
         "size": { "value": "{size.space.28}" },
         "borderRadius": { "value": "{size.space.6}" },
         "gap": { "value": "{size.space.8}" },
+        "icon": { "value": "{size.size.control.iconButton.small.icon}" },
         "paddingInline": {
           "condensed": { "value": "{size.space.8}" },
           "normal": { "value": "{size.space.12}" },
@@ -27,6 +29,7 @@
         "size": { "value": "{size.space.32}" },
         "borderRadius": { "value": "{size.space.8}" },
         "gap": { "value": "{size.space.12}" },
+        "icon": { "value": "{size.size.control.iconButton.medium.icon}" },
         "paddingInline": {
           "condensed": { "value": "{size.space.12}" },
           "normal": { "value": "{size.space.16}" },
@@ -38,6 +41,7 @@
         "size": { "value": "{size.space.40}" },
         "borderRadius": { "value": "{size.space.8}" },
         "gap": { "value": "{size.space.16}" },
+        "icon": { "value": "{size.size.control.iconButton.large.icon}" },
         "paddingInline": {
           "condensed": { "value": "{size.space.16}" },
           "normal": { "value": "{size.space.20}" },

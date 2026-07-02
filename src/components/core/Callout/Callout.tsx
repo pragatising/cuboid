@@ -11,7 +11,7 @@ export interface CalloutProps {
   /**
    * Surface color from `colors.global` (dot-path), or any CSS color string.
    * @default "canvas.inset"
-   * @example "canvas.inset" | "bg.gray.light.02" | "#eef6ff"
+   * @example "canvas.inset" | "bg.gray.light.2" | "#eef6ff"
    */
   background?: GlobalColorPath;
   theme?: CubeTheme;
@@ -22,19 +22,10 @@ export interface CalloutProps {
 
 function calloutCssVars(
   background: GlobalColorPath,
-  tokens: ReturnType<typeof useTheme>
+  tokens: ReturnType<typeof useTheme>,
 ): Record<string, string> {
   return {
-    "--callout-bg": resolveGlobalColorOrCss(background, tokens.colors.global, {
-      inset: "canvas.inset",
-      default: "bg.gray.light.01",
-      muted: "bg.gray.light.02",
-      emphasis: "bg.gray.dark.07",
-      transparent: "canvas.transparent",
-      inverse: "bg.gray.dark.07",
-      neutralMuted: "bg.gray.light.04",
-      neutralEmphasis: "bg.gray.dark.05",
-    }),
+    "--callout-bg": resolveGlobalColorOrCss(background, tokens.colors.global),
   };
 }
 

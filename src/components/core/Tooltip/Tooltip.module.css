@@ -9,9 +9,9 @@
   margin: 0;
   text-align: left;
   font-family: var(--cube-typography-fontFamily-base);
-  font-size: var(--cube-typography-text-caption-fontSize);
-  font-weight: var(--cube-typography-text-caption-fontWeight);
-  line-height: var(--cube-typography-text-caption-lineHeight);
+  font-size: var(--cube-typography-text-body-xs-fontSize);
+  font-weight: var(--cube-typography-text-body-xs-fontWeight);
+  line-height: var(--cube-typography-text-body-xs-lineHeight);
   color: var(--cube-tooltip-fg);
   background-color: var(--cube-tooltip-bg);
   border: solid var(--cube-sizes-borderWidth-thin) var(--cube-tooltip-border);

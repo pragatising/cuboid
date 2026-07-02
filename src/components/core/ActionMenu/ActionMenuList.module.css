@@ -52,9 +52,9 @@
   padding: var(--cube-actionMenu-section-padding-block)
     var(--cube-actionMenu-section-padding-inline);
   font-family: var(--cube-typography-fontFamily-base);
-  font-size: var(--cube-typography-text-caption-fontSize);
+  font-size: var(--cube-typography-text-body-xs-fontSize);
   font-weight: 600;
-  line-height: var(--cube-typography-text-caption-lineHeight);
+  line-height: var(--cube-typography-text-body-xs-lineHeight);
   color: var(--cube-actionMenu-section-fg);
   white-space: nowrap;
 }

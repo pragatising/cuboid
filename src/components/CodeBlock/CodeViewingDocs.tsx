@@ -32,11 +32,11 @@ export function CodeViewingArchitectureSection({
             margin: 0,
             padding: "var(--cube-stack-gap-sm)",
             fontFamily: "var(--cube-typography-fontFamily-mono)",
-            fontSize: "var(--cube-typography-text-body-small-fontSize)",
+            fontSize: "var(--cube-typography-text-body-xs-fontSize)",
             lineHeight: 1.5,
             borderRadius: "var(--cube-sizes-borderRadius-md)",
-            border: "var(--cube-sizes-borderWidth-thin) solid var(--cube-colors-functional-border-default)",
-            background: "var(--cube-colors-functional-background-muted)",
+            border: "var(--cube-sizes-borderWidth-thin) solid var(--cube-color-border-gray-2)",
+            background: "var(--cube-color-bg-gray-light-2)",
             overflowX: "auto",
           }}
         >

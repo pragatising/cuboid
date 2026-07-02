@@ -20,43 +20,6 @@ export interface BaseColors {
   purple: ColorScale;
 }
 
-// ── Functional: backgrounds ──────────────────────────────────────────────────
-
-export interface BackgroundColors {
-  default: string;
-  muted: string;
-  inset: string;
-  emphasis: string;
-  disabled: string;
-  transparent: string;
-  inverse: string;
-  neutral: { muted: string; emphasis: string };
-}
-
-// ── Functional: foregrounds ──────────────────────────────────────────────────
-
-export interface ForegroundColors {
-  default: string;
-  muted: string;
-  onEmphasis: string;
-  disabled: string;
-  link: string;
-  white: string;
-  neutral: string;
-}
-
-// ── Functional: borders ───────────────────────────────────────────────────────
-
-export interface BorderColors {
-  default: string;
-  muted: string;
-  emphasis: string;
-  disabled: string;
-  transparent: string;
-  translucent: string;
-  neutral: { muted: string; emphasis: string };
-}
-
 // ── Functional: syntax (prettylights) ────────────────────────────────────────
 
 export interface SyntaxColors {
@@ -118,6 +81,7 @@ export type { GlobalColorPath } from "./globalColor";
 export {
   resolveGlobalColor,
   resolveGlobalColorOrCss,
+  globalColorsToCssVars,
   GLOBAL_COLOR_PATH_EXAMPLES,
 } from "./globalColor";
 
@@ -127,6 +91,7 @@ export interface GlobalSemanticColorPair {
 }
 
 export interface GlobalTextColors {
+  inverted: string;
   contrast: string;
   default: string;
   muted: string;
@@ -243,6 +208,22 @@ export interface BreadcrumbSeparatorColors {
 export interface BreadcrumbFunctionalColors {
   link: BreadcrumbLinkColors;
   separator: BreadcrumbSeparatorColors;
+}
+
+export interface TableSurfaceColors {
+  bgColor: string;
+  fgColor: string;
+  borderColor: string;
+}
+
+export interface TableContainerColors {
+  borderColor: string;
+}
+
+export interface TableFunctionalColors {
+  header: TableSurfaceColors;
+  body: TableSurfaceColors;
+  container: TableContainerColors;
 }
 
 export interface SiteHeaderFunctionalColors {
@@ -370,15 +351,17 @@ export interface PillLayoutTokens {
   height: string;
 }
 
+import type { TokenOutput } from "./tokenOutput";
+
 export interface HighlightColorRecipe {
   bgColor: string;
   fgColor: string;
 }
 
-/** Shade keys from Figma `HighlightedText` — `none` is plain muted text without a tint. */
-export type HighlightColor = "none" | "neutral" | "green" | "blue" | "yellow" | "orange" | "red";
+/** Keys from built `token-output.json` — add stops in highlight/highlight.json, then `npm run tokens:theme`. */
+export type HighlightFunctionalColors = TokenOutput["highlightColors"];
 
-export type HighlightFunctionalColors = Record<HighlightColor, HighlightColorRecipe>;
+export type HighlightColor = keyof HighlightFunctionalColors;
 
 export interface HighlightSizesTokens {
   paddingInline: string;
@@ -387,9 +370,6 @@ export interface HighlightSizesTokens {
 }
 
 export interface FunctionalColors {
-  background: BackgroundColors;
-  foreground: ForegroundColors;
-  border: BorderColors;
   syntax: SyntaxColors;
   /** Component-scoped colors — start with primary; other variants follow the same shape */
   button: ButtonFunctionalColors;
@@ -397,6 +377,7 @@ export interface FunctionalColors {
   link: LinkFunctionalColors;
   highlight: HighlightFunctionalColors;
   breadcrumb: BreadcrumbFunctionalColors;
+  table: TableFunctionalColors;
   siteHeader: SiteHeaderFunctionalColors;
   overlay: OverlayFunctionalColors;
   sheet: SheetFunctionalColors;
@@ -421,12 +402,12 @@ export interface FontFamilyTokens {
 }
 
 export interface FontSizeTokens {
-  xs: string;   // 12px — caption
-  sm: string;   // 14px — body small
-  md: string;   // 16px — body medium, title small
-  lg: string;   // 20px — title medium
-  xl: string;   // 24px — title large
-  xxl: string;  // 32px — display
+  xs: string;   // text.sizes.xs — 12px
+  sm: string;   // text.sizes.sm — 14px
+  md: string;   // text.sizes.md — 20px
+  lg: string;   // text.sizes.lg — 24px
+  xl: string;   // text.sizes.xl — 32px
+  xxl: string;  // alias of xl — display
 }
 
 export interface FontWeightTokens {
@@ -450,22 +431,24 @@ export interface TextStyle {
 }
 
 export interface TextTokens {
-  display: TextStyle;
-  titleLarge: TextStyle;
-  titleMedium: TextStyle;
-  titleSmall: TextStyle;   // text.sizes.sm / semibold / normal
-  subtitle: TextStyle;
-  /** From Figma `text.subhead.size.*` — section labels, nav groups, field legends. */
+  /** heading + text.sizes — metrics from heading.weight / heading.lineHeight */
+  headingXs: TextStyle;
+  headingSm: TextStyle;
+  headingMd: TextStyle;
+  headingLg: TextStyle;
+  headingXl: TextStyle;
+  /** body + text.sizes — metrics from text.weight / text.lineHeight */
+  bodyXs: TextStyle;
+  bodySm: TextStyle;
+  bodyMd: TextStyle;
+  bodyLg: TextStyle;
+  bodyXl: TextStyle;
+  /** text.subhead.* — section labels, nav groups */
   subheadXs: TextStyle;
   subheadSm: TextStyle;
   subheadMd: TextStyle;
-  bodyLarge: TextStyle;
-  bodyMedium: TextStyle;
-  bodyStrong: TextStyle;
-  bodySmall: TextStyle;
-  caption: TextStyle;
-  codeBlock: TextStyle;    // for <pre> blocks
-  inlineCode: TextStyle;   // for <code> inline
+  codeBlock: TextStyle;
+  inlineCode: TextStyle;
 }
 
 /** Button label metrics per control size (from typography tokens). */
@@ -492,17 +475,19 @@ export interface Typography {
 
 // ── Sizes ─────────────────────────────────────────────────────────────────────
 
-export interface SpaceTokens {
-  1: string;   // 4px
-  2: string;   // 8px
-  3: string;   // 12px
-  4: string;   // 16px
-  5: string;   // 20px
-  6: string;   // 24px
-  8: string;   // 32px
-  10: string;  // 40px
-  12: string;  // 48px
-}
+/** Internal px-keyed spacing (`"8"` → 0.5rem). Source: tokens/functional/size/space.json */
+export type SpaceTokens = Record<string, string>;
+
+/** 8pt grid scale — `1x` = 8px, `1.5x` = 12px, … Built from `space` via px ÷ 8. */
+export type SpaceScaleTokens = Record<string, string>;
+
+export type SpaceScale = `${number}x`;
+
+/** Px stop key in `sizes.space` — prefer `SpaceScale` in component APIs. */
+export type SpacePxKey = `${number}`;
+
+/** Public spacing token — 8pt grid multiplier only. */
+export type SpaceToken = SpaceScale;
 
 export interface BorderRadiusTokens {
   sm: string;    // 4px
@@ -568,6 +553,8 @@ export interface ControlSizeStopTokens {
   /** Corner radius for this control stop (buttons, inputs, etc.) */
   borderRadius: string;
   gap: string;
+  /** Leading/trailing glyph size (labeled buttons, inputs with icons, etc.) */
+  icon: string;
   paddingBlock: string;
   paddingInline: ControlPaddingInlineTokens;
 }
@@ -628,6 +615,20 @@ export interface BreadcrumbSizesTokens {
   itemPaddingBlock: string;
   itemBorderRadius: string;
   separatorWidth: string;
+}
+
+export interface TableDensitySizeTokens {
+  cellPaddingInline: string;
+  cellPaddingBlock: string;
+  rowHeight: string;
+}
+
+export interface TableSizesTokens {
+  borderRadius: string;
+  density: {
+    dense: TableDensitySizeTokens;
+    spacious: TableDensitySizeTokens;
+  };
 }
 
 export interface SiteHeaderSizesTokens {
@@ -718,8 +719,14 @@ export interface ShadowTokens {
   tooltip: string;
 }
 
+export interface FocusRingTokens {
+  width: string;
+  offset: string;
+}
+
 export interface Sizes {
   space: SpaceTokens;
+  spaceScale: SpaceScaleTokens;
   stack: { gap: StackGapTokens; padding: StackPaddingTokens };
   layout: LayoutTokens;
   container: ContainerSizesTokens;
@@ -733,16 +740,18 @@ export interface Sizes {
   icon: IconSizesTokens;
   iconButton: IconButtonSizesTokens;
   breadcrumb: BreadcrumbSizesTokens;
+  table: TableSizesTokens;
   siteHeader: SiteHeaderSizesTokens;
   sheet: SheetSizesTokens;
   sidebar: SidebarSizesTokens;
   popover: PopoverLayoutTokens;
   actionMenu: ActionMenuSizesTokens;
   resizeHandle: ResizeHandleSizesTokens;
+  focusRing: FocusRingTokens;
   zIndex: ZIndexTokens;
 }
 
-// Convenience alias for space token keys (used by Stack gap/padding props)
+// Convenience alias for space token keys
 export type SpaceKey = keyof SpaceTokens;
 
 // ── Full resolved theme (all values present) ──────────────────────────────────

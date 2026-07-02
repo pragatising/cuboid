@@ -40,14 +40,13 @@ function linkCssVars(link: LinkFunctionalColors): Record<string, string> {
 
 function linkInlineVars(tokens: ThemeTokens): React.CSSProperties {
   const { functional } = tokens.colors;
-  const body = tokens.typography.text.bodyMedium;
+  const body = tokens.typography.text.bodySm;
   return {
     ...linkCssVars(functional.link),
     "--cube-typography-fontFamily-base": tokens.typography.fontFamily.base,
-    "--cube-typography-text-body-medium-fontSize": body.fontSize,
-    "--cube-typography-text-body-medium-fontWeight": String(body.fontWeight),
-    "--cube-typography-text-body-medium-lineHeight": String(body.lineHeight),
-    "--cube-colors-functional-foreground-link": functional.foreground.link,
+    "--cube-typography-text-body-sm-fontSize": body.fontSize,
+    "--cube-typography-text-body-sm-fontWeight": String(body.fontWeight),
+    "--cube-typography-text-body-sm-lineHeight": String(body.lineHeight),
   } as React.CSSProperties;
 }
 
@@ -69,6 +68,7 @@ export function Link<E extends React.ElementType = "a">({
   const Component = as ?? "a";
 
   const classNames = [
+    "cube-focusable",
     styles.Link,
     variant === "inline" && styles["Link--inline"],
     variant === "standalone" && styles["Link--standalone"],

@@ -40,8 +40,8 @@ function SheetDemo({
       >
         <Sheet.Body>
           <Stack gap="md">
-            <Text variant="titleSmall">{label}</Text>
-            <Text variant="bodyMedium" color="muted">
+            <Text role="heading" size="sm">{label}</Text>
+            <Text role="body" size="sm" color="muted">
               Simple sheet — content in <code>Sheet.Body</code> only.
             </Text>
             <Button onClick={() => setOpen(false)}>Close</Button>
@@ -66,7 +66,7 @@ function StickyHeaderDemo() {
       >
         <Sheet.Header>
           <span id="sheet-filters-title">
-            <Text variant="titleSmall">Filters</Text>
+            <Text role="heading" size="sm">Filters</Text>
           </span>
           <IconButton aria-label="Close" variant="ghost" size="sm" onClick={() => setOpen(false)}>
             <CloseIcon />
@@ -75,7 +75,7 @@ function StickyHeaderDemo() {
         <Sheet.Body>
           <Stack gap="sm">
             {Array.from({ length: 24 }, (_, i) => (
-              <Text key={i} variant="bodyMedium">
+              <Text key={i} role="body" size="sm">
                 Filter option {i + 1}
               </Text>
             ))}

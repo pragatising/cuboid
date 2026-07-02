@@ -61,6 +61,7 @@ export function Button({
     shape === "rounded" || variant === "rounded";
 
   const className = [
+    "cube-focusable",
     styles.Button,
     variant === "primary" && styles["Button--primary"],
     variant === "secondary" && styles["Button--secondary"],
@@ -92,6 +93,7 @@ export function Button({
           [`--cube-control-${cssSeg}-gap`]: c.gap,
           [`--cube-control-${cssSeg}-size`]: c.size,
           [`--cube-control-${cssSeg}-borderRadius`]: c.borderRadius,
+          [`--cube-control-${cssSeg}-icon`]: c.icon,
           [`--cube-control-${cssSeg}-paddingBlock`]: c.paddingBlock,
           [`--cube-control-${cssSeg}-paddingInline-condensed`]: c.paddingInline.condensed,
           [`--cube-control-${cssSeg}-paddingInline-normal`]: c.paddingInline.normal,
@@ -101,7 +103,6 @@ export function Button({
           "--cube-typography-fontFamily-base": tokens.typography.fontFamily.base,
           "--cube-sizes-borderRadius-full": tokens.sizes.borderRadius.full,
           "--cube-sizes-borderWidth-thin": tokens.sizes.borderWidth.thin,
-          "--cube-colors-functional-foreground-link": functional.foreground.link,
         };
 
         const states = ["rest", "hover", "pressed", "disabled"] as const;

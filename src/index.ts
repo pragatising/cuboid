@@ -1,7 +1,24 @@
 // ── Core primitives ───────────────────────────────────────────────────────────
 export { Stack } from "./components/core/Stack";
-export type { StackProps, StackDirection, StackGap, StackPadding, StackSpacing, LayoutWidth } from "./components/core/Stack";
+export type { StackProps, StackDirection, StackGap, StackPadding, StackSpacing, LayoutWidth, StackPosition, StackInset, LayoutMaxWidth, LayoutMaxHeight, StackPointerEvents, StackZIndex } from "./components/core/Stack";
 export type { Breakpoint, Responsive } from "./utils/responsive";
+
+export { Table, SimpleTable } from "./components/core/Table";
+export type {
+  TableProps,
+  TableRootProps,
+  TableHeaderProps,
+  TableBodyProps,
+  TableRowProps,
+  TableHeadCellProps,
+  TableCellProps,
+  TableRowLayout,
+  TableCellAlign,
+  TableDensity,
+  TableLines,
+  SimpleTableProps,
+} from "./components/core/Table";
+export type { ColumnDef, Row } from "@tanstack/react-table";
 
 export { Container } from "./components/core/Container";
 export type { ContainerProps, ContainerWidth } from "./components/core/Container";
@@ -10,11 +27,19 @@ export { Box } from "./components/core/Box";
 export type {
   BoxProps,
   BoxBackground,
-  BoxBorder,
+  BoxBorderColor,
   BoxBorderRadius,
   BoxForeground,
   BoxOverflow,
+  BoxMargin,
+  SpaceToken,
 } from "./components/core/Box";
+
+export { spaceTokenToCssVar } from "./utils/spaceToken";
+export type { SpaceScale, SpacePxKey } from "./theme/types";
+export { pxToSpaceScale, pxKeyToSpaceScale } from "./utils/spaceScale";
+export { tokenOutput } from "./theme/tokenOutput";
+export type { TokenOutput } from "./theme/tokenOutput";
 
 export { Divider } from "./components/core/Divider";
 export type { DividerProps, DividerColor } from "./components/core/Divider";
@@ -26,7 +51,7 @@ export { Highlight } from "./components/core/Highlight";
 export type { HighlightProps, HighlightColor } from "./components/core/Highlight";
 
 export { Text } from "./components/core/Text";
-export type { TextProps, TextVariant, TextColor } from "./components/core/Text";
+export type { TextProps, TextColor, TextRole, TextSize, TextTokenKey, TextWeight } from "./components/core/Text";
 
 export { Button } from "./components/core/Button";
 export type { ButtonProps, ButtonShape, ButtonSize, ButtonVariant } from "./components/core/Button";
@@ -45,6 +70,8 @@ export {
   ChevronLeftIcon,
   ChevronRightIcon,
   CloseIcon,
+  DockToLeftIcon,
+  DockToRightIcon,
   ExpandMoreIcon,
   HomeIcon,
   MenuIcon,
@@ -109,6 +136,7 @@ export type {
   SidebarEdge,
   SidebarRegionProps,
   SidebarToggleProps,
+  SidebarToggleFloatingAlign,
   SidebarWidth,
   SidebarWidthStop,
 } from "./components/core/Sidebar";
@@ -175,9 +203,6 @@ export type {
   BaseColors,
   ColorScale,
   FunctionalColors,
-  BackgroundColors,
-  ForegroundColors,
-  BorderColors,
   SyntaxColors,
   Typography,
   TextStyle,
