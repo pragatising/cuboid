@@ -75,17 +75,17 @@ export const InProse: Story = {
   render: () => (
     <Stack gap="md" style={{ maxWidth: "36rem" }}>
       <Text role="body" size="sm">
-        T-shaped product designer, currently shaping data-intensive decision making — credit,
-        verifications, underwriting, portfolio intelligence.
+        Full-stack engineer, currently shaping data-intensive decision making — billing,
+        verifications, fraud detection, reporting dashboards.
       </Text>
       <Callout>
         <Text role="body" size="sm" color="muted">
           Shipping code as well as designing directly in codebase with real data, API design,
-          designing AI native components.
+          building AI-native components.
         </Text>
       </Callout>
       <Text role="body" size="sm">
-        Previously at Amount, Stride Build, Georgia Tech, and PwC.
+        Previously at Acme Inc, Example Labs, State University, and Globex.
       </Text>
     </Stack>
   ),
@@ -97,10 +97,10 @@ export const Multiline: Story = {
     <Callout style={{ maxWidth: "36rem" }}>
       <Stack gap="xs">
         <Text role="body" size="sm" color="muted">
-          Design approach spans systems thinking and craft at the interaction layer.
+          System design spans data modeling and craft at the interface layer.
         </Text>
         <Text role="body" size="xs" color="muted">
-          Zoomed out: ecosystems and parts. Zoomed in: stimulus → cognition → action.
+          Zoomed out: architecture and services. Zoomed in: request → process → response.
         </Text>
       </Stack>
     </Callout>

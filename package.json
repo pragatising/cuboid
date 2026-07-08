@@ -1,6 +1,6 @@
 {
   "name": "@sragatiping/cuboid",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Cube — React components and design tokens for data views, tables, and themed UI.",
   "keywords": [
     "react",

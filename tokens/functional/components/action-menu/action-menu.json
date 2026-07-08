@@ -51,7 +51,7 @@
       "header": {
         "paddingInline": { "value": "{size.space.16}" },
         "paddingBlockStart": { "value": "{size.space.12}" },
-        "paddingBlockEnd": { "value": "{size.space.16}" }
+        "paddingBlockEnd": { "value": "{size.space.12}" }
       },
       "footer": {
         "padding": { "value": "{size.space.16}" }
