@@ -53,7 +53,8 @@
     "tokens:typography-theme": "node scripts/build-typography-theme.mjs",
     "pretokens:theme": "node scripts/build-typography-theme.mjs",
     "tokens:theme": "node scripts/build-theme.mjs && node scripts/build-theme-css.mjs && node scripts/build-component-theme-css.mjs",
-    "prebuild": "npm run tokens:theme"
+    "prebuild": "npm run tokens:theme",
+    "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
     "react": ">=17",
