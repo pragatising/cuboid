@@ -167,6 +167,99 @@ export const Elevation: Story = {
   ),
 };
 
+export const WithHeaderAndFooter: Story = {
+  name: "Header / footer slots — built-in actions (left)",
+  render: function WithHeaderAndFooterStory() {
+    const [open, setOpen] = useState(false);
+    return (
+      <Popover
+        open={open}
+        onOpenChange={setOpen}
+        elevation="4x"
+        trigger={
+          <Button variant="secondary" size="sm">
+            Open form overlay
+          </Button>
+        }
+        header="Edit link"
+        onClose={() => setOpen(false)}
+        footer={{
+          align: "left",
+          primary: { label: "Save", onClick: () => setOpen(false) },
+          secondary: { label: "Cancel", onClick: () => setOpen(false) },
+        }}
+      >
+        <Text role="body" size="sm">
+          A string <code>header</code> renders the standard title + close row. A{" "}
+          <code>{"{ primary, secondary, align }"}</code> object renders the built-in Figma{" "}
+          <code>ActionMenuFooter</code> button row — Figma <code>alignment=&quot;left&quot;</code>:
+          primary left, secondary right, small gap.
+        </Text>
+      </Popover>
+    );
+  },
+};
+
+export const FooterActionsJustified: Story = {
+  name: "Footer slot — built-in actions (justified)",
+  render: function FooterActionsJustifiedStory() {
+    const [open, setOpen] = useState(false);
+    return (
+      <Popover
+        open={open}
+        onOpenChange={setOpen}
+        elevation="4x"
+        trigger={
+          <Button variant="secondary" size="sm">
+            Open form overlay
+          </Button>
+        }
+        header="Edit link"
+        onClose={() => setOpen(false)}
+        footer={{
+          primary: { label: "Save", onClick: () => setOpen(false) },
+          secondary: { label: "Cancel", onClick: () => setOpen(false) },
+        }}
+      >
+        <Text role="body" size="sm">
+          Same <code>primary</code>/<code>secondary</code> actions as the story above — only{" "}
+          <code>align</code> differs. Default is <code>&quot;justified&quot;</code> — Figma{" "}
+          <code>alignment=&quot;justfied&quot;</code>: secondary left, primary right,
+          space-between. Same layout as `ActionMenu`&apos;s own Filter footer.
+        </Text>
+      </Popover>
+    );
+  },
+};
+
+export const CustomHeaderNode: Story = {
+  name: "Header slot — full customization",
+  render: () => (
+    <Popover
+      elevation="4x"
+      trigger={
+        <Button variant="secondary" size="sm">
+          Open with custom header
+        </Button>
+      }
+      aria-label="Custom header example"
+      header={
+        <Stack direction="horizontal" align="center" gap="xs" width="full">
+          <Text role="body" size="sm" weight="semibold">
+            🚀 Fully custom header node
+          </Text>
+        </Stack>
+      }
+    >
+      <Text role="body" size="sm">
+        Passing a non-string `header` bypasses the built-in title row entirely — the chrome
+        (divider) is still shared with `ActionMenuList.Header`, but the content is whatever you
+        render.
+      </Text>
+    </Popover>
+  ),
+};
+
 export const NotClippedByOverflow: Story = {
   name: "Portal (overflow: hidden)",
   render: () => (
@@ -180,7 +273,7 @@ export const NotClippedByOverflow: Story = {
         aria-label="Overflow test"
       >
         <Stack padding="sm">
-          <Text role="body" size="xs">Still visible — portaled to document.body</Text>
+          <Text role="body" size="sm">Still visible — portaled to document.body</Text>
         </Stack>
       </Popover>
     </div>

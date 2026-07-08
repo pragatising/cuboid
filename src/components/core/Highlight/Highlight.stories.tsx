@@ -27,8 +27,8 @@ const meta: Meta<typeof Highlight> = {
           <div className="cube-docs-section">
             <h3 className="cube-docs-section__title">In prose</h3>
             <Text role="body" size="sm">
-              T-shaped designer working on{" "}
-              <Highlight color="yellow">credit and underwriting</Highlight> at FIS.
+              Full-stack engineer working on{" "}
+              <Highlight color="yellow">billing and invoicing</Highlight> at Acme Corp.
             </Text>
           </div>
 
@@ -68,8 +68,8 @@ export const AllColors: Story = {
 export const InSentence: Story = {
   render: () => (
     <Text role="body" size="sm">
-      Previously at <Highlight color="neutral">Amount</Highlight>, building{" "}
-      <Highlight color="blue">portfolio intelligence</Highlight> workflows.
+      Previously at <Highlight color="neutral">Acme Inc</Highlight>, building{" "}
+      <Highlight color="blue">search infrastructure</Highlight> workflows.
     </Text>
   ),
 };

@@ -2,7 +2,7 @@
 :root {
   --cube-actionMenu-divider-fg: #EFEEEA;
   --cube-actionMenu-footer-padding: 1rem;
-  --cube-actionMenu-header-padding-block-end: 1rem;
+  --cube-actionMenu-header-padding-block-end: 0.75rem;
   --cube-actionMenu-header-padding-block-start: 0.75rem;
   --cube-actionMenu-header-padding-inline: 1rem;
   --cube-actionMenu-item-bg-disabled: #F4F4F2;

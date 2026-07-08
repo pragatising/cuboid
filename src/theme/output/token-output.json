@@ -1055,7 +1055,7 @@
       "header": {
         "paddingInline": "1rem",
         "paddingBlockStart": "0.75rem",
-        "paddingBlockEnd": "1rem"
+        "paddingBlockEnd": "0.75rem"
       },
       "footer": {
         "padding": "1rem"

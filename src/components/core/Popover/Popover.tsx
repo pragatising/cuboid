@@ -9,7 +9,14 @@ import React, {
 } from "react";
 import { createPortal } from "react-dom";
 import { useTheme } from "../../../theme/ThemeContext";
-import type { CubeTheme, ThemeTokens } from "../../../theme/types";
+import type { CubeTheme, StackPadding, ThemeTokens } from "../../../theme/types";
+import { CloseIcon } from "../../../icons/material";
+import { parseLengthPx } from "../../../utils/parseLengthPx";
+import { ActionMenuList } from "../ActionMenu/ActionMenuList";
+import { Button, type ButtonVariant } from "../Button";
+import { IconButton } from "../IconButton";
+import { Stack } from "../Stack";
+import { Text } from "../Text";
 import styles from "./Popover.module.css";
 
 export type PopoverPlacement =
@@ -27,14 +34,112 @@ export type PopoverElevation = "3x" | "4x";
 
 export type PopoverPanelRole = "dialog" | false;
 
+/** One button in a `footer` action row — Figma `ActionMenuFooter` `Button` slot. */
+export interface PopoverAction {
+  label: React.ReactNode;
+  onClick?: () => void;
+  /** @default "primary" for `primary`, "secondary" for `secondary` */
+  variant?: ButtonVariant;
+  disabled?: boolean;
+}
+
+/**
+ * Built-in two-button footer row — Figma `ActionMenuFooter`. Pass a plain
+ * `ReactNode` to `footer` instead for any other layout (single action,
+ * filter-count row, etc.).
+ */
+export interface PopoverFooterActions {
+  primary?: PopoverAction;
+  secondary?: PopoverAction;
+  /**
+   * `"justified"` — secondary left, primary right, space-between (Figma
+   * `alignment="justfied"`; matches `ActionMenu`'s own Reset/Done footer).
+   * `"left"` — primary left, secondary right, small gap, left-aligned
+   * (Figma `alignment="left"`).
+   * @default "justified"
+   */
+  align?: "justified" | "left";
+}
+
+function isFooterActions(
+  footer: React.ReactNode | PopoverFooterActions,
+): footer is PopoverFooterActions {
+  return (
+    typeof footer === "object" &&
+    footer !== null &&
+    !Array.isArray(footer) &&
+    !React.isValidElement(footer) &&
+    ("primary" in footer || "secondary" in footer || "align" in footer)
+  );
+}
+
+function renderFooterAction(action: PopoverAction | undefined, fallbackVariant: ButtonVariant) {
+  if (!action) return null;
+  return (
+    <Button
+      variant={action.variant ?? fallbackVariant}
+      size="xs"
+      onClick={action.onClick}
+      disabled={action.disabled}
+    >
+      {action.label}
+    </Button>
+  );
+}
+
+function renderFooterActions(actions: PopoverFooterActions): React.ReactNode {
+  const primaryButton = renderFooterAction(actions.primary, "primary");
+  const secondaryButton = renderFooterAction(actions.secondary, "secondary");
+
+  if (actions.align === "left") {
+    return (
+      <Stack direction="horizontal" gap="sm" width="full">
+        {primaryButton}
+        {secondaryButton}
+      </Stack>
+    );
+  }
+
+  return (
+    <Stack direction="horizontal" justify="space-between" width="full">
+      {secondaryButton}
+      {primaryButton}
+    </Stack>
+  );
+}
+
 export interface PopoverProps {
   /** When omitted, open state is managed internally (toggle on trigger click). */
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   /** Anchor control — positioned relative to Popover’s wrapper, not the child ref. */
   trigger: React.ReactElement;
-  /** Panel content — menus, forms, or any interactive UI. */
+  /** Panel body — menus, forms, or any interactive UI. */
   children: React.ReactNode;
+  /**
+   * Header slot, rendered above the body with the same chrome as
+   * `ActionMenuList.Header` (divider below). A string/number renders the
+   * standard title row (+ close button via `onClose`); pass any other
+   * `ReactNode` for full customization — it's rendered as-is, uncontained.
+   */
+  header?: React.ReactNode;
+  /** Close handler for the built-in header's close button. No-op when `header` isn't a string. */
+  onClose?: () => void;
+  /**
+   * Footer slot, rendered below the body with the same chrome as
+   * `ActionMenuList.Footer` (border-top above). Pass `{ primary, secondary,
+   * align }` for the built-in two-button row (see {@link PopoverFooterActions}),
+   * or any `ReactNode` for full customization.
+   */
+  footer?: React.ReactNode | PopoverFooterActions;
+  /**
+   * Padding around `children` when `header` and/or `footer` are set — the
+   * slot system implies the body content needs be inset. Ignored (no
+   * wrapping) when neither `header` nor `footer` is provided, so plain
+   * `Popover` usage (e.g. `ActionMenu`) is unaffected.
+   * @default "md"
+   */
+  bodyPadding?: StackPadding;
   placement?: PopoverPlacement;
   elevation?: PopoverElevation;
   /** Close on outside pointer down and Escape. Default true. */
@@ -58,14 +163,6 @@ export interface PopoverProps {
   theme?: CubeTheme;
   className?: string;
   contentClassName?: string;
-}
-
-function parseLengthPx(value: string, fallback = 4): number {
-  if (typeof value !== "string") return fallback;
-  if (value.endsWith("rem")) return parseFloat(value) * 16;
-  if (value.endsWith("px")) return parseFloat(value);
-  const n = parseFloat(value);
-  return Number.isFinite(n) ? n : fallback;
 }
 
 function computeFixedPosition(
@@ -168,6 +265,10 @@ export function Popover({
   onOpenChange,
   trigger,
   children,
+  header,
+  onClose,
+  footer,
+  bodyPadding = "md",
   placement = "bottom-start",
   elevation = "3x",
   dismissible = true,
@@ -184,6 +285,10 @@ export function Popover({
 }: PopoverProps) {
   const tokens = useTheme(theme);
   const panelId = useId();
+  const headerTitleId = useId();
+  const hasSlots = header !== undefined || footer !== undefined;
+  const isStringHeader = typeof header === "string" || typeof header === "number";
+  const resolvedAriaLabelledBy = ariaLabelledBy ?? (isStringHeader ? headerTitleId : undefined);
   /** Wrapper around the trigger — always a DOM node for anchoring. */
   const anchorRef = useRef<HTMLSpanElement>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
@@ -211,7 +316,7 @@ export function Popover({
   }, [open, returnFocusOnClose]);
 
   const gapPx = useMemo(
-    () => parseLengthPx(tokens.sizes.popover.gap),
+    () => parseLengthPx(tokens.sizes.popover.gap, 4),
     [tokens.sizes.popover.gap]
   );
 
@@ -311,6 +416,70 @@ export function Popover({
     .filter(Boolean)
     .join(" ");
 
+  const renderedHeader =
+    header === undefined ? null : (
+      <ActionMenuList.Header>
+        {isStringHeader ? (
+          <Stack direction="horizontal" align="center" gap="sm" width="full">
+            <Stack id={headerTitleId} grow width="full">
+              <Text role="body" size="sm" weight="semibold" color="text.contrast">
+                {header}
+              </Text>
+            </Stack>
+            {onClose ? (
+              <IconButton
+                aria-label="Close"
+                tooltip="Close"
+                variant="ghost"
+                size="xs"
+                onClick={onClose}
+              >
+                <CloseIcon />
+              </IconButton>
+            ) : null}
+          </Stack>
+        ) : (
+          header
+        )}
+      </ActionMenuList.Header>
+    );
+
+  const renderedFooter =
+    footer === undefined ? null : (
+      <ActionMenuList.Footer>
+        {isFooterActions(footer) ? renderFooterActions(footer) : footer}
+      </ActionMenuList.Footer>
+    );
+
+  const bodyPaddingVar = `var(--cube-stack-padding-${bodyPadding})`;
+
+  const panelContent = hasSlots ? (
+    <>
+      {renderedHeader}
+      <Stack
+        gap="sm"
+        align="stretch"
+        paddingInline={bodyPadding}
+        width="full"
+        style={{
+          // ActionMenuList.Header's own padding-block-end sits *after* its
+          // divider, so it already supplies the gap down to the body — a
+          // symmetric `padding` here would double it. ActionMenuList.Footer
+          // is the opposite: `border-top` sits flush at its own top edge and
+          // its padding only pushes content *below* the line, so the gap
+          // above the footer must still come from the body itself.
+          paddingBlockStart: header === undefined ? bodyPaddingVar : 0,
+          paddingBlockEnd: bodyPaddingVar,
+        }}
+      >
+        {children}
+      </Stack>
+      {renderedFooter}
+    </>
+  ) : (
+    children
+  );
+
   const panel =
     open && typeof document !== "undefined"
       ? createPortal(
@@ -320,12 +489,12 @@ export function Popover({
             role={panelRole === false ? undefined : panelRole}
             aria-modal={panelRole === "dialog" ? "false" : undefined}
             aria-label={panelRole === "dialog" ? ariaLabel : undefined}
-            aria-labelledby={panelRole === "dialog" ? ariaLabelledBy : undefined}
+            aria-labelledby={panelRole === "dialog" ? resolvedAriaLabelledBy : undefined}
             className={panelClass}
             style={{ ...fixedStyle, ...(inlineVars ?? {}) }}
             onKeyDown={onPanelKeyDown}
           >
-            {children}
+            {panelContent}
           </div>,
           document.body
         )

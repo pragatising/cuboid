@@ -1,9 +1,16 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Title, Primary, Controls, Subtitle } from "@storybook/blocks";
+import { Pets } from "@material-symbols-svg/react/rounded/pets";
+import { RocketLaunch } from "@material-symbols-svg/react/rounded/rocket-launch";
 import { ChevronRightIcon } from "../../../icons/material";
+import { createMaterialIcon } from "../../../icons";
 import { Stack } from "../Stack";
+import { Text } from "../Text";
 import { Icon, type IconSize } from "./Icon";
+
+const PetsIcon = createMaterialIcon(Pets);
+const RocketLaunchIcon = createMaterialIcon(RocketLaunch);
 
 const meta: Meta<typeof Icon> = {
   title: "Core/Icon",
@@ -55,5 +62,27 @@ export const Playground: Story = {
     <Icon {...args}>
       <ChevronRightIcon />
     </Icon>
+  ),
+};
+
+export const AnyMaterialIcon: Story = {
+  name: "Any Material Symbols icon (uncurated)",
+  render: () => (
+    <Stack gap="sm">
+      <Text role="body" size="xs" color="muted">
+        Only ~226 icons are pre-exported (`iconManifest`). For anything else, import the glyph
+        directly from `@material-symbols-svg/react` (already a cuboid dependency) and wrap it
+        with `createMaterialIcon` — same helper cuboid uses internally. Neither `pets` nor
+        `rocket-launch` below is in cuboid&apos;s curated set.
+      </Text>
+      <Stack direction="horizontal" gap="sm" align="center">
+        <Icon size="md">
+          <PetsIcon />
+        </Icon>
+        <Icon size="md">
+          <RocketLaunchIcon />
+        </Icon>
+      </Stack>
+    </Stack>
   ),
 };

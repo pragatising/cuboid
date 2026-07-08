@@ -93,7 +93,7 @@ export const ListRows: Story = {
       <Divider />
       {[
         { title: "Design systems at scale", summary: "Notes on tokens and composition." },
-        { title: "Portfolio intelligence", summary: "Credit and underwriting workflows." },
+        { title: "Data pipelines", summary: "Billing and reporting workflows." },
         { title: "Building in the codebase", summary: "Designing with real data." },
       ].map((item) => (
         <Stack as="li" key={item.title} gap="none">

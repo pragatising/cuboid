@@ -65,22 +65,7 @@ export type { TooltipProps, TooltipPlacement } from "./components/core/Tooltip";
 export { Icon } from "./components/core/Icon";
 export type { IconProps, IconSize } from "./components/core/Icon";
 
-export {
-  ArrowBackIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  CloseIcon,
-  DockToLeftIcon,
-  DockToRightIcon,
-  ExpandMoreIcon,
-  HomeIcon,
-  MenuIcon,
-  OpenInNewIcon,
-  SearchIcon,
-  SettingsIcon,
-  iconManifest,
-} from "./icons";
-export type { IconName, IconManifestEntry } from "./icons";
+export * from "./icons";
 
 export { Link } from "./components/core/Link";
 export type { LinkProps, LinkVariant } from "./components/core/Link";
@@ -119,7 +104,13 @@ export type {
 } from "./components/core/ResizeHandle";
 
 export { Popover } from "./components/core/Popover";
-export type { PopoverProps, PopoverPlacement, PopoverElevation } from "./components/core/Popover";
+export type {
+  PopoverProps,
+  PopoverPlacement,
+  PopoverElevation,
+  PopoverAction,
+  PopoverFooterActions,
+} from "./components/core/Popover";
 
 export { ActionMenu, ActionMenuItem, ActionMenuList } from "./components/core/ActionMenu";
 export type {

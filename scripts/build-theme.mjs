@@ -23,6 +23,18 @@ const BASE_SCALE_ALIASES = {
   purples: "purple",
 };
 
+/**
+ * Root font-size (px) that generated rem values assume — the browser
+ * default. Must match src/utils/parseLengthPx.ts's REM_BASE_PX.
+ *
+ * Do NOT change this to "fix" rem→px mental math (e.g. a 10px/62.5% root):
+ * `rem` resolves against the single global `html` font-size for the entire
+ * document, not just cuboid's components. Repointing it here only teaches
+ * cuboid's own token generator to compensate — every other rem-based style
+ * on the host page (the app's own CSS, Tailwind, third-party CSS) has no
+ * idea the root moved and silently renders at the wrong scale. Tried this,
+ * reverted it — see git history.
+ */
 const PX_TO_REM_BASE = Number(process.env.SIZE_BASE_PX ?? 16);
 if (!Number.isFinite(PX_TO_REM_BASE) || PX_TO_REM_BASE <= 0) {
   console.error(`Invalid SIZE_BASE_PX: ${process.env.SIZE_BASE_PX}`);

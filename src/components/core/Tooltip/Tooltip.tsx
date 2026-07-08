@@ -10,6 +10,7 @@ import React, {
 import { createPortal } from "react-dom";
 import { useTheme } from "../../../theme/ThemeContext";
 import type { CubeTheme, ThemeTokens } from "../../../theme/types";
+import { parseLengthPx } from "../../../utils/parseLengthPx";
 import styles from "./Tooltip.module.css";
 
 export type TooltipPlacement = "top" | "bottom" | "left" | "right";
@@ -26,14 +27,6 @@ export interface TooltipProps {
   showDelay?: number;
   theme?: CubeTheme;
   className?: string;
-}
-
-function parseLengthPx(value: string, fallback = 4): number {
-  if (typeof value !== "string") return fallback;
-  if (value.endsWith("rem")) return parseFloat(value) * 16;
-  if (value.endsWith("px")) return parseFloat(value);
-  const n = parseFloat(value);
-  return Number.isFinite(n) ? n : fallback;
 }
 
 function computeFixedPosition(
@@ -111,7 +104,7 @@ export function Tooltip({
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const gapPx = useMemo(
-    () => parseLengthPx(tokens.sizes.tooltip.gap),
+    () => parseLengthPx(tokens.sizes.tooltip.gap, 4),
     [tokens.sizes.tooltip.gap]
   );
 
