@@ -142,7 +142,10 @@ export function ActionMenu({
 
   const menuContent = isActionMenuListElement(children)
     ? React.cloneElement(children, {
-        ref: mergeRefs(listRef, (children as React.ReactElement & { ref?: React.Ref<HTMLDivElement> }).ref),
+        ref: mergeRefs(
+          listRef,
+          (children.props as React.RefAttributes<HTMLDivElement>).ref
+        ),
         theme: theme ?? children.props.theme,
         className: [listClassName, children.props.className].filter(Boolean).join(" ") || undefined,
         "aria-label": ariaLabel ?? children.props["aria-label"],

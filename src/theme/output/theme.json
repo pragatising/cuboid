@@ -249,19 +249,29 @@
       "pagePaddingInline": "1.25rem"
     },
     "container": {
-      "panelMinWidth": "15rem",
-      "sheetWidthSm": "20rem",
-      "sheetWidthMd": "25rem",
-      "sheetWidthLg": "35rem",
-      "sidebarWidthSm": "15rem",
-      "sidebarWidthMd": "17rem",
-      "sidebarWidthLg": "20rem",
-      "sidebarMinWidth": "12.5rem",
-      "sidebarMaxWidth": "30rem",
-      "tooltipMaxWidth": "15rem",
-      "tooltipMaxWidthSingleLine": "7.5rem",
-      "popoverMinWidth": "10rem",
-      "popoverMaxWidth": "20rem"
+      "panel": {
+        "minWidth": "15rem"
+      },
+      "sheet": {
+        "minWidth": "20rem",
+        "defaultWidth": "30rem",
+        "maxWidth": "min(90vw, 56rem)"
+      },
+      "sidebar": {
+        "widthSm": "15rem",
+        "widthMd": "17rem",
+        "widthLg": "20rem",
+        "minWidth": "12.5rem",
+        "maxWidth": "30rem"
+      },
+      "tooltip": {
+        "maxWidth": "15rem",
+        "maxWidthSingleLine": "7.5rem"
+      },
+      "popover": {
+        "minWidth": "10rem",
+        "maxWidth": "20rem"
+      }
     },
     "borderRadius": {
       "sm": "0.25rem",

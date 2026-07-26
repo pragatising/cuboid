@@ -5,12 +5,12 @@
     },
     "sizes": {
       "width": {
-        "sm": { "value": "{size.container.sheetWidthSm}" },
-        "md": { "value": "{size.container.sheetWidthMd}" },
-        "lg": { "value": "{size.container.sheetWidthLg}" }
+        "sm": { "value": "{size.container.sheet.minWidth}" },
+        "md": { "value": "{size.container.sheet.defaultWidth}" },
+        "lg": { "value": "{size.container.sheet.maxWidth}" }
       },
-      "minWidth": { "value": "{size.container.panelMinWidth}" },
-      "maxWidth": { "value": "90vw" },
+      "minWidth": { "value": "{size.container.sheet.minWidth}" },
+      "maxWidth": { "value": "{size.container.sheet.maxWidth}" },
       "maxHeight": { "value": "90vh" },
       "padding": { "value": "{size.space.16}" },
       "bottomCornerRadius": { "value": "{size.borderRadius.large}" }
