@@ -16,6 +16,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "../../../icons/material";
 import { ResizeHandle } from "../ResizeHandle";
 import { sidebarCssVars } from "./sidebarCssVars";
 import styles from "./Sidebar.module.css";
+import type { StackPadding } from "../Stack";
 
 export type SidebarEdge = "left" | "right";
 export type SidebarWidthStop = keyof SheetWidthStopTokens;
@@ -47,6 +48,14 @@ export interface SidebarProps {
 
 export interface SidebarRegionProps {
   theme?: CubeTheme;
+  /**
+   * Override the region's block-axis (top+bottom) inset — `sizes.stack.padding`
+   * token. Defaults to the region's own `--cube-sidebar-padding` /
+   * `--cube-sidebar-footerPadding` (uniform on all sides).
+   */
+  paddingBlock?: StackPadding;
+  /** Override the region's inline-axis (start+end) inset — `sizes.stack.padding` token. */
+  paddingInline?: StackPadding;
   className?: string;
   style?: CSSProperties;
   children?: React.ReactNode;
@@ -107,6 +116,19 @@ function regionInlineVars(theme: CubeTheme | undefined, tokens: ThemeTokens) {
   return theme ? (sidebarCssVars(tokens) as React.CSSProperties) : undefined;
 }
 
+function regionPaddingOverrides(
+  tokens: ThemeTokens,
+  paddingBlock: StackPadding | undefined,
+  paddingInline: StackPadding | undefined,
+): CSSProperties | undefined {
+  if (paddingBlock === undefined && paddingInline === undefined) return undefined;
+  const scale = tokens.sizes.stack.padding;
+  const style: CSSProperties = {};
+  if (paddingBlock !== undefined) style.paddingBlock = scale[paddingBlock];
+  if (paddingInline !== undefined) style.paddingInline = scale[paddingInline];
+  return style;
+}
+
 function resizeHandleEdge(edge: SidebarEdge): "start" | "end" {
   return edge === "right" ? "start" : "end";
 }
@@ -116,12 +138,23 @@ function applyWidthDelta(panelEdge: SidebarEdge, currentPx: number, deltaPx: num
   return currentPx + deltaPx;
 }
 
-function SidebarHeader({ theme, className, style, children }: SidebarRegionProps) {
+function SidebarHeader({
+  theme,
+  paddingBlock,
+  paddingInline,
+  className,
+  style,
+  children,
+}: SidebarRegionProps) {
   const tokens = useTheme(theme);
   return (
     <div
       className={[styles.Sidebar__header, className].filter(Boolean).join(" ")}
-      style={{ ...regionInlineVars(theme, tokens), ...style }}
+      style={{
+        ...regionInlineVars(theme, tokens),
+        ...regionPaddingOverrides(tokens, paddingBlock, paddingInline),
+        ...style,
+      }}
     >
       {children}
     </div>
@@ -140,12 +173,23 @@ function SidebarBody({ theme, className, style, children }: SidebarRegionProps) 
   );
 }
 
-function SidebarFooter({ theme, className, style, children }: SidebarRegionProps) {
+function SidebarFooter({
+  theme,
+  paddingBlock,
+  paddingInline,
+  className,
+  style,
+  children,
+}: SidebarRegionProps) {
   const tokens = useTheme(theme);
   return (
     <div
       className={[styles.Sidebar__footer, className].filter(Boolean).join(" ")}
-      style={{ ...regionInlineVars(theme, tokens), ...style }}
+      style={{
+        ...regionInlineVars(theme, tokens),
+        ...regionPaddingOverrides(tokens, paddingBlock, paddingInline),
+        ...style,
+      }}
     >
       {children}
     </div>

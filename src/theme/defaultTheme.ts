@@ -1,7 +1,7 @@
 import type { ThemeTokens } from "./types";
 import themeFoundation from "./output/theme.json";
 import { tokenOutput } from "./tokenOutput";
-import baseGenerated from "./output/base.json";
+import baseGenerated from "./base.json";
 
 // ── Primitive palette ────────────────────────────────────────────────────────
 // Generated from tokens/base/light.json via `npm run tokens:theme`.

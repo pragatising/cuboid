@@ -6,13 +6,13 @@
     },
     "sizes": {
       "width": {
-        "sm": { "value": "{size.container.sidebarWidthSm}" },
-        "md": { "value": "{size.container.sidebarWidthMd}" },
-        "lg": { "value": "{size.container.sidebarWidthLg}" }
+        "sm": { "value": "{size.container.sidebar.widthSm}" },
+        "md": { "value": "{size.container.sidebar.widthMd}" },
+        "lg": { "value": "{size.container.sidebar.widthLg}" }
       },
       "widthMinimized": { "value": "3.6rem" },
-      "minWidth": { "value": "{size.container.sidebarMinWidth}" },
-      "maxWidth": { "value": "{size.container.sidebarMaxWidth}" },
+      "minWidth": { "value": "{size.container.sidebar.minWidth}" },
+      "maxWidth": { "value": "{size.container.sidebar.maxWidth}" },
       "padding": { "value": "{size.space.8}" },
       "footerPadding": { "value": "{size.space.8}" }
     }

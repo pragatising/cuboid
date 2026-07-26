@@ -33,22 +33,52 @@ export type StackPointerEvents = "auto" | "none";
 
 export type StackZIndex = keyof ThemeTokens["sizes"]["zIndex"];
 
+/** Any CSS length/percentage, alongside the token keywords (`"full"`, `"auto"`, …). */
+export type LayoutSize = LayoutWidth | (string & {});
+
+/** `overflow-x` / `overflow-y` — same value set as CSS `overflow`. */
+export type StackOverflowAxis = "visible" | "hidden" | "auto" | "scroll" | "clip";
+
 export interface StackProps
   extends Omit<React.HTMLAttributes<HTMLElement>, "color"> {
   as?: React.ElementType;
   direction?: Responsive<StackDirection>;
   gap?: Responsive<StackGap>;
+  /** Inset on all sides — `sizes.stack.padding` token (`"md"` = 16px). */
   padding?: Responsive<StackPadding>;
+  /** Inset on the block axis (top+bottom) only — overrides `padding` on that axis. */
   paddingBlock?: Responsive<StackPadding>;
+  /** Inset on the inline axis (start+end) only — overrides `padding` on that axis. */
   paddingInline?: Responsive<StackPadding>;
   align?: Responsive<CSSProperties["alignItems"]>;
   justify?: Responsive<CSSProperties["justifyContent"]>;
   wrap?: Responsive<boolean>;
   grow?: boolean | number;
   shrink?: boolean | number;
-  width?: LayoutWidth;
+  /** Token keyword (`"full"`, `"auto"`, …) or any CSS length (`"240px"`, `"50%"`). */
+  width?: LayoutSize;
+  /** Any CSS length (`"3rem"`, `"100%"`) — no keyword presets, unlike `width`. */
+  height?: string;
   minWidth?: 0;
   position?: StackPosition;
+  /** Pointer affordance on hover — e.g. `"pointer"` for a custom clickable surface. */
+  cursor?: CSSProperties["cursor"];
+  /** Fade/hide without removing from layout — `0`–1, or a CSS percentage string. */
+  opacity?: CSSProperties["opacity"];
+  /** Raw CSS transition shorthand (e.g. `"opacity 120ms ease"`). No motion tokens yet — pass the value directly. */
+  transition?: CSSProperties["transition"];
+  /** `display` override — e.g. `"none"` to hide without unmounting. Omit to keep the default `flex`. */
+  display?: CSSProperties["display"];
+  /** Hide while preserving layout space (unlike `display: none`). Prefer over manual `opacity` + `pointerEvents` for hover-reveal patterns. */
+  visibility?: CSSProperties["visibility"];
+  /** `overflow-x` — independent of `overflow-y`. On `Box`, wins over the `overflow` shorthand for this axis. */
+  overflowX?: StackOverflowAxis;
+  /** `overflow-y` — independent of `overflow-x`. On `Box`, wins over the `overflow` shorthand for this axis. */
+  overflowY?: StackOverflowAxis;
+  /** `white-space` — e.g. `"nowrap"` to keep text on one line (pairs with `textOverflow="ellipsis"`). */
+  whiteSpace?: CSSProperties["whiteSpace"];
+  /** `text-overflow` — e.g. `"ellipsis"`. Requires `whiteSpace="nowrap"` and `overflow="hidden"` to take effect. */
+  textOverflow?: CSSProperties["textOverflow"];
   /** Shorthand inset on all sides — padding token or `0`. */
   inset?: StackInset;
   insetBlock?: StackInset;
@@ -225,6 +255,37 @@ function stackPositionStyle(
   return style;
 }
 
+function stackVisualStyle(
+  props: Pick<
+    StackProps,
+    | "height"
+    | "cursor"
+    | "opacity"
+    | "transition"
+    | "display"
+    | "visibility"
+    | "overflowX"
+    | "overflowY"
+    | "whiteSpace"
+    | "textOverflow"
+  >,
+): CSSProperties {
+  const style: CSSProperties = {};
+
+  if (props.height !== undefined) style.height = props.height;
+  if (props.cursor !== undefined) style.cursor = props.cursor;
+  if (props.opacity !== undefined) style.opacity = props.opacity;
+  if (props.transition !== undefined) style.transition = props.transition;
+  if (props.display !== undefined) style.display = props.display;
+  if (props.visibility !== undefined) style.visibility = props.visibility;
+  if (props.overflowX !== undefined) style.overflowX = props.overflowX;
+  if (props.overflowY !== undefined) style.overflowY = props.overflowY;
+  if (props.whiteSpace !== undefined) style.whiteSpace = props.whiteSpace;
+  if (props.textOverflow !== undefined) style.textOverflow = props.textOverflow;
+
+  return style;
+}
+
 function stackLayoutStyle(
   props: Pick<StackProps, "grow" | "shrink" | "width" | "minWidth">,
   layout: ThemeTokens["sizes"]["layout"],
@@ -243,10 +304,14 @@ function stackLayoutStyle(
 
   const widthKey = props.width;
   if (widthKey === "page" || widthKey === "content" || widthKey === "label") {
-    const widthVal = layoutWidthToCss(widthKey, layout);
+    const widthVal = layoutWidthToCss(widthKey as LayoutWidth, layout);
     if (widthVal !== undefined) {
       style.width = widthVal;
     }
+  } else if (widthKey !== undefined && widthKey !== "full" && widthKey !== "auto") {
+    // Not a known keyword (those are handled via CSS modifier classes below) —
+    // treat as a raw CSS length/percentage escape hatch (e.g. "240px", "50%").
+    style.width = widthKey;
   }
 
   return style;
@@ -458,6 +523,7 @@ export const Stack = forwardRef<HTMLElement, StackProps>(function Stack(
     grow,
     shrink,
     width,
+    height,
     minWidth,
     position,
     inset,
@@ -471,6 +537,15 @@ export const Stack = forwardRef<HTMLElement, StackProps>(function Stack(
     maxHeight,
     pointerEvents,
     zIndex,
+    cursor,
+    opacity,
+    transition,
+    display,
+    visibility,
+    overflowX,
+    overflowY,
+    whiteSpace,
+    textOverflow,
     theme,
     style,
     className,
@@ -494,6 +569,19 @@ export const Stack = forwardRef<HTMLElement, StackProps>(function Stack(
     maxHeight,
     pointerEvents,
     zIndex,
+  };
+
+  const visualProps = {
+    height,
+    cursor,
+    opacity,
+    transition,
+    display,
+    visibility,
+    overflowX,
+    overflowY,
+    whiteSpace,
+    textOverflow,
   };
 
   const layoutProps = {
@@ -528,6 +616,7 @@ export const Stack = forwardRef<HTMLElement, StackProps>(function Stack(
 
   const layoutStyle = stackLayoutStyle(layoutProps, tokens.sizes.layout);
   const positionStyle = stackPositionStyle(positionProps, tokens.sizes);
+  const visualStyle = stackVisualStyle(visualProps);
 
   return (
     <As
@@ -538,6 +627,7 @@ export const Stack = forwardRef<HTMLElement, StackProps>(function Stack(
         ...themeOverride,
         ...layoutStyle,
         ...positionStyle,
+        ...visualStyle,
         ...style,
       }}
       {...rest}

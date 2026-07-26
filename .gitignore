@@ -13,6 +13,7 @@ tokens/functional/typography/theme.tokens.json
 
 # Local planning docs (not published)
 docs/plans/
+docs/*.md
 
 # macOS
 .DS_Store

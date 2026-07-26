@@ -156,7 +156,9 @@ export function Tooltip({
   const setTriggerRef = useCallback(
     (node: HTMLElement | null) => {
       triggerRef.current = node;
-      const childRef = (children as React.ReactElement & { ref?: React.Ref<HTMLElement> }).ref;
+      const childRef = (
+        children.props as React.RefAttributes<HTMLElement>
+      ).ref;
       if (typeof childRef === "function") childRef(node);
       else if (childRef && typeof childRef === "object") {
         (childRef as React.MutableRefObject<HTMLElement | null>).current = node;

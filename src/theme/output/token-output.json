@@ -1004,11 +1004,11 @@
     "sheet": {
       "width": {
         "sm": "20rem",
-        "md": "25rem",
-        "lg": "35rem"
+        "md": "30rem",
+        "lg": "min(90vw, 56rem)"
       },
-      "minWidth": "15rem",
-      "maxWidth": "90vw",
+      "minWidth": "20rem",
+      "maxWidth": "min(90vw, 56rem)",
       "maxHeight": "90vh",
       "padding": "1rem",
       "bottomCornerRadius": "1rem"

@@ -20,6 +20,19 @@ export function pxKeyToSpaceScale(pxKey) {
 }
 
 /**
+ * Convert an 8pt scale key ("1.5x") back to its px count (12) — for building
+ * a dot-free CSS custom-property *name* (`--cube-space-12px`). Token
+ * *values* stay in rem (see theme.json spaceScale) so spacing keeps scaling
+ * with the user's OS/browser text-size setting; only the ident is px-named.
+ * @param {string} scaleKey — e.g. "1.5x"
+ */
+export function spaceScaleToPxKey(scaleKey) {
+  const match = /^(\d+(?:\.\d+)?)x$/.exec(scaleKey);
+  if (!match) return null;
+  return String(Number(match[1]) * 8);
+}
+
+/**
  * Build the canonical spaceScale map from resolved px-keyed space tokens.
  * @param {Record<string, string>} spacePx
  * @returns {Record<string, string>}

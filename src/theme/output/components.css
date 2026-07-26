@@ -505,11 +505,11 @@
   --cube-sheet-bg: #FFFFFF;
   --cube-sheet-bottomCornerRadius: 1rem;
   --cube-sheet-maxHeight: 90vh;
-  --cube-sheet-maxWidth: 90vw;
-  --cube-sheet-minWidth: 15rem;
+  --cube-sheet-maxWidth: min(90vw, 56rem);
+  --cube-sheet-minWidth: 20rem;
   --cube-sheet-padding: 1rem;
-  --cube-sheet-width-lg: 35rem;
-  --cube-sheet-width-md: 25rem;
+  --cube-sheet-width-lg: min(90vw, 56rem);
+  --cube-sheet-width-md: 30rem;
   --cube-sheet-width-sm: 20rem;
   --cube-sidebar-bg: #FFFFFF;
   --cube-sidebar-border: #EFEEEA;

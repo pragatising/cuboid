@@ -691,19 +691,29 @@ export interface LayoutTokens {
 
 /** Shared panel widths for sheet, sidebar, and similar overlays (from size/container.json). */
 export interface ContainerSizesTokens {
-  panelMinWidth: string;
-  sheetWidthSm: string;
-  sheetWidthMd: string;
-  sheetWidthLg: string;
-  sidebarWidthSm: string;
-  sidebarWidthMd: string;
-  sidebarWidthLg: string;
-  sidebarMinWidth: string;
-  sidebarMaxWidth: string;
-  tooltipMaxWidth: string;
-  tooltipMaxWidthSingleLine: string;
-  popoverMinWidth: string;
-  popoverMaxWidth: string;
+  panel: {
+    minWidth: string;
+  };
+  sheet: {
+    minWidth: string;
+    defaultWidth: string;
+    maxWidth: string;
+  };
+  sidebar: {
+    widthSm: string;
+    widthMd: string;
+    widthLg: string;
+    minWidth: string;
+    maxWidth: string;
+  };
+  tooltip: {
+    maxWidth: string;
+    maxWidthSingleLine: string;
+  };
+  popover: {
+    minWidth: string;
+    maxWidth: string;
+  };
 }
 
 export type LayoutWidth = "label" | "page" | "content" | "full" | "auto";

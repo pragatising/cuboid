@@ -223,7 +223,7 @@ function main() {
   const themeOutputDir = path.join(ROOT, "src/theme/output");
   const outPath = path.join(themeOutputDir, "theme.json");
   const tokenOutPath = path.join(themeOutputDir, "token-output.json");
-  const baseOutPath = path.join(themeOutputDir, "base.json");
+  const baseOutPath = path.join(ROOT, "src/theme/base.json");
 
   if (!fs.existsSync(lightPath)) {
     console.error(`Missing ${lightPath}`);
@@ -1089,21 +1089,6 @@ function main() {
     layoutSizes[key] = layoutLayoutSrc[key];
   }
 
-  const containerLayoutKeys = [
-    "panelMinWidth",
-    "sheetWidthSm",
-    "sheetWidthMd",
-    "sheetWidthLg",
-    "sidebarWidthSm",
-    "sidebarWidthMd",
-    "sidebarWidthLg",
-    "sidebarMinWidth",
-    "sidebarMaxWidth",
-    "tooltipMaxWidth",
-    "tooltipMaxWidthSingleLine",
-    "popoverMinWidth",
-    "popoverMaxWidth",
-  ];
   const containerLayoutSrc = uSize?.container;
   if (!isPlain(containerLayoutSrc)) {
     console.error(
@@ -1111,13 +1096,44 @@ function main() {
     );
     process.exit(1);
   }
-  const containerSizes = {};
-  for (const key of containerLayoutKeys) {
-    if (typeof containerLayoutSrc[key] !== "string") {
-      console.error(`Expected size.container.${key} to be a string`);
+
+  const containerSizes = {
+    panel: {
+      minWidth: containerLayoutSrc.panel?.minWidth,
+    },
+    sheet: {
+      minWidth: containerLayoutSrc.sheet?.minWidth,
+      defaultWidth: containerLayoutSrc.sheet?.defaultWidth,
+      maxWidth: containerLayoutSrc.sheet?.maxWidth,
+    },
+    sidebar: {
+      widthSm: containerLayoutSrc.sidebar?.widthSm,
+      widthMd: containerLayoutSrc.sidebar?.widthMd,
+      widthLg: containerLayoutSrc.sidebar?.widthLg,
+      minWidth: containerLayoutSrc.sidebar?.minWidth,
+      maxWidth: containerLayoutSrc.sidebar?.maxWidth,
+    },
+    tooltip: {
+      maxWidth: containerLayoutSrc.tooltip?.maxWidth,
+      maxWidthSingleLine: containerLayoutSrc.tooltip?.maxWidthSingleLine,
+    },
+    popover: {
+      minWidth: containerLayoutSrc.popover?.minWidth,
+      maxWidth: containerLayoutSrc.popover?.maxWidth,
+    },
+  };
+
+  for (const [group, values] of Object.entries(containerSizes)) {
+    if (!isPlain(values)) {
+      console.error(`Expected size.container.${group} to be a plain object`);
       process.exit(1);
     }
-    containerSizes[key] = containerLayoutSrc[key];
+    for (const [key, value] of Object.entries(values)) {
+      if (typeof value !== "string") {
+        console.error(`Expected size.container.${group}.${key} to be a string`);
+        process.exit(1);
+      }
+    }
   }
 
   const highlightLayoutSrc = uSize?.highlight;
@@ -1604,7 +1620,7 @@ function main() {
   fs.writeFileSync(tokenOutPath, JSON.stringify(tokenOutput, null, 2) + "\n", "utf8");
   console.log(`Wrote ${tokenOutPath}`);
 
-  // Base scales live in a sibling file so theme.json stays smaller (foundation only).
+  // Base scales live beside the theme source so theme.json stays smaller and the output folder only contains public theme artifacts.
   fs.writeFileSync(baseOutPath, JSON.stringify(base, null, 2) + "\n", "utf8");
   console.log(`Wrote ${baseOutPath}`);
 }

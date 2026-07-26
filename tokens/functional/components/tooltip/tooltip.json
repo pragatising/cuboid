@@ -10,8 +10,8 @@
       "borderRadius": { "value": "{size.space.4}" },
       "paddingInline": { "value": "{size.space.6}" },
       "paddingBlock": { "value": "{size.space.2}" },
-      "maxWidth": { "value": "{size.container.tooltipMaxWidth}" },
-      "maxWidthSingleLine": { "value": "{size.container.tooltipMaxWidthSingleLine}" },
+      "maxWidth": { "value": "{size.container.tooltip.maxWidth}" },
+      "maxWidthSingleLine": { "value": "{size.container.tooltip.maxWidthSingleLine}" },
       "boxShadow": { "value": "{shadows.tooltip}" }
     }
   }

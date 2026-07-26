@@ -63,7 +63,7 @@
 
 .Sidebar__footer {
   flex-shrink: 0;
-  padding: var(--cube-sidebar-footer-padding);
+  padding: var(--cube-sidebar-footerPadding);
 }
 
 .Sidebar__toggle {

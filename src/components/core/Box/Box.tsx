@@ -8,6 +8,7 @@ import styles from "./Box.module.css";
 import type { BoxBorderRadius, BoxOverflow } from "./boxTypes";
 import type { SpaceToken } from "../../../utils/spaceToken";
 import { spaceTokenToCssVar } from "../../../utils/spaceToken";
+import type { IconSize } from "../Icon";
 
 export type {
   BoxBackground,
@@ -32,24 +33,39 @@ export interface BoxProps extends StackProps {
   borderColor?: GlobalColorPath;
   /** Corner radius from `sizes.borderRadius`. */
   borderRadius?: BoxBorderRadius;
-  /** Shorthand overflow — use `overflowX` / `overflowY` in `style` to override an axis. */
+  /** Shorthand overflow on both axes — use `overflowX` / `overflowY` to diverge per axis. */
   overflow?: BoxOverflow;
   /**
    * Inherited text color from `colors.global` (dot-path), or any CSS color string.
    * @example "text.default" | "text.muted"
    */
   foreground?: GlobalColorPath;
-  /** External offset — foundation spacing token (`"2x"`, `"16"`, …). */
+  /** External offset on the block axis (top+bottom) — foundation spacing token (`"1x"` = 8px). */
   marginBlock?: SpaceToken;
+  /** External offset on the block-start edge (top in horizontal writing modes). */
   marginBlockStart?: SpaceToken;
+  /** External offset on the block-end edge (bottom in horizontal writing modes). */
   marginBlockEnd?: SpaceToken;
+  /** External offset on the inline axis (start+end) — foundation spacing token (`"1x"` = 8px). */
   marginInline?: SpaceToken;
+  /** External offset on the inline-start edge (left in LTR). Use for asymmetric insets — e.g. shifting only a leading title without affecting a trailing sibling. */
   marginInlineStart?: SpaceToken;
+  /** External offset on the inline-end edge (right in LTR). */
   marginInlineEnd?: SpaceToken;
+  /** External offset on the physical top edge — prefer `marginBlockStart` unless the layout must stay fixed under RTL. */
   marginTop?: SpaceToken;
+  /** External offset on the physical right edge — prefer `marginInlineEnd` unless the layout must stay fixed under RTL. */
   marginRight?: SpaceToken;
+  /** External offset on the physical bottom edge — prefer `marginBlockEnd` unless the layout must stay fixed under RTL. */
   marginBottom?: SpaceToken;
+  /** External offset on the physical left edge — prefer `marginInlineStart` unless the layout must stay fixed under RTL. */
   marginLeft?: SpaceToken;
+  /**
+   * Square this box to a `sizes.icon` stop (`"md"` = 20px) — for sizing a
+   * custom glyph/avatar to match an adjacent icon slot exactly, without a
+   * hardcoded pixel value in consumer code.
+   */
+  size?: IconSize;
   theme?: CubeTheme;
 }
 
@@ -136,6 +152,12 @@ function boxMarginStyle(
   return style;
 }
 
+function boxSizeStyle(size: IconSize | undefined): React.CSSProperties {
+  if (size === undefined) return {};
+  const value = `var(--cube-icon-${size})`;
+  return { width: value, height: value };
+}
+
 /**
  * Generic styled surface + flex layout primitive.
  *
@@ -162,6 +184,7 @@ export const Box = forwardRef<HTMLElement, BoxProps>(function Box(
     marginRight,
     marginBottom,
     marginLeft,
+    size,
     theme,
     className,
     style,
@@ -196,12 +219,13 @@ export const Box = forwardRef<HTMLElement, BoxProps>(function Box(
     marginBottom,
     marginLeft,
   });
+  const sizeStyle = boxSizeStyle(size);
 
   return (
     <Stack
       ref={ref}
       className={classNames}
-      style={{ ...surfaceVars, ...themeOverride, ...marginStyle, ...style }}
+      style={{ ...surfaceVars, ...themeOverride, ...marginStyle, ...sizeStyle, ...style }}
       {...stackProps}
     >
       {children}
