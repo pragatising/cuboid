@@ -9,6 +9,8 @@ import type {
 } from "../../../theme/types";
 import { stackScaleCubeOverride } from "../../../theme/themeCubeOverride";
 import { isResponsiveObject, resolveResponsive, type Responsive } from "../../../utils/responsive";
+import type { SpaceToken } from "../../../utils/spaceToken";
+import { spaceTokenToCssVar } from "../../../utils/spaceToken";
 import styles from "./Stack.module.css";
 
 export type StackDirection = "horizontal" | "vertical";
@@ -17,11 +19,22 @@ export type { StackGap, StackPadding, LayoutWidth };
 /** @deprecated Use `StackGap` or `StackPadding`. */
 export type { StackGap as StackSpacing };
 
+/** `gap`/`padding` accept a named stop (`"md"`) or, for in-between values the named scale can't hit, an 8pt scale token (`"0.25x"` = 2px). */
+export type StackGapValue = StackGap | SpaceToken;
+export type StackPaddingValue = StackPadding | SpaceToken;
+
+const SPACE_TOKEN_PATTERN = /^\d+(?:\.\d+)?x$/;
+
+/** True for a scale-token string (`"0.25x"`); false for named stops and for `Responsive<T>` objects (gap/padding can be either). */
+function isSpaceToken(value: unknown): value is SpaceToken {
+  return typeof value === "string" && SPACE_TOKEN_PATTERN.test(value);
+}
+
 /** CSS `position` values supported on Stack / Box. */
 export type StackPosition = "static" | "relative" | "absolute" | "fixed" | "sticky";
 
-/** Inset offset — stack padding token or `0`. */
-export type StackInset = StackPadding | 0;
+/** Inset offset — stack padding token, an 8pt scale token (`"0.25x"`), or `0`. */
+export type StackInset = StackPaddingValue | 0;
 
 /** Token-backed max-width; `viewport` → `min(90vw, page max width)`. */
 export type LayoutMaxWidth = LayoutWidth | "viewport";
@@ -43,13 +56,14 @@ export interface StackProps
   extends Omit<React.HTMLAttributes<HTMLElement>, "color"> {
   as?: React.ElementType;
   direction?: Responsive<StackDirection>;
-  gap?: Responsive<StackGap>;
-  /** Inset on all sides — `sizes.stack.padding` token (`"md"` = 16px). */
-  padding?: Responsive<StackPadding>;
+  /** Named stop (`"md"`), or an 8pt scale token (`"0.25x"` = 2px) for a step the named scale doesn't have. */
+  gap?: Responsive<StackGapValue>;
+  /** Inset on all sides — `sizes.stack.padding` token (`"md"` = 16px), or an 8pt scale token (`"0.25x"` = 2px) for an in-between value. */
+  padding?: Responsive<StackPaddingValue>;
   /** Inset on the block axis (top+bottom) only — overrides `padding` on that axis. */
-  paddingBlock?: Responsive<StackPadding>;
+  paddingBlock?: Responsive<StackPaddingValue>;
   /** Inset on the inline axis (start+end) only — overrides `padding` on that axis. */
-  paddingInline?: Responsive<StackPadding>;
+  paddingInline?: Responsive<StackPaddingValue>;
   align?: Responsive<CSSProperties["alignItems"]>;
   justify?: Responsive<CSSProperties["justifyContent"]>;
   wrap?: Responsive<boolean>;
@@ -105,24 +119,62 @@ function directionToFlex(direction: StackDirection | undefined): CSSProperties["
 }
 
 function gapToCss(
-  key: StackGap | undefined,
+  key: StackGapValue | undefined,
   gap: ThemeTokens["sizes"]["stack"]["gap"] | undefined,
 ): string | undefined {
   if (key === undefined) return undefined;
+  if (isSpaceToken(key)) return spaceTokenToCssVar(key);
   return gap?.[key];
 }
 
 function paddingToCss(
-  key: StackPadding | undefined,
+  key: StackPaddingValue | undefined,
   padding: ThemeTokens["sizes"]["stack"]["padding"] | undefined,
 ): string | undefined {
   if (key === undefined) return undefined;
+  if (isSpaceToken(key)) return spaceTokenToCssVar(key);
   return padding?.[key];
 }
 
 function wrapToCss(wrap: boolean | undefined): CSSProperties["flexWrap"] {
   if (wrap === undefined) return undefined;
   return wrap ? "wrap" : "nowrap";
+}
+
+/**
+ * Scale-token (`"0.25x"`) values for `gap`/`padding` skip the CSS-module
+ * class path entirely — there's no generated class per arbitrary scale step,
+ * only per named stop. Resolve them straight to `var(--cube-space-*)` inline
+ * instead. Named stops keep going through their CSS-module class, unchanged.
+ */
+/** Only called once the caller has confirmed (via `stackUsesResponsiveLayout`) that none of these are responsive objects — narrowed to plain scale/token strings here. */
+function stackScaleTokenStyle(props: {
+  gap?: StackGapValue;
+  padding?: StackPaddingValue;
+  paddingBlock?: StackPaddingValue;
+  paddingInline?: StackPaddingValue;
+}): CSSProperties {
+  const style: CSSProperties = {};
+
+  if (props.gap !== undefined && isSpaceToken(props.gap)) {
+    style.gap = spaceTokenToCssVar(props.gap);
+  }
+
+  const paddingVar =
+    props.padding !== undefined && isSpaceToken(props.padding)
+      ? spaceTokenToCssVar(props.padding)
+      : undefined;
+  if (paddingVar !== undefined) style.padding = paddingVar;
+
+  if (props.paddingBlock !== undefined && isSpaceToken(props.paddingBlock)) {
+    style.paddingBlock = spaceTokenToCssVar(props.paddingBlock);
+  }
+
+  if (props.paddingInline !== undefined && isSpaceToken(props.paddingInline)) {
+    style.paddingInline = spaceTokenToCssVar(props.paddingInline);
+  }
+
+  return style;
 }
 
 function layoutWidthToCss(
@@ -448,19 +500,19 @@ function stackModifierClasses(
     classes.push(styles["Stack--direction-horizontal"]);
   }
 
-  if (props.gap !== undefined) {
+  if (props.gap !== undefined && !isSpaceToken(props.gap)) {
     classes.push(styles[`Stack--gap-${props.gap}` as keyof typeof styles]);
   }
 
-  if (props.paddingBlock !== undefined) {
+  if (props.paddingBlock !== undefined && !isSpaceToken(props.paddingBlock)) {
     classes.push(
       styles[`Stack--paddingBlock-${props.paddingBlock}` as keyof typeof styles],
     );
-  } else if (props.padding !== undefined) {
+  } else if (props.padding !== undefined && !isSpaceToken(props.padding)) {
     classes.push(styles[`Stack--padding-${props.padding}` as keyof typeof styles]);
   }
 
-  if (props.paddingInline !== undefined) {
+  if (props.paddingInline !== undefined && !isSpaceToken(props.paddingInline)) {
     classes.push(
       styles[`Stack--paddingInline-${props.paddingInline}` as keyof typeof styles],
     );
@@ -617,6 +669,16 @@ export const Stack = forwardRef<HTMLElement, StackProps>(function Stack(
   const layoutStyle = stackLayoutStyle(layoutProps, tokens.sizes.layout);
   const positionStyle = stackPositionStyle(positionProps, tokens.sizes);
   const visualStyle = stackVisualStyle(visualProps);
+  const scaleTokenStyle = stackUsesResponsiveLayout(layoutProps)
+    ? undefined
+    : stackScaleTokenStyle(
+        layoutProps as {
+          gap?: StackGapValue;
+          padding?: StackPaddingValue;
+          paddingBlock?: StackPaddingValue;
+          paddingInline?: StackPaddingValue;
+        },
+      );
 
   return (
     <As
@@ -628,6 +690,7 @@ export const Stack = forwardRef<HTMLElement, StackProps>(function Stack(
         ...layoutStyle,
         ...positionStyle,
         ...visualStyle,
+        ...scaleTokenStyle,
         ...style,
       }}
       {...rest}
