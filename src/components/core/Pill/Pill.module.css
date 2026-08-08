@@ -6,7 +6,7 @@
   justify-content: center;
   box-sizing: border-box;
   margin: 0;
-  border-width: var(--cube-sizes-borderWidth-thin);
+  border-width: var(--cube-pill-borderWidth, var(--cube-sizes-borderWidth-thin));
   border-style: solid;
   font-family: var(--cube-typography-fontFamily-base);
   font-size: var(--cube-typography-text-body-xs-fontSize, 0.75rem);

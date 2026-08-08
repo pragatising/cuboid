@@ -5,15 +5,15 @@ node_modules/
 dist/
 storybook-static/
 
-# Generated token artifacts
-tokens/functional/typography/theme.tokens.json
-
 # Cursor IDE (local only — not published)
 .cursor/
 
 # Local planning docs (not published)
 docs/plans/
 docs/*.md
+
+# Claude Code session working notes (not published, not shared history)
+THREADS.md
 
 # macOS
 .DS_Store

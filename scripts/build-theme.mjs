@@ -12,6 +12,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { buildSpaceScaleFromPxSpace } from "./lib/spaceScale.mjs";
+import { buildTypographyTheme } from "./build-typography-theme.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, "..");
@@ -216,7 +217,6 @@ function main() {
   const lightPath = path.join(ROOT, "tokens/base/light.json");
   const globalsPath = path.join(ROOT, "tokens/functional/colors/globals.json");
   const rawTypographyPath = path.join(ROOT, "tokens/functional/typography/typography.json");
-  const typographyPath = path.join(ROOT, "tokens/functional/typography/theme.tokens.json");
   const componentsDir = path.join(ROOT, "tokens/functional/components");
   const functionalSizeDir = path.join(ROOT, "tokens/functional/size");
   const functionalShadowsDir = path.join(ROOT, "tokens/functional/shadows");
@@ -239,9 +239,7 @@ function main() {
   const rawTypography = fs.existsSync(rawTypographyPath)
     ? JSON.parse(fs.readFileSync(rawTypographyPath, "utf8"))
     : null;
-  const typographyThemeFile = fs.existsSync(typographyPath)
-    ? JSON.parse(fs.readFileSync(typographyPath, "utf8"))
-    : null;
+  const typographyThemeFile = rawTypography ? buildTypographyTheme(rawTypography) : null;
 
   if (!isPlain(light.base)) {
     console.error("light.json: expected top-level base");

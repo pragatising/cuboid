@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 /**
- * Build theme-shaped typography tokens for `scripts/build-theme.mjs`.
+ * Build theme-shaped typography tokens (in-memory) for `scripts/build-theme.mjs`.
  *
- * Input:  tokens/functional/typography/typography.json — Figma primitives (px)
- * Output: tokens/functional/typography/theme.tokens.json — generated (gitignored)
+ * Input: tokens/functional/typography/typography.json — Figma primitives (px)
  *
  * Text styles are inferred from typography.json:
  *   - heading + size → text.sizes.{size} + heading.weight.* + heading.lineHeight[fontPx]
@@ -12,6 +11,13 @@
  *   - code           → mono stack + xs / 0.875em
  *
  * px → rem uses a 16px base (override with TYPOGRAPHY_BASE_PX).
+ *
+ * `buildTypographyTheme(raw)` is imported directly by build-theme.mjs — no
+ * intermediate file is written to tokens/ anymore (that dir is otherwise
+ * 100% hand-authored source; a generated sibling there was a standing
+ * duplicate of what ends up in src/theme/output/theme.json). Run this file
+ * directly (`node scripts/build-typography-theme.mjs`) to print the same
+ * theme-shaped JSON to stdout for inspection.
  */
 
 import fs from "fs";
@@ -22,7 +28,6 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, "..");
 
 const TYPOGRAPHY_INPUT = path.join(ROOT, "tokens/functional/typography/typography.json");
-const OUTPUT = path.join(ROOT, "tokens/functional/typography/theme.tokens.json");
 
 const WEIGHT_SEMANTIC = {
   "400": "regular",
@@ -237,11 +242,8 @@ function buildTextTokens(raw, families) {
   return text;
 }
 
-function main() {
-  if (!fs.existsSync(TYPOGRAPHY_INPUT)) fail(`Missing ${TYPOGRAPHY_INPUT}`);
-
-  const raw = JSON.parse(fs.readFileSync(TYPOGRAPHY_INPUT, "utf8"));
-
+/** Pure transform: raw typography.json content in, theme-shaped `{ typography: {...} }` out. */
+export function buildTypographyTheme(raw) {
   const systemStack = leafValue(get(raw, "fontStack.system"));
   const sans = leafValue(get(raw, "fontStack.sansSerif"));
   const mono = leafValue(get(raw, "fontStack.monospace"));
@@ -276,9 +278,18 @@ function main() {
     },
   };
 
-  fs.mkdirSync(path.dirname(OUTPUT), { recursive: true });
-  fs.writeFileSync(OUTPUT, JSON.stringify(theme, null, 2) + "\n", "utf8");
-  console.log(`Wrote ${OUTPUT}`);
+  return theme;
 }
 
-main();
+function main() {
+  if (!fs.existsSync(TYPOGRAPHY_INPUT)) fail(`Missing ${TYPOGRAPHY_INPUT}`);
+  const raw = JSON.parse(fs.readFileSync(TYPOGRAPHY_INPUT, "utf8"));
+  const theme = buildTypographyTheme(raw);
+  console.log(JSON.stringify(theme, null, 2));
+}
+
+// Only run the CLI entry when invoked directly (`node scripts/build-typography-theme.mjs`),
+// not when imported by build-theme.mjs.
+if (import.meta.url === `file://${process.argv[1]}`) {
+  main();
+}

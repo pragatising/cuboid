@@ -84,8 +84,13 @@ const meta: Meta<typeof Pill> = {
               </li>
               <li>
                 <strong>Layout:</strong>{" "}
-                <code>pill.json</code> → padding, radius, gap from space tokens. Override via{" "}
-                <code>theme=&#123;&#123; sizes: &#123; pill: … &#125; &#125;&#125;</code>.
+                <code>pill.json</code> → padding, radius, gap from space tokens. Override the
+                whole recipe via{" "}
+                <code>theme=&#123;&#123; sizes: &#123; pill: … &#125; &#125;&#125;</code>, or a
+                single instance via <code>paddingInline</code> / <code>paddingBlock</code> /{" "}
+                <code>borderRadius</code> (8pt scale token, e.g. <code>"0.5x"</code>;{" "}
+                <code>borderRadius</code> also accepts a named <code>sizes.borderRadius</code>{" "}
+                stop like <code>"sm"</code>).
               </li>
               <li>
                 <strong>Typography:</strong> defaults to <code>bodyXs</code>{" "}
@@ -156,5 +161,54 @@ export const WithBodySm: Story = {
     <Pill variant="bodySm" shade="gray" intensity="light" border>
       Larger label
     </Pill>
+  ),
+};
+
+export const LayoutOverrides: Story = {
+  name: "Per-instance padding / borderRadius",
+  render: () => (
+    <Stack direction="horizontal" gap="sm" align="center" wrap>
+      <Pill shade="gray" intensity="light">
+        default
+      </Pill>
+      <Pill shade="gray" intensity="light" paddingInline="2x">
+        paddingInline="2x"
+      </Pill>
+      <Pill shade="gray" intensity="light" paddingBlock="0.5x">
+        paddingBlock="0.5x"
+      </Pill>
+      <Pill shade="gray" intensity="light" borderRadius="0.5x">
+        borderRadius="0.5x"
+      </Pill>
+      <Pill shade="gray" intensity="light" borderRadius="full">
+        borderRadius="full"
+      </Pill>
+    </Stack>
+  ),
+};
+
+export const BorderOverrides: Story = {
+  name: "Per-instance borderColor / borderWidth",
+  render: () => (
+    <Stack direction="horizontal" gap="sm" align="center" wrap>
+      <Pill shade="gray" intensity="light">
+        default (no visible border)
+      </Pill>
+      <Pill shade="gray" intensity="light" borderColor="error.default">
+        borderColor="error.default"
+      </Pill>
+      <Pill shade="gray" intensity="light" borderColor="#ff6b6b">
+        borderColor="#ff6b6b" (raw)
+      </Pill>
+      <Pill shade="gray" intensity="light" borderColor="error.default" borderWidth="thick">
+        borderWidth="thick"
+      </Pill>
+      <Pill shade="gray" intensity="light" borderColor="error.default" borderWidth="3px">
+        borderWidth="3px" (raw)
+      </Pill>
+      <Pill shade="blue" intensity="bold" border borderColor="error.default" borderWidth="thick">
+        overriding an already-bordered pill
+      </Pill>
+    </Stack>
   ),
 };

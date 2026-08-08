@@ -1,6 +1,6 @@
 {
   "name": "@sragatiping/cuboid",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Cube — React components and design tokens for data views, tables, and themed UI.",
   "keywords": [
     "react",
@@ -51,7 +51,6 @@
     "tokens:functional-colors": "node scripts/flatten-functional-colors.mjs",
     "tokens:functional-typography": "node scripts/flatten-functional-typography.mjs",
     "tokens:typography-theme": "node scripts/build-typography-theme.mjs",
-    "pretokens:theme": "node scripts/build-typography-theme.mjs",
     "tokens:theme": "node scripts/build-theme.mjs && node scripts/build-theme-css.mjs && node scripts/build-component-theme-css.mjs",
     "prebuild": "npm run tokens:theme",
     "prepublishOnly": "npm run build"
