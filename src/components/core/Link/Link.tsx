@@ -2,7 +2,6 @@ import React from "react";
 import { useTheme } from "../../../theme/ThemeContext";
 import type { CubeTheme, LinkFunctionalColors, ThemeTokens } from "../../../theme/types";
 import { Icon } from "../Icon";
-import { OpenInNewIcon } from "../../../icons/material";
 import styles from "./Link.module.css";
 
 export type LinkVariant = keyof LinkFunctionalColors | "inherit";
@@ -97,9 +96,7 @@ export function Link<E extends React.ElementType = "a">({
     <Component {...componentProps}>
       {children}
       {external && showExternalIcon && variant !== "inherit" && (
-        <Icon size="xs" className={styles.Link__externalIcon}>
-          <OpenInNewIcon />
-        </Icon>
+        <Icon name="open_in_new" size="xs" className={styles.Link__externalIcon} />
       )}
     </Component>
   );

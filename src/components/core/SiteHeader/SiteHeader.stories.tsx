@@ -1,9 +1,9 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Title, Primary, Controls, Subtitle } from "@storybook/blocks";
-import { ArrowBackIcon, MenuIcon, SearchIcon } from "../../../icons/material";
 import { Button } from "../Button";
 import { Breadcrumbs } from "../Breadcrumb";
+import { Icon } from "../Icon";
 import { IconButton } from "../IconButton";
 import { SiteHeader, SiteHeaderDivider } from "./SiteHeader";
 
@@ -29,7 +29,7 @@ const meta: Meta<typeof SiteHeader> = {
               leading={
                 <>
                   <IconButton aria-label="Open menu" variant="ghost" size="sm">
-                    <MenuIcon />
+                    <Icon name="menu" />
                   </IconButton>
                   <Breadcrumbs
                     items={[
@@ -43,7 +43,7 @@ const meta: Meta<typeof SiteHeader> = {
               trailing={
                 <>
                   <IconButton aria-label="Search" variant="ghost" size="sm">
-                    <SearchIcon />
+                    <Icon name="search" />
                   </IconButton>
                   <Button size="sm" variant="secondary">
                     New
@@ -59,7 +59,7 @@ const meta: Meta<typeof SiteHeader> = {
               leading={
                 <>
                   <IconButton aria-label="Go back" variant="ghost" size="sm">
-                    <ArrowBackIcon />
+                    <Icon name="arrow_back" />
                   </IconButton>
                   <SiteHeaderDivider />
                   <Breadcrumbs items={[{ label: "Record details" }]} />
@@ -67,7 +67,7 @@ const meta: Meta<typeof SiteHeader> = {
               }
               trailing={
                 <IconButton aria-label="More actions" variant="ghost" size="sm">
-                  <MenuIcon />
+                  <Icon name="menu" />
                 </IconButton>
               }
             />
@@ -90,7 +90,7 @@ export const Playground: Story = {
       leading={
         <>
           <IconButton aria-label="Open menu" variant="ghost" size="sm">
-            <MenuIcon />
+            <Icon name="menu" />
           </IconButton>
           <Breadcrumbs items={[{ label: "Section" }, { label: "Page" }]} />
         </>

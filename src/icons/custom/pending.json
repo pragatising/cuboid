@@ -1,4 +1,4 @@
 {
-  "note": "Figma icons with no Material Symbols Rounded match — implement under src/icons/custom/",
+  "note": "Figma icons with no match in Material Symbols' own manifest — implement under src/icons/custom/",
   "icons": []
 }

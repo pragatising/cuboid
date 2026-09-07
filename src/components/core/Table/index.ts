@@ -23,3 +23,4 @@ export type {
   TableLines,
   SimpleTableProps,
 } from "./Table";
+export type { OnChangeFn, SortingState } from "@tanstack/react-table";

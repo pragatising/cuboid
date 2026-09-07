@@ -52,7 +52,7 @@ export function CodeViewingArchitectureSection({
         <p className="cube-docs-note" style={{ marginTop: "var(--cube-stack-gap-sm)" }}>
           You do not choose between <code>JsonCodeView</code> and{" "}
           <code>ApiResponseViewer</code> — the shell wraps the JSON viewer. The meaningful
-          split is <code>CodeBlock</code> (text) vs <code>JsonCodeView</code> (data).
+          split is <code>CodeBlock</code> (text) vs <code>JsonViewer</code> (data).
         </p>
       </div>
 
@@ -93,7 +93,7 @@ export function CodeViewingArchitectureSection({
       </div>
 
       <div className="cube-docs-section cube-docs-section--wide">
-        <h3 className="cube-docs-section__title">CodeBlock vs JsonCodeView</h3>
+        <h3 className="cube-docs-section__title">CodeBlock vs JsonViewer</h3>
         <table className="cube-docs-table sbdocs-table">
           <thead>
             <tr>

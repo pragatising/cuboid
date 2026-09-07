@@ -2,6 +2,7 @@ import type { ThemeTokens } from "./types";
 import themeFoundation from "./output/theme.json";
 import { tokenOutput } from "./tokenOutput";
 import baseGenerated from "./base.json";
+import { materialSymbolsIconLibrary } from "../icons/material/materialSymbolsIconLibrary";
 
 // ── Primitive palette ────────────────────────────────────────────────────────
 // Generated from tokens/base/light.json via `npm run tokens:theme`.
@@ -90,4 +91,15 @@ export const defaultTheme: ThemeTokens = {
 
   // ── Shadows ─────────────────────────────────────────────────────────────────
   shadows: generatedShadows,
+
+  // ── Icon ────────────────────────────────────────────────────────────────────
+  // Material Symbols Rounded, w400 — matches the previous hardcoded default.
+  icon: {
+    library: materialSymbolsIconLibrary,
+    weight: 400,
+    grade: 0,
+    opticalSize: 24,
+    fill: false,
+    style: "rounded",
+  },
 };

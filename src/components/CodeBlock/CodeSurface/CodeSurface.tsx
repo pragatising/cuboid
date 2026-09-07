@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
-import { Box } from "../core/Box";
-import { Icon } from "../core/Icon/Icon";
-import { Stack } from "../core/Stack";
-import { Tooltip } from "../core/Tooltip/Tooltip";
-import { ChevronRightIcon, ExpandMoreIcon } from "../../icons/material";
-import { useTheme } from "../../theme/ThemeContext";
-import { codeBlockTypographyCubeOverride, syntaxColorsCubeOverride } from "../../theme/themeCubeOverride";
-import type { CubeTheme } from "../../theme/types";
+import { Box } from "../../core/Box";
+import { Icon } from "../../core/Icon/Icon";
+import { Stack } from "../../core/Stack";
+import { Tooltip } from "../../core/Tooltip/Tooltip";
+import { useTheme } from "../../../theme/ThemeContext";
+import { codeBlockTypographyCubeOverride, syntaxColorsCubeOverride } from "../../../theme/themeCubeOverride";
+import type { CubeTheme } from "../../../theme/types";
 import {
   CODE_SURFACE_OVERSCAN,
   CODE_SURFACE_ROW_HEIGHT_PX,
@@ -14,14 +13,14 @@ import {
   CODE_SURFACE_SCROLL_CSS,
   CODE_SURFACE_SCROLL_STYLE_ID,
   CODE_SURFACE_VIRTUAL_THRESHOLD,
-} from "./constants";
+} from "../constants";
 import {
   annotateBracketDepth,
   linkHrefForSurfaceToken,
   syntaxTokenClass,
-} from "./syntax";
+} from "../syntax";
 import styles from "./CodeSurface.module.css";
-import type { SurfaceLine, SurfaceToken } from "./types";
+import type { SurfaceLine, SurfaceToken } from "../types";
 
 export interface CodeSurfaceGutterIcons {
   collapsed?: React.ReactNode;
@@ -224,16 +223,8 @@ export function CodeSurface({
 
   const gutterChars = String(Math.max(gutterLineCount, 1)).length;
   const showCollapseColumn = onToggleCollapse != null;
-  const collapsedIcon = gutterIcons?.collapsed ?? (
-    <Icon size="xs">
-      <ChevronRightIcon />
-    </Icon>
-  );
-  const expandedIcon = gutterIcons?.expanded ?? (
-    <Icon size="xs">
-      <ExpandMoreIcon />
-    </Icon>
-  );
+  const collapsedIcon = gutterIcons?.collapsed ?? <Icon name="chevron_right" size="xs" />;
+  const expandedIcon = gutterIcons?.expanded ?? <Icon name="keyboard_arrow_down" size="xs" />;
 
   const { startIdx, endIdx } = useMemo(() => {
     if (!useVirtual) {
