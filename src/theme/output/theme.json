@@ -463,9 +463,9 @@
           "uuid": "#525252"
         },
         "css": {
-          "selector": "#536601",
-          "property": "#6F6F6D",
-          "value": "#C85700"
+          "selector": "#4F6201",
+          "property": "#C85700",
+          "value": "#236ae5 "
         }
       },
       "markup": {

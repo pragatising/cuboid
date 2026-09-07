@@ -165,9 +165,9 @@
         },
         "identifier": {
           "keyword": { "value": "{base.color.scale.teal.8}" },
-          "typeName": { "value": "{base.color.scale.violet.9}" },
-          "typeMember": { "value": "{base.color.scale.gray.8}" },
-          "functionCall": { "value": "{base.color.scale.yellow.9}" },
+          "typeName": { "value": "{base.color.scale.violet.10}" },
+          "typeMember": { "value": "{base.color.scale.violet.10}" },
+          "functionCall": { "value": "{base.color.scale.yellow.10}" },
           "propertyAccess": { "value": "{base.color.scale.gray.9}" },
           "entityTag": { "value": "{base.color.scale.mag.9}" },
           "attributeName": { "value": "{base.color.scale.orange.8}" }
@@ -180,15 +180,15 @@
           "uuid": { "value": "{base.color.scale.gray.9}" }
         },
         "css": {
-          "selector": { "value": "{base.color.scale.orange.9}" },
-          "property": { "value": "{base.color.scale.gray.8}" },
-          "value": { "value": "{base.color.scale.orange.9}" }
+          "selector": { "value": "{base.color.scale.lime.10}" },
+          "property": { "value": "{base.color.scale.orange.9}" },
+          "value": { "value": "{base.color.scale.blue.9}" }
         }
       },
       "markup": {
         "bold": { "value": "{base.color.scale.gray.9}" },
         "italic": { "value": "{base.color.scale.gray.9}" },
-        "heading": { "value": "#09B2B5" },
+        "heading": { "value": "{base.color.scale.gray.9}" },
         "list": { "value": "{base.color.scale.green.8}" },
         "insertedBg": { "value": "{base.color.scale.green.0}" },
         "insertedText": { "value": "{base.color.scale.green.8}" },
