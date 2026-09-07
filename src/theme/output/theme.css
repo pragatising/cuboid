@@ -238,9 +238,9 @@
   --cube-typography-text-body-xs-fontWeight: 400;
   --cube-typography-text-body-xs-lineHeight: 1.3333;
   --cube-typography-text-code-block-fontFamily: 'Mona Sans Mono', monospace;
-  --cube-typography-text-code-block-fontSize: 0.75rem;
-  --cube-typography-text-code-block-fontWeight: 400;
-  --cube-typography-text-code-block-lineHeight: 1.3333;
+  --cube-typography-text-code-block-fontSize: 0.875rem;
+  --cube-typography-text-code-block-fontWeight: 500;
+  --cube-typography-text-code-block-lineHeight: 1.1429;
   --cube-typography-text-heading-lg-fontSize: 1.5rem;
   --cube-typography-text-heading-lg-fontWeight: 600;
   --cube-typography-text-heading-lg-lineHeight: 1.1667;

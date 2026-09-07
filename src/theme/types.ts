@@ -376,8 +376,6 @@ export interface ActionMenuSizesTokens {
 }
 
 export interface CodeBlockSizesTokens {
-  /** Numeric weight (400) — the generic {ref} resolver only follows string leaves, so this can't reference typography.fontWeight.regular the way string-valued sizes reference {size.space.N}. */
-  fontWeight: number;
   rowHeight: string;
   gutterMinWidth: string;
   lineNumberMinWidth: string;

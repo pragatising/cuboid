@@ -1527,7 +1527,6 @@ function main() {
     process.exit(1);
   }
   const codeBlockSizeKeys = [
-    "fontWeight",
     "rowHeight",
     "gutterMinWidth",
     "lineNumberMinWidth",

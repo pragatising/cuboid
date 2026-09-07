@@ -221,14 +221,25 @@ function buildTextTokens(raw, families) {
     text[`subhead${capitalize(step)}`] = buildSubheadStyle(raw, step);
   }
 
-  const xsPx = resolveRef(raw, "text.sizes.xs", "codeBlock.fontSize");
-  const xsRem = pxToRem(xsPx);
+  // codeBlock has its own authored entry (raw.codeBlock) — same pattern as
+  // `button` — rather than borrowing text.sizes.xs / text.weight.400, which
+  // made codeBlock's fontSize/fontWeight silently track unrelated generic
+  // body-text values instead of a real per-component decision.
+  const rawCodeBlock = get(raw, "codeBlock");
+  const codeBlockFontPx = leafValue(rawCodeBlock?.fontSize);
+  const codeBlockLineHeightPx = leafValue(rawCodeBlock?.lineHeight);
+  const codeBlockWeight = leafValue(rawCodeBlock?.weight);
+  if (
+    !Number.isFinite(codeBlockFontPx) ||
+    !Number.isFinite(codeBlockLineHeightPx) ||
+    !Number.isFinite(codeBlockWeight)
+  ) {
+    fail("typography.json is missing codeBlock.{fontSize,lineHeight,weight}");
+  }
   text.codeBlock = {
-    fontSize: token(xsRem),
-    fontWeight: token(resolveRef(raw, "text.weight.400", "codeBlock.fontWeight")),
-    lineHeight: token(
-      lineHeightRatio(xsPx, mapLineHeightPx(get(raw, "text.lineHeight"), xsPx, "text.lineHeight for codeBlock"), 1.25),
-    ),
+    fontSize: token(pxToRem(codeBlockFontPx)),
+    fontWeight: token(codeBlockWeight),
+    lineHeight: token(lineHeightRatio(codeBlockFontPx, codeBlockLineHeightPx, 1.25)),
     fontFamily: token(families.mono),
   };
 
