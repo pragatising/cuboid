@@ -78,7 +78,7 @@
   --cube-color-syntax-markup-changed-text: #D95903;
   --cube-color-syntax-markup-deleted-bg: #FFF6F5;
   --cube-color-syntax-markup-deleted-text: #EF6262;
-  --cube-color-syntax-markup-heading: #09B2B5;
+  --cube-color-syntax-markup-heading: #525252;
   --cube-color-syntax-markup-inserted-bg: #F0F9EF;
   --cube-color-syntax-markup-inserted-text: #6EBF57;
   --cube-color-syntax-markup-italic: #525252;
@@ -97,11 +97,11 @@
   --cube-color-syntax-token-css-value: #236ae5 ;
   --cube-color-syntax-token-identifier-attribute-name: #D95903;
   --cube-color-syntax-token-identifier-entity-tag: #d22799;
-  --cube-color-syntax-token-identifier-function-call: #CF9202;
+  --cube-color-syntax-token-identifier-function-call: #B57C02;
   --cube-color-syntax-token-identifier-keyword: #1B899E;
   --cube-color-syntax-token-identifier-property-access: #525252;
-  --cube-color-syntax-token-identifier-type-member: #6F6F6D;
-  --cube-color-syntax-token-identifier-type-name: #8143F6;
+  --cube-color-syntax-token-identifier-type-member: #7530F5;
+  --cube-color-syntax-token-identifier-type-name: #7530F5;
   --cube-color-syntax-token-key: #6F6F6D;
   --cube-color-syntax-token-literal-boolean: #9035BD;
   --cube-color-syntax-token-literal-null: #6F6F6D;

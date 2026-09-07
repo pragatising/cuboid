@@ -93,12 +93,16 @@ function resolveOnce(root, node) {
     if (m) {
       const targetPath = m[1].split(".");
       const target = getPath(root, targetPath);
-      if (
-        isPlain(target) &&
-        typeof target.value === "string" &&
-        !/^\{[^}]+\}$/.test(target.value)
-      ) {
-        return { value: target.value };
+      if (isPlain(target)) {
+        // Most refs target a string leaf (colors, "12px" sizes). Some scales
+        // — e.g. typography.text.weight.* — store a bare number; a ref to
+        // one of those must resolve too, not just fall through unresolved.
+        if (typeof target.value === "string" && !/^\{[^}]+\}$/.test(target.value)) {
+          return { value: target.value };
+        }
+        if (typeof target.value === "number") {
+          return { value: target.value };
+        }
       }
     }
     return node;
