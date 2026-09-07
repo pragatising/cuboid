@@ -1065,7 +1065,6 @@
       }
     },
     "codeBlock": {
-      "fontWeight": 400,
       "rowHeight": "1.5rem",
       "gutterMinWidth": "2.5rem",
       "lineNumberMinWidth": "2ch",

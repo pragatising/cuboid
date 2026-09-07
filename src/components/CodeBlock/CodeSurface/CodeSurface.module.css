@@ -1,6 +1,7 @@
 .CodeSurface {
   font-family: var(--cube-typography-text-code-block-fontFamily);
   font-size: var(--cube-typography-text-code-block-fontSize);
+  font-weight: var(--cube-typography-text-code-block-fontWeight);
   line-height: var(--cube-typography-text-code-block-lineHeight);
 }
 

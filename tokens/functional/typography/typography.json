@@ -182,6 +182,17 @@
         "value": 500
       }
     }
+  },
+  "codeBlock": {
+    "fontSize": {
+      "value": 14
+    },
+    "lineHeight": {
+      "value": 16
+    },
+    "weight": {
+      "value": 500
+    }
   }
 }
 

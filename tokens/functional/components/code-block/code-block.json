@@ -4,7 +4,6 @@
       "scrollbarThumb": { "value": "{color.border.grayAlpha.4}" }
     },
     "sizes": {
-      "fontWeight": { "value": "{typography.fontWeight.regular}" },
       "rowHeight": { "value": "{size.space.24}" },
       "gutterMinWidth": { "value": "{size.space.40}" },
       "lineNumberMinWidth": { "value": "2ch" },
