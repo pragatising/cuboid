@@ -24,27 +24,27 @@
 
 .row:hover .gutter,
 .row:hover .content {
-  background: var(--cube-color-syntax-row-hover-bg);
+  background: var(--cube-color-syntax-surface-row-hover-bg);
 }
 
 .rowCollapsed .gutter,
 .rowCollapsed .content {
-  background: var(--cube-color-syntax-collapsed-row-bg);
+  background: var(--cube-color-syntax-surface-collapsed-row-bg);
 }
 
 .rowCollapsed:hover .gutter,
 .rowCollapsed:hover .content {
-  background: var(--cube-color-syntax-row-hover-bg);
+  background: var(--cube-color-syntax-surface-row-hover-bg);
 }
 
 .rowWatched .gutter,
 .rowWatched .content {
-  background: var(--cube-color-syntax-watch-row-bg);
+  background: var(--cube-color-syntax-surface-watch-row-bg);
 }
 
 .rowWatched:hover .gutter,
 .rowWatched:hover .content {
-  background: var(--cube-color-syntax-watch-row-bg);
+  background: var(--cube-color-syntax-surface-watch-row-bg);
 }
 
 .gutter {
@@ -90,7 +90,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--cube-color-syntax-watch-mark-hover);
+  background: var(--cube-color-syntax-surface-watch-mark-hover);
   opacity: 0;
   transition:
     opacity 0.12s ease,
@@ -102,7 +102,7 @@
 }
 
 .watchBtnActive .watchDot {
-  background: var(--cube-color-syntax-watch-mark);
+  background: var(--cube-color-syntax-surface-watch-mark);
   opacity: 1;
 }
 
@@ -160,48 +160,48 @@
 }
 
 .tokenKey {
-  color: var(--cube-color-syntax-key);
+  color: var(--cube-color-syntax-token-key);
 }
 
 .tokenString {
-  color: var(--cube-color-syntax-string);
+  color: var(--cube-color-syntax-token-string);
 }
 
 .tokenStringUrl {
-  color: var(--cube-color-syntax-string-url);
+  color: var(--cube-color-syntax-token-string-url);
 }
 
 .tokenStringEmail {
-  color: var(--cube-color-syntax-string-email);
+  color: var(--cube-color-syntax-token-string-email);
 }
 
 .tokenStringUuid {
-  color: var(--cube-color-syntax-string-uuid);
+  color: var(--cube-color-syntax-token-string-uuid);
 }
 
 .tokenNumber {
-  color: var(--cube-color-syntax-number-literal);
+  color: var(--cube-color-syntax-token-number-literal);
 }
 
 .tokenBoolean {
-  color: var(--cube-color-syntax-boolean-literal);
+  color: var(--cube-color-syntax-token-boolean-literal);
 }
 
 .tokenNull {
-  color: var(--cube-color-syntax-null-literal);
+  color: var(--cube-color-syntax-token-null-literal);
 }
 
 .tokenBracket {
-  color: var(--cube-color-syntax-bracket);
+  color: var(--cube-color-syntax-token-bracket);
 }
 
 /* Alternating nested delimiter colours (even / odd nesting level). */
 .tokenBracketDepth0 {
-  color: var(--cube-color-syntax-bracket);
+  color: var(--cube-color-syntax-token-bracket);
 }
 
 .tokenBracketDepth1 {
-  color: var(--cube-color-syntax-bracket-nested);
+  color: var(--cube-color-syntax-token-bracket-nested);
 }
 
 .tokenMuted {
@@ -213,51 +213,51 @@
 }
 
 .tokenComment {
-  color: var(--cube-color-syntax-comment);
+  color: var(--cube-color-syntax-token-comment);
 }
 
 .tokenKeyword {
-  color: var(--cube-color-syntax-keyword);
+  color: var(--cube-color-syntax-token-keyword);
 }
 
 .tokenEntityTag {
-  color: var(--cube-color-syntax-entity-tag);
+  color: var(--cube-color-syntax-token-entity-tag);
 }
 
 .tokenStringRegexp {
-  color: var(--cube-color-syntax-string-regexp);
+  color: var(--cube-color-syntax-token-string-regexp);
 }
 
 .tokenFunctionCall {
-  color: var(--cube-color-syntax-function-call);
+  color: var(--cube-color-syntax-token-function-call);
 }
 
 .tokenTypeName {
-  color: var(--cube-color-syntax-type-name);
+  color: var(--cube-color-syntax-token-type-name);
 }
 
 .tokenTypeMember {
-  color: var(--cube-color-syntax-type-member);
+  color: var(--cube-color-syntax-token-type-member);
 }
 
 .tokenPropertyAccess {
-  color: var(--cube-color-syntax-property-access);
+  color: var(--cube-color-syntax-token-property-access);
 }
 
 .tokenAttributeName {
-  color: var(--cube-color-syntax-attribute-name);
+  color: var(--cube-color-syntax-token-attribute-name);
 }
 
 .tokenCssSelector {
-  color: var(--cube-color-syntax-css-selector);
+  color: var(--cube-color-syntax-token-css-selector);
 }
 
 .tokenCssProperty {
-  color: var(--cube-color-syntax-css-property);
+  color: var(--cube-color-syntax-token-css-property);
 }
 
 .tokenCssValue {
-  color: var(--cube-color-syntax-css-value);
+  color: var(--cube-color-syntax-token-css-value);
 }
 
 .virtualWindow {

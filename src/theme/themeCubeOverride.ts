@@ -61,22 +61,22 @@ export function codeSurfaceCubeOverride(tokens: ThemeTokens): Record<string, str
 
 /** Rebind JSON syntax colours used by CodeSurface and JsonCodeView. */
 export function syntaxColorsCubeOverride(tokens: ThemeTokens): Record<string, string> {
-  const s = tokens.colors.global.syntax;
+  const { token: t, surface } = tokens.colors.global.syntax;
   return {
-    "--cube-color-syntax-key": s.key,
-    "--cube-color-syntax-string": s.string,
-    "--cube-color-syntax-string-url": s.stringUrl,
-    "--cube-color-syntax-string-email": s.stringEmail,
-    "--cube-color-syntax-string-uuid": s.stringUuid,
-    "--cube-color-syntax-number-literal": s.numberLiteral,
-    "--cube-color-syntax-boolean-literal": s.booleanLiteral,
-    "--cube-color-syntax-null-literal": s.nullLiteral,
-    "--cube-color-syntax-bracket": s.bracket,
-    "--cube-color-syntax-bracket-nested": s.bracketNested,
-    "--cube-color-syntax-row-hover-bg": s.rowHoverBg,
-    "--cube-color-syntax-collapsed-row-bg": s.collapsedRowBg,
-    "--cube-color-syntax-watch-mark": s.watchMark,
-    "--cube-color-syntax-watch-mark-hover": s.watchMarkHover,
-    "--cube-color-syntax-watch-row-bg": s.watchRowBg,
+    "--cube-color-syntax-token-key": t.key,
+    "--cube-color-syntax-token-string": t.string,
+    "--cube-color-syntax-token-string-url": t.stringUrl,
+    "--cube-color-syntax-token-string-email": t.stringEmail,
+    "--cube-color-syntax-token-string-uuid": t.stringUuid,
+    "--cube-color-syntax-token-number-literal": t.numberLiteral,
+    "--cube-color-syntax-token-boolean-literal": t.booleanLiteral,
+    "--cube-color-syntax-token-null-literal": t.nullLiteral,
+    "--cube-color-syntax-token-bracket": t.bracket,
+    "--cube-color-syntax-token-bracket-nested": t.bracketNested,
+    "--cube-color-syntax-surface-row-hover-bg": surface.rowHoverBg,
+    "--cube-color-syntax-surface-collapsed-row-bg": surface.collapsedRowBg,
+    "--cube-color-syntax-surface-watch-mark": surface.watchMark,
+    "--cube-color-syntax-surface-watch-mark-hover": surface.watchMarkHover,
+    "--cube-color-syntax-surface-watch-row-bg": surface.watchRowBg,
   };
 }
