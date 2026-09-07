@@ -1,0 +1,19 @@
+{
+  "codeBlock": {
+    "color": {
+      "scrollbarThumb": { "value": "{color.border.grayAlpha.4}" }
+    },
+    "sizes": {
+      "fontWeight": { "value": 400 },
+      "rowHeight": { "value": "{size.space.24}" },
+      "gutterMinWidth": { "value": "{size.space.40}" },
+      "lineNumberMinWidth": { "value": "2ch" },
+      "watchButtonWidth": { "value": "{size.space.14}" },
+      "watchDotSize": { "value": "{size.space.6}" },
+      "collapseButtonWidth": { "value": "{size.space.20}" },
+      "treeIndentWidth": { "value": "{size.space.24}" },
+      "transitionDurationFast": { "value": "{motion.duration.fast}" },
+      "transitionDurationBase": { "value": "{motion.duration.base}" }
+    }
+  }
+}

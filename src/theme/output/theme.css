@@ -135,6 +135,9 @@
   --cube-container-tooltip-maxWidthSingleLine: 7.5rem;
   --cube-focus-ring-offset: 2px;
   --cube-focus-ring-width: 3px;
+  --cube-motion-duration-base: 0.12s;
+  --cube-motion-duration-fast: 0.1s;
+  --cube-motion-duration-slow: 0.2s;
   --cube-shadow-popover: 0 0 0 1px rgba(42, 28, 0, 0.07), 0 20px 24px 0 rgba(25, 25, 25, 0.05), 0 5px 8px 0 rgba(25, 25, 25, 0.03);
   --cube-shadow-popoverElevated: 0 0 0 1px rgba(42, 28, 0, 0.10), 0 24px 32px 0 rgba(25, 25, 25, 0.08), 0 8px 12px 0 rgba(25, 25, 25, 0.05);
   --cube-shadow-sheet: 0 0 0 1px rgba(42, 28, 0, 0.07), 0 20px 24px 0 rgba(25, 25, 25, 0.05), 0 5px 8px 0 rgba(25, 25, 25, 0.03);
