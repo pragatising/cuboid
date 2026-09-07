@@ -122,6 +122,7 @@ const TOKEN_CLASS: Record<string, string> = {
   stringRegexp: styles.tokenStringRegexp,
   functionCall: styles.tokenFunctionCall,
   typeName: styles.tokenTypeName,
+  typeMember: styles.tokenTypeMember,
   propertyAccess: styles.tokenPropertyAccess,
   attributeName: styles.tokenAttributeName,
   cssSelector: styles.tokenCssSelector,

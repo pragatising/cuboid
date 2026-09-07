@@ -444,6 +444,7 @@
       "stringRegexp": "#A2D794",
       "functionCall": "#AFAFFF",
       "typeName": "#8C53F4",
+      "typeMember": "#6F6F6D",
       "propertyAccess": "#525252",
       "attributeName": "#F2711B",
       "cssSelector": "#6B8402",

@@ -54,6 +54,20 @@ export interface JsHighlightState {
    * increment this.
    */
   genericDepth: number;
+  /**
+   * True right after `interface Name` / `type Name =`, consumed by the next
+   * `{` — marks that brace as opening a type body (see `typeBodyStack`).
+   */
+  pendingTypeBody: boolean;
+  /**
+   * One entry per currently-open `{...}`, true when that brace is a type/
+   * interface body. A bare `identifier:`/shorthand member directly inside a
+   * `true` frame is a `typeMember` (the field name in a type shape), not a
+   * `propertyAccess` or a value. Nested braces (e.g. a method signature's
+   * params) push their own `false` frame so nesting doesn't leak the
+   * classification.
+   */
+  typeBodyStack: boolean[];
 }
 
 function jsState(state: HighlightState): JsHighlightState {
@@ -61,6 +75,8 @@ function jsState(state: HighlightState): JsHighlightState {
   const lang = state.lang as Partial<JsHighlightState>;
   lang.nextIsType ??= false;
   lang.genericDepth ??= 0;
+  lang.pendingTypeBody ??= false;
+  lang.typeBodyStack ??= [];
   return lang as JsHighlightState;
 }
 
@@ -118,7 +134,28 @@ function classifyIdentifier(ctx: RuleMatchContext): string {
 
   if (TS_PRIMITIVE_TYPES.has(value)) return "typeName";
 
+  // Field name declared inside an `interface`/`type` body (`id` in
+  // `{ id: string }`) — a declaration, not a value read/write, so it's
+  // neither `propertyAccess` nor `typeName`. Only fires for the member NAME
+  // position: followed by `?`/`:` (annotated) or `,`/`;`/`}` (shorthand end),
+  // never `.`/`(` (which would mean this isn't actually a plain member name).
+  if (
+    js.typeBodyStack[js.typeBodyStack.length - 1] &&
+    /^\s*[?:,;}]/.test(rest)
+  ) {
+    return "typeMember";
+  }
+
   const prev = prevSignificant(tokensSoFar);
+
+  // A property access that is also CALLED (`db.query(...)`, `response.json()`)
+  // reads as an action, same as a bare function call — check this before the
+  // plain-propertyAccess fallback below. Lookahead permits an optional
+  // `<...>` generic-args segment before the `(`, e.g. `db.query<T>(...)`.
+  if (prev?.type === "bracket" && prev.value === "." && /^\s*(?:<[^<>]*>)?\s*\(/.test(rest)) {
+    return "functionCall";
+  }
+
   if (prev?.type === "bracket" && prev.value === ".") {
     return "propertyAccess";
   }
@@ -185,8 +222,14 @@ function buildRules(keywordPattern: string): SourceRule[] {
       type: "keyword",
       pattern: new RegExp(keywordPattern),
       onMatch(state, value) {
+        const js = jsState(state);
         if (TYPE_POSITION_KEYWORDS.has(value)) {
-          jsState(state).nextIsType = true;
+          js.nextIsType = true;
+        }
+        // `interface Name { ... }` always opens a type body next — no other
+        // `{` can appear between the keyword and it in valid syntax.
+        if (value === "interface") {
+          js.pendingTypeBody = true;
         }
       },
     },
@@ -221,17 +264,42 @@ const IDENTIFIER_AND_LITERAL_RULES: SourceRule[] = [
   },
   {
     type: (ctx) => {
-      const { value, state } = ctx;
+      const { value, state, tokensSoFar } = ctx;
       const js = jsState(state);
       if (value === "<") {
-        const prev = prevSignificant(ctx.tokensSoFar);
+        const prev = prevSignificant(tokensSoFar);
+        // `propertyAccess` included so `db.query<UserProfile>()` — a called
+        // method reached via `.` — still opens a generic bracket; without
+        // this, `query`'s classification (propertyAccess, not typeName/
+        // functionCall) would hide the `<...>` from generic-arg detection.
         const opensGeneric =
           prev?.type === "typeName" ||
           prev?.type === "plain" ||
-          prev?.type === "functionCall";
+          prev?.type === "functionCall" ||
+          prev?.type === "propertyAccess";
         if (opensGeneric) js.genericDepth++;
       } else if (value === ">" && js.genericDepth > 0) {
         js.genericDepth--;
+      } else if (value === "{") {
+        let opensTypeBody = js.pendingTypeBody;
+        js.pendingTypeBody = false;
+        if (!opensTypeBody) {
+          // `type Name = {` — the alias name was tagged `typeName` via
+          // `nextIsType` when the `type` keyword fired; an `=` sits between
+          // it and this brace with only whitespace/plain tokens allowed.
+          const prev = prevSignificant(tokensSoFar);
+          if (prev?.type === "operator" && prev.value === "=") {
+            for (let i = tokensSoFar.length - 2; i >= 0; i--) {
+              const t = tokensSoFar[i]!;
+              if (t.type === "plain" && t.value.trim() === "") continue;
+              opensTypeBody = t.type === "typeName";
+              break;
+            }
+          }
+        }
+        js.typeBodyStack.push(opensTypeBody);
+      } else if (value === "}") {
+        js.typeBodyStack.pop();
       }
       return "bracket";
     },

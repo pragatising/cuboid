@@ -34,6 +34,8 @@ export interface SyntaxColors {
   functionCall: string;
   /** Identifier in a structural type position (class/interface/generic/annotation). */
   typeName: string;
+  /** Field name declared inside an `interface`/`type` body — a declaration, not a value read. */
+  typeMember: string;
   /** Identifier immediately preceded by `.` — subtle, closer to muted foreground than a keyword. */
   propertyAccess: string;
   /** Attribute/prop name on a tag — shared hue across HTML and JSX for visual consistency. */
