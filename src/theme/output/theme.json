@@ -448,9 +448,9 @@
         },
         "identifier": {
           "keyword": "#1B899E",
-          "typeName": "#8143F6",
-          "typeMember": "#6F6F6D",
-          "functionCall": "#CF9202",
+          "typeName": "#7530F5",
+          "typeMember": "#7530F5",
+          "functionCall": "#B57C02",
           "propertyAccess": "#525252",
           "entityTag": "#d22799",
           "attributeName": "#D95903"
@@ -471,7 +471,7 @@
       "markup": {
         "bold": "#525252",
         "italic": "#525252",
-        "heading": "#09B2B5",
+        "heading": "#525252",
         "list": "#6EBF57",
         "insertedBg": "#F0F9EF",
         "insertedText": "#6EBF57",
