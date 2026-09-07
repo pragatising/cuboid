@@ -236,6 +236,10 @@
   color: var(--cube-color-syntax-type-name);
 }
 
+.tokenTypeMember {
+  color: var(--cube-color-syntax-type-member);
+}
+
 .tokenPropertyAccess {
   color: var(--cube-color-syntax-property-access);
 }

@@ -161,6 +161,7 @@
       "stringRegexp": { "value": "{base.color.scale.green.6}" },
       "functionCall": { "value": "{base.color.scale.indigo.6}" },
       "typeName": { "value": "{base.color.scale.violet.8}" },
+      "typeMember": { "value": "{base.color.scale.gray.8}" },
       "propertyAccess": { "value": "{base.color.scale.gray.9}" },
       "attributeName": { "value": "{base.color.scale.orange.7}" },
       "cssSelector": { "value": "{base.color.scale.lime.8}" },
