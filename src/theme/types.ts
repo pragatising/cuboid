@@ -21,8 +21,13 @@ export interface BaseColors {
 }
 
 // ── Functional: syntax (prettylights) ────────────────────────────────────────
+// Grouped by concern, not flat: `token` is real language syntax highlighting
+// (what CodeBlock's tokenizer emits), `markup` is diff/prose rendering
+// (bold/italic/inserted/deleted — unrelated to code tokenizing), `diagnostic`
+// is error/illegal-character/edge-case rendering, `surface` is CodeSurface UI
+// chrome (row hover, watchlist) — colors of the surface, not of text.
 
-export interface SyntaxColors {
+export interface SyntaxTokenColors {
   comment: string;
   constantOtherReferenceLink: string;
   entityTag: string;
@@ -46,22 +51,6 @@ export interface SyntaxColors {
   cssProperty: string;
   /** CSS property value keyword. */
   cssValue: string;
-  brackethighlighterAngle: string;
-  brackethighlighterUnmatched: string;
-  carriageReturnBg: string;
-  carriageReturnText: string;
-  invalidIllegalText: string;
-  invalidIllegalBg: string;
-  markupBold: string;
-  markupItalic: string;
-  markupHeading: string;
-  markupList: string;
-  markupInsertedBg: string;
-  markupInsertedText: string;
-  markupDeletedBg: string;
-  markupDeletedText: string;
-  markupChangedBg: string;
-  markupChangedText: string;
   nullLiteral: string;
   /** JSON / numeric literal values — not identifiers (`variable`). */
   numberLiteral: string;
@@ -77,6 +66,31 @@ export interface SyntaxColors {
   stringEmail: string;
   /** String values that look like a UUID */
   stringUuid: string;
+}
+
+export interface SyntaxMarkupColors {
+  bold: string;
+  italic: string;
+  heading: string;
+  list: string;
+  insertedBg: string;
+  insertedText: string;
+  deletedBg: string;
+  deletedText: string;
+  changedBg: string;
+  changedText: string;
+}
+
+export interface SyntaxDiagnosticColors {
+  brackethighlighterAngle: string;
+  brackethighlighterUnmatched: string;
+  carriageReturnBg: string;
+  carriageReturnText: string;
+  invalidIllegalText: string;
+  invalidIllegalBg: string;
+}
+
+export interface SyntaxSurfaceColors {
   /** Background tint applied to a row when the pointer hovers over it */
   rowHoverBg: string;
   /** Background tint for a collapsed JSON node summary row */
@@ -87,6 +101,13 @@ export interface SyntaxColors {
   watchMarkHover: string;
   /** Row background when line is on the watchlist */
   watchRowBg: string;
+}
+
+export interface SyntaxColors {
+  token: SyntaxTokenColors;
+  markup: SyntaxMarkupColors;
+  diagnostic: SyntaxDiagnosticColors;
+  surface: SyntaxSurfaceColors;
 }
 
 /** Resolved palette from tokens/functional/colors/globals.json (color.* paths). */
