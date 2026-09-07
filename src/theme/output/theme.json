@@ -438,27 +438,35 @@
       "token": {
         "comment": "#888783",
         "key": "#6F6F6D",
-        "constantOtherReferenceLink": "#0a3069",
-        "entityTag": "#d22799",
-        "keyword": "#1B899E",
-        "string": "#EF6262",
-        "stringRegexp": "#A2D794",
-        "functionCall": "#8686FF",
-        "typeName": "#8143F6",
-        "typeMember": "#6F6F6D",
-        "propertyAccess": "#525252",
-        "attributeName": "#D95903",
-        "cssSelector": "#6B8402",
-        "cssProperty": "#6F6F6D",
-        "cssValue": "#C85700",
-        "nullLiteral": "#6F6F6D",
-        "booleanLiteral": "#9035BD",
-        "numberLiteral": "#3a80f9 ",
         "bracket": "#E01280",
         "bracketNested": "#9035BD",
-        "stringUrl": "#6565FA",
-        "stringEmail": "#6565FA",
-        "stringUuid": "#6F6F6D"
+        "constantOtherReferenceLink": "#0a3069",
+        "literal": {
+          "number": "#3a80f9 ",
+          "boolean": "#9035BD",
+          "null": "#6F6F6D"
+        },
+        "identifier": {
+          "keyword": "#1B899E",
+          "typeName": "#8143F6",
+          "typeMember": "#6F6F6D",
+          "functionCall": "#CF9202",
+          "propertyAccess": "#525252",
+          "entityTag": "#d22799",
+          "attributeName": "#D95903"
+        },
+        "string": {
+          "default": "#EF6262",
+          "regexp": "#5ca647",
+          "url": "#6565FA",
+          "email": "#6565FA",
+          "uuid": "#525252"
+        },
+        "css": {
+          "selector": "#536601",
+          "property": "#6F6F6D",
+          "value": "#C85700"
+        }
       },
       "markup": {
         "bold": "#525252",

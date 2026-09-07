@@ -27,45 +27,60 @@ export interface BaseColors {
 // is error/illegal-character/edge-case rendering, `surface` is CodeSurface UI
 // chrome (row hover, watchlist) — colors of the surface, not of text.
 
-export interface SyntaxTokenColors {
-  comment: string;
-  constantOtherReferenceLink: string;
-  entityTag: string;
+export interface SyntaxLiteralColors {
+  number: string;
+  /** Both true and false — purple by default. Not red/green: value has no inherent sentiment. */
+  boolean: string;
+  null: string;
+}
+
+export interface SyntaxIdentifierColors {
   keyword: string;
-  key: string;
-  string: string;
-  stringRegexp: string;
-  /** Identifier immediately followed by `(` — a function/method call. */
-  functionCall: string;
   /** Identifier in a structural type position (class/interface/generic/annotation). */
   typeName: string;
   /** Field name declared inside an `interface`/`type` body — a declaration, not a value read. */
   typeMember: string;
+  /** Identifier immediately followed by `(` — a function/method call. */
+  functionCall: string;
   /** Identifier immediately preceded by `.` — subtle, closer to muted foreground than a keyword. */
   propertyAccess: string;
+  entityTag: string;
   /** Attribute/prop name on a tag — shared hue across HTML and JSX for visual consistency. */
   attributeName: string;
+}
+
+export interface SyntaxStringColors {
+  default: string;
+  regexp: string;
+  /** String values that look like a URL */
+  url: string;
+  /** String values that look like an email address */
+  email: string;
+  /** String values that look like a UUID */
+  uuid: string;
+}
+
+export interface SyntaxCssColors {
   /** CSS `.class` / `#id` / `:pseudo` selector. */
-  cssSelector: string;
+  selector: string;
   /** CSS property name before `:`. */
-  cssProperty: string;
+  property: string;
   /** CSS property value keyword. */
-  cssValue: string;
-  nullLiteral: string;
-  /** JSON / numeric literal values — not identifiers (`variable`). */
-  numberLiteral: string;
-  /** Both true and false — purple by default. Not red/green: value has no inherent sentiment. */
-  booleanLiteral: string;
+  value: string;
+}
+
+export interface SyntaxTokenColors {
+  comment: string;
+  key: string;
   /** { } [ ] at nesting depth 0 */
   bracket: string;
   /** { } [ ] at odd nesting depths (first level nested and below, alternating) */
   bracketNested: string;
-  /** String values that look like a URL */
-  stringUrl: string;
-  /** String values that look like an email address */
-  stringEmail: string;
-  /** String values that look like a UUID */
-  stringUuid: string;
+  constantOtherReferenceLink: string;
+  literal: SyntaxLiteralColors;
+  identifier: SyntaxIdentifierColors;
+  string: SyntaxStringColors;
+  css: SyntaxCssColors;
 }
 
 export interface SyntaxMarkupColors {

@@ -1,33 +1,50 @@
-import type { SyntaxColors, SyntaxTokenColors } from "../../theme/types";
+import type { SyntaxColors } from "../../theme/types";
 import styles from "./CodeSurface/CodeSurface.module.css";
 import type { SurfaceLine, SurfaceToken } from "./types";
 
-// ── Token type → theme syntax key (globals.json color.syntax.token) ─────────
+// ── Token type → theme syntax path (globals.json color.syntax.token) ────────
+// `syntax.token` nests `literal`/`identifier`/`string`/`css` sub-groups (see
+// theme/types.ts), so each JSON tokenizer type maps to a PATH into it, not a
+// single flat key — a 1-tuple for a direct `token.*` key, a 2-tuple for a
+// key inside one of the sub-groups (e.g. `["string", "url"]` -> `token.string.url`).
 
-export type JsonSyntaxKey = keyof SyntaxTokenColors | "foregroundMuted";
+type SyntaxTokenPath = [string] | [string, string];
 
 export const JSON_SYNTAX_TOKEN = {
-  key: "key",
-  string: "string",
-  string_url: "stringUrl",
-  string_email: "stringEmail",
-  string_uuid: "stringUuid",
-  number: "numberLiteral",
-  boolean: "booleanLiteral",
-  null: "nullLiteral",
-  bracket: "bracket",
-  operator: "foregroundMuted",
-  punctuation: "foregroundMuted",
-  ellipsis: "foregroundMuted",
-} as const satisfies Record<string, JsonSyntaxKey>;
+  key: ["key"],
+  string: ["string", "default"],
+  string_url: ["string", "url"],
+  string_email: ["string", "email"],
+  string_uuid: ["string", "uuid"],
+  number: ["literal", "number"],
+  boolean: ["literal", "boolean"],
+  null: ["literal", "null"],
+  bracket: ["bracket"],
+  operator: ["foregroundMuted"],
+  punctuation: ["foregroundMuted"],
+  ellipsis: ["foregroundMuted"],
+} as const satisfies Record<string, SyntaxTokenPath>;
 
 export type JsonSyntaxTokenType = keyof typeof JSON_SYNTAX_TOKEN;
 
-export function syntaxCssVar(
-  key: Exclude<JsonSyntaxKey, "foregroundMuted">,
-): string {
-  const seg = key.replace(/[A-Z]/g, (ch) => `-${ch.toLowerCase()}`);
+export function syntaxCssVar(path: SyntaxTokenPath): string {
+  const seg = path
+    .map((part) => part.replace(/[A-Z]/g, (ch) => `-${ch.toLowerCase()}`))
+    .join("-");
   return `--cube-color-syntax-token-${seg}`;
+}
+
+function readSyntaxTokenPath(
+  token: SyntaxColors["token"],
+  path: SyntaxTokenPath,
+): string | undefined {
+  if (path.length === 1) {
+    const [key] = path;
+    return (token as unknown as Record<string, string>)[key];
+  }
+  const [group, key] = path;
+  const sub = (token as unknown as Record<string, Record<string, string>>)[group];
+  return sub?.[key];
 }
 
 /** Inline colour fallback when `tokenColor` prop is used (default path uses CSS classes). */
@@ -36,10 +53,10 @@ export function jsonTokenColor(
   syntax: SyntaxColors,
   mutedForeground: string,
 ): string {
-  const key = JSON_SYNTAX_TOKEN[type as JsonSyntaxTokenType];
-  if (key === "foregroundMuted") return mutedForeground;
-  if (key) return syntax.token[key];
-  return mutedForeground;
+  const path = JSON_SYNTAX_TOKEN[type as JsonSyntaxTokenType];
+  if (!path) return mutedForeground;
+  if (path[0] === "foregroundMuted") return mutedForeground;
+  return readSyntaxTokenPath(syntax.token, path) ?? mutedForeground;
 }
 
 // ── Nested bracket depth (alternating delimiter colours) ────────────────────
