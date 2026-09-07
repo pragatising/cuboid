@@ -12,6 +12,30 @@ Template for a new entry:
 **Next agent:** open threads, deferred decisions, known debt, or nothing if clean.
 -->
 
+## 2026-08-24 — Add sortable component roadmap story
+
+**Changed:**
+- `src/components/core/Table/Table.tsx` — added opt-in TanStack sorting to `SimpleTable`, with controlled/uncontrolled sorting state, accessible `aria-sort`, and icon-backed sort buttons.
+- `src/components/core/Table/ComponentRoadmap.stories.tsx` — added a four-table roadmap covering Shipped, Backlog, Feature Upgrade, and Bugs; every table is sortable.
+- `docs/backlog/core-components.md` — recorded sorting as the first shipped slice of the broader Table & Grid upgrade.
+
+**Why:**
+- Establishes a maintained Storybook view of Cuboid implementation status before the remaining component backlog is built.
+
+**Next agent:**
+- The Table & Grid cell-type system, pagination, row actions, and remaining Figma states are still open work.
+
+## 2026-08-24 — Track IconButton tooltip-label enforcement
+
+**Changed:**
+- Added an open Bugs roadmap row for requiring tooltip labels on `IconButton` instances.
+
+**Why:**
+- Icon-only actions should expose a discoverable label consistently; the current `tooltip` prop remains optional pending the enforcement change.
+
+**Next agent:**
+- Decide whether enforcement should be compile-time (`tooltip` required), runtime, lint-based, or limited to a documented accessibility rule.
+
 ## 2026-08-08 — Pill: per-instance padding/borderRadius/borderColor/borderWidth overrides
 
 **Changed:**

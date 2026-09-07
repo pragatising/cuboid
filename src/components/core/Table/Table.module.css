@@ -108,6 +108,28 @@
   text-align: right;
 }
 
+.TableSortButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cube-space-4px);
+  max-width: 100%;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
+}
+
+.TableSortButton:hover {
+  color: var(--cube-table-body-fg);
+}
+
+.TableSortButton:active {
+  opacity: 0.72;
+}
+
 .TableCell {
   box-sizing: border-box;
   padding: var(--cube-table-cell-paddingBlock) var(--cube-table-cell-paddingInline);

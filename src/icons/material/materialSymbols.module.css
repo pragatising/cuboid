@@ -1,0 +1,46 @@
+/**
+ * Glyph styling only. The @font-face declarations that back these font-family
+ * names live in src/theme/output/icon-fonts.css — a static stylesheet shipped
+ * like theme.css/components.css, NOT bundled through this CSS module. (Bundling
+ * multi-MB woff2 files through the component JS pipeline base64-inlines them
+ * into the library's single combined style.css — see icon-fonts.css for why
+ * that file is separate.) Consumers using the default icon library must load
+ * that stylesheet once; see its header comment.
+ */
+
+.Glyph {
+  /* Fills the parent Icon span — Icon controls actual pixel size via sizes.icon.* */
+  font-size: 1em;
+  line-height: 1;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  overflow: hidden;
+  font-weight: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  color: currentColor;
+  /* Without this, the ligature substitution (name text -> glyph) never
+     triggers and the literal characters render instead, clipped by
+     width/overflow above (e.g. "chevron_right" -> "ch"). */
+  font-feature-settings: "liga";
+  -webkit-font-feature-settings: "liga";
+  font-variant-ligatures: common-ligatures;
+}
+
+.Glyph--rounded {
+  font-family: "Material Symbols Rounded";
+}
+
+.Glyph--outlined {
+  font-family: "Material Symbols Outlined";
+}
+
+.Glyph--sharp {
+  font-family: "Material Symbols Sharp";
+}

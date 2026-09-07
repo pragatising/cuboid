@@ -764,6 +764,26 @@ export interface Sizes {
 // Convenience alias for space token keys
 export type SpaceKey = keyof SpaceTokens;
 
+// ── Icon ──────────────────────────────────────────────────────────────────────
+
+import type { IconLibrary } from "../icons/IconLibrary";
+
+/**
+ * Default variable-font axes for every `<Icon>` — set once here, overridable
+ * per-call via `Icon`'s `weight` / `grade` / `opticalSize` / `fill` / `style` props.
+ * `style` has no per-call override (Material ships it as a separate font family
+ * per style, not an axis), so it only ever comes from the theme.
+ */
+export interface IconTokens {
+  /** Glyph source — swap the whole icon set (Material default, Lucide, custom SVGs) here. */
+  library: IconLibrary;
+  weight: number;
+  grade: number;
+  opticalSize: number;
+  fill: boolean;
+  style: "outlined" | "rounded" | "sharp";
+}
+
 // ── Full resolved theme (all values present) ──────────────────────────────────
 
 export interface ThemeTokens {
@@ -771,6 +791,7 @@ export interface ThemeTokens {
   typography: Typography;
   sizes: Sizes;
   shadows: ShadowTokens;
+  icon: IconTokens;
 }
 
 /**

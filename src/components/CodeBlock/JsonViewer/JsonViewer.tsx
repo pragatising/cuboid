@@ -1,10 +1,10 @@
 import React, { useMemo, useState } from "react";
-import type { CubeTheme } from "../../theme/types";
-import { CodeSurface, type CodeSurfaceGutterIcons, type CodeSurfaceProps } from "./CodeSurface";
-import { buildLines, getAllCollapsiblePaths } from "./tokenizer";
-import type { SurfaceLine } from "./types";
+import type { CubeTheme } from "../../../theme/types";
+import { CodeSurface, type CodeSurfaceGutterIcons, type CodeSurfaceProps } from "../CodeSurface/CodeSurface";
+import { buildLines, getAllCollapsiblePaths } from "../tokenizer";
+import type { SurfaceLine } from "../types";
 
-export interface JsonCodeViewProps
+export interface JsonViewerProps
   extends Pick<
     CodeSurfaceProps,
     | "height"
@@ -34,7 +34,7 @@ export interface JsonCodeViewProps
  * JSON → tokenized lines → {@link CodeSurface}.
  * Use for API response bodies, debug panels, and large structured payloads.
  */
-export function JsonCodeView({
+export function JsonViewer({
   data,
   defaultCollapsed = false,
   gutterIcons,
@@ -49,7 +49,7 @@ export function JsonCodeView({
   indent,
   surfaceVariant,
   "aria-label": ariaLabel,
-}: JsonCodeViewProps) {
+}: JsonViewerProps) {
   const [collapsedPaths, setCollapsedPaths] = useState<Set<string>>(() =>
     defaultCollapsed ? getAllCollapsiblePaths(data) : new Set(),
   );

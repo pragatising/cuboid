@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Title, Primary, Controls, Subtitle } from "@storybook/blocks";
-import { CloseIcon } from "../../../icons/material";
 import { Button } from "../Button";
+import { Icon } from "../Icon";
 import { IconButton } from "../IconButton";
 import { Stack } from "../Stack";
 import { Text } from "../Text";
@@ -69,7 +69,7 @@ function StickyHeaderDemo() {
             <Text role="heading" size="sm">Filters</Text>
           </span>
           <IconButton aria-label="Close" variant="ghost" size="sm" onClick={() => setOpen(false)}>
-            <CloseIcon />
+            <Icon name="close" />
           </IconButton>
         </Sheet.Header>
         <Sheet.Body>

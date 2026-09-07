@@ -37,7 +37,12 @@ export function kebabToPascal(kebab) {
     .join("");
 }
 
-/** Read `Close` / `CloseFill` export aliases from the Material package. */
+/**
+ * @deprecated Used only by the retired static-SVG-per-glyph pipeline (checked
+ * whether `${slug}.d.ts` existed under the w400 SVG package). The variable-font
+ * adapter has no per-weight/per-fill exports to check — use
+ * {@link slugToCanonicalIconName} against `icon-index.json` instead.
+ */
 export function readMaterialSymbolExports(slug, materialIconsDir) {
   const dtsPath = path.join(materialIconsDir, `${slug}.d.ts`);
   if (!fs.existsSync(dtsPath)) {
@@ -56,6 +61,21 @@ export function readMaterialSymbolExports(slug, materialIconsDir) {
     outline: outline ?? aliases[0],
     fill: fill ?? null,
   };
+}
+
+/**
+ * Kebab-case Material slug (this module's internal naming currency) → the
+ * canonical underscore_case `IconName` used by `<Icon name=.../>` — Material's
+ * own manifest key, which is also the glyph's font ligature text.
+ */
+export function slugToCanonicalIconName(slug) {
+  return slug.replace(/-/g, "_");
+}
+
+/** Validate a slug resolves to a real Material Symbols glyph (any style/weight — the variable font covers all axes for every name in the manifest). */
+export function resolveCanonicalIconName(slug, canonicalNameSet) {
+  const name = slugToCanonicalIconName(slug);
+  return canonicalNameSet.has(name) ? name : null;
 }
 
 /** Common Figma labels → Material slug when direct kebab match is missing. */

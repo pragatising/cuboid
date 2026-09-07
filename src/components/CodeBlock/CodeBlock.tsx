@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import type { CubeTheme } from "../../theme/types";
-import { CodeSurface, type CodeSurfaceProps } from "./CodeSurface";
+import { CodeSurface, type CodeSurfaceProps } from "./CodeSurface/CodeSurface";
 import { highlightSource, type CodeBlockLanguage } from "./highlight";
 import { annotateBracketDepth } from "./syntax";
 

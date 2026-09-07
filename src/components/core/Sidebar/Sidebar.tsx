@@ -12,7 +12,7 @@ import { useTheme } from "../../../theme/ThemeContext";
 import type { CubeTheme, SheetWidthStopTokens, ThemeTokens } from "../../../theme/types";
 import { parseLengthPx } from "../../../utils/parseLengthPx";
 import { IconButton } from "../IconButton";
-import { ChevronLeftIcon, ChevronRightIcon } from "../../../icons/material";
+import { Icon } from "../Icon";
 import { ResizeHandle } from "../ResizeHandle";
 import { sidebarCssVars } from "./sidebarCssVars";
 import styles from "./Sidebar.module.css";
@@ -198,8 +198,7 @@ function SidebarFooter({
 
 function CollapseIcon({ edge, collapsed }: { edge: SidebarEdge; collapsed: boolean }) {
   const useLeftChevron = edge === "left" ? !collapsed : collapsed;
-  const Glyph = useLeftChevron ? ChevronLeftIcon : ChevronRightIcon;
-  return <Glyph />;
+  return <Icon name={useLeftChevron ? "chevron_left" : "chevron_right"} />;
 }
 
 function SidebarToggle({
