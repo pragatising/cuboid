@@ -1,4 +1,4 @@
-import { JsonCodeView, type JsonCodeViewProps } from "../CodeBlock/JsonCodeView";
+import { JsonViewer as JsonCodeView, type JsonViewerProps as JsonCodeViewProps } from "../CodeBlock/JsonViewer/JsonViewer";
 
 /**
  * @deprecated Use {@link JsonCodeView} from `@sragatiping/cuboid` / `components/CodeBlock`.

@@ -1,15 +1,24 @@
 #!/usr/bin/env node
 /**
- * Fails if Material icon packages are imported outside approved files
- * (keeps all glyphs on Material Symbols Rounded via source.ts).
+ * Fails if `@material-symbols-svg` (or other raw icon-glyph packages) is
+ * imported anywhere in `src/` outside the build-time manifest lookups.
+ *
+ * The variable-font adapter (`materialSymbolsIconLibrary`) renders glyphs as
+ * ligature text — there is no per-glyph SVG component to import anymore, so
+ * any `@material-symbols-svg` import in application/component code is a sign
+ * someone reached around `<Icon name="..." />` instead of using it.
  */
 import fs from "node:fs";
 import path from "node:path";
 
 const ROOT = path.resolve(import.meta.dirname, "..");
-const SOURCE_FILE = path.join(ROOT, "src/icons/material/source.ts");
-const CREATE_FILE = path.join(ROOT, "src/icons/material/createMaterialIcon.tsx");
-const SRC_DIR = path.join(ROOT, "src/icons");
+const SRC_DIR = path.join(ROOT, "src");
+
+// Files allowed to reference the package directly — build-time manifest data only.
+const ALLOWED = new Set([
+  path.join(ROOT, "scripts/generate-icon-names.mjs"),
+  path.join(ROOT, "scripts/sync-icons.mjs"),
+]);
 
 const FORBIDDEN = ["@material-symbols-svg", "react-icons/md"];
 
@@ -29,16 +38,14 @@ function walk(dir, out = []) {
 const violations = [];
 
 for (const file of walk(SRC_DIR)) {
-  if (file === SOURCE_FILE || file === CREATE_FILE) continue;
+  if (ALLOWED.has(file)) continue;
 
   const lines = fs.readFileSync(file, "utf8").split("\n");
   for (const [index, line] of lines.entries()) {
     if (!isImportLine(line)) continue;
     for (const pkg of FORBIDDEN) {
       if (line.includes(pkg)) {
-        violations.push(
-          `${path.relative(ROOT, file)}:${index + 1} imports ${pkg}`
-        );
+        violations.push(`${path.relative(ROOT, file)}:${index + 1} imports ${pkg}`);
       }
     }
   }
@@ -46,10 +53,10 @@ for (const file of walk(SRC_DIR)) {
 
 if (violations.length) {
   console.error(
-    "Icon import policy violation — use src/icons/material/index.ts exports instead:\n"
+    "Icon import policy violation — use `<Icon name=\"...\" />` instead of importing glyph packages directly:\n"
   );
   for (const v of violations) console.error(`  - ${v}`);
   process.exit(1);
 }
 
-console.log("Icon imports OK (Material Symbols Rounded via source.ts only).");
+console.log("Icon imports OK (no direct @material-symbols-svg imports outside build scripts).");

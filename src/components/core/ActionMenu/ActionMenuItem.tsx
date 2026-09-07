@@ -1,5 +1,5 @@
 import React from "react";
-import { CheckIcon, ChevronRightIcon } from "../../../icons/material";
+import { Icon } from "../Icon";
 import { useTheme } from "../../../theme/ThemeContext";
 import type { CubeTheme } from "../../../theme/types";
 import { actionMenuCssVars } from "./actionMenuCssVars";
@@ -114,13 +114,13 @@ export function ActionMenuItem({
 
         {hasSubmenu ? (
           <span className={styles.TrailingSlot}>
-            <ChevronRightIcon />
+            <Icon name="chevron_right" />
           </span>
         ) : null}
 
         {showCheck ? (
           <span className={styles.TrailingSlot}>
-            <CheckIcon />
+            <Icon name="check" />
           </span>
         ) : null}
       </span>

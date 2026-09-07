@@ -1,12 +1,16 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, useState } from "react";
 import {
   flexRender,
   getCoreRowModel,
+  getSortedRowModel,
   useReactTable,
   type ColumnDef,
+  type OnChangeFn,
   type Row,
+  type SortingState,
   type Table as TanStackTable,
 } from "@tanstack/react-table";
+import { Icon } from "../Icon";
 import styles from "./Table.module.css";
 
 export type TableRowLayout = "wrap" | "truncate" | "fixed";
@@ -219,11 +223,18 @@ export interface SimpleTableProps<TData> {
   className?: string;
   tableClassName?: string;
   getRowId?: (originalRow: TData, index: number) => string;
+  /** Enable clickable sortable headers. Default: false. */
+  enableSorting?: boolean;
+  /** Controlled sorting state. When omitted, SimpleTable manages sorting internally. */
+  sorting?: SortingState;
+  /** Called when a sortable header changes the sorting state. */
+  onSortingChange?: OnChangeFn<SortingState>;
 }
 
 /**
  * TanStack-powered table with Cuboid styling. Pass column defs and row data;
- * extend with sorting, selection, etc. via TanStack APIs on a custom build later.
+ * enable sorting with `enableSorting`; selection and other behaviors can be added
+ * through the composable table parts.
  */
 export function SimpleTable<TData>({
   columns,
@@ -234,12 +245,25 @@ export function SimpleTable<TData>({
   className,
   tableClassName,
   getRowId,
+  enableSorting = false,
+  sorting,
+  onSortingChange,
 }: SimpleTableProps<TData>) {
+  const [internalSorting, setInternalSorting] = useState<SortingState>([]);
+  const activeSorting = sorting ?? internalSorting;
+
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     getRowId,
+    enableSorting,
+    state: { sorting: activeSorting },
+    onSortingChange: (updater) => {
+      if (sorting === undefined) setInternalSorting(updater instanceof Function ? updater(activeSorting) : updater);
+      onSortingChange?.(updater);
+    },
   });
 
   return (
@@ -258,10 +282,40 @@ export function SimpleTable<TData>({
                 <TableHeadCell
                   key={header.id}
                   align={header.column.columnDef.meta?.align}
+                  aria-sort={
+                    header.column.getIsSorted() === "asc"
+                      ? "ascending"
+                      : header.column.getIsSorted() === "desc"
+                        ? "descending"
+                        : enableSorting && header.column.getCanSort()
+                          ? "none"
+                          : undefined
+                  }
                 >
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(header.column.columnDef.header, header.getContext())}
+                  {header.isPlaceholder ? null : enableSorting && header.column.getCanSort() ? (
+                    <button
+                      type="button"
+                      className={["cube-focusable", styles.TableSortButton].join(" ")}
+                      onClick={header.column.getToggleSortingHandler()}
+                      aria-label={`Sort by ${header.column.id}`}
+                    >
+                      <span>
+                        {flexRender(header.column.columnDef.header, header.getContext())}
+                      </span>
+                      <Icon
+                        size="xs"
+                        name={
+                          header.column.getIsSorted() === "asc"
+                            ? "arrow_upward"
+                            : header.column.getIsSorted() === "desc"
+                              ? "arrow_downward"
+                              : "sort"
+                        }
+                      />
+                    </button>
+                  ) : (
+                    flexRender(header.column.columnDef.header, header.getContext())
+                  )}
                 </TableHeadCell>
               ))}
             </TableRow>

@@ -1,13 +1,13 @@
 import React, { useMemo } from "react";
-import { JsonCodeView, type JsonCodeViewProps } from "../CodeBlock";
+import { JsonViewer as JsonCodeView, type JsonViewerProps as JsonCodeViewProps } from "../CodeBlock";
 import { Box } from "../core/Box";
 import { Divider } from "../core/Divider";
+import { Icon } from "../core/Icon";
 import { IconButton } from "../core/IconButton";
 import { Pill } from "../core/Pill";
 import { Popover } from "../core/Popover";
 import { Stack } from "../core/Stack";
 import { Text } from "../core/Text";
-import { ExpandMoreIcon } from "../../icons/material";
 import type { CubeTheme } from "../../theme/types";
 import styles from "./ApiResponseViewer.module.css";
 import { statusPillShade, statusReasonPhrase, methodPillShade } from "./status";
@@ -196,7 +196,7 @@ export function ApiResponseViewer({
                   size="xs"
                   theme={theme}
                 >
-                  <ExpandMoreIcon />
+                  <Icon name="keyboard_arrow_down" />
                 </IconButton>
               }
             >

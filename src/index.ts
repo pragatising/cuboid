@@ -18,7 +18,7 @@ export type {
   TableLines,
   SimpleTableProps,
 } from "./components/core/Table";
-export type { ColumnDef, Row } from "@tanstack/react-table";
+export type { ColumnDef, OnChangeFn, Row, SortingState } from "@tanstack/react-table";
 
 export { Container } from "./components/core/Container";
 export type { ContainerProps, ContainerWidth } from "./components/core/Container";
@@ -139,7 +139,7 @@ export type { SplitLayoutProps, SplitLayoutMainProps } from "./components/core/S
 export {
   CodeSurface,
   CodeBlock,
-  JsonCodeView,
+  JsonViewer as JsonCodeView,
   buildLines,
   getAllCollapsiblePaths,
   highlightSource,
@@ -149,7 +149,7 @@ export type {
   CodeBlockProps,
   CodeSurfaceProps,
   CodeSurfaceGutterIcons,
-  JsonCodeViewProps,
+  JsonViewerProps as JsonCodeViewProps,
   SurfaceLine,
   SurfaceToken,
   CodeLine,

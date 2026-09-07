@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Title, Primary, Controls, Subtitle } from "@storybook/blocks";
-import { DockToLeftIcon, DockToRightIcon, HomeIcon, SettingsIcon } from "../../../icons/material";
 import { ActionMenuItem } from "../ActionMenu";
 import { Button } from "../Button";
-import { Icon } from "../Icon";
+import { Icon, type IconName } from "../Icon";
 import { SplitLayout } from "../SplitLayout";
 import { Stack } from "../Stack";
 import { Text } from "../Text";
@@ -16,7 +15,7 @@ function SidebarNavItem({
   selected = false,
 }: {
   label: string;
-  icon: React.ReactElement;
+  icon: IconName;
   selected?: boolean;
 }) {
   const { collapsed } = useSidebar();
@@ -24,7 +23,7 @@ function SidebarNavItem({
   return (
     <ActionMenuItem
       iconOnly={collapsed}
-      leadingIcon={<Icon size="sm">{icon}</Icon>}
+      leadingIcon={<Icon size="sm" name={icon} />}
       selected={selected}
       showSelectionCheck={false}
       aria-label={collapsed ? label : undefined}
@@ -36,7 +35,7 @@ function SidebarNavItem({
 
 function DockToggleIcon() {
   const { collapsed } = useSidebar();
-  return collapsed ? <DockToLeftIcon /> : <DockToRightIcon />;
+  return <Icon name={collapsed ? "dock_to_left" : "dock_to_right"} />;
 }
 
 function NavRail() {
@@ -49,8 +48,8 @@ function NavRail() {
       align={collapsed ? "center" : "stretch"}
       style={{ width: collapsed ? undefined : "100%" }}
     >
-      <SidebarNavItem label="Home" icon={<HomeIcon />} selected />
-      <SidebarNavItem label="Settings" icon={<SettingsIcon />} />
+      <SidebarNavItem label="Home" icon="home" selected />
+      <SidebarNavItem label="Settings" icon="settings" />
     </Stack>
   );
 }
