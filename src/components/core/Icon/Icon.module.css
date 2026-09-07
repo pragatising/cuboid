@@ -9,21 +9,25 @@
 .Icon--size-xs {
   width: var(--cube-icon-xs);
   height: var(--cube-icon-xs);
+  font-size: var(--cube-icon-xs);
 }
 
 .Icon--size-sm {
   width: var(--cube-icon-sm);
   height: var(--cube-icon-sm);
+  font-size: var(--cube-icon-sm);
 }
 
 .Icon--size-md {
   width: var(--cube-icon-md);
   height: var(--cube-icon-md);
+  font-size: var(--cube-icon-md);
 }
 
 .Icon--size-lg {
   width: var(--cube-icon-lg);
   height: var(--cube-icon-lg);
+  font-size: var(--cube-icon-lg);
 }
 
 .Icon > :global(svg) {

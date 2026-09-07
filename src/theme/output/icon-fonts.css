@@ -1,0 +1,36 @@
+/**
+ * Self-hosted Material Symbols variable font — @font-face declarations only.
+ * Shipped as a static stylesheet (like theme.css / components.css) rather than
+ * bundled through the component JS/CSS-module pipeline, so the multi-MB woff2
+ * files never get base64-inlined into the library's main stylesheet.
+ *
+ * Consumers using the default icon library must load this once, e.g.:
+ *   import "@sragatiping/cuboid/icon-fonts.css";
+ *
+ * Files: ../fonts/material-symbols/MaterialSymbols{Rounded,Outlined,Sharp}.woff2
+ * (Google Fonts' variable-font CSS2 endpoint output — not per-weight statics.)
+ */
+
+@font-face {
+  font-family: "Material Symbols Rounded";
+  font-style: normal;
+  font-weight: 100 700;
+  font-display: block;
+  src: url("../fonts/material-symbols/MaterialSymbolsRounded.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Material Symbols Outlined";
+  font-style: normal;
+  font-weight: 100 700;
+  font-display: block;
+  src: url("../fonts/material-symbols/MaterialSymbolsOutlined.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Material Symbols Sharp";
+  font-style: normal;
+  font-weight: 100 700;
+  font-display: block;
+  src: url("../fonts/material-symbols/MaterialSymbolsSharp.woff2") format("woff2");
+}

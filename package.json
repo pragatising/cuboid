@@ -29,12 +29,15 @@
     "./style.css": "./dist/style.css",
     "./theme.css": "./src/theme/output/theme.css",
     "./components.css": "./src/theme/output/components.css",
+    "./icon-fonts.css": "./src/theme/output/icon-fonts.css",
     "./token-output.json": "./src/theme/output/token-output.json"
   },
   "files": [
     "dist",
     "src/theme/output/theme.css",
     "src/theme/output/components.css",
+    "src/theme/output/icon-fonts.css",
+    "src/theme/fonts",
     "src/theme/output/token-output.json"
   ],
   "scripts": {

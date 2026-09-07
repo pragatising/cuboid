@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Title, Primary, Controls, Subtitle } from "@storybook/blocks";
-import { JsonCodeView } from "./JsonCodeView";
+import { JsonViewer } from "./JsonViewer";
 import {
   CodeViewingArchitectureSection,
   CodeViewingDocsSubtitle,
-} from "./CodeViewingDocs";
-import devServerDiagnostics from "./__fixtures__/dev-server-diagnostics";
+} from "../CodeViewingDocs";
+import devServerDiagnostics from "../__fixtures__/dev-server-diagnostics";
 
-const meta: Meta<typeof JsonCodeView> = {
-  title: "Components/CodeBlock/JsonCodeView",
-  component: JsonCodeView,
+const meta: Meta<typeof JsonViewer> = {
+  title: "Components/CodeBlock/JsonViewer/JsonViewer",
+  component: JsonViewer,
   tags: ["autodocs"],
   argTypes: {
     defaultCollapsed: { control: "boolean" },
@@ -46,7 +46,7 @@ const meta: Meta<typeof JsonCodeView> = {
   },
 };
 export default meta;
-type Story = StoryObj<typeof JsonCodeView>;
+type Story = StoryObj<typeof JsonViewer>;
 
 /** Dev-server diagnostics snapshot — all nodes expanded by default */
 export const DevServerDiagnostics: Story = {
@@ -92,7 +92,8 @@ export const FullViewportHeight: Story = {
   parameters: { layout: "fullscreen" },
   render: () => (
     <div style={{ height: "100vh" }}>
-      <JsonCodeView data={devServerDiagnostics} height="100%" />
+      <JsonViewer
+       data={devServerDiagnostics} height="100%" />
     </div>
   ),
 };
@@ -104,7 +105,7 @@ export const WithWatchlist: Story = {
       () => new Set([5, 12]),
     );
     return (
-      <JsonCodeView
+      <JsonViewer
         data={devServerDiagnostics.project}
         maxHeight="320px"
         watchlist={watchlist}

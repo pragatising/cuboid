@@ -10,10 +10,10 @@ import React, {
 import { createPortal } from "react-dom";
 import { useTheme } from "../../../theme/ThemeContext";
 import type { CubeTheme, StackPadding, ThemeTokens } from "../../../theme/types";
-import { CloseIcon } from "../../../icons/material";
 import { parseLengthPx } from "../../../utils/parseLengthPx";
 import { ActionMenuList } from "../ActionMenu/ActionMenuList";
 import { Button, type ButtonVariant } from "../Button";
+import { Icon } from "../Icon";
 import { IconButton } from "../IconButton";
 import { Stack } from "../Stack";
 import { Text } from "../Text";
@@ -436,7 +436,7 @@ export function Popover({
                 size="xs"
                 onClick={onClose}
               >
-                <CloseIcon />
+                <Icon name="close" />
               </IconButton>
             ) : null}
           </Stack>

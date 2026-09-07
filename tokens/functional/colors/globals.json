@@ -158,7 +158,7 @@
       "constantOtherReferenceLink": { "value": "#0a3069" },
       "entity": { "value": "{base.color.scale.mag.9}" },
       "entityTag": { "value": "{base.color.scale.mag.9}" },
-      "keyword": { "value": "{base.color.scale.red.8}" },
+      "keyword": { "value": "{base.color.scale.teal.8}" },
       "string": { "value": "{base.color.scale.red.8}" },
       "stringRegexp": { "value": "{base.color.scale.green.6}" },
       "variable": { "value": "{base.color.scale.orange.6}" },

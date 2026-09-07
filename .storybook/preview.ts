@@ -2,6 +2,7 @@ import type { Preview } from "@storybook/react";
 import { create, themes, typography as sbTypography } from "@storybook/theming";
 import "../src/theme/output/theme.css";
 import "../src/theme/output/components.css";
+import "../src/theme/output/icon-fonts.css";
 import "./docs.css";
 
 /**
@@ -10,6 +11,8 @@ import "./docs.css";
  * Styling layers:
  * - theme.css       — globals, shadows, size, typography
  * - components.css  — component color tokens + selector rules (e.g. pill)
+ * - icon-fonts.css  — self-hosted Material Symbols variable font (@font-face only,
+ *                     shipped as a static stylesheet — see its header comment)
  * - docs.css        — Storybook docs prose, inline code, section utilities
  * - preview-head.html — Inter webfont (matches token base family)
  *
@@ -34,7 +37,10 @@ type DocsTheme = ReturnType<typeof create> & { typography: typeof sbTypography }
 const docsTheme = create({
   ...themes.light,
   fontBase: cubeFontBase,
-  appBorderColor: "transparent",
+  // Storybook's theme derives shades via `polished`, which only accepts
+  // hex/rgb/rgba/hsl/hsla — the "transparent" keyword throws deep inside
+  // @storybook/blocks. rgba(0,0,0,0) renders identically and is parseable.
+  appBorderColor: "rgba(0,0,0,0)",
 }) as DocsTheme;
 
 docsTheme.typography = {

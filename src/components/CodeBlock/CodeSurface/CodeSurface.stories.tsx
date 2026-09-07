@@ -1,10 +1,10 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { CodeSurface } from "./CodeSurface";
-import type { SurfaceLine } from "./types";
-import { buildLines } from "./tokenizer";
-import devServerDiagnostics from "./__fixtures__/dev-server-diagnostics";
-import { defaultTheme } from "../../theme/defaultTheme";
+import type { SurfaceLine } from "../types";
+import { buildLines } from "../tokenizer";
+import devServerDiagnostics from "../__fixtures__/dev-server-diagnostics";
+import { defaultTheme } from "../../../theme/defaultTheme";
 
 const meta: Meta<typeof CodeSurface> = {
   title: "Components/CodeBlock/CodeSurface",

@@ -1,5 +1,5 @@
 import type { SyntaxColors } from "../../theme/types";
-import styles from "./CodeSurface.module.css";
+import styles from "./CodeSurface/CodeSurface.module.css";
 import type { SurfaceLine, SurfaceToken } from "./types";
 
 // ── Token type → theme syntax key (globals.json color.syntax) ───────────────
