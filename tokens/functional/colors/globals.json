@@ -155,27 +155,35 @@
       "token": {
         "comment": { "value": "{base.color.scale.gray.7}" },
         "key": { "value": "{base.color.scale.gray.8}" },
-        "constantOtherReferenceLink": { "value": "#0a3069" },
-        "entityTag": { "value": "{base.color.scale.mag.9}" },
-        "keyword": { "value": "{base.color.scale.teal.8}" },
-        "string": { "value": "{base.color.scale.red.8}" },
-        "stringRegexp": { "value": "{base.color.scale.green.6}" },
-        "functionCall": { "value": "{base.color.scale.indigo.8}" },
-        "typeName": { "value": "{base.color.scale.violet.9}" },
-        "typeMember": { "value": "{base.color.scale.gray.8}" },
-        "propertyAccess": { "value": "{base.color.scale.gray.9}" },
-        "attributeName": { "value": "{base.color.scale.orange.8}" },
-        "cssSelector": { "value": "{base.color.scale.lime.8}" },
-        "cssProperty": { "value": "{base.color.scale.gray.8}" },
-        "cssValue": { "value": "{base.color.scale.orange.9}" },
-        "nullLiteral": { "value": "{base.color.scale.gray.8}" },
-        "booleanLiteral": { "value": "{base.color.scale.purple.8}" },
-        "numberLiteral": { "value": "{base.color.scale.blue.8}" },
         "bracket": { "value": "#E01280" },
         "bracketNested": { "value": "{base.color.scale.purple.8}" },
-        "stringUrl": { "value": "{base.color.scale.indigo.9}" },
-        "stringEmail": { "value": "{base.color.scale.indigo.9}" },
-        "stringUuid": { "value": "{base.color.scale.gray.8}" }
+        "constantOtherReferenceLink": { "value": "#0a3069" },
+        "literal": {
+          "number": { "value": "{base.color.scale.blue.8}" },
+          "boolean": { "value": "{base.color.scale.purple.8}" },
+          "null": { "value": "{base.color.scale.gray.8}" }
+        },
+        "identifier": {
+          "keyword": { "value": "{base.color.scale.teal.8}" },
+          "typeName": { "value": "{base.color.scale.violet.9}" },
+          "typeMember": { "value": "{base.color.scale.gray.8}" },
+          "functionCall": { "value": "{base.color.scale.yellow.9}" },
+          "propertyAccess": { "value": "{base.color.scale.gray.9}" },
+          "entityTag": { "value": "{base.color.scale.mag.9}" },
+          "attributeName": { "value": "{base.color.scale.orange.8}" }
+        },
+        "string": {
+          "default": { "value": "{base.color.scale.red.8}" },
+          "regexp": { "value": "{base.color.scale.green.9}" },
+          "url": { "value": "{base.color.scale.indigo.9}" },
+          "email": { "value": "{base.color.scale.indigo.9}" },
+          "uuid": { "value": "{base.color.scale.gray.9}" }
+        },
+        "css": {
+          "selector": { "value": "{base.color.scale.orange.9}" },
+          "property": { "value": "{base.color.scale.gray.8}" },
+          "value": { "value": "{base.color.scale.orange.9}" }
+        }
       },
       "markup": {
         "bold": { "value": "{base.color.scale.gray.9}" },

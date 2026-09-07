@@ -6,6 +6,7 @@ import {
   CodeViewingArchitectureSection,
   CodeViewingDocsSubtitle,
 } from "./CodeViewingDocs";
+import { SyntaxTokenReferenceSection } from "./SyntaxTokenReference";
 import {
   buildLongJavaScript,
   sampleCss,
@@ -43,6 +44,7 @@ const meta: Meta<typeof CodeBlock> = {
           <CodeViewingArchitectureSection focus="codeBlock" />
           <Primary />
           <Controls />
+          <SyntaxTokenReferenceSection />
         </>
       ),
     },

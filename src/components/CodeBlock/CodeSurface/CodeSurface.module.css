@@ -164,7 +164,7 @@
 }
 
 .tokenString {
-  color: var(--cube-color-syntax-token-string);
+  color: var(--cube-color-syntax-token-string-default);
 }
 
 .tokenStringUrl {
@@ -180,15 +180,15 @@
 }
 
 .tokenNumber {
-  color: var(--cube-color-syntax-token-number-literal);
+  color: var(--cube-color-syntax-token-literal-number);
 }
 
 .tokenBoolean {
-  color: var(--cube-color-syntax-token-boolean-literal);
+  color: var(--cube-color-syntax-token-literal-boolean);
 }
 
 .tokenNull {
-  color: var(--cube-color-syntax-token-null-literal);
+  color: var(--cube-color-syntax-token-literal-null);
 }
 
 .tokenBracket {
@@ -217,11 +217,11 @@
 }
 
 .tokenKeyword {
-  color: var(--cube-color-syntax-token-keyword);
+  color: var(--cube-color-syntax-token-identifier-keyword);
 }
 
 .tokenEntityTag {
-  color: var(--cube-color-syntax-token-entity-tag);
+  color: var(--cube-color-syntax-token-identifier-entity-tag);
 }
 
 .tokenStringRegexp {
@@ -229,23 +229,23 @@
 }
 
 .tokenFunctionCall {
-  color: var(--cube-color-syntax-token-function-call);
+  color: var(--cube-color-syntax-token-identifier-function-call);
 }
 
 .tokenTypeName {
-  color: var(--cube-color-syntax-token-type-name);
+  color: var(--cube-color-syntax-token-identifier-type-name);
 }
 
 .tokenTypeMember {
-  color: var(--cube-color-syntax-token-type-member);
+  color: var(--cube-color-syntax-token-identifier-type-member);
 }
 
 .tokenPropertyAccess {
-  color: var(--cube-color-syntax-token-property-access);
+  color: var(--cube-color-syntax-token-identifier-property-access);
 }
 
 .tokenAttributeName {
-  color: var(--cube-color-syntax-token-attribute-name);
+  color: var(--cube-color-syntax-token-identifier-attribute-name);
 }
 
 .tokenCssSelector {

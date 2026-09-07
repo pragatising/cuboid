@@ -39,6 +39,5 @@ export {
 } from "./syntax";
 export type {
   JsonClassifiedStringType,
-  JsonSyntaxKey,
   JsonSyntaxTokenType,
 } from "./syntax";
