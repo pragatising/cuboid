@@ -24,15 +24,26 @@ export interface BaseColors {
 
 export interface SyntaxColors {
   comment: string;
-  constant: string;
   constantOtherReferenceLink: string;
-  entity: string;
   entityTag: string;
   keyword: string;
   key: string;
   string: string;
   stringRegexp: string;
-  variable: string;
+  /** Identifier immediately followed by `(` — a function/method call. */
+  functionCall: string;
+  /** Identifier in a structural type position (class/interface/generic/annotation). */
+  typeName: string;
+  /** Identifier immediately preceded by `.` — subtle, closer to muted foreground than a keyword. */
+  propertyAccess: string;
+  /** Attribute/prop name on a tag — shared hue across HTML and JSX for visual consistency. */
+  attributeName: string;
+  /** CSS `.class` / `#id` / `:pseudo` selector. */
+  cssSelector: string;
+  /** CSS property name before `:`. */
+  cssProperty: string;
+  /** CSS property value keyword. */
+  cssValue: string;
   brackethighlighterAngle: string;
   brackethighlighterUnmatched: string;
   carriageReturnBg: string;

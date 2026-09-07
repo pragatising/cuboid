@@ -220,24 +220,40 @@
   color: var(--cube-color-syntax-keyword);
 }
 
-.tokenConstant {
-  color: var(--cube-color-syntax-constant);
-}
-
-.tokenEntity {
-  color: var(--cube-color-syntax-entity);
-}
-
 .tokenEntityTag {
   color: var(--cube-color-syntax-entity-tag);
 }
 
-.tokenVariable {
-  color: var(--cube-color-syntax-variable);
-}
-
 .tokenStringRegexp {
   color: var(--cube-color-syntax-string-regexp);
+}
+
+.tokenFunctionCall {
+  color: var(--cube-color-syntax-function-call);
+}
+
+.tokenTypeName {
+  color: var(--cube-color-syntax-type-name);
+}
+
+.tokenPropertyAccess {
+  color: var(--cube-color-syntax-property-access);
+}
+
+.tokenAttributeName {
+  color: var(--cube-color-syntax-attribute-name);
+}
+
+.tokenCssSelector {
+  color: var(--cube-color-syntax-css-selector);
+}
+
+.tokenCssProperty {
+  color: var(--cube-color-syntax-css-property);
+}
+
+.tokenCssValue {
+  color: var(--cube-color-syntax-css-value);
 }
 
 .virtualWindow {
