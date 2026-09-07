@@ -68,7 +68,6 @@ export function syntaxColorsCubeOverride(tokens: ThemeTokens): Record<string, st
     "--cube-color-syntax-string-url": s.stringUrl,
     "--cube-color-syntax-string-email": s.stringEmail,
     "--cube-color-syntax-string-uuid": s.stringUuid,
-    "--cube-color-syntax-variable": s.variable,
     "--cube-color-syntax-number-literal": s.numberLiteral,
     "--cube-color-syntax-boolean-literal": s.booleanLiteral,
     "--cube-color-syntax-null-literal": s.nullLiteral,
