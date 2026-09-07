@@ -11,6 +11,7 @@ import {
   sampleCss,
   sampleHtml,
   sampleJavaScript,
+  sampleTsx,
   sampleTypeScript,
 } from "./__fixtures__/source-samples";
 
@@ -63,6 +64,14 @@ export const TypeScript: Story = {
     language: "typescript",
     code: sampleTypeScript,
     maxHeight: "320px",
+  },
+};
+
+export const Tsx: Story = {
+  args: {
+    language: "tsx",
+    code: sampleTsx,
+    maxHeight: "360px",
   },
 };
 

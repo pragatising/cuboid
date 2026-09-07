@@ -118,11 +118,15 @@ const TOKEN_CLASS: Record<string, string> = {
   plain: styles.tokenPlain,
   comment: styles.tokenComment,
   keyword: styles.tokenKeyword,
-  constant: styles.tokenConstant,
-  entity: styles.tokenEntity,
   entityTag: styles.tokenEntityTag,
-  variable: styles.tokenVariable,
   stringRegexp: styles.tokenStringRegexp,
+  functionCall: styles.tokenFunctionCall,
+  typeName: styles.tokenTypeName,
+  propertyAccess: styles.tokenPropertyAccess,
+  attributeName: styles.tokenAttributeName,
+  cssSelector: styles.tokenCssSelector,
+  cssProperty: styles.tokenCssProperty,
+  cssValue: styles.tokenCssValue,
 };
 
 const BRACKET_DEPTH_CLASS = [
