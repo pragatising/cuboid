@@ -21,7 +21,7 @@ function cssSegment(key) {
 }
 
 function emitNestedStringVars(obj, pathParts, prefix, set) {
-  if (typeof obj === "string") {
+  if (typeof obj === "string" || (typeof obj === "number" && Number.isFinite(obj))) {
     const name = [prefix, ...pathParts.map(cssSegment)].filter(Boolean).join("-");
     set(name, obj);
     return;
@@ -132,6 +132,11 @@ function emitComponentSizeTokens(t, set) {
     emitNestedStringVars(actionMenuSizes.footer, [], "actionMenu-footer", set);
   }
 
+  const codeBlockSizes = t.sizes?.codeBlock;
+  if (codeBlockSizes) {
+    emitNestedStringVars(codeBlockSizes, [], "code-block-sizes", set);
+  }
+
   const pillRow = t.sizes?.pill;
   set("pill-paddingInline", pillRow?.paddingInline);
   set("pill-paddingBlock", pillRow?.paddingBlock);
@@ -239,6 +244,8 @@ function main() {
   const set = (name, value) => {
     if (typeof value === "string") {
       vars.set(`${PREFIX}-${name}`, value);
+    } else if (typeof value === "number" && Number.isFinite(value)) {
+      vars.set(`${PREFIX}-${name}`, String(value));
     }
   };
 
@@ -344,6 +351,11 @@ function main() {
     }
     set(`actionMenu-section-fg`, actionMenuColors.section?.fgColor);
     set(`actionMenu-divider-fg`, actionMenuColors.divider?.fgColor);
+  }
+
+  const codeBlockColors = t.codeBlockColors;
+  if (codeBlockColors) {
+    set("code-block-scrollbar-thumb", codeBlockColors.scrollbarThumb);
   }
 
   const pillColors = t.pillColors;
