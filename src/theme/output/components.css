@@ -103,6 +103,17 @@
   --cube-button-secondary-fg-hover: #6F6F6D;
   --cube-button-secondary-fg-pressed: #ABA9A5;
   --cube-button-secondary-fg-rest: #6F6F6D;
+  --cube-code-block-scrollbar-thumb: rgba(58,58,57,0.2);
+  --cube-code-block-sizes-collapse-button-width: 1.25rem;
+  --cube-code-block-sizes-font-weight: 400;
+  --cube-code-block-sizes-gutter-min-width: 2.5rem;
+  --cube-code-block-sizes-line-number-min-width: 2ch;
+  --cube-code-block-sizes-row-height: 1.5rem;
+  --cube-code-block-sizes-transition-duration-base: 0.12s;
+  --cube-code-block-sizes-transition-duration-fast: 0.1s;
+  --cube-code-block-sizes-tree-indent-width: 1.5rem;
+  --cube-code-block-sizes-watch-button-width: 0.875rem;
+  --cube-code-block-sizes-watch-dot-size: 0.375rem;
   --cube-control-extra-small-borderRadius: 0.375rem;
   --cube-control-extra-small-gap: 0.5rem;
   --cube-control-extra-small-icon: 1.125rem;

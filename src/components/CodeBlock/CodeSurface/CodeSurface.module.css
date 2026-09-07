@@ -7,7 +7,7 @@
 .scroll {
   overscroll-behavior: none;
   scrollbar-width: thin;
-  scrollbar-color: rgba(0, 0, 0, 0.18) transparent;
+  scrollbar-color: var(--cube-code-block-scrollbar-thumb) transparent;
   user-select: text;
   overflow-x: auto;
   overflow-y: visible;
@@ -19,7 +19,7 @@
 
 .row {
   flex-shrink: 0;
-  height: 1.625rem;
+  height: var(--cube-code-block-sizes-row-height);
 }
 
 .row:hover .gutter,
@@ -53,19 +53,19 @@
   left: 0;
   z-index: 1;
   user-select: none;
-  min-width: 2.4rem;
+  min-width: var(--cube-code-block-sizes-gutter-min-width);
   padding-left: var(--cube-space-12px);
   padding-right: var(--cube-space-10px);
   border-right: var(--cube-sizes-borderWidth-thin) solid
     var(--cube-color-border-gray-alpha-2);
   background: var(--cube-color-bg-gray-light-1);
-  transition: background-color 0.1s ease;
+  transition: background-color var(--cube-code-block-sizes-transition-duration-fast) ease;
 }
 
 .lineNumber {
   display: inline-block;
   flex: 1;
-  min-width: 2ch;
+  min-width: var(--cube-code-block-sizes-line-number-min-width);
   text-align: right;
   padding-right: var(--cube-space-8px);
   font-variant-numeric: tabular-nums;
@@ -78,7 +78,7 @@
   justify-content: center;
   align-self: stretch;
   flex-shrink: 0;
-  width: 0.875rem;
+  width: var(--cube-code-block-sizes-watch-button-width);
   margin-right: var(--cube-space-6px);
   padding: 0;
   border: none;
@@ -87,14 +87,14 @@
 }
 
 .watchDot {
-  width: 6px;
-  height: 6px;
+  width: var(--cube-code-block-sizes-watch-dot-size);
+  height: var(--cube-code-block-sizes-watch-dot-size);
   border-radius: 50%;
   background: var(--cube-color-syntax-surface-watch-mark-hover);
   opacity: 0;
   transition:
-    opacity 0.12s ease,
-    background-color 0.12s ease;
+    opacity var(--cube-code-block-sizes-transition-duration-base) ease,
+    background-color var(--cube-code-block-sizes-transition-duration-base) ease;
 }
 
 .gutterWithWatch:hover .watchBtn:not(.watchBtnActive) .watchDot {
@@ -112,7 +112,7 @@
   justify-content: center;
   align-self: stretch;
   flex-shrink: 0;
-  width: 1.25rem;
+  width: var(--cube-code-block-sizes-collapse-button-width);
   margin-left: var(--cube-space-6px);
   background: none;
   border: none;
@@ -124,7 +124,7 @@
 .collapseSpacer {
   display: inline-block;
   flex-shrink: 0;
-  width: 1.25rem;
+  width: var(--cube-code-block-sizes-collapse-button-width);
   margin-left: var(--cube-space-6px);
 }
 
@@ -134,10 +134,10 @@
   padding-right: var(--cube-space-12px);
   padding-left: calc(
     var(--cube-space-12px) + var(--code-line-depth, 0) *
-      var(--code-surface-indent, 1.5rem)
+      var(--code-surface-indent, var(--cube-code-block-sizes-tree-indent-width))
   );
   background: var(--cube-color-bg-gray-light-1);
-  transition: background-color 0.1s ease;
+  transition: background-color var(--cube-code-block-sizes-transition-duration-fast) ease;
 }
 
 .token {

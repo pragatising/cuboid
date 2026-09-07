@@ -328,6 +328,10 @@ export interface ActionMenuFunctionalColors {
   divider: { fgColor: string };
 }
 
+export interface CodeBlockFunctionalColors {
+  scrollbarThumb: string;
+}
+
 export interface ActionMenuItemSizeTokens {
   minHeight: string;
   paddingInline: string;
@@ -369,6 +373,20 @@ export interface ActionMenuSizesTokens {
   section: ActionMenuSectionSizeTokens;
   header: ActionMenuHeaderSizeTokens;
   footer: ActionMenuFooterSizeTokens;
+}
+
+export interface CodeBlockSizesTokens {
+  /** Numeric weight (400) — the generic {ref} resolver only follows string leaves, so this can't reference typography.fontWeight.regular the way string-valued sizes reference {size.space.N}. */
+  fontWeight: number;
+  rowHeight: string;
+  gutterMinWidth: string;
+  lineNumberMinWidth: string;
+  watchButtonWidth: string;
+  watchDotSize: string;
+  collapseButtonWidth: string;
+  treeIndentWidth: string;
+  transitionDurationFast: string;
+  transitionDurationBase: string;
 }
 
 export type PillSurface = "filled" | "bordered";
@@ -435,6 +453,7 @@ export interface FunctionalColors {
   actionMenu: ActionMenuFunctionalColors;
   pill: PillFunctionalColors;
   tooltip: TooltipSurfaceColors;
+  codeBlock: CodeBlockFunctionalColors;
 }
 
 export interface Colors {
@@ -778,6 +797,15 @@ export interface ShadowTokens {
   tooltip: string;
 }
 
+/** Shared transition-duration scale (from tokens/functional/motion/motion.json). */
+export interface MotionTokens {
+  duration: {
+    fast: string;
+    base: string;
+    slow: string;
+  };
+}
+
 export interface FocusRingTokens {
   width: string;
   offset: string;
@@ -805,6 +833,7 @@ export interface Sizes {
   sidebar: SidebarSizesTokens;
   popover: PopoverLayoutTokens;
   actionMenu: ActionMenuSizesTokens;
+  codeBlock: CodeBlockSizesTokens;
   resizeHandle: ResizeHandleSizesTokens;
   focusRing: FocusRingTokens;
   zIndex: ZIndexTokens;
@@ -840,6 +869,7 @@ export interface ThemeTokens {
   typography: Typography;
   sizes: Sizes;
   shadows: ShadowTokens;
+  motion: MotionTokens;
   icon: IconTokens;
 }
 
