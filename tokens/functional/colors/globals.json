@@ -159,7 +159,7 @@
       "keyword": { "value": "{base.color.scale.teal.8}" },
       "string": { "value": "{base.color.scale.red.8}" },
       "stringRegexp": { "value": "{base.color.scale.green.6}" },
-      "functionCall": { "value": "{base.color.scale.teal.8}" },
+      "functionCall": { "value": "{base.color.scale.indigo.6}" },
       "typeName": { "value": "{base.color.scale.violet.8}" },
       "propertyAccess": { "value": "{base.color.scale.gray.9}" },
       "attributeName": { "value": "{base.color.scale.orange.7}" },
