@@ -5,7 +5,7 @@
  * theme.css exports ONLY:
  *   - globals (color palette + functional foreground/background/border)
  *   - space, border (radius/width), stack, z-index, container, breakpoints
- *   - typography, shadows
+ *   - typography, shadows, motion
  *
  * Component colors, component layout, selector rules → components.css
  */
@@ -127,6 +127,10 @@ function emitShadowTokens(t, set) {
   set("shadow-tooltip", shadows.tooltip);
 }
 
+function emitMotionTokens(t, set) {
+  emitNestedStringVars(t.motion?.duration, [], "motion-duration", set);
+}
+
 export function compareCssVarNames(a, b) {
   const aSpaceMatch = a.match(/^--cube-space-(\d+)px$/);
   const bSpaceMatch = b.match(/^--cube-space-(\d+)px$/);
@@ -165,6 +169,7 @@ function main() {
   emitShadowTokens(t, set);
   emitFoundationSizeTokens(t, set);
   emitTypographyTokens(t, set);
+  emitMotionTokens(t, set);
 
   const focusRing = t.sizes?.focusRing;
   if (focusRing) {

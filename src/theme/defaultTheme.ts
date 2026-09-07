@@ -25,12 +25,14 @@ const {
   sidebarColors,
   popoverColors,
   actionMenuColors,
+  codeBlockColors,
   pillColors,
   tooltipColors,
 } = tokenOutput;
 
 const globalColors = themeFoundation.globalColors;
 const generatedShadows = themeFoundation.shadows;
+const generatedMotion = themeFoundation.motion as ThemeTokens["motion"];
 const generatedTypography = themeFoundation.typography as ThemeTokens["typography"];
 
 export const defaultTheme: ThemeTokens = {
@@ -75,6 +77,8 @@ export const defaultTheme: ThemeTokens = {
       pill: pillColors,
 
       tooltip: tooltipColors,
+
+      codeBlock: codeBlockColors,
     },
 
     global: globalColors,
@@ -91,6 +95,9 @@ export const defaultTheme: ThemeTokens = {
 
   // ── Shadows ─────────────────────────────────────────────────────────────────
   shadows: generatedShadows,
+
+  // ── Motion ──────────────────────────────────────────────────────────────────
+  motion: generatedMotion,
 
   // ── Icon ────────────────────────────────────────────────────────────────────
   // Material Symbols Rounded, w400 — matches the previous hardcoded default.

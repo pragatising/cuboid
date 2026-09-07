@@ -220,6 +220,7 @@ function main() {
   const componentsDir = path.join(ROOT, "tokens/functional/components");
   const functionalSizeDir = path.join(ROOT, "tokens/functional/size");
   const functionalShadowsDir = path.join(ROOT, "tokens/functional/shadows");
+  const functionalMotionDir = path.join(ROOT, "tokens/functional/motion");
   const themeOutputDir = path.join(ROOT, "src/theme/output");
   const outPath = path.join(themeOutputDir, "theme.json");
   const tokenOutPath = path.join(themeOutputDir, "token-output.json");
@@ -335,6 +336,14 @@ function main() {
         componentLayoutMerge = deepMerge(componentLayoutMerge, { sidebar: doc.sidebar.sizes });
       }
     }
+    if (isPlain(doc.codeBlock)) {
+      if (isPlain(doc.codeBlock.color)) {
+        mergedColor = deepMerge(mergedColor, { codeBlock: doc.codeBlock.color });
+      }
+      if (isPlain(doc.codeBlock.sizes)) {
+        componentLayoutMerge = deepMerge(componentLayoutMerge, { codeBlock: doc.codeBlock.sizes });
+      }
+    }
     if (isPlain(doc.highlight)) {
       if (isPlain(doc.highlight.color)) {
         mergedColor = deepMerge(mergedColor, { highlight: doc.highlight.color });
@@ -363,12 +372,21 @@ function main() {
     }
   }
 
+  let mergedMotion = {};
+  for (const file of walkJsonFiles(functionalMotionDir)) {
+    const doc = JSON.parse(fs.readFileSync(file, "utf8"));
+    if (isPlain(doc.motion)) {
+      mergedMotion = deepMerge(mergedMotion, doc.motion);
+    }
+  }
+
   const root = {
     base: light.base,
     color: mergedColor,
     size: functionalSize,
     shadows: mergedShadows,
     typography: mergedTypography ?? {},
+    motion: mergedMotion,
   };
 
   let resolved = root;
@@ -391,6 +409,7 @@ function main() {
   const uColor = uRootConverted.color;
   const uSize = uRootConverted.size;
   const uShadows = uRootConverted.shadows;
+  const uMotion = uRootConverted.motion;
 
   const scale = uBase?.color?.scale;
   const base = isPlain(scale) ? themeBaseFromUnwrappedScale(scale) : {};
@@ -746,6 +765,17 @@ function main() {
     },
     section: { fgColor: amSectionFg },
     divider: { fgColor: amDividerFg },
+  };
+
+  const codeBlockColor = uColor?.codeBlock;
+  if (!isPlain(codeBlockColor) || typeof codeBlockColor.scrollbarThumb !== "string") {
+    console.error(
+      "Expected resolved color.codeBlock.scrollbarThumb (tokens/functional/components/code-block/code-block.json)"
+    );
+    process.exit(1);
+  }
+  const codeBlockColors = {
+    scrollbarThumb: codeBlockColor.scrollbarThumb,
   };
 
   const tipColor = uColor?.tooltip;
@@ -1485,6 +1515,37 @@ function main() {
     footer: pickLayoutBlock(actionMenuLayoutSrc.footer, actionMenuFooterKeys, "size.actionMenu.footer"),
   };
 
+  const codeBlockLayoutSrc = uSize?.codeBlock;
+  if (!isPlain(codeBlockLayoutSrc)) {
+    console.error(
+      "Expected resolved size.codeBlock.* (from codeBlock.sizes in components/code-block/code-block.json)"
+    );
+    process.exit(1);
+  }
+  const codeBlockSizeKeys = [
+    "fontWeight",
+    "rowHeight",
+    "gutterMinWidth",
+    "lineNumberMinWidth",
+    "watchButtonWidth",
+    "watchDotSize",
+    "collapseButtonWidth",
+    "treeIndentWidth",
+    "transitionDurationFast",
+    "transitionDurationBase",
+  ];
+  const codeBlockSizes = {};
+  for (const key of codeBlockSizeKeys) {
+    const value = codeBlockLayoutSrc[key];
+    if (typeof value !== "string" && typeof value !== "number") {
+      console.error(
+        `Expected size.codeBlock.${key} to be a string or number (tokens/functional/components/code-block/code-block.json)`
+      );
+      process.exit(1);
+    }
+    codeBlockSizes[key] = value;
+  }
+
   const shadowKeys = ["popover", "popoverElevated", "sheet", "tooltip"];
   if (!isPlain(uShadows) || !shadowKeys.every((k) => typeof uShadows[k] === "string")) {
     console.error(
@@ -1493,6 +1554,21 @@ function main() {
     process.exit(1);
   }
   const shadows = Object.fromEntries(shadowKeys.map((k) => [k, uShadows[k]]));
+
+  const motionDurationKeys = ["fast", "base", "slow"];
+  const motionDurationSrc = uMotion?.duration;
+  if (
+    !isPlain(motionDurationSrc) ||
+    !motionDurationKeys.every((k) => typeof motionDurationSrc[k] === "string")
+  ) {
+    console.error(
+      `Expected resolved motion.duration.{${motionDurationKeys.join(",")}} (from tokens/functional/motion/motion.json)`
+    );
+    process.exit(1);
+  }
+  const motion = {
+    duration: Object.fromEntries(motionDurationKeys.map((k) => [k, motionDurationSrc[k]])),
+  };
 
   const typography = {
     ...uRootConverted.typography,
@@ -1523,6 +1599,7 @@ function main() {
       sidebar: sidebarSizes,
       popover: popoverLayout,
       actionMenu: actionMenuSizes,
+      codeBlock: codeBlockSizes,
       resizeHandle: resizeHandleSizes,
       focusRing,
       zIndex,
@@ -1545,7 +1622,9 @@ function main() {
     sidebarColors,
     popoverColors,
     actionMenuColors,
+    codeBlockColors,
     shadows,
+    motion,
     globalColors,
   };
 
@@ -1568,6 +1647,7 @@ function main() {
     "sidebarColors",
     "popoverColors",
     "actionMenuColors",
+    "codeBlockColors",
   ];
 
   const foundationSizeKeys = [
@@ -1597,6 +1677,7 @@ function main() {
     "sidebar",
     "popover",
     "actionMenu",
+    "codeBlock",
     "resizeHandle",
   ];
 
@@ -1610,6 +1691,7 @@ function main() {
     sizes: Object.fromEntries(foundationSizeKeys.map((k) => [k, payload.sizes[k]])),
     globalColors: payload.globalColors,
     shadows: payload.shadows,
+    motion: payload.motion,
   };
 
   fs.mkdirSync(themeOutputDir, { recursive: true });
