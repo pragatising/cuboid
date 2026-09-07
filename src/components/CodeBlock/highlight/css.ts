@@ -29,15 +29,15 @@ const RULES: SourceRule[] = [
     pattern: /^'(?:\\.|[^'\\])*'/,
   },
   {
-    type: "variable",
+    type: "cssSelector",
     pattern: /^#[\w-]+/,
   },
   {
-    type: "variable",
+    type: "cssSelector",
     pattern: /^\.[\w-]+/,
   },
   {
-    type: "variable",
+    type: "cssSelector",
     pattern: /^::?[\w-]+(?:\([\w-]+\))?/,
   },
   {
@@ -45,7 +45,7 @@ const RULES: SourceRule[] = [
     pattern: /^-?(?:\d+\.\d+|\d+)(?:%|[a-z]{2,4})?\b/i,
   },
   {
-    type: "key",
+    type: "cssProperty",
     pattern: /^[\w-]+(?=\s*:)/,
   },
   {
@@ -57,7 +57,7 @@ const RULES: SourceRule[] = [
     pattern: /^[:>,+~]/,
   },
   {
-    type: "constant",
+    type: "cssValue",
     pattern: /^[$A-Z_a-z][\w-]*/,
   },
 ];

@@ -30,6 +30,27 @@ export async function getProfile(id: string): Promise<UserProfile | null> {
 }
 `;
 
+/**
+ * Sample TSX for CodeBlock stories — exercises tag/attribute highlighting
+ * (`entityTag`/`attributeName`), a nested child tag, and a JSX expression
+ * child that falls back to full TS tokenization (`functionCall`,
+ * `propertyAccess`, a plain prop reference).
+ */
+export const sampleTsx = `interface UserCardProps {
+  user: UserProfile;
+  size: number;
+}
+
+export function UserCard({ user, size }: UserCardProps) {
+  return (
+    <div className="card">
+      <Icon size={size} color="blue" />
+      <span onClick={() => handleClick(user.id)}>{user.name}</span>
+    </div>
+  );
+}
+`;
+
 /** Sample HTML for CodeBlock stories. */
 export const sampleHtml = `<!DOCTYPE html>
 <html lang="en">
