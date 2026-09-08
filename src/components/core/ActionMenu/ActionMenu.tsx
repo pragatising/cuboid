@@ -27,6 +27,14 @@ export interface ActionMenuProps {
   elevation?: PopoverElevation;
   /** Close after a menu item is activated. @default true */
   closeOnSelect?: boolean;
+  /**
+   * Focus the first (or checked) menu item when the menu opens.
+   * Set `false` for a combobox/typeahead trigger that must keep focus and
+   * keep receiving keystrokes while the menu is a passive suggestions
+   * overlay — the caller is then responsible for its own keyboard nav.
+   * @default true
+   */
+  autoFocusFirstItem?: boolean;
   /** Accessible name when the menu has no visible title. */
   "aria-label"?: string;
   /** id of an element that labels the menu. */
@@ -67,6 +75,7 @@ export function ActionMenu({
   placement = "bottom-start",
   elevation = "3x",
   closeOnSelect = true,
+  autoFocusFirstItem = true,
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
   theme,
@@ -88,9 +97,9 @@ export function ActionMenu({
   );
 
   useLayoutEffect(() => {
-    if (!open) return;
+    if (!open || !autoFocusFirstItem) return;
     focusInitialMenuItem(listRef.current);
-  }, [open]);
+  }, [open, autoFocusFirstItem]);
 
   const handleListKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
