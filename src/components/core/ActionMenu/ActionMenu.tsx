@@ -35,6 +35,12 @@ export interface ActionMenuProps {
    * @default true
    */
   autoFocusFirstItem?: boolean;
+  /**
+   * Caps the menu's height (any valid CSS length, e.g. `"320px"`, `"60vh"`).
+   * Items beyond it scroll inside the menu. Unset means no cap (grows to
+   * fit its content, today's behavior).
+   */
+  maxHeight?: string;
   /** Accessible name when the menu has no visible title. */
   "aria-label"?: string;
   /** id of an element that labels the menu. */
@@ -76,6 +82,7 @@ export function ActionMenu({
   elevation = "3x",
   closeOnSelect = true,
   autoFocusFirstItem = true,
+  maxHeight,
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
   theme,
@@ -179,6 +186,7 @@ export function ActionMenu({
       trigger={menuTrigger}
       placement={placement}
       elevation={elevation}
+      maxHeight={maxHeight}
       panelRole={false}
       triggerHasPopup="menu"
       returnFocusOnClose

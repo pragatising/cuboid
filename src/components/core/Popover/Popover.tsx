@@ -140,6 +140,13 @@ export interface PopoverProps {
    * @default "md"
    */
   bodyPadding?: StackPadding;
+  /**
+   * Caps the panel's height (any valid CSS length, e.g. `"320px"`,
+   * `"60vh"`). Content beyond it scrolls inside the panel — header/footer
+   * slots stay pinned outside the scroll region. Unset means no cap (the
+   * panel grows to fit its content, today's behavior).
+   */
+  maxHeight?: string;
   placement?: PopoverPlacement;
   elevation?: PopoverElevation;
   /** Close on outside pointer down and Escape. Default true. */
@@ -269,6 +276,7 @@ export function Popover({
   onClose,
   footer,
   bodyPadding = "md",
+  maxHeight,
   placement = "bottom-start",
   elevation = "3x",
   dismissible = true,
@@ -463,6 +471,7 @@ export function Popover({
         align="stretch"
         paddingInline={bodyPadding}
         width="full"
+        className={maxHeight ? styles.PanelScroll : undefined}
         style={{
           // ActionMenuList.Header's own padding-block-end sits *after* its
           // divider, so it already supplies the gap down to the body — a
@@ -478,6 +487,8 @@ export function Popover({
       </Stack>
       {renderedFooter}
     </>
+  ) : maxHeight ? (
+    <div className={styles.PanelScroll}>{children}</div>
   ) : (
     children
   );
@@ -493,7 +504,7 @@ export function Popover({
             aria-label={panelRole === "dialog" ? ariaLabel : undefined}
             aria-labelledby={panelRole === "dialog" ? resolvedAriaLabelledBy : undefined}
             className={panelClass}
-            style={{ ...fixedStyle, ...(inlineVars ?? {}) }}
+            style={{ ...fixedStyle, ...(inlineVars ?? {}), ...(maxHeight ? { maxHeight } : {}) }}
             onKeyDown={onPanelKeyDown}
           >
             {panelContent}

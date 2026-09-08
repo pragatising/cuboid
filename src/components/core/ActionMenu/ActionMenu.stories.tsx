@@ -149,6 +149,30 @@ export const WithHeaderAndFooter: Story = {
   ),
 };
 
+export const LongListScrollable: Story = {
+  name: "maxHeight (scrollable long list)",
+  render: () => (
+    <ActionMenu
+      trigger={
+        <Button variant="secondary" size="sm">
+          Choose a fruit
+        </Button>
+      }
+      aria-label="Fruits"
+      maxHeight="240px"
+    >
+      {[
+        "Apple", "Apricot", "Banana", "Blackberry", "Blueberry", "Cherry",
+        "Date", "Elderberry", "Fig", "Grape", "Grapefruit", "Guava",
+        "Kiwi", "Lemon", "Lime", "Mango", "Melon", "Nectarine",
+        "Orange", "Papaya", "Peach", "Pear", "Persimmon", "Pineapple",
+      ].map((fruit) => (
+        <ActionMenuItem key={fruit}>{fruit}</ActionMenuItem>
+      ))}
+    </ActionMenu>
+  ),
+};
+
 export const ListOnly: Story = {
   name: "ActionMenuList (primitive)",
   render: () => (
