@@ -12,6 +12,15 @@ Template for a new entry:
 **Next agent:** open threads, deferred decisions, known debt, or nothing if clean.
 -->
 
+## 2026-09-07 — ActionMenu: add `autoFocusFirstItem` opt-out for combobox triggers
+
+**Changed:**
+- `src/components/core/ActionMenu/ActionMenu.tsx` — new `autoFocusFirstItem?: boolean` prop, default `true` (unchanged behavior for every existing caller). When `false`, the menu's mount-time `useLayoutEffect` that focuses the first/checked menu item is skipped entirely.
+
+**Why:**
+- Driven by a portfolio bug (its `BlockTypeAutocomplete`, the `<` block-type search menu): `ActionMenu` is built for the "click a button, menu opens, arrow through items" pattern and always steals focus into the menu on open. Portfolio needs the opposite — a combobox/typeahead trigger (a contentEditable field) that must keep focus and keep receiving every keystroke while the menu is a passive, read-only suggestions overlay. The synchronous `useLayoutEffect` focus-steal was winning a race against the field's own refocus effect, causing typed characters to land on a menu-item button instead of the field. Approved with the portfolio user as a small, reusable, non-breaking addition rather than a portfolio-side workaround.
+- **Next agent:** caller (portfolio's `BlockTypeAutocomplete`) already implements its own keyboard nav independent of `ActionMenu`'s internal `handleMenuListKeyDown` (which relies on `document.activeElement` being inside the menu), so this opt-out doesn't break arrow-key navigation for that caller. No test file exists for `ActionMenu` itself (Storybook only) — none added.
+
 ## 2026-08-24 — Add sortable component roadmap story
 
 **Changed:**
