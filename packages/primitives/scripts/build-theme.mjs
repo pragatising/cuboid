@@ -16,6 +16,9 @@ import { buildTypographyTheme } from "./build-typography-theme.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, "..");
+// Output crosses the workspace boundary on purpose: primitives has no
+// react dependency, but its build output is consumed by packages/react.
+const REACT_PKG_ROOT = path.join(ROOT, "..", "react");
 
 const isPlain = (x) => x !== null && typeof x === "object" && !Array.isArray(x);
 
@@ -220,10 +223,10 @@ function main() {
   const componentsDir = path.join(ROOT, "tokens/functional/components");
   const functionalSizeDir = path.join(ROOT, "tokens/functional/size");
   const functionalShadowsDir = path.join(ROOT, "tokens/functional/shadows");
-  const themeOutputDir = path.join(ROOT, "src/theme/output");
+  const themeOutputDir = path.join(REACT_PKG_ROOT, "src/theme/output");
   const outPath = path.join(themeOutputDir, "theme.json");
   const tokenOutPath = path.join(themeOutputDir, "token-output.json");
-  const baseOutPath = path.join(ROOT, "src/theme/base.json");
+  const baseOutPath = path.join(REACT_PKG_ROOT, "src/theme/base.json");
 
   if (!fs.existsSync(lightPath)) {
     console.error(`Missing ${lightPath}`);
