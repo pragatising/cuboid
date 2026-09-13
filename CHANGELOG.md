@@ -12,6 +12,28 @@ Template for a new entry:
 **Next agent:** open threads, deferred decisions, known debt, or nothing if clean.
 -->
 
+## 2026-09-12 — Phase -1: split into `packages/primitives` + `packages/react` npm workspaces
+
+**Changed:**
+- Repo root reorganized into npm workspaces (`"workspaces": ["packages/*"]` in root `package.json`, now a private orchestrator with no code of its own).
+- `tokens/` and the token-build scripts (`build-theme.mjs`, `build-theme-css.mjs`, `build-component-theme-css.mjs`, `build-typography-theme.mjs`, `flatten-functional-*.mjs`, `generate-pill-shade-tokens.mjs`, `scripts/lib/spaceScale.mjs`) moved via `git mv` into new package `packages/primitives/` (`@sragatiping/cuboid-primitives`, private, not published standalone). Its `package.json` has no `react`/`react-dom` in any dependency field.
+- `src/`, `tsconfig.json`, `vite.config.ts`, `.storybook/` moved via `git mv` into new package `packages/react/`, which keeps the public package name `@sragatiping/cuboid` and now depends on `@sragatiping/cuboid-primitives` as an ordinary workspace dependency (npm doesn't support the `workspace:` protocol — used `"*"`, resolved via npm's workspace auto-linking).
+- Icon-related scripts (`extract-figma-icons.mjs`, `sync-icons.mjs`, `check-icon-imports.mjs`, `generate-icon-names.mjs`, `parse-figma-metadata-xml.mjs`, `figma-icons.metadata.xml`, `scripts/lib/icon-naming.mjs`) went to `packages/react/scripts/`, not `packages/primitives/` — they read/write `src/icons/`, which is React-side content, not tokens. The migration doc (`docs/token-architecture-migration.md`) didn't call this distinction out explicitly.
+- The three token-build scripts that write generated output were repointed to cross the new workspace boundary on purpose: they still read `tokens/` from their own package root, but now write `src/theme/output/*` into `packages/react/`'s tree (added a `REACT_PKG_ROOT` constant in each rather than assuming input/output share a root).
+- Added `packages/primitives/scripts/check-no-react.mjs` (wired into `npm run test -w @sragatiping/cuboid-primitives`), a grep-based guard that fails if any file under `packages/primitives` imports `react`/`react-dom`.
+- Removed stale gitignored `dist/` and `storybook-static/` from the old repo root (both now build inside `packages/react/`).
+
+**Why:**
+- Executes Phase -1 of `docs/token-architecture-migration.md` and the boundary called for in `docs/dimension-b2-architecture.md` §3: primitives (token values) must be structurally incapable of depending on rendering concerns, so future styling/framework changes never have to renegotiate what a token is.
+- **Real deviation from the migration doc, worth flagging explicitly:** the doc's stated Phase -1 exit criterion — "a stray `import React` inside `packages/primitives/scripts/` fails the install/build for that workspace" — does not actually hold under plain npm workspaces. npm hoists all dependencies into one root `node_modules/`, and Node's module resolution walks upward through parent directories regardless of what a package's own `package.json` declares, so `react` (installed for `packages/react`'s sake) is still resolvable from inside `packages/primitives` at runtime. Verified this concretely: added a stray `import React from "react"` to `build-theme.mjs`, ran it directly, it executed successfully. A true install-time wall would require pnpm (strict, non-hoisted `node_modules` by default) or npm's `nohoist`-equivalent config, neither of which this phase adopted. Added the `check-no-react.mjs` grep guard as the practical substitute — same practical effect (a violation is caught, just at test-time instead of install-time), no new tooling dependency.
+
+**Next agent:**
+- All five generated token outputs (`theme.json`, `token-output.json`, `base.json`, `theme.css`, `components.css`) verified byte-identical to pre-split output via a clean-slate rebuild + diff. Full `npm run build`, `npm run type-check`, and `npm run build-storybook` all pass.
+- Nothing committed yet as of this entry — working tree has ~249 clean `git mv` renames plus 3 new files (`packages/primitives/package.json`, `packages/react/package.json`, `packages/primitives/scripts/check-no-react.mjs`), staged for review.
+- The two pre-existing `THREADS.md` items (Stack/Box scale-token widening; unmigrated `sizes.space[N]` usage in JsonGraph/Graph) moved along with `src/` into `packages/react/` unchanged — this phase did not touch either.
+- Style Dictionary migration (Phase 0 onward in `docs/token-architecture-migration.md`) is still not started; `packages/primitives/scripts/build-theme.mjs` and friends are unchanged hand-rolled JS, just relocated.
+- The behavior-library seam (`docs/dimension-b2-architecture.md` §4.2, resolving D-5: React Aria vs. Radix) remains an open, unscheduled decision — deliberately not addressed this session per explicit user direction to defer it until a composed component actually needs it.
+
 ## 2026-09-07 — ActionMenu: add `autoFocusFirstItem` opt-out for combobox triggers
 
 **Changed:**

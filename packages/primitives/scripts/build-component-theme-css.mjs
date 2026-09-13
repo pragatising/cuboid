@@ -10,9 +10,11 @@ import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, "..");
+// Reads/writes packages/react's generated theme output — see build-theme.mjs.
+const REACT_PKG_ROOT = path.join(ROOT, "..", "react");
 
-const INPUT = path.join(ROOT, "src/theme/output/token-output.json");
-const OUTPUT = path.join(ROOT, "src/theme/output/components.css");
+const INPUT = path.join(REACT_PKG_ROOT, "src/theme/output/token-output.json");
+const OUTPUT = path.join(REACT_PKG_ROOT, "src/theme/output/components.css");
 
 const PREFIX = "--cube";
 

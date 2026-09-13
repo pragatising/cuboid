@@ -1,0 +1,16 @@
+{
+  "name": "@sragatiping/cuboid-primitives",
+  "version": "0.1.10",
+  "private": true,
+  "description": "Design tokens and the token build pipeline for Cuboid. No React dependency, by design.",
+  "type": "module",
+  "scripts": {
+    "tokens:functional-colors": "node scripts/flatten-functional-colors.mjs",
+    "tokens:functional-typography": "node scripts/flatten-functional-typography.mjs",
+    "tokens:typography-theme": "node scripts/build-typography-theme.mjs",
+    "tokens:theme": "node scripts/build-theme.mjs && node scripts/build-theme-css.mjs && node scripts/build-component-theme-css.mjs",
+    "check:no-react": "node scripts/check-no-react.mjs",
+    "test": "npm run check:no-react && node --test scripts/__tests__/*.test.mjs"
+  },
+  "devDependencies": {}
+}
