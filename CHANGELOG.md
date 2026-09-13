@@ -12,6 +12,20 @@ Template for a new entry:
 **Next agent:** open threads, deferred decisions, known debt, or nothing if clean.
 -->
 
+## 2026-09-12 — Phase 0: scaffold Style Dictionary + Zod, inert
+
+**Changed:**
+- `packages/primitives/package.json` — added real dependencies `style-dictionary@5.5.3` and `zod@4.6.3` (versions confirmed to match what `docs/token-architecture-migration.md` verified against Primer's own tooling).
+- `packages/primitives/src/style-dictionary/cuboidStyleDictionary.mjs` — new, a real `StyleDictionary` instance registering two transforms (`cuboid/dimension/rem`, matching `build-theme.mjs`'s existing `pxStringToRem` px→rem formula exactly; `cuboid/name/kebab`, matching `build-theme-css.mjs`'s existing `emitNestedStringVars` naming). Confirmed it constructs and loads without touching any real token file.
+- `packages/primitives/src/schemas/tokenLeaf.mjs` — new, two Zod schemas (`TokenLeafSchema`, `TokenReferenceSchema`) validating cuboid's *current* token leaf shape (`{"value": ...}`, pre-DTCG) — deliberately not the future DTCG `$value`/`$type` shape, since format adoption is a separate, later decision from porting today's inline validation checks to schemas. Verified against real token data from `tokens/base/light.json`.
+
+**Why:**
+- Executes Phase 0 of `docs/token-architecture-migration.md`: get the new tooling installed and the scaffolding in place with proven zero behavior change, before Phase 1 attempts the real byte-diffed migration of the build pipeline onto it.
+
+**Next agent:**
+- Nothing in the real build (`tokens:theme`) calls either new file yet — both are inert by design. Full `npm run build` verified byte-identical to Phase -1's baseline (same five generated files, same bundle sizes); `npm run test -w @sragatiping/cuboid-primitives` (including the `check-no-react` guard) passes clean.
+- Phase 1 (point the preset at the real `tokens/` tree, build to a parallel output path, byte-diff against current output, port the 159 inline `build-theme.mjs` checks to real Zod schemas) is the next real step — expected to be the highest-effort phase per the migration doc, since cuboid's real token shapes will likely surface gaps the schema/preset above don't yet anticipate (only 2 of Style Dictionary's transforms and 2 of many possible schemas exist so far, intentionally minimal).
+
 ## 2026-09-12 — Phase -1: split into `packages/primitives` + `packages/react` npm workspaces
 
 **Changed:**

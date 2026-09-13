@@ -12,5 +12,8 @@
     "check:no-react": "node scripts/check-no-react.mjs",
     "test": "npm run check:no-react && node --test scripts/__tests__/*.test.mjs"
   },
-  "devDependencies": {}
+  "dependencies": {
+    "style-dictionary": "^5.5.3",
+    "zod": "^4.6.3"
+  }
 }
