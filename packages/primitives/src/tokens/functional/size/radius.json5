@@ -1,0 +1,65 @@
+{
+  borderRadius: {
+    xSmall: {
+      $value: '{size.2}',
+      $type: 'dimension',
+      $extensions: {
+        'org.cuboid.figma': {
+          collection: 'functional/size',
+          scopes: ['borderRadius'],
+        },
+      },
+    },
+    small: {
+      $value: '{size.4}',
+      $type: 'dimension',
+      $extensions: {
+        'org.cuboid.figma': {
+          collection: 'functional/size',
+          scopes: ['borderRadius'],
+        },
+      },
+    },
+    medium: {
+      $value: '{size.8}',
+      $type: 'dimension',
+      $extensions: {
+        'org.cuboid.figma': {
+          collection: 'functional/size',
+          scopes: ['borderRadius'],
+        },
+      },
+    },
+    large: {
+      $value: '{size.16}',
+      $type: 'dimension',
+      $extensions: {
+        'org.cuboid.figma': {
+          collection: 'functional/size',
+          scopes: ['borderRadius'],
+        },
+      },
+    },
+    xlarge: {
+      $value: '{size.24}',
+      $type: 'dimension',
+      $extensions: {
+        'org.cuboid.figma': {
+          collection: 'functional/size',
+          scopes: ['borderRadius'],
+        },
+      },
+    },
+    full: {
+      $value: { value: 9999, unit: 'px' },
+      $type: 'dimension',
+      $description: 'Arbitrary large radius for fully-rounded (pill/circle) shapes. Not part of the size scale by design.',
+      $extensions: {
+        'org.cuboid.figma': {
+          collection: 'functional/size',
+          scopes: ['borderRadius'],
+        },
+      },
+    },
+  },
+}

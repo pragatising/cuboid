@@ -1,0 +1,27 @@
+{
+  heading: {
+    $description: 'Heading component typography — size prop (large|medium|small) is independent of the `as` (h1-h6) semantic level, matching Primer.',
+    size: {
+      large: {
+        $value: '{text.title.shorthand.large}',
+        $type: 'typography',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'heading' } },
+      },
+      medium: {
+        $value: '{text.title.shorthand.medium}',
+        $type: 'typography',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'heading' } },
+      },
+      small: {
+        $value: '{text.title.shorthand.small}',
+        $type: 'typography',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'heading' } },
+      },
+    },
+    fgColor: {
+      $value: '{fgColor.neutral.contrast}',
+      $type: 'color',
+      $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'heading' } },
+    },
+  },
+}

@@ -1,0 +1,26 @@
+{
+  breadcrumb: {
+    link: {
+      fgColor: {
+        rest: { $value: '{fgColor.neutral.muted}', $type: 'color' },
+        hover: { $value: '{fgColor.neutral.muted}', $type: 'color' },
+        active: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
+      },
+      bgColor: {
+        rest: { $value: '{bgColor.canvas.transparent}', $type: 'color' },
+        hover: { $value: '{bgColor.neutral.light.3}', $type: 'color' },
+        active: { $value: '{bgColor.canvas.transparent}', $type: 'color' },
+      },
+    },
+    separator: {
+      fgColor: { $value: '{fgColor.neutral.muted}', $type: 'color' },
+    },
+    sizes: {
+      gap: { $value: '{size.2}', $type: 'dimension' },
+      itemPaddingInline: { $value: '{size.8}', $type: 'dimension' },
+      itemPaddingBlock: { $value: '{size.2}', $type: 'dimension' },
+      itemBorderRadius: { $value: '{size.8}', $type: 'dimension' },
+      separatorWidth: { $value: '{size.10}', $type: 'dimension' },
+    },
+  },
+}

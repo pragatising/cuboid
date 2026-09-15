@@ -1,0 +1,69 @@
+{
+  boxShadow: {
+    thin: {
+      $value: 'inset 0 0 0 {borderWidth.thin}',
+      $description: 'Thin shadow used instead of a border to prevent layout shift',
+      $type: 'custom-string',
+    },
+    thick: {
+      $value: 'inset 0 0 0 {borderWidth.thick}',
+      $description: 'Thick shadow (2px) used instead of a border for emphasis without layout shift',
+      $type: 'custom-string',
+    },
+    thicker: {
+      $value: 'inset 0 0 0 {borderWidth.thicker}',
+      $description: 'Thickest shadow (3px) used for high emphasis borders without layout shift. Use sparingly for maximum visual impact',
+      $type: 'custom-string',
+    },
+  },
+  borderWidth: {
+    default: {
+      $value: '{borderWidth.thin}',
+      $description: 'Semantic token: preferred default border width for standard component borders. Use this in normal component code unless a specific scale value is required.',
+      $type: 'dimension',
+      $extensions: {
+        'org.cuboid.figma': {
+          collection: 'functional/size',
+          scopes: ['borderWidth', 'effectFloat'],
+        },
+      },
+    },
+    thin: {
+      $value: '{base.size.1}',
+      $description: 'Scale token: 1px border width. Use when selecting an explicit size from the border-width scale.',
+      $type: 'dimension',
+      $extensions: {
+        'org.cuboid.figma': {
+          collection: 'functional/size',
+          scopes: ['borderWidth', 'effectFloat'],
+        },
+      },
+    },
+    thick: {
+      $value: '{base.size.2}',
+      $description: 'Scale token: 2px border width for emphasis or focus states.',
+      $type: 'dimension',
+      $extensions: {
+        'org.cuboid.figma': {
+          collection: 'functional/size',
+          scopes: ['borderWidth', 'effectFloat'],
+        },
+        'org.cuboid.llm': {
+          usage: ['focus-indicator', 'selected-state', 'emphasis-border'],
+          rules: 'MUST use for focus rings on interactive elements. Do NOT use for subtle dividers.',
+        },
+      },
+    },
+    thicker: {
+      $value: '{base.size.3}',
+      $description: 'Scale token: 3px border width for strong emphasis.',
+      $type: 'dimension',
+      $extensions: {
+        'org.cuboid.figma': {
+          collection: 'functional/size',
+          scopes: ['borderWidth', 'effectFloat'],
+        },
+      },
+    },
+  },
+}

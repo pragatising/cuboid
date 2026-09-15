@@ -1,0 +1,41 @@
+{
+  container: {
+    maxWidth: {
+      page: {
+        $value: '{layout.pageMaxWidth}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'container' } },
+      },
+      content: {
+        $value: '{layout.contentMaxWidth}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'container' } },
+      },
+      full: {
+        $value: '100%',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'container' } },
+      },
+    },
+    paddingInline: {
+      $value: '{space.xl}',
+      $type: 'dimension',
+      $description: 'Default when width="page" and no explicit paddingInline is passed. Was layout.pagePaddingInline (20px, itself just an alias to size.20) — switched to the real space scale (space.xl = 24px) since component padding belongs in space.json5, not a layout.* passthrough.',
+      $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'container' } },
+    },
+    paddingBlock: {
+      $value: '{size.0}',
+      $type: 'dimension',
+      $description: 'Defaults to none — real usage (portfolio MainColumn, PageEditor) is width="content" as an inner column inside a larger layout, not a full page shell, and neither adds vertical padding today. Callers that want it pass paddingBlock explicitly, same override pattern as paddingInline. Component-side gap tracked in packages/react/docs/component-audit.md: Container.tsx has no paddingBlock prop yet.',
+      $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'container' } },
+    },
+    minHeight: {
+      screen: {
+        $value: '100svh',
+        $type: 'dimension',
+        $description: 'GAP: currently a raw literal in Container.tsx, not backed by any functional token — viewport-relative units have no home in the size scale yet.',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'container' } },
+      },
+    },
+  },
+}

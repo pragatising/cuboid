@@ -1,0 +1,11 @@
+{
+  "pill": {
+    "sizes": {
+      "paddingInline": { "value": "{displaySizes.6}" },
+      "paddingBlock": { "value": "{displaySizes.3}" },
+      "borderRadius": { "value": "{displaySizes.4}" },
+      "gap": { "value": "{displaySizes.4}" },
+      "height": { "value": "{displaySizes.20}" }
+    }
+  }
+}

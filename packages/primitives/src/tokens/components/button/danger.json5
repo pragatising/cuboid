@@ -1,0 +1,32 @@
+{
+  button: {
+    danger: {
+      bgColor: {
+        rest: { $value: '{bgColor.danger.strong}', $type: 'color' },
+        hover: {
+          $value: '{bgColor.danger.strong}',
+          $type: 'color',
+          $description: 'GAP: original used a darker red step (red.10) than danger.strong (red.9) for hover/pressed emphasis. No functional token exists at that depth — falls back to the same strong step until one is added.',
+        },
+        pressed: { $value: '{bgColor.danger.strong}', $type: 'color' },
+        disabled: { $value: '{bgColor.neutral.light.4}', $type: 'color' },
+      },
+      borderColor: {
+        rest: { $value: '{borderColor.danger}', $type: 'color' },
+        hover: { $value: '{borderColor.danger}', $type: 'color' },
+        pressed: { $value: '{borderColor.danger}', $type: 'color' },
+        disabled: {
+          $value: '{borderColor.subtle}',
+          $type: 'color',
+          $description: 'GAP: original used color.border.gray.1, lighter than gray.3 (borderColor.subtle, the lightest named functional step). Falls back to subtle.',
+        },
+      },
+      fgColor: {
+        rest: { $value: '{fgColor.neutral.inverted}', $type: 'color' },
+        hover: { $value: '{fgColor.neutral.inverted}', $type: 'color' },
+        pressed: { $value: '{fgColor.neutral.inverted}', $type: 'color' },
+        disabled: { $value: '{fgColor.neutral.disabled}', $type: 'color' },
+      },
+    },
+  },
+}

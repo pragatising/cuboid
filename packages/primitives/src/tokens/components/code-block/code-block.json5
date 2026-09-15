@@ -1,0 +1,66 @@
+{
+  codeBlock: {
+    $description: 'Inspector/data-table chrome for the code block component — row states, carriage-return and invalid-character markers, bracket-matching highlights. Not code-grammar colors; see syntax.* for those.',
+    rowHoverBg: {
+      $value: '{bgColor.neutral.light.2}',
+      $type: 'color',
+      $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'code-block' } },
+    },
+    collapsedRowBg: {
+      $value: '{bgColor.neutral.light.1}',
+      $type: 'color',
+      $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'code-block' } },
+    },
+    watchMark: {
+      $value: '{display.blue.scale.7}',
+      $type: 'color',
+      $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'code-block' } },
+    },
+    watchMarkHover: {
+      $value: '{display.blue.scale.7}',
+      $type: 'color',
+      $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'code-block' } },
+    },
+    watchRowBg: {
+      $value: '{display.blue.scale.0}',
+      $type: 'color',
+      $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'code-block' } },
+    },
+    carriageReturn: {
+      bg: {
+        $value: '{display.red.scale.5}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'code-block' } },
+      },
+      text: {
+        $value: '{bgColor.neutral.light.1}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'code-block' } },
+      },
+    },
+    invalidIllegal: {
+      bg: {
+        $value: '{display.red.scale.7}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'code-block' } },
+      },
+      text: {
+        $value: '{bgColor.neutral.light.1}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'code-block' } },
+      },
+    },
+    bracketHighlighter: {
+      angle: {
+        $value: '{fgColor.neutral.subtle}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'code-block' } },
+      },
+      unmatched: {
+        $value: '{display.red.scale.7}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'code-block' } },
+      },
+    },
+  },
+}

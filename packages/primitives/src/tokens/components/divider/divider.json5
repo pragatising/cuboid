@@ -1,0 +1,21 @@
+{
+  divider: {
+    color: {
+      default: {
+        $value: '{borderColor.subtle}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'divider' } },
+      },
+      muted: {
+        $value: '{borderColor.translucent.3}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'divider' } },
+      },
+    },
+    thickness: {
+      $value: '{borderWidth.thin}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'divider' } },
+    },
+  },
+}

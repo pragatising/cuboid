@@ -1,0 +1,91 @@
+{
+  shadow: {
+    floating: {
+      small: {
+        $value: [
+          {
+            color: '{base.color.shadowAlpha.neutral44.0.08}',
+            offsetX: '{base.size.0}',
+            offsetY: '{base.size.1}',
+            blur: '{base.size.2}',
+            spread: '{base.size.0}',
+          },
+        ],
+        $type: 'shadow',
+        $description: 'Smallest floating shadow for subtle low-elevation surfaces',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'mode',
+            group: 'shadow',
+          },
+        },
+      },
+      medium: {
+        $value: [
+          {
+            color: '{base.color.shadowAlpha.black.0.05}',
+            offsetX: '{base.size.0}',
+            offsetY: '{base.size.0}',
+            blur: '{base.size.0}',
+            spread: '{base.size.1}',
+          },
+          {
+            color: '{base.color.shadowAlpha.neutral33.0.04}',
+            offsetX: '{base.size.0}',
+            offsetY: '{base.size.9}',
+            blur: '{base.size.12}',
+            spread: '{base.size.0}',
+          },
+          {
+            color: '{base.color.shadowAlpha.neutral33.0.07}',
+            offsetX: '{base.size.0}',
+            offsetY: '{base.size.1}',
+            blur: '{base.size.4}',
+            spread: '{base.size.0}',
+          },
+        ],
+        $type: 'shadow',
+        $description: 'Small floating shadow for dropdowns, tooltips, and small overlays',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'mode',
+            group: 'shadow',
+          },
+        },
+      },
+      large: {
+        $value: [
+          {
+            color: '{base.color.shadowAlpha.warmBlack.0.07}',
+            offsetX: '{base.size.0}',
+            offsetY: '{base.size.0}',
+            blur: '{base.size.0}',
+            spread: '{base.size.1}',
+          },
+          {
+            color: '{base.color.shadowAlpha.neutral25.0.05}',
+            offsetX: '{base.size.0}',
+            offsetY: '{base.size.20}',
+            blur: '{base.size.24}',
+            spread: '{base.size.0}',
+          },
+          {
+            color: '{base.color.shadowAlpha.neutral25.0.03}',
+            offsetX: '{base.size.0}',
+            offsetY: '{base.size.5}',
+            blur: '{base.size.8}',
+            spread: '{base.size.0}',
+          },
+        ],
+        $type: 'shadow',
+        $description: 'Medium floating shadow for popovers and action menus',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'mode',
+            group: 'shadow',
+          },
+        },
+      },
+    },
+  },
+}

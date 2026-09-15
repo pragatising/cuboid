@@ -1,0 +1,180 @@
+{
+    control: {
+      extraSmall: {
+        size: {
+          $value: '{size.24}',
+          $type: 'dimension',
+          $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size'] } },
+        },
+        borderRadius: {
+          $value: '{borderRadius.small}',
+          $type: 'dimension',
+          $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['borderRadius'] } },
+        },
+        gap: {
+          $value: '{space.xs}',
+          $type: 'dimension',
+          $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
+        },
+        icon: {
+          $value: '{size.16}',
+          $type: 'dimension',
+          $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size'] } },
+        },
+        paddingInline: {
+          condensed: {
+            $value: '{space.xs}',
+            $type: 'dimension',
+            $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
+          },
+          normal: {
+            $value: '{space.md}',
+            $type: 'dimension',
+            $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
+          },
+          spacious: {
+            $value: '{space.xl}',
+            $type: 'dimension',
+            $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
+          },
+        },
+        paddingBlock: {
+          $value: '{space.xxs}',
+          $type: 'dimension',
+          $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
+        },
+      },
+      small: {
+        size: {
+          $value: '{size.28}',
+          $type: 'dimension',
+          $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size'] } },
+        },
+        borderRadius: {
+          $value: '{borderRadius.small}',
+          $type: 'dimension',
+          $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['borderRadius'] } },
+        },
+        gap: {
+          $value: '{space.xs}',
+          $type: 'dimension',
+          $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
+        },
+        icon: {
+          $value: '{size.18}',
+          $type: 'dimension',
+          $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size'] } },
+        },
+        paddingInline: {
+          condensed: {
+            $value: '{space.xs}',
+            $type: 'dimension',
+            $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
+          },
+          normal: {
+            $value: '{space.md}',
+            $type: 'dimension',
+            $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
+          },
+          spacious: {
+            $value: '{space.xl}',
+            $type: 'dimension',
+            $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
+          },
+        },
+        paddingBlock: {
+          $value: '{space.xxs}',
+          $type: 'dimension',
+          $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
+        },
+      },
+      medium: {
+        size: {
+          $value: '{size.32}',
+          $type: 'dimension',
+          $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size'] } },
+        },
+        borderRadius: {
+          $value: '{borderRadius.medium}',
+          $type: 'dimension',
+          $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['borderRadius'] } },
+        },
+        gap: {
+          $value: '{space.md}',
+          $type: 'dimension',
+          $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
+        },
+        icon: {
+          $value: '{size.20}',
+          $type: 'dimension',
+          $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size'] } },
+        },
+        paddingInline: {
+          condensed: {
+            $value: '{space.md}',
+            $type: 'dimension',
+            $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
+          },
+          normal: {
+            $value: '{size.16}',
+            $type: 'dimension',
+            $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
+          },
+          spacious: {
+            $value: '{space.xl}',
+            $type: 'dimension',
+            $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
+          },
+        },
+        paddingBlock: {
+          $value: '{space.xs}',
+          $type: 'dimension',
+          $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
+        },
+      },
+      large: {
+        size: {
+          $value: '{size.40}',
+          $type: 'dimension',
+          $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size'] } },
+        },
+        borderRadius: {
+          $value: '{borderRadius.medium}',
+          $type: 'dimension',
+          $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['borderRadius'] } },
+        },
+        gap: {
+          $value: '{space.lg}',
+          $type: 'dimension',
+          $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
+        },
+        icon: {
+          $value: '{size.24}',
+          $type: 'dimension',
+          $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size'] } },
+        },
+        paddingInline: {
+          condensed: {
+            $value: '{space.lg}',
+            $type: 'dimension',
+            $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
+          },
+          normal: {
+            $value: '{size.20}',
+            $type: 'dimension',
+            $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
+          },
+          spacious: {
+            $value: '{space.xl}',
+            $type: 'dimension',
+            $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
+          },
+        },
+        paddingBlock: {
+          $value: '{space.md}',
+          $type: 'dimension',
+          $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
+        },
+      },
+    },
+}

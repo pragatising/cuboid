@@ -6,7 +6,5 @@ export type { GlobalColorPath as BoxForeground };
 
 export type BoxBorderRadius = keyof BorderRadiusTokens;
 
-export type BoxOverflow = "visible" | "hidden" | "auto" | "scroll";
-
-/** @deprecated Use `SpaceToken` — alias kept for Box margin props. */
-export type { SpaceToken as BoxMargin } from "../../../utils/spaceToken";
+/** Shared value set for `overflow` / `overflowX` / `overflowY`. */
+export type BoxOverflowAxis = "visible" | "hidden" | "auto" | "scroll";

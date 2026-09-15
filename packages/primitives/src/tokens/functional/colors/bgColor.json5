@@ -1,0 +1,290 @@
+{
+  bgColor: {
+    canvas: {
+      default: {
+        $value: '{base.color.gray.0}',
+        $type: 'color',
+        $description: 'Default background color for pages and main content areas',
+        $extensions: {
+          'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' },
+        },
+      },
+      inset: {
+        $value: '{base.color.gray.2}',
+        $type: 'color',
+        $description: 'Recessed background for inset panels and wells',
+        $extensions: {
+          'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' },
+        },
+      },
+      insetStrong: {
+        $value: '{base.color.gray.3}',
+        $type: 'color',
+        $description: 'Stronger recessed background for emphasized inset panels',
+        $extensions: {
+          'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' },
+        },
+      },
+      subtle: {
+        $value: '{base.color.gray.1}',
+        $type: 'color',
+        $description: 'Subtle background for secondary content areas and grouping',
+        $extensions: {
+          'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' },
+        },
+      },
+      transparent: {
+        $value: '{base.color.transparent}',
+        $type: 'color',
+        $description: 'Fully transparent background, for elements that should show what is behind them',
+        $extensions: {
+          'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' },
+        },
+      },
+      overlay: {
+        blanket: {
+          $value: '{base.color.grayAlpha.4}',
+          $type: 'color',
+          $description: 'Dimming overlay shown behind a modal dialog',
+          $extensions: {
+            'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' },
+          },
+        },
+        sheet: {
+          $value: '{base.color.gray.0}',
+          $type: 'color',
+          $description: 'Dimming overlay shown behind a sheet/drawer panel',
+          $extensions: {
+            'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' },
+          },
+        },
+      },
+    },
+    neutral: {
+        light: {
+          '1': {
+            $value: '{base.color.gray.0}',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'component' },
+            },
+          },
+          '2': {
+            $value: '{base.color.gray.1}',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'component' },
+            },
+          },
+          '3': {
+            $value: '{base.color.gray.2}',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'component' },
+            },
+          },
+          '4': {
+            $value: '{base.color.gray.3}',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'component' },
+            },
+          }
+
+        },
+        inverted: {
+          '1': {
+            $value: '{base.color.gray.13}',
+            $type: 'color',
+            $description: 'Darkest inverted surface step',
+            $extensions: {
+              'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'component' },
+            },
+          },
+          '2': {
+            $value: '{base.color.gray.12}',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'component' },
+            },
+          },
+          '3': {
+            $value: '{base.color.gray.11}',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'component' },
+            },
+          },
+          '4': {
+            $value: '{base.color.gray.10}',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'component' },
+            },
+          },
+        }
+    },
+    informational: {
+      $description: 'Informational messages',
+      subtle: {
+        $value: '{base.color.blue.0}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+      },
+      muted: {
+        $value: '{base.color.blue.3}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+      },
+      strong: {
+        $value: '{base.color.blue.9}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+      },
+    },
+    debug: {
+      $description: 'Debug-level messages',
+      subtle: {
+        $value: '{base.color.gray.0}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+      },
+      muted: {
+        $value: '{base.color.gray.3}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+      },
+      strong: {
+        $value: '{base.color.gray.9}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+      },
+    },
+    notice: {
+      $description: 'Normal but significant condition',
+      subtle: {
+        $value: '{base.color.blue.0}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+      },
+      muted: {
+        $value: '{base.color.blue.3}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+      },
+      strong: {
+        $value: '{base.color.blue.9}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+      },
+    },
+    success: {
+      $description: 'Positive outcome or completed action',
+      subtle: {
+        $value: '{base.color.green.0}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+      },
+      muted: {
+        $value: '{base.color.green.3}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+      },
+      strong: {
+        $value: '{base.color.green.9}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+      },
+    },
+    danger: {
+      $description: 'System is unusable',
+      subtle: {
+        $value: '{base.color.red.0}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+      },
+      muted: {
+        $value: '{base.color.red.3}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+      },
+      strong: {
+        $value: '{base.color.red.9}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+      },
+    },
+    critical: {
+      $description: 'Critical conditions',
+      subtle: {
+        $value: '{base.color.red.0}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+      },
+      muted: {
+        $value: '{base.color.red.3}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+      },
+      strong: {
+        $value: '{base.color.red.9}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+      },
+    },
+    alert: {
+      $description: 'Action must be taken immediately',
+      subtle: {
+        $value: '{base.color.orange.0}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+      },
+      muted: {
+        $value: '{base.color.orange.3}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+      },
+      strong: {
+        $value: '{base.color.orange.9}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+      },
+    },
+    error: {
+      $description: 'Error conditions',
+      subtle: {
+        $value: '{base.color.red.0}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+      },
+      muted: {
+        $value: '{base.color.red.3}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+      },
+      strong: {
+        $value: '{base.color.red.9}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+      },
+    },
+    warning: {
+      $description: 'Warning conditions',
+      subtle: {
+        $value: '{base.color.yellow.0}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+      },
+      muted: {
+        $value: '{base.color.yellow.3}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+      },
+      strong: {
+        $value: '{base.color.yellow.9}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+      },
+    },
+  },
+}

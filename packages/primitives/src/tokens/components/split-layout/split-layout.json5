@@ -1,0 +1,5 @@
+{
+  splitLayout: {
+    $description: 'SplitLayout is purely structural flex mechanics (display, align-items, flex, min-width/height) — no color, spacing, or radius values exist in the component today. No tokens needed unless a themeable gap or sidebar width is added later.',
+  },
+}

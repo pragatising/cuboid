@@ -1,0 +1,7 @@
+{
+  highlight: {
+    paddingInline: { $value: '{size.2}', $type: 'dimension' },
+    paddingBlock: { $value: '{size.0}', $type: 'dimension' },
+    borderRadius: { $value: '{size.2}', $type: 'dimension' },
+  },
+}

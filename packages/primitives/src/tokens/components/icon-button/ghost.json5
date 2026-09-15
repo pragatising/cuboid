@@ -1,0 +1,46 @@
+{
+  iconButton: {
+    ghost: {
+      default: {
+        bgColor: {
+          rest: { $value: '{bgColor.canvas.transparent}', $type: 'color' },
+          hover: { $value: '{bgColor.neutral.light.4}', $type: 'color' },
+          pressed: { $value: '{bgColor.neutral.light.4}', $type: 'color' },
+          disabled: { $value: '{bgColor.canvas.transparent}', $type: 'color' },
+        },
+        borderColor: {
+          rest: { $value: '{borderColor.transparent}', $type: 'color' },
+          hover: { $value: '{borderColor.transparent}', $type: 'color' },
+          pressed: { $value: '{borderColor.transparent}', $type: 'color' },
+          disabled: { $value: '{borderColor.transparent}', $type: 'color' },
+        },
+        fgColor: {
+          rest: { $value: '{fgColor.neutral.default}', $type: 'color' },
+          hover: { $value: '{fgColor.neutral.default}', $type: 'color' },
+          pressed: { $value: '{fgColor.neutral.default}', $type: 'color' },
+          disabled: { $value: '{fgColor.neutral.disabled}', $type: 'color' },
+        },
+      },
+      selected: {
+        bgColor: {
+          rest: { $value: '{bgColor.informational.subtle}', $type: 'color' },
+          hover: { $value: '{bgColor.informational.muted}', $type: 'color' },
+          pressed: { $value: '{bgColor.informational.muted}', $type: 'color' },
+          disabled: { $value: '{bgColor.neutral.light.3}', $type: 'color' },
+        },
+        borderColor: {
+          rest: { $value: '{borderColor.transparent}', $type: 'color' },
+          hover: { $value: '{borderColor.transparent}', $type: 'color' },
+          pressed: { $value: '{borderColor.transparent}', $type: 'color' },
+          disabled: { $value: '{borderColor.transparent}', $type: 'color' },
+        },
+        fgColor: {
+          rest: { $value: '{fgColor.informational.strong}', $type: 'color' },
+          hover: { $value: '{fgColor.informational.strong}', $type: 'color' },
+          pressed: { $value: '{fgColor.informational.strong}', $type: 'color' },
+          disabled: { $value: '{fgColor.neutral.disabled}', $type: 'color' },
+        },
+      },
+    },
+  },
+}

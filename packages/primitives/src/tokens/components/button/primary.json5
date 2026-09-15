@@ -1,0 +1,28 @@
+{
+  button: {
+    primary: {
+      bgColor: {
+        rest: { $value: '{bgColor.neutral.inverted.3}', $type: 'color' },
+        hover: { $value: '{bgColor.neutral.inverted.2}', $type: 'color' },
+        pressed: { $value: '{bgColor.neutral.inverted.1}', $type: 'color' },
+        disabled: { $value: '{bgColor.neutral.light.4}', $type: 'color' },
+      },
+      borderColor: {
+        rest: { $value: '{borderColor.strong}', $type: 'color' },
+        hover: { $value: '{borderColor.strong}', $type: 'color' },
+        pressed: { $value: '{borderColor.strong}', $type: 'color' },
+        disabled: {
+          $value: '{borderColor.subtle}',
+          $type: 'color',
+          $description: 'GAP: original used color.border.gray.1, lighter than gray.3 (borderColor.subtle, the lightest named functional step). Falls back to subtle.',
+        },
+      },
+      fgColor: {
+        rest: { $value: '{fgColor.neutral.inverted}', $type: 'color' },
+        hover: { $value: '{fgColor.neutral.inverted}', $type: 'color' },
+        pressed: { $value: '{fgColor.neutral.inverted}', $type: 'color' },
+        disabled: { $value: '{fgColor.neutral.disabled}', $type: 'color' },
+      },
+    },
+  },
+}

@@ -1,0 +1,24 @@
+{
+  breakpoint: {
+    md: {
+      $value: { value: 768, unit: 'px' },
+      $type: 'dimension',
+      $extensions: {
+        'org.cuboid.figma': {
+          collection: 'functional/size',
+          scopes: ['breakpoint'],
+        },
+      },
+    },
+    lg: {
+      $value: { value: 1012, unit: 'px' },
+      $type: 'dimension',
+      $extensions: {
+        'org.cuboid.figma': {
+          collection: 'functional/size',
+          scopes: ['breakpoint'],
+        },
+      },
+    },
+  },
+}

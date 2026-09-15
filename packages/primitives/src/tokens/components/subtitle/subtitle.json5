@@ -1,0 +1,13 @@
+{
+  subtitle: {
+    $description: 'Subtitle component — single-size supporting text below a Heading (page description, secondary heading, lead text). Backed by text.subtitle.*, which has no size variants.',
+    $value: '{text.subtitle.shorthand}',
+    $type: 'typography',
+    $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'subtitle' } },
+    fgColor: {
+      $value: '{fgColor.neutral.muted}',
+      $type: 'color',
+      $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'subtitle' } },
+    },
+  },
+}
