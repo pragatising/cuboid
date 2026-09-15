@@ -1,0 +1,88 @@
+{
+  stack: {
+    gap: {
+      none: {
+        $value: '{size.0}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'stack' } },
+      },
+      xxs: {
+        $value: '{size.4}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'stack' } },
+      },
+      xs: {
+        $value: '{size.8}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'stack' } },
+      },
+      sm: {
+        $value: '{size.12}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'stack' } },
+      },
+      md: {
+        $value: '{size.16}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'stack' } },
+      },
+      lg: {
+        $value: '{size.24}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'stack' } },
+      },
+      xl: {
+        $value: '{size.32}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'stack' } },
+      },
+      xxl: {
+        $value: '{size.48}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'stack' } },
+      },
+    },
+    padding: {
+      none: {
+        $value: '{size.0}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'stack' } },
+      },
+      xxs: {
+        $value: '{size.4}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'stack' } },
+      },
+      xs: {
+        $value: '{size.8}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'stack' } },
+      },
+      sm: {
+        $value: '{size.12}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'stack' } },
+      },
+      md: {
+        $value: '{size.16}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'stack' } },
+      },
+      lg: {
+        $value: '{size.24}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'stack' } },
+      },
+      xl: {
+        $value: '{size.32}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'stack' } },
+      },
+      xxl: {
+        $value: '{size.48}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'stack' } },
+      },
+    },
+  },
+}

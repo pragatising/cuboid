@@ -1,0 +1,67 @@
+{
+  actionMenu: {
+    item: {
+      bgColor: {
+        rest: { $value: '{bgColor.canvas.default}', $type: 'color' },
+        hover: { $value: '{bgColor.neutral.light.2}', $type: 'color' },
+        pressed: { $value: '{bgColor.neutral.light.3}', $type: 'color' },
+        disabled: { $value: '{bgColor.neutral.light.3}', $type: 'color' },
+        selected: {
+          rest: { $value: '{bgColor.neutral.light.3}', $type: 'color' },
+          pressed: { $value: '{bgColor.neutral.light.4}', $type: 'color' },
+        },
+      },
+      fgColor: {
+        rest: { $value: '{fgColor.neutral.muted}', $type: 'color' },
+        pressed: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
+        disabled: { $value: '{fgColor.neutral.subtle}', $type: 'color' },
+        selected: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
+        subtext: { $value: '{fgColor.neutral.muted}', $type: 'color' },
+      },
+    },
+    section: {
+      fgColor: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
+    },
+    divider: {
+      fgColor: {
+        $value: '{bgColor.neutral.light.4}',
+        $type: 'color',
+        $description: 'Named fgColor to match the existing --cube-actionMenu-divider-fg CSS var contract, though a divider line is conceptually a border color, not a foreground text color.',
+      },
+    },
+    sizes: {
+      item: {
+        minHeight: {
+          $value: { value: 30, unit: 'px' },
+          $type: 'dimension',
+          $description: 'Derived, not an independent design value: paddingBlock (5) × 2 + iconSize (20) = 30. Not a scale-step gap — DTCG cannot express cross-token arithmetic, so this is a literal that must be kept in sync if paddingBlock or iconSize below change.',
+        },
+        paddingInline: { $value: '{size.12}', $type: 'dimension' },
+        paddingBlock: { $value: '{size.5}', $type: 'dimension' },
+        borderRadius: { $value: '{size.6}', $type: 'dimension' },
+        slotGap: { $value: '{size.16}', $type: 'dimension' },
+        subtextGap: { $value: '{size.4}', $type: 'dimension' },
+        iconSize: { $value: '{size.20}', $type: 'dimension' },
+        subtextIconSize: { $value: '{size.16}', $type: 'dimension' },
+      },
+      list: {
+        paddingInline: { $value: '{size.4}', $type: 'dimension' },
+        paddingBlock: { $value: '{size.8}', $type: 'dimension' },
+        itemGap: { $value: '{size.4}', $type: 'dimension' },
+        sectionGap: { $value: '{size.8}', $type: 'dimension' },
+      },
+      section: {
+        paddingInline: { $value: '{size.12}', $type: 'dimension' },
+        paddingBlock: { $value: '{size.2}', $type: 'dimension' },
+      },
+      header: {
+        paddingInline: { $value: '{size.16}', $type: 'dimension' },
+        paddingBlockStart: { $value: '{size.12}', $type: 'dimension' },
+        paddingBlockEnd: { $value: '{size.12}', $type: 'dimension' },
+      },
+      footer: {
+        padding: { $value: '{size.16}', $type: 'dimension' },
+      },
+    },
+  },
+}

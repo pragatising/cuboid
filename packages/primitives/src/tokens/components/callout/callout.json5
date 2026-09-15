@@ -1,0 +1,31 @@
+{
+  callout: {
+    bgColor: {
+      $value: '{bgColor.canvas.inset}',
+      $type: 'color',
+      $description: 'Default background for Callout when no background prop is passed. Any GlobalColorPath can override it at the component level — this is not an enum of variants.',
+      $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'callout' } },
+    },
+    fgColor: {
+      $value: '{fgColor.neutral.default}',
+      $type: 'color',
+      $description: 'Default foreground for Callout when no foreground prop is passed. Any GlobalColorPath can override it at the component level — this is not an enum of variants.',
+      $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'callout' } },
+    },
+    paddingInline: {
+      $value: '{space.sm}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'callout' } },
+    },
+    paddingBlock: {
+      $value: '{space.sm}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'callout' } },
+    },
+    borderRadius: {
+      $value: '{borderRadius.medium}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'callout' } },
+    },
+  },
+}

@@ -1,0 +1,23 @@
+{
+  selection: {
+    bgColor: {
+      $value: '{bgColor.informational.muted}',
+      $type: 'color',
+      $description: 'Background color for text selection highlights',
+      $extensions: {
+        'org.cuboid.figma': {
+          collection: 'mode',
+          group: 'component',
+          scopes: ['bgColor'],
+        },
+        'org.cuboid.overrides': {
+          dark: {
+            $value: '{bgColor.informational.subtle}',
+            alpha: 0.7,
+          },
+        }
+      },
+      alpha: 0.2,
+    },
+  },
+}

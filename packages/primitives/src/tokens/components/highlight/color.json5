@@ -1,0 +1,60 @@
+{
+  highlight: {
+    none: {
+      bgColor: { $value: '{bgColor.canvas.transparent}', $type: 'color' },
+      fgColor: { $value: '{fgColor.neutral.subtle}', $type: 'color' },
+    },
+    neutral: {
+      bgColor: { $value: '{bgColor.neutral.light.3}', $type: 'color' },
+      fgColor: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
+    },
+    green: {
+      bgColor: {
+        $value: '#dbf8d8',
+        $type: 'color',
+        $description: 'GAP: no base.color.green step is a close match (lightest is #e6f4e4) — this highlight color is deliberately more saturated than the muted UI palette.',
+      },
+      fgColor: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
+    },
+    blue: {
+      bgColor: {
+        $value: '#e1eafb',
+        $type: 'color',
+        $description: 'GAP: no matching base.color.blue step — kept as a literal.',
+      },
+      fgColor: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
+    },
+    yellow: {
+      bgColor: {
+        $value: '#ffe100',
+        $type: 'color',
+        $description: 'GAP: a fully saturated yellow, nothing like base.color.yellow\'s pastel scale — deliberately vivid for a highlight marker.',
+      },
+      fgColor: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
+    },
+    orange: {
+      bgColor: { $value: '{base.color.orange.1}', $type: 'color' },
+      fgColor: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
+    },
+    red: {
+      bgColor: { $value: '{base.color.red.3}', $type: 'color' },
+      fgColor: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
+    },
+    lime: {
+      bgColor: {
+        $value: '#cbff00',
+        $type: 'color',
+        $description: 'GAP: a fully saturated lime, nothing like base.color.lime\'s pastel scale — deliberately vivid for a highlight marker.',
+      },
+      fgColor: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
+    },
+    purple: {
+      bgColor: {
+        $value: '#eeddff',
+        $type: 'color',
+        $description: 'GAP: no matching base.color.purple step — kept as a literal.',
+      },
+      fgColor: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
+    },
+  },
+}

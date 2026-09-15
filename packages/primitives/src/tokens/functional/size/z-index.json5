@@ -1,0 +1,63 @@
+{
+  zIndex: {
+    base: {
+      $value: '{base.zIndex.0}',
+      $type: 'number',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['zIndex'] } },
+    },
+    raised: {
+      $value: '{base.zIndex.100}',
+      $type: 'number',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['zIndex'] } },
+    },
+    sticky: {
+      $value: '{base.zIndex.200}',
+      $type: 'number',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['zIndex'] } },
+    },
+    dropdown: {
+      $value: '{base.zIndex.300}',
+      $type: 'number',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['zIndex'] } },
+    },
+    overlay: {
+      $value: '{base.zIndex.400}',
+      $type: 'number',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['zIndex'] } },
+    },
+    sheet: {
+      $value: '{base.zIndex.500}',
+      $type: 'number',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['zIndex'] } },
+    },
+    dialog: {
+      $value: '{base.zIndex.600}',
+      $type: 'number',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['zIndex'] } },
+    },
+    popover: {
+      $value: 700,
+      $type: 'number',
+      $description: 'GAP: no base.zIndex step exists above 600. Add base.zIndex.700 and alias this once added.',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['zIndex'] } },
+    },
+    tooltip: {
+      $value: 800,
+      $type: 'number',
+      $description: 'GAP: no base.zIndex step exists above 600. Add base.zIndex.800 and alias this once added.',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['zIndex'] } },
+    },
+    toast: {
+      $value: 900,
+      $type: 'number',
+      $description: 'GAP: no base.zIndex step exists above 600. Add base.zIndex.900 and alias this once added.',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['zIndex'] } },
+    },
+    max: {
+      $value: 9999,
+      $type: 'number',
+      $description: 'Ceiling value for elements that must always render above everything else. Intentionally outside the step scale.',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['zIndex'] } },
+    },
+  },
+}

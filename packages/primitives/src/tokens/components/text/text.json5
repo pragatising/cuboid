@@ -1,0 +1,27 @@
+{
+  text: {
+    $description: 'Text component typography — body text only (see heading.json5 for Heading). size prop matches Primer: large|medium|small, no role prop.',
+    size: {
+      large: {
+        $value: '{text.body.shorthand.large}',
+        $type: 'typography',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'text' } },
+      },
+      medium: {
+        $value: '{text.body.shorthand.medium}',
+        $type: 'typography',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'text' } },
+      },
+      small: {
+        $value: '{text.body.shorthand.small}',
+        $type: 'typography',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'text' } },
+      },
+    },
+    fgColor: {
+      $value: '{fgColor.neutral.muted}',
+      $type: 'color',
+      $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'text' } },
+    },
+  },
+}

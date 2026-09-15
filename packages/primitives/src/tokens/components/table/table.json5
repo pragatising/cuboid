@@ -1,0 +1,34 @@
+{
+  "table": {
+    "color": {
+      "header": {
+        "bgColor": { "value": "{color.bg.gray.light.1}" },
+        "fgColor": { "value": "{color.text.contrast}" },
+        "borderColor": { "value": "{color.border.gray.2}" }
+      },
+      "body": {
+        "bgColor": { "value": "{color.bg.gray.light.1}" },
+        "fgColor": { "value": "{color.text.default}" },
+        "borderColor": { "value": "{color.border.gray.2}" }
+      },
+      "container": {
+        "borderColor": { "value": "{color.border.gray.2}" }
+      }
+    },
+    "sizes": {
+      "borderRadius": { "value": "{displaySizes.8}" },
+      "density": {
+        "dense": {
+          "cellPaddingInline": { "value": "{displaySizes.12}" },
+          "cellPaddingBlock": { "value": "{displaySizes.6}" },
+          "rowHeight": { "value": "{displaySizes.32}" }
+        },
+        "spacious": {
+          "cellPaddingInline": { "value": "{displaySizes.16}" },
+          "cellPaddingBlock": { "value": "{displaySizes.10}" },
+          "rowHeight": { "value": "{displaySizes.40}" }
+        }
+      }
+    }
+  }
+}

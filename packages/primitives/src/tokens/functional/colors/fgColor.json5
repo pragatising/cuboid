@@ -1,0 +1,218 @@
+{
+  fgColor: {
+    neutral: {
+      inverted: {
+        $value: '{base.color.gray.0}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+      disabled: {
+        $value: '{base.color.gray.5}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+      subtle: {
+        $value: '{base.color.gray.6}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+      muted: {
+        $value: '{base.color.gray.7}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+      default: {
+        $value: '{base.color.gray.8}',
+        $type: 'color',
+        $description: 'Default text/icon color for most content',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+      contrast: {
+        $value: '{base.color.gray.10}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+    },
+    link: {
+      extraDark: {
+        $value: '{base.color.gray.10}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+      default: {
+        $value: '{base.color.gray.9}',
+        $type: 'color',
+        $description: 'Default link color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+      hover: {
+        $value: '{base.color.gray.6}',
+        $type: 'color',
+        $description: 'Link color on hover',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+    },
+    informational: {
+      $description: 'Informational messages',
+      subtle: {
+        $value: '{base.color.blue.4}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+      muted: {
+        $value: '{base.color.blue.6}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+      strong: {
+        $value: '{base.color.blue.9}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+    },
+    debug: {
+      $description: 'Debug-level messages',
+      subtle: {
+        $value: '{base.color.gray.4}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+      muted: {
+        $value: '{base.color.gray.6}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+      strong: {
+        $value: '{base.color.gray.9}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+    },
+    notice: {
+      $description: 'Normal but significant condition',
+      subtle: {
+        $value: '{base.color.blue.4}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+      muted: {
+        $value: '{base.color.blue.6}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+      strong: {
+        $value: '{base.color.blue.9}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+    },
+    success: {
+      $description: 'Positive outcome or completed action',
+      subtle: {
+        $value: '{base.color.green.4}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+      muted: {
+        $value: '{base.color.green.6}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+      strong: {
+        $value: '{base.color.green.9}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+    },
+    danger: {
+      $description: 'System is unusable',
+      subtle: {
+        $value: '{base.color.red.4}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+      muted: {
+        $value: '{base.color.red.6}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+      strong: {
+        $value: '{base.color.red.9}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+    },
+    critical: {
+      $description: 'Critical conditions',
+      subtle: {
+        $value: '{base.color.red.4}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+      muted: {
+        $value: '{base.color.red.6}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+      strong: {
+        $value: '{base.color.red.9}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+    },
+    alert: {
+      $description: 'Action must be taken immediately',
+      subtle: {
+        $value: '{base.color.orange.4}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+      muted: {
+        $value: '{base.color.orange.6}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+      strong: {
+        $value: '{base.color.orange.9}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+    },
+    error: {
+      $description: 'Error conditions',
+      subtle: {
+        $value: '{base.color.red.4}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+      muted: {
+        $value: '{base.color.red.6}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+      strong: {
+        $value: '{base.color.red.9}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+    },
+    warning: {
+      $description: 'Warning conditions',
+      subtle: {
+        $value: '{base.color.yellow.4}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+      muted: {
+        $value: '{base.color.yellow.6}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+      strong: {
+        $value: '{base.color.yellow.9}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+      },
+    },
+  },
+}

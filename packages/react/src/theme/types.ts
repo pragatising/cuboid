@@ -513,7 +513,11 @@ export interface BorderWidthTokens {
   thick: string;  // 2px
 }
 
-/** Named scale for Stack `gap`. */
+/**
+ * Named scale for the (deprecated, pending deletion) Stack component's
+ * `gap`. Kept only until every Stack consumer migrates to Box, which takes
+ * `space.*` / `SpaceToken` values directly rather than its own named scale.
+ */
 export interface StackGapTokens {
   none: string;
   xxs: string;
@@ -525,7 +529,7 @@ export interface StackGapTokens {
   xxl: string;
 }
 
-/** Named scale for Stack `padding` / `paddingBlock` / `paddingInline`. */
+/** Named scale for the (deprecated, pending deletion) Stack `padding` / `paddingBlock` / `paddingInline`. */
 export interface StackPaddingTokens {
   none: string;
   xxs: string;
@@ -539,11 +543,6 @@ export interface StackPaddingTokens {
 
 export type StackGap = keyof StackGapTokens;
 export type StackPadding = keyof StackPaddingTokens;
-
-/** @deprecated Use `StackGap` or `StackPadding` — gap and padding share the same stop names. */
-export type StackSpacing = StackGap;
-/** @deprecated Use `StackGapTokens` or `StackPaddingTokens`. */
-export type StackSpacingTokens = StackGapTokens;
 
 /** Min-width thresholds — `sm` is implicit (0); use in `@media (min-width: var(--cube-breakpoint-md))`. */
 export interface BreakpointTokens {

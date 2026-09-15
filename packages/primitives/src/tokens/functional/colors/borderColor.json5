@@ -1,0 +1,167 @@
+{
+  borderColor: {
+    $description: 'Border color tokens that resolve to a single color value (e.g. #cf222e). For composite border shorthand (color + style + width), use border.* tokens instead.',
+    default: {
+      $value: '{borderColor.muted}',
+      $type: 'color',
+      $description: 'Default border color for most UI elements',
+      $extensions: {
+        'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['borderColor', 'effectColor'] },
+      },
+    },
+    transparent: {
+      $value: '{base.color.transparent}',
+      $type: 'color',
+      $extensions: {
+        'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['borderColor', 'effectColor'] },
+      },
+    },
+    subtle: {
+      $value: '{base.color.gray.3}',
+      $type: 'color',
+      $extensions: {
+        'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['borderColor', 'effectColor'] },
+      },
+    },
+    muted: {
+      $value: '{base.color.gray.4}',
+      $type: 'color',
+      $description: 'Subtle border for secondary elements and light separators',
+      $extensions: {
+        'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['borderColor', 'effectColor'] },
+      },
+    },
+    strong: {
+      $value: '{base.color.gray.5}',
+      $type: 'color',
+      $description: 'Strong border for emphasis and visual weight',
+      $extensions: {
+        'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['borderColor', 'effectColor'] },
+      },
+    },
+    translucent: {
+      '1': {
+        $value: '{base.color.grayAlpha.0}',
+        $type: 'color',
+        $extensions: {
+          'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['borderColor', 'effectColor'] },
+        },
+      },
+      '2': {
+        $value: '{base.color.grayAlpha.1}',
+        $type: 'color',
+        $extensions: {
+          'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['borderColor', 'effectColor'] },
+        },
+      },
+      '3': {
+        $value: '{base.color.grayAlpha.2}',
+        $type: 'color',
+        $extensions: {
+          'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['borderColor', 'effectColor'] },
+        },
+      },
+      '4': {
+        $value: '{base.color.grayAlpha.3}',
+        $type: 'color',
+        $extensions: {
+          'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['borderColor', 'effectColor'] },
+        },
+      },
+      '5': {
+        $value: '{base.color.grayAlpha.4}',
+        $type: 'color',
+        $extensions: {
+          'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['borderColor', 'effectColor'] },
+        },
+      },
+    },
+      informational: {
+        $description: 'Informational messages',
+        subtle: {
+          $value: '{base.color.gray.4}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['borderColor', 'effectColor'] } },
+        },
+        strong: {
+          $value: '{base.color.blue.9}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['borderColor', 'effectColor'] } },
+        },
+      },
+      debug: {
+        $description: 'Debug-level messages',
+          $value: '{base.color.gray.4}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['borderColor', 'effectColor'] } }
+      },
+      notice: {
+        $description: 'Normal but significant condition',
+        subtle: {
+          $value: '{base.color.blue.4}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['borderColor', 'effectColor'] } },
+        },
+        strong: {
+          $value: '{base.color.blue.6}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['borderColor', 'effectColor'] } },
+        },
+      },
+      success: {
+        $description: 'Positive outcome or completed action',
+        subtle: {
+          $value: '{base.color.green.3}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['borderColor', 'effectColor'] } },
+        },
+        strong: {
+          $value: '{base.color.green.7}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['borderColor', 'effectColor'] } },
+        },
+      },
+      danger: {
+        $description: 'System is unusable',
+          $value: '{base.color.red.9}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['borderColor', 'effectColor'] } }
+      },
+      critical: {
+        $description: 'Critical conditions',
+          $value: '{base.color.red.9}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['borderColor', 'effectColor'] } }
+      },
+      alert: {
+        $description: 'Action must be taken immediately',
+          $value: '{base.color.orange.3}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['borderColor', 'effectColor'] } },
+      },
+      error: {
+        $description: 'Error conditions',
+          $value: '{base.color.red.3}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['borderColor', 'effectColor'] } }
+      },
+      warning: {
+        $description: 'Warning conditions',
+        subtle: {
+          $value: '{base.color.yellow.3}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['borderColor', 'effectColor'] } },
+        },
+        muted: {
+          $value: '{base.color.yellow.6}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['borderColor', 'effectColor'] } }
+        },
+        strong: {
+          $value: '{base.color.yellow.9}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['borderColor', 'effectColor'] } }
+        }
+      }
+  }
+}

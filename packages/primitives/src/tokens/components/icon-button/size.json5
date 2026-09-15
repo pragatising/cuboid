@@ -1,0 +1,72 @@
+{
+  iconButton: {
+    extraSmall: {
+      size: {
+        $value: '{size.control.extraSmall.size}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon-button' } },
+      },
+      borderRadius: {
+        $value: '{size.control.extraSmall.borderRadius}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon-button' } },
+      },
+      icon: {
+        $value: '{icon.xs}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon-button' } },
+      },
+    },
+    small: {
+      size: {
+        $value: '{size.control.small.size}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon-button' } },
+      },
+      borderRadius: {
+        $value: '{size.control.small.borderRadius}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon-button' } },
+      },
+      icon: {
+        $value: '{icon.md}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon-button' } },
+      },
+    },
+    medium: {
+      size: {
+        $value: '{size.control.medium.size}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon-button' } },
+      },
+      borderRadius: {
+        $value: '{size.control.medium.borderRadius}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon-button' } },
+      },
+      icon: {
+        $value: '{icon.md}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon-button' } },
+      },
+    },
+    large: {
+      size: {
+        $value: '{size.control.large.size}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon-button' } },
+      },
+      borderRadius: {
+        $value: '{size.control.large.borderRadius}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon-button' } },
+      },
+      icon: {
+        $value: '{icon.lg}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon-button' } },
+      },
+    },
+  },
+}

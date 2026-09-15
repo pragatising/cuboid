@@ -1,0 +1,1061 @@
+{
+  display: {
+    $description: 'Decorative colors for categorization and visual distinction without semantic meaning. Use for labels, tags, avatars, status indicators, and user-assigned colors. Do NOT use for success/error/warning states — use semantic colors (bgColor.status.*, borderColor.status.*) instead.',
+    gray: {
+      scale: {
+        '0': {
+          $value: '{base.color.gray.0}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '1': {
+          $value: '{base.color.gray.1}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '2': {
+          $value: '{base.color.gray.2}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '3': {
+          $value: '{base.color.gray.3}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '4': {
+          $value: '{base.color.gray.4}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '5': {
+          $value: '{base.color.gray.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '6': {
+          $value: '{base.color.gray.6}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '7': {
+          $value: '{base.color.gray.7}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '8': {
+          $value: '{base.color.gray.8}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '9': {
+          $value: '{base.color.gray.9}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '10': {
+          $value: '{base.color.gray.10}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+      },
+      bgColor: {
+        muted: {
+          $value: '{base.color.gray.0}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor'] } },
+        },
+        emphasis: {
+          $value: '{base.color.gray.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor'] } },
+        },
+      },
+      fgColor: {
+        $value: '{base.color.gray.6}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['fgColor'] } },
+      },
+      borderColor: {
+        muted: {
+          $value: '{base.color.gray.1}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['borderColor'] } },
+        },
+        emphasis: {
+          $value: '{base.color.gray.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['borderColor'] } },
+        },
+      },
+    },
+    green: {
+      scale: {
+        '0': {
+          $value: '{base.color.green.0}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '1': {
+          $value: '{base.color.green.1}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '2': {
+          $value: '{base.color.green.2}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '3': {
+          $value: '{base.color.green.3}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '4': {
+          $value: '{base.color.green.4}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '5': {
+          $value: '{base.color.green.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '6': {
+          $value: '{base.color.green.6}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '7': {
+          $value: '{base.color.green.7}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '8': {
+          $value: '{base.color.green.8}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '9': {
+          $value: '{base.color.green.9}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '10': {
+          $value: '{base.color.green.10}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+      },
+      bgColor: {
+        muted: {
+          $value: '{base.color.green.0}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor'] } },
+        },
+        emphasis: {
+          $value: '{base.color.green.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor'] } },
+        },
+      },
+      fgColor: {
+        $value: '{base.color.green.6}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['fgColor'] } },
+      },
+      borderColor: {
+        muted: {
+          $value: '{base.color.green.1}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['borderColor'] } },
+        },
+        emphasis: {
+          $value: '{base.color.green.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['borderColor'] } },
+        },
+      },
+    },
+    purple: {
+      scale: {
+        '0': {
+          $value: '{base.color.purple.0}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '1': {
+          $value: '{base.color.purple.1}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '2': {
+          $value: '{base.color.purple.2}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '3': {
+          $value: '{base.color.purple.3}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '4': {
+          $value: '{base.color.purple.4}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '5': {
+          $value: '{base.color.purple.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '6': {
+          $value: '{base.color.purple.6}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '7': {
+          $value: '{base.color.purple.7}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '8': {
+          $value: '{base.color.purple.8}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '9': {
+          $value: '{base.color.purple.9}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '10': {
+          $value: '{base.color.purple.10}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+      },
+      bgColor: {
+        muted: {
+          $value: '{base.color.purple.0}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor'] } },
+        },
+        emphasis: {
+          $value: '{base.color.purple.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor'] } },
+        },
+      },
+      fgColor: {
+        $value: '{base.color.purple.6}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['fgColor'] } },
+      },
+      borderColor: {
+        muted: {
+          $value: '{base.color.purple.1}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['borderColor'] } },
+        },
+        emphasis: {
+          $value: '{base.color.purple.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['borderColor'] } },
+        },
+      },
+    },
+    indigo: {
+      scale: {
+        '0': {
+          $value: '{base.color.indigo.0}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '1': {
+          $value: '{base.color.indigo.1}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '2': {
+          $value: '{base.color.indigo.2}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '3': {
+          $value: '{base.color.indigo.3}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '4': {
+          $value: '{base.color.indigo.4}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '5': {
+          $value: '{base.color.indigo.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '6': {
+          $value: '{base.color.indigo.6}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '7': {
+          $value: '{base.color.indigo.7}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '8': {
+          $value: '{base.color.indigo.8}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '9': {
+          $value: '{base.color.indigo.9}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '10': {
+          $value: '{base.color.indigo.10}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+      },
+      bgColor: {
+        muted: {
+          $value: '{base.color.indigo.0}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor'] } },
+        },
+        emphasis: {
+          $value: '{base.color.indigo.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor'] } },
+        },
+      },
+      fgColor: {
+        $value: '{base.color.indigo.6}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['fgColor'] } },
+      },
+      borderColor: {
+        muted: {
+          $value: '{base.color.indigo.1}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['borderColor'] } },
+        },
+        emphasis: {
+          $value: '{base.color.indigo.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['borderColor'] } },
+        },
+      },
+    },
+    blue: {
+      scale: {
+        '0': {
+          $value: '{base.color.blue.0}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '1': {
+          $value: '{base.color.blue.1}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '2': {
+          $value: '{base.color.blue.2}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '3': {
+          $value: '{base.color.blue.3}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '4': {
+          $value: '{base.color.blue.4}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '5': {
+          $value: '{base.color.blue.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '6': {
+          $value: '{base.color.blue.6}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '7': {
+          $value: '{base.color.blue.7}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '8': {
+          $value: '{base.color.blue.8}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '9': {
+          $value: '{base.color.blue.9}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '10': {
+          $value: '{base.color.blue.10}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+      },
+      bgColor: {
+        muted: {
+          $value: '{base.color.blue.0}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor'] } },
+        },
+        emphasis: {
+          $value: '{base.color.blue.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor'] } },
+        },
+      },
+      fgColor: {
+        $value: '{base.color.blue.6}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['fgColor'] } },
+      },
+      borderColor: {
+        muted: {
+          $value: '{base.color.blue.1}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['borderColor'] } },
+        },
+        emphasis: {
+          $value: '{base.color.blue.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['borderColor'] } },
+        },
+      },
+    },
+    mag: {
+      scale: {
+        '0': {
+          $value: '{base.color.mag.0}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '1': {
+          $value: '{base.color.mag.1}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '2': {
+          $value: '{base.color.mag.2}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '3': {
+          $value: '{base.color.mag.3}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '4': {
+          $value: '{base.color.mag.4}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '5': {
+          $value: '{base.color.mag.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '6': {
+          $value: '{base.color.mag.6}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '7': {
+          $value: '{base.color.mag.7}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '8': {
+          $value: '{base.color.mag.8}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '9': {
+          $value: '{base.color.mag.9}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '10': {
+          $value: '{base.color.mag.10}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+      },
+      bgColor: {
+        muted: {
+          $value: '{base.color.mag.0}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor'] } },
+        },
+        emphasis: {
+          $value: '{base.color.mag.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor'] } },
+        },
+      },
+      fgColor: {
+        $value: '{base.color.mag.6}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['fgColor'] } },
+      },
+      borderColor: {
+        muted: {
+          $value: '{base.color.mag.1}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['borderColor'] } },
+        },
+        emphasis: {
+          $value: '{base.color.mag.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['borderColor'] } },
+        },
+      },
+    },
+    yellow: {
+      scale: {
+        '0': {
+          $value: '{base.color.yellow.0}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '1': {
+          $value: '{base.color.yellow.1}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '2': {
+          $value: '{base.color.yellow.2}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '3': {
+          $value: '{base.color.yellow.3}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '4': {
+          $value: '{base.color.yellow.4}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '5': {
+          $value: '{base.color.yellow.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '6': {
+          $value: '{base.color.yellow.6}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '7': {
+          $value: '{base.color.yellow.7}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '8': {
+          $value: '{base.color.yellow.8}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '9': {
+          $value: '{base.color.yellow.9}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '10': {
+          $value: '{base.color.yellow.10}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+      },
+      bgColor: {
+        muted: {
+          $value: '{base.color.yellow.0}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor'] } },
+        },
+        emphasis: {
+          $value: '{base.color.yellow.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor'] } },
+        },
+      },
+      fgColor: {
+        $value: '{base.color.yellow.6}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['fgColor'] } },
+      },
+      borderColor: {
+        muted: {
+          $value: '{base.color.yellow.1}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['borderColor'] } },
+        },
+        emphasis: {
+          $value: '{base.color.yellow.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['borderColor'] } },
+        },
+      },
+    },
+    red: {
+      scale: {
+        '0': {
+          $value: '{base.color.red.0}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '1': {
+          $value: '{base.color.red.1}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '2': {
+          $value: '{base.color.red.2}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '3': {
+          $value: '{base.color.red.3}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '4': {
+          $value: '{base.color.red.4}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '5': {
+          $value: '{base.color.red.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '6': {
+          $value: '{base.color.red.6}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '7': {
+          $value: '{base.color.red.7}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '8': {
+          $value: '{base.color.red.8}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '9': {
+          $value: '{base.color.red.9}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '10': {
+          $value: '{base.color.red.10}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+      },
+      bgColor: {
+        muted: {
+          $value: '{base.color.red.0}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor'] } },
+        },
+        emphasis: {
+          $value: '{base.color.red.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor'] } },
+        },
+      },
+      fgColor: {
+        $value: '{base.color.red.6}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['fgColor'] } },
+      },
+      borderColor: {
+        muted: {
+          $value: '{base.color.red.1}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['borderColor'] } },
+        },
+        emphasis: {
+          $value: '{base.color.red.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['borderColor'] } },
+        },
+      },
+    },
+    orange: {
+      scale: {
+        '0': {
+          $value: '{base.color.orange.0}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '1': {
+          $value: '{base.color.orange.1}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '2': {
+          $value: '{base.color.orange.2}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '3': {
+          $value: '{base.color.orange.3}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '4': {
+          $value: '{base.color.orange.4}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '5': {
+          $value: '{base.color.orange.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '6': {
+          $value: '{base.color.orange.6}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '7': {
+          $value: '{base.color.orange.7}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '8': {
+          $value: '{base.color.orange.8}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '9': {
+          $value: '{base.color.orange.9}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '10': {
+          $value: '{base.color.orange.10}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+      },
+      bgColor: {
+        muted: {
+          $value: '{base.color.orange.0}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor'] } },
+        },
+        emphasis: {
+          $value: '{base.color.orange.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor'] } },
+        },
+      },
+      fgColor: {
+        $value: '{base.color.orange.6}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['fgColor'] } },
+      },
+      borderColor: {
+        muted: {
+          $value: '{base.color.orange.1}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['borderColor'] } },
+        },
+        emphasis: {
+          $value: '{base.color.orange.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['borderColor'] } },
+        },
+      },
+    },
+    violet: {
+      scale: {
+        '0': {
+          $value: '{base.color.violet.0}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '1': {
+          $value: '{base.color.violet.1}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '2': {
+          $value: '{base.color.violet.2}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '3': {
+          $value: '{base.color.violet.3}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '4': {
+          $value: '{base.color.violet.4}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '5': {
+          $value: '{base.color.violet.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '6': {
+          $value: '{base.color.violet.6}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '7': {
+          $value: '{base.color.violet.7}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '8': {
+          $value: '{base.color.violet.8}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '9': {
+          $value: '{base.color.violet.9}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '10': {
+          $value: '{base.color.violet.10}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+      },
+      bgColor: {
+        muted: {
+          $value: '{base.color.violet.0}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor'] } },
+        },
+        emphasis: {
+          $value: '{base.color.violet.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor'] } },
+        },
+      },
+      fgColor: {
+        $value: '{base.color.violet.6}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['fgColor'] } },
+      },
+      borderColor: {
+        muted: {
+          $value: '{base.color.violet.1}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['borderColor'] } },
+        },
+        emphasis: {
+          $value: '{base.color.violet.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['borderColor'] } },
+        },
+      },
+    },
+    teal: {
+      scale: {
+        '0': {
+          $value: '{base.color.teal.0}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '1': {
+          $value: '{base.color.teal.1}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '2': {
+          $value: '{base.color.teal.2}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '3': {
+          $value: '{base.color.teal.3}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '4': {
+          $value: '{base.color.teal.4}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '5': {
+          $value: '{base.color.teal.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '6': {
+          $value: '{base.color.teal.6}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '7': {
+          $value: '{base.color.teal.7}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '8': {
+          $value: '{base.color.teal.8}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '9': {
+          $value: '{base.color.teal.9}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '10': {
+          $value: '{base.color.teal.10}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+      },
+      bgColor: {
+        muted: {
+          $value: '{base.color.teal.0}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor'] } },
+        },
+        emphasis: {
+          $value: '{base.color.teal.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor'] } },
+        },
+      },
+      fgColor: {
+        $value: '{base.color.teal.6}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['fgColor'] } },
+      },
+      borderColor: {
+        muted: {
+          $value: '{base.color.teal.1}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['borderColor'] } },
+        },
+        emphasis: {
+          $value: '{base.color.teal.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['borderColor'] } },
+        },
+      },
+    },
+    lime: {
+      scale: {
+        '0': {
+          $value: '{base.color.lime.0}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '1': {
+          $value: '{base.color.lime.1}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '2': {
+          $value: '{base.color.lime.2}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '3': {
+          $value: '{base.color.lime.3}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '4': {
+          $value: '{base.color.lime.4}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '5': {
+          $value: '{base.color.lime.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '6': {
+          $value: '{base.color.lime.6}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '7': {
+          $value: '{base.color.lime.7}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '8': {
+          $value: '{base.color.lime.8}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '9': {
+          $value: '{base.color.lime.9}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '10': {
+          $value: '{base.color.lime.10}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+      },
+      bgColor: {
+        muted: {
+          $value: '{base.color.lime.0}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor'] } },
+        },
+        emphasis: {
+          $value: '{base.color.lime.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor'] } },
+        },
+      },
+      fgColor: {
+        $value: '{base.color.lime.6}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['fgColor'] } },
+      },
+      borderColor: {
+        muted: {
+          $value: '{base.color.lime.1}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['borderColor'] } },
+        },
+        emphasis: {
+          $value: '{base.color.lime.5}',
+          $type: 'color',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['borderColor'] } },
+        },
+      },
+    },
+  },
+}

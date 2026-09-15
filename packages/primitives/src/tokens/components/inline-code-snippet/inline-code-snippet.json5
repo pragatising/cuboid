@@ -1,0 +1,33 @@
+{
+  inlineCodeSnippet: {
+    $description: 'InlineCodeSnippet component — thin inline code text primitive for short code references inside a sentence (no syntax highlighting; see CodeBlock/CodeSnippet for multi-line/highlighted code). Backed by the codeInline typography token.',
+    $value: '{text.codeInline.shorthand}',
+    $type: 'typography',
+    $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'inline-code-snippet' } },
+    fgColor: {
+      $value: '{fgColor.neutral.muted}',
+      $type: 'color',
+      $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'inline-code-snippet' } },
+    },
+    bgColor: {
+      $value: '{bgColor.neutral.light.2}',
+      $type: 'color',
+      $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'inline-code-snippet' } },
+    },
+    paddingInline: {
+      $value: '{space.xxs}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'inline-code-snippet' } },
+    },
+    paddingBlock: {
+      $value: '{size.1}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'inline-code-snippet' } },
+    },
+    borderRadius: {
+      $value: '{borderRadius.xSmall}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'inline-code-snippet' } },
+    },
+  },
+}

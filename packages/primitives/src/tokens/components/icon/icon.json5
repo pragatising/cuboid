@@ -1,0 +1,24 @@
+{
+  icon: {
+    xs: {
+      $value: '{size.16}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon' } },
+    },
+    sm: {
+      $value: '{size.18}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon' } },
+    },
+    md: {
+      $value: '{size.20}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon' } },
+    },
+    lg: {
+      $value: '{size.24}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon' } },
+    },
+  },
+}

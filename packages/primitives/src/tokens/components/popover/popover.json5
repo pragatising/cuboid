@@ -1,0 +1,13 @@
+{
+  "popover": {
+    "color": {
+      "background": { "value": "{color.canvas.default}" }
+    },
+    "sizes": {
+      "gap": { "value": "{size.4}" },
+      "borderRadius": { "value": "{borderRadius.medium}" },
+      "minWidth": { "value": "{size.160}" },
+      "maxWidth": { "value": "{size.320}" }
+    }
+  }
+}

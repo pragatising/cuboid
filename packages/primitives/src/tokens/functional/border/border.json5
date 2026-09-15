@@ -1,0 +1,147 @@
+{
+  border: {
+    $description: 'Semantic border tokens combining color, style, and width for consistent UI boundaries.',
+    $extensions: {
+      'org.cuboid.llm': {
+        usage: ['container-border', 'card-border', 'divider', 'input-border', 'panel-border'],
+        rules: 'These are COMPOSITE border shorthand tokens that resolve to CSS shorthand values like "1px solid #color". Use for the CSS `border` property. Do NOT use for `border-color` — use borderColor.* tokens instead. Every border.* token includes width, style, AND color. Use default for standard container borders. Use muted for subtle dividers and low-emphasis boundaries. Use strong when borders need to stand out. Match connotation border colors to their meaning (error/warning for problems, success for positive states).',
+      },
+    },
+    default: {
+      $value: {
+        color: '{borderColor.default}',
+        style: 'solid',
+        width: '{borderWidth.default}',
+      },
+      $type: 'border',
+    },
+    transparent: {
+      $value: {
+        color: '{borderColor.transparent}',
+        style: 'solid',
+        width: '{borderWidth.default}',
+      },
+      $type: 'border',
+    },
+    subtle: {
+      $value: {
+        color: '{borderColor.subtle}',
+        style: 'solid',
+        width: '{borderWidth.default}',
+      },
+      $type: 'border',
+    },
+    muted: {
+      $value: {
+        color: '{borderColor.muted}',
+        style: 'solid',
+        width: '{borderWidth.default}',
+      },
+      $type: 'border',
+    },
+    strong: {
+      $value: {
+        color: '{borderColor.strong}',
+        style: 'solid',
+        width: '{borderWidth.default}',
+      },
+      $type: 'border',
+    },
+    translucent: {
+      $description: 'Semi-transparent border shorthand for overlays and layered elements.',
+      '1': {
+        $value: { color: '{borderColor.translucent.1}', style: 'solid', width: '{borderWidth.default}' },
+        $type: 'border',
+      },
+      '2': {
+        $value: { color: '{borderColor.translucent.2}', style: 'solid', width: '{borderWidth.default}' },
+        $type: 'border',
+      },
+      '3': {
+        $value: { color: '{borderColor.translucent.3}', style: 'solid', width: '{borderWidth.default}' },
+        $type: 'border',
+      },
+      '4': {
+        $value: { color: '{borderColor.translucent.4}', style: 'solid', width: '{borderWidth.default}' },
+        $type: 'border',
+      },
+      '5': {
+        $value: { color: '{borderColor.translucent.5}', style: 'solid', width: '{borderWidth.default}' },
+        $type: 'border',
+      },
+    },
+    informational: {
+      $description: 'Informational messages',
+      subtle: {
+        $value: { color: '{borderColor.informational.subtle}', style: 'solid', width: '{borderWidth.default}' },
+        $type: 'border',
+      },
+      strong: {
+        $value: { color: '{borderColor.informational.strong}', style: 'solid', width: '{borderWidth.default}' },
+        $type: 'border',
+      },
+    },
+    debug: {
+      $description: 'Debug-level messages',
+      $value: { color: '{borderColor.debug}', style: 'solid', width: '{borderWidth.default}' },
+      $type: 'border',
+    },
+    notice: {
+      $description: 'Normal but significant condition',
+      subtle: {
+        $value: { color: '{borderColor.notice.subtle}', style: 'solid', width: '{borderWidth.default}' },
+        $type: 'border',
+      },
+      strong: {
+        $value: { color: '{borderColor.notice.strong}', style: 'solid', width: '{borderWidth.default}' },
+        $type: 'border',
+      },
+    },
+    success: {
+      $description: 'Positive outcome or completed action',
+      subtle: {
+        $value: { color: '{borderColor.success.subtle}', style: 'solid', width: '{borderWidth.default}' },
+        $type: 'border',
+      },
+      strong: {
+        $value: { color: '{borderColor.success.strong}', style: 'solid', width: '{borderWidth.default}' },
+        $type: 'border',
+      },
+    },
+    danger: {
+      $description: 'System is unusable',
+      $value: { color: '{borderColor.danger}', style: 'solid', width: '{borderWidth.default}' },
+      $type: 'border',
+    },
+    critical: {
+      $description: 'Critical conditions',
+      $value: { color: '{borderColor.critical}', style: 'solid', width: '{borderWidth.default}' },
+      $type: 'border',
+    },
+    alert: {
+      $description: 'Action must be taken immediately',
+      $value: { color: '{borderColor.alert}', style: 'solid', width: '{borderWidth.default}' },
+      $type: 'border',
+    },
+    error: {
+      $description: 'Error conditions',
+      $value: { color: '{borderColor.error}', style: 'solid', width: '{borderWidth.default}' },
+      $type: 'border',
+    },
+    warning: {
+      $description: 'Warning conditions',
+      subtle: {
+        $value: { color: '{borderColor.warning.subtle}', style: 'solid', width: '{borderWidth.default}' },
+        $type: 'border',
+      },
+      muted: {
+        $value: { color: '{borderColor.warning.muted}', style: 'solid', width: '{borderWidth.default}' },
+        $type: 'border',
+      },
+      strong: {
+        $value: { color: '{borderColor.warning.strong}', style: 'solid', width: '{borderWidth.default}' },
+        $type: 'border',
+      },
+    },
+  },
+}

@@ -1,0 +1,1400 @@
+{
+  base: {
+    color: {
+        black: {
+          '0': {
+            $value: '#000000',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+        },
+        transparent: {
+          $value: '#ffffff',
+          alpha: 0,
+          $type: 'color',
+          $extensions: {
+            'org.cuboid.figma': {
+              collection: 'base/color/light',
+            },
+          },
+        },
+        white: {
+          '0': {
+            $value: '#ffffff',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+        },
+        gray: {
+          '0': {
+            $value: '#ffffff',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '1': {
+            $value: '#f9f9f8',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '2': {
+            $value: '#f4f4f2',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '3': {
+            $value: '#efeeea',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '4': {
+            $value: '#e2e1dd',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '5': {
+            $value: '#d8d7d4',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '6': {
+            $value: '#aba9a5',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '7': {
+            $value: '#888783',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '8': {
+            $value: '#6f6f6d',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '9': {
+            $value: '#525252',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '10': {
+            $value: '#474746',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '11': {
+            $value: '#3a3a39',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '12': {
+            $value: '#2d2d2d',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '13': {
+            $value: '#222221',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+        },
+        grayAlpha: {
+          '0': {
+            $value: '#3a3a39',
+            alpha: 0,
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '1': {
+            $value: '#3a3a39',
+            alpha: 0.078,
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '2': {
+            $value: '#3a3a39',
+            alpha: 0.102,
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '3': {
+            $value: '#3a3a39',
+            alpha: 0.149,
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '4': {
+            $value: '#3a3a39',
+            alpha: 0.2,
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+        },
+        shadowAlpha: {
+          // Colors used specifically for box-shadow layers, distinct from
+          // grayAlpha (#3a3a39) above — each pairs one near-black hue with
+          // the exact alpha a real shadow needs. Not part of the general
+          // gray scale; only meant to be referenced from shadow tokens.
+          black: {
+            '0.05': {
+              $value: '#000000',
+              alpha: 0.05,
+              $type: 'color',
+              $extensions: { 'org.cuboid.figma': { collection: 'base/color/light' } },
+            },
+          },
+          warmBlack: {
+            '0.07': {
+              $value: '#2a1c00',
+              alpha: 0.07,
+              $type: 'color',
+              $extensions: { 'org.cuboid.figma': { collection: 'base/color/light' } },
+            },
+          },
+          neutral33: {
+            '0.04': {
+              $value: '#212121',
+              alpha: 0.04,
+              $type: 'color',
+              $extensions: { 'org.cuboid.figma': { collection: 'base/color/light' } },
+            },
+            '0.07': {
+              $value: '#212121',
+              alpha: 0.07,
+              $type: 'color',
+              $extensions: { 'org.cuboid.figma': { collection: 'base/color/light' } },
+            },
+          },
+          neutral25: {
+            '0.03': {
+              $value: '#191919',
+              alpha: 0.03,
+              $type: 'color',
+              $extensions: { 'org.cuboid.figma': { collection: 'base/color/light' } },
+            },
+            '0.05': {
+              $value: '#191919',
+              alpha: 0.05,
+              $type: 'color',
+              $extensions: { 'org.cuboid.figma': { collection: 'base/color/light' } },
+            },
+          },
+          neutral44: {
+            '0.08': {
+              $value: '#444445',
+              alpha: 0.08,
+              $type: 'color',
+              $extensions: { 'org.cuboid.figma': { collection: 'base/color/light' } },
+            },
+          },
+        },
+        overlay: {
+          sheet: {
+            $value: '#353533',
+            alpha: 0.031,
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+        },
+        green: {
+          '0': {
+            $value: '#f0f9ef',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '1': {
+            $value: '#e6f4e4',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '2': {
+            $value: '#e2f1de',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '3': {
+            $value: '#dcf1d5',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '4': {
+            $value: '#cceec2',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '5': {
+            $value: '#bae3af',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '6': {
+            $value: '#a2d794',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '7': {
+            $value: '#87c875',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '8': {
+            $value: '#6ebf57',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '9': {
+            $value: '#5ca647',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '10': {
+            $value: '#3f8d2a',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+        },
+        purple: {
+          '0': {
+            $value: '#faf5fd',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '1': {
+            $value: '#ecdafa',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '2': {
+            $value: '#ecd2fa',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '3': {
+            $value: '#e3c1f6',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '4': {
+            $value: '#d9b2fa',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '5': {
+            $value: '#d7a7f7',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '6': {
+            $value: '#d385ef',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '7': {
+            $value: '#a854d2',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '8': {
+            $value: '#9035bd',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '9': {
+            $value: '#6f2ea8',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '10': {
+            $value: '#5b2589',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+        },
+        indigo: {
+          '0': {
+            $value: '#f7f7fc',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '1': {
+            $value: '#f4f4ff',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '2': {
+            $value: '#e8e8ff',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '3': {
+            $value: '#e2e2ff',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '4': {
+            $value: '#d4d4ff',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '5': {
+            $value: '#c1c1ff',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '6': {
+            $value: '#afafff',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '7': {
+            $value: '#9d9dff',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '8': {
+            $value: '#8686ff',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '9': {
+            $value: '#6565fa',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '10': {
+            $value: '#5454e1',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+        },
+        blue: {
+          '0': {
+            $value: '#f4f8ff',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '1': {
+            $value: '#eef4ff',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '2': {
+            $value: '#eaf2ff',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '3': {
+            $value: '#dfeafd',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '4': {
+            $value: '#cbdeff',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '5': {
+            $value: '#c4daff',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '6': {
+            $value: '#bcd4ff',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '7': {
+            $value: '#518ff8',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '8': {
+            $value: '#3a80f9',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '9': {
+            $value: '#236ae5',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '10': {
+            $value: '#1d5ece',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+        },
+        mag: {
+          '0': {
+            $value: '#fbf0f9',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '1': {
+            $value: '#fdd8f1',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '2': {
+            $value: '#ffc2ea',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '3': {
+            $value: '#ffb5e6',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '4': {
+            $value: '#ffa2e0',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '5': {
+            $value: '#ff9add',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '6': {
+            $value: '#ff83d6',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '7': {
+            $value: '#e63bad',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '8': {
+            $value: '#eb3cb2',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '9': {
+            $value: '#d22799',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '10': {
+            $value: '#c9178d',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+        },
+        yellow: {
+          '0': {
+            $value: '#fffbf0',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '1': {
+            $value: '#fbf2d8',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '2': {
+            $value: '#fff0cd',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '3': {
+            $value: '#fce6ae',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '4': {
+            $value: '#fad98e',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '5': {
+            $value: '#ffcd44',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '6': {
+            $value: '#ffb404',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '7': {
+            $value: '#e3a703',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '8': {
+            $value: '#d99904',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '9': {
+            $value: '#cf9202',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '10': {
+            $value: '#b57c02',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+        },
+        red: {
+          '0': {
+            $value: '#fff6f5',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '1': {
+            $value: '#fcedeb',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '2': {
+            $value: '#ffe6e2',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '3': {
+            $value: '#ffd9d5',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '4': {
+            $value: '#fdcec8',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '5': {
+            $value: '#fbc4c4',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '6': {
+            $value: '#feb1b1',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '7': {
+            $value: '#f99090',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '8': {
+            $value: '#ef6262',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '9': {
+            $value: '#e74646',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '10': {
+            $value: '#da2222',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+        },
+        orange: {
+          '0': {
+            $value: '#ffefe6',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '1': {
+            $value: '#fee8d8',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '2': {
+            $value: '#ffddc5',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '3': {
+            $value: '#ffd4b3',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '4': {
+            $value: '#ffba86',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '5': {
+            $value: '#ff9b61',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '6': {
+            $value: '#ff8635',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '7': {
+            $value: '#f2711b',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '8': {
+            $value: '#d95903',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '9': {
+            $value: '#c85700',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '10': {
+            $value: '#bd4b04',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+        },
+        violet: {
+          '0': {
+            $value: '#faf9ff',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '1': {
+            $value: '#ecebff',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '2': {
+            $value: '#d7cff7',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '3': {
+            $value: '#bdb7f7',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '4': {
+            $value: '#c09efe',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '5': {
+            $value: '#b792fc',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '6': {
+            $value: '#9e70f5',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '7': {
+            $value: '#8950f3',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '8': {
+            $value: '#8c53f4',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '9': {
+            $value: '#8143f6',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '10': {
+            $value: '#7530f5',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+        },
+        teal: {
+          '0': {
+            $value: '#f0fbff',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '1': {
+            $value: '#e2f7ff',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '2': {
+            $value: '#c9f0f7',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '3': {
+            $value: '#b2e8f0',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '4': {
+            $value: '#a1e9f1',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '5': {
+            $value: '#82e2ef',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '6': {
+            $value: '#46b0c8',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '7': {
+            $value: '#2e98ad',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '8': {
+            $value: '#1b899e',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '9': {
+            $value: '#177e93',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '10': {
+            $value: '#07596a',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+        },
+        lime: {
+          '0': {
+            $value: '#f1f6f2',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '1': {
+            $value: '#f4f7e6',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '2': {
+            $value: '#ecf6c2',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '3': {
+            $value: '#d5e68c',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '4': {
+            $value: '#c5de59',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '5': {
+            $value: '#b2cd36',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '6': {
+            $value: '#98b61a',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '7': {
+            $value: '#779204',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '8': {
+            $value: '#6b8402',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '9': {
+            $value: '#536601',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+          '10': {
+            $value: '#4f6201',
+            $type: 'color',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+            },
+          },
+        },
+
+    },
+  },
+}

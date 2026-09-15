@@ -1,0 +1,8 @@
+{
+  box: {
+    $description: 'Box resolves border/radius/background/foreground directly against existing functional tokens (borderWidth.thin, borderRadius.*, bgColor/borderColor/fgColor via GlobalColorPath) with no component-specific override values. Kept here to record the mismatch below rather than leaving Box silently unaudited.',
+    borderRadius: {
+      $description: "GAP (naming, not missing): Box's borderRadius prop type is keyed sm|md|lg|xl|full, but functional/size/radius.json5's real keys are xSmall|small|medium|large|xlarge|full — the component's prop names and the token names it resolves against don't match 1:1. Needs reconciling (rename one side) rather than a new token set.",
+    },
+  },
+}

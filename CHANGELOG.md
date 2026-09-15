@@ -12,6 +12,37 @@ Template for a new entry:
 **Next agent:** open threads, deferred decisions, known debt, or nothing if clean.
 -->
 
+## 2026-09-13 — Functional token layer: DTCG format, `org.cuboid.*` namespace, real base-token aliasing
+
+**Changed:**
+- Namespace: `org.primer.*` → `org.cuboid.*` across 6 functional files (`motion.json5`, `typography.json5`, `border.json5`, `font-stack.json5`, base `easing.json5`, base `typography.json5`) — leftover from whatever this content was forked/adapted from.
+- DTCG conversion (`"value"` → `$value`/`$type`): `radius.json5`, `layout.json5`, `outline.json5`, `breakpoints.json5`, `z-index.json5`.
+- Rebuilt `functional/size/size.json5` from scratch — was self-referential garbage (`{size.space.24}`, `{size.size.control.iconButton...}`, neither resolving). Now correctly aliases `space.*`/`size.*`/`borderRadius.*`.
+- Added `size.0` step to `display-sizes.json5` (didn't exist; needed for "none" gap/padding cases).
+- Fixed `base.color.scale.*` → `base.color.*` (no `.scale.` level exists in base) across `bgColor.json5`, `borderColor.json5`.
+- Rebuilt `bgColor.json5`: `canvas.*` unchanged; added `neutral.light.1-4` (→ `gray.0-3`) and `neutral.inverted.1-4` (→ `gray.13-10`, darkest first) replacing an old `bg.gray.light/dark` shape; added full connotation set (`informational/debug/notice/success/emergency/critical/alert/error/warning`), each with exactly `subtle=hue.0, muted=hue.3, strong=hue.9`.
+- Rebuilt `borderColor.json5`: flattened the `positive`/`negative`/`neutral` sentiment wrapper (it didn't hold — `boost` isn't positive/negative, `debug` isn't either) to flat `borderColor.<name>.*`, dropped `boost` entirely.
+- Rebuilt `fgColor.json5` to match: same flat category names as `borderColor`, `subtle/muted/strong` at `hue.4/6/9` (darker than bgColor's `0/3/9` — text needs contrast, fills don't). Renamed `neutralBase` → `neutral` (was disambiguating from the old `neutral.*` status wrapper, which no longer exists after flattening). Dropped `fgColor.text.*` — byte-identical duplicate of `fgColor.neutral.*`, confirmed unreferenced before removal.
+- Rebuilt `functional/border/border.json5` (was pasted from Primer wholesale, referenced GitHub-specific concepts — `open`/`closed`/`draft`/`sponsors`/`upsell`/`accent` — with no matching `borderColor` entry). Now mirrors `borderColor.json5`'s real flat keys exactly.
+- Rebuilt `syntax.json5` as fully per-language (`syntax.{json,typescript,html,css,markdown}.*`), each carrying only tokens that apply to that language's actual grammar — was one flat 40-key list mixing code-grammar, markdown/diff, and (wrongly) inspector-UI colors together.
+- New `components/code-block/code-block.json5` — the inspector/data-table UI tokens (`rowHoverBg`, `watchMark*`, `carriageReturn*`, `invalidIllegal*`, `bracketHighlighter*`) that were misfiled in `syntax.json5` moved here; `codeBlock` had no token folder despite being referenced in `functional/typography/typography.json5`.
+- Rebuilt `icon.json5`, `stack.json5` (components) — both had broken alias paths (`{displaySizes.N}`, ambiguous `{size.N}`) now pointing at real `display-sizes.json5` entries.
+- Rebuilt `icon-button/ghost.json5` + `icon-button/outlined.json5` (replacing old `.json` versions, deleted) — dropped the redundant `color` wrapper (`iconButton.ghost.*` not `color.iconButton.ghost.*`), renamed `base` state → `default`, real functional-token paths throughout (`bgColor.informational.*`, `fgColor.neutral.*`) instead of raw `base.color.scale.blue.*` reach-through and stale `color.bg.gray.light.*` paths.
+- Fixed `.claude/hooks/changelog-check.sh` — was still watching top-level `src`/`scripts`, which moved to `packages/primitives/src` and `packages/react/src` in the Phase-1 workspace split; the hook has silently not fired since then. Now watches both new paths (old ones kept as harmless fallback).
+- New `docs/backlog/token-migration-tracker.md` — alphabetical Done/Needs-rewrite/Missing status for every built component's token folder, cross-referencing `packages/react/src/components/core/*` against `packages/primitives/src/tokens/components/*`. Includes a re-runnable classification command (grep-based, checks actual file content — extension alone isn't reliable evidence of DTCG compliance, several `.json5` files still had old-format content).
+
+**Why:**
+- Started from a single tooltip fix; found "components can't use base tokens directly" was being routinely violated because the functional layer itself had broken/nonexistent alias paths, forcing components to reach through to base or to stale pre-refactor `color.*` paths. Fixing the functional layer first (this session) unblocks component-by-component fixes (tracked in the new tracker doc) without repeating the same base-token-reachthrough pattern in each one.
+
+**Next agent:**
+- `docs/backlog/token-migration-tracker.md` is the punch list — 4 components done, 15 need rewrite, 6 have no token folder at all, 1 (`input/`) is orphaned (no matching component, unclear if dead or pre-scaffolded).
+- Open gaps flagged with `$description: 'GAP: ...'` rather than invented: `syntax.json5` has 3 raw hex colors per language with no matching base color (dark navy, teal/cyan, magenta/pink); `functional/size/z-index.json5`'s `popover/tooltip/toast` need `base.zIndex.700/800/900` (base scale currently stops at 600).
+- `borderColor.informational` only has `subtle`/`strong` (2 steps), not the full 3-step shape `bgColor`/`fgColor` now have — `icon-button/outlined.json5`'s selected-border state currently can't vary across rest/hover/pressed because of this gap.
+- `border.json5`'s `boxShadow.thin/thick/thicker` (should these be shadow tokens, or does this belong somewhere else structurally?) and Tooltip's `boxShadow` placement (effect vs. sizes) are still open structural questions, not resolved this session.
+- `pill/*.json` (12 files, all old-format) look machine-generated by `scripts/generate-pill-shade-tokens.mjs` — fix the generator, not the 11 per-color output files by hand, once scoped.
+- `button/*` has no shared `size.json5` at all (unlike `icon-button`) — needs one added if Button ever needs size variants.
+- Component-level file-structure questions (one file per color variant vs. nested-in-one-file; where shared size/shadow live relative to color variants) were being actively worked out live in the IDE by the user during this session — check current on-disk state before assuming any pattern described in earlier commit messages is still current.
+
 ## 2026-09-12 — Phase 0: scaffold Style Dictionary + Zod, inert
 
 **Changed:**

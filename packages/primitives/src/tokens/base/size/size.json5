@@ -1,0 +1,662 @@
+{
+  base: {
+    size: {
+      '0': {
+        $value: { value: 0, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '1': {
+        $value: { value: 1, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '2': {
+        $value: { value: 2, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '3': {
+        $value: { value: 3, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '4': {
+        $value: { value: 4, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '5': {
+        $value: { value: 5, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '6': {
+        $value: { value: 6, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '7': {
+        $value: { value: 7, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '8': {
+        $value: { value: 8, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '9': {
+        $value: { value: 9, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '10': {
+        $value: { value: 10, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '11': {
+        $value: { value: 11, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '12': {
+        $value: { value: 12, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '13': {
+        $value: { value: 13, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '14': {
+        $value: { value: 14, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '15': {
+        $value: { value: 15, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '16': {
+        $value: { value: 16, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '17': {
+        $value: { value: 17, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '18': {
+        $value: { value: 18, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '19': {
+        $value: { value: 19, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '20': {
+        $value: { value: 20, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '21': {
+        $value: { value: 21, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '22': {
+        $value: { value: 22, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '23': {
+        $value: { value: 23, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '24': {
+        $value: { value: 24, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '28': {
+        $value: { value: 28, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '32': {
+        $value: { value: 32, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '40': {
+        $value: { value: 40, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '48': {
+        $value: { value: 48, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '56': {
+        $value: { value: 56, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '64': {
+        $value: { value: 64, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '72': {
+        $value: { value: 72, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '80': {
+        $value: { value: 80, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '88': {
+        $value: { value: 88, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '96': {
+        $value: { value: 96, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '104': {
+        $value: { value: 104, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '112': {
+        $value: { value: 112, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '120': {
+        $value: { value: 120, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '128': {
+        $value: { value: 128, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '136': {
+        $value: { value: 136, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '144': {
+        $value: { value: 144, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '152': {
+        $value: { value: 152, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '160': {
+        $value: { value: 160, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '168': {
+        $value: { value: 168, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '176': {
+        $value: { value: 176, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '184': {
+        $value: { value: 184, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '192': {
+        $value: { value: 192, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '200': {
+        $value: { value: 200, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '208': {
+        $value: { value: 208, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '216': {
+        $value: { value: 216, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '224': {
+        $value: { value: 224, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '232': {
+        $value: { value: 232, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '240': {
+        $value: { value: 240, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '248': {
+        $value: { value: 248, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '256': {
+        $value: { value: 256, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '272': {
+        $value: { value: 272, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '320': {
+        $value: { value: 320, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '400': {
+        $value: { value: 400, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '480': {
+        $value: { value: 480, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      '560': {
+        $value: { value: 560, unit: 'px' },
+        $type: 'dimension',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'base/size',
+            scopes: ['size', 'gap'],
+          },
+        },
+      },
+      'negative-2': {
+        $value: { value: -2, unit: 'px' },
+        $type: 'dimension',
+      },
+      'negative-4': {
+        $value: { value: -4, unit: 'px' },
+        $type: 'dimension',
+      },
+      'negative-6': {
+        $value: { value: -6, unit: 'px' },
+        $type: 'dimension',
+      },
+      'negative-8': {
+        $value: { value: -8, unit: 'px' },
+        $type: 'dimension',
+      },
+      'negative-12': {
+        $value: { value: -12, unit: 'px' },
+        $type: 'dimension',
+      },
+      'negative-16': {
+        $value: { value: -16, unit: 'px' },
+        $type: 'dimension',
+      },
+      'negative-20': {
+        $value: { value: -20, unit: 'px' },
+        $type: 'dimension',
+      },
+      'negative-24': {
+        $value: { value: -24, unit: 'px' },
+        $type: 'dimension',
+      },
+      'negative-28': {
+        $value: { value: -28, unit: 'px' },
+        $type: 'dimension',
+      },
+      'negative-32': {
+        $value: { value: -32, unit: 'px' },
+        $type: 'dimension',
+      },
+      'negative-36': {
+        $value: { value: -36, unit: 'px' },
+        $type: 'dimension',
+      },
+      'negative-40': {
+        $value: { value: -40, unit: 'px' },
+        $type: 'dimension',
+      },
+      'negative-44': {
+        $value: { value: -44, unit: 'px' },
+        $type: 'dimension',
+      },
+      'negative-48': {
+        $value: { value: -48, unit: 'px' },
+        $type: 'dimension',
+      },
+    },
+  },
+}

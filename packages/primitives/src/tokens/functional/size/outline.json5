@@ -1,0 +1,24 @@
+{
+  focusRing: {
+    width: {
+      $value: '{base.size.3}',
+      $type: 'dimension',
+      $extensions: {
+        'org.cuboid.figma': {
+          collection: 'functional/size',
+          scopes: ['focusRing'],
+        },
+      },
+    },
+    offset: {
+      $value: '{base.size.2}',
+      $type: 'dimension',
+      $extensions: {
+        'org.cuboid.figma': {
+          collection: 'functional/size',
+          scopes: ['focusRing'],
+        },
+      },
+    },
+  },
+}

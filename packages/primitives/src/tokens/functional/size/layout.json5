@@ -1,0 +1,45 @@
+{
+  layout: {
+    pageMaxWidth: {
+      $value: { value: 56, unit: 'rem' },
+      $type: 'dimension',
+      $extensions: {
+        'org.cuboid.figma': {
+          collection: 'functional/size',
+          scopes: ['layout'],
+        },
+      },
+    },
+    contentMaxWidth: {
+      $value: { value: 40, unit: 'rem' },
+      $type: 'dimension',
+      $extensions: {
+        'org.cuboid.figma': {
+          collection: 'functional/size',
+          scopes: ['layout'],
+        },
+      },
+    },
+    sectionLabelWidth: {
+      $value: 'clamp(6.5rem, 25%, 10rem)',
+      $type: 'custom-string',
+      $description: 'Responsive width that cannot be expressed as a single dimension token.',
+      $extensions: {
+        'org.cuboid.figma': {
+          collection: 'functional/size',
+          scopes: ['layout'],
+        },
+      },
+    },
+    pagePaddingInline: {
+      $value: '{size.20}',
+      $type: 'dimension',
+      $extensions: {
+        'org.cuboid.figma': {
+          collection: 'functional/size',
+          scopes: ['layout'],
+        },
+      },
+    },
+  },
+}
