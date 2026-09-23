@@ -12,6 +12,28 @@ Template for a new entry:
 **Next agent:** open threads, deferred decisions, known debt, or nothing if clean.
 -->
 
+## 2026-09-14 — Scaffold Primer-parity folders in `packages/primitives/src`: filters, formats, preprocessors, platforms, schemas
+
+**Changed:**
+- Added 58 stub files (all throw `"not implemented"`, header comment names the Primer equivalent) across five new folders: `filters/` (11), `formats/` (7), `preprocessors/` (2), `platforms/` (11), `schemas/` (27) — mirrors `github.com/primer/primitives`'s real `src/` structure exactly (verified against the live repo via `gh api`, not guessed).
+- `types/` and `utilities/` already had stubs from the 2026-09-12 Phase 0 scaffold; untouched this session.
+- Nothing wired up — no build script references any of these yet, no transform/format/schema is registered on `styleDictionary.ts`. Pure scaffolding, zero behavior change, matches the existing stub convention (`treeWalker.ts`, `log.ts`).
+
+**Why:**
+- Auditing cuboid's Task 1 (fix the broken token build) against Primer's real source surfaced that cuboid's original scaffold only anticipated `transformers`/`types`/`utilities`/`schemas` — missing Primer's `filters` (routes tokens into different output files from one resolved tree, e.g. themed vs. non-themed CSS) and `platforms` (one function per output target, composing transforms+formats+filters) entirely. Both are real structural gaps, not optional extras — `platforms/css.ts` in Primer's real code shows one platform producing 4 differently-filtered output files from a single resolved tree, which cuboid's current one-monolithic-script Task 1 plan can't do without this shape.
+
+**Next agent:**
+- Every file here is an empty throw-stub — this is folder/file-shape parity only, not implementation. See `docs/token-architecture-migration.md` for the pipeline design and the in-session Task 1 spec (not yet committed to the repo, lives in the conversation/scratchpad) for the real `$type` inventory found on disk (7 types in use — `color`, `dimension`, `number`, `fontFamily`, `shadow`, `cubicBezier`, and a likely `duration` — vs. DESIGN.md's originally documented 5) and the reference-resolution edge cases (embedded refs inside larger strings, `{value, unit}` object-shaped dimensions, `alpha` as a sibling key on color) that the real transformers need to handle.
+- `npm run build` is still broken (old `tokens:theme` script points at the now-deleted old `tokens/` path) — this scaffolding doesn't fix that yet, it's groundwork for the real Task 1 implementation pass.
+
+**Follow-up (same day) — completed full parity, including two subfolder levels the first pass missed:**
+- Fetched Primer's complete recursive tree via `gh api repos/primer/primitives/git/trees/main?recursive=1` and diffed it file-by-file against cuboid's tree (159 real non-test, non-token-data files on Primer's side) — the first pass's `gh api .../contents/src/<dir>` calls only listed one level deep and silently missed two nested subfolders: `formats/utilities/` (4 files: `getPropName`, `jsonToFlat`, `jsonToNestedValue`, `prefixTokens`) and `preprocessors/utilities/` (1 file: `transformTokens`).
+- Also closed 12 individual files the first pass's manual transcription missed: `filters/` (`hasLlmExtensions`, `isColorWithAlpha`, `isFontWeight`, `isGradient`, `isTransition`, `isTypography`), `formats/` (`jsonPostCssFallback`, `markdownLlmGuidelines`, `typescriptExportDefinition`), `schemas/designToken`, `transformers/borderToCss`, `types/shadow.d.ts`.
+- Also created a new `test-utilities/` folder (didn't exist at all) with Primer's 4 real files (`getMockDictionary`, `getMockFormatterArguments`, `getMockParserInput`, `getMockToken`), and filled remaining gaps in top-level `utilities/` (9 files) and `transformers/` + `transformers/utilities/` (23 files) that the first pass's folder list didn't cover in this level of detail.
+- Confirmed via bidirectional diff: full parity now holds. Intentional differences only — `styleDictionary.ts` (≈ Primer's `primerStyleDictionary.ts`), 3 renamed-not-missing files (`nameToKebabCase`↔`namePathToKebabCase`, `getTokenValues`↔`getTokenValue`, `hasSpaceInStrings`↔`hasSpaceInString`), no `index.ts` barrels anywhere (matches this repo's own no-barrel standard).
+- **Lesson for next agent doing a similar audit:** a single-level `gh api contents/<dir>` listing does not reveal nested subfolders — use the recursive git-trees endpoint (`git/trees/<branch>?recursive=1`) and a real file diff from the start, not manual screenshot transcription.
+- Still nothing wired up or implemented anywhere in this scaffold — same caveat as above, `npm run build` remains broken until the real Task 1 implementation pass.
+
 ## 2026-09-13 — Functional token layer: DTCG format, `org.cuboid.*` namespace, real base-token aliasing
 
 **Changed:**
