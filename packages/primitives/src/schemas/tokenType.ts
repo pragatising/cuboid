@@ -1,8 +1,11 @@
+import { z } from "zod";
+import type { TokenType } from "./validTokenType";
+
 /**
- * Zod schema for the "tokenType" shape. Mirrors Primer's src/schemas/tokenType.ts —
- * Primer splits per- token schemas (full leaf incl. $extensions) from
- * per-shape value schemas (just $value) so both compose independently.
- *
- * Not yet implemented — stub only.
+ * A Zod literal for one specific $type value — used by each per-type
+ * schema (e.g. colorToken.ts does `$type: tokenType("color")`). Matches
+ * Primer's schemas/tokenType.ts.
  */
-export const tokenType = undefined as never;
+export function tokenType($type: TokenType) {
+  return z.literal($type);
+}

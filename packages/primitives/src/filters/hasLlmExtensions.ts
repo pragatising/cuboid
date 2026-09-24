@@ -1,9 +1,11 @@
+import type { TransformedToken } from "style-dictionary/types";
+
 /**
- * Primer-equivalent filter: checks token.$type/$extensions for "hasLlmExtensions".
- * Mirrors Primer's src/filters/hasLlmExtensions.ts.
- *
- * Not yet implemented — stub only.
+ * True if a token has an `org.cuboid.llm` extension — used by the
+ * markdown LLM-guidelines doc generator (Group 17) to select which
+ * tokens to include. Matches Primer's filters/hasLlmExtensions.ts
+ * (renamed from `org.primer.llm`).
  */
-export function hasLlmExtensions(_token: unknown): boolean {
-  throw new Error("not implemented");
+export function hasLlmExtensions(token: TransformedToken): boolean {
+  return token.$extensions !== undefined && token.$extensions !== null && typeof token.$extensions === "object" && "org.cuboid.llm" in token.$extensions;
 }

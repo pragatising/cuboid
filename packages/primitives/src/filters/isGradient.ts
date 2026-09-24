@@ -1,9 +1,9 @@
+import type { TransformedToken } from "style-dictionary/types";
+
 /**
- * Primer-equivalent filter: checks token.$type/$extensions for "isGradient".
- * Mirrors Primer's src/filters/isGradient.ts.
- *
- * Not yet implemented — stub only.
+ * True if a token's $type is "gradient". Matches Primer's
+ * filters/isGradient.ts.
  */
-export function isGradient(_token: unknown): boolean {
-  throw new Error("not implemented");
+export function isGradient(token: TransformedToken): boolean {
+  return (token.$type ?? (token as { type?: string }).type) === "gradient";
 }

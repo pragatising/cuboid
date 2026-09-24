@@ -1,12 +1,28 @@
+import type { TransformedToken } from "style-dictionary/types";
+import { InvalidTokenValueError, InvalidTokenValuePropertyError } from "./invalidTokenError";
+
 /**
- * Given a resolved token tree and a dot-path, return that token's $value —
- * the read side of the {path} reference resolver (the write/substitution
- * side is the fixed-point resolve loop in preprocessors/, see DESIGN.md
- * §2 step 2). Matches build-theme.mjs's existing getPath()/resolveOnce()
- * logic, generalized to not assume any particular tree shape.
- *
- * Not yet implemented — stub only.
+ * Given an already-resolved token, pulls `$value` (or one composite
+ * sub-property, e.g. a shadow's `.color`), throwing a clear error if
+ * missing. This is NOT a reference resolver — Style Dictionary resolves
+ * `{path}` references natively before any transformer runs (see
+ * DESIGN.md §3). Matches Primer's real, narrow definition in
+ * transformers/utilities/getTokenValue.ts.
  */
-export function getTokenValue(_root: unknown, _path: string): unknown {
-  throw new Error("not implemented");
+export function getTokenValue(token: TransformedToken, property?: string): unknown {
+  const value = token.$value ?? (token as { value?: unknown }).value;
+
+  if (value === undefined) {
+    throw new InvalidTokenValueError(token);
+  }
+
+  if (typeof property === "string") {
+    const record = value as Record<string, unknown>;
+    if (record[property] === undefined) {
+      throw new InvalidTokenValuePropertyError(token, property);
+    }
+    return record[property];
+  }
+
+  return value;
 }

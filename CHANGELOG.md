@@ -2,6 +2,24 @@
 
 Rolling session log for Claude Code continuity. Newest entry on top. Each entry: what changed, why, and anything the next agent needs to know. Keep entries short — skip anything derivable from `git log` or the diff itself.
 
+## 2026-09-23 — Real pipeline implementation begins; old hand-rolled build deleted; docs consolidated
+
+**Changed:**
+- Implemented for real (no longer stubs): `utilities/treeWalker.ts`, `utilities/log.ts`, `schemas/baseToken.ts`, `referenceValue.ts`, `tokenType.ts`, `validTokenType.ts`, `tokenName.ts` — the generic tree walker and shared schema foundation every per-type schema will extend. `validTokenType`'s list is scoped to the real 13 W3C DTCG types (dropping Primer's org-specific `custom-string`/`custom-viewportRange`).
+- **Deleted outright** (not ported, not kept for compatibility): `scripts/build-theme.mjs`, `build-theme-css.mjs`, `build-component-theme-css.mjs`, `build-typography-theme.mjs`, `scripts/lib/spaceScale.mjs`, and their one test file — 2,527 lines of hand-rolled merge/resolve/emit logic. `package.json`'s `tokens:theme` now points at `scripts/build-tokens.mjs` (not yet written).
+- **Key finding, changes the whole remaining plan:** Style Dictionary (already installed, v5.5.3) resolves `{path}` references natively — recursively, embedded-reference-aware, with real circular-reference detection — verified directly against `node_modules/style-dictionary/lib/utils/references/resolveReferences.js` and against Primer's real `scripts/buildTokens.ts` (300+ lines, zero hand-rolled resolution — pure `StyleDictionary.extend({...}).buildAllPlatforms()` configuration calls). There was never a resolver to build; the old plan's "step 3: build the resolver" is gone.
+- New `docs/knowledge/w3c-design-token.md` — real content (was an empty stub), the 13 standard DTCG `$type`s pulled from the actual W3C spec, used as the reference for scope instead of grepping whatever the token files happen to contain mid-rebuild.
+- **Docs consolidated to one file per user request:** `docs/token-architecture-migration.md` (original migration plan) and a short-lived `docs/backlog/token-pipeline-implementation-strategy.md` (created and deleted same session) both merged into `packages/primitives/DESIGN.md`, now the single source of truth for design + verified Primer research + Figma-sync plan + build order. `docs/token-architecture-migration.md` deleted outright (was tracked in git — real removal, not just untracked cleanup). `docs/backlog/token-migration-tracker.md` deliberately kept separate — it's a live per-component token-status table, not a plan doc, so it doesn't belong merged into DESIGN.md.
+
+**Why:**
+- Scaffolding-parity work (previous entries) got every file's SHAPE matching Primer; this session started actually implementing them. Mid-implementation, a real error surfaced: `fontWeight` had been marked "no current use, defer it" without checking `packages/react/src` first — it's real and shipping (`Text.tsx`, live `theme.css` output). Per explicit user instruction after that error, the plan changed from "build ~30 of ~150 files, defer the rest by judgment" to "implement every scaffolded file, no unilateral skip decisions."
+
+**Next agent:**
+- `docs/backlog/token-migration-tracker.md` (component-token DTCG-format status, a separate older doc) was NOT touched this session — still reflects pre-rebuild state, don't confuse it with the new `DESIGN.md`.
+- `DESIGN.md` §7 has the full 33-step build order — currently at step 5 (done: treeWalker, log, schema foundation). Next: generic utilities (toCamelCase, toPascalCase, etc.), then shared schema building blocks (alphaValue, collections, scopes, llmExtension), then color.
+- `npm run build` is still broken — `scripts/build-tokens.mjs` doesn't exist yet. This is expected; nothing regressed, the old broken state and the new one just point at a different missing file.
+- Undecided still: whether `docs/token-architecture-migration.md` gets deleted outright or kept as a superseded pointer (asked, not yet answered as of this entry).
+
 <!--
 Template for a new entry:
 

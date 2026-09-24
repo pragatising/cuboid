@@ -1,8 +1,13 @@
+import { z } from "zod";
+
 /**
- * Zod schema for the "dimensionValue" shape. Mirrors Primer's src/schemas/dimensionValue.ts —
- * Primer splits per- token schemas (full leaf incl. $extensions) from
- * per-shape value schemas (just $value) so both compose independently.
- *
- * Not yet implemented — stub only.
+ * W3C DTCG dimension value format — matches Primer's
+ * schemas/dimensionValue.ts, plus "em" (not in the DTCG spec proper but
+ * supported for practical use, per Primer's real
+ * types/dimensionTokenValue.d.ts and parseDimension.ts).
+ * @see https://www.designtokens.org/tr/drafts/format/#dimension
  */
-export const dimensionValue = undefined as never;
+export const dimensionValue = z.object({
+  value: z.number(),
+  unit: z.enum(["px", "rem", "em"]),
+});

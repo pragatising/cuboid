@@ -1,9 +1,9 @@
+import type { ColorW3cValue } from "../schemas/colorW3cValue";
+
 /**
- * The shape of a color token's $value: a hex string ("#FFFFFF"), or a
- * {path.to.token} reference string, resolved before this type ever applies.
- * Matches Primer's colorHex.d.ts scope, minus the W3C color-space object
- * variant (cuboid's tokens are hex-only today — see tokens/base/light.json).
- *
- * Not yet implemented — stub only.
+ * The shape of a color token's $value: a hex string, a full W3C DTCG
+ * color object (any color space), or a {path.to.token} reference string
+ * (resolved by Style Dictionary before this type ever applies at
+ * runtime). Matches schemas/colorToken.ts.
  */
-export type ColorTokenValue = string; // TODO: hex string | {path} reference
+export type ColorTokenValue = string | ColorW3cValue;

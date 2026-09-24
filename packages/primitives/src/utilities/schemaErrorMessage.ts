@@ -1,8 +1,8 @@
 /**
- * Mirrors Primer's src/utilities/schemaErrorMessage.ts.
- *
- * Not yet implemented — stub only.
+ * Formats a two-part (what's wrong / what's expected) error message
+ * consistently across every schema. Matches Primer's
+ * utilities/schemaErrorMessage.ts.
  */
-export function schemaErrorMessage(): unknown {
-  throw new Error("not implemented");
+export function schemaErrorMessage(title: string, description?: string): string {
+  return `**${title}**${description ? `\n${description}` : ""}`;
 }

@@ -1,8 +1,13 @@
+import type { PlatformConfig, Transform, TransformedToken } from "style-dictionary/types";
+
 /**
- * Mirrors Primer's src/transformers/namePathToSlashNotation.ts.
- *
- * Not yet implemented — stub only.
+ * Token path segments -> a slash/notation string. Matches Primer's
+ * transformers/namePathToSlashNotation.ts.
  */
-export function namePathToSlashNotation(): unknown {
-  throw new Error("not implemented");
-}
+export const namePathToSlashNotation: Transform = {
+  name: "name/pathToSlashNotation",
+  type: "name",
+  transform: (token: TransformedToken, options?: PlatformConfig): string => {
+    return [options?.prefix, ...token.path].filter((part): part is string => typeof part === "string" && part !== "@").join("/");
+  },
+};

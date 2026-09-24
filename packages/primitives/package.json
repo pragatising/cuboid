@@ -7,12 +7,13 @@
   "scripts": {
     "tokens:functional-colors": "node scripts/flatten-functional-colors.mjs",
     "tokens:functional-typography": "node scripts/flatten-functional-typography.mjs",
-    "tokens:typography-theme": "node scripts/build-typography-theme.mjs",
-    "tokens:theme": "node scripts/build-theme.mjs && node scripts/build-theme-css.mjs && node scripts/build-component-theme-css.mjs",
+    "tokens:theme": "node scripts/build-tokens.mjs",
     "check:no-react": "node scripts/check-no-react.mjs",
-    "test": "npm run check:no-react && node --test scripts/__tests__/*.test.mjs"
+    "test": "npm run check:no-react && node --test \"src/**/*.test.ts\""
   },
   "dependencies": {
+    "color2k": "^2.0.4",
+    "colorjs.io": "^0.5.2",
     "style-dictionary": "^5.5.3",
     "zod": "^4.6.3"
   },

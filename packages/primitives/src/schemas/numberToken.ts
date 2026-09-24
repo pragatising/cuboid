@@ -1,8 +1,14 @@
+import { z } from "zod";
+import { baseToken } from "./baseToken";
+import { referenceValue } from "./referenceValue";
+import { tokenType } from "./tokenType";
+
 /**
- * Zod schema for the "numberToken" shape. Mirrors Primer's src/schemas/numberToken.ts —
- * Primer splits per- token schemas (full leaf incl. $extensions) from
- * per-shape value schemas (just $value) so both compose independently.
- *
- * Not yet implemented — stub only.
+ * Full `number` token schema — plain JSON number or reference. Matches
+ * Primer's schemas/numberToken.ts.
  */
-export const numberToken = undefined as never;
+export const numberToken = baseToken.extend({
+  $value: z.union([z.number(), referenceValue]),
+  $type: tokenType("number"),
+  $extensions: z.record(z.string(), z.unknown()).optional(),
+});

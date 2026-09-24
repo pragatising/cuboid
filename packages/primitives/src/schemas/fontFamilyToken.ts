@@ -1,8 +1,15 @@
+import { z } from "zod";
+import { baseToken } from "./baseToken";
+import { referenceValue } from "./referenceValue";
+import { tokenType } from "./tokenType";
+
 /**
- * Zod schema for the "fontFamilyToken" shape. Mirrors Primer's src/schemas/fontFamilyToken.ts —
- * Primer splits per- token schemas (full leaf incl. $extensions) from
- * per-shape value schemas (just $value) so both compose independently.
- *
- * Not yet implemented — stub only.
+ * Full `fontFamily` token schema — a string or an array of strings (per
+ * the DTCG spec), or a reference. Matches Primer's
+ * schemas/fontFamilyToken.ts.
  */
-export const fontFamilyToken = undefined as never;
+export const fontFamilyToken = baseToken.extend({
+  $value: z.union([z.string(), z.array(z.string()), referenceValue]),
+  $type: tokenType("fontFamily"),
+  $extensions: z.record(z.string(), z.unknown()).optional(),
+});

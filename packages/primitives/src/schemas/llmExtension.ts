@@ -1,8 +1,14 @@
+import { z } from "zod";
+
 /**
- * Zod schema for the "llmExtension" shape. Mirrors Primer's src/schemas/llmExtension.ts —
- * Primer splits per- token schemas (full leaf incl. $extensions) from
- * per-shape value schemas (just $value) so both compose independently.
- *
- * Not yet implemented — stub only.
+ * Schema for the `org.cuboid.llm` extension — agent-readable usage
+ * guidance authored directly on a token, already real content in cuboid's
+ * token files (e.g. functional/typography/typography.json5's `usage`/
+ * `rules` fields). Matches Primer's schemas/llmExtension.ts (`org.primer.llm`).
  */
-export const llmExtension = undefined as never;
+export const llmExtension = z
+  .object({
+    usage: z.array(z.string()).optional(),
+    rules: z.string().optional(),
+  })
+  .optional();

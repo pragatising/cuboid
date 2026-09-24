@@ -1,11 +1,20 @@
+import type { DesignToken } from "style-dictionary/types";
+
 /**
- * Mirrors Primer's src/preprocessors/utilities/transformTokens.ts — the
- * shared recursive-walk helper preprocessors use to rewrite every token
- * in a dictionary (e.g. themeOverrides.ts applies its per-token override
- * check via this).
- *
- * Not yet implemented — stub only.
+ * Shared recursive-walk helper preprocessors use to rewrite every real
+ * token in a dictionary, leaving group structure untouched. Matches
+ * Primer's preprocessors/utilities/transformTokens.ts.
  */
-export function transformTokens(): unknown {
-  throw new Error("not implemented");
+export function transformTokens(token: DesignToken | Record<string, unknown>, transform: (token: DesignToken) => DesignToken): unknown {
+  if (typeof token !== "object" || token === null) return token;
+
+  if ("$value" in token || "value" in token) {
+    return transform(token as DesignToken);
+  }
+
+  const next: Record<string, unknown> = {};
+  for (const [prop, value] of Object.entries(token)) {
+    next[prop] = transformTokens(value as Record<string, unknown>, transform);
+  }
+  return next;
 }

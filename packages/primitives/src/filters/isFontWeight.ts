@@ -1,9 +1,9 @@
+import type { TransformedToken } from "style-dictionary/types";
+
 /**
- * Primer-equivalent filter: checks token.$type/$extensions for "isFontWeight".
- * Mirrors Primer's src/filters/isFontWeight.ts.
- *
- * Not yet implemented — stub only.
+ * True if a token's $type is "fontWeight". Matches Primer's
+ * filters/isFontWeight.ts.
  */
-export function isFontWeight(_token: unknown): boolean {
-  throw new Error("not implemented");
+export function isFontWeight(token: TransformedToken): boolean {
+  return token.$type === "fontWeight";
 }

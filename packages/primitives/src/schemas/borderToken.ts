@@ -1,8 +1,23 @@
+import { z } from "zod";
+import { baseToken } from "./baseToken";
+import { referenceValue } from "./referenceValue";
+import { colorHexValue } from "./colorHexValue";
+import { colorW3cValue } from "./colorW3cValue";
+import { dimensionValue } from "./dimensionValue";
+import { tokenType } from "./tokenType";
+
 /**
- * Zod schema for the "borderToken" shape. Mirrors Primer's src/schemas/borderToken.ts —
- * Primer splits per- token schemas (full leaf incl. $extensions) from
- * per-shape value schemas (just $value) so both compose independently.
- *
- * Not yet implemented — stub only.
+ * Full `border` token schema — {color, width, style}. Matches Primer's
+ * schemas/borderToken.ts.
  */
-export const borderToken = undefined as never;
+export const borderValue = z.object({
+  color: z.union([colorHexValue, colorW3cValue, referenceValue]),
+  style: z.enum(["solid", "dashed", "dotted", "double", "groove", "ridge", "outset", "inset"]),
+  width: z.union([dimensionValue, referenceValue]),
+});
+
+export const borderToken = baseToken.extend({
+  $value: z.union([borderValue, referenceValue]),
+  $type: tokenType("border"),
+  $extensions: z.record(z.string(), z.unknown()).optional(),
+});

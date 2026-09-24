@@ -1,8 +1,20 @@
+import { z } from "zod";
+import { joinFriendly } from "../utilities/joinFriendly";
+import { schemaErrorMessage } from "../utilities/schemaErrorMessage";
+
 /**
- * Zod schema for the "scopes" shape. Mirrors Primer's src/schemas/scopes.ts —
- * Primer splits per- token schemas (full leaf incl. $extensions) from
- * per-shape value schemas (just $value) so both compose independently.
- *
- * Not yet implemented — stub only.
+ * Validates a token's declared `org.cuboid.figma.scopes` array against an
+ * allowed list, passed in per-type by the caller. Matches Primer's
+ * schemas/scopes.ts shape — generic validator, not Primer's own hardcoded
+ * scope names (same reasoning as collections.ts).
  */
-export const scopes = undefined as never;
+export function scopes(allowed: string[]) {
+  return z.array(z.string()).superRefine((value, ctx) => {
+    if (!value.every((item) => allowed.includes(item))) {
+      ctx.addIssue({
+        code: "custom",
+        message: schemaErrorMessage(`Invalid scope: "${value.join(", ")}"`, `Valid scopes are: ${joinFriendly(allowed)}`),
+      });
+    }
+  });
+}

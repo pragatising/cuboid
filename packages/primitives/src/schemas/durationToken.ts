@@ -1,8 +1,15 @@
+import { z } from "zod";
+import { baseToken } from "./baseToken";
+import { referenceValue } from "./referenceValue";
+import { durationValue } from "./durationValue";
+import { tokenType } from "./tokenType";
+
 /**
- * Zod schema for the "durationToken" shape. Mirrors Primer's src/schemas/durationToken.ts —
- * Primer splits per- token schemas (full leaf incl. $extensions) from
- * per-shape value schemas (just $value) so both compose independently.
- *
- * Not yet implemented — stub only.
+ * Full `duration` token schema. Matches Primer's
+ * schemas/durationToken.ts.
  */
-export const durationToken = undefined as never;
+export const durationToken = baseToken.extend({
+  $value: z.union([durationValue, referenceValue]),
+  $type: tokenType("duration"),
+  $extensions: z.record(z.string(), z.unknown()).optional(),
+});

@@ -1,8 +1,14 @@
+import { z } from "zod";
+import { baseToken } from "./baseToken";
+import { referenceValue } from "./referenceValue";
+import { tokenType } from "./tokenType";
+
 /**
- * Zod schema for the "cubicBezierToken" shape. Mirrors Primer's src/schemas/cubicBezierToken.ts —
- * Primer splits per- token schemas (full leaf incl. $extensions) from
- * per-shape value schemas (just $value) so both compose independently.
- *
- * Not yet implemented — stub only.
+ * Full `cubicBezier` token schema — a 4-number array or reference.
+ * Matches Primer's schemas/cubicBezierToken.ts.
  */
-export const cubicBezierToken = undefined as never;
+export const cubicBezierToken = baseToken.extend({
+  $value: z.union([z.array(z.number()).length(4), referenceValue]),
+  $type: tokenType("cubicBezier"),
+  $extensions: z.record(z.string(), z.unknown()).optional(),
+});

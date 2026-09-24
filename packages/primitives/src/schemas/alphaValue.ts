@@ -1,8 +1,9 @@
+import { z } from "zod";
+
 /**
- * Zod schema for the "alphaValue" shape. Mirrors Primer's src/schemas/alphaValue.ts —
- * Primer splits per- token schemas (full leaf incl. $extensions) from
- * per-shape value schemas (just $value) so both compose independently.
- *
- * Not yet implemented — stub only.
+ * Alpha channel value — a number between 0 and 1. Matches Primer's
+ * schemas/alphaValue.ts. Cuboid's real color tokens carry `alpha` as a
+ * sibling key to `$value` (e.g. `{ $value: "#ffffff", alpha: 0 }`), not
+ * folded into the value itself.
  */
-export const alphaValue = undefined as never;
+export const alphaValue = z.number().min(0).max(1);

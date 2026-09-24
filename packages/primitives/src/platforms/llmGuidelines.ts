@@ -1,10 +1,24 @@
+import type { PlatformInitializer } from "../types/platformInitializer";
+import { hasLlmExtensions } from "../filters/hasLlmExtensions";
+import type { PlatformConfig } from "style-dictionary/types";
+
 /**
- * Platform config: one function per output target, returning which
- * transforms/formats/filters/files produce it. Mirrors Primer's
- * src/platforms/llmGuidelines.ts.
- *
- * Not yet implemented — stub only.
+ * Markdown LLM-guidelines doc output. Matches Primer's
+ * platforms/llmGuidelines.ts.
  */
-export function llmGuidelines(): unknown {
-  throw new Error("not implemented");
-}
+export const llmGuidelines: PlatformInitializer = (outputFile: string, prefix: string | undefined, buildPath: string): PlatformConfig => ({
+  prefix,
+  buildPath,
+  preprocessors: ["inheritGroupProperties"],
+  transforms: ["name/pathToKebabCase"],
+  files: [
+    {
+      destination: outputFile,
+      format: "markdown/llm-guidelines",
+      filter: hasLlmExtensions,
+      options: {
+        outputReferences: false,
+      },
+    },
+  ],
+});
