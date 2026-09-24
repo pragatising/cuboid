@@ -1,6 +1,6 @@
 import type { PlatformInitializer } from "../types/platformInitializer";
 import type { PlatformConfig } from "style-dictionary/types";
-import { isSource } from "../filters/isSource";
+import { isSource } from "../filters/isSource.ts";
 
 /**
  * ESM output platform. Matches Primer's platforms/typescript.ts. Not

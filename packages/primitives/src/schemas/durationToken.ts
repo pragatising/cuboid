@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { baseToken } from "./baseToken";
-import { referenceValue } from "./referenceValue";
-import { durationValue } from "./durationValue";
-import { tokenType } from "./tokenType";
+import { baseToken } from "./baseToken.ts";
+import { referenceValue } from "./referenceValue.ts";
+import { durationValue } from "./durationValue.ts";
+import { tokenType } from "./tokenType.ts";
 
 /**
  * Full `duration` token schema. Matches Primer's

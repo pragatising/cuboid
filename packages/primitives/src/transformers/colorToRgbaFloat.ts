@@ -1,11 +1,11 @@
 import { toHex } from "color2k";
 import type { Transform, TransformedToken } from "style-dictionary/types";
-import { isColor } from "../filters/isColor";
-import { getTokenValue } from "./utilities/getTokenValues";
-import { rgbaFloatToHex } from "./utilities/rgbaFloatToHex";
-import { hexToRgbaFloat } from "./utilities/hexToRgbaFloat";
-import { isRgbaFloat } from "./utilities/isRgbaFloat";
-import { normalizeColorValue, isW3cColorValue } from "./utilities/normalizeColorValue";
+import { isColor } from "../filters/isColor.ts";
+import { getTokenValue } from "./utilities/getTokenValues.ts";
+import { rgbaFloatToHex } from "./utilities/rgbaFloatToHex.ts";
+import { hexToRgbaFloat } from "./utilities/hexToRgbaFloat.ts";
+import { isRgbaFloat } from "./utilities/isRgbaFloat.ts";
+import { normalizeColorValue, isW3cColorValue } from "./utilities/normalizeColorValue.ts";
 
 function toRgbaFloat(token: TransformedToken, alphaOverride?: number) {
   let tokenValue = getTokenValue(token);

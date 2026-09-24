@@ -1,5 +1,5 @@
 import type { PlatformInitializer } from "../types/platformInitializer";
-import { isSource } from "../filters/isSource";
+import { isSource } from "../filters/isSource.ts";
 import type { TransformedToken, PlatformConfig, Config } from "style-dictionary/types";
 
 /**

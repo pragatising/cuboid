@@ -1,5 +1,5 @@
 import { format } from "prettier";
-import { jsonToFlat } from "./utilities/jsonToFlat";
+import { jsonToFlat } from "./utilities/jsonToFlat.ts";
 import type { FormatFn, FormatFnArguments } from "style-dictionary/types";
 import { sortByName } from "style-dictionary/utils";
 

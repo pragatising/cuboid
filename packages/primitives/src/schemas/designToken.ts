@@ -1,20 +1,20 @@
 import { z } from "zod";
-import { tokenName } from "./tokenName";
-import { stringToken } from "./stringToken";
-import { viewportRangeToken } from "./viewportRangeToken";
-import { numberToken } from "./numberToken";
-import { fontWeightToken } from "./fontWeightToken";
-import { typographyToken } from "./typographyToken";
-import { borderToken } from "./borderToken";
-import { dimensionToken } from "./dimensionToken";
-import { colorToken } from "./colorToken";
-import { fontFamilyToken } from "./fontFamilyToken";
-import { shadowToken } from "./shadowToken";
-import { durationToken } from "./durationToken";
-import { cubicBezierToken } from "./cubicBezierToken";
-import { gradientToken } from "./gradientToken";
-import { transitionToken } from "./transitionToken";
-import { llmExtension } from "./llmExtension";
+import { tokenName } from "./tokenName.ts";
+import { stringToken } from "./stringToken.ts";
+import { viewportRangeToken } from "./viewportRangeToken.ts";
+import { numberToken } from "./numberToken.ts";
+import { fontWeightToken } from "./fontWeightToken.ts";
+import { typographyToken } from "./typographyToken.ts";
+import { borderToken } from "./borderToken.ts";
+import { dimensionToken } from "./dimensionToken.ts";
+import { colorToken } from "./colorToken.ts";
+import { fontFamilyToken } from "./fontFamilyToken.ts";
+import { shadowToken } from "./shadowToken.ts";
+import { durationToken } from "./durationToken.ts";
+import { cubicBezierToken } from "./cubicBezierToken.ts";
+import { gradientToken } from "./gradientToken.ts";
+import { transitionToken } from "./transitionToken.ts";
+import { llmExtension } from "./llmExtension.ts";
 
 /**
  * Group-level $extensions schema (W3C Design Tokens spec — group

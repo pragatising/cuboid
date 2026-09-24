@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { baseToken } from "./baseToken";
-import { referenceValue } from "./referenceValue";
-import { tokenType } from "./tokenType";
+import { baseToken } from "./baseToken.ts";
+import { referenceValue } from "./referenceValue.ts";
+import { tokenType } from "./tokenType.ts";
 
 /**
  * Full `fontFamily` token schema — a string or an array of strings (per

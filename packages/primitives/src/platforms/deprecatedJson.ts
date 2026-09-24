@@ -1,6 +1,6 @@
 import type { PlatformInitializer } from "../types/platformInitializer";
 import type { PlatformConfig } from "style-dictionary/types";
-import { isDeprecated } from "../filters/isDeprecated";
+import { isDeprecated } from "../filters/isDeprecated.ts";
 
 /**
  * Deprecated-tokens-only output. Matches Primer's

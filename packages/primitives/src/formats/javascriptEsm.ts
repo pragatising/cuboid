@@ -1,6 +1,6 @@
 import { format } from "prettier";
-import { jsonToNestedValue } from "./utilities/jsonToNestedValue";
-import { prefixTokens } from "./utilities/prefixTokens";
+import { jsonToNestedValue } from "./utilities/jsonToNestedValue.ts";
+import { prefixTokens } from "./utilities/prefixTokens.ts";
 import type { FormatFn, FormatFnArguments } from "style-dictionary/types";
 import { fileHeader } from "style-dictionary/utils";
 

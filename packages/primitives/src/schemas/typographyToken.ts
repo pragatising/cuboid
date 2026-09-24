@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { referenceValue } from "./referenceValue";
-import { dimensionValue } from "./dimensionValue";
-import { baseToken } from "./baseToken";
-import { fontWeightValue } from "./fontWeightValue";
-import { tokenType } from "./tokenType";
+import { referenceValue } from "./referenceValue.ts";
+import { dimensionValue } from "./dimensionValue.ts";
+import { baseToken } from "./baseToken.ts";
+import { fontWeightValue } from "./fontWeightValue.ts";
+import { tokenType } from "./tokenType.ts";
 
 /**
  * Full `typography` token schema — {fontFamily, fontSize, fontWeight,

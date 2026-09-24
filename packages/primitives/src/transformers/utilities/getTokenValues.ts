@@ -1,5 +1,5 @@
 import type { TransformedToken } from "style-dictionary/types";
-import { InvalidTokenValueError, InvalidTokenValuePropertyError } from "./invalidTokenError";
+import { InvalidTokenValueError, InvalidTokenValuePropertyError } from "./invalidTokenError.ts";
 
 /**
  * Given an already-resolved token, pulls `$value` (or one composite

@@ -1,4 +1,4 @@
-import { toPascalCase } from "../utilities/toPascalCase";
+import { toPascalCase } from "../utilities/toPascalCase.ts";
 import type { PlatformConfig, Transform, TransformedToken } from "style-dictionary/types";
 
 /**

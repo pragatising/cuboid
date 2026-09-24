@@ -1,5 +1,5 @@
 import type { PlatformConfig, Transform, TransformedToken } from "style-dictionary/types";
-import { upperCaseFirstCharacter } from "../utilities/upperCaseFirstCharacter";
+import { upperCaseFirstCharacter } from "../utilities/upperCaseFirstCharacter.ts";
 
 /**
  * camelCase implementation scoped to this transformer only — replaces

@@ -1,11 +1,11 @@
 import { z } from "zod";
-import { baseToken } from "./baseToken";
-import { referenceValue } from "./referenceValue";
-import { colorHexValue } from "./colorHexValue";
-import { colorW3cValue } from "./colorW3cValue";
-import { alphaValue } from "./alphaValue";
-import { dimensionValue } from "./dimensionValue";
-import { tokenType } from "./tokenType";
+import { baseToken } from "./baseToken.ts";
+import { referenceValue } from "./referenceValue.ts";
+import { colorHexValue } from "./colorHexValue.ts";
+import { colorW3cValue } from "./colorW3cValue.ts";
+import { alphaValue } from "./alphaValue.ts";
+import { dimensionValue } from "./dimensionValue.ts";
+import { tokenType } from "./tokenType.ts";
 
 /**
  * A single shadow layer — matches Primer's schemas/shadowToken.ts

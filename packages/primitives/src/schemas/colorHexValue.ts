@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { schemaErrorMessage } from "../utilities/schemaErrorMessage";
+import { schemaErrorMessage } from "../utilities/schemaErrorMessage.ts";
 
 /**
  * Validates a 3/6/8-digit hex color string. Matches Primer's

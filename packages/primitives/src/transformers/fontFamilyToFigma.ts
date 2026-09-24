@@ -1,6 +1,6 @@
 import type { Config, PlatformConfig, Transform, TransformedToken } from "style-dictionary/types";
-import { isFontFamily } from "../filters/isFontFamily";
-import { hasSpaceInString } from "./utilities/hasSpaceInStrings";
+import { isFontFamily } from "../filters/isFontFamily.ts";
+import { hasSpaceInString } from "./utilities/hasSpaceInStrings.ts";
 
 /**
  * fontFamily $value -> a Figma-ready string, allowing a per-token

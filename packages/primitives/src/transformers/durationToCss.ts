@@ -1,5 +1,5 @@
 import type { Config, PlatformConfig, Transform, TransformedToken } from "style-dictionary/types";
-import { isDuration } from "../filters/isDuration";
+import { isDuration } from "../filters/isDuration.ts";
 
 interface DurationValue {
   value: number;

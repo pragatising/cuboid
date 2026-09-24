@@ -1,5 +1,5 @@
-import { filterStringArray } from "./filterStringArray";
-import { upperCaseFirstCharacter } from "./upperCaseFirstCharacter";
+import { filterStringArray } from "./filterStringArray.ts";
+import { upperCaseFirstCharacter } from "./upperCaseFirstCharacter.ts";
 
 /**
  * kebab-case / space-separated string (or path-segment array) -> camelCase.

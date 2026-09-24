@@ -1,8 +1,8 @@
 import { toHex } from "color2k";
 import type { Transform, TransformedToken } from "style-dictionary/types";
-import { isGradient } from "../filters/isGradient";
-import { getTokenValue } from "./utilities/getTokenValues";
-import { normalizeColorValue, type ColorValue } from "./utilities/normalizeColorValue";
+import { isGradient } from "../filters/isGradient.ts";
+import { getTokenValue } from "./utilities/getTokenValues.ts";
+import { normalizeColorValue, type ColorValue } from "./utilities/normalizeColorValue.ts";
 
 /**
  * Array of color stops -> a CSS linear-gradient() string. Direction

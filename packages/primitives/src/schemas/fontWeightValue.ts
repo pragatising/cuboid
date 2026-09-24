@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { schemaErrorMessage } from "../utilities/schemaErrorMessage";
+import { schemaErrorMessage } from "../utilities/schemaErrorMessage.ts";
 
 /**
  * Valid fontWeight numeric values. Matches Primer's

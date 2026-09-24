@@ -1,9 +1,9 @@
 import type { Transform, TransformedToken } from "style-dictionary/types";
-import { isBorder } from "../filters/isBorder";
+import { isBorder } from "../filters/isBorder.ts";
 import type { BorderTokenValue } from "../types/borderTokenValue";
 import type { DimensionTokenValue } from "../types/dimensionTokenValue";
-import { parseDimension } from "./utilities/parseDimension";
-import { normalizeColorValue } from "./utilities/normalizeColorValue";
+import { parseDimension } from "./utilities/parseDimension.ts";
+import { normalizeColorValue } from "./utilities/normalizeColorValue.ts";
 
 function dimensionToCss(dim: DimensionTokenValue | string): string {
   if (typeof dim === "string") return dim;

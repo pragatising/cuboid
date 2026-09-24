@@ -1,9 +1,9 @@
 import { toHex } from "color2k";
 import type { PlatformConfig, Transform, TransformedToken } from "style-dictionary/types";
-import { isColor } from "../filters/isColor";
-import { getTokenValue } from "./utilities/getTokenValues";
-import { alpha } from "./utilities/alpha";
-import { normalizeColorValue } from "./utilities/normalizeColorValue";
+import { isColor } from "../filters/isColor.ts";
+import { getTokenValue } from "./utilities/getTokenValues.ts";
+import { alpha } from "./utilities/alpha.ts";
+import { normalizeColorValue } from "./utilities/normalizeColorValue.ts";
 
 /**
  * Style Dictionary value transform: converts a resolved color token's

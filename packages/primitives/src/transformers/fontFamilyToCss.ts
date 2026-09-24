@@ -1,7 +1,7 @@
 import type { Transform, TransformedToken } from "style-dictionary/types";
-import { isFontFamily } from "../filters/isFontFamily";
-import { getTokenValue } from "./utilities/getTokenValues";
-import { hasSpaceInString } from "./utilities/hasSpaceInStrings";
+import { isFontFamily } from "../filters/isFontFamily.ts";
+import { getTokenValue } from "./utilities/getTokenValues.ts";
+import { hasSpaceInString } from "./utilities/hasSpaceInStrings.ts";
 
 /**
  * A fontFamily $value (string or string array) -> a CSS-ready

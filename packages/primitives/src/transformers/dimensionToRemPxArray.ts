@@ -1,6 +1,6 @@
 import type { Config, PlatformConfig, Transform, TransformedToken } from "style-dictionary/types";
-import { isDimension } from "../filters/isDimension";
-import { parseDimension } from "./utilities/parseDimension";
+import { isDimension } from "../filters/isDimension.ts";
+import { parseDimension } from "./utilities/parseDimension.ts";
 
 type SizePx = "0" | `${number}px`;
 type SizeRem = "0" | `${number}rem`;

@@ -1,5 +1,5 @@
 import type { Transform, TransformedToken } from "style-dictionary/types";
-import { isDeprecated } from "../filters/isDeprecated";
+import { isDeprecated } from "../filters/isDeprecated.ts";
 
 /**
  * Replaces a deprecated token's value with the string naming its

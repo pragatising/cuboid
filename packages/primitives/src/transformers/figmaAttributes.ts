@@ -1,5 +1,5 @@
 import type { PlatformConfig, Transform, TransformedToken } from "style-dictionary/types";
-import { asArray } from "../utilities/asArray";
+import { asArray } from "../utilities/asArray.ts";
 
 /**
  * Extracts a token's `org.cuboid.figma` extension fields into the shape

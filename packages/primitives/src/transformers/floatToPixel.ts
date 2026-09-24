@@ -1,5 +1,5 @@
 import type { Transform, TransformedToken } from "style-dictionary/types";
-import { isNumber } from "../filters/isNumber";
+import { isNumber } from "../filters/isNumber.ts";
 
 /**
  * Converts a float multiplier token (e.g. a line-height number) to a

@@ -1,8 +1,8 @@
 import type { Transform, TransformedToken } from "style-dictionary/types";
-import { isTransition } from "../filters/isTransition";
-import { cubicBezierArrayToCss } from "./cubicBezierToCss";
-import { checkRequiredTokenProperties } from "./utilities/checkRequiredTokenProperties";
-import { getTokenValue } from "./utilities/getTokenValues";
+import { isTransition } from "../filters/isTransition.ts";
+import { cubicBezierArrayToCss } from "./cubicBezierToCss.ts";
+import { checkRequiredTokenProperties } from "./utilities/checkRequiredTokenProperties.ts";
+import { getTokenValue } from "./utilities/getTokenValues.ts";
 
 interface TransitionValue {
   duration: string;
