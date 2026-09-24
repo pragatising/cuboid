@@ -1,8 +1,13 @@
+import type { PlatformConfig, TransformedTokens } from "style-dictionary/types";
+
 /**
- * Mirrors Primer's src/formats/utilities/prefixTokens.ts.
- *
- * Not yet implemented — stub only.
+ * Wraps a token tree in one extra top-level key if the platform declares
+ * a `prefix`. Matches Primer's formats/utilities/prefixTokens.ts.
  */
-export function prefixTokens(): unknown {
-  throw new Error("not implemented");
+export function prefixTokens(tokens: TransformedTokens, platform: PlatformConfig = {}): TransformedTokens {
+  const { prefix } = platform;
+  if (typeof prefix === "string") {
+    return { [prefix]: tokens } as unknown as TransformedTokens;
+  }
+  return tokens;
 }

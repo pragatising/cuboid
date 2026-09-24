@@ -1,14 +1,13 @@
 /**
- * Shapes for cuboid's raw typography leaves: fontFamily is a string or
- * string array; fontWeight and lineHeight are unitless numbers (see
- * tokens/functional/typography/typography.json — weight: 400/500/600,
- * lineHeight: 16/20/24). Matches Primer's typographyTokenValue.d.ts scope,
- * minus the composite typography-shorthand type Primer also has, since
- * cuboid's typography.json stores each property as its own leaf, not a
- * composite object.
- *
- * Not yet implemented — stub only.
+ * W3C DTCG typography composite token value.
+ * @see https://www.designtokens.org/tr/drafts/format/#typography
+ * Matches Primer's types/typographyTokenValue.d.ts.
  */
-export type FontFamilyTokenValue = unknown; // TODO: string | string[]
-export type FontWeightTokenValue = number; // TODO
-export type LineHeightTokenValue = number; // TODO
+export interface TypographyTokenValue {
+  fontFamily: string;
+  fontSize: number;
+  fontWeight: number;
+  lineHeight: number;
+  fontStyle?: string;
+  letterSpacing?: number;
+}

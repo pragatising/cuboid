@@ -1,10 +1,9 @@
+import type { TransformedToken } from "style-dictionary/types";
+
 /**
- * Primer-equivalent filter: checks token.$type === "..." — used by
- * platforms/ to route tokens into different output files from one
- * resolved tree (e.g. themed vs. non-themed CSS).
- *
- * Not yet implemented — stub only.
+ * True if a token's $type is "cubicBezier". Matches Primer's
+ * filters/isCubicBezier.ts.
  */
-export function isCubicBezier(_token: unknown): boolean {
-  throw new Error("not implemented");
+export function isCubicBezier(token: TransformedToken): boolean {
+  return (token.$type ?? (token as { type?: string }).type) === "cubicBezier";
 }

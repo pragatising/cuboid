@@ -1,10 +1,28 @@
+import type { PlatformInitializer } from "../types/platformInitializer";
+import type { PlatformConfig } from "style-dictionary/types";
+import { isSource } from "../filters/isSource";
+
 /**
- * Platform config: one function per output target, returning which
- * transforms/formats/filters/files produce it. Mirrors Primer's
- * src/platforms/javascript.ts.
- *
- * Not yet implemented — stub only.
+ * CommonJS output platform. Matches Primer's platforms/javascript.ts.
+ * No current consumer (packages/react is ESM) — real infrastructure.
  */
-export function javascript(): unknown {
-  throw new Error("not implemented");
-}
+export const javascript: PlatformInitializer = (outputFile, prefix, buildPath, options): PlatformConfig => ({
+  prefix,
+  buildPath,
+  preprocessors: ["themeOverrides"],
+  transforms: ["color/hex", "dimension/rem", "shadow/css", "border/css", "typography/css", "fontFamily/css", "fontWeight/number"],
+  options: {
+    showFileHeader: false,
+    basePxFontSize: 16,
+    themeOverrides: {
+      theme: (options as { theme?: string })?.theme,
+    },
+  },
+  files: [
+    {
+      format: "javascript/commonJs",
+      destination: outputFile,
+      filter: isSource,
+    },
+  ],
+});

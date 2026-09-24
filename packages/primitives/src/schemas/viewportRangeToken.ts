@@ -1,8 +1,18 @@
+import { z } from "zod";
+import { baseToken } from "./baseToken";
+import { referenceValue } from "./referenceValue";
+import { tokenType } from "./tokenType";
+
 /**
- * Zod schema for the "viewportRangeToken" shape. Mirrors Primer's src/schemas/viewportRangeToken.ts —
- * Primer splits per- token schemas (full leaf incl. $extensions) from
- * per-shape value schemas (just $value) so both compose independently.
- *
- * Not yet implemented — stub only.
+ * `custom-viewportRange` — Primer's extension for a CSS custom-media
+ * viewport range (e.g. `"(min-width: 768px)"`). No confirmed use in
+ * cuboid's real token files today; built as real infrastructure anyway
+ * (per standing instruction: "deferred" never means "not built"), ready
+ * for cssCustomMedia.ts (Group 17) if a viewport-range token is
+ * authored. Matches Primer's schemas/viewportRangeToken.ts.
  */
-export const viewportRangeToken = undefined as never;
+export const viewportRangeToken = baseToken.extend({
+  $value: z.union([z.string(), referenceValue]),
+  $type: tokenType("custom-viewportRange"),
+  $extensions: z.record(z.string(), z.unknown()).optional(),
+});

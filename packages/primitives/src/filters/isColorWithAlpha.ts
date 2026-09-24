@@ -1,9 +1,10 @@
+import type { TransformedToken } from "style-dictionary/types";
+import { isColor } from "./isColor";
+
 /**
- * Primer-equivalent filter: checks token.$type/$extensions for "isColorWithAlpha".
- * Mirrors Primer's src/filters/isColorWithAlpha.ts.
- *
- * Not yet implemented — stub only.
+ * True if a token is a color AND carries a real numeric `alpha` sibling
+ * key. Matches Primer's filters/isColorWithAlpha.ts.
  */
-export function isColorWithAlpha(_token: unknown): boolean {
-  throw new Error("not implemented");
+export function isColorWithAlpha(token: TransformedToken): boolean {
+  return isColor(token) && (token as { alpha?: unknown }).alpha !== undefined && typeof (token as { alpha?: unknown }).alpha === "number";
 }

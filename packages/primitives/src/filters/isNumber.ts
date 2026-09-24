@@ -1,10 +1,10 @@
+import type { TransformedToken } from "style-dictionary/types";
+
 /**
- * Primer-equivalent filter: checks token.$type === "..." — used by
- * platforms/ to route tokens into different output files from one
- * resolved tree (e.g. themed vs. non-themed CSS).
- *
- * Not yet implemented — stub only.
+ * True if a token's $type is "number". Matches Primer's filters/isNumber.ts.
+ * Pulled forward from Group 5 — floatToPixel.ts (dimension group) depends
+ * on it.
  */
-export function isNumber(_token: unknown): boolean {
-  throw new Error("not implemented");
+export function isNumber(token: TransformedToken): boolean {
+  return token.$type === "number";
 }

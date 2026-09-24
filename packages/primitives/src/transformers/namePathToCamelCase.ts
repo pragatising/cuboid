@@ -1,8 +1,13 @@
+import { toCamelCase } from "../utilities/toCamelCase";
+import type { PlatformConfig, Transform, TransformedToken } from "style-dictionary/types";
+
 /**
- * Mirrors Primer's src/transformers/namePathToCamelCase.ts.
- *
- * Not yet implemented — stub only.
+ * Token path segments -> one camelCase key. Used for the JSON output's
+ * key naming (Task 4's defaultTheme.ts wants camelCase, not kebab-case).
+ * Matches Primer's transformers/namePathToCamelCase.ts.
  */
-export function namePathToCamelCase(): unknown {
-  throw new Error("not implemented");
-}
+export const namePathToCamelCase: Transform = {
+  name: "name/pathToCamelCase",
+  type: "name",
+  transform: (token: TransformedToken, options?: PlatformConfig): string => toCamelCase([options?.prefix || "", ...token.path]),
+};

@@ -1,9 +1,9 @@
+import type { TransformedToken } from "style-dictionary/types";
+
 /**
- * Primer-equivalent filter: checks token.$type/$extensions for "isTypography".
- * Mirrors Primer's src/filters/isTypography.ts.
- *
- * Not yet implemented — stub only.
+ * True if a token's $type is "typography". Matches Primer's
+ * filters/isTypography.ts.
  */
-export function isTypography(_token: unknown): boolean {
-  throw new Error("not implemented");
+export function isTypography(token: TransformedToken): boolean {
+  return token.$type === "typography";
 }

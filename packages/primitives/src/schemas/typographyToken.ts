@@ -1,8 +1,23 @@
+import { z } from "zod";
+import { referenceValue } from "./referenceValue";
+import { dimensionValue } from "./dimensionValue";
+import { baseToken } from "./baseToken";
+import { fontWeightValue } from "./fontWeightValue";
+import { tokenType } from "./tokenType";
+
 /**
- * Zod schema for the "typographyToken" shape. Mirrors Primer's src/schemas/typographyToken.ts —
- * Primer splits per- token schemas (full leaf incl. $extensions) from
- * per-shape value schemas (just $value) so both compose independently.
- *
- * Not yet implemented — stub only.
+ * Full `typography` token schema — {fontFamily, fontSize, fontWeight,
+ * lineHeight?}. Matches Primer's schemas/typographyToken.ts.
  */
-export const typographyToken = undefined as never;
+export const typographyValue = z.object({
+  fontSize: z.union([dimensionValue, referenceValue]),
+  lineHeight: z.union([z.number(), referenceValue]).optional(),
+  fontWeight: z.union([fontWeightValue, referenceValue]),
+  fontFamily: z.union([z.string().min(1), referenceValue]),
+});
+
+export const typographyToken = baseToken.extend({
+  $value: z.union([typographyValue, referenceValue]),
+  $type: tokenType("typography"),
+  $extensions: z.record(z.string(), z.unknown()).optional(),
+});

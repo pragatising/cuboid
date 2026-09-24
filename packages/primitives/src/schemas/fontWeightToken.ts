@@ -1,8 +1,15 @@
+import { z } from "zod";
+import { baseToken } from "./baseToken";
+import { referenceValue } from "./referenceValue";
+import { fontWeightValue } from "./fontWeightValue";
+import { tokenType } from "./tokenType";
+
 /**
- * Zod schema for the "fontWeightToken" shape. Mirrors Primer's src/schemas/fontWeightToken.ts —
- * Primer splits per- token schemas (full leaf incl. $extensions) from
- * per-shape value schemas (just $value) so both compose independently.
- *
- * Not yet implemented — stub only.
+ * Full `fontWeight` token schema. Matches Primer's
+ * schemas/fontWeightToken.ts.
  */
-export const fontWeightToken = undefined as never;
+export const fontWeightToken = baseToken.extend({
+  $value: z.union([fontWeightValue, referenceValue]),
+  $type: tokenType("fontWeight"),
+  $extensions: z.record(z.string(), z.unknown()).optional(),
+});

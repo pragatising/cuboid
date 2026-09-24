@@ -1,8 +1,15 @@
+import { z } from "zod";
+import { baseToken } from "./baseToken";
+import { referenceValue } from "./referenceValue";
+import { dimensionValue } from "./dimensionValue";
+import { tokenType } from "./tokenType";
+
 /**
- * Zod schema for the "dimensionToken" shape. Mirrors Primer's src/schemas/dimensionToken.ts —
- * Primer splits per- token schemas (full leaf incl. $extensions) from
- * per-shape value schemas (just $value) so both compose independently.
- *
- * Not yet implemented — stub only.
+ * Full `dimension` token schema. $extensions left loosely typed pending
+ * a real org.cuboid.figma shape decision (see baseToken.ts/colorToken.ts).
  */
-export const dimensionToken = undefined as never;
+export const dimensionToken = baseToken.extend({
+  $value: z.union([dimensionValue, referenceValue]),
+  $type: tokenType("dimension"),
+  $extensions: z.record(z.string(), z.unknown()).optional(),
+});

@@ -1,11 +1,18 @@
+import type { DimensionTokenValue } from "./dimensionTokenValue";
+import type { ColorW3cValue } from "../schemas/colorW3cValue";
+
 /**
- * The DTCG structured shadow shape: one shadow layer object, or an array of
- * them for stacked shadows (e.g. today's popover shadow, which is 3 layers
- * joined into one CSS string — see DESIGN.md §1 and
- * tokens/functional/shadows/shadows.json for the current pre-joined form
- * this replaces). Matches Primer's shadowTokenValue.d.ts scope.
- *
- * Not yet implemented — stub only.
+ * W3C DTCG shadow composite token value.
+ * @see https://www.designtokens.org/tr/drafts/format/#shadow
+ * Matches Primer's types/shadowTokenValue.d.ts. `inset`/`alpha` are
+ * practical additions, not in the W3C spec proper.
  */
-export type ShadowLayer = unknown; // TODO: { color, offsetX, offsetY, blur, spread }
-export type ShadowTokenValue = unknown; // TODO: ShadowLayer | ShadowLayer[]
+export interface ShadowTokenValue {
+  color: string | ColorW3cValue;
+  offsetX: DimensionTokenValue;
+  offsetY: DimensionTokenValue;
+  blur: DimensionTokenValue;
+  spread: DimensionTokenValue;
+  inset?: boolean;
+  alpha?: number;
+}

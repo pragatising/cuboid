@@ -1,9 +1,19 @@
+import { format } from "prettier";
+import type { FormatFn, FormatFnArguments } from "style-dictionary/types";
+import { fileHeader, sortByName } from "style-dictionary/utils";
+
 /**
- * Style Dictionary format: resolved token tree -> one output file's text
- * content. Mirrors Primer's src/formats/cssCustomMedia.ts.
- *
- * Not yet implemented — stub only.
+ * Resolved viewport-range tokens -> `@custom-media` CSS rules. Matches
+ * Primer's formats/cssCustomMedia.ts. No confirmed cuboid use yet
+ * (no viewportRange tokens authored) — real infrastructure, ready the
+ * moment one exists.
  */
-export function cssCustomMedia(): string {
-  throw new Error("not implemented");
-}
+export const cssCustomMedia: FormatFn = async ({ dictionary, options: _options, file }: FormatFnArguments) => {
+  const output = [await fileHeader({ file })];
+
+  dictionary.allTokens.sort(sortByName).forEach(({ name, $value }) => {
+    output.push(`@custom-media --${name} ${$value};`);
+  });
+
+  return format(output.join("\n"), { parser: "css", printWidth: 500 });
+};

@@ -1,10 +1,21 @@
+import type { PlatformInitializer } from "../types/platformInitializer";
+import type { PlatformConfig } from "style-dictionary/types";
+import { isDeprecated } from "../filters/isDeprecated";
+
 /**
- * Platform config: one function per output target, returning which
- * transforms/formats/filters/files produce it. Mirrors Primer's
- * src/platforms/deprecatedJson.ts.
- *
- * Not yet implemented — stub only.
+ * Deprecated-tokens-only output. Matches Primer's
+ * platforms/deprecatedJson.ts. No `$deprecated` authored yet — real
+ * infrastructure.
  */
-export function deprecatedJson(): unknown {
-  throw new Error("not implemented");
-}
+export const deprecatedJson: PlatformInitializer = (outputFile, prefix, buildPath): PlatformConfig => ({
+  prefix,
+  buildPath,
+  transforms: ["name/pathToDotNotation", "json/deprecated"],
+  files: [
+    {
+      destination: outputFile,
+      format: "json/flat",
+      filter: isDeprecated,
+    },
+  ],
+});

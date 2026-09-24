@@ -1,15 +1,28 @@
+import { toHex } from "color2k";
+import type { PlatformConfig, Transform, TransformedToken } from "style-dictionary/types";
+import { isColor } from "../filters/isColor";
+import { getTokenValue } from "./utilities/getTokenValues";
+import { alpha } from "./utilities/alpha";
+import { normalizeColorValue } from "./utilities/normalizeColorValue";
+
 /**
- * Normalizes a color $value to one consistent shape for downstream
- * consumers. Real, not hypothetical: tokens/base/light.json authors colors
- * in TWO shapes today — plain hex ("#3A3A39") and rgba() for alpha values
- * (grayAlpha scale, overlay.sheet — "rgba(58,58,57,0.08)"). This is what
- * lets a generic emitter treat every "color" $type token the same way
- * regardless of which shape it was authored in, instead of the CSS/JS
- * output silently mixing both forms. Matches Primer's transformers/
- * colorToHex.ts + colorToRgbaFloat.ts pairing.
- *
- * Not yet implemented — stub only.
+ * Style Dictionary value transform: converts a resolved color token's
+ * value to a hex string, applying the token's own `alpha` sibling key if
+ * present. Matches Primer's transformers/colorToHex.ts.
  */
-export function colorToHex(_value: string): string {
-  throw new Error("not implemented");
-}
+export const colorToHex: Transform = {
+  name: "color/hex",
+  type: "value",
+  transitive: true,
+  filter: isColor,
+  transform: (token: TransformedToken, config: PlatformConfig) => {
+    const rawValue = getTokenValue(token) as Parameters<typeof normalizeColorValue>[0];
+    const colorString = normalizeColorValue(rawValue);
+    const alphaValue = (token as { alpha?: number | null }).alpha;
+
+    if (alphaValue === null || alphaValue === undefined || alphaValue === 1) {
+      return toHex(colorString);
+    }
+    return toHex(alpha(colorString, alphaValue, token, config));
+  },
+};

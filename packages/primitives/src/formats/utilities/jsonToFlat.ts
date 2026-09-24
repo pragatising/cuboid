@@ -1,8 +1,10 @@
+import type { TransformedToken } from "style-dictionary/types";
+
 /**
- * Mirrors Primer's src/formats/utilities/jsonToFlat.ts.
- *
- * Not yet implemented — stub only.
+ * Flattens a token list to one-level keys (dot-path name -> resolved
+ * $value, or the full token object if `returnObject` is true). Matches
+ * Primer's formats/utilities/jsonToFlat.ts.
  */
-export function jsonToFlat(): unknown {
-  throw new Error("not implemented");
+export function jsonToFlat(tokens: TransformedToken[], returnObject = false): Record<string, unknown> {
+  return Object.fromEntries(tokens.map((token) => [token.name, returnObject ? token : token.$value]));
 }

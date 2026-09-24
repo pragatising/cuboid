@@ -1,21 +1,39 @@
+import type { Config, PlatformConfig, Transform, TransformedToken } from "style-dictionary/types";
+import { isDimension } from "../filters/isDimension";
+import { parseDimension } from "./utilities/parseDimension";
+
+function getBasePxFontSize(options?: PlatformConfig): number {
+  return (options && options.basePxFontSize) || 16;
+}
+
 /**
- * px → rem, honoring an optional SIZE_BASE_PX override (defaults to the
- * browser's 16px root). Matches cuboid's existing px-to-rem formula.
+ * Style Dictionary value transform: converts a resolved dimension
+ * token's value to a rem string, honoring an optional `basePxFontSize`
+ * override. rem/em values pass through unchanged (em is relative to its
+ * parent and cannot be converted). Matches Primer's
+ * transformers/dimensionToRem.ts.
  */
-const PX_TO_REM_BASE = Number(process.env.SIZE_BASE_PX ?? 16);
+export const dimensionToRem: Transform = {
+  name: "dimension/rem",
+  type: "value",
+  transitive: true,
+  filter: isDimension,
+  transform: (token: TransformedToken, config: PlatformConfig, options: Config) => {
+    const valueProp = options.usesDtcg ? "$value" : "value";
+    const baseFont = getBasePxFontSize(config);
 
-const PX_PATTERN = /^(\d+(?:\.\d+)?)px$/;
+    try {
+      const { value, unit } = parseDimension((token as unknown as Record<string, unknown>)[valueProp]);
 
-export function isPxDimension(value: unknown): value is string {
-  return typeof value === "string" && PX_PATTERN.test(value);
-}
-
-export function dimensionToRem(value: string): string {
-  const match = value.match(PX_PATTERN);
-  if (!match) {
-    throw new Error(`dimensionToRem: expected a "<number>px" string, got ${JSON.stringify(value)}`);
-  }
-  const px = Number(match[1]);
-  const rem = Math.round((px / PX_TO_REM_BASE) * 10000) / 10000;
-  return `${rem}rem`;
-}
+      if (value === 0) return "0";
+      if (unit === "rem") return `${value}rem`;
+      if (unit === "em") return `${value}em`;
+      return `${value / baseFont}rem`;
+    } catch (error) {
+      const details = error instanceof Error && error.message ? ` - ${error.message}` : error ? ` - ${String(error)}` : "";
+      throw new Error(
+        `Invalid dimension token: '${token.name}: ${JSON.stringify((token as unknown as Record<string, unknown>)[valueProp])}' is not valid and cannot be transformed to 'rem'${details}\n`,
+      );
+    }
+  },
+};

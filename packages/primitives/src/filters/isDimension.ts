@@ -1,10 +1,9 @@
+import type { TransformedToken } from "style-dictionary/types";
+
 /**
- * Primer-equivalent filter: checks token.$type === "..." — used by
- * platforms/ to route tokens into different output files from one
- * resolved tree (e.g. themed vs. non-themed CSS).
- *
- * Not yet implemented — stub only.
+ * True if a token's $type is "dimension". Matches Primer's
+ * filters/isDimension.ts.
  */
-export function isDimension(_token: unknown): boolean {
-  throw new Error("not implemented");
+export function isDimension(token: TransformedToken): boolean {
+  return token.$type === "dimension";
 }

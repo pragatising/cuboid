@@ -1,8 +1,38 @@
+import { z } from "zod";
+
 /**
- * Zod schema for the "colorW3cValue" shape. Mirrors Primer's src/schemas/colorW3cValue.ts —
- * Primer splits per- token schemas (full leaf incl. $extensions) from
- * per-shape value schemas (just $value) so both compose independently.
- *
- * Not yet implemented — stub only.
+ * W3C DTCG color value schema (the full color-space object form).
+ * @see https://www.designtokens.org/tr/drafts/color/#color-type
+ * Matches Primer's schemas/colorW3cValue.ts.
  */
-export const colorW3cValue = undefined as never;
+const colorSpace = z.enum([
+  "srgb",
+  "srgb-linear",
+  "hsl",
+  "hwb",
+  "lab",
+  "lch",
+  "oklab",
+  "oklch",
+  "display-p3",
+  "a98-rgb",
+  "prophoto-rgb",
+  "rec2020",
+  "xyz",
+  "xyz-d50",
+  "xyz-d65",
+]);
+
+const colorComponent = z.union([z.number(), z.literal("none")]);
+
+export const colorW3cValue = z.object({
+  colorSpace,
+  components: z.tuple([colorComponent, colorComponent, colorComponent]),
+  alpha: z.number().min(0).max(1).optional(),
+  hex: z
+    .string()
+    .regex(/^#[0-9a-fA-F]{6}$/)
+    .optional(),
+});
+
+export type ColorW3cValue = z.infer<typeof colorW3cValue>;

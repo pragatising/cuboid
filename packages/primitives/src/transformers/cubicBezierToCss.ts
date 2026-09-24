@@ -1,8 +1,24 @@
+import type { PlatformConfig, Transform, TransformedToken } from "style-dictionary/types";
+import { isCubicBezier } from "../filters/isCubicBezier";
+
 /**
- * Mirrors Primer's src/transformers/cubicBezierToCss.ts.
- *
- * Not yet implemented — stub only.
+ * `[a,b,c,d]` -> `cubic-bezier(a,b,c,d)` CSS string. Matches Primer's
+ * transformers/cubicBezierToCss.ts.
  */
-export function cubicBezierToCss(): unknown {
-  throw new Error("not implemented");
+export function cubicBezierArrayToCss(value: number[], path: string[]): string {
+  if (value.length !== 4 || value.some((item) => typeof item !== "number")) {
+    throw new Error(`Invalid cubicBezier token ${path.join(".")}, must be an array with 4 numbers, but got this instead: ${JSON.stringify(value)}`);
+  }
+  return `cubic-bezier(${value.join(",")})`;
 }
+
+export const cubicBezierToCss: Transform = {
+  name: "cubicBezier/css",
+  type: "value",
+  transitive: true,
+  filter: isCubicBezier,
+  transform: (token: TransformedToken, _config: PlatformConfig) => {
+    const value = token.$value ?? (token as { value?: unknown }).value;
+    return cubicBezierArrayToCss(value as number[], token.path);
+  },
+};

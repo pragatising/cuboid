@@ -1,9 +1,9 @@
+import type { TransformedToken } from "style-dictionary/types";
+
 /**
- * Primer-equivalent filter: checks token.$type/$extensions for "isTransition".
- * Mirrors Primer's src/filters/isTransition.ts.
- *
- * Not yet implemented — stub only.
+ * True if a token's $type is "transition". Matches Primer's
+ * filters/isTransition.ts.
  */
-export function isTransition(_token: unknown): boolean {
-  throw new Error("not implemented");
+export function isTransition(token: TransformedToken): boolean {
+  return token.$type === "transition";
 }

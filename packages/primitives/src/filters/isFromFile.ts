@@ -1,10 +1,10 @@
+import type { TransformedToken } from "style-dictionary/types";
+
 /**
- * Primer-equivalent filter: checks token.$type === "..." — used by
- * platforms/ to route tokens into different output files from one
- * resolved tree (e.g. themed vs. non-themed CSS).
- *
- * Not yet implemented — stub only.
+ * True if a token originated from one of the given source file paths —
+ * lets a platform build one output from a subset of source files.
+ * Matches Primer's filters/isFromFile.ts.
  */
-export function isFromFile(_token: unknown): boolean {
-  throw new Error("not implemented");
+export function isFromFile(token: TransformedToken, files: string[]): boolean {
+  return files?.includes(token.filePath) === true;
 }

@@ -1,8 +1,9 @@
 /**
- * Mirrors Primer's src/utilities/upperCaseFirstCharacter.ts.
- *
- * Not yet implemented — stub only.
+ * Uppercases only the first character of a string, leaving the rest
+ * unchanged. Matches Primer's utilities/upperCaseFirstCharacter.ts.
+ * Intended for use inside name-path transformers, not general text.
  */
-export function upperCaseFirstCharacter(): unknown {
-  throw new Error("not implemented");
+export function upperCaseFirstCharacter(word: string): string {
+  const [firstLetter, ...restOfWord] = word;
+  return firstLetter.toUpperCase() + restOfWord.join("");
 }

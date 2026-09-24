@@ -1,8 +1,17 @@
+import { z } from "zod";
+import { schemaErrorMessage } from "../utilities/schemaErrorMessage";
+
 /**
- * Zod schema for the "colorHexValue" shape. Mirrors Primer's src/schemas/colorHexValue.ts —
- * Primer splits per- token schemas (full leaf incl. $extensions) from
- * per-shape value schemas (just $value) so both compose independently.
- *
- * Not yet implemented — stub only.
+ * Validates a 3/6/8-digit hex color string. Matches Primer's
+ * schemas/colorHexValue.ts.
  */
-export const colorHexValue = undefined as never;
+const HEX_PATTERN = /^(#[0-9a-f]{3}$)|(#[0-9a-f]{6}$)|(#[0-9a-f]{8}$)/i;
+
+export const colorHexValue = z.string().superRefine((color, ctx) => {
+  if (!HEX_PATTERN.test(color)) {
+    ctx.addIssue({
+      code: "custom",
+      message: schemaErrorMessage(`Invalid color: "${color}"`, "Color must be a hex string or a reference to a color token."),
+    });
+  }
+});
