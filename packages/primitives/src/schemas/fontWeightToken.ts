@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { baseToken } from "./baseToken";
-import { referenceValue } from "./referenceValue";
-import { fontWeightValue } from "./fontWeightValue";
-import { tokenType } from "./tokenType";
+import { baseToken } from "./baseToken.ts";
+import { referenceValue } from "./referenceValue.ts";
+import { fontWeightValue } from "./fontWeightValue.ts";
+import { tokenType } from "./tokenType.ts";
 
 /**
  * Full `fontWeight` token schema. Matches Primer's

@@ -1,5 +1,5 @@
 import type { PlatformInitializer } from "../types/platformInitializer";
-import { hasLlmExtensions } from "../filters/hasLlmExtensions";
+import { hasLlmExtensions } from "../filters/hasLlmExtensions.ts";
 import type { PlatformConfig } from "style-dictionary/types";
 
 /**

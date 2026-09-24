@@ -1,10 +1,10 @@
 import type { Transform, TransformedToken } from "style-dictionary/types";
-import { isTypography } from "../filters/isTypography";
+import { isTypography } from "../filters/isTypography.ts";
 import type { TypographyTokenValue } from "../types/typographyTokenValue";
-import { checkRequiredTokenProperties } from "./utilities/checkRequiredTokenProperties";
-import { parseFontFamily } from "./fontFamilyToCss";
-import { parseFontWeight } from "./fontWeightToNumber";
-import { getTokenValue } from "./utilities/getTokenValues";
+import { checkRequiredTokenProperties } from "./utilities/checkRequiredTokenProperties.ts";
+import { parseFontFamily } from "./fontFamilyToCss.ts";
+import { parseFontWeight } from "./fontWeightToNumber.ts";
+import { getTokenValue } from "./utilities/getTokenValues.ts";
 
 /**
  * Composite typography value ({fontFamily, fontSize, fontWeight,

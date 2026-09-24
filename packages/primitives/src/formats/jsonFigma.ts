@@ -1,10 +1,10 @@
 import type { Dictionary, TransformedToken, FormatFn, FormatFnArguments, PlatformConfig } from "style-dictionary/types";
 import { format } from "prettier";
-import { transformNamePathToFigma } from "../transformers/namePathToFigma";
+import { transformNamePathToFigma } from "../transformers/namePathToFigma.ts";
 import type { ShadowTokenValue } from "../types/shadowTokenValue";
-import { hexToRgbaFloat } from "../transformers/utilities/hexToRgbaFloat";
+import { hexToRgbaFloat } from "../transformers/utilities/hexToRgbaFloat.ts";
 import type { RgbaFloat } from "../transformers/utilities/isRgbaFloat";
-import { isRgbaFloat } from "../transformers/utilities/isRgbaFloat";
+import { isRgbaFloat } from "../transformers/utilities/isRgbaFloat.ts";
 import { getReferences, sortByReference } from "style-dictionary/utils";
 
 function isReference(value: string): boolean {

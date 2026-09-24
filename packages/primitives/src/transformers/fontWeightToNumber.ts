@@ -1,6 +1,6 @@
 import type { Transform, TransformedToken } from "style-dictionary/types";
-import { isFontWeight } from "../filters/isFontWeight";
-import { getTokenValue } from "./utilities/getTokenValues";
+import { isFontWeight } from "../filters/isFontWeight.ts";
+import { getTokenValue } from "./utilities/getTokenValues.ts";
 
 /**
  * Named fontWeight strings mapped to their numeric equivalent. Matches

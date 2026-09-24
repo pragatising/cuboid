@@ -1,6 +1,6 @@
 import type { PlatformInitializer } from "../types/platformInitializer";
-import { isSource } from "../filters/isSource";
-import { upperCaseFirstCharacter } from "../utilities/upperCaseFirstCharacter";
+import { isSource } from "../filters/isSource.ts";
+import { upperCaseFirstCharacter } from "../utilities/upperCaseFirstCharacter.ts";
 import type { PlatformConfig } from "style-dictionary/types";
 
 /**

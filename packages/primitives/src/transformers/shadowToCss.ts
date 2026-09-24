@@ -1,12 +1,12 @@
 import { toHex } from "color2k";
 import type { PlatformConfig, Transform, TransformedToken } from "style-dictionary/types";
-import { isShadow } from "../filters/isShadow";
-import { alpha } from "./utilities/alpha";
-import { checkRequiredTokenProperties } from "./utilities/checkRequiredTokenProperties";
+import { isShadow } from "../filters/isShadow.ts";
+import { alpha } from "./utilities/alpha.ts";
+import { checkRequiredTokenProperties } from "./utilities/checkRequiredTokenProperties.ts";
 import type { ShadowTokenValue } from "../types/shadowTokenValue";
 import type { DimensionTokenValue } from "../types/dimensionTokenValue";
-import { getTokenValue } from "./utilities/getTokenValues";
-import { normalizeColorValue } from "./utilities/normalizeColorValue";
+import { getTokenValue } from "./utilities/getTokenValues.ts";
+import { normalizeColorValue } from "./utilities/normalizeColorValue.ts";
 
 function dimensionToCss(dim: DimensionTokenValue): string {
   if (dim.value === 0) return "0";

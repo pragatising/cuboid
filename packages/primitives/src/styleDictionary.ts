@@ -20,51 +20,51 @@
 import StyleDictionary from "style-dictionary";
 
 // Value transforms
-import { colorToHex } from "./transformers/colorToHex";
-import { colorToRgbAlpha } from "./transformers/colorToRgbAlpha";
-import { colorToRgbaFloat } from "./transformers/colorToRgbaFloat";
-import { dimensionToRem } from "./transformers/dimensionToRem";
-import { dimensionToPixelUnitless } from "./transformers/dimensionToPixelUnitless";
-import { dimensionToRemPxArray } from "./transformers/dimensionToRemPxArray";
-import { cubicBezierToCss } from "./transformers/cubicBezierToCss";
-import { durationToCss } from "./transformers/durationToCss";
-import { shadowToCss } from "./transformers/shadowToCss";
-import { borderToCss } from "./transformers/borderToCss";
-import { transitionToCss } from "./transformers/transitionToCss";
-import { typographyToCss } from "./transformers/typographyToCss";
-import { gradientToCss } from "./transformers/gradientToCss";
-import { fontFamilyToCss } from "./transformers/fontFamilyToCss";
-import { fontFamilyToFigma } from "./transformers/fontFamilyToFigma";
-import { fontWeightToNumber } from "./transformers/fontWeightToNumber";
-import { floatToPixel, floatToPixelUnitless } from "./transformers/floatToPixel";
-import { jsonDeprecated } from "./transformers/jsonDeprecated";
+import { colorToHex } from "./transformers/colorToHex.ts";
+import { colorToRgbAlpha } from "./transformers/colorToRgbAlpha.ts";
+import { colorToRgbaFloat } from "./transformers/colorToRgbaFloat.ts";
+import { dimensionToRem } from "./transformers/dimensionToRem.ts";
+import { dimensionToPixelUnitless } from "./transformers/dimensionToPixelUnitless.ts";
+import { dimensionToRemPxArray } from "./transformers/dimensionToRemPxArray.ts";
+import { cubicBezierToCss } from "./transformers/cubicBezierToCss.ts";
+import { durationToCss } from "./transformers/durationToCss.ts";
+import { shadowToCss } from "./transformers/shadowToCss.ts";
+import { borderToCss } from "./transformers/borderToCss.ts";
+import { transitionToCss } from "./transformers/transitionToCss.ts";
+import { typographyToCss } from "./transformers/typographyToCss.ts";
+import { gradientToCss } from "./transformers/gradientToCss.ts";
+import { fontFamilyToCss } from "./transformers/fontFamilyToCss.ts";
+import { fontFamilyToFigma } from "./transformers/fontFamilyToFigma.ts";
+import { fontWeightToNumber } from "./transformers/fontWeightToNumber.ts";
+import { floatToPixel, floatToPixelUnitless } from "./transformers/floatToPixel.ts";
+import { jsonDeprecated } from "./transformers/jsonDeprecated.ts";
 
 // Name transforms
-import { nameToKebabCase } from "./transformers/nameToKebabCase";
-import { namePathToCamelCase } from "./transformers/namePathToCamelCase";
-import { namePathToDotNotation } from "./transformers/namePathToDotNotation";
-import { namePathToFigma } from "./transformers/namePathToFigma";
-import { namePathToPascalCase } from "./transformers/namePathToPascalCase";
-import { namePathToSlashNotation } from "./transformers/namePathToSlashNotation";
+import { nameToKebabCase } from "./transformers/nameToKebabCase.ts";
+import { namePathToCamelCase } from "./transformers/namePathToCamelCase.ts";
+import { namePathToDotNotation } from "./transformers/namePathToDotNotation.ts";
+import { namePathToFigma } from "./transformers/namePathToFigma.ts";
+import { namePathToPascalCase } from "./transformers/namePathToPascalCase.ts";
+import { namePathToSlashNotation } from "./transformers/namePathToSlashNotation.ts";
 
 // Attribute transform
-import { figmaAttributes } from "./transformers/figmaAttributes";
+import { figmaAttributes } from "./transformers/figmaAttributes.ts";
 
 // Formats
-import { cssAdvanced } from "./formats/cssAdvanced";
-import { cssCustomMedia } from "./formats/cssCustomMedia";
-import { javascriptCommonJs } from "./formats/javascriptCommonJs";
-import { javascriptEsm } from "./formats/javascriptEsm";
-import { jsonFigma } from "./formats/jsonFigma";
-import { jsonNestedPrefixed } from "./formats/jsonNestedPrefixed";
-import { jsonOneDimensional } from "./formats/jsonOneDimensional";
-import { jsonPostCssFallback } from "./formats/jsonPostCssFallback";
-import { markdownLlmGuidelines } from "./formats/markdownLlmGuidelines";
-import { typescriptExportDefinition } from "./formats/typescriptExportDefinition";
+import { cssAdvanced } from "./formats/cssAdvanced.ts";
+import { cssCustomMedia } from "./formats/cssCustomMedia.ts";
+import { javascriptCommonJs } from "./formats/javascriptCommonJs.ts";
+import { javascriptEsm } from "./formats/javascriptEsm.ts";
+import { jsonFigma } from "./formats/jsonFigma.ts";
+import { jsonNestedPrefixed } from "./formats/jsonNestedPrefixed.ts";
+import { jsonOneDimensional } from "./formats/jsonOneDimensional.ts";
+import { jsonPostCssFallback } from "./formats/jsonPostCssFallback.ts";
+import { markdownLlmGuidelines } from "./formats/markdownLlmGuidelines.ts";
+import { typescriptExportDefinition } from "./formats/typescriptExportDefinition.ts";
 
 // Preprocessors
-import { themeOverrides } from "./preprocessors/themeOverrides";
-import { inheritGroupProperties } from "./preprocessors/inheritGroupProperties";
+import { themeOverrides } from "./preprocessors/themeOverrides.ts";
+import { inheritGroupProperties } from "./preprocessors/inheritGroupProperties.ts";
 
 export const styleDictionary = new StyleDictionary({
   log: { verbosity: "default" },

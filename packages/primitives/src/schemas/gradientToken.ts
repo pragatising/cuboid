@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { baseToken } from "./baseToken";
-import { referenceValue } from "./referenceValue";
-import { tokenType } from "./tokenType";
-import { colorHexValue } from "./colorHexValue";
-import { colorW3cValue } from "./colorW3cValue";
+import { baseToken } from "./baseToken.ts";
+import { referenceValue } from "./referenceValue.ts";
+import { tokenType } from "./tokenType.ts";
+import { colorHexValue } from "./colorHexValue.ts";
+import { colorW3cValue } from "./colorW3cValue.ts";
 
 /**
  * Full `gradient` token schema — an array of {color, position} stops.

@@ -1,8 +1,8 @@
 import type { PlatformConfig, Transform, TransformedToken } from "style-dictionary/types";
-import { isColorWithAlpha } from "../filters/isColorWithAlpha";
-import { alpha } from "./utilities/alpha";
-import { getTokenValue } from "./utilities/getTokenValues";
-import { normalizeColorValue } from "./utilities/normalizeColorValue";
+import { isColorWithAlpha } from "../filters/isColorWithAlpha.ts";
+import { alpha } from "./utilities/alpha.ts";
+import { getTokenValue } from "./utilities/getTokenValues.ts";
+import { normalizeColorValue } from "./utilities/normalizeColorValue.ts";
 
 /**
  * Style Dictionary value transform: replaces a color-with-alpha token's

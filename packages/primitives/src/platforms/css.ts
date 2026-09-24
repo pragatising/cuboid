@@ -1,5 +1,5 @@
-import { isFromFile } from "../filters/isFromFile";
-import { isSource as isSourceFilter } from "../filters/isSource";
+import { isFromFile } from "../filters/isFromFile.ts";
+import { isSource as isSourceFilter } from "../filters/isSource.ts";
 import type { PlatformInitializer } from "../types/platformInitializer";
 import type { PlatformConfig, TransformedToken } from "style-dictionary/types";
 import { outputReferencesTransformed, outputReferencesFilter } from "style-dictionary/utils";

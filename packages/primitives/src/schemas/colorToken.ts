@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { baseToken } from "./baseToken";
-import { colorHexValue } from "./colorHexValue";
-import { colorW3cValue } from "./colorW3cValue";
-import { referenceValue } from "./referenceValue";
-import { alphaValue } from "./alphaValue";
-import { tokenType } from "./tokenType";
+import { baseToken } from "./baseToken.ts";
+import { colorHexValue } from "./colorHexValue.ts";
+import { colorW3cValue } from "./colorW3cValue.ts";
+import { referenceValue } from "./referenceValue.ts";
+import { alphaValue } from "./alphaValue.ts";
+import { tokenType } from "./tokenType.ts";
 
 /**
  * Full `color` token schema. $value is a hex string, a W3C color object,

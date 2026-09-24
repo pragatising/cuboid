@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { baseToken } from "./baseToken";
-import { referenceValue } from "./referenceValue";
-import { dimensionValue } from "./dimensionValue";
-import { tokenType } from "./tokenType";
+import { baseToken } from "./baseToken.ts";
+import { referenceValue } from "./referenceValue.ts";
+import { dimensionValue } from "./dimensionValue.ts";
+import { tokenType } from "./tokenType.ts";
 
 /**
  * Full `dimension` token schema. $extensions left loosely typed pending

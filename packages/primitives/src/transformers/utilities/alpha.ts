@@ -1,6 +1,6 @@
 import { rgba, parseToRgba } from "color2k";
 import type { PlatformConfig, TransformedToken } from "style-dictionary/types";
-import { log } from "../../utilities/log";
+import { log } from "../../utilities/log.ts";
 
 /**
  * Applies a desired alpha value to a color string (hex, rgb, etc.),

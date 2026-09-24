@@ -1,5 +1,5 @@
 import type { TransformedToken } from "style-dictionary/types";
-import { namePathToDotNotation } from "../namePathToDotNotation";
+import { namePathToDotNotation } from "../namePathToDotNotation.ts";
 
 /**
  * Clear, path-specific errors for a token whose resolved value is missing

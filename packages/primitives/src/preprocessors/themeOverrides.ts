@@ -1,6 +1,6 @@
 import type { PlatformConfig, PreprocessedTokens, Preprocessor } from "style-dictionary/types";
-import { transformTokens } from "./utilities/transformTokens";
-import { asArray } from "../utilities/asArray";
+import { transformTokens } from "./utilities/transformTokens.ts";
+import { asArray } from "../utilities/asArray.ts";
 
 /**
  * The real dark-mode/theme-variant mechanism (DESIGN.md §5): collapses a

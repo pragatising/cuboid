@@ -1,6 +1,6 @@
 import type { Config, PlatformConfig, Transform, TransformedToken } from "style-dictionary/types";
-import { isDimension } from "../filters/isDimension";
-import { parseDimension } from "./utilities/parseDimension";
+import { isDimension } from "../filters/isDimension.ts";
+import { parseDimension } from "./utilities/parseDimension.ts";
 
 function getBasePxFontSize(options?: PlatformConfig): number {
   return (options && options.basePxFontSize) || 16;

@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { baseToken } from "./baseToken";
-import { referenceValue } from "./referenceValue";
-import { durationToken } from "./durationToken";
-import { cubicBezierToken } from "./cubicBezierToken";
-import { tokenType } from "./tokenType";
+import { baseToken } from "./baseToken.ts";
+import { referenceValue } from "./referenceValue.ts";
+import { durationToken } from "./durationToken.ts";
+import { cubicBezierToken } from "./cubicBezierToken.ts";
+import { tokenType } from "./tokenType.ts";
 
 /**
  * Full `transition` token schema — {duration, timingFunction, delay?}.

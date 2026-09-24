@@ -1,5 +1,5 @@
 import type { PlatformConfig, Transform, TransformedToken } from "style-dictionary/types";
-import { isCubicBezier } from "../filters/isCubicBezier";
+import { isCubicBezier } from "../filters/isCubicBezier.ts";
 
 /**
  * `[a,b,c,d]` -> `cubic-bezier(a,b,c,d)` CSS string. Matches Primer's

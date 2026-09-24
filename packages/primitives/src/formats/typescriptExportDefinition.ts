@@ -1,13 +1,13 @@
 import { format } from "prettier";
 import { readFileSync } from "node:fs";
 import { resolve as resolvePath } from "node:path";
-import { treeWalker } from "../utilities/treeWalker";
+import { treeWalker } from "../utilities/treeWalker.ts";
 import type { W3cTransformedToken } from "../types/w3cTransformedToken";
-import { prefixTokens } from "./utilities/prefixTokens";
+import { prefixTokens } from "./utilities/prefixTokens.ts";
 import type { Config, DesignTokens, FormatFn, FormatFnArguments, LocalOptions } from "style-dictionary/types";
 import { fileHeader } from "style-dictionary/utils";
-import { getPropName } from "./utilities/getPropName";
-import { lowerCaseFirstCharacter } from "../utilities/lowerCaseFirstCharacter";
+import { getPropName } from "./utilities/getPropName.ts";
+import { lowerCaseFirstCharacter } from "../utilities/lowerCaseFirstCharacter.ts";
 
 /**
  * Generates compiled TypeScript type definitions for the resolved token

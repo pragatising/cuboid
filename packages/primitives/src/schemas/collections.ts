@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { joinFriendly } from "../utilities/joinFriendly";
-import { schemaErrorMessage } from "../utilities/schemaErrorMessage";
+import { joinFriendly } from "../utilities/joinFriendly.ts";
+import { schemaErrorMessage } from "../utilities/schemaErrorMessage.ts";
 
 /**
  * Validates a token's declared `org.cuboid.figma.collection` name against

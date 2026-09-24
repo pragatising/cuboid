@@ -1,5 +1,5 @@
 import type { TransformedToken } from "style-dictionary/types";
-import { isColor } from "./isColor";
+import { isColor } from "./isColor.ts";
 
 /**
  * True if a token is a color AND carries a real numeric `alpha` sibling

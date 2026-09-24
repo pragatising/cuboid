@@ -1,6 +1,6 @@
 import type { PlatformInitializer } from "../types/platformInitializer";
 import type { PlatformConfig } from "style-dictionary/types";
-import { isSource } from "../filters/isSource";
+import { isSource } from "../filters/isSource.ts";
 
 /**
  * CommonJS output platform. Matches Primer's platforms/javascript.ts.

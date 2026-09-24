@@ -1,4 +1,4 @@
-import { toCamelCase } from "../utilities/toCamelCase";
+import { toCamelCase } from "../utilities/toCamelCase.ts";
 import type { PlatformConfig, Transform, TransformedToken } from "style-dictionary/types";
 
 /**
