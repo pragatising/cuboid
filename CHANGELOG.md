@@ -2,6 +2,31 @@
 
 Rolling session log for Claude Code continuity. Newest entry on top. Each entry: what changed, why, and anything the next agent needs to know. Keep entries short — skip anything derivable from `git log` or the diff itself.
 
+## 2026-09-25 — Token pipeline runs green: both CSS + JSON output, transitive double-transform bug fixed
+
+**Changed:**
+- All 145 `packages/primitives/src` files implemented (previous session), then this session actually got `npm run tokens:theme` to exit 0 with **0 transform errors** and both outputs written: `theme.css` (783 vars) + `tokens.json`.
+- **Root cause of the main bug, corrected from the previous session's diagnosis.** It is NOT base-layer-specific. Style Dictionary resolves references and transforms values in the same repeated pass over one shared token map, so any token that resolves FROM an already-transformed token receives the transformed value. Verified on a functional→functional alias with no base token involved (`container.maxWidth.page` → `{layout.pageMaxWidth}`, both in `functional/`). The previous session's `filters/isBaseToken.ts` therefore patched the wrong axis and has been deleted.
+- **Fix: make the transitive transforms idempotent.** New `transformers/utilities/isAlreadyTransformed.ts`; guard applied in `dimensionToRem`, `dimensionToPixelUnitless`, `dimensionToRemPxArray`, `durationToCss`, `cubicBezierToCss`, `typographyToCss`. Rejected alternatives, both tested rather than reasoned about: dropping `transitive` cleared the 208 errors but emitted `[object Object]` for every aliased dimension; a base-token filter leaves functional→functional aliases broken.
+- **Fixed a silent output corruption `shadowToCss` was producing:** every shadow emitted `undefinedundefined ...` for offsets/blur/spread. Its `dimensionToCss` read `.value`/`.unit` off values that, being references to `base.size.*`, had already been converted to CSS strings. Same root cause, different call site. The transform never threw, so the build stayed green while emitting garbage — audited all 795 emitted leaf values afterward: 0 malformed.
+- **Made the build a real gate.** Style Dictionary does NOT fail on transform errors — it logs, substitutes the untransformed value, and exits 0, which is how 224 errors sat behind a green exit code. `buildTokens.ts` now sets `log.warnings: "error"` + `errors.brokenReferences: "throw"`. Two expected warnings are downgraded per-platform, each with an in-file rationale: multi-layer shadow refs (css) and name collisions the nested format never reads (json).
+- `base/` moved from `source` to `include` (matches Primer): resolvable but never emitted, so 702 `--cube-base-*` vars no longer leak into public CSS, enforcing "components consume functional tokens, never reach into base."
+- Dropped 3 of the 4 CSS output files inherited from Primer's `platforms/css.ts` — each matched zero cuboid tokens (no theme data authored, no `custom-viewportRange` tokens, no `size-coarse`/`size-fine` files). The themed one is the first to re-add when dark mode lands.
+- `scripts/build-tokens.mjs` → **`scripts/buildTokens.ts`** (matches Primer, and the 145 `.ts` files it belongs to). It was the only untypechecked file in the pipeline despite importing `.ts` directly; new `tsconfig.typecheck.json` covers `src` + `scripts` (the emit config's `rootDir: "src"` makes including `scripts/` impossible), wired into `npm test` as a `typecheck` script.
+- New `src/transformers/idempotence.test.ts` — 9 regression tests, verified to fail 9/9 without the fix.
+
+**Why:**
+- Running the pipeline for the first time is what surfaced all of this. Note the pattern worth carrying forward: a green exit code proved nothing here. Two separate real bugs (224 transform errors, then the `undefined` shadows) were invisible behind `exit 0`, and were only found by reading emitted values.
+
+**Next agent:**
+- `npm test` = no-react guard + typecheck + 53 tests, all passing. `npm run tokens:theme` exits 0.
+- **Token content, not pipeline — the real remaining work.** The build globs `*.json5` only, so **19 `.json` files are silently invisible** and 7 components emit zero tokens: `link`, `overlay`, `pill`, `resize-handle`, `sheet`, `sidebar`, `site-header`. 12 are also still legacy format (`"value"`, not `$value`). Widening the glob is one line but surfaces all 12 at once — its own task. For `pill/*` fix the generator (`scripts/generate-pill-shade-tokens.mjs`), not the 12 outputs.
+- **All 27 Zod schemas exist and nothing calls them.** That is why token-content bugs reach a transform instead of failing validation. Wiring them is the next real gate.
+- ~20 `$description: 'GAP: ...'` markers are deliberate self-flags, not oversights. Two with visible UI impact: `z-index` needs `base.zIndex.700/800/900` (scale stops at 600), and `button`/`icon-button` disabled borders fall back to `borderColor.subtle` so disabled looks identical to rest/hover.
+- `src/filters/isBaseToken.ts` was **deleted**. It was invented the previous session as a workaround for the bug above and never existed in Primer (their `filters/` has no such file). Its concept is `isSource`, which cuboid already wraps — verified as an exact inverse across all 1047 tokens. Note the design point it got wrong: Primer filters transforms by TYPE only (`isDimension`, `isCubicBezier`); token layer is an output concern (which file a token lands in), never a transform concern.
+- `platforms/typescript.ts` + `typeDefinitions.ts` are implemented but unwired. Wiring them is the next planned step: `tokens.json` already gives importable *values*, these add the *types* that make token-valued component props autocomplete and fail at compile time on a typo.
+- React is deliberately untouched and stays broken until the rebuild reaches it. `defaultTheme.ts` still imports `theme.json`/`base.json`/`token-output.json` — Sep 12 files that **nothing can regenerate** (their scripts were deleted). Do not untrack or delete those; they are the only copy.
+
 ## 2026-09-23 — Real pipeline implementation begins; old hand-rolled build deleted; docs consolidated
 
 **Changed:**

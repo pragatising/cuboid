@@ -1,4 +1,5 @@
 {
+  size: {
     control: {
       extraSmall: {
         size: {
@@ -177,4 +178,5 @@
         },
       },
     },
+  },
 }

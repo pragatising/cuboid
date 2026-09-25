@@ -7,9 +7,10 @@
   "scripts": {
     "tokens:functional-colors": "node scripts/flatten-functional-colors.mjs",
     "tokens:functional-typography": "node scripts/flatten-functional-typography.mjs",
-    "tokens:theme": "node scripts/build-tokens.mjs",
+    "tokens:theme": "node scripts/buildTokens.ts",
     "check:no-react": "node scripts/check-no-react.mjs",
-    "test": "npm run check:no-react && node --test \"src/**/*.test.ts\""
+    "test": "npm run check:no-react && npm run typecheck && node --test \"src/**/*.test.ts\"",
+    "typecheck": "tsc --noEmit -p tsconfig.typecheck.json"
   },
   "dependencies": {
     "color2k": "^2.0.4",
