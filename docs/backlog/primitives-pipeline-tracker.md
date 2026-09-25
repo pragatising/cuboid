@@ -8,6 +8,83 @@ Update the status column as files are implemented. Don't delete rows — this is
 
 ---
 
+## STATUS — 2026-09-25: pipeline is GREEN, both outputs emitting
+
+All 145 files implemented, and `npm run tokens:theme` now exits 0 with **0 transform errors**, emitting both
+`packages/react/src/theme/output/theme.css` (783 vars) and `tokens.json`. `npm test` = no-react guard +
+typecheck + 53 tests, all passing. Committed.
+
+Entry point is **`scripts/buildTokens.ts`** (renamed from `build-tokens.mjs`: matches Primer, and is now
+typechecked via `tsconfig.typecheck.json` — the emit config's `rootDir: "src"` can't include `scripts/`).
+
+### The one thing to understand about this pipeline
+
+**Style Dictionary does not fail on transform errors.** It logs them, substitutes the untransformed value,
+and exits 0. A green build is therefore NOT evidence of correct output. Two separate real bugs hid behind
+`exit 0` this session: 224 transform errors, and every shadow emitting `undefinedundefined` for its offsets.
+Both were found by reading emitted values, not by trusting the exit code.
+
+`buildTokens.ts` now sets `log.warnings: "error"` + `errors.brokenReferences: "throw"` so the build is a real
+gate. Two expected warnings are downgraded per-platform, each with an in-file rationale (multi-layer shadow
+refs in css; name collisions the nested JSON format never reads in json). **If you add output, re-check that
+the gate still fires** — verify by reading values, not the exit code.
+
+### Root cause, corrected from the earlier (wrong) diagnosis
+
+The earlier handoff claimed the double-transform bug was base-layer-specific. It is not. Style Dictionary
+resolves references and transforms values in the **same repeated pass** over one shared token map
+(`lib/transform/map.js`, `lib/transform/token.js`, `StyleDictionary.js`'s `_exportPlatform` while-loop), so
+any token resolving FROM an already-transformed token inherits the transformed value. Proven on a
+functional→functional alias with no base token involved:
+
+```
+layout.pageMaxWidth      $value: {value: 56, unit: 'rem'}   (functional/)
+container.maxWidth.page  $value: '{layout.pageMaxWidth}'    (components/)  -> receives "56rem"
+```
+
+**Fix: the transitive transforms are idempotent** — `transformers/utilities/isAlreadyTransformed.ts`, applied
+in `dimensionToRem`, `dimensionToPixelUnitless`, `dimensionToRemPxArray`, `durationToCss`, `cubicBezierToCss`,
+`typographyToCss`. `src/transformers/idempotence.test.ts` covers it (9 tests, verified to fail 9/9 without
+the guard).
+
+Two alternatives were **tested and rejected**, not merely reasoned about:
+- Dropping `transitive: true` — cleared the 208 errors but emitted `[object Object]` for every aliased
+  dimension, because a reference-resolved value then never gets transformed at all.
+- A base-layer filter (`isBaseToken.ts`, since deleted) — leaves functional→functional aliases broken.
+
+Design point worth keeping: Primer filters transforms by **type** only (`isDimension`, `isCubicBezier`).
+Token layer is an **output** concern (which file a token lands in), never a transform concern.
+
+### Real remaining work — token CONTENT, not pipeline
+
+1. **19 `.json` files are invisible to the build.** The glob is `*.json5` only, so 7 components emit zero
+   tokens: `link`, `overlay`, `pill`, `resize-handle`, `sheet`, `sidebar`, `site-header`. 12 are also still
+   legacy format (`"value"`, not `$value`/`$type`). Widening the glob is one line but surfaces all 12 at
+   once — treat as its own task. For `pill/*` fix the generator
+   (`scripts/generate-pill-shade-tokens.mjs`), not the 12 outputs.
+2. **All 27 Zod schemas exist and nothing calls them.** This is why token-content bugs reach a transform
+   instead of failing validation. Wiring them is the next real gate.
+3. **~20 `$description: 'GAP: ...'` markers** are deliberate self-flags. Two with visible UI impact:
+   `z-index` needs `base.zIndex.700/800/900` (base scale stops at 600); `button`/`icon-button` disabled
+   borders fall back to `borderColor.subtle`, so disabled renders identical to rest/hover.
+4. Shadow values are structurally correct but their **composited alphas were never cross-checked against
+   Figma** — worth verifying if shadows are design-critical.
+
+### Next planned step
+
+`platforms/typescript.ts` + `typeDefinitions.ts` are implemented but **unwired**. `tokens.json` already gives
+importable *values*; these add the *types* that make token-valued component props autocomplete and fail at
+compile time on a typo. Expect some real work, not a pure two-line wire-up: `typeDefinitions` references
+`tokenTypesPath: "./src/types/"`, a Primer-shaped path that may not resolve here.
+
+### Deliberately NOT touched
+
+`packages/react` stays broken until the rebuild reaches it (explicit user decision). `defaultTheme.ts` still
+imports `output/theme.json`, `base.json`, `tokenOutput.ts` — **Sep 12 files that nothing can regenerate**,
+since the scripts that produced them were deleted. Do not untrack or delete them; they are the only copy.
+
+---
+
 ## Group 1 — Generic utilities (no token-domain knowledge)
 
 What they do: string/array helpers every schema and transformer imports. No dependencies on anything else in the pipeline.

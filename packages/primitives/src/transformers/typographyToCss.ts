@@ -5,11 +5,13 @@ import { checkRequiredTokenProperties } from "./utilities/checkRequiredTokenProp
 import { parseFontFamily } from "./fontFamilyToCss.ts";
 import { parseFontWeight } from "./fontWeightToNumber.ts";
 import { getTokenValue } from "./utilities/getTokenValues.ts";
+import { isAlreadyTransformed } from "./utilities/isAlreadyTransformed.ts";
 
 /**
  * Composite typography value ({fontFamily, fontSize, fontWeight,
  * lineHeight?, fontStyle?}) -> a CSS `font` shorthand string. Matches
- * Primer's transformers/typographyToCss.ts.
+ * Primer's transformers/typographyToCss.ts. Idempotent — see
+ * transformers/utilities/isAlreadyTransformed.ts.
  */
 export const typographyToCss: Transform = {
   name: "typography/css",
@@ -17,7 +19,10 @@ export const typographyToCss: Transform = {
   transitive: true,
   filter: isTypography,
   transform: (token: TransformedToken) => {
-    const value = getTokenValue(token) as TypographyTokenValue;
+    const rawValue = getTokenValue(token);
+    if (isAlreadyTransformed(rawValue)) return rawValue;
+
+    const value = rawValue as TypographyTokenValue;
     checkRequiredTokenProperties(value as unknown as Record<string, unknown>, ["fontWeight", "fontSize", "fontFamily"]);
 
     return `${value.fontStyle || ""} ${parseFontWeight(getTokenValue(token, "fontWeight"))} ${value.fontSize}${

@@ -13,7 +13,8 @@
       },
       full: {
         $value: '100%',
-        $type: 'dimension',
+        $type: 'custom-string',
+        $description: 'Percentage has no home in DTCG\'s dimension type (unit is px|rem|em only) — custom-string is the honest fit for a raw CSS value with no reference, same pattern as functional/size/layout.json5\'s sectionLabelWidth.',
         $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'container' } },
       },
     },
@@ -32,8 +33,8 @@
     minHeight: {
       screen: {
         $value: '100svh',
-        $type: 'dimension',
-        $description: 'GAP: currently a raw literal in Container.tsx, not backed by any functional token — viewport-relative units have no home in the size scale yet.',
+        $type: 'custom-string',
+        $description: 'GAP: currently a raw literal in Container.tsx, not backed by any functional token — viewport-relative units have no home in the size scale yet. custom-string used here (not dimension) since DTCG dimension\'s unit enum is px|rem|em only, no viewport-unit support.',
         $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'container' } },
       },
     },

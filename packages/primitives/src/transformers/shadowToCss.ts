@@ -8,7 +8,18 @@ import type { DimensionTokenValue } from "../types/dimensionTokenValue";
 import { getTokenValue } from "./utilities/getTokenValues.ts";
 import { normalizeColorValue } from "./utilities/normalizeColorValue.ts";
 
-function dimensionToCss(dim: DimensionTokenValue): string {
+/**
+ * A shadow's offsetX/offsetY/blur/spread reference dimension tokens
+ * ({base.size.1}), so by the time this transform runs they have ALREADY
+ * been converted to CSS strings ("0.0625rem") by dimension/rem — the
+ * shared transform pass resolves references and transforms values
+ * together (see transformers/utilities/isAlreadyTransformed.ts). Handle
+ * both shapes: a raw {value, unit} object for a literal, and a string
+ * for the (normal) aliased case. Reading .value/.unit off a string
+ * silently produced "undefinedundefined" in every emitted shadow.
+ */
+function dimensionToCss(dim: DimensionTokenValue | string): string {
+  if (typeof dim === "string") return dim;
   if (dim.value === 0) return "0";
   return `${dim.value}${dim.unit}`;
 }

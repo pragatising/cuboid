@@ -1,0 +1,18 @@
+{
+  // Typecheck-only config. tsconfig.json emits .d.ts for the published
+  // src/ tree, so it sets rootDir: "src" — which makes it impossible to
+  // also include scripts/ (TS6059: not under rootDir). Rather than
+  // weaken the emit config, this one drops the emit settings and widens
+  // the scope, so the build entry point (scripts/buildTokens.ts) is
+  // typechecked like every other .ts file in the package.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "declaration": false,
+    "declarationMap": false,
+    "emitDeclarationOnly": false,
+    "declarationDir": null,
+    "rootDir": "."
+  },
+  "include": ["src", "scripts"]
+}

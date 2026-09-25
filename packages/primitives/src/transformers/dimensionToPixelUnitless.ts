@@ -1,5 +1,6 @@
 import type { Config, PlatformConfig, Transform, TransformedToken } from "style-dictionary/types";
 import { isDimension } from "../filters/isDimension.ts";
+import { isAlreadyTransformed } from "./utilities/isAlreadyTransformed.ts";
 import { parseDimension } from "./utilities/parseDimension.ts";
 
 function getBasePxFontSize(options?: PlatformConfig): number {
@@ -11,6 +12,7 @@ function getBasePxFontSize(options?: PlatformConfig): number {
  * token's value to a bare px number (no unit suffix) for px/rem values;
  * em values pass through as a string since they can't be converted to a
  * unitless number. Matches Primer's transformers/dimensionToPixelUnitless.ts.
+ * Idempotent — see transformers/utilities/isAlreadyTransformed.ts.
  */
 export const dimensionToPixelUnitless: Transform = {
   name: "dimension/pixelUnitless",
@@ -21,8 +23,11 @@ export const dimensionToPixelUnitless: Transform = {
     const valueProp = options.usesDtcg ? "$value" : "value";
     const baseFont = getBasePxFontSize(config);
 
+    const rawValue = (token as unknown as Record<string, unknown>)[valueProp];
+    if (isAlreadyTransformed(rawValue)) return rawValue;
+
     try {
-      const { value, unit } = parseDimension((token as unknown as Record<string, unknown>)[valueProp]);
+      const { value, unit } = parseDimension(rawValue);
 
       if (value === 0) return 0;
       if (unit === "rem") return value * baseFont;
