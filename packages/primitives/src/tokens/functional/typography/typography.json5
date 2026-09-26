@@ -53,7 +53,7 @@
     },
     title: {
       size: {
-        large: {
+        lg: {
           $value: '{base.text.size.xl}',
           $type: 'dimension',
           $extensions: {
@@ -63,7 +63,7 @@
             },
           },
         },
-        medium: {
+        md: {
           $value: '{base.text.size.lg}',
           $type: 'dimension',
           $extensions: {
@@ -73,7 +73,7 @@
             },
           },
         },
-        small: {
+        sm: {
           $value: '{base.text.size.md}',
           $type: 'dimension',
           $extensions: {
@@ -85,7 +85,7 @@
         },
       },
       lineHeight: {
-        large: {
+        lg: {
           $value: '{base.text.lineHeight.normal}',
           $type: 'number',
           $extensions: {
@@ -98,7 +98,7 @@
             },
           },
         },
-        medium: {
+        md: {
           $value: '{base.text.lineHeight.relaxed}',
           $type: 'number',
           $extensions: {
@@ -111,7 +111,7 @@
             },
           },
         },
-        small: {
+        sm: {
           $value: '{base.text.lineHeight.normal}',
           $type: 'number',
           $extensions: {
@@ -126,7 +126,7 @@
         },
       },
       weight: {
-        large: {
+        lg: {
           $value: '{base.text.weight.semibold}',
           $type: 'fontWeight',
           $extensions: {
@@ -136,7 +136,7 @@
             },
           },
         },
-        medium: {
+        md: {
           $value: '{base.text.weight.semibold}',
           $type: 'fontWeight',
           $extensions: {
@@ -146,7 +146,7 @@
             },
           },
         },
-        small: {
+        sm: {
           $value: '{base.text.weight.semibold}',
           $type: 'fontWeight',
           $extensions: {
@@ -158,11 +158,11 @@
         },
       },
       shorthand: {
-        large: {
+        lg: {
           $value: {
-            fontWeight: '{text.title.weight.large}',
-            fontSize: '{text.title.size.large}',
-            lineHeight: '{text.title.lineHeight.large}',
+            fontWeight: '{text.title.weight.lg}',
+            fontSize: '{text.title.size.lg}',
+            lineHeight: '{text.title.lineHeight.lg}',
             fontFamily: '{fontStack.sansSerifDisplay}',
           },
           $type: 'typography',
@@ -174,11 +174,11 @@
             },
           },
         },
-        medium: {
+        md: {
           $value: {
-            fontWeight: '{text.title.weight.medium}',
-            fontSize: '{text.title.size.medium}',
-            lineHeight: '{text.title.lineHeight.medium}',
+            fontWeight: '{text.title.weight.md}',
+            fontSize: '{text.title.size.md}',
+            lineHeight: '{text.title.lineHeight.md}',
             fontFamily: '{fontStack.sansSerifDisplay}',
           },
           $type: 'typography',
@@ -190,11 +190,11 @@
             },
           },
         },
-        small: {
+        sm: {
           $value: {
-            fontWeight: '{text.title.weight.small}',
-            fontSize: '{text.title.size.small}',
-            lineHeight: '{text.title.lineHeight.small}',
+            fontWeight: '{text.title.weight.sm}',
+            fontSize: '{text.title.size.sm}',
+            lineHeight: '{text.title.lineHeight.sm}',
             fontFamily: '{fontStack.sansSerif}',
           },
           $type: 'typography',
@@ -261,7 +261,7 @@
     },
     body: {
       size: {
-        large: {
+        lg: {
           $value: '{base.text.size.md}',
           $type: 'dimension',
           $extensions: {
@@ -271,7 +271,7 @@
             },
           },
         },
-        medium: {
+        md: {
           $value: '{base.text.size.sm}',
           $type: 'dimension',
           $extensions: {
@@ -281,7 +281,7 @@
             },
           },
         },
-        small: {
+        sm: {
           $value: '{base.text.size.xs}',
           $type: 'dimension',
           $extensions: {
@@ -293,7 +293,7 @@
         },
       },
       lineHeight: {
-        large: {
+        lg: {
           $value: '{base.text.lineHeight.normal}',
           $type: 'number',
           $extensions: {
@@ -306,7 +306,7 @@
             },
           },
         },
-        medium: {
+        md: {
           $value: '{base.text.lineHeight.normal}',
           $type: 'number',
           $extensions: {
@@ -319,7 +319,7 @@
             },
           },
         },
-        small: {
+        sm: {
           $value: '{base.text.lineHeight.relaxed}',
           $type: 'number',
           $extensions: {
@@ -344,11 +344,11 @@
         },
       },
       shorthand: {
-        large: {
+        lg: {
           $value: {
             fontWeight: '{text.body.weight}',
-            fontSize: '{text.body.size.large}',
-            lineHeight: '{text.body.lineHeight.large}',
+            fontSize: '{text.body.size.lg}',
+            lineHeight: '{text.body.lineHeight.lg}',
             fontFamily: '{fontStack.sansSerif}',
           },
           $type: 'typography',
@@ -360,11 +360,11 @@
             },
           },
         },
-        medium: {
+        md: {
           $value: {
             fontWeight: '{text.body.weight}',
-            fontSize: '{text.body.size.medium}',
-            lineHeight: '{text.body.lineHeight.medium}',
+            fontSize: '{text.body.size.md}',
+            lineHeight: '{text.body.lineHeight.md}',
             fontFamily: '{fontStack.sansSerif}',
           },
           $type: 'typography',
@@ -376,11 +376,11 @@
             },
           },
         },
-        small: {
+        sm: {
           $value: {
             fontWeight: '{text.body.weight}',
-            fontSize: '{text.body.size.small}',
-            lineHeight: '{text.body.lineHeight.small}',
+            fontSize: '{text.body.size.sm}',
+            lineHeight: '{text.body.lineHeight.sm}',
             fontFamily: '{fontStack.sansSerif}',
           },
           $type: 'typography',

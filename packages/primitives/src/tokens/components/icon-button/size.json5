@@ -1,13 +1,13 @@
 {
   iconButton: {
-    extraSmall: {
+    xs: {
       size: {
-        $value: '{size.control.extraSmall.size}',
+        $value: '{size.control.xs.size}',
         $type: 'dimension',
         $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon-button' } },
       },
       borderRadius: {
-        $value: '{size.control.extraSmall.borderRadius}',
+        $value: '{size.control.xs.borderRadius}',
         $type: 'dimension',
         $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon-button' } },
       },
@@ -17,14 +17,14 @@
         $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon-button' } },
       },
     },
-    small: {
+    sm: {
       size: {
-        $value: '{size.control.small.size}',
+        $value: '{size.control.sm.size}',
         $type: 'dimension',
         $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon-button' } },
       },
       borderRadius: {
-        $value: '{size.control.small.borderRadius}',
+        $value: '{size.control.sm.borderRadius}',
         $type: 'dimension',
         $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon-button' } },
       },
@@ -34,14 +34,14 @@
         $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon-button' } },
       },
     },
-    medium: {
+    md: {
       size: {
-        $value: '{size.control.medium.size}',
+        $value: '{size.control.md.size}',
         $type: 'dimension',
         $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon-button' } },
       },
       borderRadius: {
-        $value: '{size.control.medium.borderRadius}',
+        $value: '{size.control.md.borderRadius}',
         $type: 'dimension',
         $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon-button' } },
       },
@@ -51,14 +51,14 @@
         $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon-button' } },
       },
     },
-    large: {
+    lg: {
       size: {
-        $value: '{size.control.large.size}',
+        $value: '{size.control.lg.size}',
         $type: 'dimension',
         $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon-button' } },
       },
       borderRadius: {
-        $value: '{size.control.large.borderRadius}',
+        $value: '{size.control.lg.borderRadius}',
         $type: 'dimension',
         $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon-button' } },
       },

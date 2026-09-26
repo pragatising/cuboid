@@ -19,7 +19,7 @@
       },
     },
     paddingInline: {
-      $value: '{space.xl}',
+      $value: '{space.lg}',
       $type: 'dimension',
       $description: 'Default when width="page" and no explicit paddingInline is passed. Was layout.pagePaddingInline (20px, itself just an alias to size.20) — switched to the real space scale (space.xl = 24px) since component padding belongs in space.json5, not a layout.* passthrough.',
       $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'container' } },

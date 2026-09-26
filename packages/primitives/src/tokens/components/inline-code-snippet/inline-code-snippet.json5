@@ -15,7 +15,7 @@
       $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'inline-code-snippet' } },
     },
     paddingInline: {
-      $value: '{space.xxs}',
+      $value: '{size.2}',
       $type: 'dimension',
       $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'inline-code-snippet' } },
     },
@@ -25,7 +25,7 @@
       $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'inline-code-snippet' } },
     },
     borderRadius: {
-      $value: '{borderRadius.xSmall}',
+      $value: '{borderRadius.xs}',
       $type: 'dimension',
       $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'inline-code-snippet' } },
     },

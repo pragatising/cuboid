@@ -1,6 +1,36 @@
 {
   borderRadius: {
-    xSmall: {
+    // Semantic aliases over the size scale (size.json5). These carry INTENT
+    // -- "a small radius" -- while the Nx step they point at carries the
+    // value. Components can accept either: a semantic name when the design
+    // decision matters, or a raw Nx step when a specific value does.
+    //
+    // Renamed from xSmall/small/medium/large/xlarge to the xxs..xxl ladder so
+    // one vocabulary reads the same on every scale. Note these no longer
+    // imply cross-scale equality: borderRadius.md and space.md are both
+    // aliases, and each points at whatever Nx step its own scale needs.
+    none: {
+      $value: '{size.0}',
+      $type: 'dimension',
+      $description: 'No rounding. Explicit square corners, e.g. to override an inherited radius.',
+      $extensions: {
+        'org.cuboid.figma': {
+          collection: 'functional/size',
+          scopes: ['borderRadius'],
+        },
+      },
+    },
+    xxs: {
+      $value: '{size.1}',
+      $type: 'dimension',
+      $extensions: {
+        'org.cuboid.figma': {
+          collection: 'functional/size',
+          scopes: ['borderRadius'],
+        },
+      },
+    },
+    xs: {
       $value: '{size.2}',
       $type: 'dimension',
       $extensions: {
@@ -10,7 +40,7 @@
         },
       },
     },
-    small: {
+    sm: {
       $value: '{size.4}',
       $type: 'dimension',
       $extensions: {
@@ -20,7 +50,7 @@
         },
       },
     },
-    medium: {
+    md: {
       $value: '{size.8}',
       $type: 'dimension',
       $extensions: {
@@ -30,7 +60,7 @@
         },
       },
     },
-    large: {
+    lg: {
       $value: '{size.16}',
       $type: 'dimension',
       $extensions: {
@@ -40,9 +70,20 @@
         },
       },
     },
-    xlarge: {
+    xl: {
       $value: '{size.24}',
       $type: 'dimension',
+      $extensions: {
+        'org.cuboid.figma': {
+          collection: 'functional/size',
+          scopes: ['borderRadius'],
+        },
+      },
+    },
+    xxl: {
+      $value: '{size.32}',
+      $type: 'dimension',
+      $description: 'New step. The scale previously stopped at xlarge (24px); 32px fills the gap between xl and full.',
       $extensions: {
         'org.cuboid.figma': {
           collection: 'functional/size',
@@ -53,7 +94,7 @@
     full: {
       $value: { value: 9999, unit: 'px' },
       $type: 'dimension',
-      $description: 'Arbitrary large radius for fully-rounded (pill/circle) shapes. Not part of the size scale by design.',
+      $description: 'Arbitrary large radius for fully-rounded (pill/circle) shapes. Deliberately NOT an Nx step -- it is a shape intent, not a scale value.',
       $extensions: {
         'org.cuboid.figma': {
           collection: 'functional/size',

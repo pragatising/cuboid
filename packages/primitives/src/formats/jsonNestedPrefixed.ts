@@ -1,6 +1,7 @@
 import { format } from "prettier";
 import { prefixTokens } from "./utilities/prefixTokens.ts";
 import { jsonToNestedValue } from "./utilities/jsonToNestedValue.ts";
+import { pxKeyToNx } from "./utilities/pxKeyToNx.ts";
 import type { FormatFn, FormatFnArguments } from "style-dictionary/types";
 
 /**
@@ -18,6 +19,9 @@ export const jsonNestedPrefixed: FormatFn = async ({ dictionary, file: _file, op
   if (!outputVerbose) {
     tokens = jsonToNestedValue(tokens) as typeof tokens;
   }
+
+  // px authoring keys (size.1) -> proportional Nx names (size["0.125x"]).
+  tokens = pxKeyToNx(tokens) as typeof tokens;
 
   const output = JSON.stringify(tokens, null, 2);
   return await format(output, { parser: "json", printWidth: 500 });

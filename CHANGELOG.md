@@ -2,6 +2,46 @@
 
 Rolling session log for Claude Code continuity. Newest entry on top. Each entry: what changed, why, and anything the next agent needs to know. Keep entries short — skip anything derivable from `git log` or the diff itself.
 
+## 2026-09-25 (later still) — One size vocabulary: Nx scale + xxs..xxl ladder
+
+**Changed:**
+- **`display-sizes.json5` merged into `size.json5` and deleted.** Both declared the root key `size:`, so Style Dictionary always merged them into one namespace at build time — two files, one tree, and the filename `display-sizes` appeared nowhere in the output.
+- **The raw scale is now proportional (`Nx`, 1x = 8px base unit) in the JSON output.** Tokens stay AUTHORED by px (`size.1`, `size.24`) because that is what the value literally is, and because `.` is Style Dictionary's path separator — authoring `0.125x` nests the token as `size -> 0 -> 125x` and silently corrupts every reference (hit this for real; CSS survived while the JSON tree was wrong, which is exactly the class of bug a green build hides). The two consumers get different names from the same token, per user decision:
+  - CSS  -> `--cube-size-1px`, `--cube-size-24px` (guarded branch in `transformers/nameToKebabCase.ts`)
+  - JSON -> `size["0.125x"]`, `size["3x"]` (new `formats/utilities/pxKeyToNx.ts`)
+  Both only touch bare-integer keys under a `size` group, so no other token name can be altered.
+- **One vocabulary across every size-like scale**, replacing four that disagreed (`xxs/xs/sm/md/lg/xl` vs `xSmall/small/medium/large/xlarge` vs `extraSmall/...` vs `small/medium/large`): `size.control`, `iconButton`, `heading.size`, `text.size`, `shadow.floating`, `borderRadius`, `space`, and functional typography all now use the `xxs..xxl` ladder.
+- `borderRadius` gained **`none`** (0) and **`xxl`** (32px); `full` (9999px) deliberately stays outside the scale — it is a shape intent, not a step.
+- `space` now starts at **4px** and runs to 48px (`xxs 4, xs 8, sm 12, md 16, lg 24, xl 32, xxl 48`). 2px is below the ladder by design; the three call sites that genuinely need it (tooltip `gap`/`paddingBlock`, inline-code-snippet `paddingInline`) reference `{size.2}` directly — confirmed correct by the user, values preserved rather than silently becoming 4px.
+
+**Why:**
+- `sm`/`md`/`lg` meant *different values on different scales* — `radius.medium` was 8px while `space.md` was 12px — so a shared vocabulary implied a shared scale that did not exist. That mismatch is what forced per-component translation tables like `SIZE_TO_CONTROL` in `Button.tsx`. An `Nx` key IS its value (`3x` is always 24px), so the collision disappears; semantic names remain as aliases that carry intent for their own scale.
+
+**Next agent:**
+- **`medium` is not always a scale step.** Two renames were wrong and were reverted: `base.text.weight.medium` is a FONT WEIGHT (sits alongside `light/normal/semibold`), and `motion.duration.medium` is a TIME (sits between `short` and `long`). The latter broke the build via a dangling reference — caught by the strict gate, which is what it is for. Restrict this vocabulary to genuinely size-like scales.
+- **`packages/primitives/src/tokens/base/` is untouched and must stay that way** — base is raw px values by explicit user decision. Verified clean (`git diff --stat` on that path is empty).
+- React is knowingly stale and will be rewritten wholesale — `BoxBorderRadius`, the half-finished `Responsive<\`${number}x\`>` type, and 23 pre-existing typecheck errors all still reference the old vocabulary. Not worth fixing piecemeal.
+- Verified after the rename: build exits 0, 0 transform errors, 799 leaf values with 0 malformed, 53/53 tests.
+
+## 2026-09-25 (later) — Build output moved into primitives; dead Figma stub deleted
+
+**Changed:**
+- **Token build output moved out of `packages/react`.** It was written to `packages/react/src/theme/output/`, inherited from before the Phase -1 workspace split when tokens and React shared one package. That inverted the dependency (react depends on primitives, so primitives must not depend on react's directory layout) and made the output unconsumable by anything but react. Now `packages/primitives/dist/` — `dist/css/theme.css` + `dist/tokens.json`, matching Primer's published shape.
+- `packages/primitives/package.json` gained real `exports` + `files`, so the package is actually consumable: `@sragatiping/cuboid-primitives/css/theme.css` resolves through the workspace link (verified). Deliberately **no `types` export yet** — `dist/tokens.d.ts` doesn't exist until the `typeDefinitions` platform is wired, and an export must not claim a file the build doesn't produce.
+- `.storybook/preview.ts` repointed from the relative path to the package export.
+- **Closed a latent gap the move exposed:** `dist/` is gitignored, so output is no longer committed — correct for build artifacts, but only `build` had a `prebuild` hook. `dev`, `storybook` and `build-storybook` never regenerated tokens, so a fresh clone would have found none. Added `predev`, `prestorybook`, `prebuild-storybook`.
+- **Deleted `packages/react/src/theme/figma/`** and its re-export from `src/index.ts`. Both functions were stubs that just `return defaultTheme`, with zero internal callers, unused by portfolio (the only consumer), and primitives already has the real `platforms/figma.ts` + `formats/jsonFigma.ts`.
+
+**Why:**
+- Doing this now was deliberate: `tokens.json` has no consumers yet, so moving it is free. Once `defaultTheme.ts` or generated types import it, relocating becomes a breaking change across both packages.
+
+**Next agent:**
+- **Nothing else in `packages/react/src/theme/` is safe to delete yet**, despite looking like clutter. Verified by real import sites, not name matching: `types.ts` (40), `tokenOutput.ts` (13), `globalColor.ts` (9), `defaultTheme.ts` (6), and `base.json`/`theme.json`/`token-output.json` (1 each, imported by `defaultTheme.ts`). `components.css`/`icon-fonts.css` are still imported by Storybook. These are the live theme layer running on frozen Sep 12 data — they can only go once the pipeline replaces what they provide.
+- The unlock is `types.ts`: 811 hand-written lines that the `typeDefinitions` platform should generate. Swapping that is what makes deleting the rest possible.
+- **`packages/react` typecheck fails with 23 errors at HEAD** — pre-existing, unrelated to this work (verified by stashing and re-running: 23 before, 23 after). Most are `Type '"none"' is not assignable to type 'Responsive<`${number}x`>'`, i.e. **a half-finished `Nx` sizing type for Box that does not typecheck**. Directly relevant to the open vocabulary decision below.
+- **Open decision, deliberately not made:** unify the size vocabulary. Four spellings of one concept exist today — `space` uses `xxs/xs/sm/md/lg/xl`, `radius` uses `xSmall/small/medium/large/xlarge/full`, `size.control` uses `extraSmall/small/medium/large`, typography uses `small/medium/large`. React props already diverged to the abbreviated form, which is why `Button.tsx` carries a hand-maintained `SIZE_TO_CONTROL` bridge. User has chosen `xxs–xxl` everywhere; still unsettled: the px value for a new `xxl` (space stops at `xl`=24px), and whether `radius`/`control` map onto existing steps or get padded to uniform keys.
+- On `Nx` (e.g. `1x`/`2x` as 8px multiples): **the scale is not 8-based.** Below 24px it steps by 1px, and `space.xxs`=2px, `space.xs`=4px, `space.md`=12px are not multiples of 8 — so `Nx` cannot express the three most-used spacing values. The existing `NamedStep | SpaceToken` union (already used by `Stack` and `Pill`) covers all 48 `size.*` steps and is the better escape hatch.
+
 ## 2026-09-25 — Token pipeline runs green: both CSS + JSON output, transitive double-transform bug fixed
 
 **Changed:**

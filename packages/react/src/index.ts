@@ -183,10 +183,6 @@ export type { JsonViewerProps, JsonViewerMode } from "./components/JsonViewer";
 // ── Theme ─────────────────────────────────────────────────────────────────────
 export { ThemeProvider, useTheme } from "./theme/ThemeContext";
 export { defaultTheme } from "./theme/defaultTheme";
-export {
-  buildFigmaLightTheme,
-  getFigmaLightMergedTokens,
-} from "./theme/figma/buildFigmaTheme";
 export type {
   CubeTheme,
   ThemeTokens,

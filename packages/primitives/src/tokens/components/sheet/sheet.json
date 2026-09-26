@@ -13,7 +13,7 @@
       "maxWidth": { "value": "min(90vw, 56rem)" },
       "maxHeight": { "value": "90vh" },
       "padding": { "value": "{displaySizes.16}" },
-      "bottomCornerRadius": { "value": "{size.borderRadius.large}" }
+      "bottomCornerRadius": { "value": "{size.borderRadius.lg}" }
     }
   }
 }

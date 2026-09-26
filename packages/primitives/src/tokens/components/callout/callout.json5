@@ -13,17 +13,17 @@
       $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'callout' } },
     },
     paddingInline: {
-      $value: '{space.sm}',
+      $value: '{space.xs}',
       $type: 'dimension',
       $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'callout' } },
     },
     paddingBlock: {
-      $value: '{space.sm}',
+      $value: '{space.xs}',
       $type: 'dimension',
       $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'callout' } },
     },
     borderRadius: {
-      $value: '{borderRadius.medium}',
+      $value: '{borderRadius.md}',
       $type: 'dimension',
       $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'callout' } },
     },

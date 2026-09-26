@@ -16,10 +16,15 @@ import { json } from "../src/platforms/json.ts";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, "..");
-// Output crosses the workspace boundary on purpose: primitives has no
-// react dependency, but its build output is consumed by packages/react.
-const REACT_PKG_ROOT = path.join(ROOT, "..", "react");
-const OUTPUT_DIR = path.join(REACT_PKG_ROOT, "src", "theme", "output");
+// Build output stays INSIDE this package. It used to be written across the
+// workspace boundary into packages/react/src/theme/output — inherited from
+// before the Phase -1 split, when tokens and React code shared one package.
+// That inverted the dependency (react depends on primitives, so primitives
+// must not depend on react's directory layout) and made the output
+// unconsumable by anything other than react: no Figma sync, no docs, no
+// non-react consumer. dist/ is also what Primer publishes (dist/css/,
+// dist/docs/), and what package.json's `files`/`exports` point at.
+const OUTPUT_DIR = path.join(ROOT, "dist");
 
 async function main() {
   const extendedSD = await styleDictionary.extend({
@@ -49,7 +54,7 @@ async function main() {
       errors: { brokenReferences: "throw" },
     },
     platforms: {
-      css: css("theme.css", "cube", `${OUTPUT_DIR}/`),
+      css: css("css/theme.css", "cube", `${OUTPUT_DIR}/`),
       json: json("tokens.json", undefined, `${OUTPUT_DIR}/`),
     },
   });
