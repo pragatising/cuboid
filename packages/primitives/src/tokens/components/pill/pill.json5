@@ -1,0 +1,33 @@
+{
+  pill: {
+    sizes: {
+      paddingInline: {
+        $value: '{size.6}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'pill' } },
+      },
+      paddingBlock: {
+        $value: '{size.3}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'pill' } },
+      },
+      borderRadius: {
+        $value: '{borderRadius.sm}',
+        $type: 'dimension',
+        $description: 'Was a raw {size.4} step; now aliases the functional radius scale so pill rounding tracks the design system rather than a fixed px value.',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'pill' } },
+      },
+      gap: {
+        $value: '{space.xxs}',
+        $type: 'dimension',
+        $description: 'Was a raw {size.4} step; space.xxs is the same 4px and carries the spacing intent.',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'pill' } },
+      },
+      height: {
+        $value: '{size.20}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'pill' } },
+      },
+    },
+  },
+}

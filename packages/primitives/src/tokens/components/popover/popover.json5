@@ -1,13 +1,58 @@
 {
   "popover": {
     "color": {
-      "background": { "value": "{color.canvas.default}" }
+      "background": {
+        "$value": "{bgColor.canvas.default}",
+        "$type": "color",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "popover"
+          }
+        }
+      }
     },
     "sizes": {
-      "gap": { "value": "{size.4}" },
-      "borderRadius": { "value": "{borderRadius.md}" },
-      "minWidth": { "value": "{size.160}" },
-      "maxWidth": { "value": "{size.320}" }
+      "gap": {
+        "$value": "{size.4}",
+        "$type": "dimension",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "popover"
+          }
+        }
+      },
+      "borderRadius": {
+        "$value": "{borderRadius.md}",
+        "$type": "dimension",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "popover"
+          }
+        }
+      },
+      "minWidth": {
+        "$value": "{size.80}",
+        "$type": "dimension",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "popover"
+          }
+        }
+      },
+      "maxWidth": {
+        "$value": "{size.320}",
+        "$type": "dimension",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "popover"
+          }
+        }
+      }
     }
   }
 }

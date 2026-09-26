@@ -1,9 +1,0 @@
-{
-  "overlay": {
-    "color": {
-      "modal": { "value": "{color.canvas.overlay.modal}" },
-      "sheet": { "value": "{color.canvas.overlay.sheet}" },
-      "none": { "value": "{color.canvas.transparent}" }
-    }
-  }
-}

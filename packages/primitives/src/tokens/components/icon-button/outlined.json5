@@ -15,7 +15,7 @@
           disabled: {
             $value: '{borderColor.subtle}',
             $type: 'color',
-            $description: 'GAP: original used color.border.gray.2, lighter than gray.3 (borderColor.subtle, the lightest named functional step). Falls back to subtle.',
+            $description: 'GAP: original used borderColor.muted, lighter than gray.3 (borderColor.subtle, the lightest named functional step). Falls back to subtle.',
           },
         },
         fgColor: {
@@ -39,7 +39,7 @@
           disabled: {
             $value: '{borderColor.subtle}',
             $type: 'color',
-            $description: 'GAP: original used color.border.gray.1, lighter than gray.3 (borderColor.subtle, the lightest named functional step). Falls back to subtle.',
+            $description: 'GAP: original used borderColor.subtle, lighter than gray.3 (borderColor.subtle, the lightest named functional step). Falls back to subtle.',
           },
         },
         fgColor: {

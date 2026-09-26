@@ -1,0 +1,118 @@
+{
+  "siteHeader": {
+    "color": {
+      "background": {
+        "$value": "{bgColor.canvas.default}",
+        "$type": "color",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "site-header"
+          }
+        }
+      },
+      "border": {
+        "$value": "{bgColor.canvas.transparent}",
+        "$type": "color",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "site-header"
+          }
+        }
+      },
+      "divider": {
+        "$value": "{fgColor.neutral.subtle}",
+        "$type": "color",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "site-header"
+          }
+        }
+      }
+    },
+    "sizes": {
+      "height": {
+        "$value": "{size.48}",
+        "$type": "dimension",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "site-header"
+          }
+        }
+      },
+      "paddingInlineStart": {
+        "$value": "{size.16}",
+        "$type": "dimension",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "site-header"
+          }
+        }
+      },
+      "paddingInlineEnd": {
+        "$value": "{size.8}",
+        "$type": "dimension",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "site-header"
+          }
+        }
+      },
+      "paddingBlock": {
+        "$value": "{size.8}",
+        "$type": "dimension",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "site-header"
+          }
+        }
+      },
+      "leadingGap": {
+        "$value": "{size.4}",
+        "$type": "dimension",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "site-header"
+          }
+        }
+      },
+      "trailingGap": {
+        "$value": "{size.8}",
+        "$type": "dimension",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "site-header"
+          }
+        }
+      },
+      "dividerHeight": {
+        "$value": "{size.15}",
+        "$type": "dimension",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "site-header"
+          }
+        }
+      },
+      "dividerWidth": {
+        "$value": "{size.1}",
+        "$type": "dimension",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "site-header"
+          }
+        }
+      }
+    }
+  }
+}

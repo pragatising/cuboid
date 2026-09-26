@@ -1,0 +1,110 @@
+{
+  "sidebar": {
+    "color": {
+      "background": {
+        "$value": "{bgColor.canvas.default}",
+        "$type": "color",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "sidebar"
+          }
+        }
+      },
+      "border": {
+        "$value": "{borderColor.subtle}",
+        "$type": "color",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "sidebar"
+          }
+        }
+      }
+    },
+    "sizes": {
+      "width": {
+        "sm": {
+          "$value": "{size.240}",
+          "$type": "dimension",
+          "$extensions": {
+            "org.cuboid.figma": {
+              "collection": "component",
+              "group": "sidebar"
+            }
+          }
+        },
+        "md": {
+          "$value": "{size.272}",
+          "$type": "dimension",
+          "$extensions": {
+            "org.cuboid.figma": {
+              "collection": "component",
+              "group": "sidebar"
+            }
+          }
+        },
+        "lg": {
+          "$value": "{size.320}",
+          "$type": "dimension",
+          "$extensions": {
+            "org.cuboid.figma": {
+              "collection": "component",
+              "group": "sidebar"
+            }
+          }
+        }
+      },
+      "widthMinimized": {
+        "$value": "3.6rem",
+        "$type": "dimension",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "sidebar"
+          }
+        }
+      },
+      "minWidth": {
+        "$value": "{size.200}",
+        "$type": "dimension",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "sidebar"
+          }
+        }
+      },
+      "maxWidth": {
+        "$value": "{size.480}",
+        "$type": "dimension",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "sidebar"
+          }
+        }
+      },
+      "padding": {
+        "$value": "{size.8}",
+        "$type": "dimension",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "sidebar"
+          }
+        }
+      },
+      "footerPadding": {
+        "$value": "{size.8}",
+        "$type": "dimension",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "sidebar"
+          }
+        }
+      }
+    }
+  }
+}

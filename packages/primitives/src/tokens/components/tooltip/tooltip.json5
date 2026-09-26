@@ -1,18 +1,110 @@
 {
   "tooltip": {
     "color": {
-      "background": { "value": "{base.color.scale.gray.13}" },
-      "border": { "value": "{color.canvas.transparent}" },
-      "foreground": { "value": "{color.fg.neutral.inverted}" }
+      "background": {
+        "$value": "{bgColor.neutral.inverted.1}",
+        "$type": "custom-string",
+        "$description": "Raw CSS value with no token equivalent (viewport units / min() are outside DTCG's dimension type).",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "tooltip"
+          }
+        }
+      },
+      "border": {
+        "$value": "{bgColor.canvas.transparent}",
+        "$type": "color",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "tooltip"
+          }
+        }
+      },
+      "foreground": {
+        "$value": "{fgColor.neutral.inverted}",
+        "$type": "color",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "tooltip"
+          }
+        }
+      }
     },
     "sizes": {
-      "gap": { "value": "{size.2}" },
-      "borderRadius": { "value": "{borderRadius.sm}" },
-      "paddingInline": { "value": "{size.6}" },
-      "paddingBlock": { "value": "{size.2}" },
-      "maxWidth": { "value": "{size.240}" },
-      "maxWidthSingleLine": { "value": "{size.120}" },
-      "boxShadow": { "value": "{shadows.tooltip}" }
+      "gap": {
+        "$value": "{size.2}",
+        "$type": "dimension",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "tooltip"
+          }
+        }
+      },
+      "borderRadius": {
+        "$value": "{borderRadius.sm}",
+        "$type": "dimension",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "tooltip"
+          }
+        }
+      },
+      "paddingInline": {
+        "$value": "{size.6}",
+        "$type": "dimension",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "tooltip"
+          }
+        }
+      },
+      "paddingBlock": {
+        "$value": "{size.2}",
+        "$type": "dimension",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "tooltip"
+          }
+        }
+      },
+      "maxWidth": {
+        "$value": "{size.240}",
+        "$type": "dimension",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "tooltip"
+          }
+        }
+      },
+      "maxWidthSingleLine": {
+        "$value": "{size.120}",
+        "$type": "dimension",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "tooltip"
+          }
+        }
+      },
+      "boxShadow": {
+        "$value": "{shadow.floating.sm}",
+        "$type": "custom-string",
+        "$description": "Raw CSS value with no token equivalent (viewport units / min() are outside DTCG's dimension type).",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "tooltip"
+          }
+        }
+      }
     }
   }
 }

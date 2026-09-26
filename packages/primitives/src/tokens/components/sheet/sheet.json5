@@ -1,0 +1,102 @@
+{
+  "sheet": {
+    "color": {
+      "background": {
+        "$value": "{bgColor.canvas.default}",
+        "$type": "color",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "sheet"
+          }
+        }
+      }
+    },
+    "sizes": {
+      "width": {
+        "sm": {
+          "$value": "{size.320}",
+          "$type": "dimension",
+          "$extensions": {
+            "org.cuboid.figma": {
+              "collection": "component",
+              "group": "sheet"
+            }
+          }
+        },
+        "md": {
+          "$value": "{size.480}",
+          "$type": "dimension",
+          "$extensions": {
+            "org.cuboid.figma": {
+              "collection": "component",
+              "group": "sheet"
+            }
+          }
+        },
+        "lg": {
+          "$value": "min(90vw, 56rem)",
+          "$type": "custom-string",
+          "$description": "Raw CSS value with no token equivalent (viewport units / min() are outside DTCG's dimension type).",
+          "$extensions": {
+            "org.cuboid.figma": {
+              "collection": "component",
+              "group": "sheet"
+            }
+          }
+        }
+      },
+      "minWidth": {
+        "$value": "{size.320}",
+        "$type": "dimension",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "sheet"
+          }
+        }
+      },
+      "maxWidth": {
+        "$value": "min(90vw, 56rem)",
+        "$type": "custom-string",
+        "$description": "Raw CSS value with no token equivalent (viewport units / min() are outside DTCG's dimension type).",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "sheet"
+          }
+        }
+      },
+      "maxHeight": {
+        "$value": "90vh",
+        "$type": "dimension",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "sheet"
+          }
+        }
+      },
+      "padding": {
+        "$value": "{size.16}",
+        "$type": "dimension",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "sheet"
+          }
+        }
+      },
+      "bottomCornerRadius": {
+        "$value": "{borderRadius.lg}",
+        "$type": "dimension",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "sheet"
+          }
+        }
+      }
+    }
+  }
+}

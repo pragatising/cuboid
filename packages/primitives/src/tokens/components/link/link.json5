@@ -1,0 +1,52 @@
+{
+  "link": {
+    "inline": {
+      "fgColor": {
+        "rest": {
+          "$value": "{fgColor.link.default}",
+          "$type": "color",
+          "$extensions": {
+            "org.cuboid.figma": {
+              "collection": "component",
+              "group": "link"
+            }
+          }
+        },
+        "hover": {
+          "$value": "{fgColor.link.hover}",
+          "$type": "color",
+          "$extensions": {
+            "org.cuboid.figma": {
+              "collection": "component",
+              "group": "link"
+            }
+          }
+        }
+      }
+    },
+    "standalone": {
+      "fgColor": {
+        "rest": {
+          "$value": "{fgColor.link.default}",
+          "$type": "color",
+          "$extensions": {
+            "org.cuboid.figma": {
+              "collection": "component",
+              "group": "link"
+            }
+          }
+        },
+        "hover": {
+          "$value": "{fgColor.link.hover}",
+          "$type": "color",
+          "$extensions": {
+            "org.cuboid.figma": {
+              "collection": "component",
+              "group": "link"
+            }
+          }
+        }
+      }
+    }
+  }
+}
