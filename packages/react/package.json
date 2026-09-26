@@ -1,7 +1,7 @@
 {
   "name": "@sragatiping/cuboid",
   "version": "0.1.10",
-  "description": "Cube — React components and design tokens for data views, tables, and themed UI.",
+  "description": "Cube \u2014 React components and design tokens for data views, tables, and themed UI.",
   "keywords": [
     "react",
     "cube",
@@ -53,7 +53,10 @@
     "build-storybook": "storybook build",
     "tokens:theme": "npm run tokens:theme -w @sragatiping/cuboid-primitives",
     "prebuild": "npm run tokens:theme",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "predev": "npm run tokens:theme",
+    "prestorybook": "npm run tokens:theme",
+    "prebuild-storybook": "npm run tokens:theme"
   },
   "peerDependencies": {
     "react": ">=17",

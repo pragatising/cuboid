@@ -6,8 +6,8 @@
       "foreground": { "value": "{color.fg.neutral.inverted}" }
     },
     "sizes": {
-      "gap": { "value": "{space.xxs}" },
-      "borderRadius": { "value": "{borderRadius.small}" },
+      "gap": { "value": "{size.2}" },
+      "borderRadius": { "value": "{borderRadius.sm}" },
       "paddingInline": { "value": "{size.6}" },
       "paddingBlock": { "value": "{size.2}" },
       "maxWidth": { "value": "{size.240}" },

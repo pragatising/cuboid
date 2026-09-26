@@ -21,5 +21,16 @@
   "devDependencies": {
     "@types/node": "^26.5.1",
     "typescript": "^5.9.3"
-  }
+  },
+  "exports": {
+    ".": "./dist/tokens.json",
+    "./tokens.json": "./dist/tokens.json",
+    "./css/theme.css": "./dist/css/theme.css",
+    "./css/*": "./dist/css/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src/tokens"
+  ]
 }

@@ -1,19 +1,276 @@
 {
   size: {
+    // The raw size scale, keyed as multiples of the 8px base unit.
+    //
+    // Why Nx and not xs/sm/md/lg: those names mean DIFFERENT values on
+    // different scales (radius.medium was 8px while space.md was 12px), so a
+    // shared vocabulary implied a shared scale that did not exist. An Nx key
+    // IS its value -- 3x is always 24px, on every scale -- which removes the
+    // collision and the per-component translation tables it forced.
+    //
+    // Every step maps to a clean eighth (verified across all 74 base steps),
+    // so sub-unit values are exact: 0.125x = 1px, 0.5x = 4px.
+    //
+    // Merged from the former display-sizes.json5, which declared the same
+    // `size:` root and therefore always merged into this tree at build time --
+    // two files, one namespace. Semantic aliases (space.*, borderRadius.*)
+    // reference these steps and carry intent; this file carries the scale.
+
+    '0': {
+      $value: '{base.size.0}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '1': {
+      $value: '{base.size.1}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '2': {
+      $value: '{base.size.2}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '3': {
+      $value: '{base.size.3}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '4': {
+      $value: '{base.size.4}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '5': {
+      $value: '{base.size.5}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '6': {
+      $value: '{base.size.6}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '7': {
+      $value: '{base.size.7}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '8': {
+      $value: '{base.size.8}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '9': {
+      $value: '{base.size.9}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '10': {
+      $value: '{base.size.10}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '12': {
+      $value: '{base.size.12}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '14': {
+      $value: '{base.size.14}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '15': {
+      $value: '{base.size.15}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '16': {
+      $value: '{base.size.16}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '18': {
+      $value: '{base.size.18}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '20': {
+      $value: '{base.size.20}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '22': {
+      $value: '{base.size.22}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '24': {
+      $value: '{base.size.24}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '28': {
+      $value: '{base.size.28}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '32': {
+      $value: '{base.size.32}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '40': {
+      $value: '{base.size.40}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '48': {
+      $value: '{base.size.48}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '56': {
+      $value: '{base.size.56}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '64': {
+      $value: '{base.size.64}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '72': {
+      $value: '{base.size.72}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '80': {
+      $value: '{base.size.80}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '88': {
+      $value: '{base.size.88}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '96': {
+      $value: '{base.size.96}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '104': {
+      $value: '{base.size.104}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '112': {
+      $value: '{base.size.112}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '120': {
+      $value: '{base.size.120}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '128': {
+      $value: '{base.size.128}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '136': {
+      $value: '{base.size.136}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '144': {
+      $value: '{base.size.144}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '152': {
+      $value: '{base.size.152}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '160': {
+      $value: '{base.size.160}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '168': {
+      $value: '{base.size.168}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '176': {
+      $value: '{base.size.176}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '184': {
+      $value: '{base.size.184}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '192': {
+      $value: '{base.size.192}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '200': {
+      $value: '{base.size.200}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '240': {
+      $value: '{base.size.240}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '272': {
+      $value: '{base.size.272}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '320': {
+      $value: '{base.size.320}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '400': {
+      $value: '{base.size.400}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '480': {
+      $value: '{base.size.480}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+    '560': {
+      $value: '{base.size.560}',
+      $type: 'dimension',
+      $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size', 'gap'] } },
+    },
+
     control: {
-      extraSmall: {
+      xs: {
         size: {
           $value: '{size.24}',
           $type: 'dimension',
           $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size'] } },
         },
         borderRadius: {
-          $value: '{borderRadius.small}',
+          $value: '{borderRadius.sm}',
           $type: 'dimension',
           $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['borderRadius'] } },
         },
         gap: {
-          $value: '{space.xs}',
+          $value: '{space.xxs}',
           $type: 'dimension',
           $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
         },
@@ -24,40 +281,40 @@
         },
         paddingInline: {
           condensed: {
-            $value: '{space.xs}',
+            $value: '{space.xxs}',
             $type: 'dimension',
             $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
           },
           normal: {
-            $value: '{space.md}',
+            $value: '{space.sm}',
             $type: 'dimension',
             $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
           },
           spacious: {
-            $value: '{space.xl}',
+            $value: '{space.lg}',
             $type: 'dimension',
             $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
           },
         },
         paddingBlock: {
-          $value: '{space.xxs}',
+          $value: '{size.2}',
           $type: 'dimension',
           $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
         },
       },
-      small: {
+      sm: {
         size: {
           $value: '{size.28}',
           $type: 'dimension',
           $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size'] } },
         },
         borderRadius: {
-          $value: '{borderRadius.small}',
+          $value: '{borderRadius.sm}',
           $type: 'dimension',
           $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['borderRadius'] } },
         },
         gap: {
-          $value: '{space.xs}',
+          $value: '{space.xxs}',
           $type: 'dimension',
           $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
         },
@@ -68,40 +325,40 @@
         },
         paddingInline: {
           condensed: {
-            $value: '{space.xs}',
+            $value: '{space.xxs}',
             $type: 'dimension',
             $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
           },
           normal: {
-            $value: '{space.md}',
+            $value: '{space.sm}',
             $type: 'dimension',
             $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
           },
           spacious: {
-            $value: '{space.xl}',
+            $value: '{space.lg}',
             $type: 'dimension',
             $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
           },
         },
         paddingBlock: {
-          $value: '{space.xxs}',
+          $value: '{size.2}',
           $type: 'dimension',
           $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
         },
       },
-      medium: {
+      md: {
         size: {
           $value: '{size.32}',
           $type: 'dimension',
           $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size'] } },
         },
         borderRadius: {
-          $value: '{borderRadius.medium}',
+          $value: '{borderRadius.md}',
           $type: 'dimension',
           $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['borderRadius'] } },
         },
         gap: {
-          $value: '{space.md}',
+          $value: '{space.sm}',
           $type: 'dimension',
           $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
         },
@@ -112,7 +369,7 @@
         },
         paddingInline: {
           condensed: {
-            $value: '{space.md}',
+            $value: '{space.sm}',
             $type: 'dimension',
             $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
           },
@@ -122,30 +379,30 @@
             $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
           },
           spacious: {
-            $value: '{space.xl}',
+            $value: '{space.lg}',
             $type: 'dimension',
             $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
           },
         },
         paddingBlock: {
-          $value: '{space.xs}',
+          $value: '{space.xxs}',
           $type: 'dimension',
           $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
         },
       },
-      large: {
+      lg: {
         size: {
           $value: '{size.40}',
           $type: 'dimension',
           $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['size'] } },
         },
         borderRadius: {
-          $value: '{borderRadius.medium}',
+          $value: '{borderRadius.md}',
           $type: 'dimension',
           $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['borderRadius'] } },
         },
         gap: {
-          $value: '{space.lg}',
+          $value: '{space.md}',
           $type: 'dimension',
           $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
         },
@@ -156,7 +413,7 @@
         },
         paddingInline: {
           condensed: {
-            $value: '{space.lg}',
+            $value: '{space.md}',
             $type: 'dimension',
             $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
           },
@@ -166,13 +423,13 @@
             $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
           },
           spacious: {
-            $value: '{space.xl}',
+            $value: '{space.lg}',
             $type: 'dimension',
             $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
           },
         },
         paddingBlock: {
-          $value: '{space.md}',
+          $value: '{space.sm}',
           $type: 'dimension',
           $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['gap'] } },
         },

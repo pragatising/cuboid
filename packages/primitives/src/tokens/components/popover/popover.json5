@@ -5,7 +5,7 @@
     },
     "sizes": {
       "gap": { "value": "{size.4}" },
-      "borderRadius": { "value": "{borderRadius.medium}" },
+      "borderRadius": { "value": "{borderRadius.md}" },
       "minWidth": { "value": "{size.160}" },
       "maxWidth": { "value": "{size.320}" }
     }
