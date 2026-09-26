@@ -4,7 +4,7 @@
  * Run: node scripts/generate-pill-shade-tokens.mjs && npm run tokens:theme
  *
  * Each surface has bgColor, fgColor, borderColor (single values).
- * Intensity → filled bg on hue scale: extralight 0, light 2, bold 7, extraBold 9–12.
+ * Intensity → filled bg on hue scale: extraLight 0, light 2, bold 7, extraBold 9–12.
  *
  * Emits DTCG ($value/$type) referencing the FUNCTIONAL layer only. Components
  * must never reach into base/ — base exists to be aliased by functional tokens,
@@ -29,32 +29,32 @@ const token = (value) => ({
 
 const PILL_HUE_CONFIG = {
   gray: {
-    stops: { extralight: 5, light: 5, bold: 6, extraBold: 6 },
+    stops: { extraLight: 5, light: 5, bold: 6, extraBold: 6 },
     fgHue: "neutral",
     bgHue: "gray",
     isGray: true,
   },
-  yellow: { stops: { extralight: 2, light: 3, bold: 3, extraBold: 5 } },
-  green: { stops: { extralight: 2, light: 3, bold: 3, extraBold: 5 } },
-  teal: { stops: { extralight: 1, light: 2, bold: 2, extraBold: 5 } },
-  orange: { stops: { extralight: 3, light: 3, bold: 3, extraBold: 5 } },
-  red: { stops: { extralight: 3, light: 3, bold: 3, extraBold: 5 } },
-  blue: { stops: { extralight: 1, light: 2, bold: 2, extraBold: 5 } },
-  purple: { stops: { extralight: 2, light: 3, bold: 3, extraBold: 5 } },
-  lime: { stops: { extralight: 2, light: 3, bold: 3, extraBold: 5 } },
-  indigo: { stops: { extralight: 3, light: 3, bold: 3, extraBold: 5 } },
+  yellow: { stops: { extraLight: 2, light: 3, bold: 3, extraBold: 5 } },
+  green: { stops: { extraLight: 2, light: 3, bold: 3, extraBold: 5 } },
+  teal: { stops: { extraLight: 1, light: 2, bold: 2, extraBold: 5 } },
+  orange: { stops: { extraLight: 3, light: 3, bold: 3, extraBold: 5 } },
+  red: { stops: { extraLight: 3, light: 3, bold: 3, extraBold: 5 } },
+  blue: { stops: { extraLight: 1, light: 2, bold: 2, extraBold: 5 } },
+  purple: { stops: { extraLight: 2, light: 3, bold: 3, extraBold: 5 } },
+  lime: { stops: { extraLight: 2, light: 3, bold: 3, extraBold: 5 } },
+  indigo: { stops: { extraLight: 3, light: 3, bold: 3, extraBold: 5 } },
   mag: {
-    stops: { extralight: 1, light: 2, bold: 2, extraBold: 4 },
+    stops: { extraLight: 1, light: 2, bold: 2, extraBold: 4 },
     // fgHue was "magenta", which is not a real hue key — the scale is "mag".
     fgHue: "mag",
     bgHue: "mag",
   },
 };
 
-const INTENSITIES = ["extralight", "light", "bold", "extraBold"];
+const INTENSITIES = ["extraLight", "light", "bold", "extraBold"];
 
 const BG_FILLED = {
-  extralight: "0",
+  extraLight: "0",
   light: "2",
   bold: "7",
 };
@@ -74,7 +74,7 @@ const EXTRA_BOLD_BG = {
 };
 
 const BORDER_FILLED = {
-  extralight: "3",
+  extraLight: "3",
   light: "5",
   bold: "8",
 };

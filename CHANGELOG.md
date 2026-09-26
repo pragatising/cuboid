@@ -2,6 +2,14 @@
 
 Rolling session log for Claude Code continuity. Newest entry on top. Each entry: what changed, why, and anything the next agent needs to know. Keep entries short — skip anything derivable from `git log` or the diff itself.
 
+## 2026-09-25 (end of day, follow-up) — Pill intensity casing
+
+**Changed:**
+- `extralight` -> `extraLight` across the pill intensity scale, fixed at `scripts/generate-pill-shade-tokens.mjs` and regenerated (11 hue files). It was the only non-camelCase key in a set whose sibling is `extraBold`.
+
+**Next agent:**
+- `packages/react` still says `extralight` in `Pill.stories.tsx`, `Table.stories.tsx`, and the orphaned `theme/output/components.css`. Deliberately not fixed — React is being rewritten wholesale, and `components.css` is a Sep 12 generated file nothing can regenerate.
+
 ## 2026-09-25 (end of day) — All component tokens DTCG, functional-only: 146 broken refs and 134 base reach-throughs to zero
 
 **Changed:**

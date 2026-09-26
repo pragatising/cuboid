@@ -2,7 +2,7 @@
   "pill": {
     "color": {
       "gray": {
-        "extralight": {
+        "extraLight": {
           "filled": {
             "bgColor": {
               "$value": "{display.gray.scale.0}",
