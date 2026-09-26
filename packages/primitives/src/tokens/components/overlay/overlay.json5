@@ -1,0 +1,36 @@
+{
+  "overlay": {
+    "color": {
+      "modal": {
+        "$value": "{bgColor.canvas.overlay.blanket}",
+        "$type": "color",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "overlay"
+          }
+        }
+      },
+      "sheet": {
+        "$value": "{bgColor.canvas.overlay.sheet}",
+        "$type": "color",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "overlay"
+          }
+        }
+      },
+      "none": {
+        "$value": "{bgColor.canvas.transparent}",
+        "$type": "color",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "overlay"
+          }
+        }
+      }
+    }
+  }
+}

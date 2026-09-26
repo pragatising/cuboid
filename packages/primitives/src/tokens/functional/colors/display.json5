@@ -58,6 +58,24 @@
           $type: 'color',
           $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
         },
+        '11': {
+          $value: '{base.color.gray.11}',
+          $type: 'color',
+          $description: 'Gray runs deeper than the chromatic hues (base gray has 14 steps, 0-13, vs 11). Exposed so components can reach the darkest neutrals — e.g. pill extraBold, tooltip surfaces — without reaching into base/.',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '12': {
+          $value: '{base.color.gray.12}',
+          $type: 'color',
+          $description: 'Gray runs deeper than the chromatic hues (base gray has 14 steps, 0-13, vs 11). Exposed so components can reach the darkest neutrals — e.g. pill extraBold, tooltip surfaces — without reaching into base/.',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
+        '13': {
+          $value: '{base.color.gray.13}',
+          $type: 'color',
+          $description: 'Gray runs deeper than the chromatic hues (base gray has 14 steps, 0-13, vs 11). Exposed so components can reach the darkest neutrals — e.g. pill extraBold, tooltip surfaces — without reaching into base/.',
+          $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor', 'borderColor'] } },
+        },
       },
       bgColor: {
         muted: {

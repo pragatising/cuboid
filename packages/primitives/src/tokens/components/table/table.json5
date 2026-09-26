@@ -2,31 +2,157 @@
   "table": {
     "color": {
       "header": {
-        "bgColor": { "value": "{color.bg.gray.light.1}" },
-        "fgColor": { "value": "{color.text.contrast}" },
-        "borderColor": { "value": "{color.border.gray.2}" }
+        "bgColor": {
+          "$value": "{bgColor.neutral.light.1}",
+          "$type": "color",
+          "$extensions": {
+            "org.cuboid.figma": {
+              "collection": "component",
+              "group": "table"
+            }
+          }
+        },
+        "fgColor": {
+          "$value": "{fgColor.neutral.contrast}",
+          "$type": "color",
+          "$extensions": {
+            "org.cuboid.figma": {
+              "collection": "component",
+              "group": "table"
+            }
+          }
+        },
+        "borderColor": {
+          "$value": "{borderColor.muted}",
+          "$type": "color",
+          "$extensions": {
+            "org.cuboid.figma": {
+              "collection": "component",
+              "group": "table"
+            }
+          }
+        }
       },
       "body": {
-        "bgColor": { "value": "{color.bg.gray.light.1}" },
-        "fgColor": { "value": "{color.text.default}" },
-        "borderColor": { "value": "{color.border.gray.2}" }
+        "bgColor": {
+          "$value": "{bgColor.neutral.light.1}",
+          "$type": "color",
+          "$extensions": {
+            "org.cuboid.figma": {
+              "collection": "component",
+              "group": "table"
+            }
+          }
+        },
+        "fgColor": {
+          "$value": "{fgColor.neutral.default}",
+          "$type": "color",
+          "$extensions": {
+            "org.cuboid.figma": {
+              "collection": "component",
+              "group": "table"
+            }
+          }
+        },
+        "borderColor": {
+          "$value": "{borderColor.muted}",
+          "$type": "color",
+          "$extensions": {
+            "org.cuboid.figma": {
+              "collection": "component",
+              "group": "table"
+            }
+          }
+        }
       },
       "container": {
-        "borderColor": { "value": "{color.border.gray.2}" }
+        "borderColor": {
+          "$value": "{borderColor.muted}",
+          "$type": "color",
+          "$extensions": {
+            "org.cuboid.figma": {
+              "collection": "component",
+              "group": "table"
+            }
+          }
+        }
       }
     },
     "sizes": {
-      "borderRadius": { "value": "{displaySizes.8}" },
+      "borderRadius": {
+        "$value": "{size.8}",
+        "$type": "dimension",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "table"
+          }
+        }
+      },
       "density": {
         "dense": {
-          "cellPaddingInline": { "value": "{displaySizes.12}" },
-          "cellPaddingBlock": { "value": "{displaySizes.6}" },
-          "rowHeight": { "value": "{displaySizes.32}" }
+          "cellPaddingInline": {
+            "$value": "{size.12}",
+            "$type": "dimension",
+            "$extensions": {
+              "org.cuboid.figma": {
+                "collection": "component",
+                "group": "table"
+              }
+            }
+          },
+          "cellPaddingBlock": {
+            "$value": "{size.6}",
+            "$type": "dimension",
+            "$extensions": {
+              "org.cuboid.figma": {
+                "collection": "component",
+                "group": "table"
+              }
+            }
+          },
+          "rowHeight": {
+            "$value": "{size.32}",
+            "$type": "dimension",
+            "$extensions": {
+              "org.cuboid.figma": {
+                "collection": "component",
+                "group": "table"
+              }
+            }
+          }
         },
         "spacious": {
-          "cellPaddingInline": { "value": "{displaySizes.16}" },
-          "cellPaddingBlock": { "value": "{displaySizes.10}" },
-          "rowHeight": { "value": "{displaySizes.40}" }
+          "cellPaddingInline": {
+            "$value": "{size.16}",
+            "$type": "dimension",
+            "$extensions": {
+              "org.cuboid.figma": {
+                "collection": "component",
+                "group": "table"
+              }
+            }
+          },
+          "cellPaddingBlock": {
+            "$value": "{size.10}",
+            "$type": "dimension",
+            "$extensions": {
+              "org.cuboid.figma": {
+                "collection": "component",
+                "group": "table"
+              }
+            }
+          },
+          "rowHeight": {
+            "$value": "{size.40}",
+            "$type": "dimension",
+            "$extensions": {
+              "org.cuboid.figma": {
+                "collection": "component",
+                "group": "table"
+              }
+            }
+          }
         }
       }
     }

@@ -1,10 +1,17 @@
 #!/usr/bin/env node
 /**
- * Generate pill/<shade>.json — static chip/tag colors (no button-style states).
+ * Generate pill/<shade>.json5 — static chip/tag colors (no button-style states).
  * Run: node scripts/generate-pill-shade-tokens.mjs && npm run tokens:theme
  *
  * Each surface has bgColor, fgColor, borderColor (single values).
  * Intensity → filled bg on hue scale: extralight 0, light 2, bold 7, extraBold 9–12.
+ *
+ * Emits DTCG ($value/$type) referencing the FUNCTIONAL layer only. Components
+ * must never reach into base/ — base exists to be aliased by functional tokens,
+ * and is `include`-only in the build (resolvable, never emitted), so a
+ * {base.*} reference in a component has no CSS variable to point at.
+ * Hue steps therefore go through display.<hue>.scale.<n>, the functional
+ * alias over base.color.<hue>.<n>.
  */
 
 import fs from "fs";
@@ -12,9 +19,13 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const OUT_DIR = path.join(__dirname, "../tokens/functional/components/pill");
+const OUT_DIR = path.join(__dirname, "../src/tokens/components/pill");
 
-const token = (value) => ({ value });
+const token = (value) => ({
+  $value: value,
+  $type: "color",
+  $extensions: { "org.cuboid.figma": { collection: "component", group: "pill" } },
+});
 
 const PILL_HUE_CONFIG = {
   gray: {
@@ -34,7 +45,8 @@ const PILL_HUE_CONFIG = {
   indigo: { stops: { extralight: 3, light: 3, bold: 3, extraBold: 5 } },
   mag: {
     stops: { extralight: 1, light: 2, bold: 2, extraBold: 4 },
-    fgHue: "magenta",
+    // fgHue was "magenta", which is not a real hue key — the scale is "mag".
+    fgHue: "mag",
     bgHue: "mag",
   },
 };
@@ -92,11 +104,13 @@ const NEUTRAL_FG_BY_STOP = {
 function fgSemantic(fgHue, stop) {
   if (fgHue === "neutral") {
     const key = NEUTRAL_FG_BY_STOP[stop] ?? "default";
-    return `{color.fg.neutral.${key}}`;
+    return `{fgColor.neutral.${key}}`;
   }
   const n = Number(stop);
   const role = n <= 3 ? "muted" : "contrast";
-  return `{color.fg.${fgHue}.${role}}`;
+  // display.<hue>.fgColor is a single value, not a role map, so the role
+  // picks a scale step instead: muted = mid scale, contrast = darkest.
+  return `{display.${fgHue}.scale.${role === "muted" ? 7 : 10}}`;
 }
 
 function fg(fgHue, stop) {
@@ -104,7 +118,7 @@ function fg(fgHue, stop) {
 }
 
 function bg(bgHue, stop) {
-  return `{base.color.scale.${bgHue}.${stop}}`;
+  return `{display.${bgHue}.scale.${stop}}`;
 }
 
 function filledBgStop(shade, intensity) {
@@ -131,15 +145,15 @@ function buildIntensity(shade, intensity, entry) {
 
   const filled = {
     bgColor: token(bg(bgHue, filledBgStop(shade, intensity))),
-    borderColor: token("{color.canvas.transparent}"),
-    fgColor: token(onDarkFilledBg ? "{color.fg.neutral.inverted}" : fg(fgHue, fgStop)),
+    borderColor: token("{bgColor.canvas.transparent}"),
+    fgColor: token(onDarkFilledBg ? "{fgColor.neutral.inverted}" : fg(fgHue, fgStop)),
   };
 
   const bordered = {
     bgColor: token(bg("gray", BG_BORDERED[borderedIdx])),
     borderColor: token(
       entry.isGray && intensity !== "extraBold"
-        ? "{color.border.gray.3}"
+        ? "{borderColor.strong}"
         : bg(bgHue, borderedBorderStop(shade, intensity))
     ),
     fgColor: token(
@@ -159,7 +173,7 @@ function buildHueFile(shade, entry) {
 }
 
 for (const [shade, entry] of Object.entries(PILL_HUE_CONFIG)) {
-  const outPath = path.join(OUT_DIR, `${shade}.json`);
+  const outPath = path.join(OUT_DIR, `${shade}.json5`);
   fs.writeFileSync(outPath, JSON.stringify(buildHueFile(shade, entry), null, 2) + "\n", "utf8");
   console.log(`Wrote ${outPath}`);
 }

@@ -1,14 +1,13 @@
 {
-  "tooltip": {
+  "siteHeader": {
     "color": {
       "background": {
-        "$value": "{bgColor.neutral.inverted.1}",
-        "$type": "custom-string",
-        "$description": "Raw CSS value with no token equivalent (viewport units / min() are outside DTCG's dimension type).",
+        "$value": "{bgColor.canvas.default}",
+        "$type": "color",
         "$extensions": {
           "org.cuboid.figma": {
             "collection": "component",
-            "group": "tooltip"
+            "group": "site-header"
           }
         }
       },
@@ -18,90 +17,99 @@
         "$extensions": {
           "org.cuboid.figma": {
             "collection": "component",
-            "group": "tooltip"
+            "group": "site-header"
           }
         }
       },
-      "foreground": {
-        "$value": "{fgColor.neutral.inverted}",
+      "divider": {
+        "$value": "{fgColor.neutral.subtle}",
         "$type": "color",
         "$extensions": {
           "org.cuboid.figma": {
             "collection": "component",
-            "group": "tooltip"
+            "group": "site-header"
           }
         }
       }
     },
     "sizes": {
-      "gap": {
-        "$value": "{size.2}",
+      "height": {
+        "$value": "{size.48}",
         "$type": "dimension",
         "$extensions": {
           "org.cuboid.figma": {
             "collection": "component",
-            "group": "tooltip"
+            "group": "site-header"
           }
         }
       },
-      "borderRadius": {
-        "$value": "{borderRadius.sm}",
+      "paddingInlineStart": {
+        "$value": "{size.16}",
         "$type": "dimension",
         "$extensions": {
           "org.cuboid.figma": {
             "collection": "component",
-            "group": "tooltip"
+            "group": "site-header"
           }
         }
       },
-      "paddingInline": {
-        "$value": "{size.6}",
+      "paddingInlineEnd": {
+        "$value": "{size.8}",
         "$type": "dimension",
         "$extensions": {
           "org.cuboid.figma": {
             "collection": "component",
-            "group": "tooltip"
+            "group": "site-header"
           }
         }
       },
       "paddingBlock": {
-        "$value": "{size.2}",
+        "$value": "{size.8}",
         "$type": "dimension",
         "$extensions": {
           "org.cuboid.figma": {
             "collection": "component",
-            "group": "tooltip"
+            "group": "site-header"
           }
         }
       },
-      "maxWidth": {
-        "$value": "{size.240}",
+      "leadingGap": {
+        "$value": "{size.4}",
         "$type": "dimension",
         "$extensions": {
           "org.cuboid.figma": {
             "collection": "component",
-            "group": "tooltip"
+            "group": "site-header"
           }
         }
       },
-      "maxWidthSingleLine": {
-        "$value": "{size.120}",
+      "trailingGap": {
+        "$value": "{size.8}",
         "$type": "dimension",
         "$extensions": {
           "org.cuboid.figma": {
             "collection": "component",
-            "group": "tooltip"
+            "group": "site-header"
           }
         }
       },
-      "boxShadow": {
-        "$value": "{shadow.floating.sm}",
-        "$type": "custom-string",
-        "$description": "Raw CSS value with no token equivalent (viewport units / min() are outside DTCG's dimension type).",
+      "dividerHeight": {
+        "$value": "{size.15}",
+        "$type": "dimension",
         "$extensions": {
           "org.cuboid.figma": {
             "collection": "component",
-            "group": "tooltip"
+            "group": "site-header"
+          }
+        }
+      },
+      "dividerWidth": {
+        "$value": "{size.1}",
+        "$type": "dimension",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "site-header"
           }
         }
       }

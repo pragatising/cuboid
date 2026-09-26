@@ -1,0 +1,14 @@
+{
+  "resizeHandle": {
+    "hitArea": {
+      "$value": "{size.8}",
+      "$type": "dimension",
+      "$extensions": {
+        "org.cuboid.figma": {
+          "collection": "component",
+          "group": "resize-handle"
+        }
+      }
+    }
+  }
+}

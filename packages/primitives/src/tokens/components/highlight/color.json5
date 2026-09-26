@@ -33,11 +33,11 @@
       fgColor: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
     },
     orange: {
-      bgColor: { $value: '{base.color.orange.1}', $type: 'color' },
+      bgColor: { $value: '{display.orange.scale.1}', $type: 'color' },
       fgColor: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
     },
     red: {
-      bgColor: { $value: '{base.color.red.3}', $type: 'color' },
+      bgColor: { $value: '{display.red.scale.3}', $type: 'color' },
       fgColor: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
     },
     lime: {

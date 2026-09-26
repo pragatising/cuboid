@@ -2,6 +2,26 @@
 
 Rolling session log for Claude Code continuity. Newest entry on top. Each entry: what changed, why, and anything the next agent needs to know. Keep entries short — skip anything derivable from `git log` or the diff itself.
 
+## 2026-09-25 (end of day) — All component tokens DTCG, functional-only: 146 broken refs and 134 base reach-throughs to zero
+
+**Changed:**
+- **Every component token folder is now DTCG (`$value`/`$type`) and references the FUNCTIONAL layer only.** Before: 146 broken references, 134 base reach-throughs, 11 legacy-format components, and 8 components emitting zero tokens. After: all zero, all 25 components in the output. Leaf values went 799 -> 1138 (the 8 silent components now actually build).
+- **Bulk remap of 17 dead `color.*` paths** onto the current functional layer (`color.canvas.transparent` -> `bgColor.canvas.transparent`, `color.text.contrast` -> `fgColor.neutral.contrast`, `color.border.gray.2` -> `borderColor.muted`, …) plus `displaySizes.N` -> `size.N` left over from the namespace merge. Those paths were deleted in the Sep 13 functional rebuild and never updated — 25 files touched.
+- **Pill fixed at the generator** (`scripts/generate-pill-shade-tokens.mjs`), not in its 12 outputs. It wrote to `tokens/functional/components/pill` (a path that no longer exists), emitted legacy format, and reached into `base.color.scale.*`. Now emits DTCG `.json5` into `src/tokens/components/pill` referencing `display.<hue>.scale.*`. Also fixed a latent bug: `fgHue: "magenta"` pointed at a hue key that does not exist (it is `mag`), and `display.<hue>.fgColor` is a single value, not the role map the generator assumed.
+- **`display.gray.scale` extended from 10 to 13 steps.** Base gray has 14 (0-13) while the chromatic hues have 11, and pill's `extraBold` legitimately needs step 12. This was a real functional-layer gap, so the fix is exposing the steps — not letting a component reach into base to get them.
+- **`link` re-rooted from `color.link.*` to `link.*`.** Its old `color.*` wrapper (pre-rebuild taxonomy) made it merge into a stray top-level `color` key instead of appearing as a component like every other one.
+- Remaining 9 components converted to DTCG with `$type` inferred from the reference target; raw CSS values that DTCG's dimension type cannot express (`90vh`, `min(90vw, 56rem)`) typed `custom-string` with a note, same pattern as `container`.
+
+**Why:**
+- Components reaching into `base/` is not a style violation, it is broken output: base is `include`-only in this build (resolvable, never emitted), so a `{base.*}` reference in a component has no CSS variable to point at. And 8 components producing zero tokens was invisible — nothing failed, they simply were not in the output.
+
+**Next agent:**
+- **This had to happen before generating types.** A token union built over the previous state would have omitted 8 components entirely and frozen the broken taxonomy into the public API.
+- `functional/typography/typography[DEPRECATED].json` is the only legacy-format file left anywhere. The filename says it is deliberate — ask before removing it.
+- `components/highlight/color.json5` still holds 4 raw hex values, each with a `$description: 'GAP: ...'` explaining that no base color is a close match (deliberately more saturated than the UI palette). These are honest design decisions, not bugs, but they are the last non-tokenised colors in the component layer.
+- Shadow composited alphas are structurally correct but were never cross-checked against Figma — worth verifying if shadows are design-critical.
+- Still unwired: the 27 Zod schemas (nothing calls them — this is the gate that would have caught the 146 broken refs at authoring time) and `platforms/typescript.ts` + `typeDefinitions.ts`.
+
 ## 2026-09-25 (later still) — One size vocabulary: Nx scale + xxs..xxl ladder
 
 **Changed:**
