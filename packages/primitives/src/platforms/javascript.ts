@@ -9,6 +9,9 @@ import { isSource } from "../filters/isSource.ts";
 export const javascript: PlatformInitializer = (outputFile, prefix, buildPath, options): PlatformConfig => ({
   prefix,
   buildPath,
+  // Same name-collision downgrade as platforms/typescript.ts/json.ts —
+  // see that file's comment for the full explanation.
+  log: { warnings: "warn", verbosity: "verbose" },
   preprocessors: ["themeOverrides"],
   transforms: ["color/hex", "dimension/rem", "shadow/css", "border/css", "typography/css", "fontFamily/css", "fontWeight/number"],
   options: {

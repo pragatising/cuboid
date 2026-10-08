@@ -58,6 +58,15 @@ async function main() {
     platforms: {
       css: css("css/theme.css", "cube", `${OUTPUT_DIR}/`),
       json: json("tokens.json", undefined, `${OUTPUT_DIR}/`),
+      // ESM — the real consumer seam for ADR-04 (resolved values, statically
+      // imported, no CSS var / no React context). .js, not .mjs: this
+      // package's package.json already declares "type": "module", so .js
+      // resolves as ESM without needing the extension to carry that signal.
+      typescript: typescript("tokens.js", undefined, `${OUTPUT_DIR}/js/`),
+      // CommonJS — no current consumer (packages/react is ESM), kept for
+      // any future non-ESM consumer, matching Primer's own unused-but-real
+      // javascript.ts platform.
+      javascript: javascript("tokens.js", undefined, `${OUTPUT_DIR}/cjs/`),
     },
   });
 

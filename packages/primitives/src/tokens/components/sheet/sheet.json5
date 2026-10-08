@@ -69,7 +69,8 @@
       },
       "maxHeight": {
         "$value": "90vh",
-        "$type": "dimension",
+        "$type": "custom-string",
+        "$description": "Raw CSS value with no token equivalent (viewport units are outside DTCG's dimension type) — same case as maxWidth above.",
         "$extensions": {
           "org.cuboid.figma": {
             "collection": "component",

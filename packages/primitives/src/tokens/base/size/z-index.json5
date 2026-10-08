@@ -29,6 +29,18 @@
         $value: 600,
         $type: 'number',
       },
+      '700': {
+        $value: 700,
+        $type: 'number',
+      },
+      '800': {
+        $value: 800,
+        $type: 'number',
+      },
+      '900': {
+        $value: 900,
+        $type: 'number',
+      },
     },
   },
 }

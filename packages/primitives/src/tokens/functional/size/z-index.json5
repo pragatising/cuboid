@@ -36,21 +36,30 @@
       $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['zIndex'] } },
     },
     popover: {
-      $value: 700,
+      // Above dialog(600): a popover (menu, dropdown panel) must be able to
+      // render above an open dialog that triggered it. Below tooltip: a
+      // tooltip frequently appears nested inside a popover (hovering an
+      // item inside an open menu) and must out-rank it — confirmed against
+      // Chakra UI, Material UI, Ant Design, and Primer's own z-index
+      // scales, which unanimously stack tooltip above popover.
+      $value: '{base.zIndex.700}',
       $type: 'number',
-      $description: 'GAP: no base.zIndex step exists above 600. Add base.zIndex.700 and alias this once added.',
       $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['zIndex'] } },
     },
     tooltip: {
-      $value: 800,
+      $value: '{base.zIndex.800}',
       $type: 'number',
-      $description: 'GAP: no base.zIndex step exists above 600. Add base.zIndex.800 and alias this once added.',
       $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['zIndex'] } },
     },
     toast: {
-      $value: 900,
+      // Highest named layer below `max`: a toast is a global, app-level
+      // notification that must never be hidden by anything else the app
+      // renders, including a tooltip — matching Bootstrap's and Ant
+      // Design's "toast/notification outranks everything" precedent
+      // (Ant Design places its notification layer far above its own
+      // modal/popover/tooltip cluster for the same reason).
+      $value: '{base.zIndex.900}',
       $type: 'number',
-      $description: 'GAP: no base.zIndex step exists above 600. Add base.zIndex.900 and alias this once added.',
       $extensions: { 'org.cuboid.figma': { collection: 'functional/size', scopes: ['zIndex'] } },
     },
     max: {
