@@ -8,13 +8,15 @@
     "tokens:functional-colors": "node scripts/flatten-functional-colors.mjs",
     "tokens:functional-typography": "node scripts/flatten-functional-typography.mjs",
     "tokens:theme": "node scripts/buildTokens.ts",
+    "validate:tokens": "node scripts/validateTokens.ts",
     "check:no-react": "node scripts/check-no-react.mjs",
-    "test": "npm run check:no-react && npm run typecheck && node --test \"src/**/*.test.ts\"",
+    "test": "npm run check:no-react && npm run typecheck && node --test \"src/**/*.test.ts\" \"scripts/**/*.test.ts\"",
     "typecheck": "tsc --noEmit -p tsconfig.typecheck.json"
   },
   "dependencies": {
     "color2k": "^2.0.4",
     "colorjs.io": "^0.5.2",
+    "json5": "^2.2.3",
     "style-dictionary": "^5.5.3",
     "zod": "^4.6.3"
   },
@@ -25,12 +27,15 @@
   "exports": {
     ".": "./dist/tokens.json",
     "./tokens.json": "./dist/tokens.json",
+    "./tokens.js": "./dist/js/tokens.js",
     "./css/theme.css": "./dist/css/theme.css",
     "./css/*": "./dist/css/*",
+    "./applyOverrides": "./src/applyOverrides.ts",
     "./package.json": "./package.json"
   },
   "files": [
     "dist",
-    "src/tokens"
+    "src/tokens",
+    "src/applyOverrides.ts"
   ]
 }

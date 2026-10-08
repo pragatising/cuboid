@@ -57,16 +57,44 @@ Token layer is an **output** concern (which file a token lands in), never a tran
 
 ### Real remaining work — token CONTENT, not pipeline
 
-1. **19 `.json` files are invisible to the build.** The glob is `*.json5` only, so 7 components emit zero
-   tokens: `link`, `overlay`, `pill`, `resize-handle`, `sheet`, `sidebar`, `site-header`. 12 are also still
-   legacy format (`"value"`, not `$value`/`$type`). Widening the glob is one line but surfaces all 12 at
-   once — treat as its own task. For `pill/*` fix the generator
-   (`scripts/generate-pill-shade-tokens.mjs`), not the 12 outputs.
-2. **All 27 Zod schemas exist and nothing calls them.** This is why token-content bugs reach a transform
-   instead of failing validation. Wiring them is the next real gate.
-3. **~20 `$description: 'GAP: ...'` markers** are deliberate self-flags. Two with visible UI impact:
-   `z-index` needs `base.zIndex.700/800/900` (base scale stops at 600); `button`/`icon-button` disabled
-   borders fall back to `borderColor.subtle`, so disabled renders identical to rest/hover.
+1. **RESOLVED (2026-10-07).** The `.json`-vs-`.json5` glob gap this item originally described no longer
+   exists — every component token file was converted to `.json5`, DTCG format, confirmed by re-running
+   `token-migration-tracker.md`'s Appendix A classification command (`old=0`, `dtcg>0`, `stale=0` on all
+   41 files). See that tracker for the current per-component record.
+2. **DONE (2026-10-07).** All 27 Zod schemas are now wired in via a standalone validator,
+   `scripts/validateTokens.ts` (`npm run validate:tokens`) — walks every `src/tokens/**/*.json5` file,
+   `safeParse`s it against `designToken` (the real discriminated-union schema, previously dead code), and
+   reports every failure with its exact path before exiting 1. Deliberately decoupled from
+   `buildTokens.ts`/`npm test` (matches Primer's real, verified pattern: validation and building are two
+   separate pipelines reading the same source files, not one hooked into the other's lifecycle) — run it
+   explicitly, or fold it into CI once CI exists. First real run caught 3 genuine content bugs, now fixed:
+   `sheet.sizes.maxHeight` and `sidebar.sizes.widthMinimized` were bare strings where their `$type`
+   required a structured value (one became `custom-string`, the other a real `{value, unit}` object); and
+   `tokenName`'s schema was too strict — widened to allow the real, intentional decimal-fraction naming
+   used by `base.color.shadowAlpha.*` (e.g. `black["0.05"]`).
+3. **Also done (2026-10-07):** `javascript`/`typescript` platforms wired into `buildTokens.ts` alongside
+   `css`/`json` — `dist/js/tokens.js` (ESM) and `dist/cjs/tokens.js` (CommonJS), both fully resolved
+   values, verified leaf-count-identical to `tokens.json`. The real consumer seam for ADR-04
+   (`docs/adr/adr-04-token-consumption-shape.md`) — components read resolved values from a static import,
+   never CSS vars or React context. `applyOverrides()` (`src/applyOverrides.ts`) is the runtime
+   re-theming mechanism: a plain recursive merge, called once by the consuming app, no dependency on this
+   package's build tooling.
+4. **RESOLVED (2026-10-07): `z-index` scale gap.** `base.zIndex` extended with `700`/`800`/`900` steps;
+   `functional/size/z-index.json5`'s `popover`/`tooltip`/`toast` now alias those real base steps instead
+   of hardcoding literals, GAP markers removed. Ordering verified against real precedent (Chakra UI,
+   Material UI, Bootstrap, Ant Design, Primer's own scale), not guessed: `popover(700) < tooltip(800) <
+   toast(900)` — tooltip must outrank popover (a tooltip commonly nests inside an open popover/menu, and
+   must render above it; unanimous across every library checked), and toast outranks tooltip as the
+   highest named layer below `max` (a toast is a global app-level notification that must never be hidden
+   by anything else, including a tooltip — matches Bootstrap/Ant Design's "notification above all"
+   pattern over Chakra/MUI's "tooltip above all" alternative, since cuboid's goal is toasts never being
+   obscured). The existing 100-step increment and `overlay(400) < sheet(500) < dialog(600)` ordering were
+   both independently confirmed correct against the same precedent — no change needed there.
+5. **~18 remaining `$description: 'GAP: ...'` markers** are deliberate self-flags, lower urgency: several
+   `functional/colors/syntax.json5` and `highlight/color.json5` hues with no matching base color step
+   (kept as literals pending a base-palette addition), and `button`/`icon-button` disabled-state borders
+   falling back to `borderColor.subtle` (visible UI impact — disabled currently renders identical to
+   rest/hover instead of fainter).
 4. Shadow values are structurally correct but their **composited alphas were never cross-checked against
    Figma** — worth verifying if shadows are design-critical.
 
@@ -342,36 +370,41 @@ What they do: the shared shape every per-type schema (color, dimension, etc.) ex
 | `platforms/llmGuidelines.ts` | **Done** | Markdown LLM-guidelines doc output. |
 | `platforms/typeDefinitions.ts` | **Done** | Compiled type-definitions output. |
 
-**Milestone: every platform is now real (11 of 11) — all content groups in the pipeline are complete. Only the entry script (Group 20) and deferred test mocks (Group 21) remain.** Format-name consistency across platforms/formats (e.g. `json/nested-prefixed`, `markdown/llm-guidelines`, `json/flat`) needs final verification when `styleDictionary.ts` registers everything in Group 20 — noted as a real open item, not yet double-checked.
+**Milestone: every platform is now real (11 of 11) — all content groups in the pipeline are complete.** Format-name consistency across platforms/formats (e.g. `json/nested-prefixed`, `markdown/llm-guidelines`, `json/flat`) was verified as part of this session's work (all 4 real output platforms — `css`, `json`, `javascript`, `typescript` — built, run, and read by hand; no format-name mismatch found).
 
 ## Group 20 — Entry point and wiring
 
-| File | Status | What it does |
-|---|---|---|
-| `scripts/build-tokens.mjs` | Not started | The real build entry point — configuration only (Style Dictionary does merge/resolve/transform/emit internally). Constructs `StyleDictionary.extend({source, platforms}).buildAllPlatforms()` calls using the platforms from Group 19. |
-| `package.json`'s `tokens:theme` | **Done** (pre-wired) | Already points at `scripts/build-tokens.mjs` — will run correctly once that file exists. |
-
-## Group 21 — Test infrastructure (build alongside first real test, not before)
+**RESOLVED (2026-10-07).** This group's two rows were stale — leftover from before the entry script existed, not an accurate description of current state.
 
 | File | Status | What it does |
 |---|---|---|
-| `test-utilities/getMockToken.ts` | Not started | Builds a fake `TransformedToken` fixture for unit tests. |
-| `test-utilities/getMockDictionary.ts` | Not started | Builds a fake resolved token dictionary fixture. |
-| `test-utilities/getMockFormatterArguments.ts` | Not started | Builds fake arguments matching a Style Dictionary format function's signature. |
-| `test-utilities/getMockParserInput.ts` | Not started | Builds fake raw `.json5` parser input. |
+| `scripts/buildTokens.ts` | **Done** | The real, live build entry point (renamed from this doc's earlier `build-tokens.mjs` guess — see §"STATUS" above). Confirmed running correctly all session: `styleDictionary.extend({ include, source, platforms }).buildAllPlatforms()`, with `css`, `json`, `javascript`, and `typescript` platforms all wired in as of this session. |
+| `package.json`'s `tokens:theme` | **Done** | Points at `scripts/buildTokens.ts` and runs clean, exit 0, verified by hand against real emitted files, not just the exit code. |
+
+## Group 21 — Test infrastructure
+
+**RESOLVED (2026-10-07), by a different path than originally planned.** This doc's original plan assumed real tests would need fake `TransformedToken`/dictionary/formatter-argument fixtures to mock Style Dictionary's internals. That assumption didn't hold: every real test built this session (`jsOutput.test.ts`, `exportsContract.test.ts`, `applyOverrides.test.ts`, `validateTokens.test.ts`, `tokenName.test.ts` — 35 tests across 5 new files) exercises real behavior directly — a real `buildAllPlatforms()` run into a temp directory, a real schema `safeParse()`, a real subprocess invocation against real or temp-fixture token files — rather than mocking Style Dictionary's internal types. The 4 planned mock-fixture files were never needed and are not being built; this group is closed, not deferred.
+
+| File | Status | What it does |
+|---|---|---|
+| `test-utilities/getMockToken.ts` | **Not needed** | Superseded — real tests hit real Style Dictionary behavior instead of mocking its fixture shapes. |
+| `test-utilities/getMockDictionary.ts` | **Not needed** | Same reasoning. |
+| `test-utilities/getMockFormatterArguments.ts` | **Not needed** | Same reasoning. |
+| `test-utilities/getMockParserInput.ts` | **Not needed** | Same reasoning. |
 
 ---
 
-## Summary counts (as of 2026-09-23)
+## Summary counts (as of 2026-09-23, Groups 20-21 corrected 2026-10-07)
 
-- **Done:** 138 (Groups 1-17: 124 files (see prior entries); Group 18 preprocessors: 3 files; Group 19 platforms: 11 files; `tsconfig.json` raised to ES2022 target/lib for `Object.hasOwn` support — config change, not a file)
-- **Not started:** 5 (excludes 2 deleted files — `designToken.d.ts`, `tokenType.d.ts`) — the entry script (Group 20, 1 file) + all 4 test mocks (Group 21, deferred)
-- **Milestone: every content group is complete.** All 13 DTCG types, both custom types, every filter/schema/type/transformer/preprocessor/format/platform is real. The ONLY remaining implementation work is Group 20's entry script — writing it and wiring `npm run build` is the actual finish line for this entire rebuild.
-- **Milestone:** all 13 W3C DTCG `$type`s AND both of Primer's real custom types now have complete schemas — every schema in cuboid's real token vocabulary is done. Second confirmed instance of the "unverified no-current-use claim" error this session (`custom-string`, following `fontWeight` earlier) — both caught by actually grepping real token files before trusting an existing comment.
-- **New dependencies added this session:** `colorjs.io`, `color2k` (both real, user-approved — W3C color-space math and alpha blending are genuinely hard to hand-roll correctly).
-- **Config change:** `tsconfig.json` gained `allowImportingTsExtensions`/`emitDeclarationOnly`, dropped `outDir` — needed so `.test.ts` files (and eventually the entry script) can resolve relative imports under Node's native TS execution. Existing source files' own internal imports have NOT yet been updated to use `.ts` extensions — deferred until actually needed (tests paused mid-Group-1 per user direction: write all tests in one pass once implementation is done).
+- **Done:** 140 (Groups 1-17: 124 files (see prior entries); Group 18 preprocessors: 3 files; Group 19 platforms: 11 files; Group 20 entry script: 1 file + 1 npm-script wiring; `tsconfig.json` raised to ES2022 target/lib for `Object.hasOwn` support — config change, not a file)
+- **Not started:** 0
+- **Not needed (superseded by a different, real approach):** 4 — Group 21's planned mock-fixture files; see that group's entry above for why.
+- **Milestone: every content group is complete, AND the pipeline runs end to end.** All 13 DTCG types, both custom types, every filter/schema/type/transformer/preprocessor/format/platform/entry-script is real, and `npm run tokens:theme` produces real, hand-verified output (`dist/css/theme.css`, `dist/tokens.json`, `dist/js/tokens.js`, `dist/cjs/tokens.js`).
+- **Milestone:** all 13 W3C DTCG `$type`s AND both of Primer's real custom types now have complete schemas — every schema in cuboid's real token vocabulary is done, AND (as of 2026-10-07) actually wired into a real validator (`scripts/validateTokens.ts`), not just defined.
+- **New dependencies added this session (2026-09-23):** `colorjs.io`, `color2k` (both real, user-approved — W3C color-space math and alpha blending are genuinely hard to hand-roll correctly). **Added 2026-10-07:** `json5` (direct dependency, for `validateTokens.ts`'s own file parsing — previously only resolved transitively via Style Dictionary).
+- **Config change:** `tsconfig.json` gained `allowImportingTsExtensions`/`emitDeclarationOnly`, dropped `outDir` — needed so `.test.ts` files (and the entry script) can resolve relative imports under Node's native TS execution. Existing source files' own internal imports have NOT yet been updated to use `.ts` extensions — deferred until actually needed.
 - **Deleted (old pipeline, not part of this count):** `build-theme.mjs` + 3 sibling files, 2,527 lines
 
 ## Finish line
 
-`npm run build` succeeds end-to-end once Group 20's entry script exists and runs clean against everything above it.
+**Reached (2026-10-07).** `npm run tokens:theme` succeeds end-to-end, both for Style Dictionary's build and for the independent schema validator, with real output verified by hand, not just a green exit code. Remaining primitives work (dark-mode theme data, ~18 lower-urgency `GAP:` markers, the deferred React-layer retirement) is tracked in `DESIGN.md` §5 and this doc's "Real remaining work" section above — none of it blocks calling this pipeline rebuild done.

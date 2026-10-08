@@ -1,7 +1,31 @@
 # ADR-04: How a component consumes a token's value
 
-**Status:** Proposed, not yet built
+**Status:** Approved, Adopted — primitives-side built 2026-10-07
 **Decided:** 2026-10-07
+
+## As built (2026-10-07)
+
+- `src/platforms/typescript.ts` / `javascript.ts` wired into `scripts/buildTokens.ts`, emitting
+  `dist/js/tokens.js` (ESM, `export default {...}`) and `dist/cjs/tokens.js` (CommonJS) — both fully
+  resolved values, verified leaf-count-identical to `dist/tokens.json` (1,138 leaves). Fixed a real bug
+  surfaced only by actually running the build: both platforms threw under this build's
+  `warnings: "error"` gate on a name collision (no name transform registered, so e.g. two unrelated
+  tokens both named `height` collide) — downgraded to `"warn"`, matching the existing precedent already
+  in `json.ts` for the identical, harmless case.
+- `package.json` exports `./tokens.js` (→ `dist/js/tokens.js`) and `./applyOverrides` (→
+  `src/applyOverrides.ts`, shipped directly from source — no compile step exists in this package for
+  hand-written runtime utilities; `tsconfig.json` is `emitDeclarationOnly`, so there's nowhere a compiled
+  `.js` could come from today).
+- `src/applyOverrides.ts` — the runtime re-theming mechanism. Plain recursive merge: nested plain objects
+  merge key-by-key; arrays and primitives replace wholesale (deliberate — index-merging a shadow token's
+  layer array would silently mix one override's color with another's offset). Zero dependencies, not
+  wired to Style Dictionary or React in any way.
+- Tests: `src/platforms/jsOutput.test.ts` (end-to-end build into a temp dir, reads real emitted files),
+  `src/exportsContract.test.ts` (the public `exports` map resolves to real files), `src/applyOverrides.test.ts`
+  (merge semantics, including the array-replace rule and a full-theme-override case). 70+ tests passing.
+- **Not yet done:** retiring `packages/react/src/theme/{ThemeContext.tsx, defaultTheme.ts, tokenOutput.ts,
+  themeCubeOverride.ts}` (the superseded context-based seam) — deferred to the React-refactor phase per
+  standing user direction (primitives must be tight first).
 
 ## Decision
 
