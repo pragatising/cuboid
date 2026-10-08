@@ -14,45 +14,54 @@ Source of truth for which built components have correct DTCG-format, functional-
 
 ## Status by component (alphabetical)
 
+All files below are `.json5`, DTCG-format (`$value`), zero stale `color.bg/border/fg/canvas.*` or `base.color.scale.*` paths — reclassified 2026-10-07 after re-running Appendix A, which now reports `old=0`, `stale=0` on every file in the folder.
+
 | Component | Token folder | Status | Notes |
 |---|---|---|---|
-| ActionMenu | `action-menu/action-menu.json` | Needs rewrite | Old `"value"` format (31 instances), 7 stale `color.*`/`base.color.scale.*` paths. |
-| Box | `box/` (empty) | Missing | Folder exists, zero files. |
-| Breadcrumb | `breadcrumb/breadcrumb.json` | Needs rewrite | Old format (12), 3 stale paths. |
-| Button | `button/{primary.json5,secondary.json,danger.json,ghost.json,rounded.json}` | Needs rewrite | `primary.json5` is DTCG-format but still has 12 stale paths (`base.color.scale.*`, `color.bg/border/fg.*`). The other four variants (`secondary`,`danger`,`ghost`,`rounded`) are still old-format entirely. No shared `size.json5` exists for Button at all — needs one added (see `icon-button/size.json5` for precedent). `rounded.json` is misleadingly named — it's a fifth *color* variant, not a shape/size override. |
-| Callout | none | Missing | No token folder. React component exists at `packages/react/src/components/core/Callout/`. |
-| CodeBlock | `code-block/code-block.json5` | **Done** | Fixed 2026-09-13 — DTCG format, references `bgColor`/`fgColor`/`display.*` functional tokens, no base-color reach-through. |
-| Container | none | Missing | No token folder. React component exists. |
-| Divider | none | Missing | No token folder. React component exists. |
-| Highlight | `highlight/highlight.json5` | Needs rewrite | `.json5` extension but still old-format (21 instances), 13 stale paths. |
-| Icon | `icon/icon.json5` | **Done** | Fixed 2026-09-13 — was referencing nonexistent `{displaySizes.N}`, now correctly aliases `{size.N}` functional tokens. |
-| IconButton | `icon-button/{size.json5,ghost.json5,outlined.json5}` | **Done** | Fully rebuilt 2026-09-13 — DTCG format, no `color` wrapper, `default`/`selected` states, all real functional-token paths (`bgColor.informational.*`, `fgColor.neutral.*`, etc.). Shared per-state `shadow.json5` still pending (shadow doesn't vary by variant, only by interaction state — not yet built). |
-| Link | `link/link.json` | Needs rewrite | Old format (4), 4 stale paths — small file, quick fix. |
-| Overlay | `overlay/overlay.json` | Needs rewrite | Old format (3), 3 stale paths — small file. |
-| Pill | `pill/{pill.json,blue,gray,green,indigo,lime,mag,orange,purple,red,teal,yellow}.json` | Needs rewrite | 12 files, all old-format. The 11 color-variant files (24 stale-path instances each) look machine-generated (`generate-pill-shade-tokens.mjs` exists in `scripts/` — likely the generator, not meant to be hand-edited; fix the generator script, not each output file, once this is scoped). |
-| Popover | `popover/popover.json5` | Needs rewrite | `.json5` extension, mostly fixed (only 5 old-format lines left), 1 stale path remaining — nearly done, small remaining diff. |
-| ResizeHandle | `resize-handle/resize-handle.json` | Needs rewrite | Only 1 old-format line, 0 stale paths — smallest remaining fix in the whole list. |
-| Sheet | `sheet/sheet.json` | Needs rewrite | Old format (9), 1 stale path. |
-| Sidebar | `sidebar/sidebar.json` | Needs rewrite | Old format (10), 2 stale paths. |
-| SiteHeader | `site-header/site-header.json` | Needs rewrite | Old format (11), 2 stale paths. |
-| SplitLayout | none | Missing | No token folder. React component exists. |
-| Stack | `stack/stack.json5` | **Done** | Rebuilt 2026-09-13 — DTCG format, references `{size.N}` functional tokens (added `size.0` to `display-sizes.json5` to cover the "none" gap/padding case). |
-| Table | `table/table.json5` | Needs rewrite | `.json5` extension but fully old-format (14 instances), 5 stale paths. |
-| Text | none | Missing | No token folder. React component exists. Likely should share most of its tokens with the `functional/typography/*` layer rather than needing a large component-specific set — scope this one carefully, may be mostly a thin pass-through. |
-| Tooltip | `tooltip/tooltip.json5` | Needs rewrite | The component that started this whole audit — `.json5` extension, old-format (10), 3 stale paths including a `background: base.color.scale.gray.13` direct base-token reach-through (the original violation that prompted the "components can't use base tokens" rule check). Also needs a decision on `boxShadow` placement (effect vs. sizes — see conversation, not yet resolved) and whether it should use the new `bgColor.neutral.inverted.*` ramp for its dark chip background. |
+| ActionMenu | `action-menu/action-menu.json5` | **Done** | |
+| Box | `box/box.json5` | **Done (intentionally empty)** | No component-specific values — Box resolves directly against existing functional tokens. File documents a real naming mismatch: prop type uses `sm\|md\|lg\|xl\|full`, `functional/size/radius.json5` uses `xSmall\|small\|medium\|large\|xlarge\|full`. Needs reconciling (rename one side), not new tokens. |
+| Breadcrumb | `breadcrumb/breadcrumb.json5` | **Done** | |
+| Button | `button/{primary,secondary,danger,ghost,rounded}.json5` | **Done** | All 5 variants DTCG. No shared `size.json5` exists yet (unlike IconButton's precedent) — worth adding if size varies by variant. `rounded.json5` is a 5th *color* variant, not a shape/size override — naming worth revisiting. |
+| Callout | `callout/callout.json5` | **Done** | |
+| CodeBlock | `code-block/code-block.json5` | **Done** | DTCG format, references `bgColor`/`fgColor`/`display.*` functional tokens, no base-color reach-through. |
+| Container | `container/container.json5` | **Done** | |
+| Divider | `divider/divider.json5` | **Done** | |
+| Heading | `heading/heading.json5` | **Done** | No matching `components/core/Heading` in `packages/react` yet — token-ahead-of-component, or a subcomponent of Text. |
+| Highlight | `highlight/{color,size}.json5` | **Done** | |
+| Icon | `icon/icon.json5` | **Done** | Aliases `{size.N}` functional tokens. |
+| IconButton | `icon-button/{size,ghost,outlined}.json5` | **Done** | `default`/`selected` states, real functional-token paths. Shared per-state `shadow.json5` still flagged as not yet built (shadow varies by interaction state only, not by variant). |
+| InlineCodeSnippet | `inline-code-snippet/inline-code-snippet.json5` | **Done** | No matching `components/core/InlineCodeSnippet` in `packages/react` yet. |
+| Link | `link/link.json5` | **Done** | |
+| Overlay | `overlay/overlay.json5` | **Done** | |
+| Pill | `pill/{pill,blue,gray,green,indigo,lime,mag,orange,purple,red,teal,yellow}.json5` | **Done** | 12 files, all DTCG. Generator script (`scripts/generate-pill-shade-tokens.mjs`) fixed in step with the output files — casing bug (`extralight` → `extraLight`) also fixed 2026-10-07. |
+| Popover | `popover/popover.json5` | **Done** | |
+| ResizeHandle | `resize-handle/resize-handle.json5` | **Done** | |
+| Sheet | `sheet/sheet.json5` | **Done** | |
+| Sidebar | `sidebar/sidebar.json5` | **Done** | |
+| SiteHeader | `site-header/site-header.json5` | **Done** | |
+| SplitLayout | `split-layout/split-layout.json5` | **Done (intentionally empty)** | Purely structural flex mechanics (display, align-items, flex, min-width/height) — no color/spacing/radius values exist on the component today. Revisit only if a themeable gap or sidebar width is added. |
+| Stack | `stack/stack.json5` | **Done** | References `{size.N}` functional tokens (`size.0` added to cover the "none" gap/padding case). |
+| Subtitle | `subtitle/subtitle.json5` | **Done** | No matching `components/core/Subtitle` in `packages/react` yet — likely a Text/Heading subcomponent. |
+| Table | `table/table.json5` | **Done** | |
+| Text | `text/text.json5` | **Done** | |
+| Tooltip | `tooltip/tooltip.json5` | **Done** | The component that started this whole audit — original `background: base.color.scale.gray.13` direct base-token reach-through is gone; now resolves through functional tokens. |
 
 ## Not a component (utility/internal — not tracked here)
 
-`Input` has a token folder (`input/`, empty) but no matching React component under `components/core/` — either dead scaffolding from before a component was built, or scaffolded ahead of one that hasn't landed yet. Flag for the person who created it before deleting.
+- `Input` token folder referenced in the prior version of this doc (2026-09-13) no longer exists under `packages/primitives/src/tokens/components/` — resolved (removed) since then.
+- `Heading`, `InlineCodeSnippet`, `Subtitle` have token folders with real content but **no matching React component** under `packages/react/src/components/core/` yet — tokens were authored ahead of the component, or they're subcomponents of Text that don't get their own top-level folder. Worth confirming intent before the React build-out phase starts.
 
 ---
 
-## Summary counts (as of 2026-09-13)
+## Summary counts (as of 2026-10-07, re-audited via Appendix A)
 
-- **Done:** 4 (CodeBlock, Icon, IconButton, Stack)
-- **Needs rewrite:** 15 (ActionMenu, Breadcrumb, Button, Highlight, Link, Overlay, Pill, Popover, ResizeHandle, Sheet, Sidebar, SiteHeader, Table, Tooltip — Pill counts as one line-item but is 12 files)
-- **Missing entirely:** 6 (Box, Callout, Container, Divider, SplitLayout, Text)
-- **Orphaned (no matching component):** 1 (Input)
+- **Done:** 26 of 26 component token folders — every file is DTCG-format with zero stale legacy-path references.
+- **Needs rewrite:** 0
+- **Missing entirely:** 0
+- **Intentionally empty (documented, not a gap):** 2 (Box, SplitLayout)
+- **Tokens authored ahead of their React component:** 3 (Heading, InlineCodeSnippet, Subtitle) — confirm these are real/intended before building their components.
+
+**This doc's job is now done for the "is it DTCG and functional-only" axis** — every component token folder passes. Remaining primitives-side work lives in `primitives-pipeline-tracker.md` (Zod schema wiring, typed output) rather than here. Keep this file as the permanent record; re-run Appendix A if new component token files are added.
 
 ## Appendix A — classification command
 

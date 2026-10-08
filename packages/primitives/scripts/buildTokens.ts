@@ -13,6 +13,8 @@ import { fileURLToPath } from "url";
 import { styleDictionary } from "../src/styleDictionary.ts";
 import { css } from "../src/platforms/css.ts";
 import { json } from "../src/platforms/json.ts";
+import { javascript } from "../src/platforms/javascript.ts";
+import { typescript } from "../src/platforms/typescript.ts";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, "..");
