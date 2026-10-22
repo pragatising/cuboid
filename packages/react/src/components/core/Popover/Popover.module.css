@@ -1,19 +1,19 @@
-/* Layout only. Background, radius, width limits, shadow and z-index come from the `popover`, `shadow` and `zIndex` tokens, set inline by Popover.tsx. */
-.Root {
-  display: inline-flex;
-  vertical-align: middle;
+/* Only what a prop cannot say. The panel's colours, radius, width limits, shadow and z-index are Box props from the `popover`,
+   `shadow` and `zIndex` tokens (Popover.tsx). The header and footer read the `actionMenu` token variables set on them
+   (../ActionMenu/actionMenuVars.ts): they are the same chrome as an ActionMenu's. */
+:where(.Header) {
+  padding: var(--action-menu-sizes-header-padding-block-start)
+    var(--action-menu-sizes-header-padding-inline)
+    var(--action-menu-sizes-header-padding-block-end);
 }
 
-.Panel {
-  position: fixed;
-  box-sizing: border-box;
-  margin: 0;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
+:where(.HeaderDivider) {
+  height: 1px;
+  margin-top: var(--action-menu-sizes-header-padding-block-end);
+  background-color: var(--action-menu-divider-fg-color);
 }
 
-.PanelScroll {
-  min-height: 0;
-  overflow-y: auto;
+:where(.Footer) {
+  padding: var(--action-menu-sizes-footer-padding);
+  border-top: 1px solid var(--action-menu-divider-fg-color);
 }

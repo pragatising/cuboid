@@ -1,193 +1,145 @@
-import React, {
-  useCallback,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { Children, isValidElement, useCallback, useEffect } from "react";
+import { useControllableState, useProvidedRefOrCreate, useRovingFocus } from "../../../behaviors";
 import { Popover } from "../Popover";
-import type { PopoverElevation, PopoverPlacement } from "../Popover";
+import type { PopoverProps } from "../Popover";
+import { ActionMenuItem } from "./ActionMenuItem";
 import { ActionMenuList } from "./ActionMenuList";
 import type { ActionMenuListProps } from "./ActionMenuList";
-import {
-  focusInitialMenuItem,
-  getEnabledMenuItems,
-  handleMenuListKeyDown,
-} from "./actionMenuKeyboard";
+import type { ActionMenuSelectionMode } from "./ActionMenuContext";
 
-export interface ActionMenuProps {
-  /** Anchor control — `Button`, `IconButton`, etc. */
-  trigger: React.ReactElement;
-  /** Menu rows and optional `ActionMenuList.*` regions. */
+export type ActionMenuProps = Omit<PopoverProps, "role" | "triggerHasPopup" | "autoFocus" | "children"> & {
+  /** `ActionMenu.Item`s and `ActionMenu.Section`s, with an optional `ActionMenu.Header` and `ActionMenu.Footer`; or one `ActionMenu.List`. */
   children: React.ReactNode;
-  open?: boolean;
-  onOpenChange?: (open: boolean) => void;
-  placement?: PopoverPlacement;
-  elevation?: PopoverElevation;
-  /** Close after a menu item is activated. @default true */
+  /** Close after an item is activated. @default true */
   closeOnSelect?: boolean;
   /**
-   * Focus the first (or checked) menu item when the menu opens.
-   * Set `false` for a combobox/typeahead trigger that must keep focus and
-   * keep receiving keystrokes while the menu is a passive suggestions
-   * overlay — the caller is then responsible for its own keyboard nav.
+   * Focus the selected (or first) item when the menu opens. Turn it off for a combobox or typeahead trigger that must keep
+   * focus and its keystrokes while the menu is a passive list of suggestions: it then does its own keyboard handling.
    * @default true
    */
   autoFocusFirstItem?: boolean;
-  /**
-   * Caps the menu's height (any valid CSS length, e.g. `"320px"`, `"60vh"`).
-   * Items beyond it scroll inside the menu. Unset means no cap (grows to
-   * fit its content, today's behavior).
-   */
-  maxHeight?: string;
-  /** Accessible name when the menu has no visible title. */
+  /** `single` makes the items radios, `multiple` checkboxes. Unset, they are plain actions. */
+  selectionMode?: ActionMenuSelectionMode;
+  /** The menu's accessible name, when no visible title gives it. */
   "aria-label"?: string;
-  /** id of an element that labels the menu. */
+  /** The id of an element that names the menu. */
   "aria-labelledby"?: string;
-  className?: string;
-  listClassName?: string;
-}
+  /** Called with the activated item, for any item. */
+  onSelect?: (item: HTMLElement) => void;
+};
 
-function mergeRefs<T>(...refs: Array<React.Ref<T> | undefined>) {
-  return (node: T | null) => {
-    for (const ref of refs) {
-      if (!ref) continue;
-      if (typeof ref === "function") ref(node);
-      else (ref as React.MutableRefObject<T | null>).current = node;
-    }
-  };
-}
-
-function isActionMenuListElement(
-  child: React.ReactNode
-): child is React.ReactElement<
-  ActionMenuListProps & React.RefAttributes<HTMLDivElement>
-> {
-  return React.isValidElement(child) && child.type === ActionMenuList;
-}
+const isPart = (child: React.ReactNode, part: unknown) => isValidElement(child) && child.type === part;
+const ITEM = '[role="menuitem"], [role="menuitemradio"], [role="menuitemcheckbox"]';
 
 /**
- * Composed dropdown menu — Figma `ActionMenu`.
+ * A dropdown menu: a trigger, a `Popover`, and an `ActionMenu.List` of items. The trigger opens it (and ArrowDown does), focus
+ * goes to the selected or first item, the arrow keys move, Escape closes it and gives focus back to the trigger, and choosing
+ * an item closes it unless the item says `keepOpenOnSelect`.
  *
- * Wires trigger + `Popover` + `ActionMenuList` with menu keyboard support.
+ * A header and footer sit outside the `role="menu"` list, so a search field in the header is not read as a menu item.
  */
-export function ActionMenu({
+function ActionMenuRoot({
   trigger,
   children,
   open: openProp,
+  defaultOpen,
   onOpenChange,
-  placement = "bottom-start",
-  elevation = "3x",
   closeOnSelect = true,
   autoFocusFirstItem = true,
-  maxHeight,
+  selectionMode,
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
-  className,
-  listClassName,
+  onSelect,
+  ref,
+  onKeyDown,
+  onClick,
+  ...props
 }: ActionMenuProps) {
-  const listRef = useRef<HTMLDivElement | null>(null);
-  const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
+  const panelRef = useProvidedRefOrCreate<HTMLDivElement>(ref);
+  const triggerRef = useProvidedRefOrCreate<HTMLElement>((trigger.props as { ref?: React.Ref<HTMLElement> }).ref);
+  const [open, setOpen] = useControllableState({ value: openProp, defaultValue: defaultOpen ?? false, onChange: onOpenChange, name: "open" });
+  const { focusSelected } = useRovingFocus({ containerRef: panelRef, itemSelector: ITEM });
 
-  const isControlled = openProp !== undefined;
-  const open = isControlled ? openProp : uncontrolledOpen;
+  useEffect(() => {
+    if (open && autoFocusFirstItem) focusSelected();
+  }, [open, autoFocusFirstItem, focusSelected]);
 
-  const setOpen = useCallback(
-    (next: boolean) => {
-      if (!isControlled) setUncontrolledOpen(next);
-      onOpenChange?.(next);
+  const handleClick = useCallback(
+    (event: React.MouseEvent<HTMLDivElement>) => {
+      onClick?.(event);
+      const item = (event.target as HTMLElement).closest<HTMLElement>(ITEM);
+      if (!item || (item as HTMLButtonElement).disabled || item.getAttribute("aria-disabled") === "true") return;
+      onSelect?.(item);
+      if (closeOnSelect && item.dataset.keepOpen !== "true" && !event.defaultPrevented) setOpen(false);
     },
-    [isControlled, onOpenChange]
+    [onClick, onSelect, closeOnSelect, setOpen],
   );
 
-  useLayoutEffect(() => {
-    if (!open || !autoFocusFirstItem) return;
-    focusInitialMenuItem(listRef.current);
-  }, [open, autoFocusFirstItem]);
-
-  const handleListKeyDown = useCallback(
+  const handleKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
-      handleMenuListKeyDown(event, listRef.current);
-      if (event.key === "Tab") {
+      onKeyDown?.(event);
+      if (event.key === "Tab" && !event.defaultPrevented) {
+        // Tab leaves the menu from the trigger: focus it before the menu goes, so Tab continues on from there instead of from nowhere.
+        triggerRef.current?.focus({ preventScroll: true });
         setOpen(false);
       }
     },
-    [setOpen]
+    [onKeyDown, setOpen, triggerRef],
   );
 
-  const handleListClick = useCallback(
-    (event: React.MouseEvent<HTMLDivElement>) => {
-      if (!closeOnSelect) return;
-      const target = event.target as HTMLElement;
-      const item = target.closest('[role="menuitem"]') as HTMLButtonElement | null;
-      if (!item || item.disabled || item.getAttribute("aria-disabled") === "true") return;
-      if (item.dataset.keepOpen === "true") return;
-      setOpen(false);
+  const menuTrigger = React.cloneElement(trigger as React.ReactElement<Record<string, unknown>>, {
+    ref: triggerRef,
+    onKeyDown: (event: React.KeyboardEvent) => {
+      (trigger.props as { onKeyDown?: (event: React.KeyboardEvent) => void }).onKeyDown?.(event);
+      if (!event.defaultPrevented && !open && event.key === "ArrowDown") {
+        event.preventDefault();
+        setOpen(true);
+      }
     },
-    [closeOnSelect, setOpen]
-  );
+  });
 
-  const menuTrigger = useMemo(() => {
-    return React.cloneElement(
-      trigger as React.ReactElement<Record<string, unknown>>,
-      {
-      onKeyDown: (event: React.KeyboardEvent) => {
-        (trigger.props as { onKeyDown?: (ev: React.KeyboardEvent) => void }).onKeyDown?.(event);
-        if (event.defaultPrevented) return;
-        if (!open && event.key === "ArrowDown") {
-          event.preventDefault();
-          setOpen(true);
-        }
-      },
-    }
-    );
-  }, [open, setOpen, trigger]);
+  const parts = Children.toArray(children);
+  const header = parts.find((child) => isPart(child, Popover.Header));
+  const footer = parts.find((child) => isPart(child, Popover.Footer));
+  const rest = parts.filter((child) => child !== header && child !== footer);
+  const naming = { "aria-label": ariaLabel, "aria-labelledby": ariaLabelledBy };
 
-  const listProps = {
-    ref: listRef,
-    className: listClassName,
-    "aria-label": ariaLabel,
-    "aria-labelledby": ariaLabelledBy,
-    onKeyDown: handleListKeyDown,
-    onClick: handleListClick,
-  } satisfies Partial<React.ComponentProps<typeof ActionMenuList>>;
-
-  const menuContent = isActionMenuListElement(children)
-    ? React.cloneElement(children, {
-        ref: mergeRefs(
-          listRef,
-          (children.props as React.RefAttributes<HTMLDivElement>).ref
-        ),
-        className: [listClassName, children.props.className].filter(Boolean).join(" ") || undefined,
-        "aria-label": ariaLabel ?? children.props["aria-label"],
-        "aria-labelledby": ariaLabelledBy ?? children.props["aria-labelledby"],
-        onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => {
-          children.props.onKeyDown?.(event);
-          if (!event.defaultPrevented) handleListKeyDown(event);
-        },
-        onClick: (event: React.MouseEvent<HTMLDivElement>) => {
-          children.props.onClick?.(event);
-          if (!event.defaultPrevented) handleListClick(event);
-        },
+  const list =
+    rest.length === 1 && isPart(rest[0], ActionMenuList) ? (
+      React.cloneElement(rest[0] as React.ReactElement<ActionMenuListProps>, {
+        selectionMode: selectionMode ?? (rest[0] as React.ReactElement<ActionMenuListProps>).props.selectionMode,
+        "aria-label": ariaLabel ?? (rest[0] as React.ReactElement<ActionMenuListProps>).props["aria-label"],
+        "aria-labelledby": ariaLabelledBy ?? (rest[0] as React.ReactElement<ActionMenuListProps>).props["aria-labelledby"],
       })
-    : (
-        <ActionMenuList {...listProps}>{children}</ActionMenuList>
-      );
+    ) : (
+      <ActionMenuList selectionMode={selectionMode} {...naming}>
+        {rest}
+      </ActionMenuList>
+    );
 
   return (
     <Popover
+      {...props}
+      ref={panelRef}
       open={open}
       onOpenChange={setOpen}
       trigger={menuTrigger}
-      placement={placement}
-      elevation={elevation}
-      maxHeight={maxHeight}
-      panelRole={false}
       triggerHasPopup="menu"
-      returnFocusOnClose
-      className={className}
+      autoFocus={false}
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
     >
-      {menuContent}
+      {header}
+      {list}
+      {footer}
     </Popover>
   );
 }
+
+export const ActionMenu = Object.assign(ActionMenuRoot, {
+  List: ActionMenuList,
+  Item: ActionMenuItem,
+  Section: ActionMenuList.Section,
+  Header: Popover.Header,
+  Footer: Popover.Footer,
+});

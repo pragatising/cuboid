@@ -91,15 +91,24 @@ export type {
 } from "./ResizeHandle";
 
 export { Popover } from "./Popover";
-export type { PopoverProps, PopoverPlacement, PopoverElevation } from "./Popover";
+export type {
+  PopoverProps,
+  PopoverPlacement,
+  PopoverElevation,
+  PopoverRole,
+  PopoverAction,
+  PopoverHeaderProps,
+  PopoverBodyProps,
+  PopoverFooterProps,
+} from "./Popover";
 
-export { ActionMenu, ActionMenuItem, ActionMenuList } from "./ActionMenu";
+export { ActionMenu } from "./ActionMenu";
 export type {
   ActionMenuProps,
   ActionMenuItemProps,
   ActionMenuListProps,
-  ActionMenuListRegionProps,
-  ActionMenuListSectionProps,
+  ActionMenuSectionProps,
+  ActionMenuSelectionMode,
 } from "./ActionMenu";
 
 export { Sidebar, useSidebar } from "./Sidebar";

@@ -121,8 +121,8 @@ export function IconButton({
   const tooltipText = description ?? ariaLabel;
   const tooltipType = description ? "description" : "label";
   const hasTooltip = !disableTooltip && !enclosingTooltip && Boolean(tooltipText);
-  // The tooltip would sit on top of the menu the button opened.
-  const menuOpen = isTrue(props["aria-expanded"]) && Boolean(props["aria-haspopup"]) && props["aria-haspopup"] !== "false";
+  // The tooltip would sit on top of what the button opened (a menu, a popover).
+  const menuOpen = isTrue(props["aria-expanded"]);
   // A label tooltip is the accessible name; an aria-label as well would name the button twice.
   const { "aria-label": _name, ...labelless } = props;
   const buttonProps = hasTooltip && tooltipType === "label" ? labelless : props;

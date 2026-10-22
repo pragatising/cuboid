@@ -13,23 +13,6 @@
   padding: var(--action-menu-sizes-list-padding-block) var(--action-menu-sizes-list-padding-inline);
 }
 
-:where(.Header) {
-  padding: var(--action-menu-sizes-header-padding-block-start)
-    var(--action-menu-sizes-header-padding-inline)
-    var(--action-menu-sizes-header-padding-block-end);
-}
-
-:where(.HeaderDivider) {
-  height: 1px;
-  margin-top: var(--action-menu-sizes-header-padding-block-end);
-  background-color: var(--action-menu-divider-fg-color);
-}
-
-:where(.Footer) {
-  padding: var(--action-menu-sizes-footer-padding);
-  border-top: 1px solid var(--action-menu-divider-fg-color);
-}
-
 :where(.Section) {
   display: flex;
   flex-direction: column;

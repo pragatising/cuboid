@@ -101,17 +101,20 @@ export type {
   PopoverProps,
   PopoverPlacement,
   PopoverElevation,
+  PopoverRole,
   PopoverAction,
-  PopoverFooterActions,
+  PopoverHeaderProps,
+  PopoverBodyProps,
+  PopoverFooterProps,
 } from "./components/core/Popover";
 
-export { ActionMenu, ActionMenuItem, ActionMenuList } from "./components/core/ActionMenu";
+export { ActionMenu } from "./components/core/ActionMenu";
 export type {
   ActionMenuProps,
   ActionMenuItemProps,
   ActionMenuListProps,
-  ActionMenuListRegionProps,
-  ActionMenuListSectionProps,
+  ActionMenuSectionProps,
+  ActionMenuSelectionMode,
 } from "./components/core/ActionMenu";
 
 export { Sidebar, useSidebar } from "./components/core/Sidebar";

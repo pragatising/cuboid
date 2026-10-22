@@ -2,6 +2,12 @@
 
 Rolling session log for Claude Code continuity. Newest entry on top. Each entry: what changed, why, and anything the next agent needs to know. Keep entries short — skip anything derivable from `git log` or the diff itself.
 
+## 2026-10-21 (latest still) — Popover and ActionMenu rebuilt on the behaviors
+
+- **Popover** is a generic non-modal anchored overlay: no wrapper span (it clones its trigger), no implied `role="dialog"` (`role` is opt-in; `aria-haspopup` follows it), `open/defaultOpen/onOpenChange`, focus moves into the panel on open and returns to the trigger on close (both default on), Escape only from the top-most layer. New `usePopover` behavior. Parts are dot-notation: `Popover.Header` (string = the title that names a dialog, `onClose` adds a close button), `Popover.Body`, `Popover.Footer` (`primary`/`secondary`/`align` or custom children); `header`/`footer`/`onClose`/`bodyPadding`/`panelRole`/`contentClassName` props are gone. `maxHeight` is a Length; header and footer stay pinned.
+- **ActionMenu** is `ActionMenu` + `.List`, `.Item`, `.Section`, `.Header`, `.Footer` (flat `ActionMenuItem`/`ActionMenuList` exports removed). Items use `leadingVisual`/`trailingVisual`/`description`/`descriptionVisual`; `selected` makes an item a `menuitemcheckbox`, and `selectionMode="single"|"multiple"` makes them radios/checkboxes (fixes `aria-checked` on a plain `menuitem`). Arrow keys, Home/End and typeahead come from `useRovingFocus`; Tab closes the menu with focus on the trigger. The header and footer sit outside the `role="menu"` list, ready for a search field.
+- IconButton hides its tooltip while its `aria-expanded` is true.
+
 ## 2026-10-21 (latest) — Tooltip rebuilt; KeybindingHint and VisuallyHidden added
 
 - **Tooltip** is now `<Tooltip text type="label"|"description" placement delay keybindingHint suppress>`: text only, no wrapper element (it clones its trigger), portaled with `zIndex.tooltip`, hoverable (WCAG 1.4.13), opens on `:focus-visible`, closes on Escape/blur/leave. `label` is the trigger's accessible name; `description` is announced as its description. `content`, `compact`, `showDelay` are gone. Shared `TooltipContext`.

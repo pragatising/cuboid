@@ -3,7 +3,9 @@ export type {
   PopoverProps,
   PopoverPlacement,
   PopoverElevation,
-  PopoverPanelRole,
+  PopoverRole,
   PopoverAction,
-  PopoverFooterActions,
+  PopoverHeaderProps,
+  PopoverBodyProps,
+  PopoverFooterProps,
 } from "./Popover";

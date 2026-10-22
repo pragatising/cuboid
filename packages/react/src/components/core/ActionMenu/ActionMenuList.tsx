@@ -1,104 +1,75 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { clsx } from "clsx";
+import { useProvidedRefOrCreate, useRovingFocus } from "../../../behaviors";
 import { useTokens } from "../../../mode";
 import { mergeProps } from "../../../utils/mergeProps";
+import { Box } from "../Box";
+import { ActionMenuContext } from "./ActionMenuContext";
+import type { ActionMenuSelectionMode } from "./ActionMenuContext";
 import { actionMenuVars } from "./actionMenuVars";
 import classes from "./ActionMenuList.module.css";
 
-export type ActionMenuListProps = Omit<React.ComponentPropsWithRef<"div">, "role"> & {
+export type ActionMenuListProps = Omit<React.ComponentPropsWithRef<"div">, "role" | "color"> & {
+  /** `ActionMenu.Item`s and `ActionMenu.Section`s. */
   children: React.ReactNode;
+  /** Whether the items choose from the list: `single` makes them radios, `multiple` checkboxes. Unset, they are plain actions. */
+  selectionMode?: ActionMenuSelectionMode;
 };
 
-export type ActionMenuListRegionProps = React.ComponentPropsWithRef<"div">;
-
-export type ActionMenuListSectionProps = Omit<React.ComponentPropsWithRef<"div">, "role" | "children"> & {
+export type ActionMenuSectionProps = Omit<React.ComponentPropsWithRef<"div">, "role" | "children" | "color"> & {
   label: React.ReactNode;
   children?: React.ReactNode;
 };
 
-function ActionMenuListHeader({ children, className, ...props }: ActionMenuListRegionProps) {
-  const tokens = useTokens();
+function ActionMenuSection({ label, children, className, ...props }: ActionMenuSectionProps) {
   return (
-    <div
-      {...mergeProps(
-        { "data-component": "ActionMenuList.Header", className: clsx(classes.Header, className), style: actionMenuVars(tokens) },
-        props,
-      )}
-    >
-      {children}
-      <div className={classes.HeaderDivider} role="separator" />
-    </div>
-  );
-}
-
-function ActionMenuListFooter({ className, ...props }: ActionMenuListRegionProps) {
-  const tokens = useTokens();
-  return (
-    <div
-      {...mergeProps(
-        { "data-component": "ActionMenuList.Footer", className: clsx(classes.Footer, className), style: actionMenuVars(tokens) },
-        props,
-      )}
-    />
-  );
-}
-
-function ActionMenuListSection({ label, children, className, ...props }: ActionMenuListSectionProps) {
-  return (
-    <div
+    <Box
       {...mergeProps(
         {
-          "data-component": "ActionMenuList.Section",
+          "data-component": "ActionMenu.Section",
           className: clsx(classes.Section, className),
           role: "group",
           "aria-label": typeof label === "string" ? label : undefined,
         },
-        props,
+        props as object,
       )}
     >
       <div className={classes.SectionLabel}>{label}</div>
       <div className={classes.SectionItems}>{children}</div>
-    </div>
+    </Box>
   );
 }
 
-function isHeaderChild(child: React.ReactNode): boolean {
-  return React.isValidElement(child) && child.type === ActionMenuListHeader;
-}
-
-function isFooterChild(child: React.ReactNode): boolean {
-  return React.isValidElement(child) && child.type === ActionMenuListFooter;
-}
-
-/** Menu list container. Header and footer children are lifted out around the scrolling item area. */
-function ActionMenuListRoot({ children, className, ...props }: ActionMenuListProps) {
+/**
+ * The menu: a `role="menu"` list of items. Up and Down, Home, End and typing a letter move between them (`useRovingFocus`).
+ * It works on its own, or inside an `ActionMenu` (which adds the trigger, the popover and closing).
+ */
+function ActionMenuListRoot({ children, className, selectionMode, ref, onKeyDown, ...props }: ActionMenuListProps) {
   const tokens = useTokens();
-  const childArray = React.Children.toArray(children);
-  const header = childArray.find((child) => isHeaderChild(child));
-  const footer = childArray.find((child) => isFooterChild(child));
-  const body = childArray.filter((child) => !isHeaderChild(child) && !isFooterChild(child));
+  const listRef = useProvidedRefOrCreate<HTMLDivElement>(ref);
+  const { onKeyDown: navigate } = useRovingFocus({ containerRef: listRef });
+  const context = useMemo(() => ({ selectionMode }), [selectionMode]);
 
   return (
-    <div
-      {...mergeProps(
-        {
-          "data-component": "ActionMenuList",
-          role: "menu",
-          className: clsx(classes.ActionMenuList, className),
-          style: actionMenuVars(tokens),
-        },
-        props,
-      )}
-    >
-      {header}
-      <div className={classes.ListItems}>{body}</div>
-      {footer}
-    </div>
+    <ActionMenuContext.Provider value={context}>
+      <Box
+        {...mergeProps(
+          {
+            "data-component": "ActionMenu.List",
+            role: "menu",
+            "aria-multiselectable": selectionMode === "multiple" ? true : undefined,
+            className: clsx(classes.ActionMenuList, className),
+            style: actionMenuVars(tokens),
+            onKeyDown: navigate,
+          },
+          { ...props, onKeyDown } as object,
+        )}
+        ref={listRef}
+      >
+        <div className={classes.ListItems}>{children}</div>
+      </Box>
+    </ActionMenuContext.Provider>
   );
 }
 
-export const ActionMenuList = Object.assign(ActionMenuListRoot, {
-  Header: ActionMenuListHeader,
-  Footer: ActionMenuListFooter,
-  Section: ActionMenuListSection,
-});
+export const ActionMenuList = Object.assign(ActionMenuListRoot, { Section: ActionMenuSection });

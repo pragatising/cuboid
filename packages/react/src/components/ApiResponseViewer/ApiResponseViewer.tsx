@@ -133,8 +133,8 @@ export function ApiResponseViewer({
             <Popover
               placement="bottom-start"
               aria-label="Response headers"
-              className={styles.headersTrigger}
-              contentClassName={styles.headersPopoverPanel}
+              role="dialog"
+              className={styles.headersPopoverPanel}
               trigger={
                 <IconButton
                   aria-label="Response headers"
