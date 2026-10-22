@@ -1,4 +1,9 @@
-.Sidebar {
+/*
+ * Layout and collapse states only. Background and width come from the `sidebar` tokens inline (Sidebar.tsx); the
+ * padding, border and toggle size the descendant regions need arrive as element-scoped variables
+ * (--sidebar-padding, …) set on the root. Zero specificity (:where), so a consumer's own class can override it.
+ */
+:where(.Sidebar) {
   position: relative;
   box-sizing: border-box;
   display: flex;
@@ -7,85 +12,81 @@
   align-self: stretch;
   min-height: 0;
   overflow: hidden;
-  background-color: var(--cube-sidebar-bg);
   transition: width 0.2s ease;
 }
 
-.Sidebar--left {
-  border-inline-end: 1px solid var(--cube-sidebar-border);
+:where(.Sidebar[data-edge="left"]) {
+  border-inline-end: var(--sidebar-border-width) solid var(--sidebar-border-color);
 }
 
-.Sidebar--right {
-  border-inline-start: 1px solid var(--cube-sidebar-border);
+:where(.Sidebar[data-edge="right"]) {
+  border-inline-start: var(--sidebar-border-width) solid var(--sidebar-border-color);
 }
 
-.Sidebar--resizable {
+:where(.Sidebar[data-resizable]) {
   transition: none;
 }
 
-.Sidebar__header {
+:where(.Header) {
   display: flex;
   flex-shrink: 0;
   align-items: center;
-  gap: var(--cube-sidebar-padding);
-  padding: var(--cube-sidebar-padding);
+  gap: var(--sidebar-padding);
+  padding: var(--sidebar-padding);
 }
 
-.Sidebar__header:has(.Sidebar__toggle--floating) {
-  min-height: calc(
-    var(--cube-sidebar-padding) * 2 + var(--cube-sizes-controlHeight-sm, 2rem)
-  );
+:where(.Header:has(.Toggle[data-floating])) {
+  min-height: calc(var(--sidebar-padding) * 2 + var(--sidebar-toggle-size));
 }
 
-.Sidebar[data-collapsed="true"] .Sidebar__header {
+:where(.Sidebar[data-collapsed="true"] .Header) {
   justify-content: center;
 }
 
-.Sidebar__body {
+:where(.Body) {
   flex: 1 1 auto;
   min-height: 0;
   overflow: auto;
-  padding: 0 var(--cube-sidebar-padding);
+  padding: 0 var(--sidebar-padding);
 }
 
-/** Icon-only rail — center direct children; apps hide labels via useSidebar(). */
-.Sidebar[data-collapsed="true"] .Sidebar__body {
+/* Icon-only rail: center direct children; apps hide labels via useSidebar(). */
+:where(.Sidebar[data-collapsed="true"] .Body) {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-inline: var(--cube-sidebar-padding);
+  padding-inline: var(--sidebar-padding);
 }
 
-.Sidebar[data-collapsed="true"] .Sidebar__body > * {
+:where(.Sidebar[data-collapsed="true"] .Body > *) {
   width: fit-content;
   max-width: 100%;
 }
 
-.Sidebar__footer {
+:where(.Footer) {
   flex-shrink: 0;
-  padding: var(--cube-sidebar-footerPadding);
+  padding: var(--sidebar-footer-padding);
 }
 
-.Sidebar__toggle {
+:where(.Toggle) {
   flex-shrink: 0;
 }
 
-.Sidebar__toggle--floating {
+:where(.Toggle[data-floating]) {
   position: absolute;
-  top: var(--cube-sidebar-padding);
-  inset-inline-end: var(--cube-sidebar-padding);
+  top: var(--sidebar-padding);
+  inset-inline-end: var(--sidebar-padding);
   z-index: 1;
 }
 
-.Sidebar[data-collapsed="true"]
-  .Sidebar__toggle--floating:not(.Sidebar__toggle--floating-align-corner) {
+:where(.Sidebar[data-collapsed="true"] .Toggle[data-floating="center"]) {
   inset-inline-end: auto;
   inset-inline-start: 50%;
   transform: translateX(-50%);
 }
 
-.Sidebar[data-collapsed="true"] .Sidebar__footer {
+:where(.Sidebar[data-collapsed="true"] .Footer) {
   display: flex;
   justify-content: center;
-  padding-inline: var(--cube-sidebar-padding);
+  padding-inline: var(--sidebar-padding);
 }

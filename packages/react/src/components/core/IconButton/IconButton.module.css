@@ -1,171 +1,66 @@
-.IconButton {
+/*
+ * Layout and states only. The colours arrive as element-scoped variables (--icon-button-<property>-<state>) set
+ * inline from the `iconButton` tokens (see IconButton.tsx and utils/cssVars.ts); the browser picks the state, so
+ * :hover / :active / :disabled / :focus-visible live here. Zero specificity (:where), so a consumer's own class can
+ * override any of it.
+ */
+:where(.IconButton) {
   appearance: none;
+  box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-sizing: border-box;
+  vertical-align: middle;
   padding: 0;
-  margin: 0;
-  border: solid var(--cube-sizes-borderWidth-thin) transparent;
-  background: none;
+  user-select: none;
   cursor: pointer;
-  color: inherit;
-  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+  border-style: solid;
+  box-shadow: none;
+  color: var(--icon-button-fg-rest);
+  background-color: var(--icon-button-bg-rest);
+  border-color: var(--icon-button-border-rest);
 }
 
-.IconButton:disabled,
-.IconButton[aria-disabled="true"] {
+/* Hover and pressed only apply while the button can be activated (not disabled, inactive or loading). */
+:where(.IconButton:hover:not(:disabled, [aria-disabled="true"])) {
+  color: var(--icon-button-fg-hover);
+  background-color: var(--icon-button-bg-hover);
+  border-color: var(--icon-button-border-hover);
+}
+
+:where(.IconButton:active:not(:disabled, [aria-disabled="true"])) {
+  color: var(--icon-button-fg-pressed);
+  background-color: var(--icon-button-bg-pressed);
+  border-color: var(--icon-button-border-pressed);
+}
+
+/* Disabled look: natively disabled, or `inactive`. (A loading button keeps its normal look.) */
+:where(.IconButton:disabled, .IconButton[data-inactive]) {
   cursor: not-allowed;
+  color: var(--icon-button-fg-disabled);
+  background-color: var(--icon-button-bg-disabled);
+  border-color: var(--icon-button-border-disabled);
 }
 
-/* Geometry from sizes.iconButton.* — hit target + radius + glyph only (no padding tokens). */
-.IconButton--size-xs {
-  width: var(--cube-iconButton-extra-small-size);
-  height: var(--cube-iconButton-extra-small-size);
-  min-width: var(--cube-iconButton-extra-small-size);
-  border-radius: var(--cube-iconButton-extra-small-borderRadius);
+:where(.IconButton[data-loading]) {
+  cursor: progress;
 }
 
-.IconButton--size-sm {
-  width: var(--cube-iconButton-small-size);
-  height: var(--cube-iconButton-small-size);
-  min-width: var(--cube-iconButton-small-size);
-  border-radius: var(--cube-iconButton-small-borderRadius);
+:where(.IconButton:focus-visible) {
+  outline: var(--icon-button-focus-width) solid var(--icon-button-focus-color);
+  outline-offset: var(--icon-button-focus-offset);
 }
 
-.IconButton--size-md {
-  width: var(--cube-iconButton-medium-size);
-  height: var(--cube-iconButton-medium-size);
-  min-width: var(--cube-iconButton-medium-size);
-  border-radius: var(--cube-iconButton-medium-borderRadius);
-}
-
-.IconButton--size-lg {
-  width: var(--cube-iconButton-large-size);
-  height: var(--cube-iconButton-large-size);
-  min-width: var(--cube-iconButton-large-size);
-  border-radius: var(--cube-iconButton-large-borderRadius);
-}
-
-.IconButton__icon {
+:where(.Icon) {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+  line-height: 0;
 }
 
-.IconButton--size-xs .IconButton__icon {
-  width: var(--cube-iconButton-extra-small-icon);
-  height: var(--cube-iconButton-extra-small-icon);
-}
-
-.IconButton--size-sm .IconButton__icon {
-  width: var(--cube-iconButton-small-icon);
-  height: var(--cube-iconButton-small-icon);
-}
-
-.IconButton--size-md .IconButton__icon {
-  width: var(--cube-iconButton-medium-icon);
-  height: var(--cube-iconButton-medium-icon);
-}
-
-.IconButton--size-lg .IconButton__icon {
-  width: var(--cube-iconButton-large-icon);
-  height: var(--cube-iconButton-large-icon);
-}
-
-.IconButton__icon > :global(svg) {
-  width: 100%;
-  height: 100%;
-}
-
-/* default + unselected */
-.IconButton--outlined.IconButton--unselected {
-  color: var(--cube-iconButton-outlined-unselected-fg-rest);
-  background-color: var(--cube-iconButton-outlined-unselected-bg-rest);
-  border-color: var(--cube-iconButton-outlined-unselected-border-rest);
-}
-.IconButton--outlined.IconButton--unselected:not(:disabled):not([aria-disabled="true"]):hover {
-  color: var(--cube-iconButton-outlined-unselected-fg-hover);
-  background-color: var(--cube-iconButton-outlined-unselected-bg-hover);
-  border-color: var(--cube-iconButton-outlined-unselected-border-hover);
-}
-.IconButton--outlined.IconButton--unselected:not(:disabled):not([aria-disabled="true"]):active {
-  color: var(--cube-iconButton-outlined-unselected-fg-pressed);
-  background-color: var(--cube-iconButton-outlined-unselected-bg-pressed);
-  border-color: var(--cube-iconButton-outlined-unselected-border-pressed);
-}
-.IconButton--outlined.IconButton--unselected:disabled,
-.IconButton--outlined.IconButton--unselected[aria-disabled="true"] {
-  color: var(--cube-iconButton-outlined-unselected-fg-disabled);
-  background-color: var(--cube-iconButton-outlined-unselected-bg-disabled);
-  border-color: var(--cube-iconButton-outlined-unselected-border-disabled);
-}
-
-/* default + selected */
-.IconButton--outlined.IconButton--selected {
-  color: var(--cube-iconButton-outlined-selected-fg-rest);
-  background-color: var(--cube-iconButton-outlined-selected-bg-rest);
-  border-color: var(--cube-iconButton-outlined-selected-border-rest);
-}
-.IconButton--outlined.IconButton--selected:not(:disabled):not([aria-disabled="true"]):hover {
-  color: var(--cube-iconButton-outlined-selected-fg-hover);
-  background-color: var(--cube-iconButton-outlined-selected-bg-hover);
-  border-color: var(--cube-iconButton-outlined-selected-border-hover);
-}
-.IconButton--outlined.IconButton--selected:not(:disabled):not([aria-disabled="true"]):active {
-  color: var(--cube-iconButton-outlined-selected-fg-pressed);
-  background-color: var(--cube-iconButton-outlined-selected-bg-pressed);
-  border-color: var(--cube-iconButton-outlined-selected-border-pressed);
-}
-.IconButton--outlined.IconButton--selected:disabled,
-.IconButton--outlined.IconButton--selected[aria-disabled="true"] {
-  color: var(--cube-iconButton-outlined-selected-fg-disabled);
-  background-color: var(--cube-iconButton-outlined-selected-bg-disabled);
-  border-color: var(--cube-iconButton-outlined-selected-border-disabled);
-}
-
-/* subtle + unselected */
-.IconButton--ghost.IconButton--unselected {
-  color: var(--cube-iconButton-ghost-unselected-fg-rest);
-  background-color: var(--cube-iconButton-ghost-unselected-bg-rest);
-  border-color: var(--cube-iconButton-ghost-unselected-border-rest);
-}
-.IconButton--ghost.IconButton--unselected:not(:disabled):not([aria-disabled="true"]):hover {
-  color: var(--cube-iconButton-ghost-unselected-fg-hover);
-  background-color: var(--cube-iconButton-ghost-unselected-bg-hover);
-  border-color: var(--cube-iconButton-ghost-unselected-border-hover);
-}
-.IconButton--ghost.IconButton--unselected:not(:disabled):not([aria-disabled="true"]):active {
-  color: var(--cube-iconButton-ghost-unselected-fg-pressed);
-  background-color: var(--cube-iconButton-ghost-unselected-bg-pressed);
-  border-color: var(--cube-iconButton-ghost-unselected-border-pressed);
-}
-.IconButton--ghost.IconButton--unselected:disabled,
-.IconButton--ghost.IconButton--unselected[aria-disabled="true"] {
-  color: var(--cube-iconButton-ghost-unselected-fg-disabled);
-  background-color: var(--cube-iconButton-ghost-unselected-bg-disabled);
-  border-color: var(--cube-iconButton-ghost-unselected-border-disabled);
-}
-
-/* subtle + selected */
-.IconButton--ghost.IconButton--selected {
-  color: var(--cube-iconButton-ghost-selected-fg-rest);
-  background-color: var(--cube-iconButton-ghost-selected-bg-rest);
-  border-color: var(--cube-iconButton-ghost-selected-border-rest);
-}
-.IconButton--ghost.IconButton--selected:not(:disabled):not([aria-disabled="true"]):hover {
-  color: var(--cube-iconButton-ghost-selected-fg-hover);
-  background-color: var(--cube-iconButton-ghost-selected-bg-hover);
-  border-color: var(--cube-iconButton-ghost-selected-border-hover);
-}
-.IconButton--ghost.IconButton--selected:not(:disabled):not([aria-disabled="true"]):active {
-  color: var(--cube-iconButton-ghost-selected-fg-pressed);
-  background-color: var(--cube-iconButton-ghost-selected-bg-pressed);
-  border-color: var(--cube-iconButton-ghost-selected-border-pressed);
-}
-.IconButton--ghost.IconButton--selected:disabled,
-.IconButton--ghost.IconButton--selected[aria-disabled="true"] {
-  color: var(--cube-iconButton-ghost-selected-fg-disabled);
-  background-color: var(--cube-iconButton-ghost-selected-bg-disabled);
-  border-color: var(--cube-iconButton-ghost-selected-border-disabled);
+/* The icon follows the button's size (the variable is set inline from the size tokens). */
+:where(.Icon > *) {
+  width: var(--icon-button-icon-size);
+  height: var(--icon-button-icon-size);
 }

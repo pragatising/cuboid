@@ -1,11 +1,11 @@
 import React, { CSSProperties } from "react";
-import { useTheme } from "../../theme/ThemeContext";
+import { useTokens } from "../../mode";
 import { GraphRow } from "../Graph/GraphRow";
 
 export interface JsonFieldRowProps {
-  /** The field key — rendered in `foreground.default`. */
+  /** The field key — rendered in `fgColor.neutral.default`. */
   label: string;
-  /** The field value — rendered in `foreground.muted`. */
+  /** The field value — rendered in `fgColor.neutral.muted`. */
   value: string;
   style?: CSSProperties;
 }
@@ -13,15 +13,13 @@ export interface JsonFieldRowProps {
 /**
  * A key + value pair row.
  *
- * Key is in `foreground.default`, value in `foreground.muted`.
+ * Key is in `fgColor.neutral.default`, value in `fgColor.neutral.muted`.
  * 8px gap separates key from value.
  */
 export function JsonFieldRow({ label, value, style }: JsonFieldRowProps) {
-  const tokens = useTheme();
+  const { text: textTokens, fgColor, space, borderRadius } = useTokens();
   const text: CSSProperties = {
-    fontFamily:   tokens.typography.fontFamily.base,
-    fontSize:     tokens.typography.fontSize.sm,
-    lineHeight:   String(tokens.typography.lineHeight.normal),
+    font:         textTokens.size.md,
     whiteSpace:   "nowrap",
     overflow:     "hidden",
     textOverflow: "ellipsis",
@@ -29,16 +27,16 @@ export function JsonFieldRow({ label, value, style }: JsonFieldRowProps) {
   return (
     <GraphRow
       style={{
-        gap:          tokens.sizes.space[2],                 // 8px key↔value
-        padding:      `${tokens.sizes.space[1]} ${tokens.sizes.space[2]}`,
-        borderRadius: tokens.sizes.borderRadius.sm,
+        gap:          space.xs,                              // 8px key↔value
+        padding:      `${space.xxs} ${space.xs}`,
+        borderRadius: borderRadius.sm,
         ...style,
       }}
     >
-      <span style={{ ...text, color: tokens.colors.global.text.default }}>
+      <span style={{ ...text, color: fgColor.neutral.default }}>
         {label}:
       </span>
-      <span style={{ ...text, color: tokens.colors.global.text.muted }}>
+      <span style={{ ...text, color: fgColor.neutral.muted }}>
         {value}
       </span>
     </GraphRow>

@@ -23,7 +23,6 @@ const meta: Meta<typeof JsonViewer> = {
       description: "Max height — scrolls only when content exceeds it",
     },
     gutterIcons: { control: false },
-    theme: { control: false },
     data: { control: false },
     onWatchlistChange: { control: false },
     onLinkClick: { control: false },

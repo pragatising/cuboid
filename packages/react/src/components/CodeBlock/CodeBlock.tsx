@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import type { CubeTheme } from "../../theme/types";
 import { CodeSurface, type CodeSurfaceProps } from "./CodeSurface/CodeSurface";
 import { highlightSource, type CodeBlockLanguage } from "./highlight";
 import { annotateBracketDepth } from "./syntax";
@@ -9,7 +8,6 @@ export interface CodeBlockProps
     CodeSurfaceProps,
     | "height"
     | "maxHeight"
-    | "theme"
     | "linkify"
     | "onLinkClick"
     | "watchlist"
@@ -38,7 +36,6 @@ export function CodeBlock({
   language = "text",
   height,
   maxHeight,
-  theme,
   linkify = false,
   onLinkClick,
   watchlist,
@@ -58,7 +55,6 @@ export function CodeBlock({
       gutterLineCount={lines.length}
       height={height}
       maxHeight={maxHeight}
-      theme={theme}
       linkify={linkify}
       onLinkClick={onLinkClick}
       watchlist={watchlist}

@@ -22,6 +22,8 @@ Detail: `docs/backlog/primitives-pipeline-tracker.md`
 
 Detail: `docs/backlog/token-migration-tracker.md`
 
+**Found 2026-10-19 while building Subtitle:** two component token files (`subtitle`, `inline-code-snippet`) had a `$value` plus child tokens; DTCG treats that as a leaf, so Style Dictionary silently dropped the children (the build still exited 0). Fixed, and `src/tokenStructure.test.ts` now fails on any recurrence.
+
 **Open, low-urgency:** ~18 `$description: 'GAP: ...'` markers remain in source (mostly color-literal gaps with no matching base step). One has visible UI impact — `button`/`icon-button` disabled-state borders render identical to rest/hover instead of fainter.
 
 ## 3. Token consumption shape (how a component reads a token)
@@ -30,11 +32,11 @@ Detail: `docs/backlog/token-migration-tracker.md`
 
 Detail: `docs/adr/adr-04-token-consumption-shape.md`
 
-**Not yet done:** `packages/react/src/theme/{ThemeContext.tsx, defaultTheme.ts, tokenOutput.ts, themeCubeOverride.ts}` — the old, now-superseded context seam — still exist. Retiring them is React-refactor-phase work (see §5), not a primitives blocker. A real external consumer (portfolio app, ~60 import sites) depends on the old seam today; migrating it is required follow-up, not optional cleanup.
+**Done 2026-10-21:** `packages/react/src/theme/` is deleted and no component in `packages/react/src` imports it (every core and data component reads `useTokens()`). **Still open:** a real external consumer (portfolio app, ~60 import sites) depends on the old seam and the old prop APIs (`theme` prop, `Stack`, `IconButton` children, …); migrating it is required follow-up, not optional cleanup.
 
-## 4. Dark mode / theme variants
+## 4. Dark mode (modes, switched live at runtime)
 
-**Status: Mechanism built, zero data authored.** The `themeOverrides` preprocessor (reads a token's `$extensions['org.cuboid.overrides']` block) is real and registered. No token in `src/tokens/` has that block yet — nothing to override against. Deliberately deferred; the mechanism scales to any number of theme keys later with zero migration cost, so there's no urgency.
+**Status: First pass authored, needs design review.** Light/dark are modes, not themes: the build emits a resolved tree per mode (`tokens.light`, `tokens.dark`) and the app switches between them live via `setMode` (see ADR-04 amendment). Dark values come from: a generated, contrast-matched base palette (`packages/primitives/src/tokens/modes/dark/base-colors.json5`, regenerate with `scripts/generators/generate-dark-palette.mjs`), hand-authored base alpha/shadow values (`modes/dark/alpha.json5`), and inline `org.cuboid.overrides.dark` on the few functional/component tokens a palette swap can't fix (white-on-fill backgrounds, modal scrim, syntax and highlight literals). Contrast is locked in by `src/darkMode.test.ts`. Not yet reviewed by eye by a designer; Figma variable modes not synced.
 
 Detail: `packages/primitives/docs/DESIGN.md` §5
 
@@ -45,7 +47,7 @@ Detail: `packages/primitives/docs/DESIGN.md` §5
 - **Component API gaps** (missing props/states found while token-migrating) — `packages/react/docs/component-audit.md`. Sparse so far; most components haven't been checked against their `.tsx` yet.
 - **New component build-out** (Figma-designed, not yet built in React) — `docs/backlog/core-components.md` (large items, one section each). (`docs/backlog/complex-compoennts.md`, previously listed here, was a different project's misplaced doc — deleted 2026-10-08, not cuboid backlog.)
 
-**Not started:** migrating existing components off the old CSS-var/context token seam onto ADR-04's shape (see §3). This is the next real phase once explicitly kicked off.
+**Done 2026-10-21:** every existing component is off the old CSS-var/context token seam and on ADR-04's shape (see §3), and all 153 stories render (jsdom smoke test + real Chrome). Recipe: `packages/react/docs/token-consumption.md`; per-component status: `docs/backlog/react-migration-tracker.md`. **Left:** component tests for the data components (CodeBlock, JsonViewer, Graph, JsonGraph, ApiResponseViewer), Figma Code Connect, and the downstream consumer migration.
 
 ## 6. Figma sync (bidirectional)
 

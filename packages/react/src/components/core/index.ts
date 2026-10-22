@@ -1,5 +1,3 @@
-export { Stack } from "./Stack";
-export type { StackProps, StackGap, StackPadding, StackSpacing, LayoutWidth } from "./Stack";
 
 export { Table, SimpleTable } from "./Table";
 export type {
@@ -21,17 +19,15 @@ export { Container } from "./Container";
 export type { ContainerProps, ContainerWidth } from "./Container";
 
 export { Box } from "./Box";
-export type {
-  BoxProps,
-  BoxBackground,
-  BoxBorderColor,
-  BoxBorderRadius,
-  BoxForeground,
-  BoxOverflow,
-} from "./Box";
+export type { BoxProps, BoxOwnProps, BoxSpacing } from "./Box";
+export type { Space } from "../../utils/space";
 
 export { Divider } from "./Divider";
 export type { DividerProps, DividerColor } from "./Divider";
+export { Heading } from "./Heading";
+export type { HeadingProps, HeadingLevel, HeadingSize } from "./Heading";
+export { Subtitle } from "./Subtitle";
+export type { SubtitleProps } from "./Subtitle";
 
 export { Callout } from "./Callout";
 export type { CalloutProps } from "./Callout";
@@ -40,13 +36,13 @@ export { Highlight } from "./Highlight";
 export type { HighlightProps, HighlightColor } from "./Highlight";
 
 export { Text } from "./Text";
-export type { TextProps, TextColor, TextRole, TextSize, TextTokenKey, TextWeight } from "./Text";
+export type { TextProps, TextColor, TextSize } from "./Text";
 
 export { Button } from "./Button";
-export type { ButtonProps, ButtonShape, ButtonSize, ButtonVariant } from "./Button";
+export type { ButtonProps } from "./Button";
 
 export { IconButton } from "./IconButton";
-export type { IconButtonProps, IconButtonSize, IconButtonVariant } from "./IconButton";
+export type { IconButtonProps } from "./IconButton";
 
 export { Tooltip } from "./Tooltip";
 export type { TooltipProps, TooltipPlacement } from "./Tooltip";
@@ -58,12 +54,11 @@ export { Link } from "./Link";
 export type { LinkProps, LinkVariant } from "./Link";
 
 export { Pill } from "./Pill";
-export type { PillProps, PillShade, PillIntensity, PillSurface } from "./Pill";
+export type { PillProps, PillShade, PillIntensity, PillSize } from "./Pill";
 
 export { BreadcrumbLink, Breadcrumbs } from "./Breadcrumb";
 export type {
   BreadcrumbLinkProps,
-  BreadcrumbLinkState,
   BreadcrumbsProps,
   BreadcrumbItem,
 } from "./Breadcrumb";

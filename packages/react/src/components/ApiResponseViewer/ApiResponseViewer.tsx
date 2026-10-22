@@ -6,9 +6,8 @@ import { Icon } from "../core/Icon";
 import { IconButton } from "../core/IconButton";
 import { Pill } from "../core/Pill";
 import { Popover } from "../core/Popover";
-import { Stack } from "../core/Stack";
 import { Text } from "../core/Text";
-import type { CubeTheme } from "../../theme/types";
+import { useTokens } from "../../mode";
 import styles from "./ApiResponseViewer.module.css";
 import { statusPillShade, statusReasonPhrase, methodPillShade } from "./status";
 
@@ -35,7 +34,6 @@ export interface ApiResponseViewerProps {
   headers?: ApiResponseHeaders;
   /** Round-trip duration in milliseconds. */
   durationMs?: number;
-  theme?: CubeTheme;
   /** Props forwarded to the body {@link JsonCodeView} (except `data`). */
   codeView?: Omit<JsonCodeViewProps, "data">;
   "aria-label"?: string;
@@ -49,44 +47,26 @@ function normalizeHeaders(
   return Object.entries(headers);
 }
 
-function ResponseHeadersPanel({
-  entries,
-  theme,
-}: {
-  entries: ReadonlyArray<readonly [string, string]>;
-  theme?: CubeTheme;
-}) {
+function ResponseHeadersPanel({ entries }: { entries: ReadonlyArray<readonly [string, string]> }) {
+  const { space } = useTokens();
   return (
-    <Stack gap="sm" padding="sm" className={styles.headersPopover} theme={theme}>
-      <Text
-        role="body"
-        size="sm"
-        color="text.contrast"
-        weight="medium"
-        theme={theme}
-      >
+    <Box gap="sm" padding="sm" className={styles.headersPopover}>
+      <Text color="neutral.default" weight="medium">
         Headers
       </Text>
-      <dl className={styles.headers}>
+      <dl className={styles.headers} style={{ gap: space.sm }}>
         {entries.map(([name, value]) => (
-          <div key={name} className={styles.headerEntry}>
-            <Text
-              as="dt"
-              role="body"
-              size="sm"
-              color="text.contrast"
-              weight="medium"
-              theme={theme}
-            >
+          <div key={name} className={styles.headerEntry} style={{ gap: space.xxs }}>
+            <Text as="dt" color="neutral.default" weight="medium">
               {name}
             </Text>
-            <Text as="dd" role="body" size="sm" color="fg.neutral.muted" theme={theme}>
+            <Text as="dd" color="neutral.muted">
               {value}
             </Text>
           </div>
         ))}
       </dl>
-    </Stack>
+    </Box>
   );
 }
 
@@ -101,7 +81,6 @@ export function ApiResponseViewer({
   url,
   headers,
   durationMs,
-  theme,
   codeView,
   "aria-label": ariaLabel,
 }: ApiResponseViewerProps) {
@@ -112,81 +91,47 @@ export function ApiResponseViewer({
     <Box
       role="region"
       aria-label={ariaLabel ?? "API response"}
-      borderColor="border.gray.2"
+      borderColor="translucent.2"
       borderRadius="md"
       overflow="hidden"
-      direction="vertical"
-      gap="none"
-      theme={theme}
     >
-      <Stack
-        direction="horizontal"
-        align="center"
+      <Box
+        flexDirection="row"
+        alignItems="center"
         gap="sm"
-        padding="sm"
-        paddingInline="md"
+        padding={{ block: "sm", inline: "md" }}
         className={styles.summary}
-        theme={theme}
       >
-        <Stack
-          direction="horizontal"
-          align="center"
+        <Box
+          flexDirection="row"
+          alignItems="center"
           gap="sm"
-          grow
+          flexGrow={1}
           className={styles.summaryLeading}
-          theme={theme}
         >
           {url ? (
-            <Text
-              as="span"
-              role="body" size="sm"
-              color="fg.neutral.muted"
-              truncate
-              className={styles.url}
-              theme={theme}
-            >
+            <Text as="span" color="neutral.muted" truncate className={styles.url}>
               {url}
             </Text>
           ) : null}
 
           {method ? (
-            <Pill
-              shade={methodPillShade(method)}
-              intensity="light"
-              variant="bodyXs"
-              className={styles.method}
-              theme={theme}
-            >
+            <Pill shade={methodPillShade(method)} intensity="light" className={styles.method}>
               {method}
             </Pill>
           ) : null}
 
-          <Stack
-            direction="horizontal"
-            align="center"
-            gap="xs"
-            shrink={0}
-            className={styles.status}
-            theme={theme}
-          >
-            <Pill
-              shade={statusPillShade(status)}
-              intensity="bold"
-              variant="bodyXs"
-              theme={theme}
-            >
+          <Box flexDirection="row" alignItems="center" gap="xs" flexShrink={0} className={styles.status}>
+            <Pill shade={statusPillShade(status)} intensity="bold">
               {status}
             </Pill>
-            <Text role="body" size="sm" color="fg.neutral.muted" theme={theme}>
-              {statusReasonPhrase(status)}
-            </Text>
-          </Stack>
+            <Text color="neutral.muted">{statusReasonPhrase(status)}</Text>
+          </Box>
 
           {showHeaders ? (
             <Popover
               placement="bottom-start"
               aria-label="Response headers"
-              theme={theme}
               className={styles.headersTrigger}
               contentClassName={styles.headersPopoverPanel}
               trigger={
@@ -194,41 +139,26 @@ export function ApiResponseViewer({
                   aria-label="Response headers"
                   variant="ghost"
                   size="xs"
-                  theme={theme}
-                >
-                  <Icon name="keyboard_arrow_down" />
-                </IconButton>
+                  icon={<Icon name="keyboard_arrow_down" />}
+                />
               }
             >
-              <ResponseHeadersPanel entries={headerEntries} theme={theme} />
+              <ResponseHeadersPanel entries={headerEntries} />
             </Popover>
           ) : null}
-        </Stack>
+        </Box>
 
         {durationMs != null ? (
-          <Text
-            as="span"
-            role="body" size="sm"
-            color="fg.neutral.muted"
-            className={styles.duration}
-            theme={theme}
-          >
+          <Text as="span" color="neutral.muted" className={styles.duration}>
             {durationMs} ms
           </Text>
         ) : null}
-      </Stack>
+      </Box>
 
-      <Divider theme={theme} />
+      <Divider />
 
-      <Box grow className={styles.body} theme={theme}>
-        <JsonCodeView
-          data={body}
-          surfaceVariant="embedded"
-          linkify
-          aria-label="Response body"
-          theme={theme}
-          {...codeView}
-        />
+      <Box flexGrow={1} className={styles.body}>
+        <JsonCodeView data={body} surfaceVariant="embedded" linkify aria-label="Response body" {...codeView} />
       </Box>
     </Box>
   );

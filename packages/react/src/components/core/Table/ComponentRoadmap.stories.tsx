@@ -3,7 +3,8 @@ import type { Meta, StoryObj } from "@storybook/react";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Pill } from "../Pill";
 import { SimpleTable } from "./Table";
-import { Stack } from "../Stack";
+import { Box } from "../Box";
+import { Heading } from "../Heading";
 import { Text } from "../Text";
 
 type RoadmapState = "Shipped" | "In progress" | "Backlog" | "Open" | "Technical debt";
@@ -130,35 +131,35 @@ type Story = StoryObj<typeof SimpleTable>;
 
 export const Overview: Story = {
   render: () => (
-    <Stack gap="xl" style={{ maxWidth: "78rem" }}>
-      <Stack gap="xs">
-        <Text role="heading" size="lg">
+    <Box gap="xl" style={{ maxWidth: "78rem" }}>
+      <Box gap="xs">
+        <Heading as="h2" size="lg">
           Cuboid component roadmap
-        </Text>
-        <Text role="body" size="sm" color="muted">
+        </Heading>
+        <Text size="md" color="neutral.muted">
           Sort any table by clicking a column heading. This board mirrors the current component backlog and open implementation threads.
         </Text>
-      </Stack>
+      </Box>
 
-      <Stack gap="sm">
-        <Text role="heading" size="md">Shipped</Text>
+      <Box gap="sm">
+        <Heading as="h2" size="md">Shipped</Heading>
         <SimpleTable columns={ROADMAP_COLUMNS} data={SHIPPED} enableSorting rowLayout="wrap" density="dense" lines="rows" />
-      </Stack>
+      </Box>
 
-      <Stack gap="sm">
-        <Text role="heading" size="md">Backlog</Text>
+      <Box gap="sm">
+        <Heading as="h2" size="md">Backlog</Heading>
         <SimpleTable columns={ROADMAP_COLUMNS} data={BACKLOG} enableSorting rowLayout="wrap" density="dense" lines="rows" />
-      </Stack>
+      </Box>
 
-      <Stack gap="sm">
-        <Text role="heading" size="md">Feature Upgrade</Text>
+      <Box gap="sm">
+        <Heading as="h2" size="md">Feature Upgrade</Heading>
         <SimpleTable columns={ROADMAP_COLUMNS} data={FEATURE_UPGRADES} enableSorting rowLayout="wrap" density="dense" lines="rows" />
-      </Stack>
+      </Box>
 
-      <Stack gap="sm">
-        <Text role="heading" size="md">Bugs</Text>
+      <Box gap="sm">
+        <Heading as="h2" size="md">Bugs</Heading>
         <SimpleTable columns={ROADMAP_COLUMNS} data={BUGS} enableSorting rowLayout="wrap" density="dense" lines="rows" />
-      </Stack>
-    </Stack>
+      </Box>
+    </Box>
   ),
 };

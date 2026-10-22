@@ -1,4 +1,6 @@
+/* Layout only. Colours, padding and radius come from the `callout` tokens, set inline by Callout.tsx. */
 .Callout {
-  background-color: var(--callout-bg);
-  border-radius: var(--cube-sizes-borderRadius-md);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
 }

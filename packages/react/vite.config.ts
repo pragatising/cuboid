@@ -18,13 +18,13 @@ export default defineConfig(({ mode }) => {
       dts({
         insertTypesEntry: true,
         include: ["src"],
+        exclude: ["src/**/*.test.ts", "src/**/*.test.tsx", "src/**/*.test-d.ts", "src/**/*.test-d.tsx", "src/test"],
       }),
     ],
     build: {
       lib: {
         entry: {
           index: path.resolve(__dirname, "src/index.ts"),
-          tokens: path.resolve(__dirname, "src/tokens.ts"),
         },
         name: "Cube",
         formats: ["es", "cjs"],
@@ -33,8 +33,16 @@ export default defineConfig(({ mode }) => {
       },
       cssCodeSplit: false,
       rollupOptions: {
-        // Never bundle React — consumers provide it
-        external: ["react", "react/jsx-runtime", "react-dom"],
+        // Never bundle React — consumers provide it.
+        // Never bundle the tokens either (ADR-04): the consuming app's build
+        // runs the token pipeline over its own overrides and resolves this
+        // import to the result. Inlining them would freeze the defaults.
+        external: [
+          "react",
+          "react/jsx-runtime",
+          "react-dom",
+          /^@sragatiping\/cuboid-primitives(\/.*)?$/,
+        ],
         output: {
           globals: {
             react: "React",

@@ -1,5 +1,4 @@
 import React, { useMemo, useState } from "react";
-import type { CubeTheme } from "../../../theme/types";
 import { CodeSurface, type CodeSurfaceGutterIcons, type CodeSurfaceProps } from "../CodeSurface/CodeSurface";
 import { buildLines, getAllCollapsiblePaths } from "../tokenizer";
 import type { SurfaceLine } from "../types";
@@ -9,7 +8,6 @@ export interface JsonViewerProps
     CodeSurfaceProps,
     | "height"
     | "maxHeight"
-    | "theme"
     | "linkify"
     | "onLinkClick"
     | "watchlist"
@@ -40,7 +38,6 @@ export function JsonViewer({
   gutterIcons,
   height,
   maxHeight,
-  theme,
   linkify,
   onLinkClick,
   watchlist,
@@ -84,7 +81,6 @@ export function JsonViewer({
       gutterIcons={gutterIcons}
       height={height}
       maxHeight={maxHeight}
-      theme={theme}
       linkify={linkify}
       onLinkClick={onLinkClick}
       watchlist={watchlist}

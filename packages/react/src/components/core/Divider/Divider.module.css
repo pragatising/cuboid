@@ -1,14 +1,10 @@
+/* Colour and thickness are set inline from the `divider` tokens (ADR-04); only layout lives here. */
 .Divider {
+  display: block;
   box-sizing: border-box;
+  width: 100%;
+  flex-shrink: 0;
   border: 0;
   margin: 0;
   padding: 0;
-  flex-shrink: 0;
-}
-
-.Divider--horizontal {
-  display: block;
-  width: 100%;
-  height: var(--divider-thickness);
-  background-color: var(--divider-color);
 }

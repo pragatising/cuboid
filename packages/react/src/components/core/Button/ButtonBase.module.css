@@ -1,0 +1,90 @@
+/*
+ * One generic rule set for every button-shaped control. The colours arrive as element-scoped
+ * variables (--button-<property>-<state>) set inline from the tokens (see ButtonBase.tsx and
+ * utils/cssVars.ts); the browser picks the state, so :hover / :active / :disabled / :focus-visible
+ * live here. Everything is zero-specificity (:where) so a consumer's own class can override any of it.
+ */
+
+:where(.ButtonBase) {
+  appearance: none;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  user-select: none;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  border-style: solid;
+  box-shadow: none;
+  color: var(--button-fg-rest);
+  background-color: var(--button-bg-rest);
+  border-color: var(--button-border-rest);
+}
+
+/* Hover and pressed only apply while the button can be activated (not disabled, inactive or loading). */
+:where(.ButtonBase:hover:not(:disabled, [aria-disabled="true"])) {
+  color: var(--button-fg-hover);
+  background-color: var(--button-bg-hover);
+  border-color: var(--button-border-hover);
+}
+
+:where(.ButtonBase:active:not(:disabled, [aria-disabled="true"])) {
+  color: var(--button-fg-pressed);
+  background-color: var(--button-bg-pressed);
+  border-color: var(--button-border-pressed);
+}
+
+/* Disabled look: natively disabled, or `inactive`. (A loading button keeps its normal look.) */
+:where(.ButtonBase:disabled, .ButtonBase[data-inactive]) {
+  cursor: not-allowed;
+  color: var(--button-fg-disabled);
+  background-color: var(--button-bg-disabled);
+  border-color: var(--button-border-disabled);
+}
+
+:where(.ButtonBase[data-loading]) {
+  cursor: progress;
+}
+
+:where(.ButtonBase:focus-visible) {
+  outline: var(--button-focus-width) solid var(--button-focus-color);
+  outline-offset: var(--button-focus-offset);
+}
+
+:where(.ButtonBase[data-block]) {
+  width: 100%;
+}
+
+/* Anatomy: buttonContent holds the visuals and the label, so alignContent has something to align. */
+:where(.ButtonContent) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+  min-width: 0;
+  gap: var(--button-gap);
+}
+
+:where(.ButtonContent[data-align="start"]) {
+  justify-content: flex-start;
+}
+
+:where(.Visual) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+/* Visual size follows the button's size (the variable is set inline from the size tokens). */
+:where(.Visual > *) {
+  width: var(--button-icon-size);
+  height: var(--button-icon-size);
+}
+
+:where(.Label) {
+  min-width: 0;
+}

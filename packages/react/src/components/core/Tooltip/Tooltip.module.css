@@ -1,38 +1,24 @@
+/* Layout only. Colours, font, border, padding, radius, shadow, z-index and max width come from the `tooltip` tokens, set inline by Tooltip.tsx. */
 .Root {
   display: inline-flex;
   vertical-align: middle;
 }
 
 .Panel {
-  z-index: var(--cube-z-index-tooltip, 800);
+  position: fixed;
   box-sizing: border-box;
   margin: 0;
+  border-style: solid;
   text-align: left;
-  font-family: var(--cube-typography-fontFamily-base);
-  font-size: var(--cube-typography-text-body-xs-fontSize);
-  font-weight: var(--cube-typography-text-body-xs-fontWeight);
-  line-height: var(--cube-typography-text-body-xs-lineHeight);
-  color: var(--cube-tooltip-fg);
-  background-color: var(--cube-tooltip-bg);
-  border: solid var(--cube-sizes-borderWidth-thin) var(--cube-tooltip-border);
-  border-radius: var(--cube-tooltip-borderRadius);
-  padding: var(--cube-tooltip-paddingBlock) var(--cube-tooltip-paddingInline);
-  box-shadow: var(--cube-tooltip-shadow);
   pointer-events: none;
 }
 
-.Panel--fixed {
-  position: fixed;
-}
-
-.Panel--compact {
-  max-width: var(--cube-tooltip-maxWidthSingleLine);
+.Compact {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.Panel--expanded {
-  max-width: var(--cube-tooltip-maxWidth);
+.Expanded {
   white-space: normal;
 }

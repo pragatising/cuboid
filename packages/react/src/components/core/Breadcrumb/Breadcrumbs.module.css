@@ -1,30 +1,25 @@
+/* Layout only. Gap, separator width and colour, and font come from the `breadcrumb` tokens, set inline by Breadcrumbs.tsx. */
 .Breadcrumbs {
   min-width: 0;
 }
 
-.Breadcrumbs__list {
+.List {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--cube-breadcrumb-gap);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.Breadcrumbs__item {
+.Item {
   display: inline-flex;
   align-items: center;
-  gap: var(--cube-breadcrumb-gap);
   min-width: 0;
 }
 
-.Breadcrumbs__separator {
+.Separator {
   flex-shrink: 0;
-  width: var(--cube-breadcrumb-separator-width);
   text-align: center;
-  font-size: var(--cube-typography-text-body-sm-fontSize);
-  line-height: var(--cube-typography-text-body-sm-lineHeight);
-  color: var(--cube-breadcrumb-separator-fg);
   user-select: none;
 }

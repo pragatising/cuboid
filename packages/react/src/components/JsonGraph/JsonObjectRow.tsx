@@ -1,5 +1,5 @@
 import React, { CSSProperties } from "react";
-import { useTheme } from "../../theme/ThemeContext";
+import { useTokens } from "../../mode";
 import { GraphRow } from "../Graph/GraphRow";
 
 export interface JsonObjectRowProps {
@@ -19,29 +19,27 @@ export interface JsonObjectRowProps {
 /**
  * A row that represents a link to a nested object or array card.
  *
- * Uses `base.gray[0]` (canvas/inset) background to visually distinguish
+ * Uses the `bgColor.canvas.inset` background to visually distinguish
  * nested-object rows from plain key-value rows. Place a `<GraphHandle>`
  * as children to attach an edge to the target card.
  */
 export function JsonObjectRow({ label, children, style }: JsonObjectRowProps) {
-  const tokens = useTheme();
+  const { text, fgColor, bgColor, space, size, borderRadius } = useTokens();
   return (
     <GraphRow
       style={{
-        gap:          tokens.sizes.space[2],
-        padding:      `${tokens.sizes.space[1]} ${tokens.sizes.space[2]}`,
-        paddingRight: tokens.sizes.space[5],                // 20px — room for handle dot
-        borderRadius: tokens.sizes.borderRadius.sm,         // 4px
-        background:   tokens.colors.base.gray[0],           // canvas/inset #f6f8fa
+        gap:          space.xs,
+        padding:      `${space.xxs} ${space.xs}`,
+        paddingRight: size["20"],                         // 20px — room for handle dot
+        borderRadius: borderRadius.sm,                      // 4px
+        background:   bgColor.canvas.inset,
         ...style,
       }}
     >
       <span
         style={{
-          fontFamily: tokens.typography.fontFamily.base,
-          fontSize:   tokens.typography.fontSize.sm,
-          lineHeight: String(tokens.typography.lineHeight.normal),
-          color:      tokens.colors.global.text.default,
+          font:       text.size.md,
+          color:      fgColor.neutral.default,
           flex:       1,
         }}
       >

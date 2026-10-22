@@ -1,59 +1,46 @@
 import React from "react";
-import { useTheme } from "../../../theme/ThemeContext";
-import type { CubeTheme } from "../../../theme/types";
+import { clsx } from "clsx";
+import { useTokens } from "../../../mode";
+import { mergeProps } from "../../../utils/mergeProps";
 import { BreadcrumbLink } from "./BreadcrumbLink";
-import styles from "./Breadcrumbs.module.css";
+import classes from "./Breadcrumbs.module.css";
 
 export interface BreadcrumbItem {
   label: string;
   href?: string;
 }
 
-export interface BreadcrumbsProps {
+export type BreadcrumbsProps = Omit<React.ComponentPropsWithRef<"nav">, "children"> & {
+  /** The trail, root first. The last item (or any without an `href`) is the current page. */
   items: BreadcrumbItem[];
-  /** Accessible label for the navigation landmark. */
-  "aria-label"?: string;
-  theme?: CubeTheme;
-  className?: string;
-}
+};
 
-export function Breadcrumbs({
-  items,
-  "aria-label": ariaLabel = "Breadcrumb",
-  theme,
-  className,
-}: BreadcrumbsProps) {
-  const tokens = useTheme(theme);
-
+/** A navigation trail. Spacing and the separator come from the `breadcrumb` tokens. */
+export function Breadcrumbs({ items, className, ...props }: BreadcrumbsProps) {
+  const { breadcrumb, text } = useTokens();
   if (items.length === 0) return null;
 
-  const inlineVars = theme
-    ? ({
-        "--cube-breadcrumb-gap": tokens.sizes.breadcrumb.gap,
-        "--cube-breadcrumb-separator-width": tokens.sizes.breadcrumb.separatorWidth,
-        "--cube-breadcrumb-separator-fg": tokens.colors.functional.breadcrumb.separator.fgColor,
-        "--cube-typography-text-body-sm-fontSize":
-          tokens.typography.text.bodySm.fontSize,
-        "--cube-typography-text-body-sm-lineHeight": String(
-          tokens.typography.text.bodySm.lineHeight
-        ),
-      } as React.CSSProperties)
-    : undefined;
-
   return (
-    <nav className={[styles.Breadcrumbs, className].filter(Boolean).join(" ")} aria-label={ariaLabel} style={inlineVars}>
-      <ol className={styles.Breadcrumbs__list}>
+    <nav
+      {...mergeProps(
+        { "data-component": "Breadcrumbs", "aria-label": "Breadcrumb", className: clsx(classes.Breadcrumbs, className) },
+        props,
+      )}
+    >
+      <ol className={classes.List} style={{ gap: breadcrumb.sizes.gap }}>
         {items.map((item, index) => {
           const isLast = index === items.length - 1;
-          const isCurrent = isLast || !item.href;
-
           return (
-            <li key={`${item.label}-${index}`} className={styles.Breadcrumbs__item}>
-              <BreadcrumbLink href={item.href} current={isCurrent} theme={theme}>
+            <li key={`${item.label}-${index}`} className={classes.Item} style={{ gap: breadcrumb.sizes.gap }}>
+              <BreadcrumbLink href={item.href} current={isLast || !item.href}>
                 {item.label}
               </BreadcrumbLink>
               {!isLast && (
-                <span className={styles.Breadcrumbs__separator} aria-hidden>
+                <span
+                  className={classes.Separator}
+                  aria-hidden
+                  style={{ width: breadcrumb.sizes.separatorWidth, font: text.size.md, color: breadcrumb.separator.fgColor }}
+                >
                   /
                 </span>
               )}

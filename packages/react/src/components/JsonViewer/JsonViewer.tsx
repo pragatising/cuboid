@@ -1,6 +1,4 @@
 import React from "react";
-import type { CubeTheme } from "../../theme/types";
-
 export type JsonViewerMode = "table" | "code";
 
 export interface JsonViewerProps {
@@ -8,8 +6,6 @@ export interface JsonViewerProps {
   data: unknown;
   /** Which view to start in (defaults to "code") */
   defaultMode?: JsonViewerMode;
-  /** Override any theme tokens for this instance */
-  theme?: CubeTheme;
 }
 
 /**

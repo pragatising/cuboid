@@ -1,92 +1,63 @@
 import React from "react";
-import { useTheme } from "../../../theme/ThemeContext";
-import type { CubeTheme, ThemeTokens } from "../../../theme/types";
-import { actionMenuCssVars } from "./actionMenuCssVars";
-import styles from "./ActionMenuList.module.css";
+import { clsx } from "clsx";
+import { useTokens } from "../../../mode";
+import { mergeProps } from "../../../utils/mergeProps";
+import { actionMenuVars } from "./actionMenuVars";
+import classes from "./ActionMenuList.module.css";
 
-export interface ActionMenuListProps {
+export type ActionMenuListProps = Omit<React.ComponentPropsWithRef<"div">, "role"> & {
   children: React.ReactNode;
-  /** Accessible name when the menu has no visible title. */
-  "aria-label"?: string;
-  /** id of an element that labels the menu. */
-  "aria-labelledby"?: string;
-  theme?: CubeTheme;
-  className?: string;
-  style?: React.CSSProperties;
-  onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
-  onClick?: React.MouseEventHandler<HTMLDivElement>;
-}
+};
 
-export interface ActionMenuListRegionProps {
-  children?: React.ReactNode;
-  theme?: CubeTheme;
-  className?: string;
-  style?: React.CSSProperties;
-}
+export type ActionMenuListRegionProps = React.ComponentPropsWithRef<"div">;
 
-export interface ActionMenuListSectionProps extends ActionMenuListRegionProps {
+export type ActionMenuListSectionProps = Omit<React.ComponentPropsWithRef<"div">, "role" | "children"> & {
   label: React.ReactNode;
-}
+  children?: React.ReactNode;
+};
 
-function regionStyle(
-  theme: CubeTheme | undefined,
-  tokens: ThemeTokens
-): React.CSSProperties | undefined {
-  return theme ? (actionMenuCssVars(tokens) as React.CSSProperties) : undefined;
-}
-
-function ActionMenuListHeader({
-  children,
-  theme,
-  className,
-  style,
-}: ActionMenuListRegionProps) {
-  const tokens = useTheme(theme);
+function ActionMenuListHeader({ children, className, ...props }: ActionMenuListRegionProps) {
+  const tokens = useTokens();
   return (
     <div
-      className={[styles.Header, className].filter(Boolean).join(" ")}
-      style={{ ...regionStyle(theme, tokens), ...style }}
+      {...mergeProps(
+        { "data-component": "ActionMenuList.Header", className: clsx(classes.Header, className), style: actionMenuVars(tokens) },
+        props,
+      )}
     >
       {children}
-      <div className={styles.HeaderDivider} role="separator" />
+      <div className={classes.HeaderDivider} role="separator" />
     </div>
   );
 }
 
-function ActionMenuListFooter({
-  children,
-  theme,
-  className,
-  style,
-}: ActionMenuListRegionProps) {
-  const tokens = useTheme(theme);
+function ActionMenuListFooter({ className, ...props }: ActionMenuListRegionProps) {
+  const tokens = useTokens();
   return (
     <div
-      className={[styles.Footer, className].filter(Boolean).join(" ")}
-      style={{ ...regionStyle(theme, tokens), ...style }}
-    >
-      {children}
-    </div>
+      {...mergeProps(
+        { "data-component": "ActionMenuList.Footer", className: clsx(classes.Footer, className), style: actionMenuVars(tokens) },
+        props,
+      )}
+    />
   );
 }
 
-function ActionMenuListSection({
-  label,
-  children,
-  theme,
-  className,
-  style,
-}: ActionMenuListSectionProps) {
-  const tokens = useTheme(theme);
+function ActionMenuListSection({ label, children, className, ...props }: ActionMenuListSectionProps) {
   return (
     <div
-      className={[styles.Section, className].filter(Boolean).join(" ")}
-      style={{ ...regionStyle(theme, tokens), ...style }}
-      role="group"
-      aria-label={typeof label === "string" ? label : undefined}
+      {...mergeProps(
+        {
+          "data-component": "ActionMenuList.Section",
+          className: clsx(classes.Section, className),
+          role: "group",
+          "aria-label": typeof label === "string" ? label : undefined,
+        },
+        props,
+      )}
     >
-      <div className={styles.SectionLabel}>{label}</div>
-      <div className={styles.SectionItems}>{children}</div>
+      <div className={classes.SectionLabel}>{label}</div>
+      <div className={classes.SectionItems}>{children}</div>
     </div>
   );
 }
@@ -99,49 +70,32 @@ function isFooterChild(child: React.ReactNode): boolean {
   return React.isValidElement(child) && child.type === ActionMenuListFooter;
 }
 
-/** Menu list container — maps to Figma `ActionMenu.List`. */
-const ActionMenuListRoot = React.forwardRef<HTMLDivElement, ActionMenuListProps>(
-  function ActionMenuList(
-    {
-      children,
-      "aria-label": ariaLabel,
-      "aria-labelledby": ariaLabelledBy,
-      theme,
-      className,
-      style,
-      onKeyDown,
-      onClick,
-    },
-    ref
-  ) {
-    const tokens = useTheme(theme);
-    const childArray = React.Children.toArray(children);
-    const header = childArray.find((child) => isHeaderChild(child));
-    const footer = childArray.find((child) => isFooterChild(child));
-    const body = childArray.filter((child) => !isHeaderChild(child) && !isFooterChild(child));
+/** Menu list container. Header and footer children are lifted out around the scrolling item area. */
+function ActionMenuListRoot({ children, className, ...props }: ActionMenuListProps) {
+  const tokens = useTokens();
+  const childArray = React.Children.toArray(children);
+  const header = childArray.find((child) => isHeaderChild(child));
+  const footer = childArray.find((child) => isFooterChild(child));
+  const body = childArray.filter((child) => !isHeaderChild(child) && !isFooterChild(child));
 
-    const inlineVars = theme ? (actionMenuCssVars(tokens) as React.CSSProperties) : undefined;
-
-    return (
-      <div
-        ref={ref}
-        role="menu"
-        aria-label={ariaLabel}
-        aria-labelledby={ariaLabelledBy}
-        className={[styles.ActionMenuList, className].filter(Boolean).join(" ")}
-        style={{ ...inlineVars, ...style }}
-        onKeyDown={onKeyDown}
-        onClick={onClick}
-      >
-        {header}
-        <div className={styles.ListItems}>{body}</div>
-        {footer}
-      </div>
-    );
-  }
-);
-
-ActionMenuListRoot.displayName = "ActionMenuList";
+  return (
+    <div
+      {...mergeProps(
+        {
+          "data-component": "ActionMenuList",
+          role: "menu",
+          className: clsx(classes.ActionMenuList, className),
+          style: actionMenuVars(tokens),
+        },
+        props,
+      )}
+    >
+      {header}
+      <div className={classes.ListItems}>{body}</div>
+      {footer}
+    </div>
+  );
+}
 
 export const ActionMenuList = Object.assign(ActionMenuListRoot, {
   Header: ActionMenuListHeader,

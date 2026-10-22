@@ -1,11 +1,11 @@
 import type React from "react";
-import type { IconName } from "./material/iconNames.generated";
+import type { IconName } from "@sragatiping/cuboid-primitives/icons/names";
 
 export type { IconName };
 
 /**
- * Variable-font axes for a single glyph render. Values come from
- * `theme.icon.*` unless overridden per-call on `<Icon>`.
+ * Variable-font axes for a single glyph render. `<Icon>` supplies the defaults
+ * (weight 400, grade 0, optical size 24, outline, rounded) and per-call props override them.
  */
 export interface IconAxes {
   /** Stroke weight — 100 to 700. */
@@ -21,9 +21,8 @@ export interface IconAxes {
 }
 
 /**
- * Pluggable glyph source for {@link Icon}. Configure once via
- * `ThemeProvider`'s `theme.icon.library` — call sites only ever pass a
- * canonical {@link IconName}, never a library-specific import.
+ * Glyph source for {@link Icon} (Material Symbols today). Call sites only ever
+ * pass a canonical {@link IconName}, never a library-specific import.
  */
 export interface IconLibrary {
   resolve(name: IconName, axes: IconAxes): React.ReactElement;

@@ -1,51 +1,36 @@
 import React from "react";
-import { useTheme } from "../../../theme/ThemeContext";
-import { resolveGlobalColorOrCss } from "../../../theme/globalColor";
-import type { CubeTheme, GlobalColorPath } from "../../../theme/types";
-import { Stack } from "../Stack";
-import styles from "./Callout.module.css";
+import { clsx } from "clsx";
+import { useTokens } from "../../../mode";
+import { mergeProps } from "../../../utils/mergeProps";
+import { resolveColorPath } from "../../../utils/colorPaths";
+import type { BgColor } from "../../../utils/colorPaths";
+import classes from "./Callout.module.css";
 
-export type { GlobalColorPath as CalloutBackground };
+export type CalloutProps = Omit<React.ComponentPropsWithRef<"div">, "color"> & {
+  /** Which `bgColor` token to use for the surface. @default the `callout.bgColor` token */
+  backgroundColor?: BgColor;
+};
 
-export interface CalloutProps {
-  /**
-   * Surface color from `colors.global` (dot-path), or any CSS color string.
-   * @default "canvas.inset"
-   * @example "canvas.inset" | "bg.gray.light.2" | "#eef6ff"
-   */
-  background?: GlobalColorPath;
-  theme?: CubeTheme;
-  className?: string;
-  style?: React.CSSProperties;
-  children?: React.ReactNode;
-}
-
-function calloutCssVars(
-  background: GlobalColorPath,
-  tokens: ReturnType<typeof useTheme>,
-): Record<string, string> {
-  return {
-    "--callout-bg": resolveGlobalColorOrCss(background, tokens.colors.global),
-  };
-}
-
-/** Inset block for blockquotes, notes, and asides. */
-export function Callout({
-  background = "canvas.inset",
-  theme,
-  className,
-  style,
-  children,
-}: CalloutProps) {
-  const tokens = useTheme(theme);
+/** Inset block for blockquotes, notes and asides. */
+export function Callout({ backgroundColor, className, ...props }: CalloutProps) {
+  const { callout, bgColor } = useTokens();
 
   return (
-    <Stack
-      padding="sm"
-      className={[styles.Callout, className].filter(Boolean).join(" ")}
-      style={{ ...calloutCssVars(background, tokens), ...style }}
-    >
-      {children}
-    </Stack>
+    <div
+      {...mergeProps(
+        {
+          "data-component": "Callout",
+          className: clsx(classes.Callout, className),
+          style: {
+            backgroundColor: backgroundColor ? resolveColorPath(bgColor, backgroundColor) : callout.bgColor,
+            color: callout.fgColor,
+            paddingBlock: callout.paddingBlock,
+            paddingInline: callout.paddingInline,
+            borderRadius: callout.borderRadius,
+          },
+        },
+        props,
+      )}
+    />
   );
 }

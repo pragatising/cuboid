@@ -1,162 +1,93 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Title, Primary, Controls, Subtitle } from "@storybook/blocks";
 import { Container } from "./Container";
-import { Stack } from "../Stack";
+import { Box } from "../Box";
+import { Heading } from "../Heading";
 import { Text } from "../Text";
 
-const shellStyle: React.CSSProperties = {
-  background: "var(--cube-color-bg-gray-light-2, #f9f9f8)",
-  outline: "1px dashed var(--cube-color-border-gray-2, #e2e1dd)",
-  outlineOffset: "-1px",
-};
+const Shell = ({ children }: { children: React.ReactNode }) => (
+  <Box backgroundColor="canvas.inset" style={{ outline: "1px dashed #e2e1dd", outlineOffset: "-1px" }}>
+    {children}
+  </Box>
+);
 
 const meta: Meta<typeof Container> = {
   title: "Core/Container",
   component: Container,
   tags: ["autodocs"],
-  parameters: {
-    layout: "fullscreen",
-    docs: {
-      page: () => (
-        <>
-          <Title />
-          <Subtitle>
-            Page shell — max-width, horizontal padding, and optional vertical fill. Tokens from{" "}
-            <code>tokens/functional/size/layout.json</code> (<code>pageMaxWidth</code>,{" "}
-            <code>contentMaxWidth</code>, <code>pagePaddingInline</code>).
-          </Subtitle>
-
-          <div className="cube-docs-section">
-            <h3 className="cube-docs-section__title">Page width (default)</h3>
-            <div style={shellStyle}>
-              <Container width="page">
-                <Stack paddingBlock="lg" gap="sm">
-                  <Text role="heading" size="sm">Portfolio shell</Text>
-                  <Text role="body" size="sm" color="muted">
-                    Use <code>width=&quot;page&quot;</code> for the site wrapper.
-                  </Text>
-                </Stack>
-              </Container>
-            </div>
-          </div>
-
-          <div className="cube-docs-section">
-            <h3 className="cube-docs-section__title">Content width</h3>
-            <div style={shellStyle}>
-              <Container width="page">
-                <Stack paddingBlock="lg">
-                  <Container width="content" paddingInline={false} center={false}>
-                    <Text role="body" size="sm">
-                      Narrow reading column via <code>width=&quot;content&quot;</code>.
-                    </Text>
-                  </Container>
-                </Stack>
-              </Container>
-            </div>
-          </div>
-
-          <Primary />
-          <Controls />
-        </>
-      ),
-    },
-  },
+  parameters: { layout: "fullscreen" },
   argTypes: {
     width: { control: "radio", options: ["page", "content", "full"] },
     center: { control: "boolean" },
-    paddingInline: {
-      control: "select",
-      options: ["none", "xxs", "xs", "sm", "md", "lg", "xl", "xxl", false],
-    },
+    paddingInline: { control: "select", options: [undefined, "xxs", "xs", "sm", "md", "lg", "xl", "xxl", false] },
+    paddingBlock: { control: "select", options: [undefined, "xxs", "xs", "sm", "md", "lg", "xl", "xxl", false] },
     minHeight: { control: "radio", options: [undefined, "screen"] },
   },
 };
-
 export default meta;
 type Story = StoryObj<typeof Container>;
 
 export const PageWidth: Story = {
   name: "Page width",
   render: () => (
-    <div style={shellStyle}>
-      <Container width="page">
-        <Stack paddingBlock="xl" gap="sm">
-          <Text role="heading" size="md">Page shell</Text>
-          <Text role="body" size="sm" color="muted">
-            Max width from <code>layout.pageMaxWidth</code> (56rem). Centered with token padding.
-          </Text>
-        </Stack>
+    <Shell>
+      <Container width="page" paddingBlock="xl" gap="sm">
+        <Heading as="h2" size="md">Page shell</Heading>
+        <Text color="neutral.muted">
+          Max width from <code>container.maxWidth.page</code> (56rem). Centered with token padding.
+        </Text>
       </Container>
-    </div>
+    </Shell>
   ),
 };
 
 export const ContentWidth: Story = {
   name: "Content width",
   render: () => (
-    <div style={shellStyle}>
-      <Container width="page">
-        <Stack paddingBlock="xl" gap="md">
-          <Text role="heading" size="sm">Inside page shell</Text>
-          <Container width="content" paddingInline={false} center={false}>
-            <Stack gap="sm">
-              <Text role="heading" size="md">Article column</Text>
-              <Text role="body" size="sm" color="muted">
-                Max width from <code>layout.contentMaxWidth</code> (40rem).
-              </Text>
-            </Stack>
-          </Container>
-        </Stack>
+    <Shell>
+      <Container width="page" paddingBlock="xl" gap="md">
+        <Heading as="h2" size="sm">Inside page shell</Heading>
+        <Container width="content" paddingInline={false} center={false} gap="sm">
+          <Heading as="h3" size="md">Article column</Heading>
+          <Text color="neutral.muted">
+            Max width from <code>container.maxWidth.content</code> (40rem).
+          </Text>
+        </Container>
       </Container>
-    </div>
+    </Shell>
   ),
 };
 
 export const FullWidth: Story = {
   name: "Full width",
   render: () => (
-    <div style={shellStyle}>
-      <Container width="full">
-        <Stack paddingBlock="lg">
-          <Text role="body" size="sm">
-            <code>width=&quot;full&quot;</code> — no max-width cap.
-          </Text>
-        </Stack>
+    <Shell>
+      <Container width="full" paddingBlock="lg">
+        <Text><code>width=&quot;full&quot;</code>: no max-width cap.</Text>
       </Container>
-    </div>
+    </Shell>
   ),
 };
 
 export const MinHeightScreen: Story = {
   name: "Min height screen",
   render: () => (
-    <div style={shellStyle}>
-      <Container width="page" minHeight="screen">
-        <Stack paddingBlock="lg" gap="sm">
-          <Text role="heading" size="sm">Full viewport shell</Text>
-          <Text role="body" size="sm" color="muted">
-            <code>minHeight=&quot;screen&quot;</code> sets <code>min-height: 100svh</code>.
-          </Text>
-        </Stack>
+    <Shell>
+      <Container width="page" minHeight="screen" paddingBlock="lg" gap="sm">
+        <Heading as="h2" size="sm">Full viewport shell</Heading>
+        <Text color="neutral.muted">
+          <code>minHeight=&quot;screen&quot;</code> sets <code>min-height: 100svh</code>.
+        </Text>
       </Container>
-    </div>
+    </Shell>
   ),
 };
 
 export const Playground: Story = {
-  args: {
-    width: "page",
-    center: true,
-    children: "Container content",
-  },
+  args: { width: "page", center: true, paddingBlock: "lg", children: "Container content" },
   render: (args) => (
-    <div style={shellStyle}>
-      <Container {...args}>
-        <Stack paddingBlock="lg">
-          <Text role="body" size="sm">{args.children}</Text>
-        </Stack>
-      </Container>
-    </div>
+    <Shell>
+      <Container {...args} />
+    </Shell>
   ),
 };

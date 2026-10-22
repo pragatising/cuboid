@@ -1,68 +1,60 @@
-.Link {
+/*
+ * Layout and states only. The colours arrive as element-scoped variables (--link-fg-rest, --link-fg-hover, --link-focus-*)
+ * set inline from the `link` and `focusRing` tokens (see Link.tsx and utils/cssVars.ts). Zero specificity (:where), so a
+ * consumer's own class can override any of it.
+ */
+:where(.Link) {
   cursor: pointer;
   transition: color 120ms ease;
 }
 
-/* In prose — inherit surrounding font metrics */
-.Link--inline {
+:where(.Link[data-variant="inline"]) {
   display: inline;
   font: inherit;
   letter-spacing: inherit;
 }
 
-.Link.Link--inline,
-.Link.Link--inline:visited {
-  color: var(--cube-link-inline-fg-rest);
-  text-decoration: underline;
-  text-underline-offset: 0.3em;
-}
-
-.Link.Link--inline:not([aria-disabled="true"]):hover {
-  color: var(--cube-link-inline-fg-hover);
-  text-decoration: underline;
-}
-
-/* Nav / footer / contact links */
-.Link--standalone {
+:where(.Link[data-variant="standalone"]) {
   display: inline-flex;
   align-items: center;
   gap: 0.25em;
-  font-family: var(--cube-typography-fontFamily-base);
-  font-size: var(--cube-typography-text-body-sm-fontSize);
-  font-weight: var(--cube-typography-text-body-sm-fontWeight);
-  line-height: var(--cube-typography-text-body-sm-lineHeight);
 }
 
-.Link.Link--standalone,
-.Link.Link--standalone:visited {
-  color: var(--cube-link-standalone-fg-rest);
+:where(.Link[data-variant="inline"], .Link[data-variant="standalone"], .Link[data-variant="inline"]:visited, .Link[data-variant="standalone"]:visited) {
+  color: var(--link-fg-rest);
   text-decoration: underline;
+}
+
+:where(.Link[data-variant="inline"]) {
+  text-underline-offset: 0.3em;
+}
+
+:where(.Link[data-variant="standalone"]) {
   text-underline-offset: 0.125em;
 }
 
-.Link.Link--standalone:not([aria-disabled="true"]):hover {
-  color: var(--cube-link-standalone-fg-hover);
-  text-decoration: underline;
+:where(.Link[data-variant="inline"]:not([aria-disabled="true"]):hover, .Link[data-variant="standalone"]:not([aria-disabled="true"]):hover) {
+  color: var(--link-fg-hover);
 }
 
-/* Composition wrapper — pill rows, icon+label rows without link chrome */
-.Link--inherit {
+/* Composition wrapper: pill rows, icon+label rows without link chrome */
+:where(.Link[data-variant="inherit"]) {
   display: inline-flex;
   align-items: center;
   color: inherit;
   text-decoration: none;
 }
 
-.Link--inherit:not([aria-disabled="true"]):hover {
-  color: inherit;
-  text-decoration: none;
+:where(.Link:focus-visible) {
+  outline: var(--link-focus-width) solid var(--link-focus-color);
+  outline-offset: var(--link-focus-offset);
 }
 
-.Link[aria-disabled="true"] {
+:where(.Link[aria-disabled="true"]) {
   cursor: not-allowed;
   opacity: 0.6;
 }
 
-.Link__externalIcon {
+.ExternalIcon {
   flex-shrink: 0;
 }

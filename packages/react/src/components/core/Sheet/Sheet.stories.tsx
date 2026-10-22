@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Title, Primary, Controls, Subtitle } from "@storybook/blocks";
 import { Button } from "../Button";
 import { Icon } from "../Icon";
 import { IconButton } from "../IconButton";
-import { Stack } from "../Stack";
+import { Box } from "../Box";
+import { Heading } from "../Heading";
 import { Text } from "../Text";
 import { Sheet, type SheetEdge } from "./Sheet";
 
@@ -39,13 +39,13 @@ function SheetDemo({
         aria-label={label}
       >
         <Sheet.Body>
-          <Stack gap="md">
-            <Text role="heading" size="sm">{label}</Text>
-            <Text role="body" size="sm" color="muted">
+          <Box gap="md">
+            <Heading as="h2" size="sm">{label}</Heading>
+            <Text size="md" color="neutral.muted">
               Simple sheet — content in <code>Sheet.Body</code> only.
             </Text>
             <Button onClick={() => setOpen(false)}>Close</Button>
-          </Stack>
+          </Box>
         </Sheet.Body>
       </Sheet>
     </>
@@ -66,20 +66,18 @@ function StickyHeaderDemo() {
       >
         <Sheet.Header>
           <span id="sheet-filters-title">
-            <Text role="heading" size="sm">Filters</Text>
+            <Heading as="h2" size="sm">Filters</Heading>
           </span>
-          <IconButton aria-label="Close" variant="ghost" size="sm" onClick={() => setOpen(false)}>
-            <Icon name="close" />
-          </IconButton>
+          <IconButton aria-label="Close" variant="ghost" size="sm" onClick={() => setOpen(false)} icon={<Icon name="close" />} />
         </Sheet.Header>
         <Sheet.Body>
-          <Stack gap="sm">
+          <Box gap="sm">
             {Array.from({ length: 24 }, (_, i) => (
-              <Text key={i} role="body" size="sm">
+              <Text key={i} size="md">
                 Filter option {i + 1}
               </Text>
             ))}
-          </Stack>
+          </Box>
         </Sheet.Body>
       </Sheet>
     </>
@@ -90,28 +88,8 @@ const meta: Meta<typeof Sheet> = {
   title: "Core/Sheet",
   component: Sheet,
   tags: ["autodocs"],
-  parameters: {
-    layout: "padded",
-    docs: {
-      page: () => (
-        <>
-          <Title />
-          <Subtitle>
-            Slide-in panel above <code>Overlay</code>. The shell has no padding — use{" "}
-            <code>Sheet.Header</code> (fixed) and <code>Sheet.Body</code> (scrollable). Edge
-            outline comes from <code>shadows.sheet</code>, not a border.{" "}
-            <code>roundedTop</code> applies to bottom sheets only. Left/right:{" "}
-            <code>width</code> (<code>sm</code> / <code>md</code> / <code>lg</code> or CSS length),{" "}
-            optional <code>resizable</code> via shared <code>ResizeHandle</code>.
-          </Subtitle>
-          <Primary />
-          <Controls />
-        </>
-      ),
-    },
-  },
+  parameters: { layout: "padded" },
   argTypes: {
-    theme: { control: false },
     style: { control: false },
     className: { control: false },
     onDismiss: { control: false },

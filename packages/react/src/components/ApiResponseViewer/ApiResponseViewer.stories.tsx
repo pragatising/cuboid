@@ -16,7 +16,6 @@ const meta: Meta<typeof ApiResponseViewer> = {
     body: { control: false },
     headers: { control: false },
     codeView: { control: false },
-    theme: { control: false },
   },
   parameters: {
     layout: "padded",

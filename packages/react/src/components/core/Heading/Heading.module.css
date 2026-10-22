@@ -1,0 +1,4 @@
+/* Font and colour are set inline from the `heading` tokens (ADR-04); only layout lives here. */
+.Heading {
+  margin: 0;
+}

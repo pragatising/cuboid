@@ -1,10 +1,9 @@
-.CodeSurface {
-  font-family: var(--cube-typography-text-code-block-fontFamily);
-  font-size: var(--cube-typography-text-code-block-fontSize);
-  line-height: var(--cube-typography-text-code-block-lineHeight);
-}
-
-.scroll {
+/*
+ * Layout and states only. CodeSurface.tsx sets the syntax colours, row backgrounds, surface colours and spacings as
+ * element-scoped variables (--code-surface-*; see syntaxColors.ts) from the `syntax`, `codeBlock` and colour tokens, and
+ * the font inline from `text.codeBlock`. Zero specificity (:where), so a consumer's own class can override any of it.
+ */
+:where(.scroll) {
   overscroll-behavior: none;
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 0, 0, 0.18) transparent;
@@ -13,254 +12,249 @@
   overflow-y: visible;
 }
 
-.scrollConstrained {
+:where(.scrollConstrained) {
   overflow-y: auto;
 }
 
-.row {
+:where(.row) {
   flex-shrink: 0;
   height: 1.625rem;
 }
 
-.row:hover .gutter,
-.row:hover .content {
-  background: var(--cube-color-syntax-row-hover-bg);
+:where(.row:hover .gutter, .row:hover .content) {
+  background: var(--code-surface-row-hover-bg);
 }
 
-.rowCollapsed .gutter,
-.rowCollapsed .content {
-  background: var(--cube-color-syntax-collapsed-row-bg);
+:where(.rowCollapsed .gutter, .rowCollapsed .content) {
+  background: var(--code-surface-collapsed-row-bg);
 }
 
-.rowCollapsed:hover .gutter,
-.rowCollapsed:hover .content {
-  background: var(--cube-color-syntax-row-hover-bg);
+:where(.rowCollapsed:hover .gutter, .rowCollapsed:hover .content) {
+  background: var(--code-surface-row-hover-bg);
 }
 
-.rowWatched .gutter,
-.rowWatched .content {
-  background: var(--cube-color-syntax-watch-row-bg);
+:where(.rowWatched .gutter, .rowWatched .content) {
+  background: var(--code-surface-watch-row-bg);
 }
 
-.rowWatched:hover .gutter,
-.rowWatched:hover .content {
-  background: var(--cube-color-syntax-watch-row-bg);
+:where(.rowWatched:hover .gutter, .rowWatched:hover .content) {
+  background: var(--code-surface-watch-row-bg);
 }
 
-.gutter {
+:where(.gutter) {
   flex-shrink: 0;
   position: sticky;
   left: 0;
   z-index: 1;
   user-select: none;
   min-width: 2.4rem;
-  padding-left: var(--cube-space-12px);
-  padding-right: var(--cube-space-10px);
-  border-right: var(--cube-sizes-borderWidth-thin) solid
-    var(--cube-color-border-gray-alpha-2);
-  background: var(--cube-color-bg-gray-light-1);
+  padding-left: var(--code-surface-pad12);
+  padding-right: var(--code-surface-pad10);
+  border-right: var(--code-surface-border-width) solid
+    var(--code-surface-gutter-border);
+  background: var(--code-surface-bg);
   transition: background-color 0.1s ease;
 }
 
-.lineNumber {
+:where(.lineNumber) {
   display: inline-block;
   flex: 1;
   min-width: 2ch;
   text-align: right;
-  padding-right: var(--cube-space-8px);
+  padding-right: var(--code-surface-pad8);
   font-variant-numeric: tabular-nums;
-  color: var(--cube-color-text-muted);
+  color: var(--code-surface-muted);
 }
 
-.watchBtn {
+:where(.watchBtn) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   align-self: stretch;
   flex-shrink: 0;
   width: 0.875rem;
-  margin-right: var(--cube-space-6px);
+  margin-right: var(--code-surface-pad6);
   padding: 0;
   border: none;
   background: transparent;
   cursor: pointer;
 }
 
-.watchDot {
+:where(.watchDot) {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--cube-color-syntax-watch-mark-hover);
+  background: var(--code-surface-watch-mark-hover);
   opacity: 0;
   transition:
     opacity 0.12s ease,
     background-color 0.12s ease;
 }
 
-.gutterWithWatch:hover .watchBtn:not(.watchBtnActive) .watchDot {
+:where(.gutterWithWatch:hover .watchBtn:not(.watchBtnActive) .watchDot) {
   opacity: 0.7;
 }
 
-.watchBtnActive .watchDot {
-  background: var(--cube-color-syntax-watch-mark);
+:where(.watchBtnActive .watchDot) {
+  background: var(--code-surface-watch-mark);
   opacity: 1;
 }
 
-.collapseBtn {
+:where(.collapseBtn) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   align-self: stretch;
   flex-shrink: 0;
   width: 1.25rem;
-  margin-left: var(--cube-space-6px);
+  margin-left: var(--code-surface-pad6);
   background: none;
   border: none;
   padding: 0;
   cursor: pointer;
-  color: var(--cube-color-text-muted);
+  color: var(--code-surface-muted);
 }
 
-.collapseSpacer {
+:where(.collapseSpacer) {
   display: inline-block;
   flex-shrink: 0;
   width: 1.25rem;
-  margin-left: var(--cube-space-6px);
+  margin-left: var(--code-surface-pad6);
 }
 
-.content {
+:where(.content) {
   flex: 1;
   min-width: 0;
-  padding-right: var(--cube-space-12px);
+  padding-right: var(--code-surface-pad12);
   padding-left: calc(
-    var(--cube-space-12px) + var(--code-line-depth, 0) *
+    var(--code-surface-pad12) + var(--code-line-depth, 0) *
       var(--code-surface-indent, 1.5rem)
   );
-  background: var(--cube-color-bg-gray-light-1);
+  background: var(--code-surface-bg);
   transition: background-color 0.1s ease;
 }
 
-.token {
+:where(.token) {
   white-space: pre;
 }
 
-.tokenLink {
+:where(.tokenLink) {
   text-decoration: none;
   cursor: pointer;
 }
 
-.tokenLink:hover {
+:where(.tokenLink:hover) {
   text-decoration: underline;
   text-underline-offset: 0.125em;
 }
 
-.tokenOperator {
-  color: var(--cube-color-text-muted);
-  padding-inline: var(--cube-space-6px);
+:where(.tokenOperator) {
+  color: var(--code-surface-muted);
+  padding-inline: var(--code-surface-pad6);
 }
 
-.tokenKey {
-  color: var(--cube-color-syntax-key);
+:where(.tokenKey) {
+  color: var(--code-surface-syntax-key);
 }
 
-.tokenString {
-  color: var(--cube-color-syntax-string);
+:where(.tokenString) {
+  color: var(--code-surface-syntax-string);
 }
 
-.tokenStringUrl {
-  color: var(--cube-color-syntax-string-url);
+:where(.tokenStringUrl) {
+  color: var(--code-surface-syntax-string-url);
 }
 
-.tokenStringEmail {
-  color: var(--cube-color-syntax-string-email);
+:where(.tokenStringEmail) {
+  color: var(--code-surface-syntax-string-email);
 }
 
-.tokenStringUuid {
-  color: var(--cube-color-syntax-string-uuid);
+:where(.tokenStringUuid) {
+  color: var(--code-surface-syntax-string-uuid);
 }
 
-.tokenNumber {
-  color: var(--cube-color-syntax-number-literal);
+:where(.tokenNumber) {
+  color: var(--code-surface-syntax-number-literal);
 }
 
-.tokenBoolean {
-  color: var(--cube-color-syntax-boolean-literal);
+:where(.tokenBoolean) {
+  color: var(--code-surface-syntax-boolean-literal);
 }
 
-.tokenNull {
-  color: var(--cube-color-syntax-null-literal);
+:where(.tokenNull) {
+  color: var(--code-surface-syntax-null-literal);
 }
 
-.tokenBracket {
-  color: var(--cube-color-syntax-bracket);
+:where(.tokenBracket) {
+  color: var(--code-surface-syntax-bracket);
 }
 
 /* Alternating nested delimiter colours (even / odd nesting level). */
-.tokenBracketDepth0 {
-  color: var(--cube-color-syntax-bracket);
+:where(.tokenBracketDepth0) {
+  color: var(--code-surface-syntax-bracket);
 }
 
-.tokenBracketDepth1 {
-  color: var(--cube-color-syntax-bracket-nested);
+:where(.tokenBracketDepth1) {
+  color: var(--code-surface-syntax-bracket-nested);
 }
 
-.tokenMuted {
-  color: var(--cube-color-text-muted);
+:where(.tokenMuted) {
+  color: var(--code-surface-muted);
 }
 
-.tokenPlain {
-  color: var(--cube-color-text-default);
+:where(.tokenPlain) {
+  color: var(--code-surface-plain);
 }
 
-.tokenComment {
-  color: var(--cube-color-syntax-comment);
+:where(.tokenComment) {
+  color: var(--code-surface-syntax-comment);
 }
 
-.tokenKeyword {
-  color: var(--cube-color-syntax-keyword);
+:where(.tokenKeyword) {
+  color: var(--code-surface-syntax-keyword);
 }
 
-.tokenEntityTag {
-  color: var(--cube-color-syntax-entity-tag);
+:where(.tokenEntityTag) {
+  color: var(--code-surface-syntax-entity-tag);
 }
 
-.tokenStringRegexp {
-  color: var(--cube-color-syntax-string-regexp);
+:where(.tokenStringRegexp) {
+  color: var(--code-surface-syntax-string-regexp);
 }
 
-.tokenFunctionCall {
-  color: var(--cube-color-syntax-function-call);
+:where(.tokenFunctionCall) {
+  color: var(--code-surface-syntax-function-call);
 }
 
-.tokenTypeName {
-  color: var(--cube-color-syntax-type-name);
+:where(.tokenTypeName) {
+  color: var(--code-surface-syntax-type-name);
 }
 
-.tokenPropertyAccess {
-  color: var(--cube-color-syntax-property-access);
+:where(.tokenPropertyAccess) {
+  color: var(--code-surface-syntax-property-access);
 }
 
-.tokenAttributeName {
-  color: var(--cube-color-syntax-attribute-name);
+:where(.tokenAttributeName) {
+  color: var(--code-surface-syntax-attribute-name);
 }
 
-.tokenCssSelector {
-  color: var(--cube-color-syntax-css-selector);
+:where(.tokenCssSelector) {
+  color: var(--code-surface-syntax-css-selector);
 }
 
-.tokenCssProperty {
-  color: var(--cube-color-syntax-css-property);
+:where(.tokenCssProperty) {
+  color: var(--code-surface-syntax-css-property);
 }
 
-.tokenCssValue {
-  color: var(--cube-color-syntax-css-value);
+:where(.tokenCssValue) {
+  color: var(--code-surface-syntax-css-value);
 }
 
-.virtualWindow {
+:where(.virtualWindow) {
   position: relative;
 }
 
-.virtualSlice {
+:where(.virtualSlice) {
   position: absolute;
   left: 0;
   right: 0;

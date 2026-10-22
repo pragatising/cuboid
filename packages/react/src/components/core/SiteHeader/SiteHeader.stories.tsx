@@ -1,6 +1,5 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Title, Primary, Controls, Subtitle } from "@storybook/blocks";
 import { Button } from "../Button";
 import { Breadcrumbs } from "../Breadcrumb";
 import { Icon } from "../Icon";
@@ -11,74 +10,7 @@ const meta: Meta<typeof SiteHeader> = {
   title: "Core/SiteHeader",
   component: SiteHeader,
   tags: ["autodocs"],
-  parameters: {
-    layout: "fullscreen",
-    docs: {
-      page: () => (
-        <>
-          <Title />
-          <Subtitle>
-            Shell only — pass app-specific content via <code>leading</code> and{" "}
-            <code>trailing</code> slots. Tokens from{" "}
-            <code>tokens/functional/components/site-header/</code>.
-          </Subtitle>
-
-          <div className="cube-docs-section">
-            <h3 className="cube-docs-section__title">With breadcrumbs</h3>
-            <SiteHeader
-              leading={
-                <>
-                  <IconButton aria-label="Open menu" variant="ghost" size="sm">
-                    <Icon name="menu" />
-                  </IconButton>
-                  <Breadcrumbs
-                    items={[
-                      { label: "Dashboard", href: "#dashboard" },
-                      { label: "Customers", href: "#customers" },
-                      { label: "Details" },
-                    ]}
-                  />
-                </>
-              }
-              trailing={
-                <>
-                  <IconButton aria-label="Search" variant="ghost" size="sm">
-                    <Icon name="search" />
-                  </IconButton>
-                  <Button size="sm" variant="secondary">
-                    New
-                  </Button>
-                </>
-              }
-            />
-          </div>
-
-          <div className="cube-docs-section">
-            <h3 className="cube-docs-section__title">With back + divider</h3>
-            <SiteHeader
-              leading={
-                <>
-                  <IconButton aria-label="Go back" variant="ghost" size="sm">
-                    <Icon name="arrow_back" />
-                  </IconButton>
-                  <SiteHeaderDivider />
-                  <Breadcrumbs items={[{ label: "Record details" }]} />
-                </>
-              }
-              trailing={
-                <IconButton aria-label="More actions" variant="ghost" size="sm">
-                  <Icon name="menu" />
-                </IconButton>
-              }
-            />
-          </div>
-
-          <Primary />
-          <Controls />
-        </>
-      ),
-    },
-  },
+  parameters: { layout: "fullscreen" },
 };
 export default meta;
 type Story = StoryObj<typeof SiteHeader>;
@@ -89,9 +21,7 @@ export const Playground: Story = {
       {...args}
       leading={
         <>
-          <IconButton aria-label="Open menu" variant="ghost" size="sm">
-            <Icon name="menu" />
-          </IconButton>
+          <IconButton aria-label="Open menu" variant="ghost" size="sm" icon={<Icon name="menu" />} />
           <Breadcrumbs items={[{ label: "Section" }, { label: "Page" }]} />
         </>
       }
@@ -100,6 +30,48 @@ export const Playground: Story = {
           Action
         </Button>
       }
+    />
+  ),
+};
+
+export const WithBreadcrumbs: Story = {
+  name: "With breadcrumbs",
+  render: () => (
+    <SiteHeader
+      leading={
+        <>
+          <IconButton aria-label="Open menu" variant="ghost" size="sm" icon={<Icon name="menu" />} />
+          <Breadcrumbs
+            items={[
+              { label: "Dashboard", href: "#dashboard" },
+              { label: "Customers", href: "#customers" },
+              { label: "Details" },
+            ]}
+          />
+        </>
+      }
+      trailing={
+        <>
+          <IconButton aria-label="Search" variant="ghost" size="sm" icon={<Icon name="search" />} />
+          <Button size="sm" variant="secondary">New</Button>
+        </>
+      }
+    />
+  ),
+};
+
+export const WithBackAndDivider: Story = {
+  name: "With back + divider",
+  render: () => (
+    <SiteHeader
+      leading={
+        <>
+          <IconButton aria-label="Go back" variant="ghost" size="sm" icon={<Icon name="arrow_back" />} />
+          <SiteHeaderDivider />
+          <Breadcrumbs items={[{ label: "Record details" }]} />
+        </>
+      }
+      trailing={<IconButton aria-label="More actions" variant="ghost" size="sm" icon={<Icon name="menu" />} />}
     />
   ),
 };

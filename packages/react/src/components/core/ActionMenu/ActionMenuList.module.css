@@ -1,4 +1,4 @@
-.ActionMenuList {
+:where(.ActionMenuList) {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -6,34 +6,34 @@
   box-sizing: border-box;
 }
 
-.ListItems {
+:where(.ListItems) {
   display: flex;
   flex-direction: column;
-  gap: var(--cube-actionMenu-list-item-gap);
-  padding: var(--cube-actionMenu-list-padding-block) var(--cube-actionMenu-list-padding-inline);
+  gap: var(--action-menu-sizes-list-item-gap);
+  padding: var(--action-menu-sizes-list-padding-block) var(--action-menu-sizes-list-padding-inline);
 }
 
-.Header {
-  padding: var(--cube-actionMenu-header-padding-block-start)
-    var(--cube-actionMenu-header-padding-inline)
-    var(--cube-actionMenu-header-padding-block-end);
+:where(.Header) {
+  padding: var(--action-menu-sizes-header-padding-block-start)
+    var(--action-menu-sizes-header-padding-inline)
+    var(--action-menu-sizes-header-padding-block-end);
 }
 
-.HeaderDivider {
+:where(.HeaderDivider) {
   height: 1px;
-  margin-top: var(--cube-actionMenu-header-padding-block-end);
-  background-color: var(--cube-actionMenu-divider-fg);
+  margin-top: var(--action-menu-sizes-header-padding-block-end);
+  background-color: var(--action-menu-divider-fg-color);
 }
 
-.Footer {
-  padding: var(--cube-actionMenu-footer-padding);
-  border-top: 1px solid var(--cube-actionMenu-divider-fg);
+:where(.Footer) {
+  padding: var(--action-menu-sizes-footer-padding);
+  border-top: 1px solid var(--action-menu-divider-fg-color);
 }
 
-.Section {
+:where(.Section) {
   display: flex;
   flex-direction: column;
-  gap: var(--cube-actionMenu-list-item-gap);
+  gap: var(--action-menu-sizes-list-item-gap);
 }
 
 /*
@@ -42,25 +42,23 @@
  * so section groups breathe more than rows within a section.
  * Future: `ActionMenuList.Divider` can replace/add to this between groups.
  */
-.ListItems > * + .Section {
+:where(.ListItems > * + .Section) {
   margin-block-start: calc(
-    var(--cube-actionMenu-list-section-gap) - var(--cube-actionMenu-list-item-gap)
+    var(--action-menu-sizes-list-section-gap) - var(--action-menu-sizes-list-item-gap)
   );
 }
 
-.SectionLabel {
-  padding: var(--cube-actionMenu-section-padding-block)
-    var(--cube-actionMenu-section-padding-inline);
-  font-family: var(--cube-typography-fontFamily-base);
-  font-size: var(--cube-typography-text-body-xs-fontSize);
+:where(.SectionLabel) {
+  padding: var(--action-menu-sizes-section-padding-block)
+    var(--action-menu-sizes-section-padding-inline);
+  font: var(--action-menu-subtext-font);
   font-weight: 600;
-  line-height: var(--cube-typography-text-body-xs-lineHeight);
-  color: var(--cube-actionMenu-section-fg);
+  color: var(--action-menu-section-fg-color);
   white-space: nowrap;
 }
 
-.SectionItems {
+:where(.SectionItems) {
   display: flex;
   flex-direction: column;
-  gap: var(--cube-actionMenu-list-item-gap);
+  gap: var(--action-menu-sizes-list-item-gap);
 }

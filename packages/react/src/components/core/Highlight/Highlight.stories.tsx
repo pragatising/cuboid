@@ -1,64 +1,35 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Title, Primary, Controls, Subtitle } from "@storybook/blocks";
-import type { HighlightColor } from "../../../theme/types";
-import { tokenOutput } from "../../../theme/tokenOutput";
-import { Highlight } from "./Highlight";
+import tokens from "@sragatiping/cuboid-primitives";
+import { Highlight, type HighlightColor } from "./Highlight";
 import { Text } from "../Text";
 
-const HIGHLIGHT_COLORS = Object.keys(tokenOutput.highlightColors) as HighlightColor[];
+const HIGHLIGHT_COLORS = Object.entries(tokens.light.highlight)
+  .filter(([, value]) => typeof value === "object")
+  .map(([key]) => key) as HighlightColor[];
 
 const meta: Meta<typeof Highlight> = {
   title: "Core/Highlight",
   component: Highlight,
   tags: ["autodocs"],
-  parameters: {
-    layout: "padded",
-    docs: {
-      page: () => (
-        <>
-          <Title />
-          <Subtitle>
-            Inline marker text from Figma <code>HighlightedText</code> — token colors from{" "}
-            <code>color.highlight.*</code>. Inherits font from parent; use inside{" "}
-            <code>Text</code> body copy.
-          </Subtitle>
-
-          <div className="cube-docs-section">
-            <h3 className="cube-docs-section__title">In prose</h3>
-            <Text role="body" size="sm">
-              Full-stack engineer working on{" "}
-              <Highlight color="yellow">billing and invoicing</Highlight> at Acme Corp.
-            </Text>
-          </div>
-
-          <Primary />
-          <Controls />
-        </>
-      ),
-    },
-  },
+  parameters: { layout: "padded" },
   argTypes: {
     color: { control: "select", options: HIGHLIGHT_COLORS },
   },
 };
-
 export default meta;
 type Story = StoryObj<typeof Highlight>;
 
 export const Default: Story = {
-  args: {
-    color: "yellow",
-    children: "text",
-  },
+  args: { color: "yellow", children: "text" },
 };
 
 export const AllColors: Story = {
   render: () => (
-    <Text role="body" size="sm">
+    <Text>
       {HIGHLIGHT_COLORS.map((color) => (
         <React.Fragment key={color}>
-          <Highlight color={color}>text</Highlight>{" "}
+          <Highlight color={color}>{color}</Highlight>{" "}
         </React.Fragment>
       ))}
     </Text>
@@ -67,7 +38,7 @@ export const AllColors: Story = {
 
 export const InSentence: Story = {
   render: () => (
-    <Text role="body" size="sm">
+    <Text>
       Previously at <Highlight color="neutral">Acme Inc</Highlight>, building{" "}
       <Highlight color="blue">search infrastructure</Highlight> workflows.
     </Text>

@@ -7,7 +7,6 @@ import React, {
 } from "react";
 import { Popover } from "../Popover";
 import type { PopoverElevation, PopoverPlacement } from "../Popover";
-import type { CubeTheme } from "../../../theme/types";
 import { ActionMenuList } from "./ActionMenuList";
 import type { ActionMenuListProps } from "./ActionMenuList";
 import {
@@ -45,7 +44,6 @@ export interface ActionMenuProps {
   "aria-label"?: string;
   /** id of an element that labels the menu. */
   "aria-labelledby"?: string;
-  theme?: CubeTheme;
   className?: string;
   listClassName?: string;
 }
@@ -85,7 +83,6 @@ export function ActionMenu({
   maxHeight,
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
-  theme,
   className,
   listClassName,
 }: ActionMenuProps) {
@@ -148,7 +145,6 @@ export function ActionMenu({
 
   const listProps = {
     ref: listRef,
-    theme,
     className: listClassName,
     "aria-label": ariaLabel,
     "aria-labelledby": ariaLabelledBy,
@@ -162,7 +158,6 @@ export function ActionMenu({
           listRef,
           (children.props as React.RefAttributes<HTMLDivElement>).ref
         ),
-        theme: theme ?? children.props.theme,
         className: [listClassName, children.props.className].filter(Boolean).join(" ") || undefined,
         "aria-label": ariaLabel ?? children.props["aria-label"],
         "aria-labelledby": ariaLabelledBy ?? children.props["aria-labelledby"],
@@ -190,7 +185,6 @@ export function ActionMenu({
       panelRole={false}
       triggerHasPopup="menu"
       returnFocusOnClose
-      theme={theme}
       className={className}
     >
       {menuContent}

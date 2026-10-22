@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import { Box } from "../../core/Box";
 import { Icon } from "../../core/Icon/Icon";
-import { Stack } from "../../core/Stack";
 import { Tooltip } from "../../core/Tooltip/Tooltip";
-import { useTheme } from "../../../theme/ThemeContext";
-import { codeBlockTypographyCubeOverride, syntaxColorsCubeOverride } from "../../../theme/themeCubeOverride";
-import type { CubeTheme } from "../../../theme/types";
+import { useTokens } from "../../../mode";
+import { codeSurfaceVars } from "../syntaxColors";
 import {
   CODE_SURFACE_OVERSCAN,
   CODE_SURFACE_ROW_HEIGHT_PX,
@@ -38,7 +36,7 @@ export interface CodeSurfaceProps {
   gutterLineCount: number;
   /**
    * Optional per-token colour override. When omitted, syntax colours come from
-   * theme CSS variables via {@link CodeSurface.module.css}.
+   * the `syntax` tokens via {@link CodeSurface.module.css}.
    */
   tokenColor?: (type: string) => string;
   onToggleCollapse?: (collapseKey: string) => void;
@@ -62,7 +60,6 @@ export interface CodeSurfaceProps {
   defaultWatchlist?: readonly number[];
   /** Called when the user toggles a watchlist marker in the gutter. Enables watchlist UI. */
   onWatchlistChange?: (watchlist: Set<number>) => void;
-  theme?: CubeTheme;
   /**
    * `embedded` omits border and radius — use when nesting inside a parent shell
    * (e.g. {@link ApiResponseViewer}).
@@ -141,13 +138,12 @@ export function CodeSurface({
   watchlist: watchlistProp,
   defaultWatchlist,
   onWatchlistChange,
-  theme,
   surfaceVariant = "default",
   "aria-label": ariaLabel,
 }: CodeSurfaceProps) {
-  const tokens = useTheme(theme);
+  const tokens = useTokens();
 
-  const scrollRef = useRef<HTMLElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollTop, setScrollTop] = useState(0);
   const [viewportHeight, setViewportHeight] = useState(0);
 
@@ -185,20 +181,16 @@ export function CodeSurface({
 
   const frameStyle = useMemo(() => {
     const style: React.CSSProperties = {
-      ...(theme
-        ? {
-            ...syntaxColorsCubeOverride(tokens),
-            ...codeBlockTypographyCubeOverride(tokens),
-          }
-        : {}),
+      font: tokens.text.codeBlock.shorthand,
+      ...codeSurfaceVars(tokens),
       ...(indent != null
         ? ({ "--code-surface-indent": indent } as React.CSSProperties)
         : {}),
       ...(height != null ? { height } : {}),
       ...(maxHeight != null ? { maxHeight } : {}),
     };
-    return Object.keys(style).length > 0 ? style : undefined;
-  }, [theme, tokens, indent, height, maxHeight]);
+    return style;
+  }, [tokens, indent, height, maxHeight]);
 
   useEffect(() => {
     if (document.getElementById(CODE_SURFACE_SCROLL_STYLE_ID)) return;
@@ -249,17 +241,15 @@ export function CodeSurface({
     const isWatched = watchedLines.has(line.lineNumber);
 
     return (
-      <Stack
+      <Box
         key={absoluteIdx}
-        direction="horizontal"
-        align="stretch"
-        gap="none"
+        flexDirection="row"
+        alignItems="stretch"
         className={rowClassName(line, isWatched)}
       >
         <Box
-          direction="horizontal"
-          align="center"
-          gap="none"
+          flexDirection="row"
+          alignItems="center"
           className={
             watchlistEnabled
               ? `${styles.gutter} ${styles.gutterWithWatch}`
@@ -273,7 +263,6 @@ export function CodeSurface({
               }
               placement="right"
               compact
-              theme={theme}
             >
               <button
                 type="button"
@@ -320,9 +309,8 @@ export function CodeSurface({
         </Box>
 
         <Box
-          direction="horizontal"
-          align="center"
-          gap="none"
+          flexDirection="row"
+          alignItems="center"
           className={styles.content}
           style={
             { "--code-line-depth": line.depth } as React.CSSProperties
@@ -334,7 +322,7 @@ export function CodeSurface({
             </React.Fragment>
           ))}
         </Box>
-      </Stack>
+      </Box>
     );
   }
 
@@ -346,19 +334,16 @@ export function CodeSurface({
     <Box
       role="region"
       aria-label={ariaLabel ?? "Code"}
-      borderColor={surfaceVariant === "embedded" ? undefined : "border.gray.2"}
+      borderColor={surfaceVariant === "embedded" ? undefined : "translucent.2"}
       borderRadius={surfaceVariant === "embedded" ? undefined : "md"}
       overflow="hidden"
-      direction="vertical"
-      gap="none"
       className={styles.CodeSurface}
       style={frameStyle}
-      theme={theme}
     >
       <Box
         ref={scrollRef}
-        grow
-        background="bg.gray.light.1"
+        flexGrow={1}
+        backgroundColor="canvas.subtle"
         className={`${CODE_SURFACE_SCROLL_CLASS} ${styles.scroll} ${
           isConstrained ? styles.scrollConstrained : ""
         }`}
@@ -372,11 +357,9 @@ export function CodeSurface({
           <Box
             className={styles.virtualWindow}
             style={{ height: totalContentHeight }}
-            gap="none"
           >
             <Box
               className={styles.virtualSlice}
-              gap="none"
               style={{ top: startIdx * CODE_SURFACE_ROW_HEIGHT_PX }}
             >
               {rowList}

@@ -1,69 +1,27 @@
-/* Layout + typography. Colors from components.css ([data-cube-pill]) or --cube-pill-active-* when themed. */
-.cube-Pill {
+/* Layout only. Colours, border width, font, padding, radius and height come from the `pill` tokens, set inline by Pill.tsx. */
+.Pill {
   appearance: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
   margin: 0;
-  border-width: var(--cube-pill-borderWidth, var(--cube-sizes-borderWidth-thin));
   border-style: solid;
-  font-family: var(--cube-typography-fontFamily-base);
-  font-size: var(--cube-typography-text-body-xs-fontSize, 0.75rem);
-  font-weight: 500;
-  line-height: 1;
   letter-spacing: inherit;
   text-decoration: none;
   white-space: nowrap;
   cursor: default;
-  gap: var(--cube-pill-gap);
-  height: var(--cube-pill-height);
-  min-height: var(--cube-pill-height);
-  max-height: var(--cube-pill-height);
-  padding: var(--cube-pill-paddingBlock) var(--cube-pill-paddingInline);
-  border-radius: var(--cube-pill-borderRadius);
 }
 
-.cube-Pill--bodyXs {
-  font-size: var(--cube-typography-text-body-xs-fontSize, 0.75rem);
-  line-height: 1;
-}
-
-.cube-Pill--bodySm {
-  font-size: var(--cube-typography-text-body-sm-fontSize, 0.875rem);
-  line-height: 1;
-}
-
-.cube-Pill--bodyMd {
-  font-size: var(--cube-typography-text-body-md-fontSize, 1.25rem);
-  line-height: 1;
-}
-
-a.cube-Pill,
-button.cube-Pill {
+:where(a.Pill, button.Pill) {
   cursor: pointer;
 }
 
-.cube-Pill:disabled,
-.cube-Pill[aria-disabled="true"] {
+:where(.Pill:disabled, .Pill[aria-disabled="true"]) {
   cursor: not-allowed;
 }
 
-/* Theme prop override */
-.cube-Pill--themed {
-  color: var(--cube-pill-active-fg);
-  background-color: var(--cube-pill-active-bg);
-  border-color: var(--cube-pill-active-border);
-}
-
-a.cube-Pill--themed:visited {
-  color: var(--cube-pill-active-fg);
-  background-color: var(--cube-pill-active-bg);
-  border-color: var(--cube-pill-active-border);
-}
-
-.cube-Pill__leadingVisual,
-.cube-Pill__trailingVisual {
+.Visual {
   display: inline-flex;
   align-items: center;
   flex-shrink: 0;

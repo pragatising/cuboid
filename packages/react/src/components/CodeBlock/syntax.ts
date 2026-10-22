@@ -1,10 +1,10 @@
-import type { SyntaxColors } from "../../theme/types";
+import type { SyntaxColors, SyntaxKey } from "./syntaxColors";
 import styles from "./CodeSurface/CodeSurface.module.css";
 import type { SurfaceLine, SurfaceToken } from "./types";
 
-// ── Token type → theme syntax key (globals.json color.syntax) ───────────────
+// ── Token type → syntax colour key (see syntaxColors.ts) ────────────────────
 
-export type JsonSyntaxKey = keyof SyntaxColors | "foregroundMuted";
+export type JsonSyntaxKey = SyntaxKey | "foregroundMuted";
 
 export const JSON_SYNTAX_TOKEN = {
   key: "key",
@@ -27,7 +27,7 @@ export function syntaxCssVar(
   key: Exclude<JsonSyntaxKey, "foregroundMuted">,
 ): string {
   const seg = key.replace(/[A-Z]/g, (ch) => `-${ch.toLowerCase()}`);
-  return `--cube-color-syntax-${seg}`;
+  return `--code-surface-syntax-${seg}`;
 }
 
 /** Inline colour fallback when `tokenColor` prop is used (default path uses CSS classes). */

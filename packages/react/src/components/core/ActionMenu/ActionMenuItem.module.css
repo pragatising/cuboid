@@ -1,7 +1,7 @@
-.ActionMenuItem {
+:where(.ActionMenuItem) {
   display: flex;
   width: 100%;
-  min-height: var(--cube-actionMenu-item-min-height);
+  min-height: var(--action-menu-sizes-item-min-height);
   margin: 0;
   padding: 0;
   border: none;
@@ -12,141 +12,134 @@
   color: inherit;
 }
 
-.ActionMenuItem:disabled {
+:where(.ActionMenuItem:disabled) {
   cursor: not-allowed;
 }
 
-.ActionMenuItemInner {
+:where(.ActionMenuItemInner) {
   display: flex;
   flex: 1;
   align-items: flex-start;
-  gap: var(--cube-actionMenu-item-slot-gap);
+  gap: var(--action-menu-sizes-item-slot-gap);
   box-sizing: border-box;
   width: 100%;
   min-width: 0;
-  padding: var(--cube-actionMenu-item-padding-block) var(--cube-actionMenu-item-padding-inline);
-  border-radius: var(--cube-actionMenu-item-border-radius);
-  background-color: var(--cube-actionMenu-item-bg-rest);
-  color: var(--cube-actionMenu-item-fg-rest);
+  padding: var(--action-menu-sizes-item-padding-block) var(--action-menu-sizes-item-padding-inline);
+  border-radius: var(--action-menu-sizes-item-border-radius);
+  background-color: var(--action-menu-item-bg-color-rest);
+  color: var(--action-menu-item-fg-color-rest);
   overflow: hidden;
   transition: background-color 120ms ease, color 120ms ease, box-shadow 120ms ease;
 }
 
 /* Hover — unselected rows only (selected has its own track). */
-.ActionMenuItem:not(:disabled):not(.ActionMenuItem--selected):hover .ActionMenuItemInner {
-  background-color: var(--cube-actionMenu-item-bg-hover);
+:where(.ActionMenuItem:not(:disabled):not(.ActionMenuItem--selected):hover .ActionMenuItemInner) {
+  background-color: var(--action-menu-item-bg-color-hover);
 }
 
 /* Pressed / active — momentary pointer-down (Figma `pressed`). */
-.ActionMenuItem:not(:disabled):not(.ActionMenuItem--selected):active .ActionMenuItemInner {
-  background-color: var(--cube-actionMenu-item-bg-pressed);
-  color: var(--cube-actionMenu-item-fg-pressed);
+:where(.ActionMenuItem:not(:disabled):not(.ActionMenuItem--selected):active .ActionMenuItemInner) {
+  background-color: var(--action-menu-item-bg-color-pressed);
+  color: var(--action-menu-item-fg-color-pressed);
 }
 
 /* Selected — current choice (Figma `selected?=true`, persistent). */
-.ActionMenuItem--selected:not(:disabled) .ActionMenuItemInner {
-  background-color: var(--cube-actionMenu-item-bg-selected-rest);
-  color: var(--cube-actionMenu-item-fg-selected);
+:where(.ActionMenuItem--selected:not(:disabled) .ActionMenuItemInner) {
+  background-color: var(--action-menu-item-bg-color-selected-rest);
+  color: var(--action-menu-item-fg-color-selected);
 }
 
-.ActionMenuItem--selected:not(:disabled):hover .ActionMenuItemInner {
-  background-color: var(--cube-actionMenu-item-bg-selected-pressed);
+:where(.ActionMenuItem--selected:not(:disabled):hover .ActionMenuItemInner) {
+  background-color: var(--action-menu-item-bg-color-selected-pressed);
 }
 
-.ActionMenuItem--selected:not(:disabled):active .ActionMenuItemInner {
-  background-color: var(--cube-actionMenu-item-bg-selected-pressed);
+:where(.ActionMenuItem--selected:not(:disabled):active .ActionMenuItemInner) {
+  background-color: var(--action-menu-item-bg-color-selected-pressed);
 }
 
-.ActionMenuItem:disabled .ActionMenuItemInner {
-  background-color: var(--cube-actionMenu-item-bg-disabled);
-  color: var(--cube-actionMenu-item-fg-disabled);
+:where(.ActionMenuItem:disabled .ActionMenuItemInner) {
+  background-color: var(--action-menu-item-bg-color-disabled);
+  color: var(--action-menu-item-fg-color-disabled);
 }
 
-.ActionMenuItem:focus {
+:where(.ActionMenuItem:focus) {
   outline: none;
 }
 
-.ActionMenuItem:focus-visible .ActionMenuItemInner {
+:where(.ActionMenuItem:focus-visible .ActionMenuItemInner) {
   box-shadow:
-    0 0 0 1px var(--cube-actionMenu-item-bg-rest, #fff),
-    0 0 0 var(--cube-focus-ring-width) var(--cube-color-focus);
+    0 0 0 1px var(--action-menu-item-bg-color-rest, #fff),
+    0 0 0 var(--action-menu-focus-width) var(--action-menu-focus-color);
 }
 
-.ActionMenuItem--selected:focus-visible .ActionMenuItemInner {
+:where(.ActionMenuItem--selected:focus-visible .ActionMenuItemInner) {
   box-shadow:
-    0 0 0 1px var(--cube-actionMenu-item-bg-selected-rest, #f4f4f2),
-    0 0 0 var(--cube-focus-ring-width) var(--cube-color-focus);
+    0 0 0 1px var(--action-menu-item-bg-color-selected-rest, #f4f4f2),
+    0 0 0 var(--action-menu-focus-width) var(--action-menu-focus-color);
 }
 
-.ActionMenuItem--withSubtext {
+:where(.ActionMenuItem--withSubtext) {
   min-height: auto;
 }
 
-.ActionMenuItem--iconOnly {
+:where(.ActionMenuItem--iconOnly) {
   width: auto;
 }
 
-.ActionMenuItem--iconOnly .ActionMenuItemInner {
+:where(.ActionMenuItem--iconOnly .ActionMenuItemInner) {
   justify-content: center;
   gap: 0;
-  width: var(--cube-actionMenu-item-min-height);
-  padding-inline: var(--cube-actionMenu-item-padding-block);
+  width: var(--action-menu-sizes-item-min-height);
+  padding-inline: var(--action-menu-sizes-item-padding-block);
 }
 
-.IconSlot,
-.TrailingSlot {
+:where(.IconSlot, .TrailingSlot) {
   display: inline-flex;
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  width: var(--cube-actionMenu-item-icon-size);
-  height: var(--cube-actionMenu-item-icon-size);
+  width: var(--action-menu-sizes-item-icon-size);
+  height: var(--action-menu-sizes-item-icon-size);
   color: currentColor;
 }
 
-.SubtextIconSlot {
+:where(.SubtextIconSlot) {
   display: inline-flex;
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  width: var(--cube-actionMenu-item-subtext-icon-size);
-  height: var(--cube-actionMenu-item-subtext-icon-size);
+  width: var(--action-menu-sizes-item-subtext-icon-size);
+  height: var(--action-menu-sizes-item-subtext-icon-size);
   color: currentColor;
 }
 
-.Content {
+:where(.Content) {
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: var(--cube-actionMenu-item-subtext-gap);
+  gap: var(--action-menu-sizes-item-subtext-gap);
   min-width: 0;
 }
 
-.Label {
-  font-family: var(--cube-typography-fontFamily-base);
-  font-size: var(--cube-typography-text-body-sm-fontSize);
-  font-weight: var(--cube-typography-text-body-sm-fontWeight);
-  line-height: var(--cube-typography-text-body-sm-lineHeight);
+:where(.Label) {
+  font: var(--action-menu-label-font);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.SubtextRow {
+:where(.SubtextRow) {
   display: flex;
   align-items: center;
-  gap: var(--cube-actionMenu-item-slot-gap);
+  gap: var(--action-menu-sizes-item-slot-gap);
   min-width: 0;
 }
 
-.Subtext {
+:where(.Subtext) {
   flex: 1;
   min-width: 0;
-  font-family: var(--cube-typography-fontFamily-base);
-  font-size: var(--cube-typography-text-body-xs-fontSize);
-  font-weight: var(--cube-typography-text-body-xs-fontWeight);
-  line-height: var(--cube-typography-text-body-xs-lineHeight);
-  color: var(--cube-actionMenu-item-fg-subtext);
+  font: var(--action-menu-subtext-font);
+  color: var(--action-menu-item-fg-color-subtext);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

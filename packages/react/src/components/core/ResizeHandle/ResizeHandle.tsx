@@ -1,35 +1,27 @@
 import React, { useCallback, useRef } from "react";
-import { useTheme } from "../../../theme/ThemeContext";
-import type { CubeTheme } from "../../../theme/types";
-import styles from "./ResizeHandle.module.css";
+import { clsx } from "clsx";
+import { useTokens } from "../../../mode";
+import { cssVars } from "../../../utils/cssVars";
+import { mergeProps } from "../../../utils/mergeProps";
+import classes from "./ResizeHandle.module.css";
 
 export type ResizeHandleOrientation = "vertical" | "horizontal";
 export type ResizeHandleEdge = "start" | "end" | "top" | "bottom";
 
-export interface ResizeHandleProps {
-  /** `vertical` = width; `horizontal` = height */
+export type ResizeHandleProps = Omit<React.ComponentPropsWithRef<"button">, "children"> & {
+  /** `vertical` = width; `horizontal` = height. @default "vertical" */
   orientation?: ResizeHandleOrientation;
   /** Which edge of the parent panel the handle sits on */
   edge: ResizeHandleEdge;
-  /** Pointer delta in px — positive = toward end/bottom edge of screen axis */
+  /** Pointer delta in px: positive = toward the end/bottom of the screen axis */
   onResizeDelta: (deltaPx: number) => void;
   onResizeStart?: () => void;
   onResizeEnd?: () => void;
-  "aria-label"?: string;
-  theme?: CubeTheme;
-  className?: string;
-}
-
-const EDGE_CLASS: Record<ResizeHandleEdge, string> = {
-  start: styles["ResizeHandle--edgeStart"],
-  end: styles["ResizeHandle--edgeEnd"],
-  top: styles["ResizeHandle--edgeTop"],
-  bottom: styles["ResizeHandle--edgeBottom"],
 };
 
 /**
- * Shared drag affordance for resizable panels — used by Sheet, Sidebar, etc.
- * Parent must be `position: relative` (or fixed) with room for the handle.
+ * Shared drag affordance for resizable panels (Sheet, Sidebar…). The hit area comes from the
+ * `resizeHandle` token. The parent must be `position: relative` (or fixed) with room for the handle.
  */
 export function ResizeHandle({
   orientation = "vertical",
@@ -37,19 +29,12 @@ export function ResizeHandle({
   onResizeDelta,
   onResizeStart,
   onResizeEnd,
-  "aria-label": ariaLabel = "Resize",
-  theme,
   className,
+  ...props
 }: ResizeHandleProps) {
-  const tokens = useTheme(theme);
+  const { resizeHandle, focusRing } = useTokens();
   const dragging = useRef(false);
   const lastPos = useRef(0);
-
-  const inlineVars = theme
-    ? ({
-        "--cube-resizeHandle-hitArea": tokens.sizes.resizeHandle.hitArea,
-      } as React.CSSProperties)
-    : undefined;
 
   const onPointerDown = useCallback(
     (event: React.PointerEvent<HTMLButtonElement>) => {
@@ -59,7 +44,7 @@ export function ResizeHandle({
       event.currentTarget.setPointerCapture(event.pointerId);
       onResizeStart?.();
     },
-    [onResizeStart, orientation]
+    [onResizeStart, orientation],
   );
 
   const onPointerMove = useCallback(
@@ -70,7 +55,7 @@ export function ResizeHandle({
       lastPos.current = pos;
       if (delta !== 0) onResizeDelta(delta);
     },
-    [onResizeDelta, orientation]
+    [onResizeDelta, orientation],
   );
 
   const endDrag = useCallback(
@@ -82,29 +67,30 @@ export function ResizeHandle({
       }
       onResizeEnd?.();
     },
-    [onResizeEnd]
+    [onResizeEnd],
   );
-
-  const classNames = [
-    "cube-focusable",
-    styles.ResizeHandle,
-    styles[`ResizeHandle--${orientation}`],
-    EDGE_CLASS[edge],
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
 
   return (
     <button
-      type="button"
-      className={classNames}
-      style={inlineVars}
-      aria-label={ariaLabel}
-      onPointerDown={onPointerDown}
-      onPointerMove={onPointerMove}
-      onPointerUp={endDrag}
-      onPointerCancel={endDrag}
+      {...mergeProps(
+        {
+          "data-component": "ResizeHandle",
+          "data-orientation": orientation,
+          "data-edge": edge,
+          type: "button" as const,
+          className: clsx(classes.ResizeHandle, className),
+          style: {
+            [orientation === "vertical" ? "width" : "height"]: resizeHandle.hitArea,
+            ...cssVars("resizeHandle", { focusColor: focusRing.color, focusWidth: focusRing.width, focusOffset: focusRing.offset }),
+          },
+          "aria-label": "Resize",
+          onPointerDown,
+          onPointerMove,
+          onPointerUp: endDrag,
+          onPointerCancel: endDrag,
+        },
+        props,
+      )}
     />
   );
 }

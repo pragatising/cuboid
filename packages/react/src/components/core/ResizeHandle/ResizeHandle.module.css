@@ -1,4 +1,5 @@
-.ResizeHandle {
+/* Layout only. The hit area (width or height) comes from the `resizeHandle` token, set inline by ResizeHandle.tsx. */
+:where(.ResizeHandle) {
   position: absolute;
   z-index: 1;
   margin: 0;
@@ -8,36 +9,39 @@
   touch-action: none;
 }
 
-.ResizeHandle--vertical {
+:where(.ResizeHandle[data-orientation="vertical"]) {
   top: 0;
   bottom: 0;
-  width: var(--cube-resizeHandle-hitArea, 0.5rem);
   cursor: col-resize;
 }
 
-.ResizeHandle--horizontal {
+:where(.ResizeHandle[data-orientation="horizontal"]) {
   left: 0;
   right: 0;
-  height: var(--cube-resizeHandle-hitArea, 0.5rem);
   cursor: row-resize;
 }
 
-.ResizeHandle--edgeStart {
+:where(.ResizeHandle[data-edge="start"]) {
   left: 0;
   transform: translateX(-50%);
 }
 
-.ResizeHandle--edgeEnd {
+:where(.ResizeHandle[data-edge="end"]) {
   right: 0;
   transform: translateX(50%);
 }
 
-.ResizeHandle--edgeTop {
+:where(.ResizeHandle[data-edge="top"]) {
   top: 0;
   transform: translateY(-50%);
 }
 
-.ResizeHandle--edgeBottom {
+:where(.ResizeHandle[data-edge="bottom"]) {
   bottom: 0;
   transform: translateY(50%);
+}
+
+:where(.ResizeHandle:focus-visible) {
+  outline: var(--resize-handle-focus-width) solid var(--resize-handle-focus-color);
+  outline-offset: var(--resize-handle-focus-offset);
 }

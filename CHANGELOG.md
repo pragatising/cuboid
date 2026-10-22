@@ -2,6 +2,22 @@
 
 Rolling session log for Claude Code continuity. Newest entry on top. Each entry: what changed, why, and anything the next agent needs to know. Keep entries short — skip anything derivable from `git log` or the diff itself.
 
+## 2026-10-21 — Every React component migrated to `useTokens()`; old theme seam deleted
+
+**Changed:**
+- `packages/react/src/theme/` is gone and nothing in `packages/react/src` imports it. Migrated (each with a `.test.tsx`): Icon, Pill, Highlight, Callout, Tooltip, Link, IconButton, Breadcrumb, Overlay, Popover, ActionMenu, ResizeHandle, Sheet, Container, SplitLayout, Sidebar, SiteHeader, Table. CodeBlock/CodeSurface, JsonViewer, Graph, JsonGraph, DataGrid and ApiResponseViewer are migrated but **have no component tests yet**. Stack is deleted; Box replaced it everywhere.
+- **IconButton is standalone** (own CSS module, `--icon-button-*` vars, own types); the icon-only branch was removed from ButtonBase, which now serves only the labelled Button.
+- `src/stories.test.tsx` renders every story (153) and fails on a throw or a React warning. `src/test/setup.ts` stubs `ResizeObserver` for jsdom. All 153 stories were also loaded in real Chrome.
+- New `src/utils/length.ts` (`lengthToPx`, replaces the deleted `parseLengthPx`), `actionMenuVars.ts`, `CodeBlock/syntaxColors.ts` (flattens the per-language `syntax` tokens into `--code-surface-syntax-*`).
+- **Fixed:** a modal Sheet called `onDismiss` twice on Escape (its own listener plus the Overlay's).
+
+**Why:** Storybook was broken (Button docs threw "Failed to resolve import ../../../theme/ThemeContext" from `Stack.tsx`) because the old seam was deleted before its callers were migrated.
+
+**Next agent:**
+- **Breaking API changes** the portfolio app (~60 import sites) will hit: `theme` prop removed everywhere; IconButton takes `icon`, not `children`; Pill `size` replaces `variant`, and its per-instance padding/radius/border props are gone; Icon has no pluggable library and `color` is an `fgColor` path; Callout `background` is `backgroundColor`. Per-component detail: `docs/backlog/react-migration-tracker.md`.
+- **Confirm with design:** Popover/Sheet shadows now map to `shadow.floating.{md,lg}` (the old `shadows.popover*`/`sheet` tokens no longer exist).
+- Left: component tests for the data components, Figma Code Connect, the consumer migration. `npm run tokens:theme` prints ~390 harmless "Output name … collision" warnings for `tokens.json` (the JSON is nested by path, so names never clash); worth silencing so real collisions stay visible.
+
 ## 2026-10-07 — JS/TS token output wired (ADR-04), Zod validation wired, z-index scale extended
 
 **Changed:**

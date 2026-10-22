@@ -1,5 +1,6 @@
 import React, { useRef, useLayoutEffect, useEffect, CSSProperties } from "react";
-import { useTheme } from "../../theme/ThemeContext";
+import { useTokens } from "../../mode";
+import { lengthToPx } from "../../utils/length";
 import { useCanvasContext, useCardContext } from "./context";
 
 export type HandleSide = "left" | "right" | "top" | "bottom";
@@ -121,7 +122,7 @@ const SVG_POSITION: Record<HandleSide, CSSProperties> = {
 // ── Component ─────────────────────────────────────────────────────────────────
 
 export function GraphHandle({ id, side, size = 12, color, style }: GraphHandleProps) {
-  const tokens = useTheme();
+  const { fgColor, bgColor, borderColor, borderWidth } = useTokens();
   const { cardId }  = useCardContext();
   const { viewportRef, panX, panY, zoom, registerHandle, unregisterHandle } =
     useCanvasContext();
@@ -182,10 +183,10 @@ export function GraphHandle({ id, side, size = 12, color, style }: GraphHandlePr
       <HandleSvg
         side={side}
         size={size}
-        dotColor={color ?? tokens.colors.base.blue[5]}
-        bgColor={tokens.colors.global.bg.gray.light["1"]}
-        borderColor={tokens.colors.global.border.gray["2"]}
-        strokeWidth={parseFloat(tokens.sizes.borderWidth.thin)}
+        dotColor={color ?? fgColor.informational.strong}
+        bgColor={bgColor.canvas.subtle}
+        borderColor={borderColor.strong}
+        strokeWidth={lengthToPx(borderWidth.thin, 1)}
       />
     </div>
   );

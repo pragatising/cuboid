@@ -1,53 +1,43 @@
-import React, { CSSProperties, useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
-import { useTheme } from "../../../theme/ThemeContext";
-import type { CubeTheme, SheetWidthStopTokens, ThemeTokens } from "../../../theme/types";
-import { parseLengthPx } from "../../../utils/parseLengthPx";
+import { clsx } from "clsx";
+import { useTokens } from "../../../mode";
+import type { Tokens } from "../../../mode";
+import { lengthToPx } from "../../../utils/length";
+import { mergeProps } from "../../../utils/mergeProps";
 import { Overlay } from "../Overlay";
 import { ResizeHandle } from "../ResizeHandle";
-import styles from "./Sheet.module.css";
+import classes from "./Sheet.module.css";
 
 export type SheetEdge = "left" | "right" | "bottom";
-export type SheetWidthStop = keyof SheetWidthStopTokens;
+/** A key of `tokens.sheet.sizes.width`. */
+export type SheetWidthStop = keyof Tokens["sheet"]["sizes"]["width"];
 /** Named stop (`sm` / `md` / `lg`) or any CSS length (e.g. `28rem`). Ignored for `edge="bottom"`. */
 export type SheetWidth = SheetWidthStop | (string & {});
 
-export interface SheetProps {
-  /** When false, nothing is rendered. */
+export type SheetProps = Omit<React.ComponentPropsWithRef<"div">, "role"> & {
+  /** When false, nothing is rendered. @default false */
   open?: boolean;
-  /** Which viewport edge the panel slides from. */
+  /** Which viewport edge the panel slides from. @default "right" */
   edge?: SheetEdge;
-  /** Panel width for left/right sheets — token stop or CSS length. @default "md" */
+  /** Panel width for left/right sheets: token stop or CSS length. @default "md" */
   width?: SheetWidth;
-  /** Drag the inner edge to resize (left/right only). */
+  /** Drag the inner edge to resize (left/right only). @default false */
   resizable?: boolean;
   /** Fired while resizing with the current width in px. */
   onWidthChange?: (widthPx: number) => void;
-  /** When true (default), renders a sheet-variant Overlay scrim behind the panel. */
+  /** When true, renders a sheet-variant Overlay scrim behind the panel and locks page scroll. @default true */
   modal?: boolean;
   /** Called when Escape is pressed or the scrim is clicked (when modal). */
   onDismiss?: () => void;
-  /** Accessible name when the sheet has no visible title. */
-  "aria-label"?: string;
-  /** ID of the visible title element, when present. */
-  "aria-labelledby"?: string;
   /**
    * Rounds the top corners when `edge="bottom"`. Ignored for left/right sheets.
    * @default true
    */
   roundedTop?: boolean;
-  theme?: CubeTheme;
-  className?: string;
-  style?: CSSProperties;
-  children?: React.ReactNode;
-}
+};
 
-export interface SheetRegionProps {
-  theme?: CubeTheme;
-  className?: string;
-  style?: CSSProperties;
-  children?: React.ReactNode;
-}
+export type SheetRegionProps = React.ComponentPropsWithRef<"div">;
 
 const WIDTH_STOPS: SheetWidthStop[] = ["sm", "md", "lg"];
 
@@ -55,50 +45,40 @@ function isWidthStop(value: SheetWidth): value is SheetWidthStop {
   return WIDTH_STOPS.includes(value as SheetWidthStop);
 }
 
-function resolveSheetWidthCss(width: SheetWidth, stops: SheetWidthStopTokens): string {
+function resolveSheetWidthCss(width: SheetWidth, stops: Tokens["sheet"]["sizes"]["width"]): string {
   if (isWidthStop(width)) return stops[width];
   return width;
 }
 
-function sheetCssVars(tokens: ThemeTokens): Record<string, string> {
-  const { sheet } = tokens.colors.functional;
-  const layout = tokens.sizes.sheet;
-  return {
-    "--cube-sheet-bg": sheet.background,
-    "--cube-sheet-maxWidth": layout.maxWidth,
-    "--cube-sheet-maxHeight": layout.maxHeight,
-    "--cube-sheet-padding": layout.padding,
-    "--cube-sheet-bottomCornerRadius": layout.bottomCornerRadius,
-    "--cube-shadow-sheet": tokens.shadows.sheet,
-    "--cube-z-index-sheet": tokens.sizes.zIndex.sheet,
-  };
-}
-
-function regionInlineVars(theme: CubeTheme | undefined, tokens: ThemeTokens) {
-  return theme ? (sheetCssVars(tokens) as React.CSSProperties) : undefined;
-}
-
-function SheetHeader({ theme, className, style, children }: SheetRegionProps) {
-  const tokens = useTheme(theme);
+function SheetHeader({ className, ...props }: SheetRegionProps) {
+  const { sheet } = useTokens();
   return (
     <div
-      className={[styles.Sheet__header, className].filter(Boolean).join(" ")}
-      style={{ ...regionInlineVars(theme, tokens), ...style }}
-    >
-      {children}
-    </div>
+      {...mergeProps(
+        {
+          "data-component": "Sheet.Header",
+          className: clsx(classes.Header, className),
+          style: { gap: sheet.sizes.padding, padding: sheet.sizes.padding },
+        },
+        props,
+      )}
+    />
   );
 }
 
-function SheetBody({ theme, className, style, children }: SheetRegionProps) {
-  const tokens = useTheme(theme);
+function SheetBody({ className, ...props }: SheetRegionProps) {
+  const { sheet } = useTokens();
   return (
     <div
-      className={[styles.Sheet__body, className].filter(Boolean).join(" ")}
-      style={{ ...regionInlineVars(theme, tokens), ...style }}
-    >
-      {children}
-    </div>
+      {...mergeProps(
+        {
+          "data-component": "Sheet.Body",
+          className: clsx(classes.Body, className),
+          style: { paddingInline: sheet.sizes.padding, paddingBlockEnd: sheet.sizes.padding },
+        },
+        props,
+      )}
+    />
   );
 }
 
@@ -126,41 +106,30 @@ export function Sheet({
   modal = true,
   roundedTop = true,
   onDismiss,
-  "aria-label": ariaLabel,
-  "aria-labelledby": ariaLabelledby,
-  theme,
   className,
-  style,
   children,
+  ...props
 }: SheetProps) {
-  const tokens = useTheme(theme);
-  const layout = tokens.sizes.sheet;
+  const { sheet, shadow, zIndex } = useTokens();
+  const layout = sheet.sizes;
   const isHorizontalPanel = edge === "left" || edge === "right";
 
-  const defaultWidthCss = useMemo(
-    () => resolveSheetWidthCss(width, layout.width),
-    [width, layout.width]
-  );
+  const defaultWidthCss = useMemo(() => resolveSheetWidthCss(width, layout.width), [width, layout.width]);
 
-  const minWidthPx = useMemo(() => parseLengthPx(layout.minWidth, 240), [layout.minWidth]);
-  const maxWidthPx = useMemo(
-    () => parseLengthPx(layout.maxWidth, window.innerWidth),
-    [layout.maxWidth]
-  );
+  const minWidthPx = useMemo(() => lengthToPx(layout.minWidth, 240), [layout.minWidth]);
+  const maxWidthPx = useMemo(() => lengthToPx(layout.maxWidth, window.innerWidth), [layout.maxWidth]);
 
-  const [widthPx, setWidthPx] = useState(() => parseLengthPx(defaultWidthCss, 400));
+  const [widthPx, setWidthPx] = useState(() => lengthToPx(defaultWidthCss, 400));
 
   useEffect(() => {
     if (open && isHorizontalPanel) {
-      setWidthPx(parseLengthPx(defaultWidthCss, 400));
+      setWidthPx(lengthToPx(defaultWidthCss, 400));
     }
   }, [open, defaultWidthCss, isHorizontalPanel]);
 
-  const inlineVars = theme ? (sheetCssVars(tokens) as React.CSSProperties) : undefined;
-
   const clampWidth = useCallback(
     (next: number) => Math.min(maxWidthPx, Math.max(minWidthPx, next)),
-    [maxWidthPx, minWidthPx]
+    [maxWidthPx, minWidthPx],
   );
 
   const handleResizeDelta = useCallback(
@@ -172,11 +141,12 @@ export function Sheet({
         return next;
       });
     },
-    [clampWidth, edge, isHorizontalPanel, onWidthChange]
+    [clampWidth, edge, isHorizontalPanel, onWidthChange],
   );
 
+  // A modal sheet's Overlay already dismisses on Escape; listening here too would fire onDismiss twice.
   useEffect(() => {
-    if (!open || !onDismiss) return;
+    if (!open || !onDismiss || modal) return;
     const dismiss = onDismiss;
 
     function onKeyDown(event: KeyboardEvent) {
@@ -185,7 +155,7 @@ export function Sheet({
 
     document.addEventListener("keydown", onKeyDown);
     return () => document.removeEventListener("keydown", onKeyDown);
-  }, [open, onDismiss]);
+  }, [open, onDismiss, modal]);
 
   useEffect(() => {
     if (!open || !modal) return;
@@ -198,34 +168,34 @@ export function Sheet({
 
   if (!open || typeof document === "undefined") return null;
 
-  const panelWidthStyle: CSSProperties = isHorizontalPanel
-    ? resizable
-      ? { width: `${widthPx}px`, maxWidth: layout.maxWidth }
-      : { width: resolveSheetWidthCss(width, layout.width), maxWidth: layout.maxWidth }
-    : {};
-
-  const classNames = [
-    styles.Sheet,
-    styles[`Sheet--${edge}`],
-    edge === "bottom" && roundedTop ? styles["Sheet--roundedTop"] : null,
-    resizable && isHorizontalPanel ? styles["Sheet--resizable"] : null,
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
+  const panelWidthStyle: React.CSSProperties = isHorizontalPanel
+    ? { width: resizable ? `${widthPx}px` : defaultWidthCss, maxWidth: layout.maxWidth }
+    : { maxHeight: layout.maxHeight };
 
   return createPortal(
     <>
-      {modal && (
-        <Overlay open variant="sheet" onDismiss={onDismiss} theme={theme} />
-      )}
+      {modal && <Overlay open variant="sheet" onDismiss={onDismiss} />}
       <div
-        role="dialog"
-        aria-modal={modal || undefined}
-        aria-label={ariaLabel}
-        aria-labelledby={ariaLabelledby}
-        className={classNames}
-        style={{ ...inlineVars, ...panelWidthStyle, ...style }}
+        {...mergeProps(
+          {
+            "data-component": "Sheet",
+            "data-edge": edge,
+            "data-rounded-top": edge === "bottom" && roundedTop ? "" : undefined,
+            role: "dialog",
+            "aria-modal": modal || undefined,
+            className: clsx(classes.Sheet, className),
+            style: {
+              zIndex: zIndex.sheet,
+              backgroundColor: sheet.color.background,
+              boxShadow: shadow.floating.lg,
+              ...(edge === "bottom" && roundedTop
+                ? { borderRadius: `${layout.bottomCornerRadius} ${layout.bottomCornerRadius} 0 0` }
+                : {}),
+              ...panelWidthStyle,
+            },
+          },
+          props,
+        )}
       >
         {resizable && isHorizontalPanel && (
           <ResizeHandle
@@ -233,13 +203,12 @@ export function Sheet({
             edge={resizeHandleEdge(edge)}
             onResizeDelta={handleResizeDelta}
             aria-label="Resize sheet"
-            theme={theme}
           />
         )}
         {children}
       </div>
     </>,
-    document.body
+    document.body,
   );
 }
 

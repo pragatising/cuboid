@@ -1,5 +1,5 @@
 import React, { CSSProperties } from "react";
-import { useTheme } from "../../theme/ThemeContext";
+import { useTokens } from "../../mode";
 import { CardContext } from "./context";
 
 export interface GraphCardProps {
@@ -13,7 +13,7 @@ export interface GraphCardProps {
   children?: React.ReactNode;
   /**
    * Override any visual default (background, border, padding, gap …).
-   * Merged on top of theme defaults so partial overrides work naturally.
+   * Merged on top of the token defaults so partial overrides work naturally.
    */
   style?: CSSProperties;
   className?: string;
@@ -22,9 +22,9 @@ export interface GraphCardProps {
 /**
  * A positioned, theme-styled container in the graph canvas.
  *
- * Visual defaults (background, border, shadow, padding, gap, border-radius)
- * come from the active theme so the card looks good out of the box. Override
- * any of them via the `style` prop, or swap the whole theme via `ThemeProvider`.
+ * Visual defaults (background, border, padding, gap, border-radius) come from
+ * the active mode's tokens so the card looks good out of the box. Override any
+ * of them via the `style` prop.
  *
  * Provides `CardContext` so any nested `GraphHandle` knows which card it
  * belongs to when registering its canvas-space position.
@@ -41,7 +41,7 @@ export function GraphCard({
   style,
   className,
 }: GraphCardProps) {
-  const tokens = useTheme();
+  const { bgColor, border, borderRadius, space } = useTokens();
 
   return (
     <CardContext.Provider value={{ cardId: id }}>
@@ -54,18 +54,18 @@ export function GraphCard({
           top: y,
           minWidth,
 
-          // ── Visual defaults from theme ──────────────────────────────────────
-          background:    tokens.colors.global.bg.gray.light["1"],
-          border:        `${tokens.sizes.borderWidth.thin} solid ${tokens.colors.global.border.grayAlpha["2"]}`,
-          borderRadius:  tokens.sizes.borderRadius.md,          // 8px
+          // ── Visual defaults from tokens ──────────────────────────────────────
+          background:    bgColor.canvas.subtle,
+          border:        border.translucent["2"],
+          borderRadius:  borderRadius.md,                       // 8px
           boxShadow:     "none",
 
           // ── Layout ─────────────────────────────────────────────────────────
           overflow:      "visible",                             // handles must not be clipped
-          padding:       tokens.sizes.space[3],                 // 12px all around
+          padding:       space.sm,                               // 12px all around
           display:       "flex",
           flexDirection: "column",
-          gap:           tokens.sizes.space[1],                 // 4px between rows
+          gap:           space.xxs,                              // 4px between rows
 
           // Consumer overrides come last
           ...style,

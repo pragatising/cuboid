@@ -2,6 +2,7 @@ import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Title, Primary, Controls, Subtitle } from "@storybook/blocks";
 import { Button } from "../Button";
+import { Icon } from "../Icon";
 import { IconButton } from "../IconButton";
 import { Tooltip } from "./Tooltip";
 
@@ -25,11 +26,6 @@ const meta: Meta<typeof Tooltip> = {
           <div className="cube-docs-section cube-docs-section--wide">
             <h3 className="cube-docs-section__title">Notes</h3>
             <ul className="cube-docs-list">
-              <li>
-                Pass an optional <code>theme</code> prop to rebind{" "}
-                <code>--cube-tooltip-*</code> CSS variables (same pattern as{" "}
-                <code>Button</code>).
-              </li>
               <li>
                 Viewport collision / flip (e.g.{" "}
                 <a href="https://floating-ui.com/" target="_blank" rel="noreferrer">
@@ -93,12 +89,7 @@ export const WithIconButton: Story = {
       the trigger stays associated with <code>role=&quot;tooltip&quot;</code> and{" "}
       <code>aria-describedby</code>. Example:
       <span style={{ display: "inline-block", marginLeft: 8, verticalAlign: "middle" }}>
-        <IconButton aria-label="Settings" tooltip="Open settings" variant="ghost">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden focusable={false}>
-            <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z" />
-            <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a1.873 1.873 0 0 1-1.255 1.275l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a1.873 1.873 0 0 1 1.275 1.255l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a1.873 1.873 0 0 1 1.255-1.275l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a1.873 1.873 0 0 1-1.275-1.255l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 1.255 1.275l.319.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.275 1.255l-.094.319c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-1.255-1.275l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094a1.873 1.873 0 0 0 1.275-1.255l.094-.319z" />
-          </svg>
-        </IconButton>
+        <IconButton aria-label="Settings" tooltip="Open settings" variant="ghost" icon={<Icon name="settings" />} />
       </span>
     </p>
   ),

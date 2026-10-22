@@ -1,42 +1,21 @@
 import React from "react";
-import type { CubeTheme } from "../../../theme/types";
-import styles from "./SplitLayout.module.css";
+import { clsx } from "clsx";
+import { mergeProps } from "../../../utils/mergeProps";
+import classes from "./SplitLayout.module.css";
 
-export interface SplitLayoutProps {
-  theme?: CubeTheme;
-  className?: string;
-  style?: React.CSSProperties;
-  children?: React.ReactNode;
-}
+export type SplitLayoutProps = React.ComponentPropsWithRef<"div">;
+export type SplitLayoutMainProps = React.ComponentPropsWithRef<"main">;
 
-export interface SplitLayoutMainProps {
-  theme?: CubeTheme;
-  className?: string;
-  style?: React.CSSProperties;
-  children?: React.ReactNode;
-}
-
-function SplitLayoutMain({ className, style, children }: SplitLayoutMainProps) {
-  return (
-    <main
-      className={[styles.SplitLayout__main, className].filter(Boolean).join(" ")}
-      style={style}
-    >
-      {children}
-    </main>
-  );
+function SplitLayoutMain({ className, ...props }: SplitLayoutMainProps) {
+  return <main {...mergeProps({ "data-component": "SplitLayout.Main", className: clsx(classes.Main, className) }, props)} />;
 }
 
 /**
- * Horizontal app shell — sidebar (or other leading panel) plus scrollable main.
- * In-flow only; pair with {@link Sidebar} rather than portaled {@link Sheet}.
+ * Horizontal app shell: sidebar (or other leading panel) plus scrollable main.
+ * In-flow only; pair with `Sidebar` rather than the portaled `Sheet`.
  */
-export function SplitLayout({ className, style, children }: SplitLayoutProps) {
-  return (
-    <div className={[styles.SplitLayout, className].filter(Boolean).join(" ")} style={style}>
-      {children}
-    </div>
-  );
+export function SplitLayout({ className, ...props }: SplitLayoutProps) {
+  return <div {...mergeProps({ "data-component": "SplitLayout", className: clsx(classes.SplitLayout, className) }, props)} />;
 }
 
 SplitLayout.Main = SplitLayoutMain;

@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Link } from "../Link";
 import { Pill } from "../Pill";
-import { Stack } from "../Stack";
+import { Box } from "../Box";
 import { SimpleTable, Table } from "./Table";
 
 type ComponentRow = {
@@ -63,7 +63,7 @@ const SAMPLE_COLUMNS: ColumnDef<ComponentRow, unknown>[] = [
     header: "Category",
     size: 120,
     cell: ({ getValue }) => (
-      <Pill shade="gray" intensity="extralight" border>
+      <Pill shade="gray" intensity="extraLight" border>
         {String(getValue())}
       </Pill>
     ),
@@ -181,9 +181,9 @@ export const Composable: Story = {
 
 export const RowLayouts: Story = {
   render: () => (
-    <Stack gap="lg">
+    <Box gap="lg">
       <SimpleTable columns={SAMPLE_COLUMNS.slice(0, 3)} data={SAMPLE_DATA} rowLayout="truncate" />
       <SimpleTable columns={SAMPLE_COLUMNS.slice(0, 3)} data={SAMPLE_DATA} rowLayout="fixed" />
-    </Stack>
+    </Box>
   ),
 };

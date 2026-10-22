@@ -1,7 +1,5 @@
-import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Title, Primary, Controls, Subtitle } from "@storybook/blocks";
-import { Stack } from "../Stack";
+import { Box } from "../Box";
 import { Text } from "../Text";
 import { Link } from "./Link";
 
@@ -9,60 +7,58 @@ const meta: Meta<typeof Link> = {
   title: "Core/Link",
   component: Link,
   tags: ["autodocs"],
-  parameters: {
-    layout: "padded",
-    docs: {
-      page: () => (
-        <>
-          <Title />
-          <Subtitle>
-            Smart links — token colors from <code>color.link.*</code>.
-            Use <code>variant=&quot;inline&quot;</code> inside body copy;
-            <code> standalone</code> for nav and contact rows.
-          </Subtitle>
-
-          <div className="cube-docs-section">
-            <h3 className="cube-docs-section__title">Inline (in prose)</h3>
-            <Text role="body" size="sm">
-              Read the{" "}
-              <Link href="#getting-started" variant="inline">
-                getting started guide
-              </Link>{" "}
-              for setup steps, or browse the component API reference.
-            </Text>
-          </div>
-
-          <div className="cube-docs-section">
-            <h3 className="cube-docs-section__title">Standalone</h3>
-            <Stack gap="xxs">
-              <Link href="mailto:hello@example.com" variant="standalone">
-                support@example.com
-              </Link>
-              <Link href="https://example.com" variant="standalone" external>
-                Documentation
-              </Link>
-            </Stack>
-          </div>
-
-          <Primary />
-          <Controls />
-        </>
-      ),
-    },
+  parameters: { layout: "padded" },
+  argTypes: {
+    variant: { control: "radio", options: ["inline", "standalone", "inherit"] },
+    external: { control: "boolean" },
+    showExternalIcon: { control: "boolean" },
   },
 };
 export default meta;
 type Story = StoryObj<typeof Link>;
 
 export const Playground: Story = {
-  args: {
-    href: "https://example.com",
-    variant: "standalone",
-    external: false,
-    children: "Link label",
-  },
-  argTypes: {
-    variant: { control: "radio", options: ["inline", "standalone"] },
-    external: { control: "boolean" },
-  },
+  args: { href: "https://example.com", variant: "standalone", external: false, children: "Link label" },
+};
+
+export const Inline: Story = {
+  name: "Inline (in prose)",
+  render: () => (
+    <Text>
+      Read the{" "}
+      <Link href="#getting-started" variant="inline">
+        getting started guide
+      </Link>{" "}
+      for setup steps, or browse the component API reference.
+    </Text>
+  ),
+};
+
+export const Standalone: Story = {
+  render: () => (
+    <Box gap="0.5x">
+      <Link href="mailto:hello@example.com">support@example.com</Link>
+      <Link href="https://example.com" external>
+        Documentation
+      </Link>
+    </Box>
+  ),
+};
+
+export const External: Story = {
+  name: "External without the icon",
+  render: () => (
+    <Link href="https://example.com" external showExternalIcon={false}>
+      Opens in a new tab
+    </Link>
+  ),
+};
+
+export const Inherit: Story = {
+  name: "Inherit (no link chrome)",
+  render: () => (
+    <Link href="#" variant="inherit">
+      Wraps other content without underline or colour
+    </Link>
+  ),
 };

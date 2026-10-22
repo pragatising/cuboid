@@ -1,54 +1,41 @@
 import React from "react";
-import { useTheme } from "../../../theme/ThemeContext";
-import type { CubeTheme, HighlightColor } from "../../../theme/types";
-import styles from "./Highlight.module.css";
+import { clsx } from "clsx";
+import { useTokens } from "../../../mode";
+import type { Tokens } from "../../../mode";
+import { mergeProps } from "../../../utils/mergeProps";
+import classes from "./Highlight.module.css";
 
-export type { HighlightColor };
+/** A colour key of `tokens.highlight` (the group also carries the shared padding and radius). */
+export type HighlightColor = Exclude<keyof Tokens["highlight"], "paddingInline" | "paddingBlock" | "borderRadius">;
 
-export interface HighlightProps {
-  /** Background tint — maps to Figma `HighlightedText` `color`. Default `yellow`. */
+export type HighlightProps = Omit<React.ComponentPropsWithRef<"mark">, "color"> & {
+  /** Which `highlight` colour to tint the text with. @default "yellow" */
   color?: HighlightColor;
-  theme?: CubeTheme;
-  className?: string;
-  style?: React.CSSProperties;
-  children?: React.ReactNode;
-}
-
-function highlightCssVars(
-  color: HighlightColor,
-  tokens: ReturnType<typeof useTheme>
-): Record<string, string> {
-  const recipe = tokens.colors.functional.highlight[color];
-  const geom = tokens.sizes.highlight;
-
-  return {
-    "--cube-highlight-bg": recipe.bgColor,
-    "--cube-highlight-fg": recipe.fgColor,
-    "--cube-highlight-paddingInline": geom.paddingInline,
-    "--cube-highlight-paddingBlock": geom.paddingBlock,
-    "--cube-highlight-borderRadius": geom.borderRadius,
-  };
-}
+};
 
 /**
- * Inline marker emphasis inside body copy. Renders semantic `<mark>` and inherits
- * surrounding font metrics — pair with {@link Text} `role="body" size="sm"`.
+ * Inline marker emphasis inside body copy. Renders a semantic `<mark>` and inherits the
+ * surrounding font, so use it inside `Text`.
  */
-export function Highlight({
-  color = "yellow",
-  theme,
-  className,
-  style,
-  children,
-}: HighlightProps) {
-  const tokens = useTheme(theme);
+export function Highlight({ color = "yellow", className, ...props }: HighlightProps) {
+  const { highlight } = useTokens();
 
   return (
     <mark
-      className={[styles.Highlight, className].filter(Boolean).join(" ")}
-      style={{ ...highlightCssVars(color, tokens), ...style }}
-    >
-      {children}
-    </mark>
+      {...mergeProps(
+        {
+          "data-component": "Highlight",
+          className: clsx(classes.Highlight, className),
+          style: {
+            color: highlight[color].fgColor,
+            backgroundColor: highlight[color].bgColor,
+            paddingInline: highlight.paddingInline,
+            paddingBlock: highlight.paddingBlock,
+            borderRadius: highlight.borderRadius,
+          },
+        },
+        props,
+      )}
+    />
   );
 }

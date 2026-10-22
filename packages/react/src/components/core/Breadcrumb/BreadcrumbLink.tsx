@@ -1,77 +1,50 @@
 import React from "react";
-import { useTheme } from "../../../theme/ThemeContext";
-import type { BreadcrumbFunctionalColors, CubeTheme } from "../../../theme/types";
-import styles from "./BreadcrumbLink.module.css";
+import { clsx } from "clsx";
+import { useTokens } from "../../../mode";
+import { cssVars } from "../../../utils/cssVars";
+import { mergeProps } from "../../../utils/mergeProps";
+import classes from "./BreadcrumbLink.module.css";
 
-export type BreadcrumbLinkState = "rest" | "hover" | "active";
-
-export interface BreadcrumbLinkProps {
-  href?: string;
-  /** Current page — renders as non-interactive text (maps to Figma `active`). */
+export type BreadcrumbLinkProps = Omit<React.ComponentPropsWithRef<"a">, "children"> & {
+  /** Current page: renders as non-interactive text, not a link. Also the case when there is no `href`. @default false */
   current?: boolean;
-  theme?: CubeTheme;
-  className?: string;
   children: React.ReactNode;
-}
+};
 
-function breadcrumbCssVars(breadcrumb: BreadcrumbFunctionalColors): Record<string, string> {
-  const out: Record<string, string> = {};
-  for (const state of ["rest", "hover", "active"] as const) {
-    out[`--cube-breadcrumb-link-bg-${state}`] = breadcrumb.link.bgColor[state];
-    out[`--cube-breadcrumb-link-fg-${state}`] = breadcrumb.link.fgColor[state];
-  }
-  return out;
-}
-
-export function BreadcrumbLink({
-  href,
-  current = false,
-  theme,
-  className,
-  children,
-  ...rest
-}: BreadcrumbLinkProps & Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "children">) {
-  const tokens = useTheme(theme);
+/** One item of a breadcrumb trail: a link, or (for the current page) plain text with `aria-current="page"`. */
+export function BreadcrumbLink({ href, current = false, className, children, ref, ...props }: BreadcrumbLinkProps) {
+  const { breadcrumb, text, focusRing } = useTokens();
   const isCurrent = current || !href;
 
-  const classNames = [
-    styles.BreadcrumbLink,
-    isCurrent ? styles["BreadcrumbLink--active"] : styles["BreadcrumbLink--link"],
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
-
-  const inlineVars = theme
-    ? ({
-        ...breadcrumbCssVars(tokens.colors.functional.breadcrumb),
-        "--cube-typography-fontFamily-base": tokens.typography.fontFamily.base,
-        "--cube-typography-text-body-sm-fontSize":
-          tokens.typography.text.bodySm.fontSize,
-        "--cube-typography-text-body-sm-lineHeight": String(
-          tokens.typography.text.bodySm.lineHeight
-        ),
-        "--cube-breadcrumb-item-paddingInline": tokens.sizes.breadcrumb.itemPaddingInline,
-        "--cube-breadcrumb-item-paddingBlock": tokens.sizes.breadcrumb.itemPaddingBlock,
-        "--cube-breadcrumb-item-borderRadius": tokens.sizes.breadcrumb.itemBorderRadius,
-      } as React.CSSProperties)
-    : undefined;
+  const shared = {
+    "data-component": "BreadcrumbLink",
+    "data-current": isCurrent ? "" : undefined,
+    className: clsx(classes.BreadcrumbLink, className),
+    style: {
+      font: text.size.md,
+      paddingBlock: breadcrumb.sizes.itemPaddingBlock,
+      paddingInline: breadcrumb.sizes.itemPaddingInline,
+      borderRadius: breadcrumb.sizes.itemBorderRadius,
+      ...cssVars("breadcrumb", {
+        fg: breadcrumb.link.fgColor,
+        bg: breadcrumb.link.bgColor,
+        focusColor: focusRing.color,
+        focusWidth: focusRing.width,
+        focusOffset: focusRing.offset,
+      }),
+    },
+  };
 
   if (isCurrent) {
     return (
-      <span
-        className={classNames}
-        style={inlineVars}
-        aria-current="page"
-        {...(rest as React.HTMLAttributes<HTMLSpanElement>)}
-      >
+      <span {...mergeProps({ ...shared, "aria-current": "page" as const }, props as React.ComponentPropsWithRef<"span">)} ref={ref as React.Ref<HTMLSpanElement>}>
         {children}
       </span>
     );
   }
 
   return (
-    <a className={["cube-focusable", classNames].filter(Boolean).join(" ")} style={inlineVars} href={href} {...rest}>
+    <a {...mergeProps(shared, props)} href={href} ref={ref}>
       {children}
     </a>
   );

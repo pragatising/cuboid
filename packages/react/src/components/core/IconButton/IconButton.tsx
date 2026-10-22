@@ -1,185 +1,168 @@
 import React from "react";
-import { useTheme } from "../../../theme/ThemeContext";
-import type { CubeTheme, IconButtonFunctionalColors, ThemeTokens } from "../../../theme/types";
-import { tokenOutput } from "../../../theme/tokenOutput";
+import { clsx } from "clsx";
+import { useTokens } from "../../../mode";
+import type { Tokens } from "../../../mode";
+import { announce } from "../../../utils/announce";
+import { cssVars } from "../../../utils/cssVars";
+import { isDev } from "../../../utils/isDev";
+import { mergeProps } from "../../../utils/mergeProps";
+import { transitionCss } from "../../../utils/motion";
+import { Spinner } from "../Button/Spinner";
 import { Tooltip } from "../Tooltip";
 import type { TooltipPlacement } from "../Tooltip";
-import styles from "./IconButton.module.css";
+import classes from "./IconButton.module.css";
 
-/** Keys of `iconButton` in `token-output.json` — add a variant in JSON + matching CSS module class `IconButton--<name>`. */
-export type IconButtonVariant = keyof typeof tokenOutput.iconButton;
+// The variants and sizes are the keys of the iconButton tokens. IconButton.test-d.tsx fails if these drift from them.
+export type IconButtonVariant = "ghost" | "outlined";
 export type IconButtonSize = "xs" | "sm" | "md" | "lg";
 
-type IconButtonStop = keyof ThemeTokens["sizes"]["iconButton"];
+/** A button with no visible text needs an accessible name: exactly one of `aria-label` or `aria-labelledby`. */
+export type IconButtonA11yProps =
+  | { "aria-label": string; "aria-labelledby"?: undefined }
+  | { "aria-label"?: undefined; "aria-labelledby": string };
 
-const SIZE_TO_STOP: Record<IconButtonSize, IconButtonStop> = {
-  xs: "extraSmall",
-  sm: "small",
-  md: "medium",
-  lg: "large",
-};
-
-const SIZE_CLASS: Record<IconButtonSize, string> = {
-  xs: styles["IconButton--size-xs"],
-  sm: styles["IconButton--size-sm"],
-  md: styles["IconButton--size-md"],
-  lg: styles["IconButton--size-lg"],
-};
-
-const IB_STATES = ["rest", "hover", "pressed", "disabled"] as const;
-
-function decorateIcon(icon: React.ReactNode) {
-  if (!React.isValidElement(icon)) return icon;
-  return React.cloneElement(icon as React.ReactElement<Record<string, unknown>>, {
-    "aria-hidden": true,
-    focusable: false,
-    ...((icon as React.ReactElement<Record<string, unknown>>).props ?? {}),
-  });
-}
-
-function iconButtonCssVars(ib: IconButtonFunctionalColors): Record<string, string> {
-  const out: Record<string, string> = {};
-  for (const styleKey of Object.keys(ib)) {
-    const variant = ib[styleKey];
-    if (!variant) continue;
-    for (const selKey of ["unselected", "selected"] as const) {
-      const block = variant[selKey];
-      for (const s of IB_STATES) {
-        out[`--cube-iconButton-${styleKey}-${selKey}-bg-${s}`] = block.bgColor[s];
-        out[`--cube-iconButton-${styleKey}-${selKey}-fg-${s}`] = block.fgColor[s];
-        out[`--cube-iconButton-${styleKey}-${selKey}-border-${s}`] = block.borderColor[s];
-      }
-    }
-  }
-  return out;
-}
-
-export interface IconButtonProps
-  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "children"> {
-  /** Icon only — pass a single SVG or element using `currentColor` for fills. */
-  children: React.ReactNode;
-  /** Maps to `sizes.iconButton` (hit area, radius, icon glyph — no label padding). */
-  size?: IconButtonSize;
+export type IconButtonProps = IconButtonA11yProps & {
+  /** The icon to show. It is hidden from assistive technology: the accessible name comes from `aria-label`. */
+  icon: React.ReactNode;
+  /**
+   * Which `tokens.iconButton` look to use.
+   * @default "outlined"
+   */
   variant?: IconButtonVariant;
-  /** Selected / toggled visual state (sets `aria-pressed` when not `undefined`) */
+  /**
+   * The button's square size, the icon size and the radius.
+   * @default "xs"
+   */
+  size?: IconButtonSize;
+  /** A toggle's pressed state: draws the selected look and sets `aria-pressed`. Leave unset for a plain action. */
   selected?: boolean;
   /**
-   * Optional tooltip label (hover + focus). The control still needs a concise **accessible name**
-   * via `aria-label` (or `aria-labelledby`); the tooltip is wired with `aria-describedby` when open.
-   * When both `disabled` and `tooltip` are set, the button stays focusable/hoverable and uses
-   * `aria-disabled` instead of the native `disabled` attribute so the tooltip can show.
+   * Disables the button. Avoid it where you can: a natively disabled button cannot be focused. With `tooltip`
+   * as well, the button becomes `inactive` instead, so the tooltip can still explain why.
+   */
+  disabled?: boolean;
+  /** Looks disabled but stays focusable and announced; activation is ignored. */
+  inactive?: boolean;
+  /** A spinner replaces the icon and activation is ignored. The button stays focusable. */
+  loading?: boolean;
+  /**
+   * What to announce to screen readers when loading starts.
+   * @default "Loading"
+   */
+  loadingMessage?: string;
+  /**
+   * A hover/focus hint. The button still needs its accessible name; the tooltip is wired with `aria-describedby`
+   * while open.
    */
   tooltip?: React.ReactNode;
+  /** Which side of the button the tooltip appears on. @default "bottom" */
   tooltipPlacement?: TooltipPlacement;
-  tooltipCompact?: boolean;
-  tooltipShowDelay?: number;
-  theme?: CubeTheme;
+} & Omit<React.ComponentPropsWithRef<"button">, "aria-label" | "aria-labelledby" | "children">;
+
+const isTrue = (value: unknown) => value === true || value === "true";
+
+/**
+ * Token values as inline styles: the colours of every state (as the `--icon-button-<property>-<state>` variables
+ * the CSS reads), the focus ring, and the square geometry. Pure: tokens and options in, style out.
+ */
+export function resolveIconButtonStyle(
+  tokens: Tokens,
+  { variant, size, selected }: { variant: IconButtonVariant; size: IconButtonSize; selected: boolean },
+): React.CSSProperties {
+  const colors = tokens.iconButton[variant][selected ? "selected" : "default"];
+  const square = tokens.iconButton[size];
+
+  return {
+    ...cssVars("iconButton", {
+      bg: colors.bgColor,
+      fg: colors.fgColor,
+      border: colors.borderColor,
+      iconSize: square.icon,
+      focusColor: tokens.focusRing.color,
+      focusWidth: tokens.focusRing.width,
+      focusOffset: tokens.focusRing.offset,
+    }),
+    width: square.size,
+    height: square.size,
+    borderRadius: square.borderRadius,
+    borderWidth: tokens.borderWidth.thin,
+    transition: transitionCss(tokens.motion.transition.hover, ["background-color", "border-color", "color"]),
+  };
 }
 
-const styleMap = styles as Record<string, string>;
-
+/**
+ * A button that shows only an icon. Colours come from `tokens.iconButton`; the state colours (hover, pressed,
+ * disabled) reach the CSS as element-scoped variables because a pseudo-class cannot be an inline style. The
+ * optional `tooltip` wraps it in a `Tooltip`.
+ */
 export function IconButton({
-  size = "xs",
+  icon,
   variant = "outlined",
-  selected = false,
-  theme,
-  children,
+  size = "xs",
+  selected,
   disabled,
-  style,
-  type,
-  className: userClassName,
+  inactive,
+  loading,
+  loadingMessage = "Loading",
   tooltip,
   tooltipPlacement = "bottom",
-  tooltipCompact = true,
-  tooltipShowDelay = 200,
-  "aria-pressed": ariaPressedProp,
-  onClick,
-  onKeyDown,
-  ...rest
+  className,
+  ...props
 }: IconButtonProps) {
-  const tokens = useTheme(theme);
-  const selectionClass = selected ? styles["IconButton--selected"] : styles["IconButton--unselected"];
-  const variantClass = styleMap[`IconButton--${variant}`];
-
-  const className = [
-    "cube-focusable",
-    styles.IconButton,
-    variantClass,
-    selectionClass,
-    SIZE_CLASS[size],
-    userClassName,
-  ]
-    .filter(Boolean)
-    .join(" ");
-
-  const inlineVars = theme
-    ? (() => {
-        const { functional } = tokens.colors;
-        const stop = SIZE_TO_STOP[size];
-        const cssSeg = stop.replace(/[A-Z]/g, (ch) => `-${ch.toLowerCase()}`);
-        const geom = tokens.sizes.iconButton[stop];
-        return {
-          [`--cube-iconButton-${cssSeg}-size`]: geom.size,
-          [`--cube-iconButton-${cssSeg}-borderRadius`]: geom.borderRadius,
-          [`--cube-iconButton-${cssSeg}-icon`]: geom.icon,
-          "--cube-sizes-borderWidth-thin": tokens.sizes.borderWidth.thin,
-          ...iconButtonCssVars(functional.iconButton),
-        } as React.CSSProperties;
-      })()
-    : undefined;
-
-  const ariaPressed =
-    ariaPressedProp !== undefined ? ariaPressedProp : selected ? true : undefined;
-
+  const tokens = useTokens();
   const hasTooltip = tooltip != null && tooltip !== "";
-  /** Native `disabled` blocks hover/focus tooltips; pair with `aria-disabled` when a tooltip explains why. */
-  const ariaDisabledForTooltip = Boolean(disabled && hasTooltip);
-  const nativeDisabled = Boolean(disabled && !ariaDisabledForTooltip);
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (disabled) {
-      e.preventDefault();
-      return;
-    }
-    onClick?.(e);
-  };
+  // A natively disabled button gets no hover or focus, so no tooltip: with one, `disabled` becomes `inactive`,
+  // which keeps both and still ignores activation. Loading and a consumer's own aria-disabled act the same way.
+  const lookInactive = Boolean(inactive || (hasTooltip && disabled) || isTrue(props["aria-disabled"]));
+  const ariaDisabled = lookInactive || Boolean(loading);
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
-    if (disabled && (e.key === "Enter" || e.key === " ")) {
-      e.preventDefault();
+  React.useEffect(() => {
+    if (loading) announce(loadingMessage);
+  }, [loading, loadingMessage]);
+
+  React.useEffect(() => {
+    if (isDev() && !props["aria-label"] && !props["aria-labelledby"]) {
+      console.warn("An icon-only button needs an accessible name: pass `aria-label` or `aria-labelledby`.");
     }
-    onKeyDown?.(e);
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- a development check of the props at mount
+  }, []);
 
   const button = (
     <button
-      type={type ?? "button"}
-      disabled={nativeDisabled}
-      aria-disabled={ariaDisabledForTooltip ? true : undefined}
-      aria-pressed={ariaPressed}
-      className={className}
-      style={{ ...(style ?? {}), ...(inlineVars ?? {}) }}
-      {...rest}
-      onClick={handleClick}
-      onKeyDown={handleKeyDown}
+      {...mergeProps(
+        {
+          "data-component": "IconButton",
+          "data-variant": variant,
+          "data-size": size,
+          "data-selected": selected ? "" : undefined,
+          "data-loading": loading ? "" : undefined,
+          "data-inactive": lookInactive ? "" : undefined,
+          type: "button" as const,
+          disabled: hasTooltip ? undefined : disabled,
+          ...(ariaDisabled ? { "aria-disabled": true } : {}),
+          ...(selected !== undefined ? { "aria-pressed": selected } : {}),
+          className: clsx(classes.IconButton, className),
+          // The component's handler runs first; the consumer's is skipped when the event is default-prevented (mergeProps).
+          onClick: (event: React.SyntheticEvent) => {
+            if (ariaDisabled) event.preventDefault();
+          },
+          style: resolveIconButtonStyle(tokens, { variant, size, selected: Boolean(selected) }),
+        },
+        props,
+      )}
     >
-      <span className={styles.IconButton__icon}>{decorateIcon(children)}</span>
+      <span data-component="icon" className={classes.Icon} aria-hidden="true">
+        {loading ? <Spinner /> : icon}
+      </span>
     </button>
   );
 
-  if (tooltip != null && tooltip !== "") {
-    return (
-      <Tooltip
-        content={tooltip}
-        placement={tooltipPlacement}
-        compact={tooltipCompact}
-        showDelay={tooltipShowDelay}
-        theme={theme}
-      >
-        {button}
-      </Tooltip>
-    );
-  }
+  if (!hasTooltip) return button;
 
-  return button;
+  return (
+    <Tooltip content={tooltip} placement={tooltipPlacement} compact>
+      {button}
+    </Tooltip>
+  );
 }

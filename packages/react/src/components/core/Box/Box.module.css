@@ -1,43 +1,9 @@
-.Box {
-  border-style: solid;
-  border-width: 0;
-  border-color: transparent;
-  background-color: var(--box-bg, transparent);
-  color: var(--box-fg, inherit);
-}
-
-.Box--bordered {
-  border-width: var(--cube-sizes-borderWidth-thin);
-  border-color: var(--box-border-color);
-}
-
-/* Radius */
-.Box--radius-sm {
-  border-radius: var(--cube-sizes-borderRadius-sm);
-}
-.Box--radius-md {
-  border-radius: var(--cube-sizes-borderRadius-md);
-}
-.Box--radius-lg {
-  border-radius: var(--cube-sizes-borderRadius-lg);
-}
-.Box--radius-xl {
-  border-radius: var(--cube-sizes-borderRadius-xl);
-}
-.Box--radius-full {
-  border-radius: var(--cube-sizes-borderRadius-full);
-}
-
-/* Overflow */
-.Box--overflow-visible {
-  overflow: visible;
-}
-.Box--overflow-hidden {
-  overflow: hidden;
-}
-.Box--overflow-auto {
-  overflow: auto;
-}
-.Box--overflow-scroll {
-  overflow: scroll;
+/*
+ * Colours, spacing, radius and z-index are set inline from the tokens (ADR-04). `display: flex` is
+ * the default and lives here at zero specificity (`:where`), so the `display` prop, `style`, or a
+ * consumer's own class all override it.
+ */
+:where(.Box) {
+  display: flex;
+  box-sizing: border-box;
 }

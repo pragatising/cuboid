@@ -1,29 +1,18 @@
-.Overlay {
+/* Layout only. The scrim colour and z-index come from the `overlay` and `zIndex` tokens, set inline by Overlay.tsx. */
+:where(.Overlay) {
   position: fixed;
   inset: 0;
-  z-index: var(--cube-z-index-overlay, 400);
   border: none;
   padding: 0;
   margin: 0;
   appearance: none;
-}
-
-.Overlay--modal {
-  background-color: var(--cube-overlay-modal-bg);
   cursor: default;
 }
 
-.Overlay--sheet {
-  background-color: var(--cube-overlay-sheet-bg);
-  cursor: default;
-}
-
-.Overlay--none {
-  background-color: var(--cube-overlay-none-bg);
+:where(.Overlay[data-variant="none"]) {
   pointer-events: none;
-  cursor: default;
 }
 
-.Overlay--dismissible {
+:where(.Overlay[data-dismissible]) {
   cursor: pointer;
 }

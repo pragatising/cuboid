@@ -1,11 +1,11 @@
 import React from "react";
-import { useTheme } from "../../theme/ThemeContext";
+import { useTokens } from "../../mode";
 import { GraphHandle } from "../Graph/GraphHandle";
 
 export interface JsonInputHandleProps {
   /** Handle id — must be unique within the card. Edge references: "cardId:handleId". */
   id: string;
-  /** Inner dot fill colour. Defaults to the theme's blue accent. */
+  /** Inner dot fill colour. Defaults to the informational accent. */
   color?: string;
 }
 
@@ -26,14 +26,14 @@ export interface JsonInputHandleProps {
  * ```
  *
  * ### Why the negative left offset?
- * `JsonCardTitle` is inside `GraphCard` which has `padding: space[3]` (12px).
+ * `JsonCardTitle` is inside `GraphCard` which has `padding: space.sm` (12px).
  * An absolutely-positioned element at `left: 0` inside `JsonCardTitle` would
- * sit 12px in from the card's outer edge. The `calc(-1 * space[3])` offset
+ * sit 12px in from the card's outer edge. The `calc(-1 * space.sm)` offset
  * cancels the card padding so the handle protrudes from the card's true left
  * border — consistent with handles on `GraphRow` object rows.
  */
 export function JsonInputHandle({ id, color }: JsonInputHandleProps) {
-  const tokens = useTheme();
+  const { space } = useTokens();
 
   return (
     <GraphHandle
@@ -43,7 +43,7 @@ export function JsonInputHandle({ id, color }: JsonInputHandleProps) {
       style={{
         // Cancel the card's horizontal padding so the handle sits on the
         // card's outer left edge, not 12px inside it.
-        left: `calc(-1 * ${tokens.sizes.space[3]})`,
+        left: `calc(-1 * ${space.sm})`,
       }}
     />
   );

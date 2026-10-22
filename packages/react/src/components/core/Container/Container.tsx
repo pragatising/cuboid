@@ -1,89 +1,68 @@
 import React from "react";
-import { useTheme } from "../../../theme/ThemeContext";
-import type { CubeTheme, LayoutWidth, StackPadding } from "../../../theme/types";
-import { Stack } from "../Stack";
-import styles from "./Container.module.css";
+import { clsx } from "clsx";
+import { useTokens } from "../../../mode";
+import type { Tokens } from "../../../mode";
+import { resolveSpace } from "../../../utils/space";
+import type { Space } from "../../../utils/space";
+import type { PolymorphicProps } from "../../../utils/polymorphic";
+import { Box } from "../Box";
+import type { BoxOwnProps } from "../Box";
+import classes from "./Container.module.css";
 
-export type ContainerWidth = Extract<LayoutWidth, "page" | "content" | "full">;
+/** A key of `tokens.container.maxWidth`. */
+export type ContainerWidth = keyof Tokens["container"]["maxWidth"];
 
-export interface ContainerProps {
-  as?: React.ElementType;
-  /** Max content width — `page` (site shell) or `content` (reading column). */
-  width?: ContainerWidth;
-  /** Center horizontally with `margin-inline: auto`. Default true. */
-  center?: boolean;
-  /** Inline padding — defaults to layout `pagePaddingInline` token. */
-  paddingInline?: StackPadding | false;
-  /** Minimum block size — `screen` sets `min-height: 100svh`. */
-  minHeight?: "screen";
-  theme?: CubeTheme;
-  className?: string;
-  style?: React.CSSProperties;
-  children?: React.ReactNode;
-}
-
-function containerCssVars(
-  width: ContainerWidth,
-  paddingInline: StackPadding | false | undefined,
-  layout: {
-    pageMaxWidth: string;
-    contentMaxWidth: string;
-    pagePaddingInline: string;
-  },
-  center: boolean
-): Record<string, string> {
-  const maxWidth =
-    width === "page"
-      ? layout.pageMaxWidth
-      : width === "content"
-        ? layout.contentMaxWidth
-        : "100%";
-
-  const pad =
-    paddingInline === false
-      ? "0"
-      : paddingInline
-        ? `var(--cube-stack-padding-${paddingInline})`
-        : layout.pagePaddingInline;
-
-  return {
-    "--container-maxWidth": maxWidth,
-    "--container-paddingInline": pad,
-    "--container-marginInline": center ? "auto" : "0",
-  };
-}
+export type ContainerProps<As extends React.ElementType = "div"> = PolymorphicProps<
+  As,
+  "div",
+  Omit<BoxOwnProps, "width" | "maxWidth" | "minHeight" | "padding" | "margin"> & {
+    /** Max content width: `page` (site shell), `content` (reading column) or `full`. @default "page" */
+    width?: ContainerWidth;
+    /** Center horizontally with `margin-inline: auto`. @default true */
+    center?: boolean;
+    /** Inline padding: a spacing token, or `false` for none. @default the `container.paddingInline` token */
+    paddingInline?: Space | false;
+    /** Block padding: a spacing token, or `false` for none. @default the `container.paddingBlock` token */
+    paddingBlock?: Space | false;
+    /** Minimum block size: `screen` sets the `container.minHeight.screen` token (`100svh`). */
+    minHeight?: keyof Tokens["container"]["minHeight"];
+  }
+>;
 
 /**
- * Page shell — max-width, horizontal padding, and optional vertical fill.
+ * Page shell: max width, padding, and optional vertical fill, as a flex column (it is a `Box`).
  * Replaces ad-hoc `#root` / layout wrapper CSS in consuming apps.
  */
-export function Container({
-  as = "div",
+export function Container<As extends React.ElementType = "div">({
+  as,
   width = "page",
   center = true,
   paddingInline,
+  paddingBlock,
   minHeight,
-  theme,
   className,
   style,
-  children,
-}: ContainerProps) {
-  const tokens = useTheme(theme);
-
-  const classNames = [styles.Container, className].filter(Boolean).join(" ");
+  ...props
+}: ContainerProps<As>) {
+  const tokens = useTokens();
+  const { container } = tokens;
+  const padding = (value: Space | false | undefined, fallback: string) =>
+    value === false ? "0" : value === undefined ? fallback : resolveSpace(tokens, value);
 
   return (
-    <Stack
-      as={as}
-      gap="none"
-      className={classNames}
+    <Box
+      {...(props as object)}
+      as={as as React.ElementType}
+      data-component="Container"
+      className={clsx(classes.Container, className as string | undefined)}
+      maxWidth={container.maxWidth[width]}
+      minHeight={minHeight ? container.minHeight[minHeight] : undefined}
       style={{
-        ...containerCssVars(width, paddingInline, tokens.sizes.layout, center),
-        ...(minHeight === "screen" ? { minHeight: "100svh" } : undefined),
-        ...style,
+        marginInline: center ? "auto" : "0",
+        paddingInline: padding(paddingInline, container.paddingInline),
+        paddingBlock: padding(paddingBlock, container.paddingBlock),
+        ...(style as React.CSSProperties | undefined),
       }}
-    >
-      {children}
-    </Stack>
+    />
   );
 }

@@ -1,5 +1,4 @@
 import React, {
-  CSSProperties,
   createContext,
   useCallback,
   useContext,
@@ -8,62 +7,53 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { useTheme } from "../../../theme/ThemeContext";
-import type { CubeTheme, SheetWidthStopTokens, ThemeTokens } from "../../../theme/types";
-import { parseLengthPx } from "../../../utils/parseLengthPx";
+import { clsx } from "clsx";
+import { useTokens } from "../../../mode";
+import type { Tokens } from "../../../mode";
+import { cssVars } from "../../../utils/cssVars";
+import { lengthToPx } from "../../../utils/length";
+import { mergeProps } from "../../../utils/mergeProps";
+import { resolveSpace } from "../../../utils/space";
+import type { Space } from "../../../utils/space";
 import { IconButton } from "../IconButton";
 import { Icon } from "../Icon";
 import { ResizeHandle } from "../ResizeHandle";
-import { sidebarCssVars } from "./sidebarCssVars";
-import styles from "./Sidebar.module.css";
-import type { StackPadding } from "../Stack";
+import classes from "./Sidebar.module.css";
 
 export type SidebarEdge = "left" | "right";
-export type SidebarWidthStop = keyof SheetWidthStopTokens;
+/** A key of `tokens.sidebar.sizes.width`. */
+export type SidebarWidthStop = keyof Tokens["sidebar"]["sizes"]["width"];
 /** Named stop (`sm` / `md` / `lg`) or any CSS length (e.g. `17rem`). */
 export type SidebarWidth = SidebarWidthStop | (string & {});
 
-export interface SidebarProps {
+export type SidebarProps = React.ComponentPropsWithRef<"nav"> & {
   /** When true, the sidebar collapses to the minimized rail width. */
   collapsed?: boolean;
   defaultCollapsed?: boolean;
   onCollapsedChange?: (collapsed: boolean) => void;
   /** Which document edge the sidebar sits on. @default "left" */
   edge?: SidebarEdge;
-  /** Expanded width — token stop or CSS length. @default "md" */
+  /** Expanded width: token stop or CSS length. @default "md" */
   width?: SidebarWidth;
   /** Drag the inner edge to resize (disabled while collapsed). */
   resizable?: boolean;
   /** Fired while resizing with the current width in px. */
   onWidthChange?: (widthPx: number) => void;
-  /** Accessible name when the sidebar has no visible title. */
-  "aria-label"?: string;
-  /** ID of the visible title element, when present. */
-  "aria-labelledby"?: string;
-  theme?: CubeTheme;
-  className?: string;
-  style?: CSSProperties;
-  children?: React.ReactNode;
-}
+};
 
-export interface SidebarRegionProps {
-  theme?: CubeTheme;
+export type SidebarRegionProps = React.ComponentPropsWithRef<"div"> & {
   /**
-   * Override the region's block-axis (top+bottom) inset — `sizes.stack.padding`
-   * token. Defaults to the region's own `--cube-sidebar-padding` /
-   * `--cube-sidebar-footerPadding` (uniform on all sides).
+   * Override the region's block-axis (top+bottom) inset with a spacing token.
+   * Defaults to the `sidebar.sizes.padding` / `footerPadding` token (uniform on all sides).
    */
-  paddingBlock?: StackPadding;
-  /** Override the region's inline-axis (start+end) inset — `sizes.stack.padding` token. */
-  paddingInline?: StackPadding;
-  className?: string;
-  style?: CSSProperties;
-  children?: React.ReactNode;
-}
+  paddingBlock?: Space;
+  /** Override the region's inline-axis (start+end) inset with a spacing token. */
+  paddingInline?: Space;
+};
 
 export type SidebarToggleFloatingAlign = "corner" | "center";
 
-export interface SidebarToggleProps {
+export type SidebarToggleProps = Omit<React.ComponentPropsWithRef<"div">, "children"> & {
   /** Pin the toggle to the top inner corner of the sidebar shell. */
   floating?: boolean;
   /**
@@ -75,10 +65,7 @@ export interface SidebarToggleProps {
   children?: React.ReactNode;
   /** Override the default expand/collapse label. */
   "aria-label"?: string;
-  theme?: CubeTheme;
-  className?: string;
-  style?: CSSProperties;
-}
+};
 
 interface SidebarContextValue {
   collapsed: boolean;
@@ -107,25 +94,20 @@ function isWidthStop(value: SidebarWidth): value is SidebarWidthStop {
   return WIDTH_STOPS.includes(value as SidebarWidthStop);
 }
 
-function resolveSidebarWidthCss(width: SidebarWidth, stops: SheetWidthStopTokens): string {
+function resolveSidebarWidthCss(width: SidebarWidth, stops: Tokens["sidebar"]["sizes"]["width"]): string {
   if (isWidthStop(width)) return stops[width];
   return width;
 }
 
-function regionInlineVars(theme: CubeTheme | undefined, tokens: ThemeTokens) {
-  return theme ? (sidebarCssVars(tokens) as React.CSSProperties) : undefined;
-}
-
 function regionPaddingOverrides(
-  tokens: ThemeTokens,
-  paddingBlock: StackPadding | undefined,
-  paddingInline: StackPadding | undefined,
-): CSSProperties | undefined {
+  tokens: Tokens,
+  paddingBlock: Space | undefined,
+  paddingInline: Space | undefined,
+): React.CSSProperties | undefined {
   if (paddingBlock === undefined && paddingInline === undefined) return undefined;
-  const scale = tokens.sizes.stack.padding;
-  const style: CSSProperties = {};
-  if (paddingBlock !== undefined) style.paddingBlock = scale[paddingBlock];
-  if (paddingInline !== undefined) style.paddingInline = scale[paddingInline];
+  const style: React.CSSProperties = {};
+  if (paddingBlock !== undefined) style.paddingBlock = resolveSpace(tokens, paddingBlock);
+  if (paddingInline !== undefined) style.paddingInline = resolveSpace(tokens, paddingInline);
   return style;
 }
 
@@ -138,61 +120,51 @@ function applyWidthDelta(panelEdge: SidebarEdge, currentPx: number, deltaPx: num
   return currentPx + deltaPx;
 }
 
-function SidebarHeader({
-  theme,
-  paddingBlock,
-  paddingInline,
-  className,
-  style,
-  children,
-}: SidebarRegionProps) {
-  const tokens = useTheme(theme);
+function SidebarHeader({ paddingBlock, paddingInline, className, ...props }: SidebarRegionProps) {
+  const tokens = useTokens();
   return (
     <div
-      className={[styles.Sidebar__header, className].filter(Boolean).join(" ")}
-      style={{
-        ...regionInlineVars(theme, tokens),
-        ...regionPaddingOverrides(tokens, paddingBlock, paddingInline),
-        ...style,
-      }}
-    >
-      {children}
-    </div>
+      {...mergeProps(
+        {
+          "data-component": "Sidebar.Header",
+          className: clsx(classes.Header, className),
+          style: regionPaddingOverrides(tokens, paddingBlock, paddingInline),
+        },
+        props,
+      )}
+    />
   );
 }
 
-function SidebarBody({ theme, className, style, children }: SidebarRegionProps) {
-  const tokens = useTheme(theme);
+function SidebarBody({ paddingBlock, paddingInline, className, ...props }: SidebarRegionProps) {
+  const tokens = useTokens();
   return (
     <div
-      className={[styles.Sidebar__body, className].filter(Boolean).join(" ")}
-      style={{ ...regionInlineVars(theme, tokens), ...style }}
-    >
-      {children}
-    </div>
+      {...mergeProps(
+        {
+          "data-component": "Sidebar.Body",
+          className: clsx(classes.Body, className),
+          style: regionPaddingOverrides(tokens, paddingBlock, paddingInline),
+        },
+        props,
+      )}
+    />
   );
 }
 
-function SidebarFooter({
-  theme,
-  paddingBlock,
-  paddingInline,
-  className,
-  style,
-  children,
-}: SidebarRegionProps) {
-  const tokens = useTheme(theme);
+function SidebarFooter({ paddingBlock, paddingInline, className, ...props }: SidebarRegionProps) {
+  const tokens = useTokens();
   return (
     <div
-      className={[styles.Sidebar__footer, className].filter(Boolean).join(" ")}
-      style={{
-        ...regionInlineVars(theme, tokens),
-        ...regionPaddingOverrides(tokens, paddingBlock, paddingInline),
-        ...style,
-      }}
-    >
-      {children}
-    </div>
+      {...mergeProps(
+        {
+          "data-component": "Sidebar.Footer",
+          className: clsx(classes.Footer, className),
+          style: regionPaddingOverrides(tokens, paddingBlock, paddingInline),
+        },
+        props,
+      )}
+    />
   );
 }
 
@@ -206,37 +178,31 @@ function SidebarToggle({
   floatingAlign = "center",
   children,
   "aria-label": ariaLabel,
-  theme,
   className,
-  style,
+  ...props
 }: SidebarToggleProps) {
   const { collapsed, edge, toggleCollapsed } = useSidebarContext("Sidebar.Toggle");
   const defaultLabel = collapsed ? "Expand sidebar" : "Collapse sidebar";
 
   return (
     <div
-      className={[
-        styles.Sidebar__toggle,
-        floating ? styles["Sidebar__toggle--floating"] : null,
-        floating && floatingAlign === "corner"
-          ? styles["Sidebar__toggle--floating-align-corner"]
-          : null,
-        className,
-      ]
-        .filter(Boolean)
-        .join(" ")}
-      style={style}
+      {...mergeProps(
+        {
+          "data-component": "Sidebar.Toggle",
+          "data-floating": floating ? floatingAlign : undefined,
+          className: clsx(classes.Toggle, className),
+        },
+        props,
+      )}
     >
       <IconButton
         aria-label={ariaLabel ?? defaultLabel}
         aria-expanded={!collapsed}
         variant="ghost"
         size="sm"
-        theme={theme}
         onClick={toggleCollapsed}
-      >
-        {children ?? <CollapseIcon edge={edge} collapsed={collapsed} />}
-      </IconButton>
+        icon={children ?? <CollapseIcon edge={edge} collapsed={collapsed} />}
+      />
     </div>
   );
 }
@@ -255,15 +221,14 @@ export function Sidebar({
   width = "md",
   resizable = false,
   onWidthChange,
-  "aria-label": ariaLabel,
-  "aria-labelledby": ariaLabelledby,
-  theme,
   className,
   style,
   children,
+  ...props
 }: SidebarProps) {
-  const tokens = useTheme(theme);
-  const layout = tokens.sizes.sidebar;
+  const tokens = useTokens();
+  const { sidebar, borderWidth, size } = tokens;
+  const layout = sidebar.sizes;
 
   const [internalCollapsed, setInternalCollapsed] = useState(defaultCollapsed);
   const collapsed = collapsedProp ?? internalCollapsed;
@@ -283,17 +248,17 @@ export function Sidebar({
     [width, layout.width]
   );
 
-  const minWidthPx = useMemo(() => parseLengthPx(layout.minWidth, 200), [layout.minWidth]);
+  const minWidthPx = useMemo(() => lengthToPx(layout.minWidth, 200), [layout.minWidth]);
   const maxWidthPx = useMemo(
-    () => parseLengthPx(layout.maxWidth, 480),
+    () => lengthToPx(layout.maxWidth, 480),
     [layout.maxWidth]
   );
 
-  const [widthPx, setWidthPx] = useState(() => parseLengthPx(defaultWidthCss, 272));
+  const [widthPx, setWidthPx] = useState(() => lengthToPx(defaultWidthCss, 272));
   const lastExpandedWidthRef = useRef(widthPx);
 
   useEffect(() => {
-    const next = parseLengthPx(defaultWidthCss, 272);
+    const next = lengthToPx(defaultWidthCss, 272);
     setWidthPx(next);
     lastExpandedWidthRef.current = next;
   }, [defaultWidthCss]);
@@ -303,8 +268,6 @@ export function Sidebar({
       setWidthPx(lastExpandedWidthRef.current);
     }
   }, [collapsed]);
-
-  const inlineVars = theme ? (sidebarCssVars(tokens) as React.CSSProperties) : undefined;
 
   const clampWidth = useCallback(
     (next: number) => Math.min(maxWidthPx, Math.max(minWidthPx, next)),
@@ -336,29 +299,36 @@ export function Sidebar({
     [collapsed, edge, toggleCollapsed]
   );
 
-  const widthStyle: CSSProperties = collapsed
+  const widthStyle: React.CSSProperties = collapsed
     ? { width: layout.widthMinimized }
     : resizable
       ? { width: `${widthPx}px`, maxWidth: layout.maxWidth }
       : { width: resolveSidebarWidthCss(width, layout.width), maxWidth: layout.maxWidth };
 
-  const classNames = [
-    styles.Sidebar,
-    styles[`Sidebar--${edge}`],
-    resizable && !collapsed ? styles["Sidebar--resizable"] : null,
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
-
   return (
     <SidebarContext.Provider value={contextValue}>
       <nav
-        aria-label={ariaLabel}
-        aria-labelledby={ariaLabelledby}
-        data-collapsed={collapsed ? "true" : undefined}
-        className={classNames}
-        style={{ ...inlineVars, ...widthStyle, ...style }}
+        {...mergeProps(
+          {
+            "data-component": "Sidebar",
+            "data-edge": edge,
+            "data-collapsed": collapsed ? "true" : undefined,
+            "data-resizable": resizable && !collapsed ? "" : undefined,
+            className: clsx(classes.Sidebar, className),
+            style: {
+              backgroundColor: sidebar.color.background,
+              ...cssVars("sidebar", {
+                borderColor: sidebar.color.border,
+                borderWidth: borderWidth.thin,
+                padding: layout.padding,
+                footerPadding: layout.footerPadding,
+                toggleSize: size.control.sm.size,
+              }),
+              ...widthStyle,
+            },
+          },
+          { ...props, style },
+        )}
       >
         {resizable && !collapsed && (
           <ResizeHandle
@@ -366,7 +336,6 @@ export function Sidebar({
             edge={resizeHandleEdge(edge)}
             onResizeDelta={handleResizeDelta}
             aria-label="Resize sidebar"
-            theme={theme}
           />
         )}
         {children}

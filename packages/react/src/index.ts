@@ -1,7 +1,4 @@
 // ── Core primitives ───────────────────────────────────────────────────────────
-export { Stack } from "./components/core/Stack";
-export type { StackProps, StackDirection, StackGap, StackPadding, StackSpacing, LayoutWidth, StackPosition, StackInset, LayoutMaxWidth, LayoutMaxHeight, StackPointerEvents, StackZIndex } from "./components/core/Stack";
-export type { Breakpoint, Responsive } from "./utils/responsive";
 
 export { Table, SimpleTable } from "./components/core/Table";
 export type {
@@ -24,40 +21,32 @@ export { Container } from "./components/core/Container";
 export type { ContainerProps, ContainerWidth } from "./components/core/Container";
 
 export { Box } from "./components/core/Box";
-export type {
-  BoxProps,
-  BoxBackground,
-  BoxBorderColor,
-  BoxBorderRadius,
-  BoxForeground,
-  BoxOverflow,
-  BoxMargin,
-  SpaceToken,
-} from "./components/core/Box";
+export type { BoxProps, BoxOwnProps, BoxSpacing } from "./components/core/Box";
+export type { Space } from "./utils/space";
+export type { BgColor, BorderColor, FgColor } from "./utils/colorPaths";
 
-export { spaceTokenToCssVar } from "./utils/spaceToken";
-export type { SpaceScale, SpacePxKey } from "./theme/types";
-export { pxToSpaceScale, pxKeyToSpaceScale } from "./utils/spaceScale";
-export { tokenOutput } from "./theme/tokenOutput";
-export type { TokenOutput } from "./theme/tokenOutput";
 
 export { Divider } from "./components/core/Divider";
 export type { DividerProps, DividerColor } from "./components/core/Divider";
+export { Heading } from "./components/core/Heading";
+export type { HeadingProps, HeadingLevel, HeadingSize } from "./components/core/Heading";
+export { Subtitle } from "./components/core/Subtitle";
+export type { SubtitleProps } from "./components/core/Subtitle";
 
 export { Callout } from "./components/core/Callout";
-export type { CalloutProps, CalloutBackground } from "./components/core/Callout";
+export type { CalloutProps } from "./components/core/Callout";
 
 export { Highlight } from "./components/core/Highlight";
 export type { HighlightProps, HighlightColor } from "./components/core/Highlight";
 
 export { Text } from "./components/core/Text";
-export type { TextProps, TextColor, TextRole, TextSize, TextTokenKey, TextWeight } from "./components/core/Text";
+export type { TextProps, TextColor, TextSize } from "./components/core/Text";
 
 export { Button } from "./components/core/Button";
-export type { ButtonProps, ButtonShape, ButtonSize, ButtonVariant } from "./components/core/Button";
+export type { ButtonProps } from "./components/core/Button";
 
 export { IconButton } from "./components/core/IconButton";
-export type { IconButtonProps, IconButtonSize, IconButtonVariant } from "./components/core/IconButton";
+export type { IconButtonProps } from "./components/core/IconButton";
 
 export { Tooltip } from "./components/core/Tooltip";
 export type { TooltipProps, TooltipPlacement } from "./components/core/Tooltip";
@@ -71,12 +60,11 @@ export { Link } from "./components/core/Link";
 export type { LinkProps, LinkVariant } from "./components/core/Link";
 
 export { Pill } from "./components/core/Pill";
-export type { PillProps, PillShade, PillTextVariant } from "./components/core/Pill";
+export type { PillProps, PillShade, PillIntensity, PillSize } from "./components/core/Pill";
 
 export { BreadcrumbLink, Breadcrumbs } from "./components/core/Breadcrumb";
 export type {
   BreadcrumbLinkProps,
-  BreadcrumbLinkState,
   BreadcrumbsProps,
   BreadcrumbItem,
 } from "./components/core/Breadcrumb";
@@ -180,68 +168,8 @@ export type {
 export { JsonViewer } from "./components/JsonViewer";
 export type { JsonViewerProps, JsonViewerMode } from "./components/JsonViewer";
 
-// ── Theme ─────────────────────────────────────────────────────────────────────
-export { ThemeProvider, useTheme } from "./theme/ThemeContext";
-export { defaultTheme } from "./theme/defaultTheme";
-export type {
-  CubeTheme,
-  ThemeTokens,
-  Colors,
-  BaseColors,
-  ColorScale,
-  FunctionalColors,
-  SyntaxColors,
-  Typography,
-  TextStyle,
-  TextTokens,
-  Sizes,
-  SpaceKey,
-  ZIndexTokens,
-  TooltipSurfaceColors,
-  TooltipLayoutTokens,
-  IconButtonFunctionalColors,
-  IconButtonSizesTokens,
-  IconButtonSizeStopTokens,
-  LinkFunctionalColors,
-  LinkFgColors,
-  PillFunctionalColors,
-  PillIntensity,
-  PillIntensityColors,
-  PillSurfaceColors,
-  PillSurface,
-  PillLayoutTokens,
-  ContainerSizesTokens,
-  LayoutTokens,
-  BreadcrumbFunctionalColors,
-  BreadcrumbSizesTokens,
-  OverlayFunctionalColors,
-  SheetFunctionalColors,
-  SheetSizesTokens,
-  SheetWidthStopTokens,
-  PopoverFunctionalColors,
-  PopoverLayoutTokens,
-  ActionMenuFunctionalColors,
-  ActionMenuItemBgColors,
-  ActionMenuItemFgColors,
-  ActionMenuItemSizeTokens,
-  ActionMenuListSizeTokens,
-  ActionMenuSectionSizeTokens,
-  ActionMenuHeaderSizeTokens,
-  ActionMenuFooterSizeTokens,
-  ActionMenuSizesTokens,
-  ResizeHandleSizesTokens,
-  ShadowTokens,
-  SiteHeaderFunctionalColors,
-  SiteHeaderSizesTokens,
-  BreakpointTokens,
-  GlobalColors,
-  GlobalTextColors,
-  GlobalCanvasColors,
-  GlobalSemanticColorPair,
-  GlobalColorPath,
-} from "./theme/types";
-export {
-  resolveGlobalColor,
-  resolveGlobalColorOrCss,
-  GLOBAL_COLOR_PATH_EXAMPLES,
-} from "./theme/globalColor";
+// ── Tokens & modes ────────────────────────────────────────────────────────────
+// Token consumption (ADR-04): build-time overrides, runtime modes.
+export { useTokens, useMode, getMode, setMode } from "./mode";
+export type { ModeName, SizeScale, Tokens } from "./mode";
+

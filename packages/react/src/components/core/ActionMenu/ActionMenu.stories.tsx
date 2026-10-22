@@ -1,40 +1,19 @@
 import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Title, Primary, Controls, Subtitle } from "@storybook/blocks";
 import { Button } from "../Button";
 import { IconButton } from "../IconButton";
-import { Stack } from "../Stack";
+import { Box } from "../Box";
+import { Icon } from "../Icon";
 import { Text } from "../Text";
 import { ActionMenu } from "./ActionMenu";
 import { ActionMenuItem } from "./ActionMenuItem";
 import { ActionMenuList } from "./ActionMenuList";
 
-const HomeIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden focusable={false}>
-    <path d="M10 3.5 4 8.5v7h4v-4h4v4h4v-7L10 3.5z" />
-  </svg>
-);
-
 const meta: Meta<typeof ActionMenu> = {
   title: "Core/ActionMenu",
   component: ActionMenu,
   tags: ["autodocs"],
-  parameters: {
-    layout: "padded",
-    docs: {
-      page: () => (
-        <>
-          <Title />
-          <Subtitle>
-            Dropdown menu — Figma <code>ActionMenu</code>. Composes trigger +{" "}
-            <code>Popover</code> + <code>ActionMenuList</code> with arrow-key navigation.
-          </Subtitle>
-          <Primary />
-          <Controls />
-        </>
-      ),
-    },
-  },
+  parameters: { layout: "padded" },
 };
 export default meta;
 type Story = StoryObj<typeof ActionMenu>;
@@ -60,7 +39,7 @@ export const Controlled: Story = {
   render: function ControlledMenu() {
     const [open, setOpen] = useState(false);
     return (
-      <Stack gap="sm" direction="horizontal">
+      <Box gap="sm" flexDirection="row">
         <ActionMenu
           open={open}
           onOpenChange={setOpen}
@@ -77,7 +56,7 @@ export const Controlled: Story = {
         <Button variant="ghost" size="sm" onClick={() => setOpen((value) => !value)}>
           Toggle externally
         </Button>
-      </Stack>
+      </Box>
     );
   },
 };
@@ -116,18 +95,14 @@ export const WithHeaderAndFooter: Story = {
       closeOnSelect={false}
     >
       <ActionMenuList.Header>
-        <Stack direction="horizontal" gap="sm" style={{ alignItems: "center" }}>
+        <Box flexDirection="row" gap="sm" alignItems="center">
           <span id="menu-header-title" style={{ flex: 1 }}>
-            <Text role="body" size="xs" weight="semibold">
+            <Text size="sm" weight="semibold">
               Filter
             </Text>
           </span>
-          <IconButton aria-label="Close" variant="ghost" size="sm">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden focusable={false}>
-              <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-            </svg>
-          </IconButton>
-        </Stack>
+          <IconButton aria-label="Close" variant="ghost" size="sm" icon={<Icon name="close" />} />
+        </Box>
       </ActionMenuList.Header>
       <ActionMenuItem selected keepOpenOnSelect>
         Active only
@@ -136,14 +111,14 @@ export const WithHeaderAndFooter: Story = {
         Archived
       </ActionMenuItem>
       <ActionMenuList.Footer>
-        <Stack direction="horizontal" gap="sm" style={{ justifyContent: "space-between" }}>
+        <Box flexDirection="row" gap="sm" justifyContent="space-between">
           <Button variant="secondary" size="xs">
             Reset
           </Button>
           <Button variant="primary" size="xs">
             Done
           </Button>
-        </Stack>
+        </Box>
       </ActionMenuList.Footer>
     </ActionMenu>
   ),
@@ -181,7 +156,7 @@ export const ListOnly: Story = {
         <ActionMenuItem>Rest</ActionMenuItem>
         <ActionMenuItem selected>Selected</ActionMenuItem>
         <ActionMenuItem disabled>Disabled</ActionMenuItem>
-        <ActionMenuItem leadingIcon={<HomeIcon />}>With icon</ActionMenuItem>
+        <ActionMenuItem leadingIcon={<Icon name="home" />}>With icon</ActionMenuItem>
         <ActionMenuItem subtext="Supporting text">With subtext</ActionMenuItem>
         <ActionMenuItem hasSubmenu>Submenu</ActionMenuItem>
       </ActionMenuList>

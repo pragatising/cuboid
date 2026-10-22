@@ -1,294 +1,223 @@
-import React, { forwardRef } from "react";
-import { useTheme } from "../../../theme/ThemeContext";
-import { resolveGlobalColorOrCss } from "../../../theme/globalColor";
-import type { CubeTheme, GlobalColorPath, ThemeTokens } from "../../../theme/types";
-import { isResponsiveObject, resolveResponsive, type Responsive } from "../../../utils/responsive";
-import type { SpaceToken } from "../../../utils/spaceToken";
-import { spaceTokenToCssVar } from "../../../utils/spaceToken";
-import styles from "./Box.module.css";
-import type { BoxBorderRadius, BoxOverflowAxis } from "./boxTypes";
+import React from "react";
+import { clsx } from "clsx";
+import { useTokens } from "../../../mode";
+import type { Tokens } from "../../../mode";
+import { resolveColorPath } from "../../../utils/colorPaths";
+import type { BgColor, BorderColor, FgColor } from "../../../utils/colorPaths";
+import { mergeProps } from "../../../utils/mergeProps";
+import type { PolymorphicProps } from "../../../utils/polymorphic";
+import { resolveSpace } from "../../../utils/space";
+import type { Space } from "../../../utils/space";
+import classes from "./Box.module.css";
 
-export type { BoxBackground, BoxBorderColor, BoxBorderRadius, BoxForeground, BoxOverflowAxis } from "./boxTypes";
-export type { SpaceToken } from "../../../utils/spaceToken";
-
-export type BoxDirection = "row" | "column";
-export type BoxZIndex = keyof ThemeTokens["sizes"]["zIndex"];
-export type BoxPosition = "static" | "relative" | "absolute" | "fixed" | "sticky";
+type Css = React.CSSProperties;
 
 /**
  * One box-model prop, three shapes:
- * - scalar → all sides/axes
- * - `{ block, inline }` → per-axis
- * - `{ top, right, bottom, left }` → per physical side
- * Pick whichever shape matches how asymmetric the spacing actually is —
- * don't reach for the 4-side form for a symmetric value.
+ * - scalar -> all sides
+ * - `{ block, inline }` -> per axis
+ * - `{ top, right, bottom, left }` -> per physical side
+ * Pick whichever shape matches how asymmetric the spacing actually is.
  */
-export type BoxSpacing<T> =
-  | T
-  | { block?: T; inline?: T }
-  | { top?: T; right?: T; bottom?: T; left?: T };
+export type BoxSpacing<T> = T | { block?: T; inline?: T } | { top?: T; right?: T; bottom?: T; left?: T };
 
-export interface BoxProps
-  extends Omit<React.HTMLAttributes<HTMLElement>, "color" | "style"> {
-  as?: React.ElementType;
-
-  /** Surface background — `colors.global` dot-path, or any CSS color string. */
-  background?: GlobalColorPath;
-  /** Border color — `colors.global` dot-path, or any CSS color string. Applies `sizes.borderWidth.thin` when set. */
-  borderColor?: GlobalColorPath;
-  /** Corner radius from `sizes.borderRadius`. */
-  borderRadius?: BoxBorderRadius;
-  /** Inherited text color — `colors.global` dot-path, or any CSS color string. */
-  foreground?: GlobalColorPath;
-
-  /** `flex-direction`. @default "column" */
-  direction?: Responsive<BoxDirection>;
-  /** Gap between children — an 8pt scale token (`space.*`). */
-  gap?: Responsive<SpaceToken>;
-  align?: Responsive<React.CSSProperties["alignItems"]>;
-  justify?: Responsive<React.CSSProperties["justifyContent"]>;
-  wrap?: Responsive<boolean>;
-  grow?: boolean | number;
-  shrink?: boolean | number;
+export type BoxOwnProps = {
+  /** Element colours, chosen by token path. `backgroundColor` -> `bgColor.*`, `borderColor` -> `borderColor.*`, `color` (text) -> `fgColor.*`. */
+  backgroundColor?: BgColor;
+  /** Applies a `borderWidth.thin` solid border in this colour. */
+  borderColor?: BorderColor;
+  color?: FgColor;
+  /** A key of `tokens.borderRadius`. */
+  borderRadius?: keyof Tokens["borderRadius"];
 
   /**
-   * Padding — scalar (all sides), `{block, inline}`, or `{top,right,bottom,left}`.
-   * Values are `space.*` scale tokens. Not responsive yet — pass a scalar and
-   * override with `style`-equivalent props at each breakpoint via `direction`/
-   * `gap`'s pattern once padding needs it.
+   * The CSS `display` value. Box is a flex container by default; pass `"inline-flex"`, `"grid"`, `"block"`, …
+   * for anything else (the flex props below then do nothing).
+   * @default "flex"
    */
-  padding?: BoxSpacing<SpaceToken>;
-  /** External margin — same three shapes as `padding`. Not responsive yet. */
-  margin?: BoxSpacing<SpaceToken>;
+  display?: Css["display"];
+  /** CSS `flex-direction`. @default "column" */
+  flexDirection?: Css["flexDirection"];
+  flexWrap?: Css["flexWrap"];
+  flexGrow?: Css["flexGrow"];
+  flexShrink?: Css["flexShrink"];
+  alignItems?: Css["alignItems"];
+  justifyContent?: Css["justifyContent"];
+  /** CSS `gap`, from a spacing token: Nx scale (`"1.5x"` = 12px) or semantic (`"sm"`). `0` is `0`. */
+  gap?: Space | 0;
 
-  /** Token keyword (`"full"`, `"auto"`, …) or any CSS length. */
-  width?: string;
-  /** Any CSS length. */
-  height?: string;
-  minWidth?: string | 0;
-  maxWidth?: string;
-  maxHeight?: string;
+  /** CSS `padding` / `margin`, from spacing tokens (or `0`): scalar, `{block, inline}` or `{top, right, bottom, left}`. */
+  padding?: BoxSpacing<Space | 0>;
+  margin?: BoxSpacing<Space | 0>;
 
-  position?: BoxPosition;
-  /** Shorthand inset on all sides. */
-  inset?: BoxSpacing<SpaceToken | 0>;
-  top?: SpaceToken | 0;
-  right?: SpaceToken | 0;
-  bottom?: SpaceToken | 0;
-  left?: SpaceToken | 0;
-  /** Layer from `sizes.zIndex` (e.g. `"dialog"`, `"overlay"`). */
-  zIndex?: BoxZIndex;
+  width?: Css["width"];
+  height?: Css["height"];
+  minWidth?: Css["minWidth"];
+  maxWidth?: Css["maxWidth"];
+  minHeight?: Css["minHeight"];
+  maxHeight?: Css["maxHeight"];
 
-  overflow?: BoxOverflowAxis;
-  overflowX?: BoxOverflowAxis;
-  overflowY?: BoxOverflowAxis;
+  position?: Css["position"];
+  /** CSS `inset` / `top` / `right` / `bottom` / `left`, from spacing tokens (or `0`). */
+  inset?: BoxSpacing<Space | 0>;
+  top?: Space | 0;
+  right?: Space | 0;
+  bottom?: Space | 0;
+  left?: Space | 0;
+  /** A key of `tokens.zIndex` (`"dialog"`, `"overlay"`, …). */
+  zIndex?: keyof Tokens["zIndex"];
 
-  cursor?: React.CSSProperties["cursor"];
-  opacity?: React.CSSProperties["opacity"];
-  /** Raw CSS transition shorthand — no motion tokens wired up yet. */
-  transition?: React.CSSProperties["transition"];
-  display?: React.CSSProperties["display"];
-  visibility?: React.CSSProperties["visibility"];
-  whiteSpace?: React.CSSProperties["whiteSpace"];
-  textOverflow?: React.CSSProperties["textOverflow"];
-  pointerEvents?: React.CSSProperties["pointerEvents"];
+  overflow?: Css["overflow"];
+  overflowX?: Css["overflowX"];
+  overflowY?: Css["overflowY"];
+  cursor?: Css["cursor"];
+  opacity?: Css["opacity"];
+  transition?: Css["transition"];
+  visibility?: Css["visibility"];
+  whiteSpace?: Css["whiteSpace"];
+  textOverflow?: Css["textOverflow"];
+  pointerEvents?: Css["pointerEvents"];
+};
 
-  theme?: CubeTheme;
-  className?: string;
-  children?: React.ReactNode;
-}
+export type BoxProps<As extends React.ElementType = "div"> = PolymorphicProps<As, "div", BoxOwnProps>;
 
-function directionToFlex(direction: BoxDirection | undefined): React.CSSProperties["flexDirection"] {
-  return direction;
-}
+type Resolve = (value: Space) => string;
 
-function spaceTokenOrZeroToCssVar(value: SpaceToken | 0): string {
-  return value === 0 ? "0" : spaceTokenToCssVar(value);
-}
+const zero = (resolve: Resolve) => (value: Space | 0) => (value === 0 ? "0" : resolve(value));
 
-function spacingToStyle<T extends SpaceToken | 0>(
+/** One spacing prop (`padding`, `margin`, `inset`) -> its CSS longhands, picking the shape the consumer used. */
+function spacingToStyle<T extends Space | 0>(
   value: BoxSpacing<T> | undefined,
   prop: "padding" | "margin" | "inset",
   resolve: (v: T) => string,
-): React.CSSProperties {
+): Css {
   if (value === undefined) return {};
-  const style: Record<string, string | undefined> = {};
+  const style: Record<string, string> = {};
 
   if (typeof value !== "object") {
     style[prop] = resolve(value);
-    return style;
-  }
-
-  if ("block" in value || "inline" in value) {
+  } else if ("block" in value || "inline" in value) {
     if (value.block !== undefined) style[`${prop}Block`] = resolve(value.block);
     if (value.inline !== undefined) style[`${prop}Inline`] = resolve(value.inline);
-    return style;
+  } else {
+    const sides = value as { top?: T; right?: T; bottom?: T; left?: T };
+    for (const side of ["top", "right", "bottom", "left"] as const) {
+      if (sides[side] !== undefined) style[`${prop}${side[0].toUpperCase()}${side.slice(1)}`] = resolve(sides[side] as T);
+    }
   }
-
-  const sides = value as { top?: T; right?: T; bottom?: T; left?: T };
-  if (sides.top !== undefined) style[`${prop}Top`] = resolve(sides.top);
-  if (sides.right !== undefined) style[`${prop}Right`] = resolve(sides.right);
-  if (sides.bottom !== undefined) style[`${prop}Bottom`] = resolve(sides.bottom);
-  if (sides.left !== undefined) style[`${prop}Left`] = resolve(sides.left);
   return style;
 }
 
-function boxCssVars(
-  props: Pick<BoxProps, "background" | "borderColor" | "foreground">,
-  tokens: ThemeTokens,
-): Record<string, string> {
-  const { global } = tokens.colors;
-  const vars: Record<string, string> = {
-    "--box-bg": props.background ? resolveGlobalColorOrCss(props.background, global) : "transparent",
-  };
-  if (props.borderColor) {
-    vars["--box-border-color"] = resolveGlobalColorOrCss(props.borderColor, global);
-  }
-  if (props.foreground) {
-    vars["--box-fg"] = resolveGlobalColorOrCss(props.foreground, global);
-  }
-  return vars;
-}
-
-function boxModifierClasses(props: {
-  borderColor?: GlobalColorPath;
-  borderRadius?: BoxBorderRadius;
-}): string[] {
-  const classes = [styles.Box];
-  if (props.borderColor) classes.push(styles["Box--bordered"]);
-  if (props.borderRadius) classes.push(styles[`Box--radius-${props.borderRadius}` as keyof typeof styles]);
-  return classes;
-}
+/** Drop the keys the consumer didn't set, so unset props add nothing to the inline style. */
+const defined = (style: Css): Css => Object.fromEntries(Object.entries(style).filter(([, v]) => v !== undefined));
 
 /**
- * The one primitive: a styled `<div>` (or `as` element) that is also a full
- * flex container. Every visual/layout value is a typed prop backed by a
- * theme token or a raw CSS escape hatch typed via `React.CSSProperties` —
- * there is no `style` prop, by design, so nothing bypasses the token system.
- * `gap`/`padding`/`margin`/`inset` take `space.*` scale tokens directly —
- * Box is the one primitive everything else composes from, so it has no
- * named size scale of its own to keep in sync.
+ * A flexbox container: a `div` (or any `as` element) whose props are the CSS properties of the
+ * same name. Where a CSS value is a design decision — colours, radius, spacing, z-index — the prop
+ * takes a token instead of a raw value. It is `display: flex` by default; anything else a consumer
+ * needs goes through `style`.
  */
-export const Box = forwardRef<HTMLElement, BoxProps>(function Box(
-  {
-    as: As = "div",
-    background,
-    borderColor,
-    borderRadius,
-    foreground,
-    direction = "column",
-    gap,
-    align,
-    justify,
-    wrap,
-    grow,
-    shrink,
-    padding,
-    margin,
-    width,
-    height,
-    minWidth,
-    maxWidth,
-    maxHeight,
-    position,
-    inset,
-    top,
-    right,
-    bottom,
-    left,
-    zIndex,
-    overflow,
-    overflowX,
-    overflowY,
-    cursor,
-    opacity,
-    transition,
-    display,
-    visibility,
-    whiteSpace,
-    textOverflow,
-    pointerEvents,
-    theme,
-    className,
-    children,
-    ...rest
-  },
-  ref,
-) {
-  const tokens = useTheme(theme);
+export function Box<As extends React.ElementType = "div">({
+  as,
+  backgroundColor,
+  borderColor,
+  color,
+  borderRadius,
+  display,
+  flexDirection = "column",
+  flexWrap,
+  flexGrow,
+  flexShrink,
+  alignItems,
+  justifyContent,
+  gap,
+  padding,
+  margin,
+  width,
+  height,
+  minWidth,
+  maxWidth,
+  minHeight,
+  maxHeight,
+  position,
+  inset,
+  top,
+  right,
+  bottom,
+  left,
+  zIndex,
+  overflow,
+  overflowX,
+  overflowY,
+  cursor,
+  opacity,
+  transition,
+  visibility,
+  whiteSpace,
+  textOverflow,
+  pointerEvents,
+  className,
+  ...props
+}: BoxProps<As>) {
+  const Component: React.ElementType = as ?? "div";
+  const tokens = useTokens();
+  const space: Resolve = (value) => resolveSpace(tokens, value);
+  const spaceOrZero = zero(space);
 
-  const directionResolved = resolveResponsive(direction);
-  const gapResolved = resolveResponsive(gap);
-  const alignResolved = resolveResponsive(align);
-  const justifyResolved = resolveResponsive(justify);
-  const wrapResolved = resolveResponsive(wrap);
-  const isResponsive =
-    isResponsiveObject(direction) ||
-    isResponsiveObject(gap) ||
-    isResponsiveObject(align) ||
-    isResponsiveObject(justify) ||
-    isResponsiveObject(wrap);
-
-  const classNames = [...boxModifierClasses({ borderColor, borderRadius }), className]
-    .filter(Boolean)
-    .join(" ");
-
-  const responsiveVars: Record<string, string> = {};
-  if (isResponsive) {
-    for (const tier of ["sm", "md", "lg"] as const) {
-      const dir = directionToFlex(directionResolved[tier]);
-      if (dir) responsiveVars[`--box-direction-${tier}`] = dir;
-      const g = gapResolved[tier];
-      if (g !== undefined) responsiveVars[`--box-gap-${tier}`] = spaceTokenToCssVar(g);
-      if (alignResolved[tier] !== undefined) responsiveVars[`--box-align-${tier}`] = String(alignResolved[tier]);
-      if (justifyResolved[tier] !== undefined) responsiveVars[`--box-justify-${tier}`] = String(justifyResolved[tier]);
-      if (wrapResolved[tier] !== undefined) responsiveVars[`--box-wrap-${tier}`] = wrapResolved[tier] ? "wrap" : "nowrap";
-    }
-  }
-
-  const style: React.CSSProperties = {
-    ...boxCssVars({ background, borderColor, foreground }, tokens),
-    ...(isResponsive
-      ? responsiveVars
-      : {
-          flexDirection: directionToFlex(direction as BoxDirection),
-          gap: gap !== undefined ? spaceTokenToCssVar(gap) : undefined,
-          alignItems: align,
-          justifyContent: justify,
-          flexWrap: wrap === undefined ? undefined : wrap ? "wrap" : "nowrap",
-        }),
-    ...spacingToStyle(padding, "padding", spaceTokenToCssVar),
-    ...spacingToStyle(margin, "margin", spaceTokenToCssVar),
-    ...(typeof grow === "number" ? { flexGrow: grow } : grow === true ? { flexGrow: 1 } : grow === false ? { flexGrow: 0 } : {}),
-    ...(typeof shrink === "number" ? { flexShrink: shrink } : shrink === true ? { flexShrink: 1 } : shrink === false ? { flexShrink: 0 } : {}),
-    width,
-    height,
-    minWidth,
-    maxWidth,
-    maxHeight,
-    position,
-    ...spacingToStyle(inset, "inset", spaceTokenOrZeroToCssVar),
-    top: top !== undefined ? spaceTokenOrZeroToCssVar(top) : undefined,
-    right: right !== undefined ? spaceTokenOrZeroToCssVar(right) : undefined,
-    bottom: bottom !== undefined ? spaceTokenOrZeroToCssVar(bottom) : undefined,
-    left: left !== undefined ? spaceTokenOrZeroToCssVar(left) : undefined,
-    zIndex: zIndex !== undefined ? tokens.sizes.zIndex[zIndex] : undefined,
-    overflow,
-    overflowX,
-    overflowY,
-    cursor,
-    opacity,
-    transition,
-    display,
-    visibility,
-    whiteSpace,
-    textOverflow,
-    pointerEvents,
+  const style: Css = {
+    flexDirection,
+    ...defined({
+      display,
+      flexWrap,
+      flexGrow,
+      flexShrink,
+      alignItems,
+      justifyContent,
+      gap: gap !== undefined ? spaceOrZero(gap) : undefined,
+      backgroundColor: backgroundColor ? resolveColorPath(tokens.bgColor, backgroundColor) : undefined,
+      color: color ? resolveColorPath(tokens.fgColor, color) : undefined,
+      borderRadius: borderRadius ? tokens.borderRadius[borderRadius] : undefined,
+      ...(borderColor
+        ? { borderStyle: "solid", borderWidth: tokens.borderWidth.thin, borderColor: resolveColorPath(tokens.borderColor, borderColor) }
+        : {}),
+      width,
+      height,
+      minWidth,
+      maxWidth,
+      minHeight,
+      maxHeight,
+      position,
+      top: top !== undefined ? spaceOrZero(top) : undefined,
+      right: right !== undefined ? spaceOrZero(right) : undefined,
+      bottom: bottom !== undefined ? spaceOrZero(bottom) : undefined,
+      left: left !== undefined ? spaceOrZero(left) : undefined,
+      zIndex: zIndex !== undefined ? tokens.zIndex[zIndex] : undefined,
+      overflow,
+      overflowX,
+      overflowY,
+      cursor,
+      opacity,
+      transition,
+      visibility,
+      whiteSpace,
+      textOverflow,
+      pointerEvents,
+    }),
+    ...spacingToStyle(padding, "padding", spaceOrZero),
+    ...spacingToStyle(margin, "margin", spaceOrZero),
+    ...spacingToStyle(inset, "inset", spaceOrZero),
   };
 
   return (
-    <As ref={ref} className={classNames} style={style} {...rest}>
-      {children}
-    </As>
+    <Component
+      {...mergeProps(
+        {
+          "data-component": "Box",
+          className: clsx(classes.Box, className as string | undefined),
+          style,
+        },
+        props as object,
+      )}
+    />
   );
-});
+}

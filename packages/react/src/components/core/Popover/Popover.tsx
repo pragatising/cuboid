@@ -8,16 +8,20 @@ import React, {
   useState,
 } from "react";
 import { createPortal } from "react-dom";
-import { useTheme } from "../../../theme/ThemeContext";
-import type { CubeTheme, StackPadding, ThemeTokens } from "../../../theme/types";
-import { parseLengthPx } from "../../../utils/parseLengthPx";
+import { clsx } from "clsx";
+import { useTokens } from "../../../mode";
+import { lengthToPx } from "../../../utils/length";
+import { resolveSpace } from "../../../utils/space";
+import type { Space } from "../../../utils/space";
 import { ActionMenuList } from "../ActionMenu/ActionMenuList";
-import { Button, type ButtonVariant } from "../Button";
+import { Box } from "../Box";
+import { Button, type ButtonProps } from "../Button";
 import { Icon } from "../Icon";
 import { IconButton } from "../IconButton";
-import { Stack } from "../Stack";
 import { Text } from "../Text";
-import styles from "./Popover.module.css";
+import classes from "./Popover.module.css";
+
+type ButtonVariant = NonNullable<ButtonProps["variant"]>;
 
 export type PopoverPlacement =
   | "top"
@@ -93,18 +97,18 @@ function renderFooterActions(actions: PopoverFooterActions): React.ReactNode {
 
   if (actions.align === "left") {
     return (
-      <Stack direction="horizontal" gap="sm" width="full">
+      <Box flexDirection="row" gap="sm" width="100%">
         {primaryButton}
         {secondaryButton}
-      </Stack>
+      </Box>
     );
   }
 
   return (
-    <Stack direction="horizontal" justify="space-between" width="full">
+    <Box flexDirection="row" justifyContent="space-between" width="100%">
       {secondaryButton}
       {primaryButton}
-    </Stack>
+    </Box>
   );
 }
 
@@ -139,7 +143,7 @@ export interface PopoverProps {
    * `Popover` usage (e.g. `ActionMenu`) is unaffected.
    * @default "md"
    */
-  bodyPadding?: StackPadding;
+  bodyPadding?: Space;
   /**
    * Caps the panel's height (any valid CSS length, e.g. `"320px"`,
    * `"60vh"`). Content beyond it scrolls inside the panel — header/footer
@@ -167,7 +171,6 @@ export interface PopoverProps {
   "aria-label"?: string;
   /** id of an element that labels the panel. */
   "aria-labelledby"?: string;
-  theme?: CubeTheme;
   className?: string;
   contentClassName?: string;
 }
@@ -225,23 +228,6 @@ function computeFixedPosition(
   }
 }
 
-function popoverCssVars(tokens: ThemeTokens, elevation: PopoverElevation): Record<string, string> {
-  const { popover } = tokens.colors.functional;
-  const layout = tokens.sizes.popover;
-  const shadow =
-    elevation === "4x" ? tokens.shadows.popoverElevated : tokens.shadows.popover;
-
-  return {
-    "--cube-popover-bg": popover.background,
-    "--cube-popover-gap": layout.gap,
-    "--cube-popover-borderRadius": layout.borderRadius,
-    "--cube-popover-minWidth": layout.minWidth,
-    "--cube-popover-maxWidth": layout.maxWidth,
-    "--cube-popover-shadow": shadow,
-    "--cube-z-index-popover": tokens.sizes.zIndex.popover,
-  };
-}
-
 /**
  * Portaled, anchored floating panel — maps to Figma `ActionMenu.Overlay`.
  *
@@ -287,11 +273,11 @@ export function Popover({
   returnFocusOnClose = false,
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
-  theme,
   className,
   contentClassName,
 }: PopoverProps) {
-  const tokens = useTheme(theme);
+  const tokens = useTokens();
+  const { popover, shadow, zIndex } = tokens;
   const panelId = useId();
   const headerTitleId = useId();
   const hasSlots = header !== undefined || footer !== undefined;
@@ -323,14 +309,7 @@ export function Popover({
     wasOpenRef.current = open;
   }, [open, returnFocusOnClose]);
 
-  const gapPx = useMemo(
-    () => parseLengthPx(tokens.sizes.popover.gap, 4),
-    [tokens.sizes.popover.gap]
-  );
-
-  const inlineVars = theme
-    ? (popoverCssVars(tokens, elevation) as React.CSSProperties)
-    : undefined;
+  const gapPx = useMemo(() => lengthToPx(popover.sizes.gap, 4), [popover.sizes.gap]);
 
   const updatePosition = useCallback(() => {
     const el = anchorRef.current;
@@ -418,24 +397,18 @@ export function Popover({
     );
   }, [open, onTriggerClick, panelId, setTriggerRef, trigger, triggerHasPopup]);
 
-  const panelClass = [
-    styles.Panel,
-    styles[`Panel--elevation-${elevation}`],
-    contentClassName,
-  ]
-    .filter(Boolean)
-    .join(" ");
+  const panelClass = clsx(classes.Panel, contentClassName);
 
   const renderedHeader =
     header === undefined ? null : (
       <ActionMenuList.Header>
         {isStringHeader ? (
-          <Stack direction="horizontal" align="center" gap="sm" width="full">
-            <Stack id={headerTitleId} grow width="full">
-              <Text role="body" size="sm" weight="semibold" color="text.contrast">
+          <Box flexDirection="row" alignItems="center" gap="sm" width="100%">
+            <Box id={headerTitleId} flexGrow={1} width="100%">
+              <Text weight="semibold" color="neutral.default">
                 {header}
               </Text>
-            </Stack>
+            </Box>
             {onClose ? (
               <IconButton
                 aria-label="Close"
@@ -443,11 +416,10 @@ export function Popover({
                 variant="ghost"
                 size="xs"
                 onClick={onClose}
-              >
-                <Icon name="close" />
-              </IconButton>
+                icon={<Icon name="close" />}
+              />
             ) : null}
-          </Stack>
+          </Box>
         ) : (
           header
         )}
@@ -461,17 +433,17 @@ export function Popover({
       </ActionMenuList.Footer>
     );
 
-  const bodyPaddingVar = `var(--cube-stack-padding-${bodyPadding})`;
+  const bodyPaddingValue = resolveSpace(tokens, bodyPadding);
 
   const panelContent = hasSlots ? (
     <>
       {renderedHeader}
-      <Stack
+      <Box
         gap="sm"
-        align="stretch"
-        paddingInline={bodyPadding}
-        width="full"
-        className={maxHeight ? styles.PanelScroll : undefined}
+        alignItems="stretch"
+        padding={{ inline: bodyPadding }}
+        width="100%"
+        className={maxHeight ? classes.PanelScroll : undefined}
         style={{
           // ActionMenuList.Header's own padding-block-end sits *after* its
           // divider, so it already supplies the gap down to the body — a
@@ -479,16 +451,16 @@ export function Popover({
           // is the opposite: `border-top` sits flush at its own top edge and
           // its padding only pushes content *below* the line, so the gap
           // above the footer must still come from the body itself.
-          paddingBlockStart: header === undefined ? bodyPaddingVar : 0,
-          paddingBlockEnd: bodyPaddingVar,
+          paddingBlockStart: header === undefined ? bodyPaddingValue : 0,
+          paddingBlockEnd: bodyPaddingValue,
         }}
       >
         {children}
-      </Stack>
+      </Box>
       {renderedFooter}
     </>
   ) : maxHeight ? (
-    <div className={styles.PanelScroll}>{children}</div>
+    <div className={classes.PanelScroll}>{children}</div>
   ) : (
     children
   );
@@ -497,6 +469,7 @@ export function Popover({
     open && typeof document !== "undefined"
       ? createPortal(
           <div
+            data-component="Popover.Panel"
             ref={mergeRefs(setPanelRef, panelRefProp)}
             id={panelId}
             role={panelRole === false ? undefined : panelRole}
@@ -504,7 +477,16 @@ export function Popover({
             aria-label={panelRole === "dialog" ? ariaLabel : undefined}
             aria-labelledby={panelRole === "dialog" ? resolvedAriaLabelledBy : undefined}
             className={panelClass}
-            style={{ ...fixedStyle, ...(inlineVars ?? {}), ...(maxHeight ? { maxHeight } : {}) }}
+            style={{
+              ...fixedStyle,
+              zIndex: zIndex.popover,
+              minWidth: popover.sizes.minWidth,
+              maxWidth: popover.sizes.maxWidth,
+              backgroundColor: popover.color.background,
+              borderRadius: popover.sizes.borderRadius,
+              boxShadow: shadow.floating[elevation === "4x" ? "lg" : "md"],
+              ...(maxHeight ? { maxHeight } : {}),
+            }}
             onKeyDown={onPanelKeyDown}
           >
             {panelContent}
@@ -515,10 +497,7 @@ export function Popover({
 
   return (
     <>
-      <span
-        ref={anchorRef}
-        className={[styles.Root, className].filter(Boolean).join(" ")}
-      >
+      <span data-component="Popover" ref={anchorRef} className={clsx(classes.Root, className)}>
         {triggerElement}
       </span>
       {panel}

@@ -4,7 +4,6 @@ import { CodeSurface } from "./CodeSurface";
 import type { SurfaceLine } from "../types";
 import { buildLines } from "../tokenizer";
 import devServerDiagnostics from "../__fixtures__/dev-server-diagnostics";
-import { defaultTheme } from "../../../theme/defaultTheme";
 
 const meta: Meta<typeof CodeSurface> = {
   title: "Components/CodeBlock/CodeSurface",
@@ -15,7 +14,6 @@ const meta: Meta<typeof CodeSurface> = {
     height: { control: "text" },
     maxHeight: { control: "text" },
     linkify: { control: "boolean" },
-    theme: { control: false },
     tokenColor: { control: false },
     onToggleCollapse: { control: false },
     onLinkClick: { control: false },
@@ -129,39 +127,6 @@ export const WithWatchlist: Story = {
         maxHeight="320px"
         watchlist={watchlist}
         onWatchlistChange={setWatchlist}
-      />
-    );
-  },
-};
-
-/** Partial instance override — swaps surface tokens from the built theme (no ad-hoc hex). */
-export const InsetSurfaceOverride: Story = {
-  render: () => {
-    const { global } = defaultTheme.colors;
-    const lines = buildLines(devServerDiagnostics.project, new Set());
-    return (
-      <CodeSurface
-        lines={lines}
-        gutterLineCount={lines.length}
-        maxHeight="320px"
-        theme={{
-          colors: {
-            global: {
-              bg: {
-                gray: {
-                  light: {
-                    "1": global.canvas.inset,
-                  },
-                },
-              },
-              border: {
-                grayAlpha: {
-                  "2": global.border.gray["3"],
-                },
-              },
-            },
-          },
-        }}
       />
     );
   },

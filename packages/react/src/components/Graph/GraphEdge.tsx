@@ -1,5 +1,5 @@
 import { createPortal } from "react-dom";
-import { useTheme } from "../../theme/ThemeContext";
+import { useTokens } from "../../mode";
 import { useCanvasContext } from "./context";
 
 export interface EdgeEndpoint {
@@ -37,7 +37,7 @@ export function GraphEdge({
   strokeWidth = 1,
   curvature = 0.5,
 }: GraphEdgeProps) {
-  const tokens = useTheme();
+  const { borderColor } = useTokens();
   const { handles, svgRef, panX, panY, zoom } = useCanvasContext();
 
   const fromKey = `${from.node}:${from.handle}`;
@@ -70,7 +70,7 @@ export function GraphEdge({
   return createPortal(
     <path
       d={d}
-      stroke={color ?? tokens.colors.base.gray[2]}
+      stroke={color ?? borderColor.strong}
       strokeWidth={strokeWidth}
       fill="none"
       strokeLinecap="round"

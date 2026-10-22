@@ -1,7 +1,8 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Sidebar } from "../Sidebar";
-import { Stack } from "../Stack";
+import { Box } from "../Box";
+import { Heading } from "../Heading";
 import { Text } from "../Text";
 import { SplitLayout } from "./SplitLayout";
 
@@ -23,16 +24,16 @@ export const WithSidebar: Story = {
     <SplitLayout>
       <Sidebar aria-label="Primary" width="sm">
         <Sidebar.Body>
-          <Text role="body" size="sm">Sidebar</Text>
+          <Text size="md">Sidebar</Text>
         </Sidebar.Body>
       </Sidebar>
       <SplitLayout.Main>
-        <Stack gap="md" padding="lg">
-          <Text role="heading" size="md">Main</Text>
-          <Text role="body" size="sm" color="muted">
+        <Box gap="md" padding="lg">
+          <Heading as="h1" size="md">Main</Heading>
+          <Text size="md" color="neutral.muted">
             Flex row shell — sidebar does not shrink; main grows and can scroll independently.
           </Text>
-        </Stack>
+        </Box>
       </SplitLayout.Main>
     </SplitLayout>
   ),

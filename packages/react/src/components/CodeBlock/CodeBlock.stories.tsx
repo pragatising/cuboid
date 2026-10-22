@@ -27,7 +27,6 @@ const meta: Meta<typeof CodeBlock> = {
     height: { control: "text" },
     maxHeight: { control: "text" },
     code: { control: "text" },
-    theme: { control: false },
     onWatchlistChange: { control: false },
     onLinkClick: { control: false },
   },

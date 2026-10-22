@@ -8,26 +8,26 @@ import React, {
   useState,
 } from "react";
 import { createPortal } from "react-dom";
-import { useTheme } from "../../../theme/ThemeContext";
-import type { CubeTheme, ThemeTokens } from "../../../theme/types";
-import { parseLengthPx } from "../../../utils/parseLengthPx";
-import styles from "./Tooltip.module.css";
+import { clsx } from "clsx";
+import { useTokens } from "../../../mode";
+import { lengthToPx } from "../../../utils/length";
+import { mergeProps } from "../../../utils/mergeProps";
+import classes from "./Tooltip.module.css";
 
 export type TooltipPlacement = "top" | "bottom" | "left" | "right";
 
-export interface TooltipProps {
+export type TooltipProps = Omit<React.ComponentPropsWithRef<"span">, "content" | "children"> & {
   /** Tooltip content (non-interactive label) */
   content: React.ReactNode;
   /** Anchor element(s); must be a single React element that accepts event props */
   children: React.ReactElement;
+  /** Which side of the anchor the tooltip appears on. @default "bottom" */
   placement?: TooltipPlacement;
-  /** Single line + ellipsis + narrow max-width (Figma truncated variant) */
+  /** Single line + ellipsis + narrow max-width (Figma truncated variant). @default false */
   compact?: boolean;
-  /** Milliseconds before showing after hover/focus */
+  /** Milliseconds before showing after hover/focus. @default 200 */
   showDelay?: number;
-  theme?: CubeTheme;
-  className?: string;
-}
+};
 
 function computeFixedPosition(
   rect: DOMRect,
@@ -62,53 +62,23 @@ function computeFixedPosition(
   }
 }
 
-function tooltipCssVars(tokens: ThemeTokens): Record<string, string> {
-  const { functional } = tokens.colors;
-  const tip = functional.tooltip;
-  const layout = tokens.sizes.tooltip;
-  const caption = tokens.typography.text.bodyXs;
-  return {
-    "--cube-tooltip-bg": tip.background,
-    "--cube-tooltip-border": tip.border,
-    "--cube-tooltip-fg": tip.foreground,
-    "--cube-tooltip-gap": layout.gap,
-    "--cube-tooltip-borderRadius": layout.borderRadius,
-    "--cube-tooltip-paddingInline": layout.paddingInline,
-    "--cube-tooltip-paddingBlock": layout.paddingBlock,
-    "--cube-tooltip-maxWidth": layout.maxWidth,
-    "--cube-tooltip-maxWidthSingleLine": layout.maxWidthSingleLine,
-    "--cube-tooltip-shadow": layout.boxShadow,
-    "--cube-z-index-tooltip": tokens.sizes.zIndex.tooltip,
-    "--cube-sizes-borderWidth-thin": tokens.sizes.borderWidth.thin,
-    "--cube-typography-fontFamily-base": tokens.typography.fontFamily.base,
-    "--cube-typography-text-body-xs-fontSize": caption.fontSize,
-    "--cube-typography-text-body-xs-fontWeight": String(caption.fontWeight),
-    "--cube-typography-text-body-xs-lineHeight": String(caption.lineHeight),
-  };
-}
-
 export function Tooltip({
   content,
   children,
   placement = "bottom",
   compact = false,
   showDelay = 200,
-  theme,
   className,
+  ...props
 }: TooltipProps) {
-  const tokens = useTheme(theme);
+  const { tooltip, text, borderWidth, zIndex } = useTokens();
   const tooltipId = useId();
   const triggerRef = useRef<HTMLElement | null>(null);
   const [open, setOpen] = useState(false);
   const [fixedStyle, setFixedStyle] = useState<React.CSSProperties>({});
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const gapPx = useMemo(
-    () => parseLengthPx(tokens.sizes.tooltip.gap, 4),
-    [tokens.sizes.tooltip.gap]
-  );
-
-  const inlineVars = theme ? (tooltipCssVars(tokens) as React.CSSProperties) : undefined;
+  const gapPx = useMemo(() => lengthToPx(tooltip.sizes.gap, 4), [tooltip.sizes.gap]);
 
   const clearTimer = useCallback(() => {
     if (timerRef.current) {
@@ -193,22 +163,28 @@ export function Tooltip({
     );
   }, [children, hide, show, open, tooltipId, setTriggerRef]);
 
-  const panelClass = [
-    styles.Panel,
-    styles["Panel--fixed"],
-    compact ? styles["Panel--compact"] : styles["Panel--expanded"],
-  ]
-    .filter(Boolean)
-    .join(" ");
-
   const panel =
     open && typeof document !== "undefined"
       ? createPortal(
           <span
+            data-component="Tooltip.Panel"
             id={tooltipId}
             role="tooltip"
-            className={panelClass}
-            style={{ ...fixedStyle, ...(inlineVars ?? {}) }}
+            className={clsx(classes.Panel, compact ? classes.Compact : classes.Expanded)}
+            style={{
+              ...fixedStyle,
+              zIndex: zIndex.tooltip,
+              font: text.size.sm,
+              color: tooltip.color.foreground,
+              backgroundColor: tooltip.color.background,
+              borderWidth: borderWidth.thin,
+              borderColor: tooltip.color.border,
+              borderRadius: tooltip.sizes.borderRadius,
+              paddingBlock: tooltip.sizes.paddingBlock,
+              paddingInline: tooltip.sizes.paddingInline,
+              boxShadow: tooltip.sizes.boxShadow,
+              maxWidth: compact ? tooltip.sizes.maxWidthSingleLine : tooltip.sizes.maxWidth,
+            }}
           >
             {content}
           </span>,
@@ -218,7 +194,7 @@ export function Tooltip({
 
   return (
     <>
-      <span className={[styles.Root, className].filter(Boolean).join(" ")}>{trigger}</span>
+      <span {...mergeProps({ "data-component": "Tooltip", className: clsx(classes.Root, className) }, props)}>{trigger}</span>
       {panel}
     </>
   );

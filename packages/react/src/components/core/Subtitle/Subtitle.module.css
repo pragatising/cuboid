@@ -1,0 +1,4 @@
+/* Font and colour are set inline from the `subtitle` tokens (ADR-04); only layout lives here. */
+.Subtitle {
+  margin: 0;
+}

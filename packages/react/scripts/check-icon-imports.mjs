@@ -14,11 +14,9 @@ import path from "node:path";
 const ROOT = path.resolve(import.meta.dirname, "..");
 const SRC_DIR = path.join(ROOT, "src");
 
-// Files allowed to reference the package directly — build-time manifest data only.
-const ALLOWED = new Set([
-  path.join(ROOT, "scripts/generate-icon-names.mjs"),
-  path.join(ROOT, "scripts/sync-icons.mjs"),
-]);
+// The only code that may read the glyph package (build-time manifest data) now lives in
+// packages/primitives/scripts/icons/, outside this package's src/ — nothing here is allowed.
+const ALLOWED = new Set();
 
 const FORBIDDEN = ["@material-symbols-svg", "react-icons/md"];
 

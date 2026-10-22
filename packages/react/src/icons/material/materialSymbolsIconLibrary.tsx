@@ -1,6 +1,6 @@
 import React from "react";
 import type { IconAxes, IconLibrary } from "../IconLibrary";
-import type { IconName } from "./iconNames.generated";
+import type { IconName } from "@sragatiping/cuboid-primitives/icons/names";
 import styles from "./materialSymbols.module.css";
 
 const STYLE_CLASS: Record<IconAxes["style"], string> = {

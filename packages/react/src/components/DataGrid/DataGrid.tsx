@@ -1,10 +1,6 @@
-import type { CubeTheme } from "../../theme/types";
-
 export interface DataGridProps {
   /** JSON-serializable row data (shape TBD) */
   data: unknown;
-  /** Override any theme tokens for this instance */
-  theme?: CubeTheme;
 }
 
 /**

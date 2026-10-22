@@ -1,7 +1,7 @@
 /**
  * Glyph styling only. The @font-face declarations that back these font-family
- * names live in src/theme/output/icon-fonts.css — a static stylesheet shipped
- * like theme.css/components.css, NOT bundled through this CSS module. (Bundling
+ * names live in @sragatiping/cuboid-primitives/icons/icon-fonts.css — a static
+ * stylesheet shipped with the primitives package, NOT bundled through this CSS module. (Bundling
  * multi-MB woff2 files through the component JS pipeline base64-inlines them
  * into the library's single combined style.css — see icon-fonts.css for why
  * that file is separate.) Consumers using the default icon library must load

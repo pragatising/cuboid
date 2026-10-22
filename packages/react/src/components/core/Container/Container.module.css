@@ -1,7 +1,5 @@
-.Container {
+/* Layout only. Max width, padding and min height come from the `container` tokens, set inline by Container.tsx. */
+:where(.Container) {
   box-sizing: border-box;
   width: 100%;
-  max-width: var(--container-maxWidth);
-  margin-inline: var(--container-marginInline);
-  padding-inline: var(--container-paddingInline);
 }

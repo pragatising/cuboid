@@ -1,105 +1,35 @@
+/*
+ * Font and colour are set inline from the `text` tokens (ADR-04). Everything else
+ * is plain CSS, selected by data attributes. `:where()` keeps specificity at zero,
+ * so a consumer's own class always overrides these.
+ */
 .Text {
   margin: 0;
   padding: 0;
-  font-family: var(--cube-typography-fontFamily-base);
 }
 
-.Text--truncate {
+.Truncate {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-/* heading — text.sizes.* + heading.weight/lineHeight from typography.json */
-.Text--heading-xs {
-  font-size: var(--cube-typography-text-heading-xs-fontSize);
-  font-weight: var(--cube-typography-text-heading-xs-fontWeight);
-  line-height: var(--cube-typography-text-heading-xs-lineHeight);
+.Text:where([data-white-space="normal"]) {
+  white-space: normal;
 }
 
-.Text--heading-sm {
-  font-size: var(--cube-typography-text-heading-sm-fontSize);
-  font-weight: var(--cube-typography-text-heading-sm-fontWeight);
-  line-height: var(--cube-typography-text-heading-sm-lineHeight);
+.Text:where([data-white-space="nowrap"]) {
+  white-space: nowrap;
 }
 
-.Text--heading-md {
-  font-size: var(--cube-typography-text-heading-md-fontSize);
-  font-weight: var(--cube-typography-text-heading-md-fontWeight);
-  line-height: var(--cube-typography-text-heading-md-lineHeight);
+.Text:where([data-white-space="pre"]) {
+  white-space: pre;
 }
 
-.Text--heading-lg {
-  font-size: var(--cube-typography-text-heading-lg-fontSize);
-  font-weight: var(--cube-typography-text-heading-lg-fontWeight);
-  line-height: var(--cube-typography-text-heading-lg-lineHeight);
+.Text:where([data-white-space="pre-wrap"]) {
+  white-space: pre-wrap;
 }
 
-.Text--heading-xl {
-  font-size: var(--cube-typography-text-heading-xl-fontSize);
-  font-weight: var(--cube-typography-text-heading-xl-fontWeight);
-  line-height: var(--cube-typography-text-heading-xl-lineHeight);
-}
-
-/* body — text.sizes.* + text.weight/lineHeight from typography.json */
-.Text--body-xs {
-  font-size: var(--cube-typography-text-body-xs-fontSize);
-  font-weight: var(--cube-typography-text-body-xs-fontWeight);
-  line-height: var(--cube-typography-text-body-xs-lineHeight);
-}
-
-.Text--body-sm {
-  font-size: var(--cube-typography-text-body-sm-fontSize);
-  font-weight: var(--cube-typography-text-body-sm-fontWeight);
-  line-height: var(--cube-typography-text-body-sm-lineHeight);
-}
-
-.Text--body-md {
-  font-size: var(--cube-typography-text-body-md-fontSize);
-  font-weight: var(--cube-typography-text-body-md-fontWeight);
-  line-height: var(--cube-typography-text-body-md-lineHeight);
-}
-
-.Text--body-lg {
-  font-size: var(--cube-typography-text-body-lg-fontSize);
-  font-weight: var(--cube-typography-text-body-lg-fontWeight);
-  line-height: var(--cube-typography-text-body-lg-lineHeight);
-}
-
-.Text--body-xl {
-  font-size: var(--cube-typography-text-body-xl-fontSize);
-  font-weight: var(--cube-typography-text-body-xl-fontWeight);
-  line-height: var(--cube-typography-text-body-xl-lineHeight);
-}
-
-.Text--subhead-xs {
-  font-size: var(--cube-typography-text-subhead-xs-fontSize);
-  font-weight: var(--cube-typography-text-subhead-xs-fontWeight);
-  line-height: var(--cube-typography-text-subhead-xs-lineHeight);
-}
-
-.Text--subhead-sm {
-  font-size: var(--cube-typography-text-subhead-sm-fontSize);
-  font-weight: var(--cube-typography-text-subhead-sm-fontWeight);
-  line-height: var(--cube-typography-text-subhead-sm-lineHeight);
-}
-
-.Text--subhead-md {
-  font-size: var(--cube-typography-text-subhead-md-fontSize);
-  font-weight: var(--cube-typography-text-subhead-md-fontWeight);
-  line-height: var(--cube-typography-text-subhead-md-lineHeight);
-}
-
-.Text--code-block {
-  font-family: var(--cube-typography-text-code-block-fontFamily);
-  font-size: var(--cube-typography-text-code-block-fontSize);
-  font-weight: var(--cube-typography-text-code-block-fontWeight);
-  line-height: var(--cube-typography-text-code-block-lineHeight);
-}
-
-.Text--inline-code {
-  font-family: var(--cube-typography-text-inline-code-fontFamily);
-  font-size: var(--cube-typography-text-inline-code-fontSize);
-  font-weight: var(--cube-typography-text-inline-code-fontWeight);
-  line-height: var(--cube-typography-text-inline-code-lineHeight);
+.Text:where([data-white-space="pre-line"]) {
+  white-space: pre-line;
 }

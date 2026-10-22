@@ -1,5 +1,5 @@
 import React, { CSSProperties } from "react";
-import { useTheme } from "../../theme/ThemeContext";
+import { useTokens } from "../../mode";
 
 export interface JsonCardTitleProps {
   children: React.ReactNode;
@@ -7,23 +7,21 @@ export interface JsonCardTitleProps {
 }
 
 /**
- * Semi-bold card heading. Theme defaults, fully overrideable via `style`.
+ * Semi-bold card heading. Token defaults, fully overrideable via `style`.
  *
  * Sets `position: relative` so a `JsonInputHandle` placed inside it can
  * anchor itself to the title row's left edge rather than the card's midpoint.
  */
 export function JsonCardTitle({ children, style }: JsonCardTitleProps) {
-  const tokens = useTheme();
+  const { text, fontWeight, fgColor, space } = useTokens();
   return (
     <div
       style={{
         position:   "relative",                              // anchor for JsonInputHandle
-        fontFamily: tokens.typography.fontFamily.base,
-        fontWeight: tokens.typography.fontWeight.semibold,
-        fontSize:   tokens.typography.fontSize.sm,           // 14px
-        lineHeight: String(tokens.typography.lineHeight.normal),
-        color:      tokens.colors.global.text.default,
-        padding:    `${tokens.sizes.space[1]} ${tokens.sizes.space[2]}`, // 4px 8px
+        font:       text.size.md,                            // 14px
+        fontWeight: fontWeight.semibold,
+        color:      fgColor.neutral.default,
+        padding:    `${space.xxs} ${space.xs}`,              // 4px 8px
         ...style,
       }}
     >

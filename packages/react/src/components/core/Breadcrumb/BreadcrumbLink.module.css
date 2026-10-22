@@ -1,36 +1,33 @@
-.BreadcrumbLink {
+/*
+ * Layout and states only. The colours arrive as element-scoped variables (--breadcrumb-fg-rest, …)
+ * set inline from the `breadcrumb` tokens (see BreadcrumbLink.tsx and utils/cssVars.ts). Zero
+ * specificity (:where), so a consumer's own class can override any of it.
+ */
+:where(.BreadcrumbLink) {
   display: inline-flex;
   align-items: center;
   box-sizing: border-box;
   max-width: 100%;
-  padding: var(--cube-breadcrumb-item-paddingBlock) var(--cube-breadcrumb-item-paddingInline);
-  border-radius: var(--cube-breadcrumb-item-borderRadius);
   border: none;
-  font-family: var(--cube-typography-fontFamily-base);
-  font-size: var(--cube-typography-text-body-sm-fontSize);
-  font-weight: 400;
-  line-height: var(--cube-typography-text-body-sm-lineHeight);
   text-decoration: none;
   white-space: nowrap;
   transition: background-color 120ms ease, color 120ms ease;
+  color: var(--breadcrumb-fg-rest);
+  background-color: var(--breadcrumb-bg-rest);
 }
 
-/* Color per state. `font-size` repeated on `a` only — Storybook docs overrides anchor sizing. */
-a.BreadcrumbLink.BreadcrumbLink--link,
-a.BreadcrumbLink.BreadcrumbLink--link:link,
-a.BreadcrumbLink.BreadcrumbLink--link:visited {
-  color: var(--cube-breadcrumb-link-fg-rest);
-  background-color: var(--cube-breadcrumb-link-bg-rest);
-  font-size: var(--cube-typography-text-body-sm-fontSize);
+:where(.BreadcrumbLink:hover:not([data-current])) {
+  color: var(--breadcrumb-fg-hover);
+  background-color: var(--breadcrumb-bg-hover);
 }
 
-a.BreadcrumbLink.BreadcrumbLink--link:hover {
-  color: var(--cube-breadcrumb-link-fg-hover);
-  background-color: var(--cube-breadcrumb-link-bg-hover);
-}
-
-span.BreadcrumbLink.BreadcrumbLink--active {
-  color: var(--cube-breadcrumb-link-fg-active);
-  background-color: var(--cube-breadcrumb-link-bg-active);
+:where(.BreadcrumbLink[data-current]) {
+  color: var(--breadcrumb-fg-active);
+  background-color: var(--breadcrumb-bg-active);
   cursor: default;
+}
+
+:where(.BreadcrumbLink:focus-visible) {
+  outline: var(--breadcrumb-focus-width) solid var(--breadcrumb-focus-color);
+  outline-offset: var(--breadcrumb-focus-offset);
 }

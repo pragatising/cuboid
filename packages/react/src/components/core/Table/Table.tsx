@@ -1,4 +1,5 @@
-import React, { forwardRef, useState } from "react";
+import React, { useState } from "react";
+import { clsx } from "clsx";
 import {
   flexRender,
   getCoreRowModel,
@@ -10,31 +11,17 @@ import {
   type SortingState,
   type Table as TanStackTable,
 } from "@tanstack/react-table";
+import { useTokens } from "../../../mode";
+import { cssVars } from "../../../utils/cssVars";
+import { mergeProps } from "../../../utils/mergeProps";
 import { Icon } from "../Icon";
-import styles from "./Table.module.css";
+import classes from "./Table.module.css";
 
 export type TableRowLayout = "wrap" | "truncate" | "fixed";
 export type TableCellAlign = "left" | "center" | "right";
 export type TableDensity = "dense" | "spacious";
 /** Internal cell dividers — outer frame stays on {@link TableRoot}. */
 export type TableLines = "none" | "rows" | "grid";
-
-function densityClass(density: TableDensity): string {
-  return density === "dense"
-    ? styles["TableRoot--density-dense"]
-    : styles["TableRoot--density-spacious"];
-}
-
-function linesClass(lines: TableLines): string {
-  switch (lines) {
-    case "none":
-      return styles["TableRoot--lines-none"];
-    case "rows":
-      return styles["TableRoot--lines-rows"];
-    case "grid":
-      return styles["TableRoot--lines-grid"];
-  }
-}
 
 declare module "@tanstack/react-table" {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -46,162 +33,126 @@ declare module "@tanstack/react-table" {
   }
 }
 
-function alignClass(prefix: "TableHeadCell" | "TableCell", align?: TableCellAlign): string | undefined {
-  if (align === "center") return styles[`${prefix}--align-center`];
-  if (align === "right") return styles[`${prefix}--align-right`];
-  return undefined;
-}
-
-function rowLayoutClass(layout?: TableRowLayout): string | undefined {
-  if (layout === "truncate") return styles["TableCell--truncate"];
-  if (layout === "fixed") return styles["TableCell--fixed"];
-  if (layout === "wrap") return styles["TableCell--wrap"];
-  return styles["TableCell--wrap"];
-}
-
-export interface TableRootProps extends React.HTMLAttributes<HTMLDivElement> {
-  /** Cell padding + row height — spacious (40px) or dense (32px). Default: spacious. */
+export type TableRootProps = React.ComponentPropsWithRef<"div"> & {
+  /** Cell padding + row height: `spacious` (40px) or `dense` (32px), from the `table.sizes.density` tokens. @default "spacious" */
   density?: TableDensity;
   /**
    * Internal dividers between cells.
-   * - `grid` — horizontal + vertical (default)
-   * - `rows` — horizontal row lines only
-   * - `none` — no internal lines; outer frame from TableRoot remains
+   * - `grid`: horizontal + vertical
+   * - `rows`: horizontal row lines only
+   * - `none`: no internal lines; the outer frame from TableRoot remains
+   * @default "grid"
    */
   lines?: TableLines;
-  className?: string;
-  children?: React.ReactNode;
-}
+};
 
-/** Scroll + border shell around a {@link Table}. */
-export const TableRoot = forwardRef<HTMLDivElement, TableRootProps>(function TableRoot(
-  { density = "spacious", lines = "grid", className, children, ...rest },
-  ref,
-) {
-  const classNames = [styles.TableRoot, densityClass(density), linesClass(lines), className]
-    .filter(Boolean)
-    .join(" ");
+/**
+ * Scroll + border shell around a {@link Table}. It resolves the `table` tokens for the chosen density once and hands
+ * them to the parts below as element-scoped variables (--table-row-height, --table-header-bg, …).
+ */
+export function TableRoot({ density = "spacious", lines = "grid", className, ...props }: TableRootProps) {
+  const { table, text, fontWeight, borderWidth, focusRing, space } = useTokens();
+  const d = table.sizes.density[density];
+
   return (
-    <div ref={ref} className={classNames} {...rest}>
-      {children}
-    </div>
+    <div
+      {...mergeProps(
+        {
+          "data-component": "Table.Root",
+          "data-lines": lines,
+          className: clsx(classes.TableRoot, className),
+          style: cssVars("table", {
+            borderWidth: borderWidth.thin,
+            borderRadius: table.sizes.borderRadius,
+            containerBorder: table.color.container.borderColor,
+            headerBg: table.color.header.bgColor,
+            headerFg: table.color.header.fgColor,
+            headerBorder: table.color.header.borderColor,
+            bodyBg: table.color.body.bgColor,
+            bodyFg: table.color.body.fgColor,
+            bodyBorder: table.color.body.borderColor,
+            headerFont: text.size.md,
+            headerWeight: String(fontWeight.medium),
+            bodyFont: text.size.md,
+            cellPaddingInline: d.cellPaddingInline,
+            cellPaddingBlock: d.cellPaddingBlock,
+            rowHeight: d.rowHeight,
+            sortGap: space.xxs,
+            focusColor: focusRing.color,
+            focusWidth: focusRing.width,
+            focusOffset: focusRing.offset,
+          }),
+        },
+        props,
+      )}
+    />
   );
-});
-
-export interface TableProps extends React.TableHTMLAttributes<HTMLTableElement> {
-  className?: string;
-  children?: React.ReactNode;
 }
 
-export const TableElement = forwardRef<HTMLTableElement, TableProps>(function TableElement(
-  { className, children, ...rest },
-  ref,
-) {
-  const classNames = [styles.Table, className].filter(Boolean).join(" ");
-  return (
-    <table ref={ref} className={classNames} {...rest}>
-      {children}
-    </table>
-  );
-});
+export type TableProps = React.ComponentPropsWithRef<"table">;
 
-export interface TableHeaderProps extends React.HTMLAttributes<HTMLTableSectionElement> {
-  className?: string;
-  children?: React.ReactNode;
+export function TableElement({ className, ...props }: TableProps) {
+  return <table {...mergeProps({ "data-component": "Table", className: clsx(classes.Table, className) }, props)} />;
 }
 
-export const TableHeader = forwardRef<HTMLTableSectionElement, TableHeaderProps>(
-  function TableHeader({ className, children, ...rest }, ref) {
-    const classNames = [styles.TableHeader, className].filter(Boolean).join(" ");
-    return (
-      <thead ref={ref} className={classNames} {...rest}>
-        {children}
-      </thead>
-    );
-  },
-);
+export type TableHeaderProps = React.ComponentPropsWithRef<"thead">;
 
-export interface TableBodyProps extends React.HTMLAttributes<HTMLTableSectionElement> {
-  className?: string;
-  children?: React.ReactNode;
+export function TableHeader({ className, ...props }: TableHeaderProps) {
+  return <thead {...mergeProps({ "data-component": "Table.Header", className: clsx(classes.TableHeader, className) }, props)} />;
 }
 
-export const TableBody = forwardRef<HTMLTableSectionElement, TableBodyProps>(function TableBody(
-  { className, children, ...rest },
-  ref,
-) {
-  const classNames = [styles.TableBody, className].filter(Boolean).join(" ");
-  return (
-    <tbody ref={ref} className={classNames} {...rest}>
-      {children}
-    </tbody>
-  );
-});
+export type TableBodyProps = React.ComponentPropsWithRef<"tbody">;
 
-export interface TableRowProps extends React.HTMLAttributes<HTMLTableRowElement> {
-  className?: string;
-  children?: React.ReactNode;
+export function TableBody({ className, ...props }: TableBodyProps) {
+  return <tbody {...mergeProps({ "data-component": "Table.Body", className: clsx(classes.TableBody, className) }, props)} />;
 }
 
-export const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(function TableRow(
-  { className, children, ...rest },
-  ref,
-) {
-  const classNames = [styles.TableRow, className].filter(Boolean).join(" ");
-  return (
-    <tr ref={ref} className={classNames} {...rest}>
-      {children}
-    </tr>
-  );
-});
+export type TableRowProps = React.ComponentPropsWithRef<"tr">;
 
-export interface TableHeadCellProps extends React.ThHTMLAttributes<HTMLTableCellElement> {
+export function TableRow({ className, ...props }: TableRowProps) {
+  return <tr {...mergeProps({ "data-component": "Table.Row", className: clsx(classes.TableRow, className) }, props)} />;
+}
+
+export type TableHeadCellProps = React.ComponentPropsWithRef<"th"> & {
   align?: TableCellAlign;
-  className?: string;
-  children?: React.ReactNode;
+};
+
+export function TableHeadCell({ align, className, ...props }: TableHeadCellProps) {
+  return (
+    <th
+      {...mergeProps(
+        { "data-component": "Table.HeadCell", "data-align": align, scope: "col", className: clsx(classes.TableHeadCell, className) },
+        props,
+      )}
+    />
+  );
 }
 
-export const TableHeadCell = forwardRef<HTMLTableCellElement, TableHeadCellProps>(
-  function TableHeadCell({ align, className, children, ...rest }, ref) {
-    const classNames = [styles.TableHeadCell, alignClass("TableHeadCell", align), className]
-      .filter(Boolean)
-      .join(" ");
-    return (
-      <th ref={ref} className={classNames} scope="col" {...rest}>
-        {children}
-      </th>
-    );
-  },
-);
-
-export interface TableCellProps extends React.TdHTMLAttributes<HTMLTableCellElement> {
+export type TableCellProps = React.ComponentPropsWithRef<"td"> & {
   align?: TableCellAlign;
+  /** How content that does not fit is handled. @default "wrap" */
   rowLayout?: TableRowLayout;
-  className?: string;
-  children?: React.ReactNode;
-}
+};
 
-export const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(function TableCell(
-  { align, rowLayout = "wrap", className, children, ...rest },
-  ref,
-) {
-  const classNames = [
-    styles.TableCell,
-    rowLayoutClass(rowLayout),
-    alignClass("TableCell", align),
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
-
+export function TableCell({ align, rowLayout = "wrap", className, children, ...props }: TableCellProps) {
   return (
-    <td ref={ref} className={classNames} {...rest}>
-      <span className={styles["TableCell__inner"]}>{children}</span>
+    <td
+      {...mergeProps(
+        {
+          "data-component": "Table.Cell",
+          "data-align": align,
+          "data-row-layout": rowLayout,
+          className: clsx(classes.TableCell, className),
+        },
+        props,
+      )}
+    >
+      <span className={classes.TableCellInner}>{children}</span>
     </td>
   );
-});
+}
 
-/** Composable table parts — use with {@link TableRoot} for manual markup or {@link SimpleTable} for TanStack. */
+/** Composable table parts: use with {@link TableRoot} for manual markup or {@link SimpleTable} for TanStack. */
 export const Table = Object.assign(TableElement, {
   Root: TableRoot,
   Header: TableHeader,
@@ -295,7 +246,7 @@ export function SimpleTable<TData>({
                   {header.isPlaceholder ? null : enableSorting && header.column.getCanSort() ? (
                     <button
                       type="button"
-                      className={["cube-focusable", styles.TableSortButton].join(" ")}
+                      className={classes.TableSortButton}
                       onClick={header.column.getToggleSortingHandler()}
                       aria-label={`Sort by ${header.column.id}`}
                     >

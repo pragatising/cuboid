@@ -1,0 +1,104 @@
+# React component migration tracker
+
+One row per component in `packages/react/src/components`. Tracks the move off the old theme seam (deleted) onto ADR-04's `useTokens()` — recipe in `packages/react/docs/token-consumption.md` — **and** that the component meets `packages/react/docs/style.md`. A component is only "Done" when both hold.
+
+Update a row in the same commit that changes the component.
+
+## Definition of done
+
+1. No `theme` prop, no `useTheme`, no `var(--cube-…)` for token values; values come from `useTokens()` (own token group only).
+2. Meets `docs/style.md`: `clsx` for class names, `data-component` attribute, consumer `className`/`style`/rest props merged intentionally, no slots unless a parent must identify the child.
+3. API props select tokens by their own keys; no dead props or dead branches; `ref` is a plain prop (React 19) — no `forwardRef`.
+4. Story updated (no `theme` args), checked in **both modes** in Storybook.
+5. Callers updated; `tsc` gains no new errors from this component.
+6. Has a `Component.test.tsx` next to it (see "Per-component artifacts").
+
+Status: `Todo` · `Seam done` (tokens migrated; style.md or test gaps remain) · `Done` (every item above met).
+
+Figma Code Connect is **not** part of this checklist — it is a separate pass at the end (see below).
+
+## Component families share a `types.ts` (decided 2026-10-19, from Primer)
+
+When several components share one implementation (ButtonBase and Button), all their props live in one `types.ts` next to them, composed from shared pieces (`ButtonBaseProps` → `ButtonProps`), every prop documented. It lets you read the whole API at once. Single components keep their props beside the component: **IconButton does (revised 2026-10-21, it no longer shares ButtonBase)**, and takes Primer's type-level a11y rule, a union requiring `aria-label` **or** `aria-labelledby`, so an unlabeled icon button does not compile.
+
+## Per-component artifacts (decided 2026-10-19)
+
+| Artifact | Rule | Notes |
+|---|---|---|
+| `Component.test.tsx` | **Required** for every component | Vitest + Testing Library + jest-dom, written from the user's point of view (`docs/testing.md`). Includes the shared conformance checks (class name / data-component / rest-prop pass-through, same idea as Primer's `implementsClassName` / `BehavesAsComponent`), an axe check over the component, and a mode test (`setMode("dark")` re-renders with the dark token). |
+| `Component.figma.tsx` | **Final pass, once the components are in Figma** | Figma Code Connect: maps the Figma component (node URL) and its variant props to the code example. Nothing has been pushed to Figma yet, so there are no node URLs; do this for every component at the end. Needs `@figma/code-connect` (not installed). Decided 2026-10-19: deferred, not per-component. |
+| `Component.docs.json` | **Optional for now** | Generate from the TypeScript props later instead of hand-writing it, once something reads it. The empty ActionMenu placeholders can stay empty or be removed. |
+| Playwright visual regression (`e2e/`) | **Deferred** | Until components are migrated and stable. Storybook interaction tests only where jsdom cannot simulate the behavior. |
+
+## Test infrastructure
+
+Done 2026-10-19. Run with `npm test` (`vitest run`) or `npm run test:watch` in `packages/react`; one component: `npm test -- Divider`.
+
+- [x] Vitest 3 (Vitest 5 needs Vite 6; the workspace is on Vite 5.4 / Storybook 8), jsdom, `@testing-library/{react,dom,jest-dom,user-event}`, `axe-core`. Config: `packages/react/vitest.config.ts` (CSS-module class names kept as written).
+- [x] Shared helpers in `src/test/testing.tsx` (excluded from the published build): `behavesAsComponent` (the shared contract: `data-component`, class-name merge, style merge, rest-prop pass-through), `expectNoAxeViolations` (colour-contrast rule off — jsdom has no layout; contrast is tested in `packages/primitives`), `renderInMode`. `src/test/setup.ts` resets the global mode after every test.
+- [x] Existing pure-logic tests moved to Vitest (`mode`, `mergeProps`); `mode` now has real re-render tests.
+- [x] Type-level tests: `*.test-d.ts(x)` with `expectTypeOf` run under Vitest typecheck (`tsconfig.test.json`; `ignoreSourceErrors` while unmigrated components still fail `tsc`).
+- [x] Divider tests (11): shared contract, token colour/thickness, consumer override, dark mode, mode change while mounted, axe.
+
+`packages/primitives` keeps Node's built-in test runner (no DOM needed there).
+
+## Order of work (decided 2026-10-19)
+
+Finish the components that **already exist** in `components/core` first; no new components until they are done. Heading and Subtitle (new, split out of Text) are already built because Text's old `role` switch needed them. InlineCodeSnippet and any other new component wait.
+
+Done 2026-10-21: every core component above. Left: component tests for the data components, then the final Figma Code Connect pass.
+
+## Core
+
+| Component | Tier | Status | Notes |
+|---|---|---|---|
+| Divider | simple | Done | 2026-10-19. `useTokens`, `clsx`, `data-component`, rest props via `mergeProps`; `theme` and dead `orientation` props removed. Checked in both modes; dividers are faint by token design (palette tuning later). Template for the rest. Test file done (11 tests). Figma mapping: final pass. |
+| Text | simple | Done | 2026-10-19. Body text only: `size` sm\|md\|lg (old xs→sm, sm→md, md/lg→lg), `color` = any `fgColor` token path (`"neutral.muted"`, `"success.strong"`; typed, typos fail to compile), `as`, `weight` (light|normal|medium|semibold → new functional `fontWeight` token group, `font-weight.json5`), `whiteSpace` (normal|nowrap|pre|pre-wrap|pre-line — CSS-named, set via a `data-white-space` attribute in the CSS module, not inline, so consumer classes can override it), `truncate` (shortcut: nowrap + ellipsis). `role`, `strong`, `align`, `code`, `theme` removed. 37 runtime + 4 type tests. Decided 2026-10-19: default element stays `p` (most common use; `as="span"` when needed); size stays `lg|md|sm`; `style` is the override path for token-set values. `ref` forwards (package now requires React 19; `forwardRef` not used). `as` is polymorphic: `TextProps<As>` types the element's own props and ref from `As` (`as="a"` takes `href`, a `span` does not), via the shared `PolymorphicProps` (`src/utils/polymorphic.ts`); checked by type tests (`Text.test-d.tsx`). **Callers still on the old API** (stray `role="body"` compiles as an ARIA attribute, `color="muted"` is a type error): Popover, ApiResponseViewer and the stories of Stack, Container, Callout, Popover, Sidebar, Icon, Table roadmap, Box, Sheet, SplitLayout, Highlight — fix each when that component is migrated. |
+| Heading | simple | Done | 2026-10-19. `as` limited to h1–h6 (default h2; semantic level), `size` lg\|md\|sm (visual, independent of `as`, default lg like Primer), `color` = any `fgColor` path (shared `FgColor` helper, `src/utils/fgColor.ts`, also used by Text). Polymorphic types restricted to heading elements (`as="div"` / `as="a"` do not compile). 22 runtime + 2 type tests. Taken from Primer: `as`/size independence, h2 default, large default. Left out: its dev-only "not a heading element" warning (our types forbid it). Popover's title should use this when Popover is migrated. |
+| Subtitle | simple | Done | 2026-10-19. Single size (`subtitle.font` token, no `size` prop), `as` (default p), `color` = any `fgColor` path (shared `FgColor`). Polymorphic + ref. 14 runtime + 2 type tests. Needed a token fix first: `subtitle` had a `$value` *and* child tokens, so `fgColor` was silently dropped; restructured to `subtitle.font` + `subtitle.fgColor`. |
+| InlineCodeSnippet | simple | **On hold** | New component (did not exist before): split out of Text `role="code"`. Held 2026-10-19 — finish the existing core components first. Tokens exist and work (`font`, `fgColor`, `bgColor`, `paddingInline`, `paddingBlock`, `borderRadius`; fixed 2026-10-19 — they used to be silently dropped). A draft implementation + tests is parked outside the repo (not committed). |
+| Icon | simple | Done | 2026-10-21. `useTokens`, sizes from `tokens.icon`, `color` = any `fgColor` path, `weight`/`grade`/`opticalSize`/`fill` per call (defaults 400/0/24/outline, Material Symbols Rounded). **Removed:** `theme`, the pluggable `IconLibrary` (it was only reachable through the theme; `materialSymbolsIconLibrary` is now used directly), raw CSS colours. Span props pass through. 20 tests. |
+| Pill | simple | Done | 2026-10-21. Colours from `tokens.pill.color[shade][intensity][filled\|bordered]` (`intensity` is `extraLight`\|`light`\|`bold`\|`extraBold`), geometry from `pill.sizes`, label font from `text.size` via `size` sm\|md\|lg (replaces `variant` bodyXs/Sm/Md; height stays fixed). Polymorphic (`as="a"` takes `href`). **Removed:** `theme`, per-instance `paddingInline`/`paddingBlock`/`borderRadius`/`borderColor`/`borderWidth` (use `style`). 18 tests. |
+| Highlight | simple | Done | 2026-10-21. `<mark>`; colours from `tokens.highlight[color]`, shared padding/radius from the same group. **Removed:** `theme`. 11 tests. |
+| Callout | simple | Done | 2026-10-21. A plain flex-column `div` (no longer a Stack). Surface, text colour, padding and radius from `tokens.callout`; `background` is now `backgroundColor` = any `bgColor` path. **Removed:** `theme`, raw CSS colours. 8 tests. |
+| Tooltip | simple | Done | 2026-10-21. Panel styled inline from `tokens.tooltip` (its own `boxShadow`), z-index from `tokens.zIndex.tooltip`. New `src/utils/length.ts` (`lengthToPx`) replaces the deleted `parseLengthPx`. **Removed:** `theme`. Root span takes span props. 14 tests. |
+| Button | state-heavy | Done | 2026-10-19. A thin wrapper (`<ButtonBase as="button" data-component="Button">`). **Structure mirrors Primer's ButtonBase** (reviewed against it): `types.ts` is flat (`ButtonBaseProps` → `ButtonProps`); **anatomy is named** — `buttonContent` (carries `data-align`) wraps `leadingVisual` / `text` / `trailingVisual`, the spinner is `loadingSpinner`; each part has a `data-component`, so `trailingAction`/`count` can be added without restructuring. `size` (xs–lg) sets height/padding/gap/label font/icon+visual size/radius; `variant` picks colours from `tokens.button`; states `disabled`, `inactive`, `loading` + `loadingMessage` (shared live region); `block`, `alignContent`, `as`, `ref`. Token→style resolution is a pure module (`buttonStyle.ts`); `Spinner` is its own file; dev-time warning for a non-semantic element. **2026-10-21:** the icon-only branch (`icon`, `selected`, `iconButton` tokens) was removed from ButtonBase when IconButton became standalone. New tokens: `button.font.*`, `button.paddingInline.*` (replaces a lookup table that hid Figma intent in the TSX), `focusRing.color`. Only `Button` and `ButtonProps` are exported from the package (no generic `Size`/`AlignContent`). Removed: `theme`, `shape`, `leadingIcon`/`trailingIcon`, `cube-focusable`. 212 package tests + **136 real-Chrome checks per mode** (every state of every variant, icon-only default/selected, inactive and loading must not react to hover, focus ring). Deferred from Primer: `count`, `trailingAction`, `labelWrap`, notification indicator, `LinkButton`. **Open, design-side:** light-mode danger is white on `#e74646` ≈ 3.9:1 (below AA for 14px text). |
+| ButtonBase | state-heavy | Done | Internal base of the labelled Button (see Button); also serves a link styled as a button (`as`). No longer shared with IconButton (2026-10-21). With IconButton gone from it, it could be folded into `Button` later; left as is. |
+| IconButton | state-heavy | Done | 2026-10-21, refactored the same day to be **standalone** (not on `ButtonBase`): its own `IconButton.tsx`, CSS module and `--icon-button-*` variables, and its own types (`IconButtonProps`, `IconButtonVariant` ghost\|outlined, `IconButtonSize` xs–lg, the `aria-label`-or-`aria-labelledby` union; `IconButton.test-d.tsx` checks them against the tokens). Colours from `tokens.iconButton[variant][default\|selected]`, a square from `iconButton.{size}`; `selected` → `aria-pressed`; `loading` (spinner from `Button/Spinner`, live-region announcement), `inactive`, native `disabled`. **`children` is now `icon`.** `tooltip` + `tooltipPlacement` wrap it in a `Tooltip`; with `disabled` too it becomes `inactive` so the tooltip can explain. Button only, no `as`. **Removed:** `theme`, `tooltipCompact`/`tooltipShowDelay`. 28 tests. |
+| Link | state-heavy | Done | 2026-10-21. Rest/hover colours from `tokens.link.{inline,standalone}.fgColor` via element-scoped `--link-fg-*` vars (the Button convention); standalone font from `text.size.md`; focus ring from `tokens.focusRing`. Polymorphic. **Removed:** `theme`, `cube-focusable`. 17 tests. |
+| Breadcrumb | state-heavy | Done | 2026-10-21. `Breadcrumbs` + `BreadcrumbLink` read `tokens.breadcrumb`; link states via `--breadcrumb-*` vars. `aria-label` stays "Breadcrumb" by default. **Removed:** `theme`, the `BreadcrumbLinkState` export. 23 tests. |
+| ActionMenu | state-heavy | Done | 2026-10-21. `ActionMenu`, `ActionMenuList` (+ `.Header`/`.Footer`/`.Section`), `ActionMenuItem`. `actionMenuVars.ts` dumps `tokens.actionMenu` as `--action-menu-*` vars (on the list, each item — so a Sidebar nav row works outside a list — and header/footer); all rules are `:where()`. `ActionMenuList` is a plain function (React 19 `ref`), no `forwardRef`. **Removed:** `theme`, `actionMenuCssVars.ts`. 27 tests. `ActionMenu.docs.json`/`.figma.tsx` placeholders still empty. |
+| Sidebar | state-heavy | Done | 2026-10-21. Background/width from `tokens.sidebar`; padding, border and toggle size reach the regions as `--sidebar-*` vars on the root; collapse/edge/resize are `data-*` attributes. Region `paddingBlock`/`paddingInline` take `Space`. `Sidebar.Toggle` uses IconButton's `icon`. **Removed:** `theme`, `sidebarCssVars.ts`. 23 tests. |
+| Stack | layout | **Deleted** | Decided 2026-10-19: Box is the only layout primitive. The folder is gone from `src` and every call site (ApiResponseViewer, Container, Callout, CodeSurface, the stories) now uses Box (`gap="sm"` etc. still works; `direction="horizontal"` is `flexDirection="row"`, `align` is `alignItems`, `grow` is `flexGrow`). |
+| Box | layout | Done | 2026-10-19. A CSS flexbox container: props are the CSS properties of the same name with CSS values (`display` default `flex` via zero-specificity CSS, any display value allowed; `flexDirection` default column; `flexWrap`, `flexGrow`, `flexShrink`, `alignItems`, `justifyContent`, `width`, `overflow`, `cursor`, …). Tokens where the value is a design decision: `gap` / `padding` / `margin` / `inset` / `top…left` take the **Nx scale** (`"1.5x"` = 12px, typed `SizeScale` generated by primitives from `tokens.size`) **or** the semantic ladder (`"xs"`…`"xxl"`) **or `0`**; `backgroundColor` / `borderColor` / `color` take typed token paths (`BgColor`, `BorderColor`, `FgColor`); `borderRadius` and `zIndex` take token keys. `style` accepted (merged, consumer wins), `as`, `ref`, polymorphic. **Removed:** `theme`, responsive props (Box is plain flexbox), `grow`/`shrink` booleans (use `flexGrow`/`flexShrink`), `direction`/`align`/`justify`/`wrap` (now CSS names), `background`/`foreground` (now `backgroundColor`/`color`). 28 runtime + 3 type tests; checked in a browser in both modes. **Callers still on the old API:** CodeSurface, Popover, ApiResponseViewer, Container, Callout. |
+| Container | layout | Done | 2026-10-21. A `Box` with `container` tokens: `width` page\|content\|full, `center`, `paddingInline`/`paddingBlock` (`Space` or `false`, defaults from tokens), `minHeight="screen"`; takes Box's flex props (`gap`, …). Polymorphic. Closes the `paddingBlock` gap. **Removed:** `theme`. 17 tests. |
+| Overlay | layout | Done | 2026-10-21. Scrim colour from `tokens.overlay.color[variant]`, z-index from `tokens.zIndex.overlay`. **Removed:** `theme`. 13 tests. |
+| Popover | layout | Done | 2026-10-21. Panel from `tokens.popover`; shadow `shadow.floating.md` for `elevation="3x"` and `.lg` for `"4x"` (the old `shadows.popover*` tokens no longer exist: **confirm with design**). `bodyPadding` is a `Space`. Built-in header/footer use `Box`, `Text`, `Button`, `IconButton`. No `Responsive` needed. **Removed:** `theme`. 18 tests. |
+| Sheet | layout | Done | 2026-10-21. Panel from `tokens.sheet` (`shadow.floating.lg`). **Fixed:** a modal sheet fired `onDismiss` twice on Escape (its own listener plus the Overlay's); it now listens only when non-modal. No `Responsive` needed. **Removed:** `theme`. 17 tests. |
+| SplitLayout | layout | Done | 2026-10-21. Plain layout shell (no tokens); data-component on both parts. **Removed:** `theme`. 8 tests. |
+| SiteHeader | layout | Done | 2026-10-21. Height, padding, gaps, colours, border from `tokens.siteHeader`. **Removed:** `theme`. 16 tests. |
+| ResizeHandle | layout | Done | 2026-10-21. Hit area from `tokens.resizeHandle`; orientation/edge are `data-*`; focus ring from `tokens.focusRing`. **Removed:** `theme`, `cube-focusable`. 11 tests. |
+| Table | data | Done | 2026-10-21. `TableRoot` resolves `tokens.table` (for the chosen density) into `--table-*` vars the parts read; `lines`, `align`, `rowLayout` are `data-*`. Plain functions (no `forwardRef`). 29 tests. |
+
+## Data components
+
+| Component | Status | Notes |
+|---|---|---|
+| CodeBlock (+ CodeSurface, syntax) | Seam done | 2026-10-21. New `syntaxColors.ts` flattens `tokens.syntax.{json,typescript,html,css}` into `--code-surface-syntax-*` vars (URL/email/UUID, which JSON has no tokens for, come from the TypeScript group); `codeBlock` tokens drive row/watch backgrounds; font from `text.codeBlock`. CSS is `:where()`. **Removed:** `theme`, Stack, the `InsetSurfaceOverride` story. `syntaxCssVar` now returns the new var names. No component tests yet (only the story smoke test). |
+| JsonViewer | Seam done | 2026-10-21. Both the CodeBlock `JsonViewer` and the placeholder lost `theme`. No tests yet. |
+| JsonGraph | Seam done | 2026-10-21. No component tokens exist for it; it reads semantic ones (`fgColor`, `bgColor.canvas.inset`, `text.size.md`, `space`). No tests yet. |
+| Graph | Seam done | 2026-10-21. Same: semantic tokens (`bgColor.canvas.subtle`, `border.translucent`, `borderColor.strong`, `fgColor.informational.strong`). No tests yet. |
+| DataGrid | Seam done | 2026-10-21. Placeholder; `theme` prop removed. |
+| ApiResponseViewer | Seam done | 2026-10-21. Stack → Box, `theme` and old text/colour paths removed, Pill/IconButton on the new APIs. No tests yet. |
+
+## Shared helpers to recreate (deleted with the old `src/utils`)
+
+| Helper | Needed by | Plan |
+|---|---|---|
+| `Responsive` / `Breakpoint` types, `resolveResponsive` | (none now) | Not needed: Sheet, Popover and Pill were migrated without them. Recreate only if a component needs them. |
+| `parseLengthPx` | Tooltip, Sidebar, Popover, Sheet | **Done 2026-10-21:** `lengthToPx` in `src/utils/length.ts` (rem × 16, px, bare number). |
+| Nx spacing (`"1.5x"` → `tokens.size["12"]`) | Box, Pill | **Done 2026-10-19:** `SizeScale` type generated into primitives' `tokens.d.ts`; `Space` + `resolveSpace` in `src/utils/space.ts` (Nx or semantic).  |
+
+## Final pass: Figma Code Connect
+
+Once the components exist in Figma: install `@figma/code-connect`, add each `Component.figma.tsx` with its node URL, and decide where the ActionMenu placeholders (`ActionMenu.figma.tsx`, empty) go.

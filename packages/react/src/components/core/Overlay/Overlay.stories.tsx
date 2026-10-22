@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Title, Primary, Controls, Subtitle } from "@storybook/blocks";
 import { Button } from "../Button";
-import { Stack } from "../Stack";
+import { Box } from "../Box";
 import { Text } from "../Text";
 import { Overlay } from "./Overlay";
 
 const demoPageStyle: React.CSSProperties = {
   minHeight: "12rem",
   padding: "1.5rem",
-  background: "var(--cube-color-canvas-subtle, #f9f9f8)",
+  background: "#f9f9f8",
   borderRadius: "0.5rem",
 };
 
@@ -24,17 +23,17 @@ function OverlayDemo({
 
   return (
     <>
-      <Stack gap="sm">
+      <Box gap="sm">
         <Button onClick={() => setOpen(true)}>Show {variant} overlay</Button>
         <div style={demoPageStyle}>
-          <Text role="body" size="sm">
+          <Text size="md">
             Page content stays visible behind the scrim.{" "}
             {variant === "none"
               ? "The none variant is transparent and does not block clicks."
               : "Click the scrim or press Escape to dismiss."}
           </Text>
         </div>
-      </Stack>
+      </Box>
       <Overlay
         open={open}
         variant={variant}
@@ -48,26 +47,8 @@ const meta: Meta<typeof Overlay> = {
   title: "Core/Overlay",
   component: Overlay,
   tags: ["autodocs"],
-  parameters: {
-    layout: "padded",
-    docs: {
-      page: () => (
-        <>
-          <Title />
-          <Subtitle>
-            Portaled full-viewport scrim — the backdrop layer for Dialog and Sheet. Variants:{" "}
-            <code>modal</code> (strong scrim), <code>sheet</code> (light tint),{" "}
-            <code>none</code> (transparent, non-blocking). Pass <code>onDismiss</code> for
-            click-outside and Escape; omit for a static backdrop.
-          </Subtitle>
-          <Primary />
-          <Controls />
-        </>
-      ),
-    },
-  },
+  parameters: { layout: "padded" },
   argTypes: {
-    theme: { control: false },
     style: { control: false },
     className: { control: false },
     onDismiss: { control: false },

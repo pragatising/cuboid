@@ -1,8 +1,8 @@
-import manifest from "./manifest.json";
+import manifest from "@sragatiping/cuboid-primitives/icons/manifest.json";
 
 export type { IconAxes, IconLibrary } from "./IconLibrary";
-export type { IconName } from "./material/iconNames.generated";
-export { ICON_NAMES, isIconName } from "./material/iconNames.generated";
+export type { IconName } from "@sragatiping/cuboid-primitives/icons/names";
+export { ICON_NAMES, isIconName } from "@sragatiping/cuboid-primitives/icons/names";
 export { materialSymbolsIconLibrary } from "./material/materialSymbolsIconLibrary";
 
 export { manifest as iconManifest };
@@ -14,7 +14,7 @@ export { manifest as iconManifest };
  * own manifest) is the runtime source of truth — see `IconLibrary.ts`.
  */
 export type IconManifestEntry = {
-  name: import("./material/iconNames.generated").IconName;
+  name: import("@sragatiping/cuboid-primitives/icons/names").IconName;
   category: string;
   filled: boolean;
 };

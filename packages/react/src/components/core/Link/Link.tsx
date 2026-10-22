@@ -1,102 +1,71 @@
 import React from "react";
-import { useTheme } from "../../../theme/ThemeContext";
-import type { CubeTheme, LinkFunctionalColors, ThemeTokens } from "../../../theme/types";
+import { clsx } from "clsx";
+import { useTokens } from "../../../mode";
+import { cssVars } from "../../../utils/cssVars";
+import { mergeProps } from "../../../utils/mergeProps";
+import type { PolymorphicProps } from "../../../utils/polymorphic";
 import { Icon } from "../Icon";
-import styles from "./Link.module.css";
+import classes from "./Link.module.css";
 
-export type LinkVariant = keyof LinkFunctionalColors | "inherit";
+/**
+ * `inline`: inside body copy, inherits the font from its parent.
+ * `standalone`: nav, footer, contact rows.
+ * `inherit`: composition wrapper (e.g. pill links); no underline, inherits colour.
+ */
+export type LinkVariant = "inline" | "standalone" | "inherit";
 
-type LinkOwnProps = {
-  /**
-   * `inline` — inside body copy; inherits font from parent.
-   * `standalone` — nav, footer, contact rows.
-   * `inherit` — composition wrapper (e.g. pill links); no underline, inherits color.
-   */
-  variant?: LinkVariant;
-  /** Opens in a new tab with `rel="noopener noreferrer"`. */
-  external?: boolean;
-  /** Show ↗ icon when `external` (default true). */
-  showExternalIcon?: boolean;
-  theme?: CubeTheme;
-  className?: string;
-  children: React.ReactNode;
-};
-
-export type LinkProps<E extends React.ElementType = "a"> = LinkOwnProps &
-  Omit<React.ComponentPropsWithoutRef<E>, keyof LinkOwnProps | "as"> & {
-    as?: E;
-  };
-
-function linkCssVars(link: LinkFunctionalColors): Record<string, string> {
-  const out: Record<string, string> = {};
-  for (const variant of ["inline", "standalone"] as const) {
-    const fg = link[variant];
-    out[`--cube-link-${variant}-fg-rest`] = fg.rest;
-    out[`--cube-link-${variant}-fg-hover`] = fg.hover;
+export type LinkProps<As extends React.ElementType = "a"> = PolymorphicProps<
+  As,
+  "a",
+  {
+    /** Which look to use. `inline` and `standalone` read the `link` colour tokens. @default "standalone" */
+    variant?: LinkVariant;
+    /** Opens in a new tab with `rel="noopener noreferrer"` (when rendered as an anchor). @default false */
+    external?: boolean;
+    /** Show the open-in-new icon when `external`. @default true */
+    showExternalIcon?: boolean;
   }
-  return out;
-}
+>;
 
-function linkInlineVars(tokens: ThemeTokens): React.CSSProperties {
-  const { functional } = tokens.colors;
-  const body = tokens.typography.text.bodySm;
-  return {
-    ...linkCssVars(functional.link),
-    "--cube-typography-fontFamily-base": tokens.typography.fontFamily.base,
-    "--cube-typography-text-body-sm-fontSize": body.fontSize,
-    "--cube-typography-text-body-sm-fontWeight": String(body.fontWeight),
-    "--cube-typography-text-body-sm-lineHeight": String(body.lineHeight),
-  } as React.CSSProperties;
-}
-
-export function Link<E extends React.ElementType = "a">({
+/** A link. Colours come from the `link` tokens; the hover colour is picked by CSS from element-scoped variables. */
+export function Link<As extends React.ElementType = "a">({
   as,
-  href,
   variant = "standalone",
   external = false,
   showExternalIcon = true,
-  theme,
-  children,
   className,
-  target,
-  rel,
-  style,
-  ...rest
-}: LinkProps<E>) {
-  const tokens = useTheme(theme);
-  const Component = as ?? "a";
-
-  const classNames = [
-    "cube-focusable",
-    styles.Link,
-    variant === "inline" && styles["Link--inline"],
-    variant === "standalone" && styles["Link--standalone"],
-    variant === "inherit" && styles["Link--inherit"],
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
-
-  const inlineVars = theme ? linkInlineVars(tokens) : undefined;
-
-  const resolvedTarget = external && Component === "a" ? "_blank" : target;
-  const resolvedRel =
-    external && Component === "a"
-      ? [rel, "noopener", "noreferrer"].filter(Boolean).join(" ")
-      : rel;
-
-  const componentProps = {
-    className: classNames,
-    style: { ...inlineVars, ...style },
-    ...(Component === "a" ? { href, target: resolvedTarget, rel: resolvedRel } : {}),
-    ...rest,
-  } as React.ComponentPropsWithoutRef<E>;
+  children,
+  ...props
+}: LinkProps<As>) {
+  const Component: React.ElementType = as ?? "a";
+  const { link, text, focusRing } = useTokens();
+  const isAnchor = Component === "a";
+  const { rel, ...rest } = props as { rel?: string };
 
   return (
-    <Component {...componentProps}>
-      {children}
+    <Component
+      {...mergeProps(
+        {
+          "data-component": "Link",
+          "data-variant": variant,
+          className: clsx(classes.Link, className as string | undefined),
+          style: {
+            ...cssVars("link", {
+              ...(variant === "inherit" ? {} : { fg: link[variant].fgColor }),
+              focusColor: focusRing.color,
+              focusWidth: focusRing.width,
+              focusOffset: focusRing.offset,
+            }),
+            ...(variant === "standalone" ? { font: text.size.md } : {}),
+          },
+          ...(external && isAnchor ? { target: "_blank", rel: [rel, "noopener", "noreferrer"].filter(Boolean).join(" ") } : { rel }),
+        },
+        rest as object,
+      )}
+    >
+      {children as React.ReactNode}
       {external && showExternalIcon && variant !== "inherit" && (
-        <Icon name="open_in_new" size="xs" className={styles.Link__externalIcon} />
+        <Icon name="open_in_new" size="xs" className={classes.ExternalIcon} />
       )}
     </Component>
   );

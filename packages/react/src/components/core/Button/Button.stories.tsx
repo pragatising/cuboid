@@ -1,112 +1,138 @@
-import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Title, Primary, Controls, Subtitle } from "@storybook/blocks";
-import { Stack } from "../Stack";
+import { Box } from "../Box";
+import { Text } from "../Text";
 import { Button } from "./Button";
 
 const meta: Meta<typeof Button> = {
   title: "Core/Button",
   component: Button,
+  parameters: { layout: "padded" },
   tags: ["autodocs"],
-  parameters: {
-    layout: "padded",
-    docs: {
-      page: () => (
-        <>
-          <Title />
-          <Subtitle>
-            Token-driven variants (Figma DS—AI). All colors from{" "}
-            <code>tokens/functional/components/button/</code>.
-          </Subtitle>
-
-          <div className="cube-docs-section">
-            <h3 className="cube-docs-section__title">Variants</h3>
-            <Stack gap="sm">
-              {(["xs", "sm", "md", "lg"] as const).map((size) => (
-                <Stack key={size} direction="horizontal" gap="xs" align="center">
-                  <span className="cube-docs-matrix-label cube-docs-matrix-label--narrow">{size.toUpperCase()}</span>
-                  <Button size={size} variant="primary">Primary</Button>
-                  <Button size={size} variant="secondary">Secondary</Button>
-                  <Button size={size} variant="ghost">Ghost</Button>
-                  <Button size={size} variant="danger">Danger</Button>
-                  <Button size={size} variant="rounded">Rounded</Button>
-                </Stack>
-              ))}
-            </Stack>
-          </div>
-
-          <div className="cube-docs-section">
-            <h3 className="cube-docs-section__title">Pill shape</h3>
-            <Stack direction="horizontal" gap="xs" align="center" wrap>
-              <Button size="sm" variant="primary" shape="rounded">
-                Primary pill
-              </Button>
-              <Button size="sm" variant="secondary" shape="rounded">
-                Secondary pill
-              </Button>
-              <Button size="sm" variant="ghost" shape="rounded">
-                Ghost pill
-              </Button>
-            </Stack>
-          </div>
-
-          <div className="cube-docs-section cube-docs-section--last">
-            <h3 className="cube-docs-section__title">Block</h3>
-            <div style={{ maxWidth: 280 }}>
-              <Button block variant="primary">
-                Full width
-              </Button>
-            </div>
-          </div>
-
-          <Primary />
-          <Controls />
-        </>
-      ),
-    },
+  argTypes: {
+    variant: { control: "select", options: ["primary", "secondary", "ghost", "danger", "rounded"] },
+    size: { control: "inline-radio", options: ["xs", "sm", "md", "lg"] },
+    alignContent: { control: "inline-radio", options: ["center", "start"] },
   },
 };
 export default meta;
 type Story = StoryObj<typeof Button>;
 
 const PlusIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false">
-    <path d="M7.75 2a.75.75 0 0 1 .75.75V7h4.25a.75.75 0 0 1 0 1.5H8.5v4.25a.75.75 0 0 1-1.5 0V8.5H2.75a.75.75 0 0 1 0-1.5H7V2.75A.75.75 0 0 1 7.75 2Z" />
+  <svg viewBox="0 0 16 16" fill="currentColor" focusable="false">
+    <path d="M7.25 2.5a.75.75 0 0 1 1.5 0v4.75h4.75a.75.75 0 0 1 0 1.5H8.75v4.75a.75.75 0 0 1-1.5 0V8.75H2.5a.75.75 0 0 1 0-1.5h4.75Z" />
   </svg>
 );
-
-const ChevronDownIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false">
-    <path d="M4.427 9.427l3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 9H4.604a.25.25 0 0 0-.177.427z" />
+const ChevronIcon = () => (
+  <svg viewBox="0 0 16 16" fill="currentColor" focusable="false">
+    <path d="M4.47 5.97a.75.75 0 0 1 1.06 0L8 8.44l2.47-2.47a.75.75 0 1 1 1.06 1.06L8.53 10.03a.75.75 0 0 1-1.06 0L4.47 7.03a.75.75 0 0 1 0-1.06Z" />
   </svg>
 );
 
 export const Playground: Story = {
-  args: {
-    size: "sm",
-    variant: "primary",
-    shape: "default",
-    block: false,
-    disabled: false,
-    children: "Button",
-    leadingIcon: undefined,
-    trailingIcon: undefined,
-  },
-  argTypes: {
-    size: { control: "radio", options: ["xs", "sm", "md", "lg"] },
-    variant: { control: "radio", options: ["primary", "secondary", "ghost", "danger", "rounded"] },
-    shape: { control: "radio", options: ["default", "rounded"] },
-    block: { control: "boolean" },
-    disabled: { control: "boolean" },
-    leadingIcon: { control: "radio", options: [undefined, "plus"] },
-    trailingIcon: { control: "radio", options: [undefined, "chevronDown"] },
-    onClick: { action: "clicked" },
-  },
-  render: (args) => (
-    <Button
-      {...args}
-      leadingIcon={args.leadingIcon === "plus" ? <PlusIcon /> : undefined}
-      trailingIcon={args.trailingIcon === "chevronDown" ? <ChevronDownIcon /> : undefined}
-    />
+  args: { children: "Button", variant: "secondary", size: "sm" },
+};
+
+export const Variants: Story = {
+  render: () => (
+    <Box flexDirection="row" gap="1x" flexWrap="wrap" alignItems="center">
+      {(["primary", "secondary", "ghost", "danger", "rounded"] as const).map((variant) => (
+        <Button key={variant} variant={variant}>
+          {variant}
+        </Button>
+      ))}
+    </Box>
+  ),
+};
+
+export const Sizes: Story = {
+  render: () => (
+    <Box flexDirection="row" gap="1x" flexWrap="wrap" alignItems="center">
+      {(["xs", "sm", "md", "lg"] as const).map((size) => (
+        <Button key={size} variant="primary" size={size}>
+          Size {size}
+        </Button>
+      ))}
+    </Box>
+  ),
+};
+
+export const States: Story = {
+  render: () => (
+    <Box gap="1x">
+      <Text size="sm" color="neutral.muted">Hover, press and tab to each; the last of each row is disabled.</Text>
+      {(["primary", "secondary", "ghost", "danger", "rounded"] as const).map((variant) => (
+        <Box key={variant} flexDirection="row" gap="1x" alignItems="center">
+          <Button variant={variant}>{variant}</Button>
+          <Button variant={variant} disabled>
+            {variant} (disabled)
+          </Button>
+        </Box>
+      ))}
+    </Box>
+  ),
+};
+
+export const Visuals: Story = {
+  render: () => (
+    <Box flexDirection="row" gap="1x" flexWrap="wrap" alignItems="center">
+      <Button variant="primary" leadingVisual={<PlusIcon />}>Leading visual</Button>
+      <Button trailingVisual={<ChevronIcon />}>Trailing visual</Button>
+      <Button variant="primary" size="lg" leadingVisual={<PlusIcon />} trailingVisual={<ChevronIcon />}>Both</Button>
+    </Box>
+  ),
+};
+
+export const Loading: Story = {
+  render: () => (
+    <Box gap="1x">
+      <Text size="sm" color="neutral.muted">
+        Loading shows a spinner in place of the leading visual (or beside the label when there is none), ignores activation, stays
+        focusable, and announces `loadingMessage` to screen readers.
+      </Text>
+      <Box flexDirection="row" gap="1x" flexWrap="wrap" alignItems="center">
+        <Button variant="primary" loading>Saving</Button>
+        <Button variant="primary" loading leadingVisual={<PlusIcon />}>Replaces the leading visual</Button>
+        <Button loading trailingVisual={<ChevronIcon />} loadingMessage="Loading options">Replaces the trailing visual</Button>
+      </Box>
+    </Box>
+  ),
+};
+
+export const Inactive: Story = {
+  render: () => (
+    <Box flexDirection="row" gap="1x" flexWrap="wrap" alignItems="center">
+      <Button variant="primary" inactive>Inactive</Button>
+      <Button variant="primary" disabled>Disabled</Button>
+      <Text size="sm" color="neutral.muted">Inactive looks disabled but stays focusable: tab to it.</Text>
+    </Box>
+  ),
+};
+
+export const AlignContent: Story = {
+  name: "Align content",
+  render: () => (
+    <Box width="20rem" gap="1x">
+      <Button block leadingVisual={<PlusIcon />}>Centered (default)</Button>
+      <Button block alignContent="start" leadingVisual={<PlusIcon />}>Start</Button>
+    </Box>
+  ),
+};
+
+export const RoundedVariant: Story = {
+  name: "Rounded variant",
+  render: () => (
+    <Box flexDirection="row" gap="1x" flexWrap="wrap" alignItems="center">
+      <Button variant="rounded">rounded</Button>
+      <Button variant="rounded" size="lg" leadingVisual={<PlusIcon />}>rounded large</Button>
+    </Box>
+  ),
+};
+
+export const Block: Story = {
+  render: () => (
+    <Box width="20rem" gap="1x">
+      <Button variant="primary" block>Block button</Button>
+      <Button block>Block button</Button>
+    </Box>
   ),
 };
