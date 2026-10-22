@@ -69,8 +69,8 @@ export type {
   BreadcrumbItem,
 } from "./Breadcrumb";
 
-export { SiteHeader, SiteHeaderDivider } from "./SiteHeader";
-export type { SiteHeaderProps, SiteHeaderDividerProps } from "./SiteHeader";
+export { Header } from "./Header";
+export type { HeaderProps, HeaderSlotProps, HeaderDividerProps } from "./Header";
 
 export { Overlay } from "./Overlay";
 export type { OverlayProps, OverlayVariant } from "./Overlay";

@@ -1,0 +1,8 @@
+/* Layout, size, colour and the border are Box props from the `siteHeader` tokens (Header.tsx). The classes are hooks for a consumer's own CSS. */
+.Header {
+  border-bottom-style: solid;
+}
+
+.Divider {
+  flex-shrink: 0;
+}

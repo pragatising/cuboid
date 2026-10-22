@@ -23,8 +23,8 @@ describe("Pill", () => {
     expect(root(container)).toHaveStyle({ color: recipe.fgColor, backgroundColor: recipe.bgColor });
   });
 
-  it("uses the bordered recipe with border", () => {
-    const { container } = render(<Pill shade="blue" intensity="bold" border>Label</Pill>);
+  it("uses the bordered recipe with bordered", () => {
+    const { container } = render(<Pill shade="blue" intensity="bold" bordered>Label</Pill>);
     const recipe = tokens.light.pill.color.blue.bold.bordered;
     expect(root(container)).toHaveStyle({ color: recipe.fgColor, backgroundColor: recipe.bgColor, borderColor: recipe.borderColor });
   });
@@ -78,5 +78,17 @@ describe("Pill", () => {
   it("has no axe violations", async () => {
     const { container } = render(<Pill>Label</Pill>);
     await expectNoAxeViolations(container);
+  });
+
+  it("sets the label weight from a fontWeight token, medium by default", () => {
+    const { container, rerender } = render(<Pill>Label</Pill>);
+    expect(root(container).style.fontWeight).toBe(String(tokens.light.fontWeight.medium));
+    rerender(<Pill weight="semibold">Label</Pill>);
+    expect(root(container).style.fontWeight).toBe(String(tokens.light.fontWeight.semibold));
+  });
+
+  it("takes any CSS prop, like Box", () => {
+    const { container } = render(<Pill {...({ marginInlineStart: "8px" } as object)}>Label</Pill>);
+    expect(root(container).style.marginInlineStart).toBe("8px");
   });
 });

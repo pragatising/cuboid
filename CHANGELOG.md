@@ -2,6 +2,11 @@
 
 Rolling session log for Claude Code continuity. Newest entry on top. Each entry: what changed, why, and anything the next agent needs to know. Keep entries short — skip anything derivable from `git log` or the diff itself.
 
+## 2026-10-21 (and on) — SiteHeader is now Header; Pill `bordered` and `weight`
+
+- **SiteHeader → Header**, built on `Box` (any CSS prop works). Content goes in slots: `Header.Leading`, `Header.Trailing`, `Header.Divider` (was `SiteHeaderDivider`); the `leading`/`trailing` props are gone. Still styled from the `siteHeader` tokens (token names unchanged).
+- **Pill**: `border` is now `bordered` (reads as a boolean), `weight` sets the label weight from a `fontWeight` token (default `medium`), and Pill is built on `Box`, so it takes any CSS prop.
+
 ## 2026-10-21 (latest still) — Popover and ActionMenu rebuilt on the behaviors
 
 - **Popover** is a generic non-modal anchored overlay: no wrapper span (it clones its trigger), no implied `role="dialog"` (`role` is opt-in; `aria-haspopup` follows it), `open/defaultOpen/onOpenChange`, focus moves into the panel on open and returns to the trigger on close (both default on), Escape only from the top-most layer. New `usePopover` behavior. Parts are dot-notation: `Popover.Header` (string = the title that names a dialog, `onClose` adds a close button), `Popover.Body`, `Popover.Footer` (`primary`/`secondary`/`align` or custom children); `header`/`footer`/`onClose`/`bodyPadding`/`panelRole`/`contentClassName` props are gone. `maxHeight` is a Length; header and footer stay pinned.

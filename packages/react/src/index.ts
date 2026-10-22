@@ -75,8 +75,8 @@ export type {
   BreadcrumbItem,
 } from "./components/core/Breadcrumb";
 
-export { SiteHeader, SiteHeaderDivider } from "./components/core/SiteHeader";
-export type { SiteHeaderProps, SiteHeaderDividerProps } from "./components/core/SiteHeader";
+export { Header } from "./components/core/Header";
+export type { HeaderProps, HeaderSlotProps, HeaderDividerProps } from "./components/core/Header";
 
 export { Overlay } from "./components/core/Overlay";
 export type { OverlayProps, OverlayVariant } from "./components/core/Overlay";

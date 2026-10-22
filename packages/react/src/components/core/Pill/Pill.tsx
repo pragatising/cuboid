@@ -4,6 +4,7 @@ import { useTokens } from "../../../mode";
 import type { Tokens } from "../../../mode";
 import { mergeProps } from "../../../utils/mergeProps";
 import type { PolymorphicProps } from "../../../utils/polymorphic";
+import { Box } from "../Box";
 import classes from "./Pill.module.css";
 
 /** A key of `tokens.pill.color`: the colour family. */
@@ -22,7 +23,9 @@ export type PillProps<As extends React.ElementType = "span"> = PolymorphicProps<
     /** Emphasis step within the shade. @default "light" */
     intensity?: PillIntensity;
     /** Use the bordered surface rather than the filled one. @default false */
-    border?: boolean;
+    bordered?: boolean;
+    /** Which `fontWeight` token sets the label's weight. @default "medium" */
+    weight?: keyof Tokens["fontWeight"];
     /** Which `text.size` token to set the label font from. The pill's height stays fixed. @default "sm" */
     size?: PillSize;
     leadingVisual?: React.ReactNode;
@@ -36,7 +39,8 @@ export function Pill<As extends React.ElementType = "span">({
   as,
   shade = "gray",
   intensity = "light",
-  border = false,
+  bordered = false,
+  weight = "medium",
   size = "sm",
   leadingVisual,
   trailingVisual,
@@ -44,12 +48,12 @@ export function Pill<As extends React.ElementType = "span">({
   children,
   ...props
 }: PillProps<As>) {
-  const Component: React.ElementType = as ?? "span";
   const { pill, text, fontWeight, borderWidth } = useTokens();
-  const colors = pill.color[shade][intensity][border ? "bordered" : "filled"];
+  const colors = pill.color[shade][intensity][bordered ? "bordered" : "filled"];
 
   return (
-    <Component
+    <Box
+      as={(as ?? "span") as React.ElementType}
       {...mergeProps(
         {
           "data-component": "Pill",
@@ -57,7 +61,7 @@ export function Pill<As extends React.ElementType = "span">({
           style: {
             // `lineHeight` comes after the `font` shorthand, which resets it: the pill's height is fixed.
             font: text.size[size],
-            fontWeight: fontWeight.medium,
+            fontWeight: fontWeight[weight],
             lineHeight: 1,
             color: colors.fgColor,
             backgroundColor: colors.bgColor,
@@ -76,6 +80,6 @@ export function Pill<As extends React.ElementType = "span">({
       {leadingVisual ? <span data-component="Pill.LeadingVisual" className={classes.Visual}>{leadingVisual}</span> : null}
       {children as React.ReactNode}
       {trailingVisual ? <span data-component="Pill.TrailingVisual" className={classes.Visual}>{trailingVisual}</span> : null}
-    </Component>
+    </Box>
   );
 }

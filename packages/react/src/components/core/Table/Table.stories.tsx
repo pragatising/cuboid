@@ -63,7 +63,7 @@ const SAMPLE_COLUMNS: ColumnDef<ComponentRow, unknown>[] = [
     header: "Category",
     size: 120,
     cell: ({ getValue }) => (
-      <Pill shade="gray" intensity="extraLight" border>
+      <Pill shade="gray" intensity="extraLight" bordered>
         {String(getValue())}
       </Pill>
     ),

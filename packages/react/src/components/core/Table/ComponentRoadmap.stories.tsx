@@ -30,7 +30,7 @@ const ROADMAP_COLUMNS: ColumnDef<RoadmapRow, unknown>[] = [
       const state = getValue<RoadmapState>();
       const shade = state === "Shipped" ? "blue" : state === "Backlog" ? "gray" : "orange";
       return (
-        <Pill shade={shade} intensity="light" border>
+        <Pill shade={shade} intensity="light" bordered>
           {state}
         </Pill>
       );
@@ -65,7 +65,7 @@ const SHIPPED: RoadmapRow[] = [
   { component: "Link", state: "Shipped", area: "Core", notes: "Inline, standalone, and external link styles." },
   { component: "Pill", state: "Shipped", area: "Core", notes: "Status and label surface with shade recipes." },
   { component: "Breadcrumbs", state: "Shipped", area: "Core", notes: "Hierarchical navigation." },
-  { component: "SiteHeader", state: "Shipped", area: "Core", notes: "Application header structure." },
+  { component: "Header", state: "Shipped", area: "Core", notes: "Application header structure." },
   { component: "Overlay", state: "Shipped", area: "Core", notes: "Modal backdrop primitive." },
   { component: "Sheet", state: "Shipped", area: "Core", notes: "Edge-anchored slide-in surface." },
   { component: "ResizeHandle", state: "Shipped", area: "Core", notes: "Resizable layout affordance." },

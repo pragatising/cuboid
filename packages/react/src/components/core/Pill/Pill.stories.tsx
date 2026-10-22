@@ -9,14 +9,14 @@ import { Pill, type PillIntensity, type PillShade } from "./Pill";
 const SHADES = Object.keys(tokens.light.pill.color) as PillShade[];
 const INTENSITIES = Object.keys(tokens.light.pill.color.gray) as PillIntensity[];
 
-function IntensityMatrix({ border = false }: { border?: boolean }) {
+function IntensityMatrix({ bordered = false }: { bordered?: boolean }) {
   return (
     <Box gap="1x">
       {INTENSITIES.map((intensity) => (
         <Box key={intensity} flexDirection="row" flexWrap="wrap" alignItems="center" gap="1x">
           <Text size="sm" style={{ width: "6rem" }}>{intensity}</Text>
           {SHADES.map((shade) => (
-            <Pill key={shade} shade={shade} intensity={intensity} border={border}>
+            <Pill key={shade} shade={shade} intensity={intensity} bordered={bordered}>
               {shade}
             </Pill>
           ))}
@@ -34,7 +34,7 @@ const meta: Meta<typeof Pill> = {
   argTypes: {
     shade: { control: "select", options: SHADES },
     intensity: { control: "select", options: INTENSITIES },
-    border: { control: "boolean" },
+    bordered: { control: "boolean" },
     size: { control: "inline-radio", options: ["sm", "md", "lg"] },
   },
 };
@@ -42,7 +42,7 @@ export default meta;
 type Story = StoryObj<typeof Pill>;
 
 export const Playground: Story = {
-  args: { shade: "gray", intensity: "light", border: false, size: "sm", children: "Pill" },
+  args: { shade: "gray", intensity: "light", bordered: false, size: "sm", children: "Pill" },
 };
 
 export const AllVariantsFilled: Story = {
@@ -52,7 +52,7 @@ export const AllVariantsFilled: Story = {
 
 export const AllVariantsBordered: Story = {
   name: "All variants (bordered)",
-  render: () => <IntensityMatrix border />,
+  render: () => <IntensityMatrix bordered />,
 };
 
 export const Sizes: Story = {
@@ -60,7 +60,7 @@ export const Sizes: Story = {
   render: () => (
     <Box flexDirection="row" alignItems="center" gap="1x">
       {(["sm", "md", "lg"] as const).map((size) => (
-        <Pill key={size} size={size} border>
+        <Pill key={size} size={size} bordered>
           {size}
         </Pill>
       ))}

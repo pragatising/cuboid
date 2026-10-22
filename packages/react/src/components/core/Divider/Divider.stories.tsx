@@ -18,7 +18,7 @@ const meta: Meta<typeof Divider> = {
           <Subtitle>
             Horizontal rule drawn from the <code>divider</code> component tokens. Use between list rows, sections, or
             stacked content — not for vertical header separators (see{" "}
-            <code>SiteHeaderDivider</code>).
+            <code>Header.Divider</code>).
           </Subtitle>
 
           <div className="cube-docs-section">
