@@ -41,7 +41,8 @@
     "predev": "npm run tokens:theme",
     "prestorybook": "npm run tokens:theme",
     "prebuild-storybook": "npm run tokens:theme",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "generate:css-properties": "node scripts/generate-css-properties.mjs"
   },
   "peerDependencies": {
     "react": ">=19",

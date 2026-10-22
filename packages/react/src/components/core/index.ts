@@ -19,7 +19,7 @@ export { Container } from "./Container";
 export type { ContainerProps, ContainerWidth } from "./Container";
 
 export { Box } from "./Box";
-export type { BoxProps, BoxOwnProps, BoxSpacing } from "./Box";
+export type { BoxProps, BoxOwnProps } from "./Box";
 export type { Space } from "../../utils/space";
 
 export { Divider } from "./Divider";

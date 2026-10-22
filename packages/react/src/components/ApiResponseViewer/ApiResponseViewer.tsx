@@ -99,7 +99,8 @@ export function ApiResponseViewer({
         flexDirection="row"
         alignItems="center"
         gap="sm"
-        padding={{ block: "sm", inline: "md" }}
+        paddingBlock="sm"
+        paddingInline="md"
         className={styles.summary}
       >
         <Box

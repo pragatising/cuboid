@@ -1,8 +1,8 @@
 import React from "react";
 import { clsx } from "clsx";
 import { useTokens } from "../../../mode";
-import { resolveColorPath } from "../../../utils/colorPaths";
-import type { FgColor } from "../../../utils/colorPaths";
+import { resolveColorValue } from "../../../utils/colorPaths";
+import type { CssColor, FgColor } from "../../../utils/colorPaths";
 import { mergeProps } from "../../../utils/mergeProps";
 import type { PolymorphicProps } from "../../../utils/polymorphic";
 import classes from "./Heading.module.css";
@@ -19,8 +19,8 @@ export type HeadingProps<As extends HeadingLevel = "h2"> = PolymorphicProps<
   {
     /** Which `heading.size` token to set the font from. Independent of `as`. @default "lg" */
     size?: HeadingSize;
-    /** Which `fgColor` token to colour the heading with. @default the `heading.fgColor` token */
-    color?: FgColor;
+    /** Which `fgColor` token to colour the heading with, or any CSS colour. @default the `heading.fgColor` token */
+    color?: FgColor | CssColor;
   }
 >;
 
@@ -38,7 +38,7 @@ export function Heading<As extends HeadingLevel = "h2">({ as, size = "lg", color
         {
           "data-component": "Heading",
           className: clsx(classes.Heading, className as string | undefined),
-          style: { font: heading.size[size], color: color ? resolveColorPath(fgColor, color) : heading.fgColor },
+          style: { font: heading.size[size], color: color ? resolveColorValue(fgColor, color) : heading.fgColor },
         },
         props as object,
       )}

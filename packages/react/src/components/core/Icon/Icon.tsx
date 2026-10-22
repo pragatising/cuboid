@@ -3,8 +3,8 @@ import { clsx } from "clsx";
 import { useTokens } from "../../../mode";
 import type { Tokens } from "../../../mode";
 import { mergeProps } from "../../../utils/mergeProps";
-import { resolveColorPath } from "../../../utils/colorPaths";
-import type { FgColor } from "../../../utils/colorPaths";
+import { resolveColorValue } from "../../../utils/colorPaths";
+import type { CssColor, FgColor } from "../../../utils/colorPaths";
 import type { IconAxes } from "../../../icons/IconLibrary";
 import { materialSymbolsIconLibrary } from "../../../icons/material/materialSymbolsIconLibrary";
 import type { IconName } from "@sragatiping/cuboid-primitives/icons/names";
@@ -23,8 +23,8 @@ export type IconProps = Omit<React.ComponentPropsWithRef<"span">, "color" | "chi
   name: IconName;
   /** Which `icon` size token sets the width, height and font size. @default "sm" */
   size?: IconSize;
-  /** Which `fgColor` token to colour the glyph with. @default inherits the ambient text colour */
-  color?: FgColor;
+  /** Which `fgColor` token to colour the glyph with, or any CSS colour. @default inherits the ambient text colour */
+  color?: FgColor | CssColor;
   /** When set, the icon is exposed as `role="img"` with this accessible name; otherwise it is decorative. */
   label?: string;
   /** Stroke weight, 100 to 700. @default 400 */
@@ -66,7 +66,7 @@ export function Icon({
             width: icon[size],
             height: icon[size],
             fontSize: icon[size],
-            color: color ? resolveColorPath(fgColor, color) : undefined,
+            color: color ? resolveColorValue(fgColor, color) : undefined,
           },
         },
         props,

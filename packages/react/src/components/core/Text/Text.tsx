@@ -3,16 +3,16 @@ import { clsx } from "clsx";
 import { useTokens } from "../../../mode";
 import type { Tokens } from "../../../mode";
 import { mergeProps } from "../../../utils/mergeProps";
-import { resolveColorPath } from "../../../utils/colorPaths";
-import type { FgColor } from "../../../utils/colorPaths";
+import { resolveColorValue } from "../../../utils/colorPaths";
+import type { CssColor, FgColor } from "../../../utils/colorPaths";
 import type { PolymorphicProps } from "../../../utils/polymorphic";
 import classes from "./Text.module.css";
 
 /** A key of `tokens.text.size`. */
 export type TextSize = "sm" | "md" | "lg";
 
-/** Any foreground colour token as `group.key` — see `FgColor`. */
-export type TextColor = FgColor;
+/** Any foreground colour token as `group.key` (see `FgColor`), or any CSS colour (`"red"`, `"#fff"`, `"currentColor"`). */
+export type TextColor = FgColor | CssColor;
 
 export type TextProps<As extends React.ElementType = "p"> = PolymorphicProps<
   As,
@@ -20,7 +20,7 @@ export type TextProps<As extends React.ElementType = "p"> = PolymorphicProps<
   {
     /** Which `text.size` token to set the font from. @default "md" */
     size?: TextSize;
-    /** Which `fgColor` token to colour the text with. @default the `text.fgColor` token */
+    /** Which `fgColor` token to colour the text with, or any CSS colour. @default the `text.fgColor` token */
     color?: TextColor;
     /** Which `fontWeight` token to set the weight from. @default the regular body weight */
     weight?: keyof Tokens["fontWeight"];
@@ -61,7 +61,7 @@ export function Text<As extends React.ElementType = "p">({
           style: {
             font: text.size[size],
             fontWeight: weight ? fontWeight[weight] : text.body.weight,
-            color: color ? resolveColorPath(fgColor, color) : text.fgColor,
+            color: color ? resolveColorValue(fgColor, color) : text.fgColor,
           },
         },
         props as object,

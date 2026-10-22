@@ -15,7 +15,7 @@ export type ContainerWidth = keyof Tokens["container"]["maxWidth"];
 export type ContainerProps<As extends React.ElementType = "div"> = PolymorphicProps<
   As,
   "div",
-  Omit<BoxOwnProps, "width" | "maxWidth" | "minHeight" | "padding" | "margin"> & {
+  Omit<BoxOwnProps, "width" | "maxWidth" | "minHeight" | `padding${string}` | `margin${string}`> & {
     /** Max content width: `page` (site shell), `content` (reading column) or `full`. @default "page" */
     width?: ContainerWidth;
     /** Center horizontally with `margin-inline: auto`. @default true */

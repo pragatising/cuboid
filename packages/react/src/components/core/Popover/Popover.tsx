@@ -11,7 +11,6 @@ import { createPortal } from "react-dom";
 import { clsx } from "clsx";
 import { useTokens } from "../../../mode";
 import { lengthToPx } from "../../../utils/length";
-import { resolveSpace } from "../../../utils/space";
 import type { Space } from "../../../utils/space";
 import { ActionMenuList } from "../ActionMenu/ActionMenuList";
 import { Box } from "../Box";
@@ -433,27 +432,23 @@ export function Popover({
       </ActionMenuList.Footer>
     );
 
-  const bodyPaddingValue = resolveSpace(tokens, bodyPadding);
-
   const panelContent = hasSlots ? (
     <>
       {renderedHeader}
       <Box
         gap="sm"
         alignItems="stretch"
-        padding={{ inline: bodyPadding }}
+        paddingInline={bodyPadding}
+        // ActionMenuList.Header's own padding-block-end sits *after* its
+        // divider, so it already supplies the gap down to the body — a
+        // symmetric `padding` here would double it. ActionMenuList.Footer
+        // is the opposite: `border-top` sits flush at its own top edge and
+        // its padding only pushes content *below* the line, so the gap
+        // above the footer must still come from the body itself.
+        paddingBlockStart={header === undefined ? bodyPadding : 0}
+        paddingBlockEnd={bodyPadding}
         width="100%"
         className={maxHeight ? classes.PanelScroll : undefined}
-        style={{
-          // ActionMenuList.Header's own padding-block-end sits *after* its
-          // divider, so it already supplies the gap down to the body — a
-          // symmetric `padding` here would double it. ActionMenuList.Footer
-          // is the opposite: `border-top` sits flush at its own top edge and
-          // its padding only pushes content *below* the line, so the gap
-          // above the footer must still come from the body itself.
-          paddingBlockStart: header === undefined ? bodyPaddingValue : 0,
-          paddingBlockEnd: bodyPaddingValue,
-        }}
       >
         {children}
       </Box>

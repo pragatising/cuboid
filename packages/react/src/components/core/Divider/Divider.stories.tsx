@@ -36,7 +36,7 @@ const meta: Meta<typeof Divider> = {
               <Divider />
               {["First item", "Second item", "Third item"].map((label) => (
                 <Box as="li" key={label}>
-                  <Box padding={{ block: "sm" }}>
+                  <Box paddingBlock="sm">
                     <Text>{label}</Text>
                   </Box>
                   <Divider />
@@ -97,7 +97,7 @@ export const ListRows: Story = {
         { title: "Building in the codebase", summary: "Designing with real data." },
       ].map((item) => (
         <Box as="li" key={item.title}>
-          <Box padding={{ block: "sm" }} gap="xxs">
+          <Box paddingBlock="sm" gap="xxs">
             <Text>{item.title}</Text>
             <Text size="md" color="neutral.muted">
               {item.summary}

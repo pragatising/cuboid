@@ -21,7 +21,7 @@ export { Container } from "./components/core/Container";
 export type { ContainerProps, ContainerWidth } from "./components/core/Container";
 
 export { Box } from "./components/core/Box";
-export type { BoxProps, BoxOwnProps, BoxSpacing } from "./components/core/Box";
+export type { BoxProps, BoxOwnProps } from "./components/core/Box";
 export type { Space } from "./utils/space";
 export type { BgColor, BorderColor, FgColor } from "./utils/colorPaths";
 
