@@ -12,7 +12,7 @@ type ComponentRow = {
   category: string;
   owner: string;
   weeklyUses: string;
-  state: string;
+  status: string;
 };
 
 const SAMPLE_DATA: ComponentRow[] = [
@@ -27,7 +27,7 @@ const SAMPLE_DATA: ComponentRow[] = [
   {
     id: "CMP-1043",
     name: "Data grid with a very long component name that should truncate",
-    category: "Actions",
+    category: "Data",
     owner: "Robert Fox",
     weeklyUses: "312",
     status: "Beta",
@@ -35,7 +35,7 @@ const SAMPLE_DATA: ComponentRow[] = [
   {
     id: "CMP-1044",
     name: "Tooltip",
-    category: "Actions",
+    category: "Overlays",
     owner: "Leslie Alexander",
     weeklyUses: "868",
     status: "Stable",
@@ -82,7 +82,7 @@ const SAMPLE_COLUMNS: ColumnDef<ComponentRow, unknown>[] = [
   {
     accessorKey: "status",
     header: "Status",
-    size: 72,
+    size: 96,
   },
 ];
 
