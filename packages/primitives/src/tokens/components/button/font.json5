@@ -1,0 +1,27 @@
+{
+  button: {
+    font: {
+      $description: 'Button label typography per size (the size.control.* sizes). Medium weight, body-text sizes: xs is the small body size, sm and md share the medium body size, lg is the large body size.',
+      xs: {
+        $value: { fontWeight: '{fontWeight.medium}', fontSize: '{text.body.size.sm}', lineHeight: '{text.body.lineHeight.sm}', fontFamily: '{fontStack.sansSerif}' },
+        $type: 'typography',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'button' } },
+      },
+      sm: {
+        $value: { fontWeight: '{fontWeight.medium}', fontSize: '{text.body.size.md}', lineHeight: '{text.body.lineHeight.md}', fontFamily: '{fontStack.sansSerif}' },
+        $type: 'typography',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'button' } },
+      },
+      md: {
+        $value: { fontWeight: '{fontWeight.medium}', fontSize: '{text.body.size.md}', lineHeight: '{text.body.lineHeight.md}', fontFamily: '{fontStack.sansSerif}' },
+        $type: 'typography',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'button' } },
+      },
+      lg: {
+        $value: { fontWeight: '{fontWeight.medium}', fontSize: '{text.body.size.lg}', lineHeight: '{text.body.lineHeight.lg}', fontFamily: '{fontStack.sansSerif}' },
+        $type: 'typography',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'button' } },
+      },
+    },
+  },
+}

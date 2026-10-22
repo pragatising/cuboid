@@ -1,0 +1,1391 @@
+{
+  "source": {
+    "figmaFileKey": "zOabpawUgebUI45IulHZUP",
+    "figmaNodeId": "12810:80161",
+    "figmaUrl": "https://www.figma.com/design/zOabpawUgebUI45IulHZUP/--DS---Cuboid?node-id=12810-80161",
+    "extractedAt": "2026-06-14T21:13:19.089Z",
+    "method": "metadata-snapshot"
+  },
+  "icons": [
+    {
+      "figmaName": "account",
+      "category": "Header",
+      "figmaNodeId": "10590:96218"
+    },
+    {
+      "figmaName": "account_balance",
+      "category": "Header",
+      "figmaNodeId": "2033:2566"
+    },
+    {
+      "figmaName": "account-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96221"
+    },
+    {
+      "figmaName": "acute",
+      "category": "Header",
+      "figmaNodeId": "233:28094"
+    },
+    {
+      "figmaName": "add-tag",
+      "category": "Header",
+      "figmaNodeId": "10590:96187"
+    },
+    {
+      "figmaName": "add-tag-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96190"
+    },
+    {
+      "figmaName": "adjust",
+      "category": "Header",
+      "figmaNodeId": "2033:2666"
+    },
+    {
+      "figmaName": "airport_shuttle",
+      "category": "Header",
+      "figmaNodeId": "2050:305"
+    },
+    {
+      "figmaName": "alt_route",
+      "category": "Header",
+      "figmaNodeId": "2146:445"
+    },
+    {
+      "figmaName": "app_spark",
+      "category": "Header",
+      "figmaNodeId": "2033:2578"
+    },
+    {
+      "figmaName": "application",
+      "category": "Header",
+      "figmaNodeId": "10590:96425"
+    },
+    {
+      "figmaName": "application-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96428"
+    },
+    {
+      "figmaName": "apps",
+      "category": "Header",
+      "figmaNodeId": "10834:90631"
+    },
+    {
+      "figmaName": "apps-user management",
+      "category": "Header",
+      "figmaNodeId": "11042:100715"
+    },
+    {
+      "figmaName": "apps-user management-fill",
+      "category": "Header",
+      "figmaNodeId": "11042:100728"
+    },
+    {
+      "figmaName": "arrow_split",
+      "category": "Header",
+      "figmaNodeId": "2146:453"
+    },
+    {
+      "figmaName": "arrow-backward",
+      "category": "Header",
+      "figmaNodeId": "10590:96397"
+    },
+    {
+      "figmaName": "arrow-circle-up",
+      "category": "Header",
+      "figmaNodeId": "2035:2387"
+    },
+    {
+      "figmaName": "arrow-downward",
+      "category": "Header",
+      "figmaNodeId": "10590:96394"
+    },
+    {
+      "figmaName": "arrow-drop-down",
+      "category": "Header",
+      "figmaNodeId": "10590:96376"
+    },
+    {
+      "figmaName": "arrow-drop-left",
+      "category": "Header",
+      "figmaNodeId": "10590:96382"
+    },
+    {
+      "figmaName": "arrow-drop-right",
+      "category": "Header",
+      "figmaNodeId": "10590:96385"
+    },
+    {
+      "figmaName": "arrow-drop-up",
+      "category": "Header",
+      "figmaNodeId": "10590:96379"
+    },
+    {
+      "figmaName": "arrow-forward",
+      "category": "Header",
+      "figmaNodeId": "10590:96388"
+    },
+    {
+      "figmaName": "arrow-upward",
+      "category": "Header",
+      "figmaNodeId": "10590:96391"
+    },
+    {
+      "figmaName": "article",
+      "category": "Header",
+      "figmaNodeId": "209:2810"
+    },
+    {
+      "figmaName": "article_person",
+      "category": "Header",
+      "figmaNodeId": "209:2911"
+    },
+    {
+      "figmaName": "article_shortcut",
+      "category": "Header",
+      "figmaNodeId": "209:2914"
+    },
+    {
+      "figmaName": "attachment",
+      "category": "Header",
+      "figmaNodeId": "264:30471"
+    },
+    {
+      "figmaName": "bookmark",
+      "category": "Header",
+      "figmaNodeId": "10590:96567"
+    },
+    {
+      "figmaName": "bookmark-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96570"
+    },
+    {
+      "figmaName": "border_all",
+      "category": "Header",
+      "figmaNodeId": "2083:1412"
+    },
+    {
+      "figmaName": "brand-awareness",
+      "category": "Header",
+      "figmaNodeId": "11089:96098"
+    },
+    {
+      "figmaName": "brightness",
+      "category": "Header",
+      "figmaNodeId": "14917:32527"
+    },
+    {
+      "figmaName": "bug-report",
+      "category": "Header",
+      "figmaNodeId": "11089:96091"
+    },
+    {
+      "figmaName": "cake",
+      "category": "Header",
+      "figmaNodeId": "2029:20909"
+    },
+    {
+      "figmaName": "calendar",
+      "category": "Header",
+      "figmaNodeId": "10590:96322"
+    },
+    {
+      "figmaName": "calendar-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96325"
+    },
+    {
+      "figmaName": "call",
+      "category": "Header",
+      "figmaNodeId": "14489:372"
+    },
+    {
+      "figmaName": "camera",
+      "category": "Header",
+      "figmaNodeId": "10590:96490"
+    },
+    {
+      "figmaName": "camera-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96493"
+    },
+    {
+      "figmaName": "celebration",
+      "category": "Header",
+      "figmaNodeId": "2033:2779"
+    },
+    {
+      "figmaName": "chat",
+      "category": "Header",
+      "figmaNodeId": "10590:96644"
+    },
+    {
+      "figmaName": "chat-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96647"
+    },
+    {
+      "figmaName": "check",
+      "category": "Header",
+      "figmaNodeId": "10590:96309"
+    },
+    {
+      "figmaName": "check_circle_unread",
+      "category": "Header",
+      "figmaNodeId": "2035:2373"
+    },
+    {
+      "figmaName": "checkbook",
+      "category": "Header",
+      "figmaNodeId": "2050:374"
+    },
+    {
+      "figmaName": "chevron-down",
+      "category": "Header",
+      "figmaNodeId": "10590:96373"
+    },
+    {
+      "figmaName": "chevron-left",
+      "category": "Header",
+      "figmaNodeId": "10590:96364"
+    },
+    {
+      "figmaName": "chevron-right",
+      "category": "Header",
+      "figmaNodeId": "10590:96367"
+    },
+    {
+      "figmaName": "chevron-up",
+      "category": "Header",
+      "figmaNodeId": "10590:96370"
+    },
+    {
+      "figmaName": "chips",
+      "category": "Header",
+      "figmaNodeId": "2033:2548"
+    },
+    {
+      "figmaName": "circle",
+      "category": "Header",
+      "figmaNodeId": "10837:93543"
+    },
+    {
+      "figmaName": "circle_circle",
+      "category": "Header",
+      "figmaNodeId": "2035:2380"
+    },
+    {
+      "figmaName": "circle-add",
+      "category": "Header",
+      "figmaNodeId": "10590:96540"
+    },
+    {
+      "figmaName": "circle-add-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96543"
+    },
+    {
+      "figmaName": "circle-check",
+      "category": "Header",
+      "figmaNodeId": "10590:96477"
+    },
+    {
+      "figmaName": "circle-check-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96480"
+    },
+    {
+      "figmaName": "circle-denied",
+      "category": "Header",
+      "figmaNodeId": "10590:96554"
+    },
+    {
+      "figmaName": "circle-denied-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96557"
+    },
+    {
+      "figmaName": "close",
+      "category": "Header",
+      "figmaNodeId": "10590:96409"
+    },
+    {
+      "figmaName": "cloud_download",
+      "category": "Header",
+      "figmaNodeId": "2435:3557"
+    },
+    {
+      "figmaName": "code",
+      "category": "Header",
+      "figmaNodeId": "10590:96159"
+    },
+    {
+      "figmaName": "code-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96162"
+    },
+    {
+      "figmaName": "collapse",
+      "category": "Header",
+      "figmaNodeId": "10798:90567"
+    },
+    {
+      "figmaName": "collapse-sheet",
+      "category": "Header",
+      "figmaNodeId": "10685:96973"
+    },
+    {
+      "figmaName": "comment",
+      "category": "Header",
+      "figmaNodeId": "2333:27611"
+    },
+    {
+      "figmaName": "contract-edit",
+      "category": "Header",
+      "figmaNodeId": "14614:30766"
+    },
+    {
+      "figmaName": "convert_to_text",
+      "category": "Header",
+      "figmaNodeId": "209:2912"
+    },
+    {
+      "figmaName": "copy",
+      "category": "Header",
+      "figmaNodeId": "10590:96602"
+    },
+    {
+      "figmaName": "copy-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96605"
+    },
+    {
+      "figmaName": "cottage",
+      "category": "Header",
+      "figmaNodeId": "2033:2646"
+    },
+    {
+      "figmaName": "credit-card",
+      "category": "Header",
+      "figmaNodeId": "2024:19137"
+    },
+    {
+      "figmaName": "credit-worthy",
+      "category": "Header",
+      "figmaNodeId": "14556:29942"
+    },
+    {
+      "figmaName": "crop_square",
+      "category": "Header",
+      "figmaNodeId": "2033:2550"
+    },
+    {
+      "figmaName": "crown",
+      "category": "Header",
+      "figmaNodeId": "2033:2771"
+    },
+    {
+      "figmaName": "dangerous",
+      "category": "Header",
+      "figmaNodeId": "14614:1228"
+    },
+    {
+      "figmaName": "data-object",
+      "category": "Header",
+      "figmaNodeId": "10590:96288"
+    },
+    {
+      "figmaName": "database",
+      "category": "Header",
+      "figmaNodeId": "2439:3307"
+    },
+    {
+      "figmaName": "deblur",
+      "category": "Header",
+      "figmaNodeId": "2033:2844"
+    },
+    {
+      "figmaName": "delete",
+      "category": "Header",
+      "figmaNodeId": "10590:96588"
+    },
+    {
+      "figmaName": "delete-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96591"
+    },
+    {
+      "figmaName": "delivery_truck_speed",
+      "category": "Header",
+      "figmaNodeId": "2050:327"
+    },
+    {
+      "figmaName": "deployed-code",
+      "category": "Header",
+      "figmaNodeId": "10590:96348"
+    },
+    {
+      "figmaName": "directions_car",
+      "category": "Header",
+      "figmaNodeId": "2050:313"
+    },
+    {
+      "figmaName": "discover_tune",
+      "category": "Header",
+      "figmaNodeId": "151:15876"
+    },
+    {
+      "figmaName": "dock_to_bottom",
+      "category": "Header",
+      "figmaNodeId": "2087:11733"
+    },
+    {
+      "figmaName": "dock_to_left",
+      "category": "Header",
+      "figmaNodeId": "2033:2530"
+    },
+    {
+      "figmaName": "dock_to_right",
+      "category": "Header",
+      "figmaNodeId": "2087:11741"
+    },
+    {
+      "figmaName": "docs",
+      "category": "Header",
+      "figmaNodeId": "209:2917"
+    },
+    {
+      "figmaName": "document",
+      "category": "Header",
+      "figmaNodeId": "10590:96180"
+    },
+    {
+      "figmaName": "document-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96183"
+    },
+    {
+      "figmaName": "dollar",
+      "category": "Header",
+      "figmaNodeId": "10590:96446"
+    },
+    {
+      "figmaName": "dollar-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96449"
+    },
+    {
+      "figmaName": "dollar-input",
+      "category": "Header",
+      "figmaNodeId": "14882:5108"
+    },
+    {
+      "figmaName": "dot-indicator",
+      "category": "Header",
+      "figmaNodeId": "2331:5235"
+    },
+    {
+      "figmaName": "download",
+      "category": "Header",
+      "figmaNodeId": "10590:96622"
+    },
+    {
+      "figmaName": "download-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96631"
+    },
+    {
+      "figmaName": "downloading",
+      "category": "Header",
+      "figmaNodeId": "2435:3564"
+    },
+    {
+      "figmaName": "drag-handle",
+      "category": "Header",
+      "figmaNodeId": "153:15979"
+    },
+    {
+      "figmaName": "drag-indicator",
+      "category": "Header",
+      "figmaNodeId": "10590:96297"
+    },
+    {
+      "figmaName": "edit",
+      "category": "Header",
+      "figmaNodeId": "10590:96329"
+    },
+    {
+      "figmaName": "edit-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96332"
+    },
+    {
+      "figmaName": "eligibility-rule",
+      "category": "Header",
+      "figmaNodeId": "10685:94735"
+    },
+    {
+      "figmaName": "emergency_home",
+      "category": "Header",
+      "figmaNodeId": "233:28027"
+    },
+    {
+      "figmaName": "emoji_objects",
+      "category": "Header",
+      "figmaNodeId": "2050:335"
+    },
+    {
+      "figmaName": "energy_program_saving",
+      "category": "Header",
+      "figmaNodeId": "233:28038"
+    },
+    {
+      "figmaName": "equalizer",
+      "category": "Header",
+      "figmaNodeId": "10590:96351"
+    },
+    {
+      "figmaName": "error",
+      "category": "Header",
+      "figmaNodeId": "10590:96470"
+    },
+    {
+      "figmaName": "error-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96473"
+    },
+    {
+      "figmaName": "expand",
+      "category": "Header",
+      "figmaNodeId": "10798:90574"
+    },
+    {
+      "figmaName": "expand-circle-down",
+      "category": "Header",
+      "figmaNodeId": "10590:96609"
+    },
+    {
+      "figmaName": "expand-circle-down-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96612"
+    },
+    {
+      "figmaName": "expand-circle-up",
+      "category": "Header",
+      "figmaNodeId": "10590:96616"
+    },
+    {
+      "figmaName": "expand-circle-up-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96619"
+    },
+    {
+      "figmaName": "expand-sheet",
+      "category": "Header",
+      "figmaNodeId": "10590:96412"
+    },
+    {
+      "figmaName": "fields",
+      "category": "Header",
+      "figmaNodeId": "14599:29946"
+    },
+    {
+      "figmaName": "first_page",
+      "category": "Header",
+      "figmaNodeId": "2087:11749"
+    },
+    {
+      "figmaName": "flag",
+      "category": "Header",
+      "figmaNodeId": "243:28344"
+    },
+    {
+      "figmaName": "flag_2",
+      "category": "Header",
+      "figmaNodeId": "243:28336"
+    },
+    {
+      "figmaName": "flip",
+      "category": "Header",
+      "figmaNodeId": "2033:2708"
+    },
+    {
+      "figmaName": "folder",
+      "category": "Header",
+      "figmaNodeId": "10590:96145"
+    },
+    {
+      "figmaName": "folder-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96148"
+    },
+    {
+      "figmaName": "format_italic",
+      "category": "Header",
+      "figmaNodeId": "288:11880"
+    },
+    {
+      "figmaName": "format_list_numbered",
+      "category": "Header",
+      "figmaNodeId": "288:11910"
+    },
+    {
+      "figmaName": "format-align-center",
+      "category": "Header",
+      "figmaNodeId": "10590:96273"
+    },
+    {
+      "figmaName": "format-align-left",
+      "category": "Header",
+      "figmaNodeId": "10590:96276"
+    },
+    {
+      "figmaName": "format-align-right",
+      "category": "Header",
+      "figmaNodeId": "10590:96279"
+    },
+    {
+      "figmaName": "format-bold",
+      "category": "Header",
+      "figmaNodeId": "10590:96267"
+    },
+    {
+      "figmaName": "format-list-bulleted",
+      "category": "Header",
+      "figmaNodeId": "10590:96270"
+    },
+    {
+      "figmaName": "format-underlined",
+      "category": "Header",
+      "figmaNodeId": "10590:96282"
+    },
+    {
+      "figmaName": "forward_media",
+      "category": "Header",
+      "figmaNodeId": "2033:2620"
+    },
+    {
+      "figmaName": "frame_spark",
+      "category": "Header",
+      "figmaNodeId": "2033:2628"
+    },
+    {
+      "figmaName": "function",
+      "category": "Header",
+      "figmaNodeId": "2373:206"
+    },
+    {
+      "figmaName": "gite",
+      "category": "Header",
+      "figmaNodeId": "233:28045"
+    },
+    {
+      "figmaName": "help",
+      "category": "Header",
+      "figmaNodeId": "10590:96483"
+    },
+    {
+      "figmaName": "help-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96486"
+    },
+    {
+      "figmaName": "history",
+      "category": "Header",
+      "figmaNodeId": "11479:21651"
+    },
+    {
+      "figmaName": "home",
+      "category": "Header",
+      "figmaNodeId": "10590:96339"
+    },
+    {
+      "figmaName": "home-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96342"
+    },
+    {
+      "figmaName": "id-verify",
+      "category": "Header",
+      "figmaNodeId": "10685:94674"
+    },
+    {
+      "figmaName": "image",
+      "category": "Header",
+      "figmaNodeId": "10590:96166"
+    },
+    {
+      "figmaName": "image-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96169"
+    },
+    {
+      "figmaName": "in_home_mode",
+      "category": "Header",
+      "figmaNodeId": "233:28057"
+    },
+    {
+      "figmaName": "jamboard_kiosk",
+      "category": "Header",
+      "figmaNodeId": "2033:2830"
+    },
+    {
+      "figmaName": "kid_star",
+      "category": "Header",
+      "figmaNodeId": "2033:2593"
+    },
+    {
+      "figmaName": "label",
+      "category": "Header",
+      "figmaNodeId": "10590:96173"
+    },
+    {
+      "figmaName": "label-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96176"
+    },
+    {
+      "figmaName": "laptop_mac",
+      "category": "Header",
+      "figmaNodeId": "2033:2815"
+    },
+    {
+      "figmaName": "laptop_windows",
+      "category": "Header",
+      "figmaNodeId": "2033:2822"
+    },
+    {
+      "figmaName": "lightbulb",
+      "category": "Header",
+      "figmaNodeId": "10687:93036"
+    },
+    {
+      "figmaName": "lightbulb-fill",
+      "category": "Header",
+      "figmaNodeId": "10687:93035"
+    },
+    {
+      "figmaName": "link",
+      "category": "Header",
+      "figmaNodeId": "10590:96285"
+    },
+    {
+      "figmaName": "lock",
+      "category": "Header",
+      "figmaNodeId": "10590:96316"
+    },
+    {
+      "figmaName": "lock-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96319"
+    },
+    {
+      "figmaName": "log-in",
+      "category": "Header",
+      "figmaNodeId": "10590:96400"
+    },
+    {
+      "figmaName": "log-out",
+      "category": "Header",
+      "figmaNodeId": "10590:96403"
+    },
+    {
+      "figmaName": "logo",
+      "category": "Header",
+      "figmaNodeId": "10682:92780"
+    },
+    {
+      "figmaName": "logo-fill",
+      "category": "Header",
+      "figmaNodeId": "10682:92767"
+    },
+    {
+      "figmaName": "mail",
+      "category": "Header",
+      "figmaNodeId": "10590:96442"
+    },
+    {
+      "figmaName": "mail-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96439"
+    },
+    {
+      "figmaName": "map-pin",
+      "category": "Header",
+      "figmaNodeId": "10590:96595"
+    },
+    {
+      "figmaName": "map-pin-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96598"
+    },
+    {
+      "figmaName": "margin",
+      "category": "Header",
+      "figmaNodeId": "209:2916"
+    },
+    {
+      "figmaName": "mark-email-unread",
+      "category": "Header",
+      "figmaNodeId": "14797:1594"
+    },
+    {
+      "figmaName": "menu",
+      "category": "Header",
+      "figmaNodeId": "10590:96345"
+    },
+    {
+      "figmaName": "message",
+      "category": "Header",
+      "figmaNodeId": "11006:95709"
+    },
+    {
+      "figmaName": "mic",
+      "category": "Header",
+      "figmaNodeId": "2032:210"
+    },
+    {
+      "figmaName": "minus",
+      "category": "Header",
+      "figmaNodeId": "10590:96312"
+    },
+    {
+      "figmaName": "mobile_2",
+      "category": "Header",
+      "figmaNodeId": "2033:2872"
+    },
+    {
+      "figmaName": "money_bag",
+      "category": "Header",
+      "figmaNodeId": "227:28015"
+    },
+    {
+      "figmaName": "more-horiz",
+      "category": "Header",
+      "figmaNodeId": "13881:239"
+    },
+    {
+      "figmaName": "more-vert",
+      "category": "Header",
+      "figmaNodeId": "13881:232"
+    },
+    {
+      "figmaName": "motion_photos_paused",
+      "category": "Header",
+      "figmaNodeId": "2085:3752"
+    },
+    {
+      "figmaName": "motion_play",
+      "category": "Header",
+      "figmaNodeId": "2085:3755"
+    },
+    {
+      "figmaName": "nest_eco_leaf",
+      "category": "Header",
+      "figmaNodeId": "233:28064"
+    },
+    {
+      "figmaName": "new_window",
+      "category": "Header",
+      "figmaNodeId": "2087:11787"
+    },
+    {
+      "figmaName": "news",
+      "category": "Header",
+      "figmaNodeId": "209:2910"
+    },
+    {
+      "figmaName": "notes",
+      "category": "Header",
+      "figmaNodeId": "209:2909"
+    },
+    {
+      "figmaName": "notifications",
+      "category": "Header",
+      "figmaNodeId": "10590:96358"
+    },
+    {
+      "figmaName": "notifications-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96361"
+    },
+    {
+      "figmaName": "numbers",
+      "category": "Header",
+      "figmaNodeId": "147:5656"
+    },
+    {
+      "figmaName": "page_footer",
+      "category": "Header",
+      "figmaNodeId": "209:2908"
+    },
+    {
+      "figmaName": "passkey",
+      "category": "Header",
+      "figmaNodeId": "14613:860"
+    },
+    {
+      "figmaName": "pending",
+      "category": "Header",
+      "figmaNodeId": "10590:96504"
+    },
+    {
+      "figmaName": "pending-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96507"
+    },
+    {
+      "figmaName": "percent",
+      "category": "Header",
+      "figmaNodeId": "2050:343"
+    },
+    {
+      "figmaName": "percent_discount",
+      "category": "Header",
+      "figmaNodeId": "2033:2764"
+    },
+    {
+      "figmaName": "percent-input",
+      "category": "Header",
+      "figmaNodeId": "14882:4931"
+    },
+    {
+      "figmaName": "person",
+      "category": "Header",
+      "figmaNodeId": "10590:96204"
+    },
+    {
+      "figmaName": "person-add",
+      "category": "Header",
+      "figmaNodeId": "10590:96211"
+    },
+    {
+      "figmaName": "person-add-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96214"
+    },
+    {
+      "figmaName": "person-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96207"
+    },
+    {
+      "figmaName": "play_circle",
+      "category": "Header",
+      "figmaNodeId": "2033:2692"
+    },
+    {
+      "figmaName": "play-arrow",
+      "category": "Header",
+      "figmaNodeId": "10590:96650"
+    },
+    {
+      "figmaName": "plus",
+      "category": "Header",
+      "figmaNodeId": "10590:96536"
+    },
+    {
+      "figmaName": "primary-color",
+      "category": "Header",
+      "figmaNodeId": "10682:92717"
+    },
+    {
+      "figmaName": "priority",
+      "category": "Header",
+      "figmaNodeId": "243:28364"
+    },
+    {
+      "figmaName": "productivity",
+      "category": "Header",
+      "figmaNodeId": "233:28087"
+    },
+    {
+      "figmaName": "release_alert",
+      "category": "Header",
+      "figmaNodeId": "2033:2787"
+    },
+    {
+      "figmaName": "reply",
+      "category": "Header",
+      "figmaNodeId": "2033:2685"
+    },
+    {
+      "figmaName": "report-box",
+      "category": "Header",
+      "figmaNodeId": "10590:96152"
+    },
+    {
+      "figmaName": "report-box-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96155"
+    },
+    {
+      "figmaName": "restart-alt",
+      "category": "Header",
+      "figmaNodeId": "10590:96634"
+    },
+    {
+      "figmaName": "roofing",
+      "category": "Header",
+      "figmaNodeId": "233:28076"
+    },
+    {
+      "figmaName": "rotate_left",
+      "category": "Header",
+      "figmaNodeId": "2033:2673"
+    },
+    {
+      "figmaName": "savings",
+      "category": "Header",
+      "figmaNodeId": "10590:96240"
+    },
+    {
+      "figmaName": "savings-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96237"
+    },
+    {
+      "figmaName": "scan",
+      "category": "Header",
+      "figmaNodeId": "2033:2716"
+    },
+    {
+      "figmaName": "schedule",
+      "category": "Header",
+      "figmaNodeId": "2033:2795"
+    },
+    {
+      "figmaName": "school",
+      "category": "Header",
+      "figmaNodeId": "14575:29873"
+    },
+    {
+      "figmaName": "science",
+      "category": "Header",
+      "figmaNodeId": "14927:32553"
+    },
+    {
+      "figmaName": "search",
+      "category": "Header",
+      "figmaNodeId": "10590:96306"
+    },
+    {
+      "figmaName": "security",
+      "category": "Header",
+      "figmaNodeId": "14903:31773"
+    },
+    {
+      "figmaName": "send",
+      "category": "Header",
+      "figmaNodeId": "10590:96547"
+    },
+    {
+      "figmaName": "send-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96550"
+    },
+    {
+      "figmaName": "settings",
+      "category": "Header",
+      "figmaNodeId": "10590:96354"
+    },
+    {
+      "figmaName": "settings_backup_restore",
+      "category": "Header",
+      "figmaNodeId": "2033:2601"
+    },
+    {
+      "figmaName": "shield-person",
+      "category": "Header",
+      "figmaNodeId": "15108:1252"
+    },
+    {
+      "figmaName": "shopping",
+      "category": "Header",
+      "figmaNodeId": "10590:96230"
+    },
+    {
+      "figmaName": "shopping_bag_speed",
+      "category": "Header",
+      "figmaNodeId": "226:28005"
+    },
+    {
+      "figmaName": "shopping-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96233"
+    },
+    {
+      "figmaName": "siren",
+      "category": "Header",
+      "figmaNodeId": "243:28352"
+    },
+    {
+      "figmaName": "sort",
+      "category": "Header",
+      "figmaNodeId": "10590:96300"
+    },
+    {
+      "figmaName": "sort-default",
+      "category": "Header",
+      "figmaNodeId": "14691:21851"
+    },
+    {
+      "figmaName": "stack",
+      "category": "Header",
+      "figmaNodeId": "10935:93194"
+    },
+    {
+      "figmaName": "stethoscope",
+      "category": "Header",
+      "figmaNodeId": "12665:156935"
+    },
+    {
+      "figmaName": "sticky_note",
+      "category": "Header",
+      "figmaNodeId": "265:30479"
+    },
+    {
+      "figmaName": "sticky_note_2",
+      "category": "Header",
+      "figmaNodeId": "265:30487"
+    },
+    {
+      "figmaName": "stop_circle",
+      "category": "Header",
+      "figmaNodeId": "2033:2700"
+    },
+    {
+      "figmaName": "storefront",
+      "category": "Header",
+      "figmaNodeId": "226:28006"
+    },
+    {
+      "figmaName": "strikethrough_s",
+      "category": "Header",
+      "figmaNodeId": "288:11888"
+    },
+    {
+      "figmaName": "stylus_fountain_pen",
+      "category": "Header",
+      "figmaNodeId": "2050:366"
+    },
+    {
+      "figmaName": "stylus_highlighter",
+      "category": "Header",
+      "figmaNodeId": "2033:2740"
+    },
+    {
+      "figmaName": "stylus_note",
+      "category": "Header",
+      "figmaNodeId": "2033:2732"
+    },
+    {
+      "figmaName": "swap_vert",
+      "category": "Header",
+      "figmaNodeId": "105:4619"
+    },
+    {
+      "figmaName": "table",
+      "category": "Header",
+      "figmaNodeId": "2083:1415"
+    },
+    {
+      "figmaName": "table-fill",
+      "category": "Header",
+      "figmaNodeId": "2085:11725"
+    },
+    {
+      "figmaName": "tag",
+      "category": "Header",
+      "figmaNodeId": "10682:92668"
+    },
+    {
+      "figmaName": "text",
+      "category": "Header",
+      "figmaNodeId": "10590:96291"
+    },
+    {
+      "figmaName": "text_compare",
+      "category": "Header",
+      "figmaNodeId": "2033:2724"
+    },
+    {
+      "figmaName": "text-snippet",
+      "category": "Header",
+      "figmaNodeId": "10590:96518"
+    },
+    {
+      "figmaName": "text-snippet-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96521"
+    },
+    {
+      "figmaName": "theme",
+      "category": "Header",
+      "figmaNodeId": "10590:96419"
+    },
+    {
+      "figmaName": "theme-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96422"
+    },
+    {
+      "figmaName": "thermostat_carbon",
+      "category": "Header",
+      "figmaNodeId": "2033:2654"
+    },
+    {
+      "figmaName": "thought",
+      "category": "Header",
+      "figmaNodeId": "2034:211"
+    },
+    {
+      "figmaName": "thumb-down",
+      "category": "Header",
+      "figmaNodeId": "10590:96524"
+    },
+    {
+      "figmaName": "thumb-up",
+      "category": "Header",
+      "figmaNodeId": "10590:96527"
+    },
+    {
+      "figmaName": "timer",
+      "category": "Header",
+      "figmaNodeId": "10590:96456"
+    },
+    {
+      "figmaName": "timer-filled",
+      "category": "Header",
+      "figmaNodeId": "10590:96459"
+    },
+    {
+      "figmaName": "tips",
+      "category": "Header",
+      "figmaNodeId": "10590:96511"
+    },
+    {
+      "figmaName": "tips-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96514"
+    },
+    {
+      "figmaName": "toggle-on",
+      "category": "Header",
+      "figmaNodeId": "14869:1108"
+    },
+    {
+      "figmaName": "tooltip-info",
+      "category": "Header",
+      "figmaNodeId": "10590:96463"
+    },
+    {
+      "figmaName": "tooltip-info-filled",
+      "category": "Header",
+      "figmaNodeId": "10590:96466"
+    },
+    {
+      "figmaName": "travel_explore",
+      "category": "Header",
+      "figmaNodeId": "13179:248"
+    },
+    {
+      "figmaName": "triangle_down",
+      "category": "Header",
+      "figmaNodeId": "2146:438"
+    },
+    {
+      "figmaName": "triangle_up",
+      "category": "Header",
+      "figmaNodeId": "2146:429"
+    },
+    {
+      "figmaName": "unfold-less",
+      "category": "Header",
+      "figmaNodeId": "10590:96637"
+    },
+    {
+      "figmaName": "unfold-more",
+      "category": "Header",
+      "figmaNodeId": "10590:96640"
+    },
+    {
+      "figmaName": "upload",
+      "category": "Header",
+      "figmaNodeId": "10590:96625"
+    },
+    {
+      "figmaName": "upload-cloud",
+      "category": "Header",
+      "figmaNodeId": "10590:96563"
+    },
+    {
+      "figmaName": "upload-cloud-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96560"
+    },
+    {
+      "figmaName": "upload-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96628"
+    },
+    {
+      "figmaName": "variable-add",
+      "category": "Header",
+      "figmaNodeId": "14599:29956"
+    },
+    {
+      "figmaName": "verified",
+      "category": "Header",
+      "figmaNodeId": "209:2928"
+    },
+    {
+      "figmaName": "view_kanban",
+      "category": "Header",
+      "figmaNodeId": "2033:2557"
+    },
+    {
+      "figmaName": "view-new-window",
+      "category": "Header",
+      "figmaNodeId": "10590:96406"
+    },
+    {
+      "figmaName": "visibility-off",
+      "category": "Header",
+      "figmaNodeId": "10590:96581"
+    },
+    {
+      "figmaName": "visibility-off-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96584"
+    },
+    {
+      "figmaName": "visibility-on",
+      "category": "Header",
+      "figmaNodeId": "10590:96574"
+    },
+    {
+      "figmaName": "visibility-on-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96577"
+    },
+    {
+      "figmaName": "wand_stars",
+      "category": "Header",
+      "figmaNodeId": "2362:289"
+    },
+    {
+      "figmaName": "warning",
+      "category": "Header",
+      "figmaNodeId": "10590:96497"
+    },
+    {
+      "figmaName": "warning-fill",
+      "category": "Header",
+      "figmaNodeId": "10590:96500"
+    }
+  ]
+}

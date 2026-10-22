@@ -21,10 +21,12 @@
           $description: 'GAP: original used borderColor.subtle, lighter than gray.3 (borderColor.subtle, the lightest named functional step). Falls back to subtle.',
         },
       },
+      // White text sits on the red fill in both modes. `neutral.inverted` flips to near-black in dark
+      // mode (correct for the inverted *surface* it was made for), which would put dark text on red.
       fgColor: {
-        rest: { $value: '{fgColor.neutral.inverted}', $type: 'color' },
-        hover: { $value: '{fgColor.neutral.inverted}', $type: 'color' },
-        pressed: { $value: '{fgColor.neutral.inverted}', $type: 'color' },
+        rest: { $value: '{fgColor.neutral.inverted}', $type: 'color', $extensions: { 'org.cuboid.overrides': { dark: '#ffffff' } } },
+        hover: { $value: '{fgColor.neutral.inverted}', $type: 'color', $extensions: { 'org.cuboid.overrides': { dark: '#ffffff' } } },
+        pressed: { $value: '{fgColor.neutral.inverted}', $type: 'color', $extensions: { 'org.cuboid.overrides': { dark: '#ffffff' } } },
         disabled: { $value: '{fgColor.neutral.disabled}', $type: 'color' },
       },
     },

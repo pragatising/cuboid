@@ -10,6 +10,17 @@
         },
       },
     },
+    color: {
+      $value: '{borderColor.informational.strong}',
+      $type: 'color',
+      $description: 'Colour of the keyboard focus ring (:focus-visible outline). Follows the informational border colour, so it has a dark-mode value too.',
+      $extensions: {
+        'org.cuboid.figma': {
+          collection: 'functional/size',
+          scopes: ['focusRing'],
+        },
+      },
+    },
     offset: {
       $value: '{base.size.2}',
       $type: 'dimension',

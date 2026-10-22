@@ -27,6 +27,23 @@
   themeCubeOverride.ts}` (the superseded context-based seam) — deferred to the React-refactor phase per
   standing user direction (primitives must be tight first).
 
+## Amendment (2026-10-19): build-time overrides, runtime modes via a store + hook
+
+Two requirements surfaced after the original decision, and together they replace parts of it:
+
+1. **Overrides must cascade.** A consumer changing a base or functional token has to flow into every token that references it. Merging overrides into the already-resolved object (the original `applyOverrides`) cannot do that.
+2. **Light/dark are modes, not themes, and must switch while the app is live, with no rebuild.**
+
+What changes:
+
+- **Overrides run through the pipeline, at the consumer's build.** The consumer supplies a partial DTCG file (any layer: base, functional, component; `.json`/`.json5` or a `.ts` default export). `build({ overrides })` deep-merges it over the token dictionary in the `consumerOverrides` preprocessor, *before* references resolve, so a base change cascades. It is a preprocessor and **not** an extra Style Dictionary `source` file because SD's source merge replaces a whole token on a same-path collision — an override of only `$value` would silently drop the token's `$type`, `$extensions` (including its dark value) and `alpha`. Overrides may only target existing tokens (an unknown path is a typo and fails the build). The merged tree is then validated with the Zod `designToken` schema, and a broken `{reference}` throws. `applyOverrides` is reused as the merge, but no longer as a consumer-facing runtime API.
+- **The build emits one resolved tree per mode**, by running the existing `themeOverrides` preprocessor once per mode (`light`, `dark`): `tokens.light`, `tokens.dark`, same shape, plus the generated `.d.ts`. Modes are authored inline on the token (`$extensions['org.cuboid.overrides'].dark`), per DESIGN.md §5.
+- **Components read the current mode's tree through a hook backed by a tiny store**, not CSS vars and not a React context provider: `const tokens = useTokens()`. The store holds the active mode; `useTokens()` is `useSyncExternalStore` over it; `setMode("dark")` notifies subscribers. Only a mode change re-renders token readers (rare, user-initiated) — theme *values* never change at runtime, so the original objection (re-render on every theme change) is bounded to the toggle. The store lives in `packages/react`; `packages/primitives` stays React-free.
+- **Delivery to the published components is unchanged from the earlier amendment:** `@sragatiping/cuboid-primitives` is an **external** import of `@sragatiping/cuboid` (`packages/react/vite.config.ts`) and must be published. The consumer's build resolves it to the trees generated from their overrides; with no overrides, to the defaults we ship. How that resolution is wired (alias first, bundler plugin later) and the consumer CLI are still open.
+- **Import shape:** default import with generated types (`dist/js/tokens.d.ts`).
+
+Costs accepted: a hook in every token-reading component; SSR needs the initial mode known at render (cookie or `prefers-color-scheme`) to avoid a wrong-mode flash; modes beyond light/dark are supported by the same mechanism but are not authored yet. Rejected for this: CSS variables (live switching with zero JS, but contradicts the static-values goal) and `light-dark()` strings (colors only, two modes only).
+
 ## Decision
 
 A component reads a token's **resolved raw value** (`"#1a7f37"`, `"0.5rem"`) from a **statically-imported JSON/JS object**, not a CSS custom property and not a value read from React context. Re-theming is a **plain-object merge, applied once, before render** — never a context subscription that causes every token-reading component to re-render when a theme changes.

@@ -64,6 +64,7 @@ import { typescriptExportDefinition } from "./formats/typescriptExportDefinition
 
 // Preprocessors
 import { themeOverrides } from "./preprocessors/themeOverrides.ts";
+import { consumerOverrides } from "./preprocessors/consumerOverrides.ts";
 import { inheritGroupProperties } from "./preprocessors/inheritGroupProperties.ts";
 
 export const styleDictionary = new StyleDictionary({
@@ -116,4 +117,5 @@ styleDictionary.registerFormat({ name: "typescript/export-definition", format: t
 
 // -- Preprocessors --
 styleDictionary.registerPreprocessor(themeOverrides);
+styleDictionary.registerPreprocessor(consumerOverrides);
 styleDictionary.registerPreprocessor(inheritGroupProperties);

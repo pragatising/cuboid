@@ -1,0 +1,33 @@
+// Dark-mode values for the base layer's alpha-based tokens (hand-authored; the
+// opaque ramps next to this file are generated). Applied in dark mode only.
+{
+  base: {
+    color: {
+      // Translucent layers over a dark surface lighten instead of darken: white, not #3a3a39.
+      grayAlpha: {
+        '0': { $value: '#ffffff', alpha: 0 },
+        '1': { $value: '#ffffff', alpha: 0.07 },
+        '2': { $value: '#ffffff', alpha: 0.1 },
+        '3': { $value: '#ffffff', alpha: 0.14 },
+        '4': { $value: '#ffffff', alpha: 0.2 },
+      },
+      // A shadow is invisible on a dark surface at light-mode opacity. Pure black at higher alpha,
+      // same rank order as the light values (so layered shadow tokens keep their relative depth).
+      shadowAlpha: {
+        black: { '0.05': { $value: '#000000', alpha: 0.3 } },
+        warmBlack: { '0.07': { $value: '#000000', alpha: 0.35 } },
+        neutral33: {
+          '0.04': { $value: '#000000', alpha: 0.25 },
+          '0.07': { $value: '#000000', alpha: 0.35 },
+        },
+        neutral25: {
+          '0.03': { $value: '#000000', alpha: 0.2 },
+          '0.05': { $value: '#000000', alpha: 0.3 },
+        },
+        neutral44: { '0.08': { $value: '#000000', alpha: 0.4 } },
+      },
+      // Sheet scrim: light mode tints very slightly dark; dark mode needs a real dim.
+      overlay: { sheet: { $value: '#000000', alpha: 0.4 } },
+    },
+  },
+}

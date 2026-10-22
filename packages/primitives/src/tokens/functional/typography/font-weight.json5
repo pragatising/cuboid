@@ -1,0 +1,25 @@
+{
+  fontWeight: {
+    $description: 'Named font weights for components that let consumers choose a weight (e.g. Text `weight`). Aliases the base weights, which are reference-only and never emitted.',
+    light: {
+      $value: '{base.text.weight.light}',
+      $type: 'fontWeight',
+      $extensions: { 'org.cuboid.figma': { collection: 'typography', scopes: ['fontWeight'] } },
+    },
+    normal: {
+      $value: '{base.text.weight.normal}',
+      $type: 'fontWeight',
+      $extensions: { 'org.cuboid.figma': { collection: 'typography', scopes: ['fontWeight'] } },
+    },
+    medium: {
+      $value: '{base.text.weight.medium}',
+      $type: 'fontWeight',
+      $extensions: { 'org.cuboid.figma': { collection: 'typography', scopes: ['fontWeight'] } },
+    },
+    semibold: {
+      $value: '{base.text.weight.semibold}',
+      $type: 'fontWeight',
+      $extensions: { 'org.cuboid.figma': { collection: 'typography', scopes: ['fontWeight'] } },
+    },
+  },
+}

@@ -46,6 +46,9 @@ function log(...args: unknown[]) {
 function findJson5Files(dir: string, acc: string[] = []): string[] {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const entryPath = path.join(dir, entry.name);
+    // modes/ holds PARTIAL per-mode files (plain `$value`, no `$type`): they only
+    // become complete tokens once merged, and build() validates that merged tree.
+    if (entry.isDirectory() && entry.name === "modes") continue;
     if (entry.isDirectory()) findJson5Files(entryPath, acc);
     else if (entry.name.endsWith(".json5")) acc.push(entryPath);
   }

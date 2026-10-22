@@ -1,0 +1,11 @@
+{
+  button: {
+    paddingInline: {
+      $description: 'Horizontal padding of a labelled button per size. The small sizes use the normal padding stop of size.control, the larger sizes the condensed stop (Figma button sizes).',
+      xs: { $value: '{size.control.xs.paddingInline.normal}', $type: 'dimension', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'button' } } },
+      sm: { $value: '{size.control.sm.paddingInline.normal}', $type: 'dimension', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'button' } } },
+      md: { $value: '{size.control.md.paddingInline.condensed}', $type: 'dimension', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'button' } } },
+      lg: { $value: '{size.control.lg.paddingInline.condensed}', $type: 'dimension', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'button' } } },
+    },
+  },
+}

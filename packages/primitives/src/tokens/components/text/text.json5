@@ -1,6 +1,6 @@
 {
   text: {
-    $description: 'Text component typography — body text only (see heading.json5 for Heading). size prop matches Primer: large|medium|small, no role prop.',
+    $description: 'Text component typography — body text only (see heading.json5 for Heading). size prop is lg|md|sm (the token keys), no role prop.',
     size: {
       lg: {
         $value: '{text.body.shorthand.lg}',

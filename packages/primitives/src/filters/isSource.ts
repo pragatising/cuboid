@@ -8,5 +8,9 @@ import type { TransformedToken } from "style-dictionary/types";
  * Matches Primer's filters/isSource.ts.
  */
 export function isSource(token: TransformedToken): boolean {
-  return token.isSource === true;
+  // The base layer is reference-only and never emitted. It is normally kept
+  // out by living in `include`, but a consumer override of a base token
+  // (src/build.ts `overrides`, appended to `source`) makes the merged token
+  // count as source — so exclude the base namespace explicitly as well.
+  return token.isSource === true && token.path[0] !== "base";
 }

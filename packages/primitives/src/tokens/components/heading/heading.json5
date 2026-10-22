@@ -1,6 +1,6 @@
 {
   heading: {
-    $description: 'Heading component typography — size prop (large|medium|small) is independent of the `as` (h1-h6) semantic level, matching Primer.',
+    $description: 'Heading component typography — size prop (lg|md|sm) is independent of the `as` (h1-h6) semantic level, matching Primer.',
     size: {
       lg: {
         $value: '{text.title.shorthand.lg}',

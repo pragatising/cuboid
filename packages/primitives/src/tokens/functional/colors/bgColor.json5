@@ -48,6 +48,8 @@
           $description: 'Dimming overlay shown behind a modal dialog',
           $extensions: {
             'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' },
+            // A light-gray scrim does not dim a dark page; use black.
+            'org.cuboid.overrides': { dark: { $value: '#000000', alpha: 0.5 } },
           },
         },
         sheet: {
@@ -139,7 +141,11 @@
       strong: {
         $value: '{base.color.blue.9}',
         $type: 'color',
-        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+        $extensions: {
+          'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' },
+          // White text sits on this fill, so dark mode needs a darker step than the text-colour use of the same hue.
+          'org.cuboid.overrides': { dark: '{base.color.blue.8}' },
+        },
       },
     },
     debug: {
@@ -157,7 +163,11 @@
       strong: {
         $value: '{base.color.gray.9}',
         $type: 'color',
-        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+        $extensions: {
+          'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' },
+          // White text sits on this fill, so dark mode needs a darker step than the text-colour use of the same hue.
+          'org.cuboid.overrides': { dark: '{base.color.gray.7}' },
+        },
       },
     },
     notice: {
@@ -175,7 +185,11 @@
       strong: {
         $value: '{base.color.blue.9}',
         $type: 'color',
-        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+        $extensions: {
+          'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' },
+          // White text sits on this fill, so dark mode needs a darker step than the text-colour use of the same hue.
+          'org.cuboid.overrides': { dark: '{base.color.blue.8}' },
+        },
       },
     },
     success: {
@@ -211,7 +225,11 @@
       strong: {
         $value: '{base.color.red.9}',
         $type: 'color',
-        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+        $extensions: {
+          'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' },
+          // White text sits on this fill, so dark mode needs a darker step than the text-colour use of the same hue.
+          'org.cuboid.overrides': { dark: '{base.color.red.8}' },
+        },
       },
     },
     critical: {
@@ -229,7 +247,11 @@
       strong: {
         $value: '{base.color.red.9}',
         $type: 'color',
-        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+        $extensions: {
+          'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' },
+          // White text sits on this fill, so dark mode needs a darker step than the text-colour use of the same hue.
+          'org.cuboid.overrides': { dark: '{base.color.red.8}' },
+        },
       },
     },
     alert: {
@@ -247,7 +269,11 @@
       strong: {
         $value: '{base.color.orange.9}',
         $type: 'color',
-        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+        $extensions: {
+          'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' },
+          // White text sits on this fill, so dark mode needs a darker step than the text-colour use of the same hue.
+          'org.cuboid.overrides': { dark: '{base.color.orange.7}' },
+        },
       },
     },
     error: {
@@ -265,7 +291,11 @@
       strong: {
         $value: '{base.color.red.9}',
         $type: 'color',
-        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+        $extensions: {
+          'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' },
+          // White text sits on this fill, so dark mode needs a darker step than the text-colour use of the same hue.
+          'org.cuboid.overrides': { dark: '{base.color.red.8}' },
+        },
       },
     },
     warning: {
@@ -283,7 +313,11 @@
       strong: {
         $value: '{base.color.yellow.9}',
         $type: 'color',
-        $extensions: { 'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' } },
+        $extensions: {
+          'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' },
+          // White text sits on this fill, so dark mode needs a darker step than the text-colour use of the same hue.
+          'org.cuboid.overrides': { dark: '{base.color.yellow.10}' },
+        },
       },
     },
   },

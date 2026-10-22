@@ -11,7 +11,7 @@
         $value: '#E01280',
         $type: 'color',
         $description: 'GAP: no base color step matches this magenta/pink. Add a base color and alias this once added.',
-        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'syntax' } },
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'syntax' }, 'org.cuboid.overrides': { dark: '#f33190' } },
       },
       bracketNested: { $value: '{base.color.purple.8}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'syntax' } } },
     },
@@ -33,14 +33,14 @@
         $value: '#E01280',
         $type: 'color',
         $description: 'GAP: no base color step matches this magenta/pink. Add a base color and alias this once added.',
-        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'syntax' } },
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'syntax' }, 'org.cuboid.overrides': { dark: '#f33190' } },
       },
       bracketNested: { $value: '{base.color.purple.8}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'syntax' } } },
       constantOtherReferenceLink: {
         $value: '#0a3069',
         $type: 'color',
         $description: 'GAP: no base color step matches this dark navy. Add a base color and alias this once added.',
-        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'syntax' } },
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'syntax' }, 'org.cuboid.overrides': { dark: '#c5e1ff' } },
       },
     },
     html: {
@@ -52,7 +52,7 @@
         $value: '#E01280',
         $type: 'color',
         $description: 'GAP: no base color step matches this magenta/pink. Add a base color and alias this once added.',
-        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'syntax' } },
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'syntax' }, 'org.cuboid.overrides': { dark: '#f33190' } },
       },
     },
     css: {
@@ -66,7 +66,7 @@
         $value: '#E01280',
         $type: 'color',
         $description: 'GAP: no base color step matches this magenta/pink. Add a base color and alias this once added.',
-        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'syntax' } },
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'syntax' }, 'org.cuboid.overrides': { dark: '#f33190' } },
       },
     },
     markdown: {
