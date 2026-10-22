@@ -25,21 +25,23 @@ const clamp = (value: number, min: number, max: number) => Math.min(max, Math.ma
  * handle element: a focusable `role="separator"` carrying `aria-orientation` and `aria-valuenow/min/max`, with
  * Arrow keys (Shift for bigger steps), Home and End. The pointer is captured for the drag, so it can leave the handle.
  */
-export function useResizable({ orientation = "vertical", value, min, max, step = 16, invert = false, onChange, onResizeStart, onResizeEnd }: ResizableOptions) {
+export function useResizable({ orientation = "vertical", value: valueProp, min, max, step = 16, invert = false, onChange, onResizeStart, onResizeEnd }: ResizableOptions) {
   const [dragging, setDragging] = useState(false);
   const last = useRef(0);
-  const latest = useRef({ value, min, max, onChange, onResizeStart, onResizeEnd });
+  const latest = useRef({ value: valueProp, min, max, onChange, onResizeStart, onResizeEnd });
   useEffect(() => {
-    latest.current = { value, min, max, onChange, onResizeStart, onResizeEnd };
+    latest.current = { value: valueProp, min, max, onChange, onResizeStart, onResizeEnd };
   });
   const sign = invert ? -1 : 1;
   const axis = orientation === "vertical" ? "clientX" : "clientY";
 
-  const apply = useCallback((next: number) => {
+  // `track` is for a pointer drag, whose moves can arrive faster than React re-renders: the next move then builds on this one.
+  // A keyboard step never guesses: the caller may refuse or clamp it, and only its next `value` settles that.
+  const apply = useCallback((next: number, track = false) => {
     const { min: lo, max: hi, value: current, onChange: notify } = latest.current;
     const clamped = clamp(next, lo, hi);
     if (clamped === current) return;
-    latest.current = { ...latest.current, value: clamped };
+    if (track) latest.current = { ...latest.current, value: clamped };
     notify(clamped);
   }, []);
 
@@ -59,7 +61,7 @@ export function useResizable({ orientation = "vertical", value, min, max, step =
       if (!dragging) return;
       const delta = event[axis] - last.current;
       last.current = event[axis];
-      if (delta !== 0) apply(latest.current.value + sign * delta);
+      if (delta !== 0) apply(latest.current.value + sign * delta, true);
     },
     [apply, axis, dragging, sign],
   );
@@ -67,9 +69,10 @@ export function useResizable({ orientation = "vertical", value, min, max, step =
   const endDrag = useCallback((event: React.PointerEvent<HTMLElement>) => {
     if (!dragging) return;
     setDragging(false);
+    latest.current = { ...latest.current, value: valueProp };
     if (event.currentTarget.hasPointerCapture?.(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
     latest.current.onResizeEnd?.();
-  }, [dragging]);
+  }, [dragging, valueProp]);
 
   const onKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLElement>) => {
@@ -95,7 +98,7 @@ export function useResizable({ orientation = "vertical", value, min, max, step =
       role: "separator" as const,
       tabIndex: 0,
       "aria-orientation": orientation,
-      "aria-valuenow": Math.round(value),
+      "aria-valuenow": Math.round(valueProp),
       "aria-valuemin": Math.round(min),
       "aria-valuemax": Math.round(max),
       onPointerDown,

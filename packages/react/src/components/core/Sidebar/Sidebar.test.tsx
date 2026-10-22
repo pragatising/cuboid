@@ -302,15 +302,15 @@ describe("Sidebar.Item", () => {
 describe("Sidebar resizing", () => {
   it("offers a resize handle only when resizable and expanded", () => {
     const { rerender } = shell();
-    expect(screen.queryByRole("button", { name: "Resize sidebar" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("separator", { name: "Resize sidebar" })).not.toBeInTheDocument();
     rerender(<Sidebar aria-label="Primary" resizable>x</Sidebar>);
-    expect(screen.getByRole("button", { name: "Resize sidebar" })).toBeInTheDocument();
+    expect(screen.getByRole("separator", { name: "Resize sidebar" })).toBeInTheDocument();
     rerender(<Sidebar aria-label="Primary" resizable collapsed>x</Sidebar>);
-    expect(screen.queryByRole("button", { name: "Resize sidebar" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("separator", { name: "Resize sidebar" })).not.toBeInTheDocument();
   });
 
   const drag = (to: number) => {
-    const handle = screen.getByRole("button", { name: "Resize sidebar" });
+    const handle = screen.getByRole("separator", { name: "Resize sidebar" });
     handle.setPointerCapture = vi.fn();
     handle.hasPointerCapture = vi.fn(() => false);
     fireEvent.pointerDown(handle, { clientX: 100, pointerId: 1 });
@@ -324,7 +324,7 @@ describe("Sidebar resizing", () => {
     drag(140);
     expect(onWidthChange).toHaveBeenLastCalledWith(start + 40);
     expect(nav().style.width).toBe(`${start + 40}px`);
-    fireEvent.pointerMove(screen.getByRole("button", { name: "Resize sidebar" }), { clientX: 5000, pointerId: 1 });
+    fireEvent.pointerMove(screen.getByRole("separator", { name: "Resize sidebar" }), { clientX: 5000, pointerId: 1 });
     expect(nav().style.width).toBe(`${parseFloat(tokens.light.sidebar.sizes.maxWidth) * 16}px`);
   });
 

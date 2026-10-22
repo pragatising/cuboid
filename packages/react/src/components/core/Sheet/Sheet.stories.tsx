@@ -35,7 +35,7 @@ function SheetDemo({
         roundedTop={roundedTop}
         width={width}
         resizable={resizable}
-        onDismiss={() => setOpen(false)}
+        onOpenChange={setOpen}
         aria-label={label}
       >
         <Sheet.Body>
@@ -61,7 +61,7 @@ function StickyHeaderDemo() {
       <Sheet
         open={open}
         edge="right"
-        onDismiss={() => setOpen(false)}
+        onOpenChange={setOpen}
         aria-labelledby="sheet-filters-title"
       >
         <Sheet.Header>
@@ -92,7 +92,7 @@ const meta: Meta<typeof Sheet> = {
   argTypes: {
     style: { control: false },
     className: { control: false },
-    onDismiss: { control: false },
+    onOpenChange: { control: false },
     children: { control: false },
     edge: { control: "radio", options: ["left", "right", "bottom"] },
     modal: { control: "boolean" },

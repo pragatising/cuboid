@@ -96,6 +96,21 @@ describe("useResizable: keyboard (the window-splitter pattern)", () => {
   });
 });
 
+describe("useResizable: a controlling parent has the last word", () => {
+  it("a keyboard step builds on the parent's value, not on a change the parent refused", async () => {
+    const onChange = vi.fn();
+    function Refuses() {
+      const { separatorProps } = useResizable({ value: 200, min: 100, max: 400, step: 10, onChange });
+      return <div data-testid="handle" {...separatorProps} />;
+    }
+    render(<Refuses />);
+    handle().focus();
+    await userEvent.keyboard("{ArrowRight}{ArrowRight}");
+    expect(onChange).toHaveBeenNthCalledWith(1, 210);
+    expect(onChange).toHaveBeenNthCalledWith(2, 210);
+  });
+});
+
 describe("useResizable: pointer", () => {
   it("resizes by the pointer's movement along x for a vertical separator, and reports start and end", () => {
     const onChange = vi.fn();

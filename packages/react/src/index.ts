@@ -87,7 +87,6 @@ export type {
 export { ResizeHandle } from "./components/core/ResizeHandle";
 export type {
   ResizeHandleProps,
-  ResizeHandleOrientation,
   ResizeHandleEdge,
 } from "./components/core/ResizeHandle";
 

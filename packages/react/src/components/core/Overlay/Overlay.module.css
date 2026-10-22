@@ -1,18 +1,5 @@
-/* Layout only. The scrim colour and z-index come from the `overlay` and `zIndex` tokens, set inline by Overlay.tsx. */
+/* Everything is a Box prop (position, inset, background colour from the `overlay` token, z-index, cursor); this class is the
+   hook consumers and tests select on. */
 :where(.Overlay) {
-  position: fixed;
-  inset: 0;
-  border: none;
-  padding: 0;
-  margin: 0;
-  appearance: none;
-  cursor: default;
-}
-
-:where(.Overlay[data-variant="none"]) {
-  pointer-events: none;
-}
-
-:where(.Overlay[data-dismissible]) {
-  cursor: pointer;
+  box-sizing: border-box;
 }

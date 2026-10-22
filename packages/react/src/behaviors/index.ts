@@ -15,6 +15,7 @@ export { useFocusReturn } from "./useFocusReturn";
 export type { FocusReturnOptions } from "./useFocusReturn";
 export { useFocusTrap } from "./useFocusTrap";
 export type { FocusTrapOptions } from "./useFocusTrap";
+export { useScrollLock } from "./useScrollLock";
 export { useRovingFocus } from "./useRovingFocus";
 export type { RovingFocusOptions } from "./useRovingFocus";
 export { getTabbableElements, isTabbable } from "./tabbable";

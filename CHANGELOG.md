@@ -2,6 +2,19 @@
 
 Rolling session log for Claude Code continuity. Newest entry on top. Each entry: what changed, why, and anything the next agent needs to know. Keep entries short — skip anything derivable from `git log` or the diff itself.
 
+## 2026-10-21 (later still) — behaviours foundation; Sheet, Overlay and ResizeHandle migrated onto it
+
+**Changed:**
+- **`src/behaviors/`** (generic hooks per `docs/behaviours.md`): `useControllableState`, `useProvidedRefOrCreate`, `useEscape` (top-most layer only), `useClickAway`, `useDismiss`, `useAnchoredPosition`, `useResizable` (pointer **and keyboard**, window-splitter ARIA), `useFocusReturn`, `useFocusTrap`, `useScrollLock` (counted, so stacked modals unlock only when the last closes), `useRovingFocus`. 95 tests.
+- **Sheet:** `open` / `defaultOpen` / `onOpenChange` replaces `onDismiss`; a modal sheet moves focus in, traps Tab, returns focus and locks scroll; an accessible name is required by type (`AccessibleName`, `src/utils/a11y.ts`); built from `Box`.
+- **ResizeHandle:** now a keyboard-operable `role="separator"`. **Breaking:** `edge` is `left | right | top | bottom`, controlled by `value`/`min`/`max`/`onValueChange`; `orientation` and `onResizeDelta` are removed. Sidebar uses it.
+- **Overlay:** Escape through `useEscape`; built from `Box`.
+- `lengthToPx` now understands viewport units and `min()` / `max()` / `clamp()` (Sheet's `min(90vw, 56rem)` used to fall back to the viewport width). `resolved()` (`src/utils/resolved.ts`) hands a resolved token string to a checked Box prop in one greppable place.
+
+**Why:** the measured accessibility audit (`docs/backlog/api-audit.md` §8) found the modal Sheet neither moved nor trapped focus, and resize handles could not be used from a keyboard. Both are fixed and re-verified in Chrome (focus enters, Tab stays inside, focus returns to the trigger; arrow keys resize; axe clean).
+
+**Next agent:** the audit's plan, step 2, continues with Popover, Tooltip, ActionMenu, SimpleTable, CodeSurface and Sidebar's collapse state, each on these hooks, then the vocabulary pass.
+
 ## 2026-10-21 (later) — Sidebar nav rail; Box takes any CSS
 
 **Changed:**

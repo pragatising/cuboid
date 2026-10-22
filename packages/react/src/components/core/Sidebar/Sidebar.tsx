@@ -129,15 +129,6 @@ function regionPaddingOverrides(
   return style;
 }
 
-function resizeHandleEdge(edge: SidebarEdge): "start" | "end" {
-  return edge === "right" ? "start" : "end";
-}
-
-function applyWidthDelta(panelEdge: SidebarEdge, currentPx: number, deltaPx: number): number {
-  if (panelEdge === "right") return currentPx - deltaPx;
-  return currentPx + deltaPx;
-}
-
 /** The icon that says "collapse" or "expand" for this edge (a panel with its side highlighted). */
 function toggleIconName(edge: SidebarEdge, collapsed: boolean) {
   if (edge === "left") return collapsed ? "left_panel_open" : "left_panel_close";
@@ -367,11 +358,9 @@ export function Sidebar({
   const draggedPx = dragged?.base === defaultWidthCss ? dragged.px : null;
   const expandedPx = draggedPx ?? lengthToPx(defaultWidthCss, 272);
 
-  const handleResizeDelta = (deltaPx: number) => {
-    if (collapsed) return;
-    const next = Math.min(maxWidthPx, Math.max(minWidthPx, applyWidthDelta(edge, expandedPx, deltaPx)));
-    setDragged({ base: defaultWidthCss, px: next });
-    onWidthChange?.(next);
+  const handleResize = (px: number) => {
+    setDragged({ base: defaultWidthCss, px });
+    onWidthChange?.(px);
   };
 
   const widthStyle: React.CSSProperties = collapsed
@@ -407,9 +396,11 @@ export function Sidebar({
       >
         {resizable && !collapsed && (
           <ResizeHandle
-            orientation="vertical"
-            edge={resizeHandleEdge(edge)}
-            onResizeDelta={handleResizeDelta}
+            edge={edge === "right" ? "left" : "right"}
+            value={expandedPx}
+            min={minWidthPx}
+            max={maxWidthPx}
+            onValueChange={handleResize}
             aria-label="Resize sidebar"
           />
         )}

@@ -187,12 +187,12 @@ The a11y fixes are almost all **behaviours** (focus trap, focus return, window s
 Direction (2026-10-21): this is a **refactor onto proper behaviours** per `packages/react/docs/behaviours.md`, not only an API rename. Generic behaviours are low-level hooks; each component calls exactly one component behavior that returns props objects to spread on its elements; refs go through a `useProvidedRefOrCreate`.
 
 1. **Foundation: generic behaviours** in `src/behaviors/`, each with its own tests (**done 2026-10-21**, 89 tests; documented in `packages/react/docs/behaviours.md`): `useControllableState`, `useProvidedRefOrCreate`, `useDismiss` (Escape + click-away), `useAnchoredPosition`, `useResizable` (pointer **and** keyboard), `useFocusTrap`, `useFocusReturn`, `useRovingFocus` (menu keys, Home/End, typeahead).
-2. **Component behaviours + migration, one component at a time**, each with its a11y fixes and renames: Overlay/Sheet (`open`/`onOpenChange`, trap, return, reduced motion), Popover (`usePopover`), Tooltip (`useTooltip`, hoverable), ActionMenu (`useActionMenu`, `menuitemradio`, `leadingVisual`/`trailingVisual`), Sidebar + ResizeHandle (`useResizable`, separator role), SimpleTable (`sorting`/`defaultSorting`), CodeSurface (watchlist, scroller `tabIndex`).
+2. **Component behaviours + migration, one component at a time**, each with its a11y fixes and renames (**done so far: Overlay, Sheet, ResizeHandle**, with the Sidebar resize wiring; Popover, Tooltip, ActionMenu, SimpleTable, CodeSurface and the Sidebar state are next): Overlay/Sheet (`open`/`onOpenChange`, trap, return, reduced motion), Popover (`usePopover`), Tooltip (`useTooltip`, hoverable), ActionMenu (`useActionMenu`, `menuitemradio`, `leadingVisual`/`trailingVisual`), Sidebar + ResizeHandle (`useResizable`, separator role), SimpleTable (`sorting`/`defaultSorting`), CodeSurface (watchlist, scroller `tabIndex`).
 3. **Vocabulary pass** (§1, §4, §5) as one breaking release with a migration note per rename, including `Pill.border` → a boolean name (`bordered`), Breadcrumbs compound parts, `Length`/`SpaceValue` on the dimension props.
 4. **Root contract** (§3) for the nine components that skip it.
 5. **`components.json` + dictionary check + `scripts/a11y-sweep.mjs` in CI** (§7, §8), then the 56 missing JSDoc comments.
 6. **CSS props on primitives** (§6), still to be decided.
-7. **Token contrast fixes** (§8.1) are a design review; they run in parallel and do not block the code work.
+7. **Token contrast fixes** (§8.1): deferred by decision (a theme issue, fixable independently of the code).
 
 ## Decisions
 
@@ -210,7 +210,11 @@ Direction (2026-10-21): this is a **refactor onto proper behaviours** per `packa
 - **Callout is a Box** with a preset padding, border and colour, forwarding every Box prop. It gets 4 to 5 variants **named after the colour, not the meaning**, using the same palette as Highlight (neutral, green, blue, yellow, orange, red, lime, purple). The prop name is open (it cannot be `color`, which is Box's text colour).
 - **Tooltip's anatomy is parked** until the tooltip patterns have been studied further; the behavioural fixes that do not depend on it (hoverable, dismissible) still go in the shared behaviours.
 
+- **Callout's variant prop is `variant`** (named after the colour, not the meaning), the same word as Button's and Link's: in this library `variant` means "pick one of the component's presets".
+- **Palette contrast (§8.1) is deferred on purpose.** It is a theme issue that can be fixed at any time without touching components; it stays documented here and in the tracker, and is not part of this refactor.
+
+- **`edge` stays physical: `left | right | top | bottom`** (Sheet, Sidebar, ResizeHandle all use it). Developer expectation wins over right-to-left correctness; the logical `start | end` form is not used.
+- **Link keeps `variant`** (`inline | standalone | inherit`): it says "this is an inline link", the same sense as every other `variant` (pick a preset).
+
 **Still open:**
-1. §1: the new names for Link `variant` (inline/standalone/inherit) and the logical `edge` values (`start | end | top | bottom`), and the Callout variant prop name (`tint`? `tone`?).
-2. §8.1: who owns the palette changes, and whether `muted` should be re-spaced from `default` (a design call).
-3. Tooltip anatomy (after the study).
+1. Tooltip anatomy (after the study).
