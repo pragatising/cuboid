@@ -51,7 +51,7 @@ export { Icon } from "./Icon";
 export type { IconProps, IconSize } from "./Icon";
 
 export { Link } from "./Link";
-export type { LinkProps, LinkVariant } from "./Link";
+export type { LinkProps, LinkVariant, LinkSize, LinkUnderline } from "./Link";
 
 export { Pill } from "./Pill";
 export type { PillProps, PillShade, PillIntensity, PillSize } from "./Pill";

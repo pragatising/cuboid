@@ -57,7 +57,7 @@ export type { IconProps, IconSize } from "./components/core/Icon";
 export * from "./icons";
 
 export { Link } from "./components/core/Link";
-export type { LinkProps, LinkVariant } from "./components/core/Link";
+export type { LinkProps, LinkVariant, LinkSize, LinkUnderline } from "./components/core/Link";
 
 export { Pill } from "./components/core/Pill";
 export type { PillProps, PillShade, PillIntensity, PillSize } from "./components/core/Pill";

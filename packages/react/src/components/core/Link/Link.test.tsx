@@ -1,5 +1,6 @@
 import { act, render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import userEvent from "@testing-library/user-event";
+import { describe, expect, it, vi } from "vitest";
 import tokens from "@sragatiping/cuboid-primitives";
 import { setMode } from "../../../mode";
 import { behavesAsComponent, expectNoAxeViolations, renderInMode } from "../../../test/testing";
@@ -68,6 +69,100 @@ describe("Link", () => {
     render(<Link href="/x">Go</Link>);
     act(() => setMode("dark"));
     expect(screen.getByRole("link").style.getPropertyValue("--link-fg-hover")).toBe(tokens.dark.link.standalone.fgColor.hover);
+  });
+
+  describe("size and weight", () => {
+    it("standalone is the md font and the body weight by default", () => {
+      render(<Link href="/x">Go</Link>);
+      expect(screen.getByRole("link").style.font).not.toBe("");
+      expect(screen.getByRole("link").style.fontWeight).toBe(String(tokens.light.text.body.weight));
+    });
+
+    it.each(["sm", "md", "lg"] as const)("size %s sets the font from text.size.%s", (size) => {
+      const { container } = render(<Link href="/x" size={size}>Go</Link>);
+      const link = container.querySelector("a") as HTMLElement;
+      expect(link.style.fontSize).toBe(tokens.light.text.size[size].match(/ ([\d.]+rem)/)?.[1]);
+    });
+
+    it("weight sets the weight from fontWeight, with or without a size", () => {
+      const { rerender } = render(<Link href="/x" weight="semibold">Go</Link>);
+      expect(screen.getByRole("link").style.fontWeight).toBe(String(tokens.light.fontWeight.semibold));
+      rerender(<Link href="/x" size="lg" weight="medium">Go</Link>);
+      expect(screen.getByRole("link").style.fontWeight).toBe(String(tokens.light.fontWeight.medium));
+    });
+
+    it("inline inherits the font from its parent unless a size or weight is given", () => {
+      const { rerender } = render(<Link href="/x" variant="inline">Go</Link>);
+      expect(screen.getByRole("link").style.fontSize).toBe("");
+      expect(screen.getByRole("link").style.fontWeight).toBe("");
+      rerender(<Link href="/x" variant="inline" weight="medium">Go</Link>);
+      expect(screen.getByRole("link").style.fontWeight).toBe(String(tokens.light.fontWeight.medium));
+      expect(screen.getByRole("link").style.fontSize).toBe("");
+    });
+  });
+
+  describe("underline", () => {
+    it("is always by default, and none for inherit", () => {
+      const { rerender } = render(<Link href="/x">Go</Link>);
+      expect(screen.getByRole("link")).toHaveAttribute("data-underline", "always");
+      rerender(<Link href="/x" variant="inherit">Go</Link>);
+      expect(screen.getByRole("link")).toHaveAttribute("data-underline", "none");
+    });
+
+    it.each(["always", "hover", "none"] as const)("takes %s", (underline) => {
+      render(<Link href="/x" underline={underline}>Go</Link>);
+      expect(screen.getByRole("link")).toHaveAttribute("data-underline", underline);
+    });
+  });
+
+  describe("color", () => {
+    it("takes an fgColor token path, used at rest and on hover", () => {
+      render(<Link href="/x" color="success.strong">Go</Link>);
+      const link = screen.getByRole("link");
+      expect(link.style.getPropertyValue("--link-fg-rest")).toBe(tokens.light.fgColor.success.strong);
+      expect(link.style.getPropertyValue("--link-fg-hover")).toBe(tokens.light.fgColor.success.strong);
+      expect(link).toHaveAttribute("data-custom-color");
+    });
+
+    it("takes any CSS colour, on every variant (including inherit)", () => {
+      const { rerender } = render(<Link href="/x" color="#e01280">Go</Link>);
+      expect(screen.getByRole("link").style.getPropertyValue("--link-fg-rest")).toBe("#e01280");
+      rerender(<Link href="/x" variant="inherit" color="rebeccapurple">Go</Link>);
+      expect(screen.getByRole("link").style.getPropertyValue("--link-fg-rest")).toBe("rebeccapurple");
+    });
+
+    it("without a colour, the link tokens are used and there is no custom-colour mark", () => {
+      render(<Link href="/x">Go</Link>);
+      expect(screen.getByRole("link")).not.toHaveAttribute("data-custom-color");
+    });
+
+    it("follows the mode for a token colour", () => {
+      render(<Link href="/x" color="success.strong">Go</Link>);
+      act(() => setMode("dark"));
+      expect(screen.getByRole("link").style.getPropertyValue("--link-fg-rest")).toBe(tokens.dark.fgColor.success.strong);
+    });
+  });
+
+  describe("inactive", () => {
+    it("looks disabled, stays focusable and ignores clicks, without leaving the page", async () => {
+      const onClick = vi.fn();
+      render(<Link href="/x" inactive onClick={onClick}>Go</Link>);
+      const link = screen.getByRole("link");
+      expect(link).toHaveAttribute("aria-disabled", "true");
+      expect(link).toHaveAttribute("data-inactive");
+      await userEvent.tab();
+      expect(link).toHaveFocus();
+      await userEvent.click(link);
+      expect(onClick).not.toHaveBeenCalled();
+    });
+
+    it("is active otherwise", async () => {
+      const onClick = vi.fn((e: React.MouseEvent) => e.preventDefault());
+      render(<Link href="/x" onClick={onClick}>Go</Link>);
+      await userEvent.click(screen.getByRole("link"));
+      expect(onClick).toHaveBeenCalledOnce();
+      expect(screen.getByRole("link")).not.toHaveAttribute("aria-disabled");
+    });
   });
 
   it("has no axe violations", async () => {

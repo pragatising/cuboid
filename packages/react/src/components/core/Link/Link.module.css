@@ -20,8 +20,28 @@
   gap: 0.25em;
 }
 
-:where(.Link[data-variant="inline"], .Link[data-variant="standalone"], .Link[data-variant="inline"]:visited, .Link[data-variant="standalone"]:visited) {
+:where(
+  .Link[data-variant="inline"],
+  .Link[data-variant="standalone"],
+  .Link[data-custom-color],
+  .Link[data-variant="inline"]:visited,
+  .Link[data-variant="standalone"]:visited,
+  .Link[data-custom-color]:visited
+) {
   color: var(--link-fg-rest);
+}
+
+/* Underline: always (the default), only on hover, or none. */
+:where(.Link[data-underline="always"]) {
+  text-decoration: underline;
+}
+
+:where(.Link[data-underline="hover"], .Link[data-underline="none"]) {
+  text-decoration: none;
+}
+
+/* After the rule above: a link is a link to the browser, so `hover` must say "none" at rest before it says "underline". */
+:where(.Link[data-underline="hover"]:not([aria-disabled="true"]):hover) {
   text-decoration: underline;
 }
 
@@ -33,16 +53,20 @@
   text-underline-offset: 0.125em;
 }
 
-:where(.Link[data-variant="inline"]:not([aria-disabled="true"]):hover, .Link[data-variant="standalone"]:not([aria-disabled="true"]):hover) {
+:where(.Link[data-variant="inline"]:not([aria-disabled="true"]):hover, .Link[data-variant="standalone"]:not([aria-disabled="true"]):hover, .Link[data-custom-color]:not([aria-disabled="true"]):hover) {
   color: var(--link-fg-hover);
 }
 
+/* A custom colour has no hover pair: the colour stays and the link fades a little. */
+:where(.Link[data-custom-color]:not([aria-disabled="true"]):hover) {
+  opacity: 0.8;
+}
+
 /* Composition wrapper: pill rows, icon+label rows without link chrome */
-:where(.Link[data-variant="inherit"]) {
+:where(.Link[data-variant="inherit"]:not([data-custom-color])) {
   display: inline-flex;
   align-items: center;
   color: inherit;
-  text-decoration: none;
 }
 
 :where(.Link:focus-visible) {
