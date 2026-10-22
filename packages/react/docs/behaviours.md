@@ -70,3 +70,23 @@ B: Contents passed as data
     {text: 'Delete file', variant: 'danger'},
   ]}
 />
+
+## Cuboid's behaviors (`src/behaviors/`)
+
+Built 2026-10-21 as step 1 of the API refactor (see `docs/backlog/api-audit.md`). Every one is a generic behavior: it knows nothing about any one component and depends only on the others. Component behaviors (`usePopover`, `useActionMenu`, …) are built from them, live next to their component, and return props objects to spread. Nothing here is exported from the package root yet.
+
+| Hook | What it does | Replaces |
+|---|---|---|
+| `useControllableState({ value, defaultValue, onChange })` | the `x` / `defaultX` / `onXChange` contract; stable setter; `onChange` only on a real change; warns when a component flips between controlled and uncontrolled | four hand-rolled copies (Popover, ActionMenu, Sidebar, SimpleTable, CodeSurface) |
+| `useProvidedRefOrCreate(ref)` | a ref object to put on an element that also feeds the consumer's object or callback `ref` | `mergeRefs` in Popover and ActionMenu, `panelRef` |
+| `useEscape(handler, enabled)` | Escape, answered only by the most recently enabled listener, so Escape peels one layer at a time; ignores `defaultPrevented` and IME composition | Escape handlers in Overlay, Sheet, Popover, Tooltip |
+| `useClickAway(refs, handler, enabled)` | a press outside every ref (capture phase) | Popover's outside-click |
+| `useDismiss({ enabled, onDismiss, refs })` | `useEscape` + `useClickAway` | |
+| `useAnchoredPosition({ anchorRef, placement, gap, enabled })` | `position: fixed` coordinates for 8 placements, re-measured on scroll and resize, no re-render when nothing moved | `computeFixedPosition` in Tooltip and Popover |
+| `useResizable({ value, min, max, onChange, … })` | pointer drag **and keyboard** (Arrows, Shift, Home, End) with the window-splitter ARIA (`role="separator"`, `aria-orientation`, `aria-valuenow/min/max`) | the resize math in Sheet and Sidebar; ResizeHandle gets a keyboard |
+| `useFocusReturn({ enabled })` | remember the opener before the layer takes focus (an insertion effect, so before `autoFocus`), give focus back on close, but not if the user moved it elsewhere | `returnFocusOnClose` in Popover |
+| `useFocusTrap({ enabled, containerRef })` | move focus in, wrap Tab and Shift+Tab, pull focus back if it escapes, return it on close: what `aria-modal` promises | nothing yet: Sheet had no trap |
+| `useRovingFocus({ containerRef })` | arrow / Home / End navigation, disabled items skipped, typeahead; `focusFirst` / `focusSelected` | `actionMenuKeyboard.ts` (which had no typeahead) |
+
+Conventions: a hook that needs an element takes a ref (or, for a behavior that returns props, accepts an optional ref via `useProvidedRefOrCreate`); handlers that must stay current are read through a ref so effects do not re-subscribe; anything that touches `document` is guarded by `enabled` so it costs nothing while a layer is closed.
+
