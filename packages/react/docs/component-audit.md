@@ -19,7 +19,7 @@ A finding here means: the component's actual `.tsx`/`.module.css` is missing som
 - `Container.tsx` has `paddingInline?: StackPadding | false` (defaults to `layout.pagePaddingInline`) but no equivalent vertical padding prop — no `paddingBlock`, no `--container-paddingBlock` CSS var, nothing in `Container.module.css` sets block padding at all.
 - Discovered: while building `container.json5` token file — the component only exposes `maxWidth`/`paddingInline`/`minHeight` as themeable surface, so the token file initially mirrored that (incompletely).
 - Consequence: any page needing vertical breathing room inside `Container` has to add it externally (wrapping `Stack`, ad-hoc `style`, etc.) instead of through the component's own API — inconsistent with how `paddingInline` already works. For a "page shell" component, lacking vertical padding is a real practical gap, not a stylistic choice.
-- Status: **Open.** Needs `paddingBlock?: StackPadding | false` prop added to `Container.tsx` (mirroring `paddingInline`'s implementation exactly — same `StackPadding | false` type, same CSS-var wiring), a `container.paddingBlock` token added to `container.json5`, and `--container-paddingBlock` consumed in `Container.module.css`.
+- Status: **Fixed 2026-10-21.** `Container` takes `paddingBlock?: Space | false` (default: the `container.paddingBlock` token), like `paddingInline`. See also `docs/backlog/api-audit.md` for the cross-cutting API audit.
 
 ---
 
