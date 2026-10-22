@@ -1,7 +1,8 @@
 /*
- * Layout and collapse states only. Background and width come from the `sidebar` tokens inline (Sidebar.tsx); the
- * padding, border and toggle size the descendant regions need arrive as element-scoped variables
- * (--sidebar-padding, …) set on the root. Zero specificity (:where), so a consumer's own class can override it.
+ * Layout and collapse states only. Background and width come from the `sidebar` tokens inline (Sidebar.tsx). The padding,
+ * border and toggle size the regions need arrive as element-scoped --sidebar-* variables on the root; the nav rows read
+ * the --action-menu-* variables set there too (see ../ActionMenu/actionMenuVars.ts), because the nav rail is the
+ * ActionMenu design. Zero specificity (:where), so a consumer's own class can override any of it.
  */
 :where(.Sidebar) {
   position: relative;
@@ -31,29 +32,51 @@
   display: flex;
   flex-shrink: 0;
   align-items: center;
-  gap: var(--sidebar-padding);
-  padding: var(--sidebar-padding);
-}
-
-:where(.Header:has(.Toggle[data-floating])) {
+  gap: var(--action-menu-sizes-item-slot-gap);
   min-height: calc(var(--sidebar-padding) * 2 + var(--sidebar-toggle-size));
+  padding: var(--sidebar-padding);
 }
 
 :where(.Sidebar[data-collapsed="true"] .Header) {
   justify-content: center;
 }
 
-:where(.Body) {
+:where(.LeadingVisual) {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+:where(.Title) {
   flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:where(.Toggle) {
+  flex-shrink: 0;
+  /* With no title to push it, the toggle sits at the end of the header. */
+  margin-inline-start: auto;
+}
+
+:where(.Sidebar[data-collapsed="true"] .Toggle) {
+  margin-inline-start: 0;
+}
+
+:where(.Body) {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--action-menu-sizes-list-section-gap);
   min-height: 0;
   overflow: auto;
   padding: 0 var(--sidebar-padding);
 }
 
-/* Icon-only rail: center direct children; apps hide labels via useSidebar(). */
+/* Icon-only rail: center direct children; labels are hidden by the items themselves. */
 :where(.Sidebar[data-collapsed="true"] .Body) {
-  display: flex;
-  flex-direction: column;
   align-items: center;
   padding-inline: var(--sidebar-padding);
 }
@@ -68,25 +91,114 @@
   padding: var(--sidebar-footer-padding);
 }
 
-:where(.Toggle) {
-  flex-shrink: 0;
-}
-
-:where(.Toggle[data-floating]) {
-  position: absolute;
-  top: var(--sidebar-padding);
-  inset-inline-end: var(--sidebar-padding);
-  z-index: 1;
-}
-
-:where(.Sidebar[data-collapsed="true"] .Toggle[data-floating="center"]) {
-  inset-inline-end: auto;
-  inset-inline-start: 50%;
-  transform: translateX(-50%);
-}
-
 :where(.Sidebar[data-collapsed="true"] .Footer) {
   display: flex;
   justify-content: center;
   padding-inline: var(--sidebar-padding);
+}
+
+:where(.Section) {
+  display: flex;
+  flex-direction: column;
+}
+
+:where(.SectionLabel) {
+  font: var(--action-menu-subtext-font);
+  font-weight: 600;
+  color: var(--action-menu-item-fg-color-subtext);
+  /* A typographic treatment, not a token value: the rail's small-caps heading. */
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+:where(.Item) {
+  display: flex;
+  width: 100%;
+  min-height: var(--action-menu-sizes-item-min-height);
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+:where(.ItemInner) {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: var(--action-menu-sizes-item-slot-gap);
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  padding: var(--action-menu-sizes-item-padding-block) var(--action-menu-sizes-item-padding-inline);
+  border-radius: var(--action-menu-sizes-item-border-radius);
+  background-color: var(--action-menu-item-bg-color-rest);
+  color: var(--action-menu-item-fg-color-rest);
+  overflow: hidden;
+  transition: background-color 120ms ease, color 120ms ease, box-shadow 120ms ease;
+}
+
+:where(.Item:not([aria-disabled="true"], [data-current]):hover .ItemInner) {
+  background-color: var(--action-menu-item-bg-color-hover);
+}
+
+:where(.Item:not([aria-disabled="true"], [data-current]):active .ItemInner) {
+  background-color: var(--action-menu-item-bg-color-pressed);
+  color: var(--action-menu-item-fg-color-pressed);
+}
+
+/* The current page (Figma `selected?=true`). */
+:where(.Item[data-current] .ItemInner) {
+  background-color: var(--action-menu-item-bg-color-selected-rest);
+  color: var(--action-menu-item-fg-color-selected);
+}
+
+:where(.Item[data-current]:not([aria-disabled="true"]):hover .ItemInner, .Item[data-current]:not([aria-disabled="true"]):active .ItemInner) {
+  background-color: var(--action-menu-item-bg-color-selected-pressed);
+}
+
+:where(.Item[aria-disabled="true"]) {
+  cursor: not-allowed;
+}
+
+:where(.Item[aria-disabled="true"] .ItemInner) {
+  background-color: var(--action-menu-item-bg-color-disabled);
+  color: var(--action-menu-item-fg-color-disabled);
+}
+
+:where(.Item:focus) {
+  outline: none;
+}
+
+:where(.Item:focus-visible .ItemInner) {
+  box-shadow: 0 0 0 1px var(--action-menu-item-bg-color-rest), 0 0 0 var(--action-menu-focus-width) var(--action-menu-focus-color);
+}
+
+:where(.Item[data-icon-only]) {
+  width: auto;
+}
+
+:where(.Item[data-icon-only] .ItemInner) {
+  justify-content: center;
+  gap: 0;
+  width: var(--action-menu-sizes-item-min-height);
+  padding-inline: var(--action-menu-sizes-item-padding-block);
+}
+
+:where(.Slot) {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--action-menu-sizes-item-icon-size);
+  height: var(--action-menu-sizes-item-icon-size);
+  color: currentColor;
+}
+
+:where(.ItemLabel) {
+  flex: 1;
+  min-width: 0;
+  font: var(--action-menu-label-font);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

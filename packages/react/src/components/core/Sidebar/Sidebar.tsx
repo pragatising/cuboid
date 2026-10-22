@@ -1,23 +1,18 @@
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { createContext, useCallback, useContext, useId, useMemo, useState } from "react";
 import { clsx } from "clsx";
 import { useTokens } from "../../../mode";
 import type { Tokens } from "../../../mode";
 import { cssVars } from "../../../utils/cssVars";
 import { lengthToPx } from "../../../utils/length";
 import { mergeProps } from "../../../utils/mergeProps";
+import type { PolymorphicProps } from "../../../utils/polymorphic";
 import { resolveSpace } from "../../../utils/space";
 import type { Space } from "../../../utils/space";
-import { IconButton } from "../IconButton";
+import { actionMenuVars } from "../ActionMenu/actionMenuVars";
 import { Icon } from "../Icon";
+import { IconButton } from "../IconButton";
 import { ResizeHandle } from "../ResizeHandle";
+import { Tooltip } from "../Tooltip";
 import classes from "./Sidebar.module.css";
 
 export type SidebarEdge = "left" | "right";
@@ -51,18 +46,41 @@ export type SidebarRegionProps = React.ComponentPropsWithRef<"div"> & {
   paddingInline?: Space;
 };
 
-export type SidebarToggleFloatingAlign = "corner" | "center";
-
-export type SidebarToggleProps = Omit<React.ComponentPropsWithRef<"div">, "children"> & {
-  /** Pin the toggle to the top inner corner of the sidebar shell. */
-  floating?: boolean;
+export type SidebarHeaderProps = SidebarRegionProps & {
   /**
-   * Where the floating toggle sits when the rail is collapsed.
-   * @default "center"
+   * Whatever identifies what the sidebar belongs to: an avatar, an org logo, a team icon, any node. It is shown before
+   * the title, and stays visible in the collapsed rail when the header has no toggle.
    */
-  floatingAlign?: SidebarToggleFloatingAlign;
-  /** Replace the default chevron icon(s). */
-  children?: React.ReactNode;
+  leadingVisual?: React.ReactNode;
+  /**
+   * Show the collapse toggle at the end of the header. In the collapsed rail the toggle replaces the title and
+   * leading visual, so there is always a way to expand. Turn it off to drive collapse from elsewhere.
+   * @default true
+   */
+  toggle?: boolean;
+};
+
+export type SidebarSectionProps = Omit<React.ComponentPropsWithRef<"div">, "role"> & {
+  /** The section's heading, shown above its items. It names the group for assistive technology, also when hidden by a collapsed rail. */
+  label: React.ReactNode;
+};
+
+export type SidebarItemProps<As extends React.ElementType = "a"> = PolymorphicProps<
+  As,
+  "a",
+  {
+    /** The page the link points at: draws the selected look and sets `aria-current="page"`. @default false */
+    current?: boolean;
+    /** Shown before the label (typically an `Icon`). In a collapsed rail it is all that is shown, so give it one. */
+    leadingVisual?: React.ReactNode;
+    /** Shown after the label. Hidden in a collapsed rail. */
+    trailingVisual?: React.ReactNode;
+  }
+>;
+
+export type SidebarToggleProps = Omit<React.ComponentPropsWithRef<"button">, "children" | "aria-label" | "aria-labelledby"> & {
+  /** Replace the default panel icon. */
+  icon?: React.ReactNode;
   /** Override the default expand/collapse label. */
   "aria-label"?: string;
 };
@@ -83,7 +101,7 @@ function useSidebarContext(component: string): SidebarContextValue {
   return ctx;
 }
 
-/** Read collapse state and toggle from anywhere inside {@link Sidebar}. */
+/** Read collapse state and toggle from anywhere inside {@link Sidebar}. Items, sections and the header already follow it. */
 export function useSidebar(): SidebarContextValue {
   return useSidebarContext("useSidebar");
 }
@@ -120,8 +138,43 @@ function applyWidthDelta(panelEdge: SidebarEdge, currentPx: number, deltaPx: num
   return currentPx + deltaPx;
 }
 
-function SidebarHeader({ paddingBlock, paddingInline, className, ...props }: SidebarRegionProps) {
+/** The icon that says "collapse" or "expand" for this edge (a panel with its side highlighted). */
+function toggleIconName(edge: SidebarEdge, collapsed: boolean) {
+  if (edge === "left") return collapsed ? "left_panel_open" : "left_panel_close";
+  return collapsed ? "right_panel_open" : "right_panel_close";
+}
+
+/** The collapse / expand button. The header already includes one; use this to place it anywhere else inside the sidebar. */
+function SidebarToggle({ icon, "aria-label": ariaLabel, className, onClick, ...props }: SidebarToggleProps) {
+  const { collapsed, edge, toggleCollapsed } = useSidebarContext("Sidebar.Toggle");
+
+  return (
+    <IconButton
+      {...mergeProps(
+        {
+          "data-component": "Sidebar.Toggle",
+          "aria-label": ariaLabel ?? (collapsed ? "Expand sidebar" : "Collapse sidebar"),
+          "aria-expanded": !collapsed,
+          variant: "ghost" as const,
+          size: "sm" as const,
+          className: clsx(classes.Toggle, className),
+          onClick: toggleCollapsed,
+          icon: icon ?? <Icon name={toggleIconName(edge, collapsed)} />,
+        },
+        { ...props, onClick },
+      )}
+    />
+  );
+}
+
+/** The top of the sidebar: a leading visual and a title, then the collapse toggle. */
+function SidebarHeader({ leadingVisual, toggle = true, paddingBlock, paddingInline, className, children, ...props }: SidebarHeaderProps) {
   const tokens = useTokens();
+  const { collapsed } = useSidebarContext("Sidebar.Header");
+  const { text, fontWeight, fgColor } = tokens;
+  // The collapsed rail has room for one thing: the toggle if the header has one, else the leading visual.
+  const showLeading = leadingVisual != null && (!collapsed || !toggle);
+
   return (
     <div
       {...mergeProps(
@@ -132,7 +185,18 @@ function SidebarHeader({ paddingBlock, paddingInline, className, ...props }: Sid
         },
         props,
       )}
-    />
+    >
+      {showLeading ? <span className={classes.LeadingVisual}>{leadingVisual}</span> : null}
+      {!collapsed && children != null ? (
+        <div
+          className={classes.Title}
+          style={{ font: text.size.md, fontWeight: fontWeight.medium, color: fgColor.neutral.default }}
+        >
+          {children}
+        </div>
+      ) : null}
+      {toggle ? <SidebarToggle /> : null}
+    </div>
   );
 }
 
@@ -168,50 +232,103 @@ function SidebarFooter({ paddingBlock, paddingInline, className, ...props }: Sid
   );
 }
 
-function CollapseIcon({ edge, collapsed }: { edge: SidebarEdge; collapsed: boolean }) {
-  const useLeftChevron = edge === "left" ? !collapsed : collapsed;
-  return <Icon name={useLeftChevron ? "chevron_left" : "chevron_right"} />;
-}
-
-function SidebarToggle({
-  floating = false,
-  floatingAlign = "center",
-  children,
-  "aria-label": ariaLabel,
-  className,
-  ...props
-}: SidebarToggleProps) {
-  const { collapsed, edge, toggleCollapsed } = useSidebarContext("Sidebar.Toggle");
-  const defaultLabel = collapsed ? "Expand sidebar" : "Collapse sidebar";
+/** A labelled set of items. The label is hidden in the collapsed rail but still names the group. */
+function SidebarSection({ label, className, children, ...props }: SidebarSectionProps) {
+  const { collapsed } = useSidebarContext("Sidebar.Section");
+  const { actionMenu } = useTokens();
+  const labelId = useId();
 
   return (
     <div
       {...mergeProps(
         {
-          "data-component": "Sidebar.Toggle",
-          "data-floating": floating ? floatingAlign : undefined,
-          className: clsx(classes.Toggle, className),
+          "data-component": "Sidebar.Section",
+          role: "group",
+          "aria-labelledby": labelId,
+          className: clsx(classes.Section, className),
+          style: { gap: actionMenu.sizes.list.itemGap },
         },
         props,
       )}
     >
-      <IconButton
-        aria-label={ariaLabel ?? defaultLabel}
-        aria-expanded={!collapsed}
-        variant="ghost"
-        size="sm"
-        onClick={toggleCollapsed}
-        icon={children ?? <CollapseIcon edge={edge} collapsed={collapsed} />}
-      />
+      <div
+        id={labelId}
+        hidden={collapsed}
+        className={classes.SectionLabel}
+        style={{ paddingBlock: actionMenu.sizes.section.paddingBlock, paddingInline: actionMenu.sizes.section.paddingInline }}
+      >
+        {label}
+      </div>
+      {children}
     </div>
   );
 }
 
 /**
- * In-flow navigation shell — not portaled like {@link Sheet}.
+ * One link of the nav rail. It follows the sidebar: in a collapsed rail it shows only its `leadingVisual` (named by its
+ * label, with a tooltip), so consumers do not switch it themselves.
  *
- * Use {@link Sidebar.Header}, {@link Sidebar.Body}, and {@link Sidebar.Footer} for regions.
- * {@link Sidebar.Toggle} calls into the sidebar collapse state (controlled or uncontrolled).
+ * It looks like an ActionMenu row (the Figma nav rail is that design) and reads `tokens.actionMenu`, but it is a link,
+ * not a menu item: `aria-current` marks the page, and there is no `role="menuitem"`.
+ */
+function SidebarItem<As extends React.ElementType = "a">({
+  as,
+  current = false,
+  leadingVisual,
+  trailingVisual,
+  className,
+  children,
+  ...props
+}: SidebarItemProps<As>) {
+  const Component: React.ElementType = as ?? "a";
+  const { collapsed, edge } = useSidebarContext("Sidebar.Item");
+  const { ["aria-label"]: ariaLabel, ...rest } = props as { "aria-label"?: string };
+  // Without a visual there is nothing to show in the rail, so the label stays.
+  const iconOnly = collapsed && leadingVisual != null;
+  const name = ariaLabel ?? (iconOnly && typeof children === "string" ? children : undefined);
+
+  const link = (
+    <Component
+      {...mergeProps(
+        {
+          "data-component": "Sidebar.Item",
+          "data-current": current ? "" : undefined,
+          "data-icon-only": iconOnly ? "" : undefined,
+          "aria-current": current ? ("page" as const) : undefined,
+          "aria-label": name,
+          className: clsx(classes.Item, className as string | undefined),
+        },
+        rest as object,
+      )}
+    >
+      <span className={classes.ItemInner}>
+        {leadingVisual ? <span className={classes.Slot}>{leadingVisual}</span> : null}
+        {!iconOnly ? <span className={classes.ItemLabel}>{children as React.ReactNode}</span> : null}
+        {!iconOnly && trailingVisual ? <span className={classes.Slot}>{trailingVisual}</span> : null}
+      </span>
+    </Component>
+  );
+
+  return iconOnly && name ? (
+    <Tooltip content={name} placement={tooltipPlacement(edge)} compact>
+      {link}
+    </Tooltip>
+  ) : (
+    link
+  );
+}
+
+function tooltipPlacement(edge: SidebarEdge) {
+  return edge === "left" ? "right" : "left";
+}
+
+/**
+ * In-flow navigation shell, a `<nav>`: not portaled like {@link Sheet}.
+ *
+ * Build the nav rail from {@link Sidebar.Header} (a leading visual, a title and the collapse toggle),
+ * {@link Sidebar.Body} holding {@link Sidebar.Section}s of {@link Sidebar.Item}s, and {@link Sidebar.Footer}.
+ * Everything inside follows the collapse state (controlled or uncontrolled), so items and sections need no logic of
+ * their own.
  */
 export function Sidebar({
   collapsed: collapsedProp,
@@ -233,77 +350,33 @@ export function Sidebar({
   const [internalCollapsed, setInternalCollapsed] = useState(defaultCollapsed);
   const collapsed = collapsedProp ?? internalCollapsed;
 
-  const setCollapsed = useCallback(
-    (next: boolean) => {
-      if (collapsedProp === undefined) {
-        setInternalCollapsed(next);
-      }
-      onCollapsedChange?.(next);
-    },
-    [collapsedProp, onCollapsedChange]
-  );
-
-  const defaultWidthCss = useMemo(
-    () => resolveSidebarWidthCss(width, layout.width),
-    [width, layout.width]
-  );
-
-  const minWidthPx = useMemo(() => lengthToPx(layout.minWidth, 200), [layout.minWidth]);
-  const maxWidthPx = useMemo(
-    () => lengthToPx(layout.maxWidth, 480),
-    [layout.maxWidth]
-  );
-
-  const [widthPx, setWidthPx] = useState(() => lengthToPx(defaultWidthCss, 272));
-  const lastExpandedWidthRef = useRef(widthPx);
-
-  useEffect(() => {
-    const next = lengthToPx(defaultWidthCss, 272);
-    setWidthPx(next);
-    lastExpandedWidthRef.current = next;
-  }, [defaultWidthCss]);
-
-  useEffect(() => {
-    if (!collapsed) {
-      setWidthPx(lastExpandedWidthRef.current);
-    }
-  }, [collapsed]);
-
-  const clampWidth = useCallback(
-    (next: number) => Math.min(maxWidthPx, Math.max(minWidthPx, next)),
-    [maxWidthPx, minWidthPx]
-  );
-
-  const handleResizeDelta = useCallback(
-    (deltaPx: number) => {
-      if (collapsed) return;
-      setWidthPx((current) => {
-        const next = clampWidth(applyWidthDelta(edge, current, deltaPx));
-        lastExpandedWidthRef.current = next;
-        onWidthChange?.(next);
-        return next;
-      });
-    },
-    [clampWidth, collapsed, edge, onWidthChange]
-  );
-
   const toggleCollapsed = useCallback(() => {
-    if (!collapsed) {
-      lastExpandedWidthRef.current = widthPx;
-    }
-    setCollapsed(!collapsed);
-  }, [collapsed, setCollapsed, widthPx]);
+    if (collapsedProp === undefined) setInternalCollapsed(!collapsed);
+    onCollapsedChange?.(!collapsed);
+  }, [collapsed, collapsedProp, onCollapsedChange]);
 
-  const contextValue = useMemo<SidebarContextValue>(
-    () => ({ collapsed, edge, toggleCollapsed }),
-    [collapsed, edge, toggleCollapsed]
-  );
+  const contextValue = useMemo<SidebarContextValue>(() => ({ collapsed, edge, toggleCollapsed }), [collapsed, edge, toggleCollapsed]);
+
+  const defaultWidthCss = resolveSidebarWidthCss(width, layout.width);
+  const minWidthPx = lengthToPx(layout.minWidth, 200);
+  const maxWidthPx = lengthToPx(layout.maxWidth, 480);
+
+  // The width the user dragged to, remembered per `width` prop: changing the prop starts over from its stop. It is never
+  // cleared by collapsing, so expanding returns to where the user left it.
+  const [dragged, setDragged] = useState<{ base: string; px: number } | null>(null);
+  const draggedPx = dragged?.base === defaultWidthCss ? dragged.px : null;
+  const expandedPx = draggedPx ?? lengthToPx(defaultWidthCss, 272);
+
+  const handleResizeDelta = (deltaPx: number) => {
+    if (collapsed) return;
+    const next = Math.min(maxWidthPx, Math.max(minWidthPx, applyWidthDelta(edge, expandedPx, deltaPx)));
+    setDragged({ base: defaultWidthCss, px: next });
+    onWidthChange?.(next);
+  };
 
   const widthStyle: React.CSSProperties = collapsed
     ? { width: layout.widthMinimized }
-    : resizable
-      ? { width: `${widthPx}px`, maxWidth: layout.maxWidth }
-      : { width: resolveSidebarWidthCss(width, layout.width), maxWidth: layout.maxWidth };
+    : { width: resizable && draggedPx != null ? `${draggedPx}px` : defaultWidthCss, maxWidth: layout.maxWidth };
 
   return (
     <SidebarContext.Provider value={contextValue}>
@@ -317,6 +390,8 @@ export function Sidebar({
             className: clsx(classes.Sidebar, className),
             style: {
               backgroundColor: sidebar.color.background,
+              // The rows are ActionMenu rows: they read the same scoped variables.
+              ...actionMenuVars(tokens),
               ...cssVars("sidebar", {
                 borderColor: sidebar.color.border,
                 borderWidth: borderWidth.thin,
@@ -347,4 +422,6 @@ export function Sidebar({
 Sidebar.Header = SidebarHeader;
 Sidebar.Body = SidebarBody;
 Sidebar.Footer = SidebarFooter;
+Sidebar.Section = SidebarSection;
+Sidebar.Item = SidebarItem;
 Sidebar.Toggle = SidebarToggle;

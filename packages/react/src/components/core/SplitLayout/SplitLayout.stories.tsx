@@ -24,7 +24,10 @@ export const WithSidebar: Story = {
     <SplitLayout>
       <Sidebar aria-label="Primary" width="sm">
         <Sidebar.Body>
-          <Text size="md">Sidebar</Text>
+          <Sidebar.Section label="Section">
+            <Sidebar.Item href="#one" current>One</Sidebar.Item>
+            <Sidebar.Item href="#two">Two</Sidebar.Item>
+          </Sidebar.Section>
         </Sidebar.Body>
       </Sidebar>
       <SplitLayout.Main>

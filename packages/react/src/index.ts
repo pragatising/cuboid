@@ -114,8 +114,10 @@ export type {
   SidebarProps,
   SidebarEdge,
   SidebarRegionProps,
+  SidebarHeaderProps,
+  SidebarSectionProps,
+  SidebarItemProps,
   SidebarToggleProps,
-  SidebarToggleFloatingAlign,
   SidebarWidth,
   SidebarWidthStop,
 } from "./components/core/Sidebar";

@@ -1,125 +1,70 @@
 import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { ActionMenuItem } from "../ActionMenu";
-import { Button } from "../Button";
-import { Icon, type IconName } from "../Icon";
-import { SplitLayout } from "../SplitLayout";
 import { Box } from "../Box";
+import { Button } from "../Button";
 import { Heading } from "../Heading";
+import { Icon } from "../Icon";
+import { SplitLayout } from "../SplitLayout";
 import { Text } from "../Text";
-import { Sidebar, useSidebar } from "./Sidebar";
+import { Sidebar } from "./Sidebar";
 
-function SidebarNavItem({
-  label,
-  icon,
-  selected = false,
-}: {
-  label: string;
-  icon: IconName;
-  selected?: boolean;
-}) {
-  const { collapsed } = useSidebar();
-
-  return (
-    <ActionMenuItem
-      iconOnly={collapsed}
-      leadingIcon={<Icon size="sm" name={icon} />}
-      selected={selected}
-      showSelectionCheck={false}
-      aria-label={collapsed ? label : undefined}
-    >
-      {label}
-    </ActionMenuItem>
-  );
-}
-
-function DockToggleIcon() {
-  const { collapsed } = useSidebar();
-  return <Icon name={collapsed ? "dock_to_left" : "dock_to_right"} />;
-}
-
-function NavRail() {
-  const { collapsed } = useSidebar();
-
+/** Any node can lead the header: a user, an org, a team. This one is a user's initial. */
+function UserBadge({ initial }: { initial: string }) {
   return (
     <Box
-      gap="xxs"
-      alignItems={collapsed ? "center" : "stretch"}
-      style={{ width: collapsed ? undefined : "100%" }}
+      alignItems="center"
+      justifyContent="center"
+      borderRadius="full"
+      backgroundColor="debug.strong"
+      style={{ width: "1.5rem", height: "1.5rem" }}
     >
-      <SidebarNavItem label="Home" icon="home" selected />
-      <SidebarNavItem label="Settings" icon="settings" />
+      <Text size="sm" color="neutral.inverted">{initial}</Text>
     </Box>
   );
 }
 
-function SidebarContent({
-  showInternalToggle,
-  floatingToggle,
-}: {
-  showInternalToggle?: boolean;
-  floatingToggle?: boolean;
-}) {
-  const { collapsed } = useSidebar();
-
+/** The docs nav rail: sections of plain links (no icons), the first one current. */
+function PlainNav() {
   return (
     <>
-      <Sidebar.Header>
-        {!collapsed && <Heading as="h2" size="sm">Cube</Heading>}
-        {showInternalToggle && <Sidebar.Toggle floating={floatingToggle} />}
-      </Sidebar.Header>
-      <Sidebar.Body>
-        <NavRail />
-      </Sidebar.Body>
-      <Sidebar.Footer>
-        {!collapsed && (
-          <Text size="sm" color="neutral.muted">
-            Footer slot
-          </Text>
-        )}
-      </Sidebar.Footer>
+      <Sidebar.Section label="Primitives">
+        <Sidebar.Item href="#button" current>Button</Sidebar.Item>
+        <Sidebar.Item href="#text">Text</Sidebar.Item>
+        <Sidebar.Item href="#box">Box</Sidebar.Item>
+      </Sidebar.Section>
+      <Sidebar.Section label="Layout">
+        <Sidebar.Item href="#container">Container</Sidebar.Item>
+        <Sidebar.Item href="#sidebar">Sidebar</Sidebar.Item>
+      </Sidebar.Section>
     </>
   );
 }
 
-function AppShell({
-  collapsed,
-  onCollapsedChange,
-  resizable,
-  showInternalToggle,
-  floatingToggle,
-}: {
-  collapsed?: boolean;
-  onCollapsedChange?: (next: boolean) => void;
-  resizable?: boolean;
-  showInternalToggle?: boolean;
-  floatingToggle?: boolean;
-}) {
+/** The same links with icons, which is what a collapsed rail shows. */
+function IconNav() {
   return (
-    <SplitLayout>
-      <Sidebar
-        aria-label="Primary"
-        collapsed={collapsed}
-        onCollapsedChange={onCollapsedChange}
-        resizable={resizable}
-        width="md"
-      >
-        <SidebarContent
-          showInternalToggle={showInternalToggle}
-          floatingToggle={floatingToggle}
-        />
-      </Sidebar>
-      <SplitLayout.Main>
-        <Box gap="md" padding="lg">
-          <Heading as="h1" size="md">Main content</Heading>
-          <Text size="md" color="neutral.muted">
-            Sidebar stays in document flow — unlike Sheet, it does not portal or scrim the page.
-            Collapsed rail width is <code>3.6rem</code>; nav rows use{" "}
-            <code>ActionMenuItem</code> (labeled expanded, <code>iconOnly</code> collapsed).
-          </Text>
-        </Box>
-      </SplitLayout.Main>
-    </SplitLayout>
+    <Sidebar.Section label="Workspace">
+      <Sidebar.Item href="#home" current leadingVisual={<Icon name="home" size="sm" />}>Home</Sidebar.Item>
+      <Sidebar.Item href="#inbox" leadingVisual={<Icon name="inbox" size="sm" />} trailingVisual={<Icon name="chevron_right" size="sm" />}>
+        Inbox
+      </Sidebar.Item>
+      <Sidebar.Item href="#settings" leadingVisual={<Icon name="settings" size="sm" />}>Settings</Sidebar.Item>
+    </Sidebar.Section>
+  );
+}
+
+function Main({ children }: { children?: React.ReactNode }) {
+  return (
+    <SplitLayout.Main>
+      <Box gap="md" padding="lg">
+        <Heading as="h1" size="md">Main content</Heading>
+        <Text color="neutral.muted">
+          The sidebar stays in document flow: unlike Sheet, it does not portal or scrim the page. Collapsed rail width is{" "}
+          <code>3.6rem</code>.
+        </Text>
+        {children}
+      </Box>
+    </SplitLayout.Main>
   );
 }
 
@@ -129,74 +74,103 @@ const meta: Meta<typeof Sidebar> = {
   tags: ["autodocs"],
   parameters: { layout: "fullscreen" },
 };
-
 export default meta;
-
 type Story = StoryObj<typeof Sidebar>;
 
-export const Default: Story = {
-  render: () => <AppShell showInternalToggle />,
+export const NavRail: Story = {
+  name: "Nav rail (the docs shell)",
+  render: () => (
+    <SplitLayout>
+      <Sidebar aria-label="Components" width="sm">
+        <Sidebar.Header leadingVisual={<UserBadge initial="J" />}>John Doe</Sidebar.Header>
+        <Sidebar.Body>
+          <PlainNav />
+        </Sidebar.Body>
+      </Sidebar>
+      <Main />
+    </SplitLayout>
+  ),
+};
+
+export const WithIcons: Story = {
+  name: "With icons (collapse to see the rail)",
+  render: () => (
+    <SplitLayout>
+      <Sidebar aria-label="Workspace" width="sm">
+        <Sidebar.Header leadingVisual={<UserBadge initial="A" />}>Acme Inc</Sidebar.Header>
+        <Sidebar.Body>
+          <IconNav />
+        </Sidebar.Body>
+        <Sidebar.Footer>
+          <Sidebar.Item href="#help" leadingVisual={<Icon name="help" size="sm" />}>Help</Sidebar.Item>
+        </Sidebar.Footer>
+      </Sidebar>
+      <Main />
+    </SplitLayout>
+  ),
 };
 
 export const CollapsedRail: Story = {
-  render: () => <AppShell collapsed showInternalToggle />,
+  render: () => (
+    <SplitLayout>
+      <Sidebar aria-label="Workspace" defaultCollapsed>
+        <Sidebar.Header leadingVisual={<UserBadge initial="A" />}>Acme Inc</Sidebar.Header>
+        <Sidebar.Body>
+          <IconNav />
+        </Sidebar.Body>
+      </Sidebar>
+      <Main />
+    </SplitLayout>
+  ),
+};
+
+export const TeamHeader: Story = {
+  name: "Header: a team icon instead of a user",
+  render: () => (
+    <SplitLayout>
+      <Sidebar aria-label="Workspace" width="sm">
+        <Sidebar.Header leadingVisual={<Icon name="groups" size="md" />}>Platform team</Sidebar.Header>
+        <Sidebar.Body>
+          <IconNav />
+        </Sidebar.Body>
+      </Sidebar>
+      <Main />
+    </SplitLayout>
+  ),
 };
 
 export const Resizable: Story = {
-  render: () => <AppShell resizable showInternalToggle />,
+  render: () => (
+    <SplitLayout>
+      <Sidebar aria-label="Workspace" resizable>
+        <Sidebar.Header leadingVisual={<UserBadge initial="J" />}>John Doe</Sidebar.Header>
+        <Sidebar.Body>
+          <IconNav />
+        </Sidebar.Body>
+      </Sidebar>
+      <Main />
+    </SplitLayout>
+  ),
 };
 
 export const ExternalToggle: Story = {
+  name: "Collapse driven from outside (header without a toggle)",
   render: function ExternalToggleStory() {
     const [collapsed, setCollapsed] = useState(false);
 
     return (
       <SplitLayout>
-        <Sidebar aria-label="Primary" collapsed={collapsed} onCollapsedChange={setCollapsed} width="md">
-          <SidebarContent />
-        </Sidebar>
-        <SplitLayout.Main>
-          <Box gap="md" padding="lg">
-            <Button onClick={() => setCollapsed((value) => !value)}>
-              {collapsed ? "Expand sidebar" : "Collapse sidebar"}
-            </Button>
-            <Text size="md" color="neutral.muted">
-              Collapse can be driven from outside the sidebar via controlled{" "}
-              <code>collapsed</code> / <code>onCollapsedChange</code>.
-            </Text>
-          </Box>
-        </SplitLayout.Main>
-      </SplitLayout>
-    );
-  },
-};
-
-export const FloatingToggle: Story = {
-  render: () => <AppShell showInternalToggle floatingToggle />,
-};
-
-export const DockToggleCorner: Story = {
-  render: function DockToggleCornerStory() {
-    return (
-      <SplitLayout>
-        <Sidebar aria-label="Primary" defaultCollapsed width="sm">
-          <Sidebar.Header>
-            <Sidebar.Toggle floating floatingAlign="corner">
-              <DockToggleIcon />
-            </Sidebar.Toggle>
-          </Sidebar.Header>
+        <Sidebar aria-label="Workspace" collapsed={collapsed} onCollapsedChange={setCollapsed} width="sm">
+          <Sidebar.Header toggle={false} leadingVisual={<UserBadge initial="J" />}>John Doe</Sidebar.Header>
           <Sidebar.Body>
-            <NavRail />
+            <IconNav />
           </Sidebar.Body>
         </Sidebar>
-        <SplitLayout.Main>
-          <Box gap="md" padding="lg">
-            <Text size="md" color="neutral.muted">
-              Custom toggle icons via <code>Sidebar.Toggle</code> children.{" "}
-              <code>floatingAlign="corner"</code> keeps the control top-right when collapsed.
-            </Text>
-          </Box>
-        </SplitLayout.Main>
+        <Main>
+          <Button onClick={() => setCollapsed((value) => !value)}>
+            {collapsed ? "Expand sidebar" : "Collapse sidebar"}
+          </Button>
+        </Main>
       </SplitLayout>
     );
   },
@@ -205,18 +179,11 @@ export const DockToggleCorner: Story = {
 export const RightEdge: Story = {
   render: () => (
     <SplitLayout>
-      <SplitLayout.Main>
-        <Box gap="md" padding="lg">
-          <Heading as="h1" size="md">Main first</Heading>
-        </Box>
-      </SplitLayout.Main>
-      <Sidebar aria-label="Secondary" edge="right" width="sm">
-        <Sidebar.Header>
-          <Heading as="h2" size="sm">Panel</Heading>
-          <Sidebar.Toggle />
-        </Sidebar.Header>
+      <Main />
+      <Sidebar aria-label="Details" edge="right" width="sm">
+        <Sidebar.Header>Details</Sidebar.Header>
         <Sidebar.Body>
-          <NavRail />
+          <IconNav />
         </Sidebar.Body>
       </Sidebar>
     </SplitLayout>
