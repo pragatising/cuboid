@@ -49,12 +49,18 @@ export { IconButton } from "./components/core/IconButton";
 export type { IconButtonProps } from "./components/core/IconButton";
 
 export { Tooltip } from "./components/core/Tooltip";
-export type { TooltipProps, TooltipPlacement } from "./components/core/Tooltip";
+export type { TooltipProps, TooltipPlacement, TooltipType, TooltipDelay } from "./components/core/Tooltip";
 
 export { Icon } from "./components/core/Icon";
 export type { IconProps, IconSize } from "./components/core/Icon";
 
 export * from "./icons";
+
+export { KeybindingHint, getAccessibleKeybindingHintString } from "./components/core/KeybindingHint";
+export type { KeybindingHintProps } from "./components/core/KeybindingHint";
+
+export { VisuallyHidden } from "./components/core/VisuallyHidden";
+export type { VisuallyHiddenProps } from "./components/core/VisuallyHidden";
 
 export { Link } from "./components/core/Link";
 export type { LinkProps, LinkVariant, LinkSize, LinkUnderline } from "./components/core/Link";

@@ -105,6 +105,39 @@
           }
         }
       }
+    },
+    "delay": {
+      "$description": "How long the pointer must rest on the trigger before the tooltip shows: short for a hint on something familiar, medium for most, long where a tooltip would get in the way. Focus from the keyboard shows it at once.",
+      "short": {
+        "$value": "{base.duration.50}",
+        "$type": "duration",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "tooltip"
+          }
+        }
+      },
+      "medium": {
+        "$value": "{base.duration.400}",
+        "$type": "duration",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "tooltip"
+          }
+        }
+      },
+      "long": {
+        "$value": "{base.duration.1200}",
+        "$type": "duration",
+        "$extensions": {
+          "org.cuboid.figma": {
+            "collection": "component",
+            "group": "tooltip"
+          }
+        }
+      }
     }
   }
 }

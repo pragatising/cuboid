@@ -1,4 +1,4 @@
-import { act, render, screen } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import tokens from "@sragatiping/cuboid-primitives";
@@ -20,7 +20,7 @@ behavesAsComponent({
   Component: IconButton,
   dataComponent: "IconButton",
   baseClassName: classes.IconButton,
-  props: { icon, "aria-label": "Close" },
+  props: { icon, "aria-label": "Close", disableTooltip: true },
 });
 
 const ib = (props: Partial<React.ComponentProps<typeof IconButton>> = {}) =>
@@ -107,12 +107,18 @@ describe("IconButton: states", () => {
     expect(onClick).toHaveBeenCalledTimes(2);
   });
 
-  it("disabled is native: no clicks, no focus", async () => {
+  it("disabled is native without a tooltip: no clicks, no focus", async () => {
     const onClick = vi.fn();
-    ib({ disabled: true, onClick });
+    ib({ disabled: true, onClick, disableTooltip: true });
     await userEvent.click(el());
     expect(el()).toBeDisabled();
     expect(onClick).not.toHaveBeenCalled();
+  });
+
+  it("disabled becomes inactive when it has a tooltip, so the tooltip can still be reached", () => {
+    ib({ disabled: true });
+    expect(el()).not.toBeDisabled();
+    expect(el()).toHaveAttribute("aria-disabled", "true");
   });
 
   it("inactive looks disabled, stays focusable, and ignores clicks and keyboard activation", async () => {
@@ -189,24 +195,50 @@ describe("IconButton: loading", () => {
 });
 
 describe("IconButton: tooltip", () => {
-  it("shows the tooltip on hover and describes the button while it is open", async () => {
-    render(<IconButton icon={icon} aria-label="Settings" tooltip="Open settings" />);
+  const tip = () => document.querySelector<HTMLElement>('[data-component="Tooltip"]');
+
+  it("shows its aria-label as a label tooltip, which is the button's name", async () => {
+    render(<IconButton icon={icon} aria-label="Settings" />);
+    const button = screen.getByRole("button", { name: "Settings" });
+    expect(button).not.toHaveAttribute("aria-label");
+    await userEvent.hover(button);
+    await waitFor(() => expect(tip()).toHaveAttribute("data-open"));
+    expect(tip()).toHaveTextContent("Settings");
+    expect(button).toHaveAttribute("aria-labelledby", tip()!.querySelector("span")!.id);
+  });
+
+  it("with description, keeps the aria-label and describes the button", async () => {
+    render(<IconButton icon={icon} aria-label="Settings" description="Open settings" />);
     const button = screen.getByRole("button", { name: "Settings" });
     await userEvent.hover(button);
-    const tip = await screen.findByRole("tooltip");
-    expect(tip).toHaveTextContent("Open settings");
-    expect(button).toHaveAttribute("aria-describedby", tip.id);
+    await waitFor(() => expect(tip()).toHaveAttribute("data-open"));
+    expect(tip()).toHaveTextContent("Open settings");
+    expect(button).toHaveAccessibleDescription("Open settings");
+  });
+
+  it("shows no tooltip with disableTooltip, and keeps the aria-label", () => {
+    render(<IconButton icon={icon} aria-label="Settings" disableTooltip />);
+    expect(screen.getByRole("button")).toHaveAttribute("aria-label", "Settings");
+    expect(tip()).toBeNull();
+  });
+
+  it("is suppressed while the button's own menu is open", async () => {
+    render(<IconButton icon={icon} aria-label="More" aria-haspopup="menu" aria-expanded />);
+    await userEvent.hover(screen.getByRole("button"));
+    await new Promise((resolve) => setTimeout(resolve, 120));
+    expect(tip()).not.toHaveAttribute("data-open");
   });
 
   it("keeps a disabled button focusable and hoverable so the tooltip can explain why", async () => {
     const onClick = vi.fn();
-    render(<IconButton icon={icon} aria-label="Save" tooltip="Nothing to save" disabled onClick={onClick} />);
+    render(<IconButton icon={icon} aria-label="Save" description="Nothing to save" disabled onClick={onClick} />);
     const button = screen.getByRole("button");
     expect(button).not.toBeDisabled();
     expect(button).toHaveAttribute("aria-disabled", "true");
     expect(button).toHaveAttribute("data-inactive");
     await userEvent.hover(button);
-    expect(await screen.findByRole("tooltip")).toHaveTextContent("Nothing to save");
+    await waitFor(() => expect(tip()).toHaveAttribute("data-open"));
+    expect(tip()).toHaveTextContent("Nothing to save");
     await userEvent.click(button);
     expect(onClick).not.toHaveBeenCalled();
   });

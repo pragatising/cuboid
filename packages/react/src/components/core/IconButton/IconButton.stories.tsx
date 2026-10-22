@@ -16,7 +16,7 @@ const meta: Meta<typeof IconButton> = {
     variant: { control: "radio", options: ["outlined", "ghost"] },
     selected: { control: "boolean" },
     disabled: { control: "boolean" },
-    tooltip: { control: "text" },
+    description: { control: "text" },
     onClick: { action: "clicked" },
   },
 };
@@ -30,7 +30,7 @@ export const Playground: Story = {
     selected: false,
     disabled: false,
     "aria-label": "Favorite",
-    tooltip: "Add to favorites",
+    description: "Add to favorites",
     icon: star,
   },
 };
@@ -41,9 +41,9 @@ export const Matrix: Story = {
       {(["outlined", "ghost"] as const).map((variant) => (
         <Box key={variant} flexDirection="row" alignItems="center" gap="1x">
           <Text size="sm" style={{ width: "5rem" }}>{variant}</Text>
-          <IconButton aria-label="Favorite" tooltip="Add to favorites" variant={variant} icon={star} />
-          <IconButton aria-label="Favorite, selected" tooltip="Remove from favorites" variant={variant} selected icon={star} />
-          <IconButton aria-label="Favorite, unavailable" tooltip="Unavailable" variant={variant} disabled icon={star} />
+          <IconButton aria-label="Favorite" description="Add to favorites" variant={variant} icon={star} />
+          <IconButton aria-label="Favorite, selected" description="Remove from favorites" variant={variant} selected icon={star} />
+          <IconButton aria-label="Favorite, unavailable" description="Unavailable" variant={variant} disabled icon={star} />
         </Box>
       ))}
     </Box>

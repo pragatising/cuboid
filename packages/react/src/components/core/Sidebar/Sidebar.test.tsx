@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen, within } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { useState } from "react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
@@ -238,7 +238,8 @@ describe("Sidebar.Item", () => {
   it("shows its name in a tooltip on hover when collapsed", async () => {
     shell({ defaultCollapsed: true });
     await userEvent.hover(screen.getByRole("link", { name: "Button" }));
-    expect(await screen.findByRole("tooltip")).toHaveTextContent("Button");
+    await waitFor(() => expect(document.querySelector('[data-component="Tooltip"][data-open]')).toBeInTheDocument());
+    expect(document.querySelector('[data-component="Tooltip"][data-open]')).toHaveTextContent("Button");
   });
 
   it("keeps its label in the collapsed rail when it has no leading visual", () => {

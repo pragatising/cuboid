@@ -286,7 +286,8 @@ function SidebarItem<As extends React.ElementType = "a">({
           "data-current": current ? "" : undefined,
           "data-icon-only": iconOnly ? "" : undefined,
           "aria-current": current ? ("page" as const) : undefined,
-          "aria-label": name,
+          // A collapsed item is named by its tooltip.
+          "aria-label": iconOnly && name ? undefined : name,
           className: clsx(classes.Item, className as string | undefined),
         },
         rest as object,
@@ -301,7 +302,7 @@ function SidebarItem<As extends React.ElementType = "a">({
   );
 
   return iconOnly && name ? (
-    <Tooltip content={name} placement={tooltipPlacement(edge)} compact>
+    <Tooltip text={name} type="label" placement={tooltipPlacement(edge)}>
       {link}
     </Tooltip>
   ) : (

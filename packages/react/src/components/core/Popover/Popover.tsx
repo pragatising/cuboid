@@ -411,7 +411,6 @@ export function Popover({
             {onClose ? (
               <IconButton
                 aria-label="Close"
-                tooltip="Close"
                 variant="ghost"
                 size="xs"
                 onClick={onClose}

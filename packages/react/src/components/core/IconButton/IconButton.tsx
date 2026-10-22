@@ -8,7 +8,7 @@ import { isDev } from "../../../utils/isDev";
 import { mergeProps } from "../../../utils/mergeProps";
 import { transitionCss } from "../../../utils/motion";
 import { Spinner } from "../Button/Spinner";
-import { Tooltip } from "../Tooltip";
+import { Tooltip, useTooltipContext } from "../Tooltip";
 import type { TooltipPlacement } from "../Tooltip";
 import classes from "./IconButton.module.css";
 
@@ -37,8 +37,8 @@ export type IconButtonProps = IconButtonA11yProps & {
   /** A toggle's pressed state: draws the selected look and sets `aria-pressed`. Leave unset for a plain action. */
   selected?: boolean;
   /**
-   * Disables the button. Avoid it where you can: a natively disabled button cannot be focused. With `tooltip`
-   * as well, the button becomes `inactive` instead, so the tooltip can still explain why.
+   * Disables the button. Avoid it where you can: a natively disabled button cannot be focused. With a
+   * tooltip (the default), the button becomes `inactive` instead, so the tooltip can still explain why.
    */
   disabled?: boolean;
   /** Looks disabled but stays focusable and announced; activation is ignored. */
@@ -51,10 +51,14 @@ export type IconButtonProps = IconButtonA11yProps & {
    */
   loadingMessage?: string;
   /**
-   * A hover/focus hint. The button still needs its accessible name; the tooltip is wired with `aria-describedby`
-   * while open.
+   * Supplementary text for a tooltip, announced as the button's description. The button keeps its `aria-label`. Without it
+   * the `aria-label` itself is shown as a label tooltip, which is then the button's accessible name.
    */
-  tooltip?: React.ReactNode;
+  description?: string;
+  /** A keyboard shortcut shown in the tooltip (`"Mod+K"`), as `KeybindingHint` takes `keys`. */
+  keybindingHint?: string | readonly string[];
+  /** Show no tooltip, for a button inside something that already explains it. @default false */
+  disableTooltip?: boolean;
   /** Which side of the button the tooltip appears on. @default "bottom" */
   tooltipPlacement?: TooltipPlacement;
 } & Omit<React.ComponentPropsWithRef<"button">, "aria-label" | "aria-labelledby" | "children">;
@@ -93,7 +97,7 @@ export function resolveIconButtonStyle(
 /**
  * A button that shows only an icon. Colours come from `tokens.iconButton`; the state colours (hover, pressed,
  * disabled) reach the CSS as element-scoped variables because a pseudo-class cannot be an inline style. The
- * optional `tooltip` wraps it in a `Tooltip`.
+ * `aria-label` is shown as a label `Tooltip` (not inside another tooltip, not while the button's own menu is open).
  */
 export function IconButton({
   icon,
@@ -104,13 +108,24 @@ export function IconButton({
   inactive,
   loading,
   loadingMessage = "Loading",
-  tooltip,
+  description,
+  keybindingHint,
+  disableTooltip,
   tooltipPlacement = "bottom",
   className,
   ...props
 }: IconButtonProps) {
   const tokens = useTokens();
-  const hasTooltip = tooltip != null && tooltip !== "";
+  const { tooltipId: enclosingTooltip } = useTooltipContext();
+  const ariaLabel = props["aria-label"];
+  const tooltipText = description ?? ariaLabel;
+  const tooltipType = description ? "description" : "label";
+  const hasTooltip = !disableTooltip && !enclosingTooltip && Boolean(tooltipText);
+  // The tooltip would sit on top of the menu the button opened.
+  const menuOpen = isTrue(props["aria-expanded"]) && Boolean(props["aria-haspopup"]) && props["aria-haspopup"] !== "false";
+  // A label tooltip is the accessible name; an aria-label as well would name the button twice.
+  const { "aria-label": _name, ...labelless } = props;
+  const buttonProps = hasTooltip && tooltipType === "label" ? labelless : props;
 
   // A natively disabled button gets no hover or focus, so no tooltip: with one, `disabled` becomes `inactive`,
   // which keeps both and still ignores activation. Loading and a consumer's own aria-disabled act the same way.
@@ -149,7 +164,7 @@ export function IconButton({
           },
           style: resolveIconButtonStyle(tokens, { variant, size, selected: Boolean(selected) }),
         },
-        props,
+        buttonProps,
       )}
     >
       <span data-component="icon" className={classes.Icon} aria-hidden="true">
@@ -161,7 +176,13 @@ export function IconButton({
   if (!hasTooltip) return button;
 
   return (
-    <Tooltip content={tooltip} placement={tooltipPlacement} compact>
+    <Tooltip
+      text={tooltipText as string}
+      type={tooltipType}
+      placement={tooltipPlacement}
+      keybindingHint={keybindingHint}
+      suppress={menuOpen}
+    >
       {button}
     </Tooltip>
   );

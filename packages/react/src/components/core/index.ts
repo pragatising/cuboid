@@ -45,10 +45,16 @@ export { IconButton } from "./IconButton";
 export type { IconButtonProps } from "./IconButton";
 
 export { Tooltip } from "./Tooltip";
-export type { TooltipProps, TooltipPlacement } from "./Tooltip";
+export type { TooltipProps, TooltipPlacement, TooltipType, TooltipDelay } from "./Tooltip";
 
 export { Icon } from "./Icon";
 export type { IconProps, IconSize } from "./Icon";
+
+export { KeybindingHint, getAccessibleKeybindingHintString } from "./KeybindingHint";
+export type { KeybindingHintProps } from "./KeybindingHint";
+
+export { VisuallyHidden } from "./VisuallyHidden";
+export type { VisuallyHiddenProps } from "./VisuallyHidden";
 
 export { Link } from "./Link";
 export type { LinkProps, LinkVariant, LinkSize, LinkUnderline } from "./Link";

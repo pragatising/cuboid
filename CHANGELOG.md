@@ -2,6 +2,14 @@
 
 Rolling session log for Claude Code continuity. Newest entry on top. Each entry: what changed, why, and anything the next agent needs to know. Keep entries short — skip anything derivable from `git log` or the diff itself.
 
+## 2026-10-21 (latest) — Tooltip rebuilt; KeybindingHint and VisuallyHidden added
+
+- **Tooltip** is now `<Tooltip text type="label"|"description" placement delay keybindingHint suppress>`: text only, no wrapper element (it clones its trigger), portaled with `zIndex.tooltip`, hoverable (WCAG 1.4.13), opens on `:focus-visible`, closes on Escape/blur/leave. `label` is the trigger's accessible name; `description` is announced as its description. `content`, `compact`, `showDelay` are gone. Shared `TooltipContext`.
+- **Tokens**: `tooltip.delay.{short,medium,long}` (50/400/1200ms), `base.duration.1200`, `keybindingHint.*`.
+- **KeybindingHint**, **VisuallyHidden**, `usePlatform` / `PlatformProvider` are new.
+- **IconButton**: `tooltip` is replaced by `description`, `keybindingHint`, `disableTooltip`. Its `aria-label` is shown as a label tooltip by default; disabled becomes `inactive` so the tooltip stays reachable; suppressed while its own menu is open or inside another tooltip.
+- Sidebar.Item (collapsed), CodeSurface watchlist and Popover close button moved to the new API.
+
 ## 2026-10-21 (later still) — behaviours foundation; Sheet, Overlay and ResizeHandle migrated onto it
 
 **Changed:**

@@ -1,24 +1,23 @@
-/* Layout only. Colours, font, border, padding, radius, shadow, z-index and max width come from the `tooltip` tokens, set inline by Tooltip.tsx. */
-.Root {
-  display: inline-flex;
-  vertical-align: middle;
+/* Only what a prop cannot say. Position, colours, padding, radius, shadow, z-index and width are Box props from the `tooltip`
+   tokens (Tooltip.tsx); the fade is here because it is an animation, and only for people who have not asked for less motion. */
+@keyframes tooltip-appear {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
-.Panel {
-  position: fixed;
-  box-sizing: border-box;
-  margin: 0;
-  border-style: solid;
-  text-align: left;
-  pointer-events: none;
+@media (prefers-reduced-motion: no-preference) {
+  :where(.Tooltip[data-open]) {
+    animation: tooltip-appear var(--tooltip-fade, 100ms) ease-in both;
+  }
 }
 
-.Compact {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.Expanded {
-  white-space: normal;
+@media (forced-colors: active) {
+  :where(.Tooltip) {
+    outline: 1px solid transparent;
+  }
 }

@@ -258,11 +258,8 @@ export function CodeSurface({
         >
           {watchlistEnabled ? (
             <Tooltip
-              content={
-                isWatched ? "Remove from watchlist" : "Add to watchlist"
-              }
+              text={isWatched ? "Remove from watchlist" : "Add to watchlist"}
               placement="right"
-              compact
             >
               <button
                 type="button"

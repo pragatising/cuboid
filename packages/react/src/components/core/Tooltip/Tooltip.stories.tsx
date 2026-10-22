@@ -1,6 +1,6 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Title, Primary, Controls, Subtitle } from "@storybook/blocks";
+import { Box } from "../Box";
 import { Button } from "../Button";
 import { Icon } from "../Icon";
 import { IconButton } from "../IconButton";
@@ -10,113 +10,91 @@ const meta: Meta<typeof Tooltip> = {
   title: "Core/Tooltip",
   component: Tooltip,
   tags: ["autodocs"],
-  parameters: {
-    layout: "padded",
-    docs: {
-      page: () => (
-        <>
-          <Title />
-          <Subtitle>
-            Non-interactive floating label; styled with Cube tooltip tokens (Figma DS—AI).
-            Renders in a portal so it is not clipped by <code>overflow: hidden</code> ancestors.
-          </Subtitle>
-          <Primary />
-          <Controls />
-
-          <div className="cube-docs-section cube-docs-section--wide">
-            <h3 className="cube-docs-section__title">Notes</h3>
-            <ul className="cube-docs-list">
-              <li>
-                Viewport collision / flip (e.g.{" "}
-                <a href="https://floating-ui.com/" target="_blank" rel="noreferrer">
-                  Floating UI
-                </a>
-                ) and touch-specific patterns are future hardening — not in v1.
-              </li>
-              <li>
-                For icon-only controls, prefer <code>IconButton</code>&apos;s{" "}
-                <code>tooltip</code> prop (handles{" "}
-                <code>aria-disabled</code> when disabled + tooltip).
-              </li>
-            </ul>
-          </div>
-        </>
-      ),
-    },
+  parameters: { layout: "padded" },
+  argTypes: {
+    type: { control: "radio", options: ["description", "label"] },
+    placement: { control: "select", options: ["top", "top-start", "top-end", "bottom", "bottom-start", "bottom-end", "left", "right"] },
+    delay: { control: "radio", options: ["short", "medium", "long"] },
   },
 };
 export default meta;
 type Story = StoryObj<typeof Tooltip>;
 
-export const Default: Story = {
-  args: {
-    content: "Tooltip",
-    placement: "bottom",
-    compact: true,
-  },
+export const Description: Story = {
+  args: { text: "Saves to the cloud", placement: "bottom" },
   render: (args) => (
     <Tooltip {...args}>
-      <Button variant="secondary" size="sm">
-        Hover or focus me
-      </Button>
+      <Button variant="secondary" size="sm">Save</Button>
     </Tooltip>
   ),
 };
 
-export const LongText: Story = {
-  args: {
-    content:
-      "Do not put essential information in a tooltip. Tooltips have low discoverability and have usability issues on devices without hover interactions.",
-    placement: "bottom",
-    compact: false,
-  },
-  render: (args) => (
-    <div style={{ padding: 48 }}>
-      <Tooltip {...args}>
-        <Button variant="secondary" size="sm">
-          Hover for guidance
-        </Button>
-      </Tooltip>
-    </div>
+export const Label: Story = {
+  name: "Label (names an icon-only trigger)",
+  render: () => (
+    <Tooltip type="label" text="Settings">
+      <IconButton aria-label="Settings" disableTooltip icon={<Icon name="settings" />} />
+    </Tooltip>
   ),
 };
 
-export const WithIconButton: Story = {
-  name: "With IconButton (built-in tooltip)",
+export const WithKeybindingHint: Story = {
   render: () => (
-    <p className="cube-docs-note">
-      Prefer <code>IconButton</code>’s <code>tooltip</code> prop so
-      the trigger stays associated with <code>role=&quot;tooltip&quot;</code> and{" "}
-      <code>aria-describedby</code>. Example:
-      <span style={{ display: "inline-block", marginLeft: 8, verticalAlign: "middle" }}>
-        <IconButton aria-label="Settings" tooltip="Open settings" variant="ghost" icon={<Icon name="settings" />} />
-      </span>
-    </p>
+    <Tooltip text="Save" keybindingHint="Mod+S">
+      <Button variant="secondary" size="sm">Save</Button>
+    </Tooltip>
+  ),
+};
+
+export const OnIconButton: Story = {
+  name: "On IconButton (built in)",
+  render: () => (
+    <Box flexDirection="row" gap="md">
+      <IconButton aria-label="Settings" variant="ghost" icon={<Icon name="settings" />} />
+      <IconButton aria-label="Search" keybindingHint="Mod+K" variant="ghost" icon={<Icon name="search" />} />
+      <IconButton aria-label="Delete" description="Deletes the file for everyone" disabled variant="ghost" icon={<Icon name="delete" />} />
+    </Box>
   ),
 };
 
 export const Placements: Story = {
   render: () => (
-    <div style={{ display: "grid", gap: 48, padding: 64, placeItems: "center" }}>
+    <Box padding="xxl" gap="xl" alignItems="center">
       {(["top", "bottom", "left", "right"] as const).map((placement) => (
-        <Tooltip key={placement} content={`${placement}`} placement={placement} compact>
-          <Button variant="rounded" size="sm">
-            {placement}
-          </Button>
+        <Tooltip key={placement} text={placement} placement={placement}>
+          <Button variant="rounded" size="sm">{placement}</Button>
         </Tooltip>
       ))}
-    </div>
+    </Box>
   ),
 };
 
-export const NotClippedByOverflow: Story = {
-  name: "Portal (overflow: hidden)",
+export const Delays: Story = {
+  render: () => (
+    <Box flexDirection="row" gap="md">
+      {(["short", "medium", "long"] as const).map((delay) => (
+        <Tooltip key={delay} text={`${delay} delay`} delay={delay}>
+          <Button variant="secondary" size="sm">{delay}</Button>
+        </Tooltip>
+      ))}
+    </Box>
+  ),
+};
+
+export const LongText: Story = {
+  render: () => (
+    <Tooltip text="Tooltips have low discoverability and do not work on touch: never put essential information in one.">
+      <Button variant="secondary" size="sm">Hover for guidance</Button>
+    </Tooltip>
+  ),
+};
+
+export const Portal: Story = {
+  name: "Portal (not clipped by overflow: hidden)",
   render: () => (
     <div style={{ overflow: "hidden", height: 72, padding: 12 }}>
-      <Tooltip content="Still visible — portaled to document.body" compact>
-        <Button variant="secondary" size="sm">
-          Hover inside clipped box
-        </Button>
+      <Tooltip text="Still visible: portaled to document.body">
+        <Button variant="secondary" size="sm">Hover inside clipped box</Button>
       </Tooltip>
     </div>
   ),
