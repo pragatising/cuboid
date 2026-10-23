@@ -32,7 +32,7 @@ export const WithSidebar: Story = {
       </Sidebar>
       <SplitLayout.Main>
         <Box gap="md" padding="lg">
-          <Heading as="h1" size="md">Main</Heading>
+          <Heading as="h1" size="h2">Main</Heading>
           <Text size="md" color="neutral.muted">
             Flex row shell — sidebar does not shrink; main grows and can scroll independently.
           </Text>

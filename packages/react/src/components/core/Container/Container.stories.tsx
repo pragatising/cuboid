@@ -32,7 +32,7 @@ export const PageWidth: Story = {
   render: () => (
     <Shell>
       <Container width="page" paddingBlock="xl" gap="sm">
-        <Heading as="h2" size="md">Page shell</Heading>
+        <Heading as="h2" size="h2">Page shell</Heading>
         <Text color="neutral.muted">
           Max width from <code>container.maxWidth.page</code> (56rem). Centered with token padding.
         </Text>
@@ -46,9 +46,9 @@ export const ContentWidth: Story = {
   render: () => (
     <Shell>
       <Container width="page" paddingBlock="xl" gap="md">
-        <Heading as="h2" size="sm">Inside page shell</Heading>
+        <Heading as="h2" size="h3">Inside page shell</Heading>
         <Container width="content" paddingInline={false} center={false} gap="sm">
-          <Heading as="h3" size="md">Article column</Heading>
+          <Heading as="h3" size="h2">Article column</Heading>
           <Text color="neutral.muted">
             Max width from <code>container.maxWidth.content</code> (40rem).
           </Text>
@@ -74,7 +74,7 @@ export const MinHeightScreen: Story = {
   render: () => (
     <Shell>
       <Container width="page" minHeight="screen" paddingBlock="lg" gap="sm">
-        <Heading as="h2" size="sm">Full viewport shell</Heading>
+        <Heading as="h2" size="h3">Full viewport shell</Heading>
         <Text color="neutral.muted">
           <code>minHeight=&quot;screen&quot;</code> sets <code>min-height: 100svh</code>.
         </Text>

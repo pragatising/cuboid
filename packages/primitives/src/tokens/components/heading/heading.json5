@@ -1,20 +1,41 @@
 {
   heading: {
-    $description: 'Heading component typography — size prop (lg|md|sm) is independent of the `as` (h1-h6) semantic level, matching Primer.',
+    $description: 'Heading component typography. The size prop is named h1-h6 after the level it is the default for, but is independent of the `as` semantic level (an h3 element can look like an h1).',
     size: {
-      lg: {
+      h1: {
         $value: '{text.title.shorthand.lg}',
         $type: 'typography',
         $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'heading' } },
       },
-      md: {
+      h2: {
         $value: '{text.title.shorthand.md}',
         $type: 'typography',
         $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'heading' } },
       },
-      sm: {
+      h3: {
         $value: '{text.title.shorthand.sm}',
         $type: 'typography',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'heading' } },
+      },
+      h4: {
+        $value: '{text.title.shorthand.xs}',
+        $type: 'typography',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'heading' } },
+      },
+      h5: {
+        $value: '{text.title.shorthand.xxs}',
+        $type: 'typography',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'heading' } },
+      },
+      h6: {
+        $value: {
+          fontWeight: '{text.title.weight.sm}',
+          fontSize: '{text.body.size.xs}',
+          lineHeight: '{text.body.lineHeight.xs}',
+          fontFamily: '{fontStack.sansSerif}',
+        },
+        $type: 'typography',
+        $description: 'The smallest step (10px). Not uppercase: a component that wants a label look (the Sidebar group heading) adds case and tracking itself.',
         $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'heading' } },
       },
     },

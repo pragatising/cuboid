@@ -133,7 +133,7 @@ export const Overview: Story = {
   render: () => (
     <Box gap="xl" style={{ maxWidth: "78rem" }}>
       <Box gap="xs">
-        <Heading as="h2" size="lg">
+        <Heading as="h2" size="h1">
           Cuboid component roadmap
         </Heading>
         <Text size="md" color="neutral.muted">
@@ -142,22 +142,22 @@ export const Overview: Story = {
       </Box>
 
       <Box gap="sm">
-        <Heading as="h2" size="md">Shipped</Heading>
+        <Heading as="h2" size="h2">Shipped</Heading>
         <SimpleTable columns={ROADMAP_COLUMNS} data={SHIPPED} enableSorting rowLayout="wrap" density="dense" lines="rows" />
       </Box>
 
       <Box gap="sm">
-        <Heading as="h2" size="md">Backlog</Heading>
+        <Heading as="h2" size="h2">Backlog</Heading>
         <SimpleTable columns={ROADMAP_COLUMNS} data={BACKLOG} enableSorting rowLayout="wrap" density="dense" lines="rows" />
       </Box>
 
       <Box gap="sm">
-        <Heading as="h2" size="md">Feature Upgrade</Heading>
+        <Heading as="h2" size="h2">Feature Upgrade</Heading>
         <SimpleTable columns={ROADMAP_COLUMNS} data={FEATURE_UPGRADES} enableSorting rowLayout="wrap" density="dense" lines="rows" />
       </Box>
 
       <Box gap="sm">
-        <Heading as="h2" size="md">Bugs</Heading>
+        <Heading as="h2" size="h2">Bugs</Heading>
         <SimpleTable columns={ROADMAP_COLUMNS} data={BUGS} enableSorting rowLayout="wrap" density="dense" lines="rows" />
       </Box>
     </Box>

@@ -1,5 +1,18 @@
 {
   text: {
+    letterSpacing: {
+      label: {
+        $value: '{base.text.letterSpacing.wide}',
+        $type: 'dimension',
+        $description: 'Tracking for uppercase labels and group headings.',
+        $extensions: {
+          'org.cuboid.figma': {
+            collection: 'typography',
+            scopes: ['letterSpacing'],
+          },
+        },
+      },
+    },
     display: {
       size: {
         $value: '{base.text.size.2xl}',
@@ -83,6 +96,26 @@
             },
           },
         },
+        xs: {
+          $value: '{base.text.size.sm}',
+          $type: 'dimension',
+          $extensions: {
+            'org.cuboid.figma': {
+              collection: 'typography',
+              scopes: ['fontSize'],
+            },
+          },
+        },
+        xxs: {
+          $value: '{base.text.size.xs}',
+          $type: 'dimension',
+          $extensions: {
+            'org.cuboid.figma': {
+              collection: 'typography',
+              scopes: ['fontSize'],
+            },
+          },
+        },
       },
       lineHeight: {
         lg: {
@@ -124,6 +157,32 @@
             },
           },
         },
+        xs: {
+          $value: '{base.text.lineHeight.normal}',
+          $type: 'number',
+          $extensions: {
+            'org.cuboid.data': {
+              fontSize: 14,
+            },
+            'org.cuboid.figma': {
+              collection: 'typography',
+              scopes: ['lineHeight'],
+            },
+          },
+        },
+        xxs: {
+          $value: '{base.text.lineHeight.relaxed}',
+          $type: 'number',
+          $extensions: {
+            'org.cuboid.data': {
+              fontSize: 12,
+            },
+            'org.cuboid.figma': {
+              collection: 'typography',
+              scopes: ['lineHeight'],
+            },
+          },
+        },
       },
       weight: {
         lg: {
@@ -148,6 +207,26 @@
         },
         sm: {
           $value: '{base.text.weight.semibold}',
+          $type: 'fontWeight',
+          $extensions: {
+            'org.cuboid.figma': {
+              collection: 'typography',
+              scopes: ['fontWeight'],
+            },
+          },
+        },
+        xs: {
+          $value: '{base.text.weight.semibold}',
+          $type: 'fontWeight',
+          $extensions: {
+            'org.cuboid.figma': {
+              collection: 'typography',
+              scopes: ['fontWeight'],
+            },
+          },
+        },
+        xxs: {
+          $value: '{base.text.weight.medium}',
           $type: 'fontWeight',
           $extensions: {
             'org.cuboid.figma': {
@@ -203,6 +282,38 @@
             'org.cuboid.llm': {
               usage: ['subsection-heading', 'list-title', 'h3', 'sidebar-heading'],
               rules: 'Use for smaller headings within sections. Same size as body.large but semibold.',
+            },
+          },
+        },
+        xs: {
+          $value: {
+            fontWeight: '{text.title.weight.xs}',
+            fontSize: '{text.title.size.xs}',
+            lineHeight: '{text.title.lineHeight.xs}',
+            fontFamily: '{fontStack.sansSerif}',
+          },
+          $type: 'typography',
+          $description: 'Small heading step (14px) for sub-subsections; semibold.',
+          $extensions: {
+            'org.cuboid.llm': {
+              usage: ['h4'],
+              rules: 'Use for the fourth heading level.',
+            },
+          },
+        },
+        xxs: {
+          $value: {
+            fontWeight: '{text.title.weight.xxs}',
+            fontSize: '{text.title.size.xxs}',
+            lineHeight: '{text.title.lineHeight.xxs}',
+            fontFamily: '{fontStack.sansSerif}',
+          },
+          $type: 'typography',
+          $description: 'Smaller heading step (12px) for minor groupings; semibold.',
+          $extensions: {
+            'org.cuboid.llm': {
+              usage: ['h5'],
+              rules: 'Use for the fifth heading level.',
             },
           },
         },
@@ -291,6 +402,16 @@
             },
           },
         },
+          xs: {
+          $value: '{base.text.size.xxs}',
+          $type: 'dimension',
+          $extensions: {
+            'org.cuboid.figma': {
+              collection: 'typography',
+              scopes: ['fontSize'],
+            },
+          },
+        },
       },
       lineHeight: {
         lg: {
@@ -325,6 +446,19 @@
           $extensions: {
             'org.cuboid.data': {
               fontSize: 12,
+            },
+            'org.cuboid.figma': {
+              collection: 'typography',
+              scopes: ['lineHeight'],
+            },
+          },
+        },
+        xs: {
+          $value: '{base.text.lineHeight.relaxed}',
+          $type: 'number',
+          $extensions: {
+            'org.cuboid.data': {
+              fontSize: 10,
             },
             'org.cuboid.figma': {
               collection: 'typography',
@@ -389,6 +523,22 @@
             'org.cuboid.llm': {
               usage: ['helper-text', 'footnote', 'metadata', 'timestamp'],
               rules: 'Use sparingly for secondary information. Do NOT use for primary content or interactive elements.',
+            },
+          },
+        },
+        xs: {
+          $value: {
+            fontWeight: '{text.body.weight}',
+            fontSize: '{text.body.size.xs}',
+            lineHeight: '{text.body.lineHeight.xs}',
+            fontFamily: '{fontStack.sansSerif}',
+          },
+          $type: 'typography',
+          $description: 'Smallest body step (10px), for uppercase labels and other tiny annotations. Use sparingly.',
+          $extensions: {
+            'org.cuboid.llm': {
+              usage: ['overline','uppercase-label'],
+              rules: 'Do NOT use for sentences or interactive text.',
             },
           },
         },

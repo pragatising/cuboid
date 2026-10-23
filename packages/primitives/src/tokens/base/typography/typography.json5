@@ -2,6 +2,17 @@
   base: {
     text: {
       size: {
+         xxs: {
+          $value: {value: 0.63, unit: 'rem'},
+          $type: 'dimension',
+          $description: '10px - Smallest text size for capitalised headings.',
+          $extensions: {
+            'org.cuboid.figma': {
+              collection: 'base/typography',
+              scopes: ['fontSize'],
+            },
+          },
+        },
         xs: {
           $value: {value: 0.75, unit: 'rem'},
           $type: 'dimension',
@@ -107,6 +118,19 @@
             'org.cuboid.figma': {
               collection: 'base/typography',
               scopes: ['fontWeight'],
+            },
+          },
+        },
+      },
+      letterSpacing: {
+        wide: {
+          $value: {value: 0.08, unit: 'em'},
+          $type: 'dimension',
+          $description: 'Open tracking (0.08em) for small uppercase labels, so capital letters do not crowd.',
+          $extensions: {
+            'org.cuboid.figma': {
+              collection: 'base/typography',
+              scopes: ['letterSpacing'],
             },
           },
         },

@@ -24,10 +24,10 @@ describe("Heading", () => {
 
   it("looks large by default, whatever the level", () => {
     render(<Heading as="h4">Title</Heading>);
-    expect(normaliseFont(screen.getByRole("heading").style.font)).toBe(normaliseFont(tokens.light.heading.size.lg));
+    expect(normaliseFont(screen.getByRole("heading").style.font)).toBe(normaliseFont(tokens.light.heading.size.h4));
   });
 
-  it.each(["sm", "md", "lg"] as const)("sets the font from the heading.size.%s token for size=%s", (size) => {
+  it.each(["h1", "h2", "h3", "h4", "h5", "h6"] as const)("sets the font from the heading.size.%s token for size=%s", (size) => {
     render(<Heading size={size}>Title</Heading>);
     expect(normaliseFont(screen.getByRole("heading").style.font)).toBe(normaliseFont(tokens.light.heading.size[size]));
   });
@@ -58,5 +58,21 @@ describe("Heading", () => {
   it("has no axe violations", async () => {
     const { container } = render(<Heading>Title</Heading>);
     await expectNoAxeViolations(container);
+  });
+
+  it("follows the level when size is unset, and size overrides it", () => {
+    const { rerender } = render(<Heading as="h1">Title</Heading>);
+    expect(screen.getByRole("heading")).toHaveAttribute("data-size", "h1");
+    rerender(<Heading as="h1" size="h5">Title</Heading>);
+    expect(screen.getByRole("heading")).toHaveAttribute("data-size", "h5");
+    expect(normaliseFont(screen.getByRole("heading").style.font)).toBe(normaliseFont(tokens.light.heading.size.h5));
+  });
+
+  it("sets no case or tracking on any step: the h6 step is just 10px", () => {
+    render(<Heading as="h3" size="h6">Group</Heading>);
+    const heading = screen.getByRole("heading");
+    expect(heading).toHaveAttribute("data-size", "h6");
+    expect(heading.style.letterSpacing).toBe("");
+    expect(getComputedStyle(heading).textTransform).not.toBe("uppercase");
   });
 });

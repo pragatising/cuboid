@@ -40,7 +40,7 @@ function SheetDemo({
       >
         <Sheet.Body>
           <Box gap="md">
-            <Heading as="h2" size="sm">{label}</Heading>
+            <Heading as="h2" size="h3">{label}</Heading>
             <Text size="md" color="neutral.muted">
               Simple sheet — content in <code>Sheet.Body</code> only.
             </Text>
@@ -66,7 +66,7 @@ function StickyHeaderDemo() {
       >
         <Sheet.Header>
           <span id="sheet-filters-title">
-            <Heading as="h2" size="sm">Filters</Heading>
+            <Heading as="h2" size="h3">Filters</Heading>
           </span>
           <IconButton aria-label="Close" variant="ghost" size="sm" onClick={() => setOpen(false)} icon={<Icon name="close" />} />
         </Sheet.Header>

@@ -17,6 +17,11 @@
         $type: 'typography',
         $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'text' } },
       },
+       xs: {
+        $value: '{text.body.shorthand.xs}',
+        $type: 'typography',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'text' } },
+      },
     },
     fgColor: {
       $value: '{fgColor.neutral.muted}',
