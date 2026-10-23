@@ -59,8 +59,8 @@ const scales = JSON5.parse(fs.readFileSync(LIGHT, "utf8")).base.color;
 const out = { base: { color: {} } };
 
 for (const [name, scale] of Object.entries(scales)) {
-  // Only the opaque numbered ramps are generated; black/white/transparent/alpha/overlay/shadow are exceptions.
-  if (["black", "white", "transparent", "grayAlpha", "shadowAlpha", "overlay"].includes(name)) continue;
+  // Only the opaque numbered ramps are generated; black/white/transparent/alpha/overlay/shadow are exceptions, and so is highlight (its markers carry their own dark values).
+  if (["black", "white", "transparent", "grayAlpha", "shadowAlpha", "overlay", "highlight"].includes(name)) continue;
   out.base.color[name] = {};
   for (const [step, token] of Object.entries(scale)) {
     out.base.color[name][step] = { $value: name === "gray" && step === "0" ? hex(DARK_CANVAS) : darkStep(token.$value) };

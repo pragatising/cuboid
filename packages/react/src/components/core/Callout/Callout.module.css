@@ -1,6 +1,4 @@
-/* Layout only. Colours, padding and radius come from the `callout` tokens, set inline by Callout.tsx. */
+/* Colours, padding, radius and layout are Box props from the `callout` tokens (Callout.tsx). The class is a hook for a consumer's own CSS. */
 .Callout {
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
+  min-width: 0;
 }

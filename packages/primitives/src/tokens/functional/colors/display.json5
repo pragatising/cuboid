@@ -1075,5 +1075,33 @@
         },
       },
     },
+    highlight: {
+      $description: 'Saturated marker colors for highlighting text (the Highlight component). Not part of the muted category scales.',
+      green: {
+        $value: '{base.color.highlight.green}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor'] } },
+      },
+      blue: {
+        $value: '{base.color.highlight.blue}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor'] } },
+      },
+      yellow: {
+        $value: '{base.color.highlight.yellow}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor'] } },
+      },
+      lime: {
+        $value: '{base.color.highlight.lime}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor'] } },
+      },
+      purple: {
+        $value: '{base.color.highlight.purple}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor'] } },
+      },
+    },
   },
 }

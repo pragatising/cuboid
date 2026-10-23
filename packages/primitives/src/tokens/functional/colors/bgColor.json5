@@ -166,7 +166,7 @@
         $extensions: {
           'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' },
           // White text sits on this fill, so dark mode needs a darker step than the text-colour use of the same hue.
-          'org.cuboid.overrides': { dark: '{base.color.gray.7}' },
+          'org.cuboid.overrides': { dark: '{base.color.gray.6}' },
         },
       },
     },

@@ -98,7 +98,7 @@
             },
           },
           '7': {
-            $value: '#888783',
+            $value: '#747370',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -1395,6 +1395,63 @@
           },
         },
 
+        highlight: {
+          green: {
+            $value: '#dbf8d8',
+            $type: 'color',
+            $description: 'Highlight-marker green: deliberately more saturated than the muted green scale, for text marking.',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+              'org.cuboid.overrides': { dark: '#2d482a' },
+            },
+          },
+          blue: {
+            $value: '#e1eafb',
+            $type: 'color',
+            $description: 'Highlight-marker blue: deliberately more saturated than the muted blue scale, for text marking.',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+              'org.cuboid.overrides': { dark: '#314162' },
+            },
+          },
+          yellow: {
+            $value: '#ffe100',
+            $type: 'color',
+            $description: 'Highlight-marker yellow: deliberately more saturated than the muted yellow scale, for text marking.',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+              'org.cuboid.overrides': { dark: '#4f4100' },
+            },
+          },
+          lime: {
+            $value: '#cbff00',
+            $type: 'color',
+            $description: 'Highlight-marker lime: deliberately more saturated than the muted lime scale, for text marking.',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+              'org.cuboid.overrides': { dark: '#344800' },
+            },
+          },
+          purple: {
+            $value: '#eeddff',
+            $type: 'color',
+            $description: 'Highlight-marker purple: deliberately more saturated than the muted purple scale, for text marking.',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+              'org.cuboid.overrides': { dark: '#4c3a5c' },
+            },
+          },
+        },
     },
   },
 }

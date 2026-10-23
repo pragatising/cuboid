@@ -9,30 +9,15 @@
       fgColor: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
     },
     green: {
-      bgColor: {
-        $value: '#dbf8d8',
-        $type: 'color',
-        $description: 'GAP: no base.color.green step is a close match (lightest is #e6f4e4) — this highlight color is deliberately more saturated than the muted UI palette.',
-        $extensions: { 'org.cuboid.overrides': { dark: '#2d482a' } },
-      },
+      bgColor: { $value: '{display.highlight.green}', $type: 'color' },
       fgColor: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
     },
     blue: {
-      bgColor: {
-        $value: '#e1eafb',
-        $type: 'color',
-        $description: 'GAP: no matching base.color.blue step — kept as a literal.',
-        $extensions: { 'org.cuboid.overrides': { dark: '#314162' } },
-      },
+      bgColor: { $value: '{display.highlight.blue}', $type: 'color' },
       fgColor: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
     },
     yellow: {
-      bgColor: {
-        $value: '#ffe100',
-        $type: 'color',
-        $description: 'GAP: a fully saturated yellow, nothing like base.color.yellow\'s pastel scale — deliberately vivid for a highlight marker.',
-        $extensions: { 'org.cuboid.overrides': { dark: '#4f4100' } },
-      },
+      bgColor: { $value: '{display.highlight.yellow}', $type: 'color' },
       fgColor: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
     },
     orange: {
@@ -44,21 +29,11 @@
       fgColor: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
     },
     lime: {
-      bgColor: {
-        $value: '#cbff00',
-        $type: 'color',
-        $description: 'GAP: a fully saturated lime, nothing like base.color.lime\'s pastel scale — deliberately vivid for a highlight marker.',
-        $extensions: { 'org.cuboid.overrides': { dark: '#344800' } },
-      },
+      bgColor: { $value: '{display.highlight.lime}', $type: 'color' },
       fgColor: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
     },
     purple: {
-      bgColor: {
-        $value: '#eeddff',
-        $type: 'color',
-        $description: 'GAP: no matching base.color.purple step — kept as a literal.',
-        $extensions: { 'org.cuboid.overrides': { dark: '#4c3a5c' } },
-      },
+      bgColor: { $value: '{display.highlight.purple}', $type: 'color' },
       fgColor: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
     },
   },

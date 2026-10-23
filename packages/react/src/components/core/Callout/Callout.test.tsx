@@ -30,6 +30,29 @@ describe("Callout", () => {
     expect(root(container)).toHaveStyle({ backgroundColor: tokens.light.bgColor.canvas.insetStrong });
   });
 
+  it("backgroundColor and color override the callout look, with a token or any CSS colour", () => {
+    const { container } = render(<Callout backgroundColor="#ff0000" color="neutral.default">note</Callout>);
+    expect(root(container)).toHaveStyle({ backgroundColor: "#ff0000", color: tokens.light.fgColor.neutral.default });
+  });
+
+  it("sets the surface and text from the variant's tokens", () => {
+    const callout = tokens.light.callout as unknown as Record<string, unknown>;
+    const variants = Object.keys(callout).filter((key) => typeof callout[key] === "object" && callout[key] !== null && "bgColor" in (callout[key] as object));
+    for (const variant of variants) {
+      const colors = callout[variant] as { bgColor: string; fgColor: string };
+      const { container, unmount } = render(<Callout variant={variant as never}>note</Callout>);
+      expect(root(container)).toHaveStyle({ backgroundColor: colors.bgColor, color: colors.fgColor });
+      expect(root(container)).toHaveAttribute("data-variant", variant);
+      unmount();
+    }
+  });
+
+  it("takes any Box prop", () => {
+    const { container } = render(<Callout {...({ marginBlockStart: "8px", maxWidth: "20rem" } as object)}>note</Callout>);
+    expect(root(container).style.marginBlockStart).toBe("8px");
+    expect(root(container).style.maxWidth).toBe("20rem");
+  });
+
   it("lets the consumer's style override the token styles", () => {
     const { container } = render(<Callout style={{ backgroundColor: "#ff0000" }}>note</Callout>);
     expect(root(container)).toHaveStyle({ backgroundColor: "#ff0000" });
