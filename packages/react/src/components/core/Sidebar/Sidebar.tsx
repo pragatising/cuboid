@@ -8,11 +8,16 @@ import { mergeProps } from "../../../utils/mergeProps";
 import type { PolymorphicProps } from "../../../utils/polymorphic";
 import { resolveSpace } from "../../../utils/space";
 import type { Space } from "../../../utils/space";
+import { resolved } from "../../../utils/resolved";
+import type { SpaceValue } from "../../../utils/space";
 import { actionMenuVars } from "../ActionMenu/actionMenuVars";
+import { Box } from "../Box";
+import { Heading } from "../Heading";
 import { Icon } from "../Icon";
 import { IconButton } from "../IconButton";
 import { ResizeHandle } from "../ResizeHandle";
 import { Tooltip } from "../Tooltip";
+import { VisuallyHidden } from "../VisuallyHidden";
 import classes from "./Sidebar.module.css";
 
 export type SidebarEdge = "left" | "right";
@@ -21,7 +26,7 @@ export type SidebarWidthStop = keyof Tokens["sidebar"]["sizes"]["width"];
 /** Named stop (`sm` / `md` / `lg`) or any CSS length (e.g. `17rem`). */
 export type SidebarWidth = SidebarWidthStop | (string & {});
 
-export type SidebarProps = React.ComponentPropsWithRef<"nav"> & {
+export type SidebarProps = Omit<React.ComponentPropsWithRef<"nav">, "color"> & {
   /** When true, the sidebar collapses to the minimized rail width. */
   collapsed?: boolean;
   defaultCollapsed?: boolean;
@@ -36,7 +41,7 @@ export type SidebarProps = React.ComponentPropsWithRef<"nav"> & {
   onWidthChange?: (widthPx: number) => void;
 };
 
-export type SidebarRegionProps = React.ComponentPropsWithRef<"div"> & {
+export type SidebarRegionProps = Omit<React.ComponentPropsWithRef<"div">, "color"> & {
   /**
    * Override the region's block-axis (top+bottom) inset with a spacing token.
    * Defaults to the `sidebar.sizes.padding` / `footerPadding` token (uniform on all sides).
@@ -60,7 +65,16 @@ export type SidebarHeaderProps = SidebarRegionProps & {
   toggle?: boolean;
 };
 
-export type SidebarSectionProps = Omit<React.ComponentPropsWithRef<"div">, "role"> & {
+export type SidebarHeaderButtonProps = Omit<React.ComponentPropsWithRef<"button">, "color"> & {
+  /** The button's label: the account, workspace or team name. */
+  children: React.ReactNode;
+  /** An avatar, a logo or an icon before the label. */
+  leadingVisual?: React.ReactNode;
+  /** After the label. A down chevron by default, which says "this opens a menu"; `false` for none. */
+  trailingVisual?: React.ReactNode | false;
+};
+
+export type SidebarSectionProps = Omit<React.ComponentPropsWithRef<"div">, "role" | "color"> & {
   /** The section's heading, shown above its items. It names the group for assistive technology, also when hidden by a collapsed rail. */
   label: React.ReactNode;
 };
@@ -117,22 +131,13 @@ function resolveSidebarWidthCss(width: SidebarWidth, stops: Tokens["sidebar"]["s
   return width;
 }
 
-function regionPaddingOverrides(
-  tokens: Tokens,
-  paddingBlock: Space | undefined,
-  paddingInline: Space | undefined,
-): React.CSSProperties | undefined {
-  if (paddingBlock === undefined && paddingInline === undefined) return undefined;
-  const style: React.CSSProperties = {};
-  if (paddingBlock !== undefined) style.paddingBlock = resolveSpace(tokens, paddingBlock);
-  if (paddingInline !== undefined) style.paddingInline = resolveSpace(tokens, paddingInline);
-  return style;
-}
-
-/** The icon that says "collapse" or "expand" for this edge (a panel with its side highlighted). */
+/**
+ * The default toggle icon: Material's `dock_to_left` / `dock_to_right`. On the left edge the expanded sidebar shows
+ * `dock_to_right` (collapse it) and the collapsed rail `dock_to_left` (expand it); the right edge is the mirror.
+ */
 function toggleIconName(edge: SidebarEdge, collapsed: boolean) {
-  if (edge === "left") return collapsed ? "left_panel_open" : "left_panel_close";
-  return collapsed ? "right_panel_open" : "right_panel_close";
+  const dockedLeft = edge === "left" ? collapsed : !collapsed;
+  return dockedLeft ? "dock_to_left" : "dock_to_right";
 }
 
 /** The collapse / expand button. The header already includes one; use this to place it anywhere else inside the sidebar. */
@@ -160,98 +165,125 @@ function SidebarToggle({ icon, "aria-label": ariaLabel, className, onClick, ...p
 
 /** The top of the sidebar: a leading visual and a title, then the collapse toggle. */
 function SidebarHeader({ leadingVisual, toggle = true, paddingBlock, paddingInline, className, children, ...props }: SidebarHeaderProps) {
-  const tokens = useTokens();
   const { collapsed } = useSidebarContext("Sidebar.Header");
-  const { text, fontWeight, fgColor } = tokens;
+  const { text, fontWeight, fgColor } = useTokens();
   // The collapsed rail has room for one thing: the toggle if the header has one, else the leading visual.
   const showLeading = leadingVisual != null && (!collapsed || !toggle);
 
   return (
-    <div
-      {...mergeProps(
-        {
-          "data-component": "Sidebar.Header",
-          className: clsx(classes.Header, className),
-          style: regionPaddingOverrides(tokens, paddingBlock, paddingInline),
-        },
-        props,
-      )}
+    <Box
+      {...mergeProps({ "data-component": "Sidebar.Header", className: clsx(classes.Header, className) }, props as object)}
+      flexDirection="row"
+      paddingBlock={paddingBlock}
+      paddingInline={paddingInline}
     >
       {showLeading ? <span className={classes.LeadingVisual}>{leadingVisual}</span> : null}
       {!collapsed && children != null ? (
-        <div
-          className={classes.Title}
-          style={{ font: text.size.md, fontWeight: fontWeight.medium, color: fgColor.neutral.default }}
-        >
+        <Box data-component="Sidebar.Title" className={classes.Title} font={text.size.md} fontWeight={fontWeight.medium} color={fgColor.neutral.default as never}>
           {children}
-        </div>
+        </Box>
       ) : null}
       {toggle ? <SidebarToggle /> : null}
-    </div>
+    </Box>
+  );
+}
+
+/**
+ * The header's title as a button: a leading visual, the name and a chevron, with the ActionMenu row's hover, pressed and
+ * focus looks. It is the trigger for an account or workspace menu: give it to an `ActionMenu` or `Popover` as their
+ * `trigger` (it takes a `ref` and the `aria-expanded` / `aria-controls` they add), and put the whole thing in a
+ * `Sidebar.Header` in place of its title. Its pressed look also shows while the menu is open.
+ */
+function SidebarHeaderButton({ leadingVisual, trailingVisual, className, children, ...props }: SidebarHeaderButtonProps) {
+  return (
+    <Box
+      as="button"
+      {...mergeProps({ "data-component": "Sidebar.HeaderButton", type: "button" as const, className: clsx(classes.HeaderButton, className) }, props as object)}
+      flexDirection="row"
+      alignItems="center"
+      gap="1x"
+      width="100%"
+      minWidth="0"
+    >
+      {leadingVisual ? <span className={classes.LeadingVisual}>{leadingVisual}</span> : null}
+      <span className={classes.HeaderButtonLabel}>{children}</span>
+      {trailingVisual === false ? null : (
+        <span className={classes.HeaderButtonTrailing} aria-hidden="true">
+          {trailingVisual ?? <Icon name="keyboard_arrow_down" size="xs" />}
+        </span>
+      )}
+    </Box>
   );
 }
 
 function SidebarBody({ paddingBlock, paddingInline, className, ...props }: SidebarRegionProps) {
-  const tokens = useTokens();
   return (
-    <div
-      {...mergeProps(
-        {
-          "data-component": "Sidebar.Body",
-          className: clsx(classes.Body, className),
-          style: regionPaddingOverrides(tokens, paddingBlock, paddingInline),
-        },
-        props,
-      )}
+    <Box
+      // The space between one group and the next; a `gap` you pass replaces it.
+      gap="3x"
+      {...mergeProps({ "data-component": "Sidebar.Body", className: clsx(classes.Body, className) }, props as object)}
+      // The space between the header and the first section, unless the consumer sets the block padding.
+      paddingBlockStart={paddingBlock === undefined ? "2x" : undefined}
+      paddingBlock={paddingBlock}
+      paddingInline={paddingInline}
     />
   );
 }
 
 function SidebarFooter({ paddingBlock, paddingInline, className, ...props }: SidebarRegionProps) {
-  const tokens = useTokens();
   return (
-    <div
-      {...mergeProps(
-        {
-          "data-component": "Sidebar.Footer",
-          className: clsx(classes.Footer, className),
-          style: regionPaddingOverrides(tokens, paddingBlock, paddingInline),
-        },
-        props,
-      )}
+    <Box
+      {...mergeProps({ "data-component": "Sidebar.Footer", className: clsx(classes.Footer, className) }, props as object)}
+      paddingBlock={paddingBlock}
+      paddingInline={paddingInline}
     />
   );
 }
 
-/** A labelled set of items. The label is hidden in the collapsed rail but still names the group. */
+/** Tells a `Sidebar.Item` it is in a section's list, so it renders as a list item. */
+const SectionListContext = createContext(false);
+
+/**
+ * A labelled set of items: a group named by an `h3` (so screen-reader users can jump between groups) over a list of its
+ * items. In the collapsed rail the heading is visually hidden, not removed, so the group keeps its name and its heading.
+ */
 function SidebarSection({ label, className, children, ...props }: SidebarSectionProps) {
   const { collapsed } = useSidebarContext("Sidebar.Section");
-  const { actionMenu } = useTokens();
+  const tokens = useTokens();
+  const { actionMenu } = tokens;
   const labelId = useId();
 
-  return (
-    <div
-      {...mergeProps(
-        {
-          "data-component": "Sidebar.Section",
-          role: "group",
-          "aria-labelledby": labelId,
-          className: clsx(classes.Section, className),
-          style: { gap: actionMenu.sizes.list.itemGap },
-        },
-        props,
-      )}
+  const heading = (
+    <Heading
+      as="h3"
+      size="h6"
+      id={labelId}
+      className={classes.SectionLabel}
+      style={{
+        color: "var(--action-menu-item-fg-color-subtext)",
+        letterSpacing: tokens.text.letterSpacing.label,
+        paddingBlock: actionMenu.sizes.section.paddingBlock,
+        paddingInline: resolveSpace(tokens, "1.5x"),
+      }}
     >
-      <div
-        id={labelId}
-        hidden={collapsed}
-        className={classes.SectionLabel}
-        style={{ paddingBlock: actionMenu.sizes.section.paddingBlock, paddingInline: actionMenu.sizes.section.paddingInline }}
-      >
-        {label}
-      </div>
-      {children}
-    </div>
+      {label}
+    </Heading>
+  );
+
+  return (
+    <Box
+      {...mergeProps(
+        { "data-component": "Sidebar.Section", role: "group", "aria-labelledby": labelId, className: clsx(classes.Section, className) },
+        props as object,
+      )}
+      // Space between the heading and its list; the items' own gap is `actionMenu.sizes.list.itemGap`.
+      gap="1x"
+    >
+      {collapsed ? <VisuallyHidden>{heading}</VisuallyHidden> : heading}
+      <Box as="ul" role="list" margin={0} padding={0} gap={resolved<SpaceValue>(actionMenu.sizes.list.itemGap)} className={classes.SectionItems}>
+        <SectionListContext.Provider value>{children}</SectionListContext.Provider>
+      </Box>
+    </Box>
   );
 }
 
@@ -272,6 +304,7 @@ function SidebarItem<As extends React.ElementType = "a">({
   ...props
 }: SidebarItemProps<As>) {
   const Component: React.ElementType = as ?? "a";
+  const inList = useContext(SectionListContext);
   const { collapsed, edge } = useSidebarContext("Sidebar.Item");
   const { ["aria-label"]: ariaLabel, ...rest } = props as { "aria-label"?: string };
   // Without a visual there is nothing to show in the rail, so the label stays.
@@ -301,12 +334,21 @@ function SidebarItem<As extends React.ElementType = "a">({
     </Component>
   );
 
-  return iconOnly && name ? (
-    <Tooltip text={name} type="label" placement={tooltipPlacement(edge)}>
-      {link}
-    </Tooltip>
+  const item =
+    iconOnly && name ? (
+      <Tooltip text={name} type="label" placement={tooltipPlacement(edge)}>
+        {link}
+      </Tooltip>
+    ) : (
+      link
+    );
+
+  return inList ? (
+    <Box as="li" display="block" margin={0} padding={0} className={classes.SectionItem}>
+      {item}
+    </Box>
   ) : (
-    link
+    item
   );
 }
 
@@ -370,7 +412,8 @@ export function Sidebar({
 
   return (
     <SidebarContext.Provider value={contextValue}>
-      <nav
+      <Box
+        as="nav"
         {...mergeProps(
           {
             "data-component": "Sidebar",
@@ -392,7 +435,7 @@ export function Sidebar({
               ...widthStyle,
             },
           },
-          { ...props, style },
+          { ...props, style } as object,
         )}
       >
         {resizable && !collapsed && (
@@ -406,12 +449,13 @@ export function Sidebar({
           />
         )}
         {children}
-      </nav>
+      </Box>
     </SidebarContext.Provider>
   );
 }
 
 Sidebar.Header = SidebarHeader;
+Sidebar.HeaderButton = SidebarHeaderButton;
 Sidebar.Body = SidebarBody;
 Sidebar.Footer = SidebarFooter;
 Sidebar.Section = SidebarSection;

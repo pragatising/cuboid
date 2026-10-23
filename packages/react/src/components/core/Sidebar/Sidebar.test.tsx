@@ -5,6 +5,7 @@ import { describe, expect, it, vi } from "vitest";
 import tokens from "@sragatiping/cuboid-primitives";
 import { setMode } from "../../../mode";
 import { behavesAsComponent, expectNoAxeViolations } from "../../../test/testing";
+import { ActionMenu } from "../ActionMenu";
 import { Sidebar, useSidebar } from "./Sidebar";
 import classes from "./Sidebar.module.css";
 
@@ -83,7 +84,7 @@ describe("Sidebar.Header", () => {
     const { container } = shell();
     const header = container.querySelector('[data-component="Sidebar.Header"]') as HTMLElement;
     const order = Array.from(header.children).map((el) => (el.querySelector('[data-testid="lead"]') ? "lead" : el.getAttribute("data-component") ?? el.textContent));
-    expect(order).toEqual(["lead", "John Doe", "Sidebar.Toggle"]);
+    expect(order).toEqual(["lead", "Sidebar.Title", "Sidebar.Toggle"]);
   });
 
   it("takes any node as the leading visual", () => {
@@ -157,15 +158,15 @@ describe("Sidebar collapsing", () => {
     expect(screen.queryByText("John Doe")).not.toBeInTheDocument();
   });
 
-  it("uses the panel icon for the edge", async () => {
+  it("uses Material's dock icons: dock_to_right to collapse a left sidebar, mirrored on the right", async () => {
     const { container, rerender } = shell();
-    expect(container.querySelector('[data-component="Sidebar.Toggle"]')).toHaveTextContent("left_panel_close");
+    expect(container.querySelector('[data-component="Sidebar.Toggle"]')).toHaveTextContent("dock_to_right");
     rerender(
       <Sidebar aria-label="Primary" edge="right" collapsed>
         <Sidebar.Header />
       </Sidebar>,
     );
-    expect(container.querySelector('[data-component="Sidebar.Toggle"]')).toHaveTextContent("right_panel_open");
+    expect(container.querySelector('[data-component="Sidebar.Toggle"]')).toHaveTextContent("dock_to_right");
   });
 
   it("shares its state with useSidebar", async () => {
@@ -200,16 +201,20 @@ describe("Sidebar collapsing", () => {
 });
 
 describe("Sidebar.Section", () => {
-  it("is a group named by its label", () => {
+  it("is a group named by its label, an h3, over a list of its items", () => {
     shell();
     const group = screen.getByRole("group", { name: "Primitives" });
     expect(within(group).getAllByRole("link")).toHaveLength(2);
+    expect(within(group).getByRole("heading", { level: 3, name: "Primitives" })).toBeInTheDocument();
+    expect(within(group).getAllByRole("listitem")).toHaveLength(2);
   });
 
   it("hides the label in the collapsed rail but still names the group", () => {
     shell({ defaultCollapsed: true });
-    expect(screen.getByText("Primitives")).not.toBeVisible();
+    // Visually hidden, not removed: the group keeps its name and its heading.
+    expect(screen.getByText("Primitives").closest('[data-component="VisuallyHidden"]')).toBeInTheDocument();
     expect(screen.getByRole("group", { name: "Primitives" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 3, name: "Primitives" })).toBeInTheDocument();
   });
 });
 
@@ -366,5 +371,49 @@ describe("Sidebar regions", () => {
     const body = screen.getByText("Body");
     expect(body.style.paddingBlock).toBe(tokens.light.space.lg);
     expect(body.style.paddingInline).toBe(tokens.light.space.xs);
+  });
+});
+
+describe("Sidebar.HeaderButton", () => {
+  it("is a button with the label, and a chevron hidden from assistive technology", () => {
+    render(
+      <Sidebar aria-label="Primary">
+        <Sidebar.Header>
+          <Sidebar.HeaderButton leadingVisual={<svg data-testid="avatar" />}>John Doe</Sidebar.HeaderButton>
+        </Sidebar.Header>
+      </Sidebar>,
+    );
+    const button = screen.getByRole("button", { name: "John Doe" });
+    expect(button).toHaveAttribute("type", "button");
+    expect(within(button).getByTestId("avatar")).toBeInTheDocument();
+    expect(button.querySelector('[aria-hidden="true"]')).toBeInTheDocument();
+  });
+
+  it("shows no chevron with trailingVisual={false}", () => {
+    render(
+      <Sidebar aria-label="Primary">
+        <Sidebar.Header>
+          <Sidebar.HeaderButton trailingVisual={false}>John Doe</Sidebar.HeaderButton>
+        </Sidebar.Header>
+      </Sidebar>,
+    );
+    expect(screen.getByRole("button", { name: "John Doe" }).querySelector('[aria-hidden="true"]')).toBeNull();
+  });
+
+  it("is the trigger of an ActionMenu: it opens the menu and reports it open", async () => {
+    render(
+      <Sidebar aria-label="Primary">
+        <Sidebar.Header>
+          <ActionMenu aria-label="Account" trigger={<Sidebar.HeaderButton>John Doe</Sidebar.HeaderButton>}>
+            <ActionMenu.Item>Settings</ActionMenu.Item>
+          </ActionMenu>
+        </Sidebar.Header>
+      </Sidebar>,
+    );
+    const button = screen.getByRole("button", { name: "John Doe" });
+    expect(button).toHaveAttribute("aria-haspopup", "menu");
+    await userEvent.click(button);
+    expect(button).toHaveAttribute("aria-expanded", "true");
+    expect(screen.getByRole("menuitem", { name: "Settings" })).toBeInTheDocument();
   });
 });

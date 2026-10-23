@@ -117,6 +117,7 @@ export type {
   SidebarEdge,
   SidebarRegionProps,
   SidebarHeaderProps,
+  SidebarHeaderButtonProps,
   SidebarSectionProps,
   SidebarItemProps,
   SidebarToggleProps,

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
+import { ActionMenu } from "../ActionMenu";
 import { Box } from "../Box";
 import { Button } from "../Button";
 import { Heading } from "../Heading";
@@ -57,7 +58,7 @@ function Main({ children }: { children?: React.ReactNode }) {
   return (
     <SplitLayout.Main>
       <Box gap="md" padding="lg">
-        <Heading as="h1" size="md">Main content</Heading>
+        <Heading as="h1" size="h2">Main content</Heading>
         <Text color="neutral.muted">
           The sidebar stays in document flow: unlike Sheet, it does not portal or scrim the page. Collapsed rail width is{" "}
           <code>3.6rem</code>.
@@ -186,6 +187,31 @@ export const RightEdge: Story = {
           <IconNav />
         </Sidebar.Body>
       </Sidebar>
+    </SplitLayout>
+  ),
+};
+
+export const AccountMenuHeader: Story = {
+  name: "Header as a button (account menu)",
+  render: () => (
+    <SplitLayout>
+      <Sidebar aria-label="Components" width="sm">
+        <Sidebar.Header>
+          <ActionMenu
+            aria-label="Account"
+            trigger={
+              <Sidebar.HeaderButton leadingVisual={<UserBadge initial="J" />}>John Doe</Sidebar.HeaderButton>
+            }
+          >
+            <ActionMenu.Item leadingVisual={<Icon name="settings" />}>Settings</ActionMenu.Item>
+            <ActionMenu.Item leadingVisual={<Icon name="logout" />}>Log out</ActionMenu.Item>
+          </ActionMenu>
+        </Sidebar.Header>
+        <Sidebar.Body>
+          <PlainNav />
+        </Sidebar.Body>
+      </Sidebar>
+      <Main />
     </SplitLayout>
   ),
 };

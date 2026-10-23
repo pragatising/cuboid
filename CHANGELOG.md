@@ -2,6 +2,13 @@
 
 Rolling session log for Claude Code continuity. Newest entry on top. Each entry: what changed, why, and anything the next agent needs to know. Keep entries short — skip anything derivable from `git log` or the diff itself.
 
+## 2026-10-22 — Callout variants, Heading h1–h6, Sidebar group headings and header button
+
+- **Colour tokens**: the saturated highlight colours moved to `base.color.highlight.*` (with dark values), exposed as `display.highlight.*`; `highlight.*` references them. `base.color.gray.7` (the muted text step) darkened from `#888783` to `#747370` so muted text passes 4.5:1 on white and `canvas.inset`; the dark palette is regenerated (the generator now skips `highlight`) and `bgColor.debug.strong`'s dark step moved to `gray.6`.
+- **Callout** is a `Box`; `variant` is any `callout` token colour (`info`, `caution`, `note`, `positive`, `negative`, `neutral`, `green`, `blue`, `orange`, `red`, `purple`), and `backgroundColor`/`color`/any Box prop overrides it. The `CalloutVariant` type is derived from the tokens.
+- **Heading** `size` is `h1`–`h6` (title `lg`/`md`/`sm`/`xs`/`xxs`, and a 10px step), defaulting to the `as` level. Completed `title.xs`/`xxs` and `body.xs` typography; added `base.text.letterSpacing.wide` (0.08em) → `text.letterSpacing.label`.
+- **Sidebar**: built on `Box`; a section is a group named by an `h3` (a `Heading` at `h6`, uppercase with the label tracking) over a `ul` of `li` items; the heading is visually hidden, not removed, when collapsed. Spacing: `2x` above the first group, `3x` between groups, `1x` heading to items. New `Sidebar.HeaderButton`: the header title as a button, the trigger for an account/workspace menu. The toggle icon is Material's `dock_to_left`/`dock_to_right`.
+
 ## 2026-10-21 (and on) — SiteHeader is now Header; Pill `bordered` and `weight`
 
 - **SiteHeader → Header**, built on `Box` (any CSS prop works). Content goes in slots: `Header.Leading`, `Header.Trailing`, `Header.Divider` (was `SiteHeaderDivider`); the `leading`/`trailing` props are gone. Still styled from the `siteHeader` tokens (token names unchanged).

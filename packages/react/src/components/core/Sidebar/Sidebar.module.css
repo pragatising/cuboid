@@ -69,7 +69,6 @@
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
-  gap: var(--action-menu-sizes-list-section-gap);
   min-height: 0;
   overflow: auto;
   padding: 0 var(--sidebar-padding);
@@ -102,12 +101,13 @@
   flex-direction: column;
 }
 
+:where(.SectionItems) {
+  list-style: none;
+}
+
 :where(.SectionLabel) {
-  font: var(--action-menu-subtext-font);
-  font-weight: 600;
-  color: var(--action-menu-item-fg-color-subtext);
-  /* A typographic treatment, not a token value: the rail's small-caps heading. */
-  letter-spacing: 0.06em;
+  /* The group label: a Heading at size h6, shown uppercase. The text itself stays in normal case; the tracking is
+     tokens.text.letterSpacing.label, set inline by Sidebar.tsx. */
   text-transform: uppercase;
   white-space: nowrap;
 }
@@ -201,4 +201,51 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/* The header's title as a button (an account or workspace menu trigger): the ActionMenu row's looks. */
+:where(.HeaderButton) {
+  box-sizing: border-box;
+  min-height: var(--action-menu-sizes-item-min-height);
+  margin: 0;
+  padding: 0.25rem 0.5rem;
+  border: none;
+  border-radius: var(--action-menu-sizes-item-border-radius);
+  background-color: var(--action-menu-item-bg-color-rest);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 120ms ease;
+}
+
+:where(.HeaderButton:hover) {
+  background-color: var(--action-menu-item-bg-color-hover);
+}
+
+:where(.HeaderButton:active, .HeaderButton[aria-expanded="true"]) {
+  background-color: var(--action-menu-item-bg-color-pressed);
+}
+
+:where(.HeaderButton:focus) {
+  outline: none;
+}
+
+:where(.HeaderButton:focus-visible) {
+  box-shadow: 0 0 0 1px var(--action-menu-item-bg-color-rest), 0 0 0 var(--action-menu-focus-width) var(--action-menu-focus-color);
+}
+
+:where(.HeaderButtonLabel) {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:where(.HeaderButtonTrailing) {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  color: var(--action-menu-item-fg-color-subtext);
 }
