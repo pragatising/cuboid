@@ -2,6 +2,8 @@
 // ActionMenu, Select and Autocomplete are built on it. Internal: not exported from the package root.
 export { ActionList } from "./ActionList";
 export type { ActionListProps, ActionListSectionProps } from "./ActionList";
+export { ActionListLoading } from "./ActionListLoading";
+export type { ActionListLoadingProps } from "./ActionListLoading";
 export { ActionListItem } from "./ActionListItem";
 export type { ActionListItemProps } from "./ActionListItem";
 export { useActionListContext } from "./ActionListContext";

@@ -47,6 +47,10 @@ export type SelectProps = Omit<React.ComponentPropsWithRef<"button">, "children"
   defaultOpen?: boolean;
   /** Called when the select wants the options shown or hidden. */
   onOpenChange?: (open: boolean) => void;
+  /** The options are on their way: a loading row shows above the list, and a screen reader is told once. @default false */
+  loading?: boolean;
+  /** What the loading row says. @default "Loading…" */
+  loadingText?: string;
   /** Shown when nothing is chosen. */
   placeholder?: string;
   /** The field's height: `sm` 24px, `md` 28px, `lg` 32px (as Button). @default "md" */
@@ -99,6 +103,8 @@ function SelectRoot({
   open,
   defaultOpen,
   onOpenChange,
+  loading = false,
+  loadingText,
   placeholder,
   size = "md",
   leadingVisual,
@@ -135,6 +141,7 @@ function SelectRoot({
     defaultOpen,
     onOpenChange,
     disabled: disabled || readOnly,
+    loading,
     controlRef: buttonRef,
     onChoose: (option) => setValue(option.dataset.value ?? ""),
   });
@@ -186,7 +193,8 @@ function SelectRoot({
             </InputField>
           }
         >
-          <ActionList {...combobox.listProps} data-component="Select.List" aria-label={ariaLabel ?? (typeof label === "string" ? label : undefined)}>
+          {loading ? <ActionList.Loading>{loadingText}</ActionList.Loading> : null}
+          <ActionList {...combobox.listProps} data-component="Select.List" aria-label={ariaLabel ?? (typeof label === "string" ? label : undefined)} aria-busy={loading || undefined} hidden={(loading && Children.toArray(children).length === 0) || undefined}>
             {children}
           </ActionList>
         </Popover>

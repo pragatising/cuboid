@@ -268,3 +268,74 @@ describe("Autocomplete: focus leaving and announcements", () => {
     await waitFor(() => expect(region()?.textContent).toBe("No suggestions"), { timeout: 3000 });
   });
 });
+
+describe("Autocomplete: loading and a create row", () => {
+  const live = () => document.querySelector('[data-component="LiveRegion"]');
+
+  it("shows a loading row, and the list is hidden and busy while there is nothing yet", async () => {
+    render(
+      <Autocomplete label="Fruit" value="" onChange={() => {}} loading>
+        {null}
+      </Autocomplete>,
+    );
+    await userEvent.click(field());
+    expect(screen.getByText("Loading…")).toBeInTheDocument();
+    expect(field()).toHaveAttribute("aria-expanded", "true");
+    const list = document.getElementById(field().getAttribute("aria-controls") as string);
+    expect(list).toHaveAttribute("aria-busy", "true");
+    expect(list).not.toBeVisible();
+  });
+
+  it("keeps the suggestions it has while it loads more", async () => {
+    render(
+      <Autocomplete label="Fruit" value="" onChange={() => {}} loading loadingText="Searching…">
+        <Autocomplete.Item>Apple</Autocomplete.Item>
+      </Autocomplete>,
+    );
+    await userEvent.click(field());
+    expect(screen.getByText("Searching…")).toBeInTheDocument();
+    expect(option("Apple")).toBeInTheDocument();
+  });
+
+  it("says it is loading once, then the count when the suggestions arrive", async () => {
+    const { rerender } = render(
+      <Autocomplete label="Fruit" value="" onChange={() => {}} loading>
+        {null}
+      </Autocomplete>,
+    );
+    await userEvent.click(field());
+    await waitFor(() => expect(live()?.textContent).toBe("Loading"), { timeout: 3000 });
+    rerender(
+      <Autocomplete label="Fruit" value="" onChange={() => {}}>
+        <Autocomplete.Item>Apple</Autocomplete.Item>
+        <Autocomplete.Item>Banana</Autocomplete.Item>
+      </Autocomplete>,
+    );
+    await waitFor(() => expect(live()?.textContent).toBe("2 suggestions available"), { timeout: 3000 });
+  });
+
+  it("does not show the empty state while loading", async () => {
+    render(
+      <Autocomplete label="Fruit" value="" onChange={() => {}} loading empty={<div>Nothing</div>}>
+        {null}
+      </Autocomplete>,
+    );
+    await userEvent.click(field());
+    expect(screen.queryByText("Nothing")).toBeNull();
+  });
+
+  it("a create row is an item the consumer renders, and choosing it works like any other", async () => {
+    const onSelect = vi.fn();
+    render(
+      <Autocomplete label="Fruit" value="kiwi" onChange={() => {}} onSelect={onSelect}>
+        <Autocomplete.Item data-create="kiwi" leadingVisual={<svg />}>
+          Create “kiwi”
+        </Autocomplete.Item>
+      </Autocomplete>,
+    );
+    await userEvent.click(field());
+    await userEvent.keyboard("{Enter}");
+    expect(onSelect).toHaveBeenCalledTimes(1);
+    expect(onSelect.mock.calls[0][0]).toHaveAttribute("data-create", "kiwi");
+  });
+});

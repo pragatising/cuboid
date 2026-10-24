@@ -32,6 +32,10 @@ const OPEN_STATES = {
   "core-select--with-sections-and-visuals": '[role="combobox"]',
   "core-autocomplete--default": '[role="combobox"]',
   "core-autocomplete--with-descriptions": '[role="combobox"]',
+  "core-autocomplete--loading": '[role="combobox"]',
+  "core-autocomplete--create-new": '[role="combobox"]',
+  "core-autocomplete--nothing-matches": '[role="combobox"]',
+  "core-select--loading": '[role="combobox"]',
   "core-actionmenu--with-search": "#storybook-root button",
   "core-actionmenu--with-header-and-footer": "#storybook-root button",
 };
@@ -110,9 +114,15 @@ try {
     for (const type of ["mouseMoved", "mousePressed", "mouseReleased"]) await send("Input.dispatchMouseEvent", { type, x: point.x, y: point.y, button: "left", clickCount: 1 });
   };
 
+  // The `hidden` attribute is only the browser's default `display: none`: a component rule that sets `display` (even at zero
+  // specificity) beats it, and the element stays on screen. jsdom does not load the CSS, so only a browser can see this.
+  const hiddenButShown = () =>
+    evaluate(`[...document.querySelectorAll('[hidden]')].filter((e) => getComputedStyle(e).display !== 'none').map((e) => ({ id: 'hidden-attribute-ignored', impact: 'serious', help: 'An element with the hidden attribute is still displayed (a component display rule overrides it)', nodes: [{ target: e.tagName.toLowerCase() + (e.getAttribute('data-component') ? '[data-component=' + e.getAttribute('data-component') + ']' : ''), data: null }] }))`);
+
   const audit = async () => {
     await evaluate(AXE);
-    return evaluate(`axe.run(document, { rules: { region: { enabled: false }, 'landmark-one-main': { enabled: false }, 'page-has-heading-one': { enabled: false } } }).then((r) => r.violations.map((v) => ({ id: v.id, impact: v.impact, help: v.help, nodes: v.nodes.map((n) => ({ target: n.target.join(' '), data: (n.any[0] || {}).data && { fg: n.any[0].data.fgColor, bg: n.any[0].data.bgColor, ratio: n.any[0].data.contrastRatio, size: n.any[0].data.fontSize } })) })))`);
+    const found = await evaluate(`axe.run(document, { rules: { region: { enabled: false }, 'landmark-one-main': { enabled: false }, 'page-has-heading-one': { enabled: false } } }).then((r) => r.violations.map((v) => ({ id: v.id, impact: v.impact, help: v.help, nodes: v.nodes.map((n) => ({ target: n.target.join(' '), data: (n.any[0] || {}).data && { fg: n.any[0].data.fgColor, bg: n.any[0].data.bgColor, ratio: n.any[0].data.contrastRatio, size: n.any[0].data.fontSize } })) })))`);
+    return [...found, ...(await hiddenButShown())];
   };
 
   const shot = async (name) => {

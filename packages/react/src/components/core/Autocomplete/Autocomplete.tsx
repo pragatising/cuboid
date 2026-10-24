@@ -15,6 +15,10 @@ export type AutocompleteProps = Omit<InputTextProps, "role" | "children" | "onSe
   onSelect?: (item: HTMLElement) => void;
   /** Shown in the list while there is nothing to suggest, usually an `EmptyState`. Without it the list is not shown when empty. */
   empty?: React.ReactNode;
+  /** Suggestions are on their way: a loading row shows above the list (or alone, with none yet), and a screen reader is told once. @default false */
+  loading?: boolean;
+  /** What the loading row says. @default "Loading…" */
+  loadingText?: string;
   /** Show the suggestions whenever the field is focused, not only once the user types. @default true */
   openOnFocus?: boolean;
   /** Whether the suggestions are showing. Leave unset to let the field open and close them. */
@@ -40,12 +44,16 @@ function AutocompleteItem(props: ActionListItemProps) {
  * suggestions are a `listbox`, and ArrowUp and ArrowDown move the active one (`aria-activedescendant`), Enter chooses it,
  * Escape hides the list, and Tab or focus leaving for outside the popup closes it. It tells a screen reader how many
  * suggestions there are once typing pauses (so give `empty` no `role="status"`). With nothing to suggest the list is not shown, unless there is an `empty` state to
- * show in its place. The rows are the same ones an `ActionMenu` uses.
+ * show in its place, and `loading` puts a loading row above the list. A "create new" row is just an item you render when nothing
+ * matches exactly: `<Autocomplete.Item leadingVisual={<Icon name="add" />}>Create “{value}”</Autocomplete.Item>`. The rows are the same
+ * ones an `ActionMenu` uses.
  */
 function AutocompleteRoot({
   children,
   onSelect,
   empty,
+  loading = false,
+  loadingText,
   openOnFocus = true,
   open,
   defaultOpen,
@@ -62,9 +70,9 @@ function AutocompleteRoot({
 
   // `toArray` drops null, undefined and booleans: `Children.count` would count `{cond && <Item />}` that rendered nothing.
   const hasItems = Children.toArray(children).length > 0;
-  const showEmpty = !hasItems && isPresent(empty);
+  const showEmpty = !hasItems && !loading && isPresent(empty);
 
-  const combobox = useCombobox({ kind: "input", open, defaultOpen, onOpenChange, hasContent: hasItems || showEmpty, controlRef: inputRef, onChoose: (item) => onSelect?.(item) });
+  const combobox = useCombobox({ kind: "input", open, defaultOpen, onOpenChange, hasContent: hasItems || showEmpty || loading, loading, loadingMessage: loadingText?.replace(/…$/, "") || "Loading", controlRef: inputRef, onChoose: (item) => onSelect?.(item) });
 
   const name = props["aria-label"] ?? (typeof props.label === "string" ? props.label : undefined);
 
@@ -101,9 +109,10 @@ function AutocompleteRoot({
           />
         }
       >
+        {loading ? <ActionList.Loading>{loadingText}</ActionList.Loading> : null}
         {showEmpty ? empty : null}
-        {/* Hidden, not removed, while the empty state shows, so the field's aria-controls still points at something. */}
-        <ActionList {...combobox.listProps} data-component="Autocomplete.List" aria-label={name} hidden={showEmpty || undefined}>
+        {/* Hidden, not removed, while there is only a loading row or the empty state, so the field's aria-controls still points at something. */}
+        <ActionList {...combobox.listProps} data-component="Autocomplete.List" aria-label={name} aria-busy={loading || undefined} hidden={!hasItems || undefined}>
           {children}
         </ActionList>
       </Popover>

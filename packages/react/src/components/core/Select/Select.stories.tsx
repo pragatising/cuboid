@@ -93,3 +93,21 @@ export const Sizes: Story = {
     </Box>
   ),
 };
+
+export const Loading: Story = {
+  name: "Loading options",
+  render: function LoadingStory() {
+    const [loaded, setLoaded] = useState(false);
+    return (
+      <Select label="Region" placeholder="Open me" loading={!loaded} onOpenChange={(open) => open && !loaded && setTimeout(() => setLoaded(true), 1500)}>
+        {loaded
+          ? ["Europe", "Asia", "Africa"].map((name) => (
+              <Select.Option key={name} value={name.toLowerCase()}>
+                {name}
+              </Select.Option>
+            ))
+          : null}
+      </Select>
+    );
+  },
+};

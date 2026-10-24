@@ -17,6 +17,10 @@ export type ComboboxOptions = {
   hasContent?: boolean;
   /** A disabled or read-only control never opens. @default false */
   disabled?: boolean;
+  /** Options are on their way: a screen reader is told once, and the count is announced when they arrive. @default false */
+  loading?: boolean;
+  /** What a screen reader hears when loading begins. @default "Loading" */
+  loadingMessage?: string;
   /** The control that keeps focus: it gets focus back after an option is chosen or the popup is dismissed. */
   controlRef: React.RefObject<HTMLElement | null>;
   /** Called with the option element that was chosen, by pointer or key. The popup then closes. */
@@ -24,6 +28,8 @@ export type ComboboxOptions = {
 };
 
 const ANNOUNCE_DELAY_MS = 400;
+/** What `announced` holds while the loading message has been said. */
+const LOADING = -1;
 const OPTION = '[role="option"]';
 /** What an option says, for typeahead: its label, not its description. */
 const optionText = (option: HTMLElement) => option.querySelector('[data-component="ActionList.Label"]')?.textContent ?? option.textContent ?? "";
@@ -46,7 +52,7 @@ const suggestions = (count: number) => (count === 0 ? "No suggestions" : count =
  * the control, Tab closes; a `select` chooses with Space too, unless a word is being typed. Focus leaving for outside the popup
  * closes it. An `input` announces how many suggestions there are, once typing pauses (so give an empty state no `role="status"`).
  */
-export function useCombobox({ kind, open: openProp, defaultOpen = false, onOpenChange, hasContent = true, disabled = false, controlRef, onChoose }: ComboboxOptions) {
+export function useCombobox({ kind, open: openProp, defaultOpen = false, onOpenChange, hasContent = true, disabled = false, loading = false, loadingMessage = "Loading", controlRef, onChoose }: ComboboxOptions) {
   const listId = useId();
   const anchorRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useControllableState({ value: openProp, defaultValue: defaultOpen, onChange: onOpenChange, name: "open" });
@@ -101,7 +107,18 @@ export function useCombobox({ kind, open: openProp, defaultOpen = false, onOpenC
   const announced = useRef<number | undefined>(undefined);
   useEffect(() => {
     // Open, even when there is nothing to show: "No suggestions" is exactly what a user who cannot see the popup is missing.
-    if (!open || disabled || select) {
+    if (!open || disabled) {
+      announced.current = undefined;
+      return;
+    }
+    if (loading) {
+      if (announced.current !== LOADING) {
+        announced.current = LOADING;
+        announce(loadingMessage);
+      }
+      return;
+    }
+    if (select) {
       announced.current = undefined;
       return;
     }

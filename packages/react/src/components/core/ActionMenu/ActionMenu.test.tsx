@@ -469,3 +469,12 @@ describe("ActionMenu.Empty", () => {
     await expectNoAxeViolations(document.querySelector('[data-component="Popover"]') as HTMLElement);
   });
 });
+
+describe("ActionList CSS: hidden", () => {
+  // jsdom does not load component CSS, so `toBeVisible` cannot see a display rule beating the `hidden` attribute (a real browser
+  // does: a hidden list with `display: flex` stays on screen). `npm run a11y:sweep` checks it in Chrome; this guards the rule.
+  it("a hidden list is display: none, so it does not take space while a loading row or an empty state shows", () => {
+    const css = readSource("src/components/core/ActionList/ActionList.module.css");
+    expect(css).toMatch(/\.ActionList\[hidden\]\) \{\s*display: none;/);
+  });
+});

@@ -1,0 +1,16 @@
+/* Lines up with the rows under it: the list's padding plus a row's, then the spinner at the icon size. */
+:where(.Loading) {
+  display: flex;
+  align-items: center;
+  gap: var(--cube-actionMenu-sizes-item-slotGap);
+  padding: var(--cube-actionMenu-sizes-list-paddingBlock) calc(var(--cube-actionMenu-sizes-list-paddingInline) + var(--cube-actionMenu-sizes-item-paddingInline));
+  min-height: var(--cube-actionMenu-sizes-item-minHeight);
+  box-sizing: border-box;
+}
+
+:where(.Loading svg) {
+  flex-shrink: 0;
+  width: var(--cube-actionMenu-sizes-item-iconSize);
+  height: var(--cube-actionMenu-sizes-item-iconSize);
+  color: var(--cube-actionMenu-item-fgColor-subtext);
+}

@@ -5,6 +5,7 @@ import { mergeProps } from "../../../utils/mergeProps";
 import { Box } from "../Box";
 import { ActionListContext } from "./ActionListContext";
 import type { ActionListRole, ActionListSelectionMode } from "./ActionListContext";
+import { ActionListLoading } from "./ActionListLoading";
 import classes from "./ActionList.module.css";
 
 export type ActionListProps = Omit<React.ComponentPropsWithRef<"div">, "role" | "color"> & {
@@ -73,4 +74,4 @@ function ActionListRoot({ children, className, selectionMode, role = "menu", ref
   );
 }
 
-export const ActionList = Object.assign(ActionListRoot, { Section: ActionListSection });
+export const ActionList = Object.assign(ActionListRoot, { Section: ActionListSection, Loading: ActionListLoading });

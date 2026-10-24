@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { act, render, screen } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { behavesAsFormControl, expectNoAxeViolations } from "../../../test/testing";
@@ -322,5 +322,33 @@ describe("Select: typeahead and focus", () => {
     await userEvent.click(option("Banana"));
     expect(box()).toHaveTextContent("Banana");
     expect(box()).toHaveFocus();
+  });
+});
+
+describe("Select: loading", () => {
+  const live = () => document.querySelector('[data-component="LiveRegion"]');
+
+  it("shows a loading row above the list, which is busy, and says so once", async () => {
+    render(
+      <Select label="Fruit" loading>
+        <Select.Option value="a">Apple</Select.Option>
+      </Select>,
+    );
+    await userEvent.click(box());
+    expect(screen.getByText("Loading…")).toBeInTheDocument();
+    expect(screen.getByRole("listbox")).toHaveAttribute("aria-busy", "true");
+    await waitFor(() => expect(live()?.textContent).toBe("Loading"), { timeout: 3000 });
+  });
+
+  it("with no options yet the list is hidden and only the loading row shows", async () => {
+    render(
+      <Select label="Fruit" loading loadingText="Fetching…">
+        {null}
+      </Select>,
+    );
+    await userEvent.click(box());
+    expect(screen.getByText("Fetching…")).toBeInTheDocument();
+    expect(screen.queryByRole("listbox")).toBeNull();
+    expect(screen.queryAllByRole("option")).toHaveLength(0);
   });
 });

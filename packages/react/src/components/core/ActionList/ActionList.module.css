@@ -6,6 +6,12 @@
   box-sizing: border-box;
 }
 
+/* The `display` above would beat the browser's `[hidden]` default (author rules win over it, whatever their specificity), so a
+   hidden list (kept in the DOM for aria-controls) must say it again. */
+:where(.ActionList[hidden]) {
+  display: none;
+}
+
 :where(.ListItems) {
   display: flex;
   flex-direction: column;
