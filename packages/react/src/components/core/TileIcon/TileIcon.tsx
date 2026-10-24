@@ -35,7 +35,8 @@ export function TileIcon({ name, size = "sm", backgroundColor = "canvas.inset", 
         {
           "data-component": "TileIcon",
           className: clsx(classes.TileIcon, className),
-          style: { backgroundColor: resolveColorValue(bgColor, backgroundColor), ...style },
+          // The fill reaches the CSS as a custom property (style.md), so a consumer's class can still override `background-color`.
+          style: { "--tile-icon-bg": resolveColorValue(bgColor, backgroundColor), ...style } as React.CSSProperties,
         },
         props as object,
       )}

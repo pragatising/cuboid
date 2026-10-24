@@ -39,7 +39,7 @@ describe("EmptyState", () => {
 
   it("passes iconProps to the tile", () => {
     const { container } = render(<EmptyState icon="celebration" iconProps={{ backgroundColor: "#ff0000" }} description="D" />);
-    expect(container.querySelector('[data-component="TileIcon"]')).toHaveStyle({ backgroundColor: "#ff0000" });
+    expect((container.querySelector('[data-component="TileIcon"]') as HTMLElement).style.getPropertyValue("--tile-icon-bg")).toBe("#ff0000");
   });
 
   it("can be a status region, so it is announced when it appears", () => {

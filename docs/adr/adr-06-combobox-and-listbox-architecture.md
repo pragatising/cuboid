@@ -22,10 +22,11 @@
    `ActionMenu` gets its own component behavior.
 4. **`Popover` can anchor to something other than its trigger** (`anchorRef`, with the trigger rendered as is: no toggle, no ARIA) and
    match the anchor's width (`matchAnchorWidth`). Anchored to a field, it clears the field's focus ring.
-5. **Filtering belongs to the consumer.** The menu, select and autocomplete render the children they are given. With nothing to show
+5. **`useCombobox` also owns what a user cannot see.** A `select` has typeahead (`useTypeAhead`, by label, Space is part of a word once one has begun); focus leaving for outside the popup closes it (a press on an option never moves focus); an `input` announces "N suggestions available", "No suggestions" and "Loading" once typing pauses, so an empty state needs no `role="status"`. `loading` shows `ActionList.Loading` above the list.
+6. **A list kept in the DOM while hidden needs `display: none` restated.** Its own `display` beats the `hidden` attribute (author rules beat the browser default whatever their specificity). `ActionList` does, and `a11y:sweep` checks it in Chrome.
+7. **Filtering belongs to the consumer.** The menu, select and autocomplete render the children they are given. With nothing to show
    they show an `EmptyState` if one is provided; the empty list stays in the DOM, hidden, so `aria-controls` still resolves.
 
 ## What this is not deciding
 
-Typeahead in `Select`, loading and "create new" rows, live announcements of the result count, a native select fallback, and renaming the
-`actionMenu` tokens to a neutral group (the shared list still reads `--cube-actionMenu-*`).
+Renaming the `actionMenu` tokens to a neutral group (the shared list still reads `--cube-actionMenu-*`), and folding `ActionMenu.Search` into `useCombobox`.

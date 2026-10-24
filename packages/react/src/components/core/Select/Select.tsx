@@ -77,7 +77,8 @@ function labelOf(children: React.ReactNode, value: string): React.ReactNode | un
 }
 
 /**
- * A field that chooses one of several options: the label, the box showing the chosen option (or a placeholder) with a chevron,
+ * A field that chooses one of several options (`Select.Option` as direct children, inside a `Select.Section` or a fragment: the closed
+ * box finds the chosen label by looking at them, so an option wrapped in your own component is not found): the label, the box showing the chosen option (or a placeholder) with a chevron,
  * and help text or an error under it, as `InputText` has. Like a native `<select>`, `className`, `style`, `aria-*` and `ref` go
  * to the box that holds focus (ADR-05). The options open in a popup under it, the same rows an `ActionMenu`
  * uses.

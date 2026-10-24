@@ -21,17 +21,17 @@ describe("TileIcon", () => {
     expect(screen.getByRole("img", { name: "Home" })).toBeInTheDocument();
   });
 
-  it("fills with canvas.inset by default, and the glyph is neutral.muted", () => {
+  it("fills with canvas.inset by default (as --tile-icon-bg, which the CSS paints), and the glyph is neutral.muted", () => {
     const { container } = render(<TileIcon name="home" />);
-    expect(tile(container)).toHaveStyle({ backgroundColor: tokens.light.bgColor.canvas.inset });
+    expect(tile(container).style.getPropertyValue("--tile-icon-bg")).toBe(tokens.light.bgColor.canvas.inset);
     expect(container.querySelector('[data-component="Icon"]')).toHaveStyle({ color: tokens.light.fgColor.neutral.muted });
   });
 
   it("takes a bgColor token, a palette colour or any CSS colour for the fill", () => {
     const { container, rerender } = render(<TileIcon name="home" backgroundColor="informational.subtle" />);
-    expect(tile(container)).toHaveStyle({ backgroundColor: tokens.light.bgColor.informational.subtle });
+    expect(tile(container).style.getPropertyValue("--tile-icon-bg")).toBe(tokens.light.bgColor.informational.subtle);
     rerender(<TileIcon name="home" backgroundColor="#ff0000" />);
-    expect(tile(container)).toHaveStyle({ backgroundColor: "#ff0000" });
+    expect(tile(container).style.getPropertyValue("--tile-icon-bg")).toBe("#ff0000");
   });
 
   it("takes an fgColor token or any CSS colour for the glyph", () => {

@@ -34,9 +34,9 @@ Audit of the components built 2026-10-23/24: `InputField` (chrome), `InputText`,
 | M3 | **Decisions not followed:** flat part names; bare elements instead of `Box`. | **Fixed:** `InputField.Shell`. **Decided:** form-control chrome is plain elements + CSS modules (Primer's form controls use no `Box`), ADR-05. |
 | M4 | **State contract:** `Select` had no `open`/`defaultOpen`/`onOpenChange`; `Autocomplete` no `defaultOpen`. Callback shape: `style.md` says object argument, API audit says `onXChange(value)`. | **Fixed** (both now take the trio, via `useCombobox`). **Decided:** keep the plain value, ADR-05. |
 | M5 | **ADR-04 said "piloted on Button and IconButton"**; the shape is now used widely. `token-consumption.md` described the old recipe. | **Fixed.** ADR-04 amendment 2 (2026-10-24); `token-consumption.md` rewritten; `behaviours.md` and `testing.md` extended. |
-| M6 | **Verification:** jsdom axe runs with contrast off; no real-browser check. | **Fixed:** `npm run a11y:sweep`. **Open:** run it in CI (needs a built or running Storybook and Chrome). Playwright VRT/AVT (`testing.md`) still not set up. |
+| M6 | **Verification:** jsdom axe runs with contrast off; no real-browser check. | **Fixed:** `npm run a11y:sweep`. **Open:** run it in CI (there is no CI config in the repo yet; it needs a running Storybook and Chrome). Playwright VRT/AVT (`testing.md`) still not set up. |
 | M7 | **Figma sync (ADR-03):** `input` tokens had no `org.cuboid.figma` metadata; Figma's error border is two-tone. | **Fixed:** metadata on all 22 leaves. **Open:** two-tone error border (outer `#e34848`, inner `#d50606` in Figma; the repo has `borderColor.danger` and a pale `borderColor.error`); needs a design call on which palette steps. |
-| M8 | **Accessibility and polish.** | **Fixed:** focus ring overlapped the popup top (the popup's gap now clears it when anchored to a field). **Open:** live announcement of result count and "no results"; `Select` typeahead; an active row and a chosen row look identical in the search menu. |
+| M8 | **Accessibility and polish.** | **Fixed:** focus ring overlapped the popup top (the popup's gap now clears it when anchored to a field). **Fixed later the same day:** result counts, "no results" and "loading" are announced; `Select` has typeahead. **Open:** an active row and a chosen row look identical in the search menu (a design call). |
 
 ### Low
 
@@ -46,8 +46,8 @@ Audit of the components built 2026-10-23/24: `InputField` (chrome), `InputText`,
 | `CHANGELOG.md` entry, tracker rows, `core-components.md` row 37 | Fixed. |
 | Removing the DOM `onSelect` from `ActionMenuProps` narrows a type (`versioning.md`: major) | Recorded in the changelog. |
 | `useActiveDescendant` queries the DOM on every render | Open (fine for short lists; revisit for long ones). |
-| `Select` finds the closed label only through direct `Select.Option` children (and treats `""` as nothing chosen) | Open (document, or find the label from the rendered option). |
-| `TileIcon` sets its fill inline (`style.md` prefers a custom property) | Open. |
+| `Select` finds the closed label only through direct `Select.Option` children (and treats `""` as nothing chosen) | Documented on `Select`. |
+| `TileIcon` sets its fill inline (`style.md` prefers a custom property) | Fixed (`--tile-icon-bg`). |
 
 ## Decisions made while resolving this audit
 
@@ -63,6 +63,17 @@ Audit of the components built 2026-10-23/24: `InputField` (chrome), `InputText`,
 - **Whole library** (209 stories, 430 runs): 325 clean, **105 with findings**, none in the components above. They are the palette and story issues already listed in `api-audit.md` §8: code-block syntax colours, Pill palettes, ApiResponseViewer, and Box, Callout, Container, Heading, Link, Subtitle, Text and Overlay stories (`color-contrast`); code-block scroll regions (`scrollable-region-focusable`); Breadcrumbs, Divider, Heading and Sidebar stories (`landmark-unique`, `list`, `heading-order`). Run `npm run a11y:sweep` for the list.
 - **Already failing before this work:** two `packages/primitives` tests in `src/darkMode.test.ts` (dark text colours weaker than light's for the success/danger/critical/error steps; button danger text on its fill). Confirmed by stashing the one token file this work edited and running them on the committed version.
 
-## Not built yet (deferred by decision)
+## Found after this audit, while building the deferred gaps
 
-Typeahead in `Select`; loading and "create new" rows; live announcement of result count; character count; label tooltip; help and error icons; `TextArea` auto-grow; native `<select>` fallback for small screens; closing `Autocomplete`'s list on blur (it closes on Escape, Tab, choosing and a press outside; blur is deliberately not a trigger so clicks on options work). Tracked in `CHANGELOG.md` (2026-10-24) and `ADR-05`/`ADR-06` "not deciding".
+Two defects that neither the unit tests nor axe could see, found by reading real-Chrome screenshots:
+
+- **A hidden list took space.** A list kept in the DOM with the `hidden` attribute (for `aria-controls`, under an empty state or a loading row) was still displayed, because the component's own `display` beats the attribute's browser default. This had been shipping since the empty state was added. Fixed in `ActionList`; `a11y:sweep` now fails on any `[hidden]` element that is still displayed.
+- **Help and error icons sat above their text and too large** (`height: 1lh` on an element whose `line-height` was `0`). Fixed.
+
+## Deferred gaps: now built
+
+Typeahead in `Select`; loading rows; announced result counts; character count; label help; help and error visuals; `TextArea` auto-grow; a native `<select>` fallback; closing `Autocomplete`'s list on focus-out. A "create new" row is an item the consumer renders, not an API. See `CHANGELOG.md` (2026-10-24, later).
+
+## Still open
+
+The two-tone error border (a design call on palette steps); an active row and a chosen row look the same in the search menu; `ActionMenu.Search` uses `useActiveDescendant` directly, not `useCombobox` (ADR-06); renaming the `actionMenu` tokens to a neutral group; the sweep in CI (no CI config yet); Playwright VRT/AVT; the whole-library sweep findings listed above.

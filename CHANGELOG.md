@@ -2,6 +2,16 @@
 
 Rolling session log for Claude Code continuity. Newest entry on top. Each entry: what changed, why, and anything the next agent needs to know. Keep entries short — skip anything derivable from `git log` or the diff itself.
 
+## 2026-10-24 (later) — The deferred form-control gaps, built
+
+- **`Select`:** typeahead (a word moves the active option, by label; Space is part of a word once one has begun), a native `<select>` fallback (`native`, chosen per use), `loading`/`loadingText`, `labelHelp`, help and error visuals. `Select` is a dispatcher over `PopupSelect` and `NativeSelect`; `Select.Option` is in its own file.
+- **`Autocomplete`:** `loading`/`loadingText`, closes when focus leaves for outside the popup, announces "N suggestions available" / "No suggestions" / "Loading" once typing pauses. A "create new" row is just an item you render (story and test), not an API.
+- **`InputText`, `TextArea`:** `showCount` (`12 / 100`, read with the field), `labelHelp` (an info button after the label, explained in a Tooltip), `descriptionVisual`, `errorVisual`; `TextArea` `autoGrow` and `maxRows`.
+- **Behaviors:** `useTypeAhead` (generic; `useRovingFocus` now uses it, unchanged), `useAutoGrow`, `useCharacterCount`; `useActiveDescendant` takes `typeahead`/`getText`; `useCombobox` takes `loading`. `ActionList.Loading` is the shared loading row.
+- **Fixed:** a list kept in the DOM, hidden, for `aria-controls` (the empty state, a loading-only popup) still took space in a browser: the list's own `display` beat the `hidden` attribute. `ActionList` restores `display: none` for `[hidden]`. Also the help/error icons collapsed out of line (`1lh` on an element with `line-height: 0`). Neither is visible to jsdom; both were found by looking at real Chrome screenshots.
+- **`npm run a11y:sweep`** now also fails on any `[hidden]` element that is still displayed, and opens the loading, create and empty stories. There is no CI config in the repo yet, so it is not wired into CI.
+- **Still open:** the two-tone error border (needs a design call on palette steps), an active row and a chosen row look the same in the search menu, `ActionMenu.Search` still uses `useActiveDescendant` directly rather than `useCombobox`, renaming the `actionMenu` tokens to a neutral group.
+
 ## 2026-10-24 — Form controls and the combobox family; one size scale; contrast fixes
 
 - **New:** `InputText`, `TextArea`, `Select`, `Autocomplete`, `ActionMenu.Search`, `ActionMenu.Empty`, `EmptyState`, `TileIcon`; internal `InputField` (label, `InputField.Shell`, help text, error), `ActionList` (the rows `ActionMenu`, `Select` and `Autocomplete` share), `useActiveDescendant`, `useCombobox`, `useFieldControl`. `Popover` takes `anchorRef` and `matchAnchorWidth`. New `input` token group. ADR-05 (form-control anatomy) and ADR-06 (list, focus models, combobox), ADR-04 amendment 2.

@@ -33,9 +33,10 @@ Covers `InputText`, `TextArea`, `Select`, `Autocomplete` and the chrome they sha
    text and border use the danger colours (dark mode gets a lighter step). Every text pair is checked in
    `fieldContrast.test.ts` in both modes.
 7. **Open state.** Anything that opens takes `open` / `defaultOpen` / `onOpenChange(open)` (`Select`, `Autocomplete`, `ActionMenu`).
+8. **Optional field parts** are props of the chrome, so every control has them: `labelHelp` (an info button after the label, explained in a `Tooltip`), `descriptionVisual`, `errorVisual`, and a count line (`showCount` on `InputText` and `TextArea`, read with the help text). `TextArea` can `autoGrow` up to `maxRows`.
+9. **`Select` has a native form: `native`** renders a real `<select>` in the same field, for a phone or tablet. It is chosen per use, never switched automatically (the server and the first client render must agree), and it reads options as text.
 
 ## What this is not deciding
 
-- Character count, label tooltip, help and error icons, auto-grow for `TextArea`: not built (tracked in the audit).
-- A native `<select>` fallback for small screens: a product decision, deferred.
+- Whether a "create new" row deserves an API: it is a composed item today (Primer's `addNewItem` prop is replaced by rendering one).
 - Whether a form-control wrapper should also accept CSS props through the shared prop splitter (API audit §6, still open).

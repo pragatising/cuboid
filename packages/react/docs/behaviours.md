@@ -87,7 +87,9 @@ Built 2026-10-21 as step 1 of the API refactor (see `docs/backlog/api-audit.md`)
 | `useFocusReturn({ enabled })` | remember the opener before the layer takes focus (an insertion effect, so before `autoFocus`), give focus back on close, but not if the user moved it elsewhere | `returnFocusOnClose` in Popover |
 | `useFocusTrap({ enabled, containerRef })` | move focus in, wrap Tab and Shift+Tab, pull focus back if it escapes, return it on close: what `aria-modal` promises | nothing yet: Sheet had no trap |
 | `useRovingFocus({ containerRef })` | arrow / Home / End navigation, disabled items skipped, typeahead; `focusFirst` / `focusSelected` | `actionMenuKeyboard.ts` (which had no typeahead) |
-| `useActiveDescendant({ listId, activeId, setActiveId, initial, homeEnd })` | the keys of a combobox whose control keeps focus: arrows move the active option (wrapping, skipping disabled), Enter clicks it, optionally Home and End; keeps the active option real as the list changes (first, or the chosen one) | roving focus, when an input must keep focus |
+| `useActiveDescendant({ listId, activeId, setActiveId, initial, homeEnd, typeahead, getText })` | the keys of a combobox whose control keeps focus: arrows move the active option (wrapping, skipping disabled), Enter clicks it, optionally Home and End and typeahead; keeps the active option real as the list changes (first, or the chosen one) | roving focus, when an input must keep focus |
+| `useTypeAhead({ getText, resetMs })` | typing finds the next item whose text starts with what was typed (a repeated letter cycles, a longer word refines, a pause ends the word); `match(event, items, index)` and `typing()`. Used by `useRovingFocus` and `useActiveDescendant` | the typeahead copied inside `useRovingFocus` |
+| `useAutoGrow({ ref, enabled, value, maxRows })` | a textarea as tall as its text: measures `scrollHeight`, hands it to the CSS as `--textarea-height`, marks `data-capped` at `maxRows`, re-measures on value, input and width change | |
 
 Conventions: a hook that needs an element takes a ref (or, for a behavior that returns props, accepts an optional ref via `useProvidedRefOrCreate`); handlers that must stay current are read through a ref so effects do not re-subscribe; anything that touches `document` is guarded by `enabled` so it costs nothing while a layer is closed.
 
@@ -96,5 +98,6 @@ Conventions: a hook that needs an element takes a ref (or, for a behavior that r
 
 | Hook | Where | What it does |
 |---|---|---|
-| `useCombobox({ kind, open, hasContent, disabled, controlRef, onChoose })` | `components/core/ActionList/` | The behavior of `Select` (`kind: "select"`) and `Autocomplete` (`kind: "input"`): open state, active option, keys, choosing, popup wiring. Returns `controlProps`, `popoverProps`, `listProps` and `activeOption` (ADR-06). |
-| `useFieldControl({ id, description, error, "aria-describedby" })` | `components/core/InputField/` | A form control's id, invalid state and `aria-describedby`, shared by `InputText`, `TextArea`, `Select` (ADR-05). |
+| `useCombobox({ kind, open, hasContent, disabled, controlRef, onChoose })` | `components/core/ActionList/` | The behavior of `Select` (`kind: "select"`) and `Autocomplete` (`kind: "input"`): open state, active option, keys, choosing, popup wiring. Also closes on focus leaving for outside the popup, announces suggestion counts and loading, and gives a `select` typeahead. Returns `controlProps`, `popoverProps`, `listProps` and `activeOption` (ADR-06). |
+| `useFieldControl({ id, description, error, count, "aria-describedby" })` | `components/core/InputField/` | A form control's id, invalid state and `aria-describedby` (help text, error, count, then the consumer's), shared by `InputText`, `TextArea`, `Select` (ADR-05). |
+| `useCharacterCount({ enabled, value, defaultValue, maxLength })` | `components/core/InputField/` | The `12 / 100` line under a field, following a controlled value or what is typed. |
