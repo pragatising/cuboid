@@ -2,6 +2,8 @@ import React from "react";
 import { clsx } from "clsx";
 import { isPresent } from "../../../utils/isPresent";
 import { mergeProps } from "../../../utils/mergeProps";
+import { Icon } from "../Icon";
+import { Tooltip } from "../Tooltip";
 import classes from "./InputField.module.css";
 
 /** The field's height, radius and icon size: `sm` 24px, `md` 28px, `lg` 32px, the same sizes as Button and IconButton (`size.control`). */
@@ -20,18 +22,30 @@ export type InputFieldProps = Omit<React.ComponentPropsWithRef<"div">, "children
   error?: React.ReactNode;
   /** Whether the control is disabled, for the label. */
   disabled?: boolean;
+  /** An info icon after the label that explains the field in a tooltip, on hover and keyboard focus. */
+  labelHelp?: string;
+  /** A visual before the help text, usually an `Icon`. Hidden from assistive technology. */
+  descriptionVisual?: React.ReactNode;
+  /** A visual before the error, usually an `Icon`. Hidden from assistive technology. */
+  errorVisual?: React.ReactNode;
+  /** A line under the field, for example `12 / 100`. It is read with the help text when the control is focused. */
+  count?: React.ReactNode;
 };
 
-/** The ids of the help text and the error, for the control's `aria-describedby`. */
-export function describedBy(controlId: string, { description, error }: { description?: React.ReactNode; error?: React.ReactNode }) {
-  return [isPresent(description) ? `${controlId}-description` : null, isPresent(error) ? `${controlId}-error` : null].filter(Boolean).join(" ") || undefined;
+/** The ids of the help text, the error and the count, for the control's `aria-describedby`. */
+export function describedBy(controlId: string, { description, error, count }: { description?: React.ReactNode; error?: React.ReactNode; count?: React.ReactNode }) {
+  return (
+    [isPresent(description) ? `${controlId}-description` : null, isPresent(error) ? `${controlId}-error` : null, isPresent(count) ? `${controlId}-count` : null]
+      .filter(Boolean)
+      .join(" ") || undefined
+  );
 }
 
 /**
  * The chrome around a form control: a label above, and help text and a validation message below. `InputText` is built on it;
  * select and textarea use the same chrome around their own control. Its colours and gaps are the `--cube-input-*` variables.
  */
-function InputFieldRoot({ children, label, controlId, description, error, disabled, className, ...props }: InputFieldProps) {
+function InputFieldRoot({ children, label, controlId, description, error, disabled, labelHelp, descriptionVisual, errorVisual, count, className, ...props }: InputFieldProps) {
   const invalid = isPresent(error);
 
   return (
@@ -47,19 +61,43 @@ function InputFieldRoot({ children, label, controlId, description, error, disabl
       )}
     >
       {isPresent(label) ? (
-        <label htmlFor={controlId} className={classes.Label} data-component="InputField.Label">
-          {label}
-        </label>
+        <div className={classes.LabelRow}>
+          <label htmlFor={controlId} className={classes.Label} data-component="InputField.Label">
+            {label}
+          </label>
+          {isPresent(labelHelp) ? (
+            <Tooltip text={labelHelp as string}>
+              <button type="button" className={classes.LabelHelp} aria-label={typeof label === "string" ? `More about ${label}` : "More information"} data-component="InputField.LabelHelp">
+                <Icon name="info" size="xs" />
+              </button>
+            </Tooltip>
+          ) : null}
+        </div>
       ) : null}
       {children}
       {isPresent(description) ? (
-        <div id={`${controlId}-description`} className={classes.Description} data-component="InputField.Description">
+        <div id={`${controlId}-description`} className={clsx(classes.Description, classes.Assistive)} data-component="InputField.Description">
+          {isPresent(descriptionVisual) ? (
+            <span className={classes.AssistiveVisual} aria-hidden="true">
+              {descriptionVisual}
+            </span>
+          ) : null}
           {description}
         </div>
       ) : null}
       {invalid ? (
-        <div id={`${controlId}-error`} className={classes.Error} data-component="InputField.Error">
+        <div id={`${controlId}-error`} className={clsx(classes.Error, classes.Assistive)} data-component="InputField.Error">
+          {isPresent(errorVisual) ? (
+            <span className={classes.AssistiveVisual} aria-hidden="true">
+              {errorVisual}
+            </span>
+          ) : null}
           {error}
+        </div>
+      ) : null}
+      {isPresent(count) ? (
+        <div id={`${controlId}-count`} className={classes.Count} data-component="InputField.Count">
+          {count}
         </div>
       ) : null}
     </div>

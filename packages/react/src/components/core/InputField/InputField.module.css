@@ -13,9 +13,36 @@
   min-width: 0;
 }
 
+:where(.LabelRow) {
+  display: flex;
+  align-items: center;
+  gap: var(--cube-input-sizes-stackGap);
+  min-width: 0;
+}
+
 :where(.Label) {
   font: var(--cube-text-size-md);
   color: var(--cube-input-label-fgColor-rest);
+}
+
+/* The icon that explains the field: a button so the keyboard reaches it, drawn as the bare icon. */
+:where(.LabelHelp) {
+  appearance: none;
+  display: inline-flex;
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--cube-borderRadius-full);
+  background: transparent;
+  color: var(--cube-input-fgColor-icon);
+  line-height: 0;
+  cursor: help;
+}
+
+:where(.LabelHelp:focus-visible) {
+  outline: var(--cube-focusRing-width) solid var(--cube-focusRing-color);
+  outline-offset: var(--cube-focusRing-offset);
 }
 
 :where(.InputField:hover:not([data-disabled]) .Label),
@@ -36,6 +63,31 @@
 :where(.Error) {
   font: var(--cube-text-size-sm);
   color: var(--cube-input-error-fgColor);
+}
+
+:where(.Count) {
+  font: var(--cube-text-size-sm);
+  color: var(--cube-input-description-fgColor);
+}
+
+/* Help and error text with an optional visual before it: the visual sits by the first line. */
+:where(.Assistive) {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--cube-input-sizes-stackGap);
+}
+
+:where(.AssistiveVisual) {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  /* One line of the text beside it (it inherits that line-height), so the visual centres on the first line. */
+  min-height: 1lh;
+}
+
+:where(.AssistiveVisual > *) {
+  width: var(--cube-icon-xs);
+  height: var(--cube-icon-xs);
 }
 
 /* Geometry: the size picks the control tokens. */

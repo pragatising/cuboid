@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Box } from "../Box";
+import { Icon } from "../Icon";
 import { TextArea } from "./TextArea";
 
 const meta: Meta<typeof TextArea> = {
@@ -16,6 +17,13 @@ type Story = StoryObj<typeof TextArea>;
 export const Default: Story = { args: { label: "Notes", placeholder: "Write something" } };
 
 export const WithDescription: Story = { args: { label: "Notes", description: "Visible to everyone on the team.", rows: 4 } };
+
+export const AutoGrow: Story = {
+  name: "Auto-grow with a count",
+  args: { label: "Notes", autoGrow: true, maxRows: 6, rows: 2, showCount: true, maxLength: 280, placeholder: "Keep typing: it grows to six lines, then scrolls" },
+};
+
+export const WithLabelHelp: Story = { args: { label: "Notes", labelHelp: "Visible to everyone on the team.", description: "Markdown is supported.", descriptionVisual: <Icon name="info" /> } };
 
 export const Error: Story = { args: { label: "Notes", defaultValue: "value", error: "error message (description)" } };
 

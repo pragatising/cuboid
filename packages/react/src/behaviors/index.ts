@@ -18,6 +18,8 @@ export type { FocusTrapOptions } from "./useFocusTrap";
 export { useScrollLock } from "./useScrollLock";
 export { usePlatform, PlatformProvider } from "./usePlatform";
 export type { Platform } from "./usePlatform";
+export { useAutoGrow } from "./useAutoGrow";
+export type { AutoGrowOptions } from "./useAutoGrow";
 export { useActiveDescendant } from "./useActiveDescendant";
 export type { ActiveDescendantOptions } from "./useActiveDescendant";
 export { useTypeAhead } from "./useTypeAhead";

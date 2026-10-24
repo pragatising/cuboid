@@ -145,3 +145,37 @@ describe("InputText: accessibility", () => {
     await expectNoAxeViolations(container);
   });
 });
+
+describe("InputText: character count", () => {
+  it("shows nothing by default", () => {
+    render(<InputText label="A" maxLength={10} />);
+    expect(screen.queryByText(/\/ 10/)).toBeNull();
+  });
+
+  it("counts what is typed against maxLength, and is read with the field", async () => {
+    render(<InputText label="A" showCount maxLength={10} />);
+    expect(screen.getByText("0 / 10")).toBeInTheDocument();
+    await userEvent.type(screen.getByLabelText("A"), "abc");
+    expect(screen.getByText("3 / 10")).toBeInTheDocument();
+    expect(screen.getByLabelText("A")).toHaveAccessibleDescription("3 / 10");
+  });
+
+  it("starts from the default value, and is just the number without a maxLength", () => {
+    render(<InputText label="A" showCount defaultValue="hello" />);
+    expect(screen.getByText("5")).toBeInTheDocument();
+  });
+
+  it("follows a controlled value", () => {
+    const { rerender } = render(<InputText label="A" showCount maxLength={10} value="ab" onChange={() => {}} />);
+    expect(screen.getByText("2 / 10")).toBeInTheDocument();
+    rerender(<InputText label="A" showCount maxLength={10} value="abcdef" onChange={() => {}} />);
+    expect(screen.getByText("6 / 10")).toBeInTheDocument();
+  });
+
+  it("keeps the consumer's onInput", async () => {
+    let seen = "";
+    render(<InputText label="A" showCount onInput={(event) => (seen = event.currentTarget.value)} />);
+    await userEvent.type(screen.getByLabelText("A"), "hi");
+    expect(seen).toBe("hi");
+  });
+});

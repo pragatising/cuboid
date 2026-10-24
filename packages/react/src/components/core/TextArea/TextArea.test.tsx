@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { behavesAsFormControl, expectNoAxeViolations } from "../../../test/testing";
 import { cubeVariablesRead, readSource, themeVariables } from "../../../test/themeCss";
 import { TextArea } from "./TextArea";
@@ -122,5 +122,58 @@ describe("TextArea: accessibility", () => {
   it("has no axe violations", async () => {
     const { container } = render(<TextArea label="Notes" description="Help" error="Required" leadingVisual={<svg />} />);
     await expectNoAxeViolations(container);
+  });
+});
+
+describe("TextArea: character count", () => {
+  it("counts what is typed against maxLength", async () => {
+    render(<TextArea label="A" showCount maxLength={20} />);
+    expect(screen.getByText("0 / 20")).toBeInTheDocument();
+    await userEvent.type(screen.getByLabelText("A"), "one{Enter}two");
+    expect(screen.getByText("7 / 20")).toBeInTheDocument();
+  });
+});
+
+describe("TextArea: autoGrow", () => {
+  const scrollHeight = (value: number) => vi.spyOn(HTMLElement.prototype, "scrollHeight", "get").mockReturnValue(value);
+
+  it("is off by default: no attribute, no height handed to the CSS", () => {
+    render(<TextArea label="A" />);
+    expect(screen.getByLabelText("A")).not.toHaveAttribute("data-auto-grow");
+    expect(screen.getByLabelText("A").style.getPropertyValue("--textarea-height")).toBe("");
+  });
+
+  it("hands its text height to the CSS as --textarea-height, and re-measures as the user types", async () => {
+    const spy = scrollHeight(60);
+    render(<TextArea label="A" autoGrow />);
+    const box = screen.getByLabelText("A");
+    expect(box).toHaveAttribute("data-auto-grow");
+    expect(box.style.getPropertyValue("--textarea-height")).toBe("60px");
+    spy.mockReturnValue(100);
+    await userEvent.type(box, "x");
+    expect(box.style.getPropertyValue("--textarea-height")).toBe("100px");
+    spy.mockRestore();
+  });
+
+  it("stops at maxRows, marks itself capped, and scrolls", () => {
+    const spy = scrollHeight(200);
+    const computed = vi.spyOn(window, "getComputedStyle").mockReturnValue({ lineHeight: "20px", paddingTop: "0px", paddingBottom: "0px" } as CSSStyleDeclaration);
+    render(<TextArea label="A" autoGrow maxRows={4} />);
+    const box = screen.getByLabelText("A");
+    expect(box.style.getPropertyValue("--textarea-height")).toBe("80px");
+    expect(box).toHaveAttribute("data-capped");
+    computed.mockRestore();
+    spy.mockRestore();
+  });
+
+  it("does not cap below maxRows", () => {
+    const spy = scrollHeight(50);
+    const computed = vi.spyOn(window, "getComputedStyle").mockReturnValue({ lineHeight: "20px", paddingTop: "0px", paddingBottom: "0px" } as CSSStyleDeclaration);
+    render(<TextArea label="A" autoGrow maxRows={4} />);
+    const box = screen.getByLabelText("A");
+    expect(box.style.getPropertyValue("--textarea-height")).toBe("50px");
+    expect(box).not.toHaveAttribute("data-capped");
+    computed.mockRestore();
+    spy.mockRestore();
   });
 });

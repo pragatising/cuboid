@@ -4,7 +4,7 @@ import { ActionList, ActionListItem, ActiveOptionContext, useCombobox } from "..
 import type { ActionListItemProps } from "../ActionList";
 import { Icon } from "../Icon";
 import { InputField, useFieldControl } from "../InputField";
-import type { InputFieldSize } from "../InputField";
+import type { InputFieldProps, InputFieldSize } from "../InputField";
 import { clsx } from "clsx";
 import { Popover } from "../Popover";
 import type { PopoverProps } from "../Popover";
@@ -23,7 +23,8 @@ function SelectOption({ value, ...props }: SelectOptionProps) {
   return <ActionListItem data-component="Select.Option" {...props} selected={current === value} data-value={value} />;
 }
 
-export type SelectProps = Omit<React.ComponentPropsWithRef<"button">, "children" | "value" | "defaultValue" | "onChange" | "color" | "type" | "role" | "name"> & {
+export type SelectProps = Omit<React.ComponentPropsWithRef<"button">, "children" | "value" | "defaultValue" | "onChange" | "color" | "type" | "role" | "name"> &
+  Pick<InputFieldProps, "labelHelp" | "descriptionVisual" | "errorVisual"> & {
   /** The visible label, tied to the select. Without one, give it an `aria-label`. */
   label?: React.ReactNode;
   /** Help text under the field. */
@@ -104,8 +105,11 @@ function SelectRoot({
   name,
   id,
   label,
+  labelHelp,
   description,
+  descriptionVisual,
   error,
+  errorVisual,
   disabled,
   readOnly,
   maxHeight,
@@ -143,7 +147,7 @@ function SelectRoot({
           {...combobox.popoverProps}
           maxHeight={maxHeight}
           trigger={
-            <InputField data-component="Select" label={label} controlId={controlId} description={description} error={error} disabled={disabled} className={wrapperClassName}>
+            <InputField data-component="Select" label={label} labelHelp={labelHelp} controlId={controlId} description={description} descriptionVisual={descriptionVisual} error={error} errorVisual={errorVisual} disabled={disabled} className={wrapperClassName}>
               <InputField.Shell ref={combobox.anchorRef} size={size} leadingVisual={leadingVisual} trailingVisual={<Icon name="keyboard_arrow_down" />} invalid={invalid} disabled={disabled} readOnly={readOnly}>
                 <button
                   {...props}

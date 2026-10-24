@@ -27,6 +27,16 @@ export const WithVisuals: Story = {
   },
 };
 
+export const WithExtras: Story = {
+  name: "Label help, count, help and error visuals",
+  render: () => (
+    <Box flexDirection="column" gap="md">
+      <InputText label="Display name" labelHelp="Shown to everyone on your team." description="As it appears on your ID." descriptionVisual={<Icon name="info" />} showCount maxLength={30} defaultValue="Ada" />
+      <InputText label="Email" error="Enter a valid address" errorVisual={<Icon name="error" />} defaultValue="ada@" />
+    </Box>
+  ),
+};
+
 export const Error: Story = { args: { label: "Name", defaultValue: "value", error: "error message (description)" } };
 
 export const ReadOnly: Story = { args: { label: "Name", defaultValue: "value", readOnly: true } };

@@ -29,3 +29,14 @@
 :where(.TextArea[readonly]) {
   resize: none;
 }
+
+/* autoGrow: as tall as the text (useAutoGrow sets --textarea-height and data-capped), no resize handle. */
+:where(.TextArea[data-auto-grow]) {
+  height: var(--textarea-height, auto);
+  overflow-y: hidden;
+  resize: none;
+}
+
+:where(.TextArea[data-auto-grow][data-capped]) {
+  overflow-y: auto;
+}
