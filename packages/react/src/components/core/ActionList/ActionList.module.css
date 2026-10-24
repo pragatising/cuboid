@@ -1,4 +1,4 @@
-:where(.ActionMenuList) {
+:where(.ActionList) {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -9,39 +9,39 @@
 :where(.ListItems) {
   display: flex;
   flex-direction: column;
-  gap: var(--action-menu-sizes-list-item-gap);
-  padding: var(--action-menu-sizes-list-padding-block) var(--action-menu-sizes-list-padding-inline);
+  gap: var(--cube-actionMenu-sizes-list-itemGap);
+  padding: var(--cube-actionMenu-sizes-list-paddingBlock) var(--cube-actionMenu-sizes-list-paddingInline);
 }
 
 :where(.Section) {
   display: flex;
   flex-direction: column;
-  gap: var(--action-menu-sizes-list-item-gap);
+  gap: var(--cube-actionMenu-sizes-list-itemGap);
 }
 
 /*
  * Section spacing: `ListItems` gap handles itemGap between all children.
  * Add (sectionGap - itemGap) before each section that follows another block
  * so section groups breathe more than rows within a section.
- * Future: `ActionMenuList.Divider` can replace/add to this between groups.
+ * Future: `ActionList.Divider` can replace/add to this between groups.
  */
 :where(.ListItems > * + .Section) {
   margin-block-start: calc(
-    var(--action-menu-sizes-list-section-gap) - var(--action-menu-sizes-list-item-gap)
+    var(--cube-actionMenu-sizes-list-sectionGap) - var(--cube-actionMenu-sizes-list-itemGap)
   );
 }
 
 :where(.SectionLabel) {
-  padding: var(--action-menu-sizes-section-padding-block)
-    var(--action-menu-sizes-section-padding-inline);
-  font: var(--action-menu-subtext-font);
+  padding: var(--cube-actionMenu-sizes-section-paddingBlock)
+    var(--cube-actionMenu-sizes-section-paddingInline);
+  font: var(--cube-text-size-sm);
   font-weight: 600;
-  color: var(--action-menu-section-fg-color);
+  color: var(--cube-actionMenu-section-fgColor);
   white-space: nowrap;
 }
 
 :where(.SectionItems) {
   display: flex;
   flex-direction: column;
-  gap: var(--action-menu-sizes-list-item-gap);
+  gap: var(--cube-actionMenu-sizes-list-itemGap);
 }

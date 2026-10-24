@@ -1,0 +1,135 @@
+/*
+ * The chrome around a form control. Every value is a `--cube-*` variable the token build publishes (light on :root, dark under
+ * [data-mode="dark"]), so nothing is set inline and the browser picks the state (:hover, :focus-within, :disabled).
+ * The three sizes read the `size.control` tokens of the same name: sm 24px, md 28px, lg 32px (as Button and IconButton).
+ * Zero specificity (:where), so a consumer's own class can override any of it.
+ */
+
+:where(.InputField) {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--cube-input-sizes-stackGap);
+  min-width: 0;
+}
+
+:where(.Label) {
+  font: var(--cube-text-size-md);
+  color: var(--cube-input-label-fgColor-rest);
+}
+
+:where(.InputField:hover:not([data-disabled]) .Label),
+:where(.InputField:focus-within .Label),
+:where(.InputField[data-invalid] .Label) {
+  color: var(--cube-input-label-fgColor-active);
+}
+
+:where(.InputField[data-disabled] .Label) {
+  color: var(--cube-input-label-fgColor-disabled);
+}
+
+:where(.Description) {
+  font: var(--cube-text-size-sm);
+  color: var(--cube-input-description-fgColor);
+}
+
+:where(.Error) {
+  font: var(--cube-text-size-sm);
+  color: var(--cube-input-error-fgColor);
+}
+
+/* Geometry: the size picks the control tokens. */
+:where(.Shell[data-size="sm"]) {
+  --field-height: var(--cube-size-control-sm-size);
+  --field-icon: var(--cube-size-control-sm-icon);
+  --field-radius: var(--cube-size-control-sm-borderRadius);
+}
+
+:where(.Shell[data-size="md"]) {
+  --field-height: var(--cube-size-control-md-size);
+  --field-icon: var(--cube-size-control-md-icon);
+  --field-radius: var(--cube-size-control-md-borderRadius);
+}
+
+:where(.Shell[data-size="lg"]) {
+  --field-height: var(--cube-size-control-lg-size);
+  --field-icon: var(--cube-size-control-lg-icon);
+  --field-radius: var(--cube-size-control-lg-borderRadius);
+}
+
+:where(.Shell) {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--cube-input-sizes-gap);
+  height: var(--field-height);
+  padding-inline: var(--cube-input-sizes-paddingInline);
+  border-style: solid;
+  border-width: var(--cube-borderWidth-thin);
+  border-radius: var(--field-radius);
+  color: var(--cube-input-fgColor-rest);
+  background-color: var(--cube-input-bgColor-rest);
+  border-color: var(--cube-input-borderColor-rest);
+  transition:
+    background-color var(--cube-motion-transition-hover),
+    border-color var(--cube-motion-transition-hover);
+}
+
+/* A several-line control: the box grows, content starts at the top, and a visual is as tall as the first line so it lines up with it. */
+:where(.Shell[data-multiline]) {
+  height: auto;
+  min-height: var(--field-height);
+  align-items: flex-start;
+  padding-block: var(--cube-size-4px);
+}
+
+:where(.Shell[data-multiline] .Visual) {
+  min-height: 1.3125rem;
+}
+
+:where(.Shell:hover:not([data-disabled], [data-readonly])) {
+  background-color: var(--cube-input-bgColor-hover);
+  border-color: var(--cube-input-borderColor-hover);
+}
+
+:where(.Shell[data-readonly]) {
+  color: var(--cube-input-fgColor-readOnly);
+  background-color: var(--cube-input-bgColor-readOnly);
+  border-color: var(--cube-input-borderColor-readOnly);
+}
+
+:where(.Shell[data-disabled]) {
+  cursor: not-allowed;
+  color: var(--cube-input-fgColor-disabled);
+  background-color: var(--cube-input-bgColor-disabled);
+  border-color: var(--cube-input-borderColor-disabled);
+}
+
+/* The error border is drawn a second pixel outward with a shadow, so the field does not change size. */
+:where(.Shell[data-invalid]) {
+  border-color: var(--cube-input-borderColor-error);
+  box-shadow: 0 0 0 var(--cube-borderWidth-thin) var(--cube-input-borderColor-error);
+}
+
+:where(.Shell:focus-within:not([data-disabled])) {
+  outline: var(--cube-focusRing-width) solid var(--cube-focusRing-color);
+  outline-offset: var(--cube-focusRing-offset);
+}
+
+:where(.Visual) {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  color: var(--cube-input-fgColor-icon);
+  line-height: 0;
+}
+
+:where(.Shell[data-disabled] .Visual) {
+  color: var(--cube-input-fgColor-disabled);
+}
+
+:where(.Visual > *) {
+  width: var(--field-icon);
+  height: var(--field-icon);
+}

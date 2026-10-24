@@ -2,9 +2,10 @@ import React from "react";
 import { clsx } from "clsx";
 import { useTokens } from "../../../mode";
 import type { Tokens } from "../../../mode";
+import { colorGroups, resolveColorValue } from "../../../utils/colorPaths";
+import type { BgColor, BorderColor, CssColor, FgColor } from "../../../utils/colorPaths";
 import { mergeProps } from "../../../utils/mergeProps";
 import type { PolymorphicProps } from "../../../utils/polymorphic";
-import { Box } from "../Box";
 import classes from "./Pill.module.css";
 
 /** A key of `tokens.pill.color`: the colour family. */
@@ -28,6 +29,12 @@ export type PillProps<As extends React.ElementType = "span"> = PolymorphicProps<
     weight?: keyof Tokens["fontWeight"];
     /** Which `text.size` token to set the label font from. The pill's height stays fixed. @default "sm" */
     size?: PillSize;
+    /** Override the label colour: a `fgColor` token, a palette colour (`"indigo.7"`) or any CSS colour. */
+    color?: FgColor | CssColor;
+    /** Override the surface: a `bgColor` token, a palette colour (`"indigo.0"`) or any CSS colour. */
+    backgroundColor?: BgColor | CssColor;
+    /** Override the border colour: a `borderColor` token, a palette colour (`"indigo.5"`) or any CSS colour. */
+    borderColor?: BorderColor | CssColor;
     leadingVisual?: React.ReactNode;
     /** Pass `<Icon size="…">`: the pill's height stays fixed regardless of icon size. */
     trailingVisual?: React.ReactNode;
@@ -42,18 +49,23 @@ export function Pill<As extends React.ElementType = "span">({
   bordered = false,
   weight = "medium",
   size = "sm",
+  color,
+  backgroundColor,
+  borderColor,
   leadingVisual,
   trailingVisual,
   className,
   children,
   ...props
 }: PillProps<As>) {
-  const { pill, text, fontWeight, borderWidth } = useTokens();
+  const Component: React.ElementType = as ?? "span";
+  const tokens = useTokens();
+  const { pill, text, fontWeight, borderWidth } = tokens;
+  const palette = colorGroups(tokens);
   const colors = pill.color[shade][intensity][bordered ? "bordered" : "filled"];
 
   return (
-    <Box
-      as={(as ?? "span") as React.ElementType}
+    <Component
       {...mergeProps(
         {
           "data-component": "Pill",
@@ -63,9 +75,9 @@ export function Pill<As extends React.ElementType = "span">({
             font: text.size[size],
             fontWeight: fontWeight[weight],
             lineHeight: 1,
-            color: colors.fgColor,
-            backgroundColor: colors.bgColor,
-            borderColor: colors.borderColor,
+            color: color ? resolveColorValue(palette.fgColor, color) : colors.fgColor,
+            backgroundColor: backgroundColor ? resolveColorValue(palette.bgColor, backgroundColor) : colors.bgColor,
+            borderColor: borderColor ? resolveColorValue(palette.borderColor, borderColor) : colors.borderColor,
             borderWidth: borderWidth.thin,
             gap: pill.sizes.gap,
             height: pill.sizes.height,
@@ -80,6 +92,6 @@ export function Pill<As extends React.ElementType = "span">({
       {leadingVisual ? <span data-component="Pill.LeadingVisual" className={classes.Visual}>{leadingVisual}</span> : null}
       {children as React.ReactNode}
       {trailingVisual ? <span data-component="Pill.TrailingVisual" className={classes.Visual}>{trailingVisual}</span> : null}
-    </Box>
+    </Component>
   );
 }

@@ -48,6 +48,9 @@ export type { ButtonProps } from "./components/core/Button";
 export { IconButton } from "./components/core/IconButton";
 export type { IconButtonProps } from "./components/core/IconButton";
 
+export { InputText } from "./components/core/InputText";
+export type { InputTextProps } from "./components/core/InputText";
+
 export { Tooltip } from "./components/core/Tooltip";
 export type { TooltipProps, TooltipPlacement, TooltipType, TooltipDelay } from "./components/core/Tooltip";
 
@@ -108,11 +111,27 @@ export type {
   PopoverFooterProps,
 } from "./components/core/Popover";
 
+export { TileIcon } from "./components/core/TileIcon";
+export type { TileIconProps } from "./components/core/TileIcon";
+
+export { EmptyState } from "./components/core/EmptyState";
+export type { EmptyStateProps } from "./components/core/EmptyState";
+
+export { Select } from "./components/core/Select";
+export type { SelectProps, SelectOptionProps } from "./components/core/Select";
+
+export { TextArea } from "./components/core/TextArea";
+export type { TextAreaProps } from "./components/core/TextArea";
+
+export { Autocomplete } from "./components/core/Autocomplete";
+export type { AutocompleteProps } from "./components/core/Autocomplete";
+
 export { ActionMenu } from "./components/core/ActionMenu";
 export type {
   ActionMenuProps,
   ActionMenuItemProps,
   ActionMenuListProps,
+  ActionMenuSearchProps,
   ActionMenuSectionProps,
   ActionMenuSelectionMode,
 } from "./components/core/ActionMenu";

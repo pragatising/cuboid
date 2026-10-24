@@ -5,14 +5,44 @@ export type Paths<T> = T extends string
   ? never
   : { [K in keyof T & string]: T[K] extends string ? K : `${K}.${Paths<T[K]>}` }[keyof T & string];
 
-/** Any foreground colour token: `"neutral.muted"`, `"success.strong"`, `"danger.strong"`… */
-export type FgColor = Paths<Tokens["fgColor"]>;
-/** Any background colour token: `"canvas.default"`, `"neutral.light.2"`, `"danger.subtle"`… */
-export type BgColor = Paths<Tokens["bgColor"]>;
+/**
+ * A step of the general-purpose palette (`tokens.display`): `"indigo.0"`, `"green.7"`, `"gray.12"`. The hues have no meaning
+ * of their own, so they are valid for any colour prop: a text, a background or a border.
+ */
+export type DisplayColor = Paths<Omit<Tokens["display"], "highlight">>;
+/** The text-marker backgrounds (`tokens.display.highlight`): `"highlight.yellow"`. For a background only. */
+export type HighlightBackground = `highlight.${Extract<keyof Tokens["display"]["highlight"], string>}`;
+/** Any foreground colour token (`"neutral.muted"`, `"danger.strong"`…) or palette colour (`"indigo.7"`). */
+export type FgColor = Paths<Tokens["fgColor"]> | DisplayColor;
+/** Any background colour token (`"canvas.default"`, `"danger.subtle"`…), palette colour (`"indigo.0"`) or highlight (`"highlight.yellow"`). */
+export type BgColor = Paths<Tokens["bgColor"]> | DisplayColor | HighlightBackground;
 /** Any whole-border token (width, style and colour): `"default"`, `"subtle"`, `"translucent.2"`… */
 export type BorderToken = Paths<Tokens["border"]>;
-/** Any border colour token: `"default"`, `"subtle"`, `"translucent.3"`… */
-export type BorderColor = Paths<Tokens["borderColor"]>;
+/** Any border colour token (`"default"`, `"subtle"`, `"translucent.3"`…) or palette colour (`"indigo.5"`). */
+export type BorderColor = Paths<Tokens["borderColor"]> | DisplayColor;
+
+type ColorGroups = { bgColor: object; fgColor: object; borderColor: object };
+const groupCache = new WeakMap<object, ColorGroups>();
+
+/**
+ * The colour groups a colour prop resolves a token path against: the semantic group (`bgColor`, `fgColor` or `borderColor`)
+ * with the palette's hues alongside (and `highlight` for backgrounds), so `"danger.subtle"` and `"indigo.0"` both resolve. Their names do not collide
+ * (the palette's are hues; the semantic ones are `canvas`, `neutral`, `danger`…). One object per mode's token tree, kept.
+ */
+export function colorGroups(tokens: Pick<Tokens, "display"> & Partial<Pick<Tokens, "bgColor" | "fgColor" | "borderColor">>): ColorGroups {
+  let groups = groupCache.get(tokens);
+  if (!groups) {
+    const { highlight: _highlight, ...hues } = tokens.display;
+    groups = {
+      // `highlight` is for backgrounds only.
+      bgColor: { ...tokens.display, ...(tokens.bgColor ?? {}) },
+      fgColor: { ...hues, ...(tokens.fgColor ?? {}) },
+      borderColor: { ...hues, ...(tokens.borderColor ?? {}) },
+    };
+    groupCache.set(tokens, groups);
+  }
+  return groups;
+}
 
 /** Look a dot path up in one resolved token group of the active mode's tokens (`kind` names it in the error). */
 export function resolveColorPath(group: object, path: string, kind = "colour"): string {

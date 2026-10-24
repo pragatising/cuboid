@@ -21,10 +21,10 @@ type Story = StoryObj<typeof Popover>;
 
 export const Default: Story = {
   render: () => (
-    <Popover trigger={<Button variant="secondary" size="sm">Open popover</Button>}>
+    <Popover trigger={<Button variant="secondary" size="md">Open popover</Button>}>
       <Popover.Body>
         <Text size="sm">Any content can go here. With no role it is a plain region; give it one when it is something specific.</Text>
-        <Button variant="primary" size="sm">Action</Button>
+        <Button variant="primary" size="md">Action</Button>
       </Popover.Body>
     </Popover>
   ),
@@ -35,13 +35,13 @@ export const Controlled: Story = {
     const [open, setOpen] = useState(false);
     return (
       <Box gap="sm" flexDirection="row">
-        <Popover open={open} onOpenChange={setOpen} trigger={<Button variant="secondary" size="sm">{open ? "Close" : "Open"} popover</Button>}>
+        <Popover open={open} onOpenChange={setOpen} trigger={<Button variant="secondary" size="md">{open ? "Close" : "Open"} popover</Button>}>
           <Popover.Body>
             <Text size="sm">Controlled with open / onOpenChange.</Text>
-            <Button variant="ghost" size="sm" onClick={() => setOpen(false)}>Dismiss</Button>
+            <Button variant="ghost" size="md" onClick={() => setOpen(false)}>Dismiss</Button>
           </Popover.Body>
         </Popover>
-        <Button variant="ghost" size="sm" onClick={() => setOpen((value) => !value)}>Toggle externally</Button>
+        <Button variant="ghost" size="md" onClick={() => setOpen((value) => !value)}>Toggle externally</Button>
       </Box>
     );
   },
@@ -51,7 +51,7 @@ export const Placements: Story = {
   render: () => (
     <Box padding="xxl" gap="xl" flexDirection="row" flexWrap="wrap" justifyContent="center">
       {(["top-start", "top", "top-end", "bottom-start", "bottom", "bottom-end", "left", "right"] as const).map((placement) => (
-        <Popover key={placement} placement={placement} trigger={<Button variant="secondary" size="sm">{placement}</Button>}>
+        <Popover key={placement} placement={placement} trigger={<Button variant="secondary" size="md">{placement}</Button>}>
           <Popover.Body>
             <Text size="sm">{placement}</Text>
           </Popover.Body>
@@ -65,7 +65,7 @@ export const Elevation: Story = {
   render: () => (
     <Box flexDirection="row" gap="md">
       {(["3x", "4x"] as const).map((elevation) => (
-        <Popover key={elevation} elevation={elevation} trigger={<Button variant="secondary" size="sm">{elevation}</Button>}>
+        <Popover key={elevation} elevation={elevation} trigger={<Button variant="secondary" size="md">{elevation}</Button>}>
           <Popover.Body>
             <Text size="sm">Elevation {elevation}</Text>
           </Popover.Body>
@@ -80,7 +80,7 @@ export const DialogWithHeaderAndFooter: Story = {
   render: function DialogStory() {
     const [open, setOpen] = useState(false);
     return (
-      <Popover open={open} onOpenChange={setOpen} role="dialog" elevation="4x" trigger={<Button variant="secondary" size="sm">Edit link</Button>}>
+      <Popover open={open} onOpenChange={setOpen} role="dialog" elevation="4x" trigger={<Button variant="secondary" size="md">Edit link</Button>}>
         <Popover.Header onClose={() => setOpen(false)}>Edit link</Popover.Header>
         <Popover.Body>
           <Text size="md">A string header is the title: it names the dialog. The close button is the header&apos;s <code>onClose</code>.</Text>
@@ -100,7 +100,7 @@ export const FooterJustified: Story = {
   render: function JustifiedStory() {
     const [open, setOpen] = useState(false);
     return (
-      <Popover open={open} onOpenChange={setOpen} role="dialog" aria-label="Filter" trigger={<Button variant="secondary" size="sm">Filter</Button>}>
+      <Popover open={open} onOpenChange={setOpen} role="dialog" aria-label="Filter" trigger={<Button variant="secondary" size="md">Filter</Button>}>
         <Popover.Body>
           <Text size="md">Secondary on the left, primary on the right.</Text>
         </Popover.Body>
@@ -113,7 +113,7 @@ export const FooterJustified: Story = {
 export const CustomHeader: Story = {
   name: "Header: any content",
   render: () => (
-    <Popover role="dialog" aria-label="Custom header" trigger={<Button variant="secondary" size="sm">Custom header</Button>}>
+    <Popover role="dialog" aria-label="Custom header" trigger={<Button variant="secondary" size="md">Custom header</Button>}>
       <Popover.Header>
         <Text size="md" weight="semibold">Anything can lead the panel</Text>
       </Popover.Header>
@@ -127,7 +127,7 @@ export const CustomHeader: Story = {
 export const MaxHeight: Story = {
   name: "maxHeight: the content scrolls, header and footer stay",
   render: () => (
-    <Popover role="dialog" aria-label="Long content" maxHeight="14rem" trigger={<Button variant="secondary" size="sm">Long content</Button>}>
+    <Popover role="dialog" aria-label="Long content" maxHeight="14rem" trigger={<Button variant="secondary" size="md">Long content</Button>}>
       <Popover.Header>Long content</Popover.Header>
       <Popover.Body>
         {Array.from({ length: 20 }, (_, index) => (
@@ -143,7 +143,7 @@ export const Portal: Story = {
   name: "Portal (not clipped by overflow: hidden)",
   render: () => (
     <div style={{ overflow: "hidden", height: 72, padding: 12 }}>
-      <Popover trigger={<Button variant="secondary" size="sm">Open inside clipped box</Button>}>
+      <Popover trigger={<Button variant="secondary" size="md">Open inside clipped box</Button>}>
         <Popover.Body>
           <Text size="md">Still visible: portaled to document.body.</Text>
         </Popover.Body>

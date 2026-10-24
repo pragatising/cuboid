@@ -3,7 +3,7 @@
     item: {
       bgColor: {
         rest: { $value: '{bgColor.canvas.default}', $type: 'color' },
-        hover: { $value: '{bgColor.neutral.light.2}', $type: 'color' },
+        hover: { $value: '{bgColor.neutral.light.3}', $type: 'color' },
         pressed: { $value: '{bgColor.neutral.light.3}', $type: 'color' },
         disabled: { $value: '{bgColor.neutral.light.3}', $type: 'color' },
         selected: {
@@ -13,10 +13,11 @@
       },
       fgColor: {
         rest: { $value: '{fgColor.neutral.muted}', $type: 'color' },
+        hover: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
         pressed: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
-        disabled: { $value: '{fgColor.neutral.subtle}', $type: 'color' },
+        disabled: { $value: '{fgColor.neutral.disabled}', $type: 'color' },
         selected: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
-        subtext: { $value: '{fgColor.neutral.muted}', $type: 'color' },
+        subtext: { $value: '{fgColor.neutral.default}', $type: 'color', $description: 'neutral.muted is 4.3:1 on the hover and active row (bgColor.neutral.light.3); default is 4.6:1.' },
       },
     },
     section: {
@@ -32,11 +33,11 @@
     sizes: {
       item: {
         minHeight: {
-          $value: { value: 30, unit: 'px' },
+          $value: { value: 32, unit: 'px' },
           $type: 'dimension',
           $description: 'Derived, not an independent design value: paddingBlock (5) × 2 + iconSize (20) = 30. Not a scale-step gap — DTCG cannot express cross-token arithmetic, so this is a literal that must be kept in sync if paddingBlock or iconSize below change.',
         },
-        paddingInline: { $value: '{size.12}', $type: 'dimension' },
+        paddingInline: { $value: '{size.8}', $type: 'dimension', $description: 'Equal to paddingBlock: the item padding is symmetric.' },
         paddingBlock: { $value: '{size.5}', $type: 'dimension' },
         borderRadius: { $value: '{size.6}', $type: 'dimension' },
         slotGap: { $value: '{size.16}', $type: 'dimension' },
@@ -45,22 +46,31 @@
         subtextIconSize: { $value: '{size.16}', $type: 'dimension' },
       },
       list: {
-        paddingInline: { $value: '{size.4}', $type: 'dimension' },
+        paddingInline: { $value: '{size.8}', $type: 'dimension' },
         paddingBlock: { $value: '{size.8}', $type: 'dimension' },
         itemGap: { $value: '{size.4}', $type: 'dimension' },
-        sectionGap: { $value: '{size.8}', $type: 'dimension' },
+        sectionGap: { $value: '{size.16}', $type: 'dimension' },
       },
       section: {
-        paddingInline: { $value: '{size.12}', $type: 'dimension' },
+        paddingInline: { $value: '{size.8}', $type: 'dimension' },
         paddingBlock: { $value: '{size.2}', $type: 'dimension' },
       },
       header: {
-        paddingInline: { $value: '{size.16}', $type: 'dimension' },
-        paddingBlockStart: { $value: '{size.12}', $type: 'dimension' },
-        paddingBlockEnd: { $value: '{size.12}', $type: 'dimension' },
+        paddingInlineStart: { $value: '{size.16}', $type: 'dimension' },
+        paddingInlineEnd: { $value: '{size.16}', $type: 'dimension' },
+        paddingInlineEndDismissible: {
+          $value: '{size.8}',
+          $type: 'dimension',
+          $description: 'The end padding when the header has a close button, which brings its own padding.',
+        },
+        paddingBlockStart: { $value: '{size.8}', $type: 'dimension' },
+        paddingBlockEnd: { $value: '{size.8}', $type: 'dimension' },
+      },
+      search: {
+        padding: { $value: '{size.8}', $type: 'dimension', $description: 'Padding around the search field, on every side.' },
       },
       footer: {
-        padding: { $value: '{size.16}', $type: 'dimension' },
+        padding: { $value: '{size.12}', $type: 'dimension' },
       },
     },
   },

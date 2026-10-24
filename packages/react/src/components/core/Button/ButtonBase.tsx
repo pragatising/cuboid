@@ -1,10 +1,8 @@
 import React from "react";
 import { clsx } from "clsx";
-import { useTokens } from "../../../mode";
 import { announce } from "../../../utils/announce";
 import { isDev } from "../../../utils/isDev";
 import { mergeProps } from "../../../utils/mergeProps";
-import { resolveButtonStyle } from "./buttonStyle";
 import { Spinner } from "./Spinner";
 import type { ButtonBaseComponentProps, ButtonProps } from "./types";
 import classes from "./ButtonBase.module.css";
@@ -24,8 +22,9 @@ const SEMANTIC = new Set(["button", "a", "summary"]);
  *
  * The icon-only button is not built on this: it is its own component (`IconButton`).
  *
- * Token values reach the CSS as inline styles and element-scoped variables (see buttonStyle.ts):
- * the state colours as `--button-bg-hover`, … because a pseudo-class cannot be an inline style.
+ * The element carries no inline style: its colours, geometry and states are in ButtonBase.module.css, which reads the
+ * `--cube-*` variables the token build publishes (light on :root, dark under [data-mode="dark"]) and picks the look by
+ * `data-variant` and `data-size`.
  */
 export function ButtonBase<As extends React.ElementType = "button">(allProps: ButtonBaseComponentProps<As>) {
   const {
@@ -45,8 +44,7 @@ export function ButtonBase<As extends React.ElementType = "button">(allProps: Bu
   } = allProps as unknown as ButtonProps & { as?: React.ElementType };
 
   const Component: React.ElementType = as ?? "button";
-  const tokens = useTokens();
-  const resolvedSize = size ?? "sm";
+  const resolvedSize = size ?? "md";
   const resolvedVariant = variant ?? "secondary";
 
   // Inactive, loading and a consumer's own aria-disabled all mean the same thing: focusable, but activation is ignored.
@@ -90,7 +88,6 @@ export function ButtonBase<As extends React.ElementType = "button">(allProps: Bu
           ...(ariaDisabled ? { "aria-disabled": true } : {}),
           className: clsx(classes.ButtonBase, className),
           onClick: blockWhenAriaDisabled,
-          style: resolveButtonStyle(tokens, { variant: resolvedVariant, size: resolvedSize }),
         },
         props,
       )}

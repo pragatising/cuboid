@@ -62,6 +62,12 @@ test("JSX: tokens where the value is a design decision, CSS values everywhere el
   <Box color="neutral.nope">no</Box>;
   // @ts-expect-error neither a token path nor a CSS colour
   <Box backgroundColor="canvs.default">no</Box>;
+  // palette hues are valid for text, background and border; highlight for a background
+  <Box color="indigo.7" backgroundColor="highlight.yellow" borderColor="indigo.5">ok</Box>;
+  // @ts-expect-error highlight colours are for backgrounds only
+  <Box color="highlight.yellow">no</Box>;
+  // @ts-expect-error highlight colours are for backgrounds only
+  <Box borderColor="highlight.yellow">no</Box>;
   // @ts-expect-error not a semantic space name
   <Box gap="huge">no</Box>;
   // @ts-expect-error a bare number has no unit

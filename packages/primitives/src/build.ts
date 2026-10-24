@@ -53,9 +53,14 @@ export async function build({ outDir, overrides = [], modeOverrides = {}, modes 
   const stage = await mkdtemp(path.join(tmpdir(), "cuboid-build-"));
   try {
     const platforms: Record<string, ReturnType<typeof css>> = {
-      css: css("css/theme.css", "cube", `${outDir}/css/`),
+      css: css("theme.css", "cube", `${outDir}/css/`),
       json: json("tokens.json", undefined, `${outDir}/`),
     };
+    // One more CSS file per non-default mode, scoped by `[data-mode="<mode>"]`, staged and appended to theme.css below, so
+    // `theme.css` carries every mode: `:root` is the first mode, `[data-mode="dark"]` the others.
+    for (const mode of modes.slice(1)) {
+      platforms[`css-${mode}`] = css(`${mode}.css`, "cube", `${stage}/css/`, { theme: mode, options: { selector: `[data-mode="${mode}"]` } });
+    }
     for (const mode of modes) {
       // Per-mode ESM + CJS into a throwaway stage; composed below.
       platforms[`typescript-${mode}`] = typescript(`${mode}.js`, undefined, `${stage}/js/`, { theme: mode });
@@ -95,9 +100,24 @@ export async function build({ outDir, overrides = [], modeOverrides = {}, modes 
       trees[mode] = (await import(`${pathToFileURL(path.join(stage, "js", `${mode}.js`)).href}`)).default;
     }
     await writeComposed(outDir, trees, modes);
+    await appendModeCss(outDir, stage, modes);
   } finally {
     await rm(stage, { recursive: true, force: true });
   }
+}
+
+/**
+ * Appends each non-default mode's variables to `css/theme.css`, under `[data-mode="<mode>"]`. The whole set is emitted (not
+ * only what differs): a custom property that references another is resolved where it is defined, so a dark subtree
+ * (`<div data-mode="dark">`) only flips if the dependent variables are redefined inside it too.
+ */
+async function appendModeCss(outDir: string, stage: string, modes: readonly string[]) {
+  const target = path.join(outDir, "css", "theme.css");
+  let css = await readFile(target, "utf8");
+  for (const mode of modes.slice(1)) {
+    css += `\n${await readFile(path.join(stage, "css", `${mode}.css`), "utf8")}`;
+  }
+  await writeFile(target, css);
 }
 
 const isPlainObject = (v: unknown): v is Record<string, unknown> => typeof v === "object" && v !== null && !Array.isArray(v);

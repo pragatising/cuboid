@@ -1,27 +1,30 @@
 import React, { useMemo } from "react";
 import { clsx } from "clsx";
 import { useProvidedRefOrCreate, useRovingFocus } from "../../../behaviors";
-import { useTokens } from "../../../mode";
 import { mergeProps } from "../../../utils/mergeProps";
 import { Box } from "../Box";
-import { ActionMenuContext } from "./ActionMenuContext";
-import type { ActionMenuSelectionMode } from "./ActionMenuContext";
-import { actionMenuVars } from "./actionMenuVars";
-import classes from "./ActionMenuList.module.css";
+import { ActionListContext } from "./ActionListContext";
+import type { ActionListRole, ActionListSelectionMode } from "./ActionListContext";
+import classes from "./ActionList.module.css";
 
-export type ActionMenuListProps = Omit<React.ComponentPropsWithRef<"div">, "role" | "color"> & {
+export type ActionListProps = Omit<React.ComponentPropsWithRef<"div">, "role" | "color"> & {
   /** `ActionMenu.Item`s and `ActionMenu.Section`s. */
   children: React.ReactNode;
+  /**
+   * `menu` is a list of actions; `listbox` is a list to choose from, whose items are options (`aria-selected`). The items follow it.
+   * @default "menu"
+   */
+  role?: ActionListRole;
   /** Whether the items choose from the list: `single` makes them radios, `multiple` checkboxes. Unset, they are plain actions. */
-  selectionMode?: ActionMenuSelectionMode;
+  selectionMode?: ActionListSelectionMode;
 };
 
-export type ActionMenuSectionProps = Omit<React.ComponentPropsWithRef<"div">, "role" | "children" | "color"> & {
+export type ActionListSectionProps = Omit<React.ComponentPropsWithRef<"div">, "role" | "children" | "color"> & {
   label: React.ReactNode;
   children?: React.ReactNode;
 };
 
-function ActionMenuSection({ label, children, className, ...props }: ActionMenuSectionProps) {
+function ActionListSection({ label, children, className, ...props }: ActionListSectionProps) {
   return (
     <Box
       {...mergeProps(
@@ -41,25 +44,23 @@ function ActionMenuSection({ label, children, className, ...props }: ActionMenuS
 }
 
 /**
- * The menu: a `role="menu"` list of items. Up and Down, Home, End and typing a letter move between them (`useRovingFocus`).
+ * The list: a `role="menu"` (or, with `role="listbox"`, a list of options) of items. Up and Down, Home, End and typing a letter move between them (`useRovingFocus`).
  * It works on its own, or inside an `ActionMenu` (which adds the trigger, the popover and closing).
  */
-function ActionMenuListRoot({ children, className, selectionMode, ref, onKeyDown, ...props }: ActionMenuListProps) {
-  const tokens = useTokens();
+function ActionListRoot({ children, className, selectionMode, role = "menu", ref, onKeyDown, ...props }: ActionListProps) {
   const listRef = useProvidedRefOrCreate<HTMLDivElement>(ref);
-  const { onKeyDown: navigate } = useRovingFocus({ containerRef: listRef });
-  const context = useMemo(() => ({ selectionMode }), [selectionMode]);
+  const { onKeyDown: navigate } = useRovingFocus({ containerRef: listRef, itemSelector: role === "listbox" ? '[role="option"]' : undefined });
+  const context = useMemo(() => ({ selectionMode, role }), [selectionMode, role]);
 
   return (
-    <ActionMenuContext.Provider value={context}>
+    <ActionListContext.Provider value={context}>
       <Box
         {...mergeProps(
           {
             "data-component": "ActionMenu.List",
-            role: "menu",
+            role,
             "aria-multiselectable": selectionMode === "multiple" ? true : undefined,
-            className: clsx(classes.ActionMenuList, className),
-            style: actionMenuVars(tokens),
+            className: clsx(classes.ActionList, className),
             onKeyDown: navigate,
           },
           { ...props, onKeyDown } as object,
@@ -68,8 +69,8 @@ function ActionMenuListRoot({ children, className, selectionMode, ref, onKeyDown
       >
         <div className={classes.ListItems}>{children}</div>
       </Box>
-    </ActionMenuContext.Provider>
+    </ActionListContext.Provider>
   );
 }
 
-export const ActionMenuList = Object.assign(ActionMenuListRoot, { Section: ActionMenuSection });
+export const ActionList = Object.assign(ActionListRoot, { Section: ActionListSection });

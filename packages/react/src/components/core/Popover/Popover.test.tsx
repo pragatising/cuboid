@@ -256,3 +256,42 @@ describe("Popover", () => {
     await expectNoAxeViolations(panel()!);
   });
 });
+
+describe("Popover: anchorRef", () => {
+  it("renders the trigger as it is: no toggle on click, no aria-expanded, aria-controls or aria-haspopup", async () => {
+    const anchor = { current: null as HTMLElement | null };
+    render(
+      <div>
+        <div ref={(node) => void (anchor.current = node)}>anchor</div>
+        <Popover trigger={<button type="button">Field</button>} anchorRef={anchor} role="listbox" aria-label="List">
+          <p>Body</p>
+        </Popover>
+      </div>,
+    );
+    const trigger = screen.getByRole("button", { name: "Field" });
+    expect(trigger).not.toHaveAttribute("aria-expanded");
+    expect(trigger).not.toHaveAttribute("aria-controls");
+    expect(trigger).not.toHaveAttribute("aria-haspopup");
+    await userEvent.click(trigger);
+    expect(panel()).toBeNull();
+  });
+
+  it("opens from the open prop and is dismissed by a press outside it and its anchor", async () => {
+    const onOpenChange = vi.fn();
+    const anchor = { current: null as HTMLElement | null };
+    render(
+      <div>
+        <div ref={(node) => void (anchor.current = node)}>anchor</div>
+        <button type="button">outside</button>
+        <Popover trigger={<button type="button">Field</button>} anchorRef={anchor} open onOpenChange={onOpenChange} aria-label="List">
+          <p>Body</p>
+        </Popover>
+      </div>,
+    );
+    expect(panel()).toBeInTheDocument();
+    await userEvent.click(screen.getByText("anchor"));
+    expect(onOpenChange).not.toHaveBeenCalled();
+    await userEvent.click(screen.getByRole("button", { name: "outside" }));
+    expect(onOpenChange).toHaveBeenCalledWith(false);
+  });
+});

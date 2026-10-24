@@ -33,6 +33,7 @@
     "type-check": "tsc --noEmit",
     "test": "vitest run",
     "check:icons": "node scripts/check-icon-imports.mjs",
+    "a11y:sweep": "node scripts/a11y-sweep.mjs",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "tokens:theme": "npm run tokens:theme -w @sragatiping/cuboid-primitives",

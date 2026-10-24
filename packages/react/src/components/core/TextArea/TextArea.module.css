@@ -1,0 +1,31 @@
+/* The native textarea inside the field shell (InputField.module.css): no chrome of its own, it fills the shell and inherits its colour. */
+:where(.TextArea) {
+  appearance: none;
+  box-sizing: border-box;
+  display: block;
+  flex: 1 1 auto;
+  align-self: stretch;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font: var(--cube-text-size-md);
+  resize: vertical;
+}
+
+:where(.TextArea)::placeholder {
+  color: var(--cube-input-fgColor-placeholder);
+  opacity: 1;
+}
+
+:where(.TextArea:disabled) {
+  cursor: not-allowed;
+  resize: none;
+}
+
+:where(.TextArea[readonly]) {
+  resize: none;
+}

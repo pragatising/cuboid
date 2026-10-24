@@ -22,7 +22,7 @@
         }
       },
       "divider": {
-        "$value": "{fgColor.neutral.subtle}",
+        "$value": "{display.gray.6}",
         "$type": "color",
         "$extensions": {
           "org.cuboid.figma": {

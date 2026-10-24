@@ -1,0 +1,86 @@
+import { useState } from "react";
+import type { Meta, StoryObj } from "@storybook/react";
+import { Box } from "../Box";
+import { Icon } from "../Icon";
+import { Select } from "./Select";
+
+const meta: Meta<typeof Select> = {
+  title: "Core/Select",
+  component: Select,
+  tags: ["autodocs"],
+  parameters: { layout: "padded" },
+  argTypes: { size: { control: "select", options: ["sm", "md", "lg"] } },
+  decorators: [(Story) => <div style={{ maxWidth: "16rem", minHeight: "14rem" }}>{Story()}</div>],
+};
+export default meta;
+type Story = StoryObj<typeof Select>;
+
+const FRUIT = ["Apple", "Banana", "Cherry", "Grape", "Lemon", "Mango"];
+
+export const Default: Story = {
+  render: function DefaultStory() {
+    const [value, setValue] = useState("");
+    return (
+      <Select label="Fruit" placeholder="Choose one" value={value} onValueChange={setValue}>
+        {FRUIT.map((name) => (
+          <Select.Option key={name} value={name.toLowerCase()}>
+            {name}
+          </Select.Option>
+        ))}
+      </Select>
+    );
+  },
+};
+
+export const WithDescriptionAndError: Story = {
+  render: () => (
+    <Select label="Fruit" description="Pick the one you like most." error="Choose a fruit" placeholder="Choose one">
+      <Select.Option value="apple">Apple</Select.Option>
+      <Select.Option value="banana">Banana</Select.Option>
+    </Select>
+  ),
+};
+
+export const WithSectionsAndVisuals: Story = {
+  render: () => (
+    <Select label="Workspace" defaultValue="personal" leadingVisual={<Icon name="home" />} maxHeight="14rem">
+      <Select.Section label="Yours">
+        <Select.Option value="personal" description="Only you">
+          Personal
+        </Select.Option>
+      </Select.Section>
+      <Select.Section label="Shared">
+        <Select.Option value="team">Team</Select.Option>
+        <Select.Option value="archive" disabled>
+          Archive
+        </Select.Option>
+      </Select.Section>
+    </Select>
+  ),
+};
+
+export const States: Story = {
+  render: () => (
+    <Box flexDirection="column" gap="md">
+      <Select label="Read only" readOnly defaultValue="apple">
+        <Select.Option value="apple">Apple</Select.Option>
+      </Select>
+      <Select label="Disabled" disabled defaultValue="apple">
+        <Select.Option value="apple">Apple</Select.Option>
+      </Select>
+    </Box>
+  ),
+};
+
+export const Sizes: Story = {
+  render: () => (
+    <Box flexDirection="column" gap="md">
+      {(["lg", "md", "sm"] as const).map((size) => (
+        <Select key={size} size={size} label={`${size}`} defaultValue="apple">
+          <Select.Option value="apple">Apple</Select.Option>
+          <Select.Option value="banana">Banana</Select.Option>
+        </Select>
+      ))}
+    </Box>
+  ),
+};

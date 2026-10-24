@@ -4,11 +4,11 @@
       bgColor: {
         rest: { $value: '{bgColor.danger.strong}', $type: 'color' },
         hover: {
-          $value: '{bgColor.danger.strong}',
+          $value: '{bgColor.danger.strongest}',
           $type: 'color',
           $description: 'GAP: original used a darker red step (red.10) than danger.strong (red.9) for hover/pressed emphasis. No functional token exists at that depth — falls back to the same strong step until one is added.',
         },
-        pressed: { $value: '{bgColor.danger.strong}', $type: 'color' },
+        pressed: { $value: '{bgColor.danger.strongest}', $type: 'color' },
         disabled: { $value: '{bgColor.neutral.light.4}', $type: 'color' },
       },
       borderColor: {

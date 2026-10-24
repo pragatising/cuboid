@@ -18,11 +18,10 @@ describe("Button", () => {
     expect(button()).toHaveAttribute("data-component", "Button");
   });
 
-  it("defaults to the secondary variant at size sm", () => {
+  it("defaults to the secondary variant at size md", () => {
     render(<Button>Save</Button>);
     expect(button()).toHaveAttribute("data-variant", "secondary");
-    expect(button()).toHaveAttribute("data-size", "sm");
-    expect(button().style.getPropertyValue("--button-bg-rest")).toBe(tokens.light.button.secondary.bgColor.rest);
+    expect(button()).toHaveAttribute("data-size", "md");
   });
 
   it("passes the anatomy, size, variant and state props through", async () => {
@@ -33,7 +32,7 @@ describe("Button", () => {
       </Button>,
     );
     expect(button()).toHaveAttribute("data-variant", "primary");
-    expect(button().style.height).toBe(tokens.light.size.control.lg.size);
+    expect(button()).toHaveAttribute("data-size", "lg");
     expect(button()).toHaveAttribute("data-block");
     expect(screen.getByTestId("lead")).toBeInTheDocument();
     await userEvent.click(button());

@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "../Button";
-import { IconButton } from "../IconButton";
 import { Box } from "../Box";
 import { Icon } from "../Icon";
-import { Text } from "../Text";
 import { ActionMenu } from "./ActionMenu";
 
 const meta: Meta<typeof ActionMenu> = {
@@ -20,7 +18,7 @@ export const Default: Story = {
   render: () => (
     <ActionMenu
       trigger={
-        <Button variant="secondary" size="sm">
+        <Button variant="secondary" size="md">
           Actions
         </Button>
       }
@@ -42,7 +40,7 @@ export const Controlled: Story = {
           open={open}
           onOpenChange={setOpen}
           trigger={
-            <Button variant="secondary" size="sm">
+            <Button variant="secondary" size="md">
               {open ? "Close" : "Open"} menu
             </Button>
           }
@@ -51,7 +49,7 @@ export const Controlled: Story = {
           <ActionMenu.Item onClick={() => console.log("edit")}>Edit</ActionMenu.Item>
           <ActionMenu.Item>Duplicate</ActionMenu.Item>
         </ActionMenu>
-        <Button variant="ghost" size="sm" onClick={() => setOpen((value) => !value)}>
+        <Button variant="ghost" size="md" onClick={() => setOpen((value) => !value)}>
           Toggle externally
         </Button>
       </Box>
@@ -63,7 +61,7 @@ export const WithSections: Story = {
   render: () => (
     <ActionMenu
       trigger={
-        <Button variant="secondary" size="sm">
+        <Button variant="secondary" size="md">
           Workspaces
         </Button>
       }
@@ -82,44 +80,41 @@ export const WithSections: Story = {
 };
 
 export const WithHeaderAndFooter: Story = {
-  render: () => (
-    <ActionMenu
-      trigger={
-        <Button variant="secondary" size="sm">
-          Filter
-        </Button>
-      }
-      aria-labelledby="menu-header-title"
-      closeOnSelect={false}
-    >
-      <ActionMenu.Header>
-        <Box flexDirection="row" gap="sm" alignItems="center">
-          <span id="menu-header-title" style={{ flex: 1 }}>
-            <Text size="sm" weight="semibold">
-              Filter
-            </Text>
-          </span>
-          <IconButton aria-label="Close" variant="ghost" size="sm" icon={<Icon name="close" />} />
-        </Box>
-      </ActionMenu.Header>
-      <ActionMenu.Item selected keepOpenOnSelect>
-        Active only
-      </ActionMenu.Item>
-      <ActionMenu.Item keepOpenOnSelect>
-        Archived
-      </ActionMenu.Item>
-      <ActionMenu.Footer>
-        <Box flexDirection="row" gap="sm" justifyContent="space-between">
-          <Button variant="secondary" size="xs">
-            Reset
+  render: () => {
+    const [open, setOpen] = useState(false);
+    return (
+      <ActionMenu
+        trigger={
+          <Button variant="secondary" size="md">
+            Filter
           </Button>
-          <Button variant="primary" size="xs">
-            Done
-          </Button>
-        </Box>
-      </ActionMenu.Footer>
-    </ActionMenu>
-  ),
+        }
+        open={open}
+        onOpenChange={setOpen}
+        aria-label="Filter"
+        closeOnSelect={false}
+      >
+        {/* `onClose` renders the close button and sets the header's dismissible (smaller end) padding. */}
+        <ActionMenu.Header onClose={() => setOpen(false)}>Filter</ActionMenu.Header>
+        <ActionMenu.Item selected keepOpenOnSelect>
+          Active only
+        </ActionMenu.Item>
+        <ActionMenu.Item keepOpenOnSelect>
+          Archived
+        </ActionMenu.Item>
+        <ActionMenu.Footer>
+          <Box flexDirection="row" gap="xs" justifyContent="space-between">
+            <Button variant="secondary" size="sm">
+              Reset
+            </Button>
+            <Button variant="primary" size="sm">
+              Done
+            </Button>
+          </Box>
+        </ActionMenu.Footer>
+      </ActionMenu>
+    );
+  },
 };
 
 export const LongListScrollable: Story = {
@@ -127,7 +122,7 @@ export const LongListScrollable: Story = {
   render: () => (
     <ActionMenu
       trigger={
-        <Button variant="secondary" size="sm">
+        <Button variant="secondary" size="md">
           Choose a fruit
         </Button>
       }
@@ -167,7 +162,7 @@ export const SingleSelection: Story = {
   render: function SingleStory() {
     const [sort, setSort] = useState("Name");
     return (
-      <ActionMenu trigger={<Button variant="secondary" size="sm">Sort by {sort}</Button>} aria-label="Sort by" selectionMode="single">
+      <ActionMenu trigger={<Button variant="secondary" size="md">Sort by {sort}</Button>} aria-label="Sort by" selectionMode="single">
         {["Name", "Date", "Size"].map((option) => (
           <ActionMenu.Item key={option} selected={sort === option} onClick={() => setSort(option)}>
             {option}
@@ -184,9 +179,41 @@ export const MultipleSelection: Story = {
     const [chosen, setChosen] = useState<string[]>(["Active"]);
     const toggle = (name: string) => setChosen((now) => (now.includes(name) ? now.filter((item) => item !== name) : [...now, name]));
     return (
-      <ActionMenu trigger={<Button variant="secondary" size="sm">Status ({chosen.length})</Button>} aria-label="Status" selectionMode="multiple" closeOnSelect={false}>
+      <ActionMenu trigger={<Button variant="secondary" size="md">Status ({chosen.length})</Button>} aria-label="Status" selectionMode="multiple" closeOnSelect={false}>
         {["Active", "Archived", "Draft"].map((name) => (
           <ActionMenu.Item key={name} selected={chosen.includes(name)} onClick={() => toggle(name)}>
+            {name}
+          </ActionMenu.Item>
+        ))}
+      </ActionMenu>
+    );
+  },
+};
+
+const FRUIT = ["Apple", "Banana", "Cherry", "Grape", "Lemon", "Mango", "Orange", "Pear"];
+
+export const WithSearch: Story = {
+  name: "With search (filterable choice list)",
+  render: function SearchStory() {
+    const [query, setQuery] = useState("");
+    const [chosen, setChosen] = useState("Banana");
+    const matches = FRUIT.filter((name) => name.toLowerCase().includes(query.toLowerCase()));
+    return (
+      <ActionMenu
+        trigger={
+          <Button variant="secondary" size="md">
+            {chosen}
+          </Button>
+        }
+        aria-label="Fruit"
+        maxHeight="16rem"
+        onOpenChange={(open) => open && setQuery("")}
+        onSelect={(item) => setChosen(item.textContent ?? "")}
+      >
+        <ActionMenu.Search aria-label="Filter fruit" placeholder="Filter" value={query} onChange={(event) => setQuery(event.target.value)} />
+        <ActionMenu.Empty role="status" icon="search" heading="No results" description="Try a different word" />
+        {matches.map((name) => (
+          <ActionMenu.Item key={name} selected={name === chosen}>
             {name}
           </ActionMenu.Item>
         ))}

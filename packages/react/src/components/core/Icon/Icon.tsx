@@ -3,7 +3,7 @@ import { clsx } from "clsx";
 import { useTokens } from "../../../mode";
 import type { Tokens } from "../../../mode";
 import { mergeProps } from "../../../utils/mergeProps";
-import { resolveColorValue } from "../../../utils/colorPaths";
+import { colorGroups, resolveColorValue } from "../../../utils/colorPaths";
 import type { CssColor, FgColor } from "../../../utils/colorPaths";
 import type { IconAxes } from "../../../icons/IconLibrary";
 import { materialSymbolsIconLibrary } from "../../../icons/material/materialSymbolsIconLibrary";
@@ -50,7 +50,9 @@ export function Icon({
   className,
   ...props
 }: IconProps) {
-  const { icon, fgColor } = useTokens();
+  const tokens = useTokens();
+  const { icon } = tokens;
+  const { fgColor } = colorGroups(tokens);
   const glyph = materialSymbolsIconLibrary.resolve(name, { weight, grade, opticalSize, fill, style: DEFAULT_AXES.style });
 
   return (

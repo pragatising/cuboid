@@ -12,8 +12,9 @@
         $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
       },
       subtle: {
-        $value: '{base.color.gray.6}',
+        $value: '{base.color.gray.7}',
         $type: 'color',
+        $description: 'Passes 4.5:1 on canvas.default in both modes (gray.6 was 2.3:1). It now shares gray.7 with muted: tell them apart by use, not by shade. Disabled text uses neutral.disabled, not this.',
         $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
       },
       muted: {
@@ -139,7 +140,11 @@
       strong: {
         $value: '{base.color.red.9}',
         $type: 'color',
-        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+        $description: 'Dark mode uses red.10: red.9 is 3.9:1 on the dark canvas, red.10 is 5.0:1.',
+        $extensions: {
+          'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] },
+          'org.cuboid.overrides': { dark: '{base.color.red.10}' },
+        },
       },
     },
     critical: {
@@ -157,7 +162,11 @@
       strong: {
         $value: '{base.color.red.9}',
         $type: 'color',
-        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+        $description: 'Dark mode uses red.10: red.9 is 3.9:1 on the dark canvas, red.10 is 5.0:1.',
+        $extensions: {
+          'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] },
+          'org.cuboid.overrides': { dark: '{base.color.red.10}' },
+        },
       },
     },
     alert: {
@@ -193,7 +202,11 @@
       strong: {
         $value: '{base.color.red.9}',
         $type: 'color',
-        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+        $description: 'Dark mode uses red.10: red.9 is 3.9:1 on the dark canvas, red.10 is 5.0:1.',
+        $extensions: {
+          'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] },
+          'org.cuboid.overrides': { dark: '{base.color.red.10}' },
+        },
       },
     },
     warning: {

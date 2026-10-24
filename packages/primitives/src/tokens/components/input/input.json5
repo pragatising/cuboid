@@ -1,0 +1,52 @@
+{
+  input: {
+    bgColor: {
+      rest: { $value: '{bgColor.canvas.default}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'input' } } },
+      hover: { $value: '{bgColor.canvas.default}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'input' } } },
+      readOnly: { $value: '{bgColor.neutral.light.2}', $type: 'color', $description: 'Figma canvas/inset (#f9f9f8): one step lighter than disabled.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'input' } } },
+      disabled: { $value: '{bgColor.neutral.light.3}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'input' } } },
+    },
+    borderColor: {
+      rest: { $value: '{borderColor.default}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'input' } } },
+      hover: { $value: '{borderColor.default}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'input' } } },
+      readOnly: { $value: '{borderColor.default}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'input' } } },
+      disabled: { $value: '{borderColor.default}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'input' } } },
+      error: { $value: '{borderColor.danger}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'input' } } },
+    },
+    fgColor: {
+      rest: { $value: '{fgColor.neutral.default}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'input' } } },
+      placeholder: { $value: '{fgColor.neutral.muted}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'input' } } },
+      readOnly: { $value: '{fgColor.neutral.default}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'input' } } },
+      disabled: { $value: '{fgColor.neutral.disabled}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'input' } } },
+      icon: { $value: '{fgColor.neutral.muted}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'input' } } },
+    },
+    label: {
+      fgColor: {
+        rest: { $value: '{fgColor.neutral.muted}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'input' } } },
+        active: {
+          $value: '{fgColor.neutral.default}',
+          $type: 'color',
+          $description: 'The label while the field is hovered, focused or in error.',
+          $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'input' } },
+        },
+        disabled: { $value: '{fgColor.neutral.muted}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'input' } } },
+      },
+    },
+    description: {
+      fgColor: { $value: '{fgColor.neutral.muted}', $type: 'color', $description: 'The help text and the character count under the field.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'input' } } },
+    },
+    error: {
+      fgColor: { $value: '{fgColor.danger.strong}', $type: 'color', $description: 'The validation message under the field.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'input' } } },
+    },
+    sizes: {
+      paddingInline: {
+        $value: '{space.sm}',
+        $type: 'dimension',
+        $description: 'Inline padding inside the field, between its border and the leading or trailing visual or the text. The same at every size.',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'input' } },
+      },
+      gap: { $value: '{space.sm}', $type: 'dimension', $description: 'Gap between the leading visual, the text and the trailing visual.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'input' } } },
+      stackGap: { $value: '{size.4}', $type: 'dimension', $description: 'Gap between the label, the field and the text under it.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'input' } } },
+    },
+  },
+}

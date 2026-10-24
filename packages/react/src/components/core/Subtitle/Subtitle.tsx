@@ -1,7 +1,7 @@
 import React from "react";
 import { clsx } from "clsx";
 import { useTokens } from "../../../mode";
-import { resolveColorValue } from "../../../utils/colorPaths";
+import { colorGroups, resolveColorValue } from "../../../utils/colorPaths";
 import type { CssColor, FgColor } from "../../../utils/colorPaths";
 import { mergeProps } from "../../../utils/mergeProps";
 import type { PolymorphicProps } from "../../../utils/polymorphic";
@@ -22,7 +22,9 @@ export type SubtitleProps<As extends React.ElementType = "p"> = PolymorphicProps
  */
 export function Subtitle<As extends React.ElementType = "p">({ as, color, className, ...props }: SubtitleProps<As>) {
   const Component: React.ElementType = as ?? "p";
-  const { subtitle, fgColor } = useTokens();
+  const tokens = useTokens();
+  const { subtitle } = tokens;
+  const { fgColor } = colorGroups(tokens);
 
   return (
     <Component

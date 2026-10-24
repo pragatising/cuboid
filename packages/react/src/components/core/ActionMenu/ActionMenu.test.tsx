@@ -1,24 +1,25 @@
+import { useState } from "react";
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import tokens from "@sragatiping/cuboid-primitives";
-import { setMode } from "../../../mode";
 import { behavesAsComponent, expectNoAxeViolations } from "../../../test/testing";
+import { cubeVariablesRead, readSource, resolveVariable, themeVariables } from "../../../test/themeCss";
 import { Button } from "../Button";
 import { ActionMenu } from "./ActionMenu";
-import itemClasses from "./ActionMenuItem.module.css";
-import listClasses from "./ActionMenuList.module.css";
+import itemClasses from "../ActionList/ActionListItem.module.css";
+import listClasses from "../ActionList/ActionList.module.css";
 
 behavesAsComponent({
   Component: ActionMenu.List,
   dataComponent: "ActionMenu.List",
-  baseClassName: listClasses.ActionMenuList,
+  baseClassName: listClasses.ActionList,
   props: { children: <ActionMenu.Item>One</ActionMenu.Item> },
 });
 behavesAsComponent({
   Component: ActionMenu.Item,
   dataComponent: "ActionMenu.Item",
-  baseClassName: itemClasses.ActionMenuItem,
+  baseClassName: itemClasses.ActionListItem,
   props: { children: "One" },
 });
 
@@ -43,30 +44,33 @@ describe("ActionMenu.List and ActionMenu.Item", () => {
     expect(screen.getAllByRole("menuitem")).toHaveLength(2);
   });
 
-  it("hands the actionMenu tokens down as scoped variables", () => {
+  it("inlines no token variables on the list or its items: the CSS reads the published ones", () => {
     render(
       <ActionMenu.List aria-label="Things">
         <ActionMenu.Item>One</ActionMenu.Item>
       </ActionMenu.List>,
     );
-    const list = screen.getByRole("menu");
-    expect(list.style.getPropertyValue("--action-menu-item-bg-color-rest")).toBe(tokens.light.actionMenu.item.bgColor.rest);
-    expect(list.style.getPropertyValue("--action-menu-item-bg-color-selected-pressed")).toBe(
-      tokens.light.actionMenu.item.bgColor.selected.pressed,
-    );
-    expect(list.style.getPropertyValue("--action-menu-sizes-item-min-height")).toBe(tokens.light.actionMenu.sizes.item.minHeight);
+    expect(screen.getByRole("menu").getAttribute("style") ?? "").not.toContain("--");
+    expect(screen.getByRole("menuitem").getAttribute("style") ?? "").not.toContain("--");
   });
 
-  it("re-renders its variables with the new mode's tokens", () => {
-    render(
-      <ActionMenu.List aria-label="Things">
-        <ActionMenu.Item>One</ActionMenu.Item>
-      </ActionMenu.List>,
-    );
-    act(() => setMode("dark"));
-    expect(screen.getByRole("menu").style.getPropertyValue("--action-menu-item-bg-color-rest")).toBe(
-      tokens.dark.actionMenu.item.bgColor.rest,
-    );
+  it.each(["ActionList/ActionListItem", "ActionList/ActionList", "ActionMenu/ActionMenuSearch"])("%s.module.css reads only --cube-* variables the built theme.css has, in both modes", (name) => {
+    const css = readSource(`src/components/core/${name}.module.css`);
+    const read = cubeVariablesRead(css);
+    expect(read.length).toBeGreaterThan(0);
+    for (const variable of read) {
+      expect(themeVariables().light.has(variable), `${variable} (light)`).toBe(true);
+      expect(themeVariables().dark.has(variable), `${variable} (dark)`).toBe(true);
+    }
+  });
+
+  it("resolves the item colours to the actionMenu tokens in both modes", () => {
+    for (const mode of ["light", "dark"] as const) {
+      const { item } = tokens[mode].actionMenu;
+      expect(resolveVariable("--cube-actionMenu-item-bgColor-rest", mode)).toBe(item.bgColor.rest);
+      expect(resolveVariable("--cube-actionMenu-item-bgColor-selected-pressed", mode)).toBe(item.bgColor.selected.pressed);
+      expect(resolveVariable("--cube-actionMenu-item-fgColor-subtext", mode)).toBe(item.fgColor.subtext);
+    }
   });
 
   it("keeps the header and footer outside the menu, around the items", async () => {
@@ -130,6 +134,32 @@ describe("ActionMenu.List and ActionMenu.Item", () => {
     );
     expect(screen.getByRole("menu")).toHaveAttribute("aria-multiselectable", "true");
     expect(screen.getAllByRole("menuitemcheckbox")).toHaveLength(1);
+  });
+
+  it('role="listbox" makes the items options, aria-selected on every one, with no aria-checked', () => {
+    render(
+      <ActionMenu.List role="listbox" aria-label="Things" selectionMode="single">
+        <ActionMenu.Item selected>One</ActionMenu.Item>
+        <ActionMenu.Item>Two</ActionMenu.Item>
+      </ActionMenu.List>,
+    );
+    expect(screen.getByRole("listbox", { name: "Things" })).toBeInTheDocument();
+    expect(screen.queryByRole("menu")).toBeNull();
+    expect(screen.getByRole("option", { name: "One" })).toHaveAttribute("aria-selected", "true");
+    expect(screen.getByRole("option", { name: "Two" })).toHaveAttribute("aria-selected", "false");
+    expect(screen.getByRole("option", { name: "One" })).not.toHaveAttribute("aria-checked");
+  });
+
+  it("a listbox moves between its options with the arrow keys", async () => {
+    render(
+      <ActionMenu.List role="listbox" aria-label="Things">
+        <ActionMenu.Item>One</ActionMenu.Item>
+        <ActionMenu.Item>Two</ActionMenu.Item>
+      </ActionMenu.List>,
+    );
+    act(() => screen.getByRole("option", { name: "One" }).focus());
+    await userEvent.keyboard("{ArrowDown}");
+    expect(screen.getByRole("option", { name: "Two" })).toHaveFocus();
   });
 
   it("renders leading and trailing visuals hidden from assistive technology, and a description", () => {
@@ -284,5 +314,158 @@ describe("ActionMenu", () => {
     menu();
     await userEvent.click(screen.getByRole("button", { name: "Actions" }));
     await expectNoAxeViolations(screen.getByRole("menu"));
+  });
+});
+
+const FRUIT = ["Apple", "Banana", "Cherry"];
+
+function Filterable({ onSelect, items = FRUIT }: { onSelect?: (item: HTMLElement) => void; items?: string[] }) {
+  const [query, setQuery] = useState("");
+  return (
+    <ActionMenu trigger={<Button>Pick</Button>} aria-label="Fruit" defaultOpen onSelect={onSelect}>
+      <ActionMenu.Search aria-label="Filter fruit" value={query} onChange={(event) => setQuery(event.target.value)} />
+      {items.filter((name) => name.toLowerCase().includes(query.toLowerCase())).map((name) => (
+        <ActionMenu.Item key={name}>{name}</ActionMenu.Item>
+      ))}
+    </ActionMenu>
+  );
+}
+
+const search = () => screen.getByRole("combobox", { name: "Filter fruit" });
+const option = (name: string) => screen.getByRole("option", { name });
+
+describe("ActionMenu.Search", () => {
+  it("makes the menu a listbox of options, with a combobox outside it that controls it", () => {
+    render(<Filterable />);
+    const list = screen.getByRole("listbox", { name: "Fruit" });
+    expect(screen.queryByRole("menu")).toBeNull();
+    expect(screen.getAllByRole("option")).toHaveLength(3);
+    expect(list).not.toContainElement(search());
+    expect(search()).toHaveAttribute("aria-controls", list.id);
+    expect(search()).toHaveAttribute("aria-expanded", "true");
+    expect(screen.getByRole("button", { name: "Pick" })).toHaveAttribute("aria-haspopup", "listbox");
+  });
+
+  it("focuses the search field when the menu opens", () => {
+    render(<Filterable />);
+    expect(search()).toHaveFocus();
+  });
+
+  it("makes the first option active, and the options are not tab stops", () => {
+    render(<Filterable />);
+    expect(search()).toHaveAttribute("aria-activedescendant", option("Apple").id);
+    expect(option("Apple")).toHaveAttribute("data-active");
+    expect(option("Banana")).not.toHaveAttribute("data-active");
+    expect(option("Apple")).toHaveAttribute("tabindex", "-1");
+  });
+
+  it("ArrowDown and ArrowUp move the active option and wrap, while focus stays in the field", async () => {
+    render(<Filterable />);
+    await userEvent.keyboard("{ArrowDown}");
+    expect(search()).toHaveAttribute("aria-activedescendant", option("Banana").id);
+    await userEvent.keyboard("{ArrowDown}{ArrowDown}");
+    expect(search()).toHaveAttribute("aria-activedescendant", option("Apple").id);
+    await userEvent.keyboard("{ArrowUp}");
+    expect(search()).toHaveAttribute("aria-activedescendant", option("Cherry").id);
+    expect(search()).toHaveFocus();
+  });
+
+  it("skips disabled options", async () => {
+    render(
+      <ActionMenu trigger={<Button>Pick</Button>} aria-label="Fruit" defaultOpen>
+        <ActionMenu.Search aria-label="Filter fruit" />
+        <ActionMenu.Item>Apple</ActionMenu.Item>
+        <ActionMenu.Item disabled>Banana</ActionMenu.Item>
+        <ActionMenu.Item>Cherry</ActionMenu.Item>
+      </ActionMenu>,
+    );
+    await userEvent.keyboard("{ArrowDown}");
+    expect(search()).toHaveAttribute("aria-activedescendant", option("Cherry").id);
+  });
+
+  it("Enter chooses the active option and closes the menu", async () => {
+    const onSelect = vi.fn();
+    render(<Filterable onSelect={onSelect} />);
+    await userEvent.keyboard("{ArrowDown}{Enter}");
+    expect(onSelect).toHaveBeenCalledTimes(1);
+    expect(onSelect.mock.calls[0][0]).toHaveTextContent("Banana");
+    expect(screen.queryByRole("listbox")).toBeNull();
+  });
+
+  it("filtering is the consumer's: the first matching option becomes active", async () => {
+    render(<Filterable />);
+    await userEvent.type(search(), "an");
+    expect(screen.getAllByRole("option")).toHaveLength(1);
+    expect(search()).toHaveAttribute("aria-activedescendant", option("Banana").id);
+    expect(search()).toHaveValue("an");
+  });
+
+  it("with no matching option nothing is active and Enter does nothing", async () => {
+    const onSelect = vi.fn();
+    render(<Filterable onSelect={onSelect} />);
+    await userEvent.type(search(), "zzz{Enter}");
+    expect(screen.queryAllByRole("option")).toHaveLength(0);
+    expect(search()).not.toHaveAttribute("aria-activedescendant");
+    expect(onSelect).not.toHaveBeenCalled();
+  });
+
+  it("clicking an option chooses it", async () => {
+    const onSelect = vi.fn();
+    render(<Filterable onSelect={onSelect} />);
+    await userEvent.click(option("Cherry"));
+    expect(onSelect.mock.calls[0][0]).toHaveTextContent("Cherry");
+  });
+
+  it("Escape closes the menu and returns focus to the trigger", async () => {
+    render(<Filterable />);
+    await userEvent.keyboard("{Escape}");
+    expect(screen.queryByRole("listbox")).toBeNull();
+    expect(screen.getByRole("button", { name: "Pick" })).toHaveFocus();
+  });
+
+  it("has no axe violations", async () => {
+    render(<Filterable />);
+    await expectNoAxeViolations(document.querySelector('[data-component="Popover"]') as HTMLElement);
+  });
+});
+
+describe("ActionMenu.Empty", () => {
+  function Searchable({ items }: { items: string[] }) {
+    return (
+      <ActionMenu trigger={<Button>Pick</Button>} aria-label="Fruit" defaultOpen>
+        <ActionMenu.Search aria-label="Filter fruit" />
+        <ActionMenu.Empty role="status" heading="No results" description="Try another word" />
+        {items.map((name) => (
+          <ActionMenu.Item key={name}>{name}</ActionMenu.Item>
+        ))}
+      </ActionMenu>
+    );
+  }
+
+  it("shows in place of the list while there are no items, outside the listbox", () => {
+    render(<Searchable items={[]} />);
+    expect(screen.getByRole("status")).toHaveTextContent("No results");
+    expect(screen.queryAllByRole("option")).toHaveLength(0);
+    expect(screen.queryByRole("listbox")).toBeNull();
+    expect(search()).not.toHaveAttribute("aria-activedescendant");
+  });
+
+  it("keeps the list in the DOM, hidden, so the search field's aria-controls still resolves", () => {
+    render(<Searchable items={[]} />);
+    const id = search().getAttribute("aria-controls") as string;
+    const list = document.getElementById(id);
+    expect(list).toBeInTheDocument();
+    expect(list).not.toBeVisible();
+  });
+
+  it("is not shown while there are items", () => {
+    render(<Searchable items={["Apple"]} />);
+    expect(screen.queryByRole("status")).toBeNull();
+    expect(screen.getByRole("option", { name: "Apple" })).toBeInTheDocument();
+  });
+
+  it("has no axe violations", async () => {
+    render(<Searchable items={[]} />);
+    await expectNoAxeViolations(document.querySelector('[data-component="Popover"]') as HTMLElement);
   });
 });

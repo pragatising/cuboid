@@ -9,16 +9,22 @@ import { Pill, type PillIntensity, type PillShade } from "./Pill";
 const SHADES = Object.keys(tokens.light.pill.color) as PillShade[];
 const INTENSITIES = Object.keys(tokens.light.pill.color.gray) as PillIntensity[];
 
-function IntensityMatrix({ bordered = false }: { bordered?: boolean }) {
+/** Every pill: each intensity, filled and bordered, in every shade. */
+function PillMatrix() {
   return (
-    <Box gap="1x">
-      {INTENSITIES.map((intensity) => (
-        <Box key={intensity} flexDirection="row" flexWrap="wrap" alignItems="center" gap="1x">
-          <Text size="sm" style={{ width: "6rem" }}>{intensity}</Text>
-          {SHADES.map((shade) => (
-            <Pill key={shade} shade={shade} intensity={intensity} bordered={bordered}>
-              {shade}
-            </Pill>
+    <Box gap="3x">
+      {([false, true] as const).map((bordered) => (
+        <Box key={String(bordered)} gap="1x">
+          <Text size="sm" weight="semibold" color="neutral.contrast">{bordered ? "Bordered" : "Filled"}</Text>
+          {INTENSITIES.map((intensity) => (
+            <Box key={intensity} flexDirection="row" flexWrap="wrap" alignItems="center" gap="1x">
+              <Text size="sm" style={{ width: "6rem" }}>{intensity}</Text>
+              {SHADES.map((shade) => (
+                <Pill key={shade} shade={shade} intensity={intensity} bordered={bordered}>
+                  {shade}
+                </Pill>
+              ))}
+            </Box>
           ))}
         </Box>
       ))}
@@ -45,14 +51,9 @@ export const Playground: Story = {
   args: { shade: "gray", intensity: "light", bordered: false, size: "sm", children: "Pill" },
 };
 
-export const AllVariantsFilled: Story = {
-  name: "All variants (filled)",
-  render: () => <IntensityMatrix />,
-};
-
-export const AllVariantsBordered: Story = {
-  name: "All variants (bordered)",
-  render: () => <IntensityMatrix bordered />,
+export const AllPills: Story = {
+  name: "All pills (every shade and intensity, filled and bordered)",
+  render: () => <PillMatrix />,
 };
 
 export const Sizes: Story = {

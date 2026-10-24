@@ -1,7 +1,7 @@
 /*
  * Layout and collapse states only. Background and width come from the `sidebar` tokens inline (Sidebar.tsx). The padding,
  * border and toggle size the regions need arrive as element-scoped --sidebar-* variables on the root; the nav rows read
- * the --action-menu-* variables set there too (see ../ActionMenu/actionMenuVars.ts), because the nav rail is the
+ * the --cube-actionMenu-* token variables, because the nav rail is the
  * ActionMenu design. Zero specificity (:where), so a consumer's own class can override any of it.
  */
 :where(.Sidebar) {
@@ -32,7 +32,7 @@
   display: flex;
   flex-shrink: 0;
   align-items: center;
-  gap: var(--action-menu-sizes-item-slot-gap);
+  gap: var(--cube-actionMenu-sizes-item-slotGap);
   min-height: calc(var(--sidebar-padding) * 2 + var(--sidebar-toggle-size));
   padding: var(--sidebar-padding);
 }
@@ -115,7 +115,7 @@
 :where(.Item) {
   display: flex;
   width: 100%;
-  min-height: var(--action-menu-sizes-item-min-height);
+  min-height: var(--cube-actionMenu-sizes-item-minHeight);
   color: inherit;
   text-decoration: none;
   cursor: pointer;
@@ -125,35 +125,36 @@
   display: flex;
   flex: 1;
   align-items: center;
-  gap: var(--action-menu-sizes-item-slot-gap);
+  gap: var(--cube-actionMenu-sizes-item-slotGap);
   box-sizing: border-box;
   width: 100%;
   min-width: 0;
-  padding: var(--action-menu-sizes-item-padding-block) var(--action-menu-sizes-item-padding-inline);
-  border-radius: var(--action-menu-sizes-item-border-radius);
-  background-color: var(--action-menu-item-bg-color-rest);
-  color: var(--action-menu-item-fg-color-rest);
+  padding: var(--cube-actionMenu-sizes-item-paddingBlock) var(--cube-actionMenu-sizes-item-paddingInline);
+  border-radius: var(--cube-actionMenu-sizes-item-borderRadius);
+  background-color: var(--cube-actionMenu-item-bgColor-rest);
+  color: var(--cube-actionMenu-item-fgColor-rest);
   overflow: hidden;
   transition: background-color 120ms ease, color 120ms ease, box-shadow 120ms ease;
 }
 
 :where(.Item:not([aria-disabled="true"], [data-current]):hover .ItemInner) {
-  background-color: var(--action-menu-item-bg-color-hover);
+  background-color: var(--cube-actionMenu-item-bgColor-hover);
+  color: var(--cube-actionMenu-item-fgColor-hover);
 }
 
 :where(.Item:not([aria-disabled="true"], [data-current]):active .ItemInner) {
-  background-color: var(--action-menu-item-bg-color-pressed);
-  color: var(--action-menu-item-fg-color-pressed);
+  background-color: var(--cube-actionMenu-item-bgColor-pressed);
+  color: var(--cube-actionMenu-item-fgColor-pressed);
 }
 
 /* The current page (Figma `selected?=true`). */
 :where(.Item[data-current] .ItemInner) {
-  background-color: var(--action-menu-item-bg-color-selected-rest);
-  color: var(--action-menu-item-fg-color-selected);
+  background-color: var(--cube-actionMenu-item-bgColor-selected-rest);
+  color: var(--cube-actionMenu-item-fgColor-selected);
 }
 
 :where(.Item[data-current]:not([aria-disabled="true"]):hover .ItemInner, .Item[data-current]:not([aria-disabled="true"]):active .ItemInner) {
-  background-color: var(--action-menu-item-bg-color-selected-pressed);
+  background-color: var(--cube-actionMenu-item-bgColor-selected-pressed);
 }
 
 :where(.Item[aria-disabled="true"]) {
@@ -161,8 +162,8 @@
 }
 
 :where(.Item[aria-disabled="true"] .ItemInner) {
-  background-color: var(--action-menu-item-bg-color-disabled);
-  color: var(--action-menu-item-fg-color-disabled);
+  background-color: var(--cube-actionMenu-item-bgColor-disabled);
+  color: var(--cube-actionMenu-item-fgColor-disabled);
 }
 
 :where(.Item:focus) {
@@ -170,7 +171,7 @@
 }
 
 :where(.Item:focus-visible .ItemInner) {
-  box-shadow: 0 0 0 1px var(--action-menu-item-bg-color-rest), 0 0 0 var(--action-menu-focus-width) var(--action-menu-focus-color);
+  box-shadow: 0 0 0 1px var(--cube-actionMenu-item-bgColor-rest), 0 0 0 var(--cube-focusRing-width) var(--cube-focusRing-color);
 }
 
 :where(.Item[data-icon-only]) {
@@ -180,8 +181,8 @@
 :where(.Item[data-icon-only] .ItemInner) {
   justify-content: center;
   gap: 0;
-  width: var(--action-menu-sizes-item-min-height);
-  padding-inline: var(--action-menu-sizes-item-padding-block);
+  width: var(--cube-actionMenu-sizes-item-minHeight);
+  padding-inline: var(--cube-actionMenu-sizes-item-paddingBlock);
 }
 
 :where(.Slot) {
@@ -189,15 +190,15 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  min-width: var(--action-menu-sizes-item-icon-size);
-  height: var(--action-menu-sizes-item-icon-size);
+  min-width: var(--cube-actionMenu-sizes-item-iconSize);
+  height: var(--cube-actionMenu-sizes-item-iconSize);
   color: currentColor;
 }
 
 :where(.ItemLabel) {
   flex: 1;
   min-width: 0;
-  font: var(--action-menu-label-font);
+  font: var(--cube-text-size-md);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -206,12 +207,12 @@
 /* The header's title as a button (an account or workspace menu trigger): the ActionMenu row's looks. */
 :where(.HeaderButton) {
   box-sizing: border-box;
-  min-height: var(--action-menu-sizes-item-min-height);
+  min-height: var(--cube-actionMenu-sizes-item-minHeight);
   margin: 0;
   padding: 0.25rem 0.5rem;
   border: none;
-  border-radius: var(--action-menu-sizes-item-border-radius);
-  background-color: var(--action-menu-item-bg-color-rest);
+  border-radius: var(--cube-actionMenu-sizes-item-borderRadius);
+  background-color: var(--cube-actionMenu-item-bgColor-rest);
   color: inherit;
   font: inherit;
   text-align: left;
@@ -220,11 +221,11 @@
 }
 
 :where(.HeaderButton:hover) {
-  background-color: var(--action-menu-item-bg-color-hover);
+  background-color: var(--cube-actionMenu-item-bgColor-hover);
 }
 
 :where(.HeaderButton:active, .HeaderButton[aria-expanded="true"]) {
-  background-color: var(--action-menu-item-bg-color-pressed);
+  background-color: var(--cube-actionMenu-item-bgColor-pressed);
 }
 
 :where(.HeaderButton:focus) {
@@ -232,7 +233,7 @@
 }
 
 :where(.HeaderButton:focus-visible) {
-  box-shadow: 0 0 0 1px var(--action-menu-item-bg-color-rest), 0 0 0 var(--action-menu-focus-width) var(--action-menu-focus-color);
+  box-shadow: 0 0 0 1px var(--cube-actionMenu-item-bgColor-rest), 0 0 0 var(--cube-focusRing-width) var(--cube-focusRing-color);
 }
 
 :where(.HeaderButtonLabel) {
@@ -247,5 +248,5 @@
   display: inline-flex;
   flex-shrink: 0;
   align-items: center;
-  color: var(--action-menu-item-fg-color-subtext);
+  color: var(--cube-actionMenu-item-fgColor-subtext);
 }

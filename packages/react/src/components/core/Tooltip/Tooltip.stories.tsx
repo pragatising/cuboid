@@ -24,7 +24,7 @@ export const Description: Story = {
   args: { text: "Saves to the cloud", placement: "bottom" },
   render: (args) => (
     <Tooltip {...args}>
-      <Button variant="secondary" size="sm">Save</Button>
+      <Button variant="secondary" size="md">Save</Button>
     </Tooltip>
   ),
 };
@@ -41,7 +41,7 @@ export const Label: Story = {
 export const WithKeybindingHint: Story = {
   render: () => (
     <Tooltip text="Save" keybindingHint="Mod+S">
-      <Button variant="secondary" size="sm">Save</Button>
+      <Button variant="secondary" size="md">Save</Button>
     </Tooltip>
   ),
 };
@@ -62,7 +62,7 @@ export const Placements: Story = {
     <Box padding="xxl" gap="xl" alignItems="center">
       {(["top", "bottom", "left", "right"] as const).map((placement) => (
         <Tooltip key={placement} text={placement} placement={placement}>
-          <Button variant="rounded" size="sm">{placement}</Button>
+          <Button variant="rounded" size="md">{placement}</Button>
         </Tooltip>
       ))}
     </Box>
@@ -74,7 +74,7 @@ export const Delays: Story = {
     <Box flexDirection="row" gap="md">
       {(["short", "medium", "long"] as const).map((delay) => (
         <Tooltip key={delay} text={`${delay} delay`} delay={delay}>
-          <Button variant="secondary" size="sm">{delay}</Button>
+          <Button variant="secondary" size="md">{delay}</Button>
         </Tooltip>
       ))}
     </Box>
@@ -84,7 +84,7 @@ export const Delays: Story = {
 export const LongText: Story = {
   render: () => (
     <Tooltip text="Tooltips have low discoverability and do not work on touch: never put essential information in one.">
-      <Button variant="secondary" size="sm">Hover for guidance</Button>
+      <Button variant="secondary" size="md">Hover for guidance</Button>
     </Tooltip>
   ),
 };
@@ -94,7 +94,7 @@ export const Portal: Story = {
   render: () => (
     <div style={{ overflow: "hidden", height: 72, padding: 12 }}>
       <Tooltip text="Still visible: portaled to document.body">
-        <Button variant="secondary" size="sm">Hover inside clipped box</Button>
+        <Button variant="secondary" size="md">Hover inside clipped box</Button>
       </Tooltip>
     </div>
   ),

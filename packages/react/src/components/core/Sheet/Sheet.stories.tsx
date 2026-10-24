@@ -68,7 +68,7 @@ function StickyHeaderDemo() {
           <span id="sheet-filters-title">
             <Heading as="h2" size="h3">Filters</Heading>
           </span>
-          <IconButton aria-label="Close" variant="ghost" size="sm" onClick={() => setOpen(false)} icon={<Icon name="close" />} />
+          <IconButton aria-label="Close" variant="ghost" size="md" onClick={() => setOpen(false)} icon={<Icon name="close" />} />
         </Sheet.Header>
         <Sheet.Body>
           <Box gap="sm">

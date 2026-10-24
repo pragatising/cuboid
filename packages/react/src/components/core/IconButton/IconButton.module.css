@@ -1,8 +1,11 @@
 /*
- * Layout and states only. The colours arrive as element-scoped variables (--icon-button-<property>-<state>) set
- * inline from the `iconButton` tokens (see IconButton.tsx and utils/cssVars.ts); the browser picks the state, so
- * :hover / :active / :disabled / :focus-visible live here. Zero specificity (:where), so a consumer's own class can
- * override any of it.
+ * Layout, geometry and states. Every value comes from the token variables the token build publishes (`--cube-*`, see
+ * dist/css/theme.css: light on :root, dark under [data-mode="dark"]), so the element carries no inline style and the
+ * browser picks the state (:hover / :active / :disabled / :focus-visible).
+ *
+ * The per-variant block maps the `iconButton.<variant>.<default|selected>` tokens to the short element-scoped variables the
+ * rules below read (--icon-button-bg-rest …), so a consumer can still override one with `style` or a class. Zero specificity
+ * (:where). IconButton.test.tsx fails if a --cube-* variable used here is missing from the built theme.css.
  */
 :where(.IconButton) {
   appearance: none;
@@ -15,10 +18,98 @@
   user-select: none;
   cursor: pointer;
   border-style: solid;
+  border-width: var(--cube-borderWidth-thin);
   box-shadow: none;
   color: var(--icon-button-fg-rest);
   background-color: var(--icon-button-bg-rest);
   border-color: var(--icon-button-border-rest);
+  transition:
+    background-color var(--cube-motion-transition-hover),
+    border-color var(--cube-motion-transition-hover),
+    color var(--cube-motion-transition-hover);
+}
+
+/* Colours: the variant picks the token set, and `selected` the selected half of it. */
+:where(.IconButton[data-variant="ghost"]:not([data-selected])) {
+  --icon-button-bg-rest: var(--cube-iconButton-ghost-default-bgColor-rest);
+  --icon-button-bg-hover: var(--cube-iconButton-ghost-default-bgColor-hover);
+  --icon-button-bg-pressed: var(--cube-iconButton-ghost-default-bgColor-pressed);
+  --icon-button-bg-disabled: var(--cube-iconButton-ghost-default-bgColor-disabled);
+  --icon-button-fg-rest: var(--cube-iconButton-ghost-default-fgColor-rest);
+  --icon-button-fg-hover: var(--cube-iconButton-ghost-default-fgColor-hover);
+  --icon-button-fg-pressed: var(--cube-iconButton-ghost-default-fgColor-pressed);
+  --icon-button-fg-disabled: var(--cube-iconButton-ghost-default-fgColor-disabled);
+  --icon-button-border-rest: var(--cube-iconButton-ghost-default-borderColor-rest);
+  --icon-button-border-hover: var(--cube-iconButton-ghost-default-borderColor-hover);
+  --icon-button-border-pressed: var(--cube-iconButton-ghost-default-borderColor-pressed);
+  --icon-button-border-disabled: var(--cube-iconButton-ghost-default-borderColor-disabled);
+}
+
+:where(.IconButton[data-variant="ghost"][data-selected]) {
+  --icon-button-bg-rest: var(--cube-iconButton-ghost-selected-bgColor-rest);
+  --icon-button-bg-hover: var(--cube-iconButton-ghost-selected-bgColor-hover);
+  --icon-button-bg-pressed: var(--cube-iconButton-ghost-selected-bgColor-pressed);
+  --icon-button-bg-disabled: var(--cube-iconButton-ghost-selected-bgColor-disabled);
+  --icon-button-fg-rest: var(--cube-iconButton-ghost-selected-fgColor-rest);
+  --icon-button-fg-hover: var(--cube-iconButton-ghost-selected-fgColor-hover);
+  --icon-button-fg-pressed: var(--cube-iconButton-ghost-selected-fgColor-pressed);
+  --icon-button-fg-disabled: var(--cube-iconButton-ghost-selected-fgColor-disabled);
+  --icon-button-border-rest: var(--cube-iconButton-ghost-selected-borderColor-rest);
+  --icon-button-border-hover: var(--cube-iconButton-ghost-selected-borderColor-hover);
+  --icon-button-border-pressed: var(--cube-iconButton-ghost-selected-borderColor-pressed);
+  --icon-button-border-disabled: var(--cube-iconButton-ghost-selected-borderColor-disabled);
+}
+
+:where(.IconButton[data-variant="outlined"]:not([data-selected])) {
+  --icon-button-bg-rest: var(--cube-iconButton-outlined-default-bgColor-rest);
+  --icon-button-bg-hover: var(--cube-iconButton-outlined-default-bgColor-hover);
+  --icon-button-bg-pressed: var(--cube-iconButton-outlined-default-bgColor-pressed);
+  --icon-button-bg-disabled: var(--cube-iconButton-outlined-default-bgColor-disabled);
+  --icon-button-fg-rest: var(--cube-iconButton-outlined-default-fgColor-rest);
+  --icon-button-fg-hover: var(--cube-iconButton-outlined-default-fgColor-hover);
+  --icon-button-fg-pressed: var(--cube-iconButton-outlined-default-fgColor-pressed);
+  --icon-button-fg-disabled: var(--cube-iconButton-outlined-default-fgColor-disabled);
+  --icon-button-border-rest: var(--cube-iconButton-outlined-default-borderColor-rest);
+  --icon-button-border-hover: var(--cube-iconButton-outlined-default-borderColor-hover);
+  --icon-button-border-pressed: var(--cube-iconButton-outlined-default-borderColor-pressed);
+  --icon-button-border-disabled: var(--cube-iconButton-outlined-default-borderColor-disabled);
+}
+
+:where(.IconButton[data-variant="outlined"][data-selected]) {
+  --icon-button-bg-rest: var(--cube-iconButton-outlined-selected-bgColor-rest);
+  --icon-button-bg-hover: var(--cube-iconButton-outlined-selected-bgColor-hover);
+  --icon-button-bg-pressed: var(--cube-iconButton-outlined-selected-bgColor-pressed);
+  --icon-button-bg-disabled: var(--cube-iconButton-outlined-selected-bgColor-disabled);
+  --icon-button-fg-rest: var(--cube-iconButton-outlined-selected-fgColor-rest);
+  --icon-button-fg-hover: var(--cube-iconButton-outlined-selected-fgColor-hover);
+  --icon-button-fg-pressed: var(--cube-iconButton-outlined-selected-fgColor-pressed);
+  --icon-button-fg-disabled: var(--cube-iconButton-outlined-selected-fgColor-disabled);
+  --icon-button-border-rest: var(--cube-iconButton-outlined-selected-borderColor-rest);
+  --icon-button-border-hover: var(--cube-iconButton-outlined-selected-borderColor-hover);
+  --icon-button-border-pressed: var(--cube-iconButton-outlined-selected-borderColor-pressed);
+  --icon-button-border-disabled: var(--cube-iconButton-outlined-selected-borderColor-disabled);
+}
+
+/* Geometry: the size is a square, with the icon size and radius from the iconButton size tokens. */
+:where(.IconButton[data-size="sm"]) {
+  --icon-button-icon-size: var(--cube-iconButton-sm-icon);
+  width: var(--cube-iconButton-sm-size);
+  height: var(--cube-iconButton-sm-size);
+  border-radius: var(--cube-iconButton-sm-borderRadius);
+}
+
+:where(.IconButton[data-size="md"]) {
+  --icon-button-icon-size: var(--cube-iconButton-md-icon);
+  width: var(--cube-iconButton-md-size);
+  height: var(--cube-iconButton-md-size);
+  border-radius: var(--cube-iconButton-md-borderRadius);
+}
+
+:where(.IconButton[data-size="lg"]) {
+  --icon-button-icon-size: var(--cube-iconButton-lg-icon);
+  width: var(--cube-iconButton-lg-size);
+  height: var(--cube-iconButton-lg-size);
+  border-radius: var(--cube-iconButton-lg-borderRadius);
 }
 
 /* Hover and pressed only apply while the button can be activated (not disabled, inactive or loading). */
@@ -47,8 +138,8 @@
 }
 
 :where(.IconButton:focus-visible) {
-  outline: var(--icon-button-focus-width) solid var(--icon-button-focus-color);
-  outline-offset: var(--icon-button-focus-offset);
+  outline: var(--cube-focusRing-width) solid var(--cube-focusRing-color);
+  outline-offset: var(--cube-focusRing-offset);
 }
 
 :where(.Icon) {
@@ -59,7 +150,7 @@
   line-height: 0;
 }
 
-/* The icon follows the button's size (the variable is set inline from the size tokens). */
+/* The icon follows the button's size (--icon-button-icon-size comes from the size block above). */
 :where(.Icon > *) {
   width: var(--icon-button-icon-size);
   height: var(--icon-button-icon-size);

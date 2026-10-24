@@ -27,6 +27,16 @@ describe("Divider", () => {
     expect(screen.getByRole("separator")).toHaveStyle({ backgroundColor: tokens.light.divider.color.muted });
   });
 
+  it("takes a palette colour, any borderColor token, or a CSS colour for color", () => {
+    const { container, rerender } = render(<Divider color="indigo.3" />);
+    const rule = () => container.querySelector("hr") as HTMLElement;
+    expect(rule()).toHaveStyle({ backgroundColor: tokens.light.display.indigo[3] });
+    rerender(<Divider color="strong" />);
+    expect(rule()).toHaveStyle({ backgroundColor: tokens.light.borderColor.strong });
+    rerender(<Divider color="#ff0000" />);
+    expect(rule()).toHaveStyle({ backgroundColor: "#ff0000" });
+  });
+
   it("lets the consumer's style override the token styles", () => {
     render(<Divider style={{ height: "4px" }} />);
     expect(screen.getByRole("separator")).toHaveStyle({ height: "4px" });

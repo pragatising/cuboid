@@ -1,0 +1,11 @@
+/* The fill and the glyph colour are props (TileIcon.tsx); the shape is a pill with a little padding around the glyph. */
+:where(.TileIcon) {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  padding: var(--cube-size-3px);
+  border-radius: var(--cube-borderRadius-full);
+  line-height: 0;
+}

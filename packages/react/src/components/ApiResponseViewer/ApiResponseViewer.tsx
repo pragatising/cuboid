@@ -139,7 +139,7 @@ export function ApiResponseViewer({
                 <IconButton
                   aria-label="Response headers"
                   variant="ghost"
-                  size="xs"
+                  size="sm"
                   icon={<Icon name="keyboard_arrow_down" />}
                 />
               }

@@ -321,7 +321,7 @@
             },
           },
           '4': {
-            $value: '#cceec2',
+            $value: '#c4eab9',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -366,7 +366,7 @@
             },
           },
           '9': {
-            $value: '#5ca647',
+            $value: '#4a8d38',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -375,7 +375,7 @@
             },
           },
           '10': {
-            $value: '#3f8d2a',
+            $value: '#2d6b1c',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -395,7 +395,7 @@
             },
           },
           '1': {
-            $value: '#ecdafa',
+            $value: '#f5eafd',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -487,7 +487,7 @@
         },
         indigo: {
           '0': {
-            $value: '#f7f7fc',
+            $value: '#f8f8ff',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -496,7 +496,7 @@
             },
           },
           '1': {
-            $value: '#f4f4ff',
+            $value: '#f1f1ff',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -568,7 +568,7 @@
             },
           },
           '9': {
-            $value: '#6565fa',
+            $value: '#5f5ff4',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -577,7 +577,7 @@
             },
           },
           '10': {
-            $value: '#5454e1',
+            $value: '#3c3ccc',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -597,7 +597,7 @@
             },
           },
           '1': {
-            $value: '#eef4ff',
+            $value: '#e2eafa',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -606,7 +606,7 @@
             },
           },
           '2': {
-            $value: '#eaf2ff',
+            $value: '#d1e3ff',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -615,7 +615,7 @@
             },
           },
           '3': {
-            $value: '#dfeafd',
+            $value: '#b8d2ff',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -624,7 +624,7 @@
             },
           },
           '4': {
-            $value: '#cbdeff',
+            $value: '#96bcfe',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -642,7 +642,7 @@
             },
           },
           '6': {
-            $value: '#bcd4ff',
+            $value: '#79a8ff',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -651,7 +651,7 @@
             },
           },
           '7': {
-            $value: '#518ff8',
+            $value: '#5292ff',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -660,7 +660,7 @@
             },
           },
           '8': {
-            $value: '#3a80f9',
+            $value: '#2c74f0',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -669,7 +669,7 @@
             },
           },
           '9': {
-            $value: '#236ae5',
+            $value: '#1c60d4',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -678,7 +678,7 @@
             },
           },
           '10': {
-            $value: '#1d5ece',
+            $value: '#0d48b0',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -752,7 +752,7 @@
             },
           },
           '7': {
-            $value: '#e63bad',
+            $value: '#f140b6',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -761,7 +761,7 @@
             },
           },
           '8': {
-            $value: '#eb3cb2',
+            $value: '#f12cb0',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -770,7 +770,7 @@
             },
           },
           '9': {
-            $value: '#d22799',
+            $value: '#ce118f',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -779,7 +779,7 @@
             },
           },
           '10': {
-            $value: '#c9178d',
+            $value: '#950b67',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -835,7 +835,7 @@
             },
           },
           '5': {
-            $value: '#ffcd44',
+            $value: '#fecf4c',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -844,7 +844,7 @@
             },
           },
           '6': {
-            $value: '#ffb404',
+            $value: '#ffc130',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -853,7 +853,7 @@
             },
           },
           '7': {
-            $value: '#e3a703',
+            $value: '#ffc116',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -862,7 +862,7 @@
             },
           },
           '8': {
-            $value: '#d99904',
+            $value: '#eaa70b',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -880,7 +880,7 @@
             },
           },
           '10': {
-            $value: '#b57c02',
+            $value: '#765101',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -900,7 +900,7 @@
             },
           },
           '1': {
-            $value: '#fcedeb',
+            $value: '#fdebe8',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -936,7 +936,7 @@
             },
           },
           '5': {
-            $value: '#fbc4c4',
+            $value: '#feb4b4',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -945,7 +945,7 @@
             },
           },
           '6': {
-            $value: '#feb1b1',
+            $value: '#fea0a0',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -954,7 +954,7 @@
             },
           },
           '7': {
-            $value: '#f99090',
+            $value: '#ec4646',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -963,7 +963,7 @@
             },
           },
           '8': {
-            $value: '#ef6262',
+            $value: '#dc2929',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -972,7 +972,7 @@
             },
           },
           '9': {
-            $value: '#e74646',
+            $value: '#c40c0c',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -981,7 +981,7 @@
             },
           },
           '10': {
-            $value: '#da2222',
+            $value: '#920202',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -1055,7 +1055,7 @@
             },
           },
           '7': {
-            $value: '#f2711b',
+            $value: '#f86e11',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -1082,7 +1082,7 @@
             },
           },
           '10': {
-            $value: '#bd4b04',
+            $value: '#a03f02',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {
@@ -1221,7 +1221,7 @@
             },
           },
           '3': {
-            $value: '#b2e8f0',
+            $value: '#bcf1f9',
             $type: 'color',
             $extensions: {
               'org.cuboid.figma': {

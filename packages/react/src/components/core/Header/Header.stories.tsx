@@ -19,11 +19,11 @@ export const Playground: Story = {
   render: (args) => (
     <Header {...args}>
       <Header.Leading>
-        <IconButton aria-label="Open menu" variant="ghost" size="sm" icon={<Icon name="menu" />} />
+        <IconButton aria-label="Open menu" variant="ghost" size="md" icon={<Icon name="menu" />} />
         <Breadcrumbs items={[{ label: "Section" }, { label: "Page" }]} />
       </Header.Leading>
       <Header.Trailing>
-        <Button size="sm" variant="secondary">Action</Button>
+        <Button size="md" variant="secondary">Action</Button>
       </Header.Trailing>
     </Header>
   ),
@@ -34,12 +34,12 @@ export const WithBreadcrumbs: Story = {
   render: () => (
     <Header>
       <Header.Leading>
-        <IconButton aria-label="Open menu" variant="ghost" size="sm" icon={<Icon name="menu" />} />
+        <IconButton aria-label="Open menu" variant="ghost" size="md" icon={<Icon name="menu" />} />
         <Breadcrumbs items={[{ label: "Dashboard", href: "#dashboard" }, { label: "Customers", href: "#customers" }, { label: "Details" }]} />
       </Header.Leading>
       <Header.Trailing>
-        <IconButton aria-label="Search" variant="ghost" size="sm" icon={<Icon name="search" />} />
-        <Button size="sm" variant="secondary">New</Button>
+        <IconButton aria-label="Search" variant="ghost" size="md" icon={<Icon name="search" />} />
+        <Button size="md" variant="secondary">New</Button>
       </Header.Trailing>
     </Header>
   ),
@@ -50,12 +50,12 @@ export const WithBackAndDivider: Story = {
   render: () => (
     <Header>
       <Header.Leading>
-        <IconButton aria-label="Go back" variant="ghost" size="sm" icon={<Icon name="arrow_back" />} />
+        <IconButton aria-label="Go back" variant="ghost" size="md" icon={<Icon name="arrow_back" />} />
         <Header.Divider />
         <Breadcrumbs items={[{ label: "Record details" }]} />
       </Header.Leading>
       <Header.Trailing>
-        <IconButton aria-label="More actions" variant="ghost" size="sm" icon={<Icon name="menu" />} />
+        <IconButton aria-label="More actions" variant="ghost" size="md" icon={<Icon name="menu" />} />
       </Header.Trailing>
     </Header>
   ),

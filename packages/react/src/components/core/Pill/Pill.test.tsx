@@ -87,8 +87,10 @@ describe("Pill", () => {
     expect(root(container).style.fontWeight).toBe(String(tokens.light.fontWeight.semibold));
   });
 
-  it("takes any CSS prop, like Box", () => {
-    const { container } = render(<Pill {...({ marginInlineStart: "8px" } as object)}>Label</Pill>);
-    expect(root(container).style.marginInlineStart).toBe("8px");
+
+  it("takes a palette colour (or any token or CSS colour) for the label, surface and border", () => {
+    const { container } = render(<Pill color="indigo.10" backgroundColor="indigo.0" borderColor="indigo.5">Label</Pill>);
+    expect(root(container).style.color).not.toBe("");
+    expect(root(container)).toHaveStyle({ color: tokens.light.display.indigo[10], backgroundColor: tokens.light.display.indigo[0], borderColor: tokens.light.display.indigo[5] });
   });
 });

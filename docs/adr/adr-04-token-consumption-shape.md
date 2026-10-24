@@ -117,3 +117,52 @@ Four real candidate shapes were compared concretely (component code written out 
 ## Source
 
 This session's own research (not external citation-worthy ADRs): live inspection of `primer/react` and `primer/primitives` source via `gh api`/raw GitHub fetches (confirmed zero JS-token imports in real Primer components, confirmed `@primer/styled-react`'s deprecation and its own README's stated reason), confirmed `panda-css.com`/`vanilla-extract.style` docs for the `token.var()` / `vars` pattern, and a producthistory data point supplied directly by the person making this decision (prior experience with a resolved-JSON, no-CSS-lookup component library). Existing `packages/primitives/src/platforms/{javascript,typescript}.ts` read directly to confirm they already emit resolved (not reference) values.
+
+## Amendment (2026-10-22): component CSS may read the published token variables; the typed JS tree stays the consumer API
+
+**Why.** The original shape kept CSS variables out of components entirely. For *state* colours that cost an unusual workaround:
+a `:hover` rule cannot take an inline style, so every Button/IconButton copied all of its state colours onto the element as
+element-scoped variables (`--button-bg-hover`, …) — about 50 inline entries per button. Primer, Atlassian and the Claude
+design system do the opposite: the tokens are CSS variables defined once for the page, and the component CSS only reads them.
+
+**What changes (internal to the library).**
+
+- The token build's `dist/css/theme.css` now carries every mode: the first (light) on `:root`, each other mode under
+  `[data-mode="<mode>"]`, the full variable set in each (a variable that references another is resolved where it is defined,
+  so a dark *subtree* only flips if the dependent variables are redefined inside it).
+- `setMode()` also sets `data-mode` on `<html>`, which is what switches component CSS. The JS store and `useTokens()` are unchanged.
+- A component's `.module.css` may read `var(--cube-*)` for its colours, sizes and states, picking the look by `data-variant`,
+  `data-size` and similar attributes. The element then carries no inline style. Piloted on Button and IconButton.
+- A test per converted component fails if its CSS reads a variable missing from the built `theme.css`, and checks that the
+  variables it maps resolve (in both modes) to the same values as the JS tree.
+
+**What does not change.** Consumers still use the typed JS tree (`useTokens()`, `<Box backgroundColor="…">`, `variant`) and do not
+write `var(--cube-…)` strings; the rejection of "raw `var()` strings at every call site" stands. Build-time overrides still
+flow through the pipeline, now into the CSS as well as the JS.
+
+**New requirement for an app.** It loads `@sragatiping/cuboid-primitives/css/theme.css` once (or its own token build's output, if it
+overrides tokens), and a server render sets `data-mode` on `<html>` to avoid a wrong-mode flash. Runtime overrides applied in the
+browser reach the JS tree, not these variables.
+
+
+## Amendment (2026-10-24): the CSS-reads-variables shape is the default for state-heavy components; token-free components
+
+**Why.** The 2026-10-22 amendment said the shape was "piloted on Button and IconButton". It has since been used for the ActionMenu family
+(`ActionMenu`, `Popover` header and footer, `Sidebar` rows), the form-control chrome (`InputField`, `InputText`, `TextArea`, `Select`,
+`Autocomplete`), `EmptyState` and `TileIcon`, and the element-scoped `actionMenuVars` helper was removed. It held up: every component
+carries no inline token variable, the browser picks the state, and a test per stylesheet fails if it reads a variable the build does not
+publish (checked in both modes). A real-Chrome sweep (axe with colour contrast on, light and dark, popups open) was clean on all of them.
+
+**What changes.**
+
+- For a component with states (hover, focus, disabled, error, selected), reading `var(--cube-<group>-…)` in its CSS module is the default,
+  not a pilot. The element-scoped `--<component>-…` helper (`cssVars()` plus `actionMenuVars`-style functions) is retired for new work.
+- **A component with no states and no design values of its own needs no token group.** `TileIcon` takes its fill and glyph colour as props;
+  `EmptyState` reads the size scale (`--cube-size-*`, `--cube-borderRadius-*`) for spacing and uses `Text` for its type. Do not invent a
+  token group only to have one.
+- A text colour must pass 4.5:1 on the surface it sits on, in both modes. `packages/react/src/components/core/InputField/fieldContrast.test.ts`
+  checks the form-control and menu text pairs; extend it when a component adds a text colour. A fix repoints the *semantic* token to a base
+  step that passes (and, for a dark-only problem, uses an `org.cuboid.overrides` dark value); it never edits a shared base step.
+
+**What does not change.** Consumers use the typed JS tree and props, not `var(--cube-…)`. A library component may pass a `var()` string
+to a prop only when the value is its own (for example `ActionListItem`'s description colour); an app should not.

@@ -1,19 +1,24 @@
 /* Only what a prop cannot say. The panel's colours, radius, width limits, shadow and z-index are Box props from the `popover`,
-   `shadow` and `zIndex` tokens (Popover.tsx). The header and footer read the `actionMenu` token variables set on them
-   (../ActionMenu/actionMenuVars.ts): they are the same chrome as an ActionMenu's. */
+   `shadow` and `zIndex` tokens (Popover.tsx). The header and footer read the `--cube-actionMenu-*` token variables: they are the same chrome as an ActionMenu's. */
 :where(.Header) {
-  padding: var(--action-menu-sizes-header-padding-block-start)
-    var(--action-menu-sizes-header-padding-inline)
-    var(--action-menu-sizes-header-padding-block-end);
+  padding: var(--cube-actionMenu-sizes-header-paddingBlockStart)
+    var(--cube-actionMenu-sizes-header-paddingInlineEnd)
+    var(--cube-actionMenu-sizes-header-paddingBlockEnd)
+    var(--cube-actionMenu-sizes-header-paddingInlineStart);
+}
+
+/* With a close button the end padding is smaller: the button has its own. */
+:where(.Header[data-dismissible]) {
+  padding-inline-end: var(--cube-actionMenu-sizes-header-paddingInlineEndDismissible);
 }
 
 :where(.HeaderDivider) {
   height: 1px;
-  margin-top: var(--action-menu-sizes-header-padding-block-end);
-  background-color: var(--action-menu-divider-fg-color);
+  margin-top: var(--cube-actionMenu-sizes-header-paddingBlockEnd);
+  background-color: var(--cube-actionMenu-divider-fgColor);
 }
 
 :where(.Footer) {
-  padding: var(--action-menu-sizes-footer-padding);
-  border-top: 1px solid var(--action-menu-divider-fg-color);
+  padding: var(--cube-actionMenu-sizes-footer-padding);
+  border-top: 1px solid var(--cube-actionMenu-divider-fgColor);
 }

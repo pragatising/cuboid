@@ -10,7 +10,7 @@ const meta: Meta<typeof Button> = {
   tags: ["autodocs"],
   argTypes: {
     variant: { control: "select", options: ["primary", "secondary", "ghost", "danger", "rounded"] },
-    size: { control: "inline-radio", options: ["xs", "sm", "md", "lg"] },
+    size: { control: "inline-radio", options: ["sm", "md", "lg"] },
     alignContent: { control: "inline-radio", options: ["center", "start"] },
   },
 };
@@ -47,7 +47,7 @@ export const Variants: Story = {
 export const Sizes: Story = {
   render: () => (
     <Box flexDirection="row" gap="1x" flexWrap="wrap" alignItems="center">
-      {(["xs", "sm", "md", "lg"] as const).map((size) => (
+      {(["sm", "md", "lg"] as const).map((size) => (
         <Button key={size} variant="primary" size={size}>
           Size {size}
         </Button>

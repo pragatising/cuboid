@@ -1,0 +1,9 @@
+/* The search row sits above the list inside the popover's scrolling content, so it stays put while the options scroll under it. */
+:where(.Search) {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: var(--cube-actionMenu-sizes-search-padding);
+  background-color: var(--cube-popover-color-background);
+  border-bottom: 1px solid var(--cube-actionMenu-divider-fgColor);
+}

@@ -2,8 +2,8 @@ import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import tokens from "@sragatiping/cuboid-primitives";
-import { setMode } from "../../../mode";
-import { behavesAsComponent, expectNoAxeViolations, renderInMode } from "../../../test/testing";
+import { behavesAsComponent, expectNoAxeViolations } from "../../../test/testing";
+import { cubeVariablesRead, readSource, resolveVariable, themeVariables } from "../../../test/themeCss";
 import { IconButton } from "./IconButton";
 import type { IconButtonSize, IconButtonVariant } from "./IconButton";
 import classes from "./IconButton.module.css";
@@ -12,7 +12,7 @@ const t = tokens.light;
 const icon = <svg data-testid="glyph" />;
 const el = () => screen.getByTestId("ib");
 const part = (name: string) => el().querySelector(`[data-component="${name}"]`);
-const SIZES = ["xs", "sm", "md", "lg"] as const satisfies readonly IconButtonSize[];
+const SIZES = ["sm", "md", "lg"] as const satisfies readonly IconButtonSize[];
 const VARIANTS = ["ghost", "outlined"] as const satisfies readonly IconButtonVariant[];
 const STATES = ["rest", "hover", "pressed", "disabled"] as const;
 
@@ -56,44 +56,74 @@ describe("IconButton: element and anatomy", () => {
   });
 });
 
-describe("IconButton: size and look come from the iconButton tokens", () => {
-  it.each(SIZES)("size %s: a square, with the icon size and radius", (size) => {
+describe("IconButton: size and look are attributes, and the element carries no inline style", () => {
+  it.each(SIZES)("size %s is the data-size attribute", (size) => {
     ib({ size });
-    const c = t.iconButton[size];
-    expect(el().style.width).toBe(c.size);
-    expect(el().style.height).toBe(c.size);
-    expect(el().style.borderRadius).toBe(c.borderRadius);
-    expect(el().style.getPropertyValue("--icon-button-icon-size")).toBe(c.icon);
     expect(el()).toHaveAttribute("data-size", size);
   });
 
-  it("defaults to xs and outlined", () => {
+  it("defaults to sm and outlined", () => {
     ib();
-    expect(el()).toHaveAttribute("data-size", "xs");
+    expect(el()).toHaveAttribute("data-size", "sm");
     expect(el()).toHaveAttribute("data-variant", "outlined");
   });
 
-  it.each(VARIANTS)("%s: every state's colours as variables, default and selected", (variant) => {
-    const expectVars = (look: (typeof t.iconButton)["ghost"]["default"]) => {
-      for (const state of STATES) {
-        expect(el().style.getPropertyValue(`--icon-button-bg-${state}`)).toBe(look.bgColor[state]);
-        expect(el().style.getPropertyValue(`--icon-button-fg-${state}`)).toBe(look.fgColor[state]);
-        expect(el().style.getPropertyValue(`--icon-button-border-${state}`)).toBe(look.borderColor[state]);
-      }
-    };
-    const { rerender } = ib({ variant });
-    expectVars(t.iconButton[variant].default);
-    rerender(<IconButton data-testid="ib" icon={icon} aria-label="Close" variant={variant} selected />);
-    expectVars(t.iconButton[variant].selected);
+  it("selected is the data-selected attribute", () => {
+    const { rerender } = ib();
+    expect(el()).not.toHaveAttribute("data-selected");
+    rerender(<IconButton data-testid="ib" icon={icon} aria-label="Close" selected />);
+    expect(el()).toHaveAttribute("data-selected");
   });
 
-  it("sets the focus ring, border width and transition", () => {
-    ib();
-    expect(el().style.getPropertyValue("--icon-button-focus-color")).toBe(t.focusRing.color);
-    expect(el().style.getPropertyValue("--icon-button-focus-width")).toBe(t.focusRing.width);
-    expect(el().style.getPropertyValue("--icon-button-focus-offset")).toBe(t.focusRing.offset);
-    expect(el().style.borderWidth).toBe(t.borderWidth.thin);
-    expect(el().style.transition).toContain("background-color");
+  it("sets no inline style: colours, geometry and states are in the CSS", () => {
+    ib({ variant: "ghost", size: "lg", selected: true });
+    expect(el().getAttribute("style")).toBeNull();
+  });
+});
+
+// jsdom does not evaluate component CSS, so the colours and geometry are checked at their source: the stylesheet only reads
+// variables the token build publishes, and the ones it maps resolve (in both modes) to the JavaScript token tree's values.
+describe("IconButton.module.css reads the published token variables", () => {
+  const css = readSource("src/components/core/IconButton/IconButton.module.css");
+  const mapped = (selector: string, property: string) =>
+    css.match(new RegExp(`${selector.replace(/[[\]().]/g, "\\$&")}\\) \\{[^}]*${property}: var\\((--cube-[\\w-]+)\\)`))?.[1];
+
+  it("reads only --cube-* variables that exist in the built theme.css, in both modes", () => {
+    for (const name of cubeVariablesRead(css)) {
+      expect(themeVariables().light.has(name), `${name} (light)`).toBe(true);
+      expect(themeVariables().dark.has(name), `${name} (dark)`).toBe(true);
+    }
+  });
+
+  it.each(["light", "dark"] as const)("each variant's default and selected colours resolve to tokens.%s.iconButton", (mode) => {
+    for (const variant of VARIANTS) {
+      for (const look of ["default", "selected"] as const) {
+        const selector = `.IconButton[data-variant="${variant}"]${look === "selected" ? "[data-selected]" : ":not([data-selected])"}`;
+        for (const [short, group] of [["bg", "bgColor"], ["fg", "fgColor"], ["border", "borderColor"]] as const) {
+          for (const state of STATES) {
+            const name = mapped(selector, `--icon-button-${short}-${state}`);
+            expect(name, `${variant} ${look} ${short} ${state} is mapped`).toBeDefined();
+            const expected = (tokens[mode].iconButton[variant][look] as Record<string, Record<string, string>>)[group][state];
+            expect(resolveVariable(name as string, mode), `${variant} ${look} ${group} ${state}`).toBe(expected);
+          }
+        }
+      }
+    }
+  });
+
+  it.each(SIZES)("size %s is a square with its icon size and radius from the iconButton tokens", (size) => {
+    const c = t.iconButton[size];
+    const selector = `.IconButton[data-size="${size}"]`;
+    expect(resolveVariable(mapped(selector, "width") as string, "light")).toBe(c.size);
+    expect(resolveVariable(mapped(selector, "height") as string, "light")).toBe(c.size);
+    expect(resolveVariable(mapped(selector, "border-radius") as string, "light")).toBe(c.borderRadius);
+    expect(resolveVariable(mapped(selector, "--icon-button-icon-size") as string, "light")).toBe(c.icon);
+  });
+
+  it("takes the focus ring and border width from tokens", () => {
+    expect(resolveVariable("--cube-focusRing-color", "light")).toBe(t.focusRing.color);
+    expect(resolveVariable("--cube-borderWidth-thin", "light")).toBe(t.borderWidth.thin);
+    expect(css).toContain("var(--cube-motion-transition-hover)");
   });
 });
 
@@ -262,18 +292,10 @@ describe("IconButton: development warnings", () => {
 });
 
 describe("IconButton: overrides and modes", () => {
-  it("lets the consumer's style override anything it sets, including the colour variables", () => {
+  it("lets the consumer's style override anything, including the colour variables", () => {
     ib({ style: { height: "99px", "--icon-button-bg-rest": "red" } as React.CSSProperties });
     expect(el().style.height).toBe("99px");
     expect(el().style.getPropertyValue("--icon-button-bg-rest")).toBe("red");
-  });
-
-  it("uses the dark tokens in dark mode, and follows a mode change while mounted", () => {
-    renderInMode(<IconButton data-testid="ib" icon={icon} aria-label="Close" />, "dark");
-    expect(el().style.getPropertyValue("--icon-button-bg-rest")).toBe(tokens.dark.iconButton.outlined.default.bgColor.rest);
-    expect(tokens.dark.iconButton.outlined.default.bgColor.rest).not.toBe(t.iconButton.outlined.default.bgColor.rest);
-    act(() => setMode("light"));
-    expect(el().style.getPropertyValue("--icon-button-bg-rest")).toBe(t.iconButton.outlined.default.bgColor.rest);
   });
 });
 

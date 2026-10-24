@@ -1,22 +1,5 @@
 {
   iconButton: {
-    xs: {
-      size: {
-        $value: '{size.control.xs.size}',
-        $type: 'dimension',
-        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon-button' } },
-      },
-      borderRadius: {
-        $value: '{size.control.xs.borderRadius}',
-        $type: 'dimension',
-        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon-button' } },
-      },
-      icon: {
-        $value: '{icon.xs}',
-        $type: 'dimension',
-        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon-button' } },
-      },
-    },
     sm: {
       size: {
         $value: '{size.control.sm.size}',
@@ -29,7 +12,7 @@
         $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon-button' } },
       },
       icon: {
-        $value: '{icon.md}',
+        $value: '{icon.xs}',
         $type: 'dimension',
         $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon-button' } },
       },
@@ -63,7 +46,7 @@
         $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon-button' } },
       },
       icon: {
-        $value: '{icon.lg}',
+        $value: '{icon.md}',
         $type: 'dimension',
         $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'icon-button' } },
       },

@@ -17,7 +17,7 @@ const DEFAULT_ITEMS = '[role="menuitem"], [role="menuitemradio"], [role="menuite
 const TYPEAHEAD_RESET_MS = 500;
 
 const isEnabled = (item: HTMLElement) => !(item as HTMLButtonElement).disabled && item.getAttribute("aria-disabled") !== "true";
-const isSelected = (item: HTMLElement) => item.getAttribute("aria-checked") === "true" || item.hasAttribute("data-current");
+const isSelected = (item: HTMLElement) => item.getAttribute("aria-checked") === "true" || item.getAttribute("aria-selected") === "true" || item.hasAttribute("data-current");
 
 /**
  * Arrow-key navigation through a set of items (a menu, a toolbar), the "roving" focus pattern: Up/Down (or Left/Right),

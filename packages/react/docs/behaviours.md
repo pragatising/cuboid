@@ -87,6 +87,14 @@ Built 2026-10-21 as step 1 of the API refactor (see `docs/backlog/api-audit.md`)
 | `useFocusReturn({ enabled })` | remember the opener before the layer takes focus (an insertion effect, so before `autoFocus`), give focus back on close, but not if the user moved it elsewhere | `returnFocusOnClose` in Popover |
 | `useFocusTrap({ enabled, containerRef })` | move focus in, wrap Tab and Shift+Tab, pull focus back if it escapes, return it on close: what `aria-modal` promises | nothing yet: Sheet had no trap |
 | `useRovingFocus({ containerRef })` | arrow / Home / End navigation, disabled items skipped, typeahead; `focusFirst` / `focusSelected` | `actionMenuKeyboard.ts` (which had no typeahead) |
+| `useActiveDescendant({ listId, activeId, setActiveId, initial, homeEnd })` | the keys of a combobox whose control keeps focus: arrows move the active option (wrapping, skipping disabled), Enter clicks it, optionally Home and End; keeps the active option real as the list changes (first, or the chosen one) | roving focus, when an input must keep focus |
 
 Conventions: a hook that needs an element takes a ref (or, for a behavior that returns props, accepts an optional ref via `useProvidedRefOrCreate`); handlers that must stay current are read through a ref so effects do not re-subscribe; anything that touches `document` is guarded by `enabled` so it costs nothing while a layer is closed.
 
+
+**Component behaviors built from these** (live next to their component; return props objects):
+
+| Hook | Where | What it does |
+|---|---|---|
+| `useCombobox({ kind, open, hasContent, disabled, controlRef, onChoose })` | `components/core/ActionList/` | The behavior of `Select` (`kind: "select"`) and `Autocomplete` (`kind: "input"`): open state, active option, keys, choosing, popup wiring. Returns `controlProps`, `popoverProps`, `listProps` and `activeOption` (ADR-06). |
+| `useFieldControl({ id, description, error, "aria-describedby" })` | `components/core/InputField/` | A form control's id, invalid state and `aria-describedby`, shared by `InputText`, `TextArea`, `Select` (ADR-05). |

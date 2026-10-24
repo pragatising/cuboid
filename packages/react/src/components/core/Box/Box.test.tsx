@@ -132,6 +132,25 @@ describe("Box", () => {
   });
 
   describe("colour and shape tokens", () => {
+    it("takes a palette (display) colour for any colour prop: backgroundColor, color and borderColor", () => {
+      const style = styleOf((As) => <Box as={As} backgroundColor="indigo.0" color="indigo.10" borderColor="indigo.5" />);
+      expect(style.backgroundColor).toBe(t.display.indigo[0]);
+      expect(style.color).toBe(t.display.indigo[10]);
+      expect(style.borderColor).toBe(t.display.indigo[5]);
+    });
+
+    it("takes a highlight colour for a background only", () => {
+      const style = styleOf((As) => <Box as={As} backgroundColor="highlight.yellow" />);
+      expect(style.backgroundColor).toBe(t.display.highlight.yellow);
+      expect(() => render(<Box color={"highlight.yellow" as never} />)).toThrow(/Unknown colour/);
+      expect(() => render(<Box borderColor={"highlight.yellow" as never} />)).toThrow(/Unknown colour/);
+    });
+
+    it("resolves a palette colour in the active mode", () => {
+      renderInMode(<Box data-testid="box" backgroundColor="green.3" />, "dark");
+      expect(box()).toHaveStyle({ backgroundColor: tokens.dark.display.green[3] });
+    });
+
     it("backgroundColor, color and borderRadius resolve from tokens", () => {
       render(<Box data-testid="box" backgroundColor="canvas.inset" color="neutral.contrast" borderRadius="md" />);
       expect(box()).toHaveStyle({ backgroundColor: t.bgColor.canvas.inset, color: t.fgColor.neutral.contrast });

@@ -2,6 +2,28 @@
 
 Rolling session log for Claude Code continuity. Newest entry on top. Each entry: what changed, why, and anything the next agent needs to know. Keep entries short — skip anything derivable from `git log` or the diff itself.
 
+## 2026-10-24 — Form controls and the combobox family; one size scale; contrast fixes
+
+- **New:** `InputText`, `TextArea`, `Select`, `Autocomplete`, `ActionMenu.Search`, `ActionMenu.Empty`, `EmptyState`, `TileIcon`; internal `InputField` (label, `InputField.Shell`, help text, error), `ActionList` (the rows `ActionMenu`, `Select` and `Autocomplete` share), `useActiveDescendant`, `useCombobox`, `useFieldControl`. `Popover` takes `anchorRef` and `matchAnchorWidth`. New `input` token group. ADR-05 (form-control anatomy) and ADR-06 (list, focus models, combobox), ADR-04 amendment 2.
+- **Breaking, one size scale: `sm` 24, `md` 28, `lg` 32px** for Button, IconButton and the form controls. `xs` and the 40px size are gone from `size.control`, `button.paddingInline`, `button.font` and `iconButton`. Migration for callers: `xs`→`sm`, `sm`→`md`, `md`→`lg` (same pixels); a `lg` Button is now 32px, not 40. Defaults: Button `md`, IconButton `sm`. `Sidebar`'s toggle reads `size.control.md`.
+- **Colour tokens:** `fgColor.neutral.subtle` repointed from `gray.6` to `gray.7` (4.74:1; was 2.3:1); `fgColor.{danger,critical,error}.strong` use `red.10` in dark mode (5.0:1; was 3.9:1). ActionMenu's disabled text and the new input's disabled text use `neutral.disabled`; ActionMenu descriptions use `neutral.default`; the site-header divider and code-block bracket colour keep their look through `display.gray.6`. The `actionMenu` tokens gained `item.fgColor.hover` and the header/search paddings (`paddingInlineStart`, `paddingInlineEnd`, `paddingInlineEndDismissible`, `search.padding`).
+- **Removed/renamed:** `actionMenuVars.ts` (ActionMenu, Popover header/footer and Sidebar rows read `--cube-actionMenu-*` in CSS, ADR-04 amendments); `ActionMenuList`/`ActionMenuItem` moved to `ActionList`/`ActionListItem` (`ActionMenu.List`, `.Item`, `.Section` and the exported types are unchanged); `ActionMenuProps` no longer carries the DOM `onSelect` (it never fired for the menu's own meaning).
+- **Checks:** `behavesAsFormControl` (form-control contract), `fieldContrast.test.ts` (text pairs in both modes), and `npm run a11y:sweep` (axe with colour contrast on, real Chrome, light and dark, popups opened; needs Storybook running). The new components and Button/IconButton/ActionMenu: 112 of 112 runs clean. **Whole library: 105 of 430 runs have findings** (code-block syntax colours, Pill palettes, Box/Callout/Container stories, two story-only issues): the token work in `docs/backlog/api-audit.md` §8.
+- **Already failing before this work, not touched:** two `packages/primitives` dark-mode parity tests (`src/darkMode.test.ts`: dark text colours weaker than light's for the success/danger/critical/error steps; button danger text on fill). `fgColor.danger.strong` in dark is now 5.0:1 but still weaker than light's 6.1:1.
+- **Audit and decisions:** `docs/backlog/forms-and-combobox-audit.md`. Not built yet: typeahead in `Select`, loading and "create new" rows, live announcement of result counts, character count, label tooltip, help/error icons, `TextArea` auto-grow, native select fallback.
+
+## 2026-10-23 — Callout has no variants; the display palette is flat and valid in every colour prop
+
+- **Callout** no longer has `variant` (and its variant colour tokens are gone): set the surface with `backgroundColor`, any `bgColor` token or palette colour or CSS colour.
+- **`display` palette** is flat and general-purpose: `display.indigo.0` (no `scale` level; `gray` is a family like the rest, 0–13), with the per-property `bgColor`/`fgColor`/`borderColor` subgroups removed. References to `display.<hue>.scale.N` are now `display.<hue>.N`.
+- **Colour props** (`Box` `backgroundColor`/`color`/`borderColor`, and `Text`, `Heading`, `Subtitle`, `Link`, `Icon` `color`) accept a palette colour as a path: `"indigo.0"`, `"green.7"`, `"highlight.yellow"`. New `DisplayColor` type and `colorGroups()` helper.
+
+## 2026-10-22 (later) — Button and IconButton read the published token variables (ADR-04 amendment)
+
+- **Token build**: `dist/css/theme.css` now holds every mode (light on `:root`, dark under `[data-mode="dark"]`, the full set in each) and is written to the path `package.json` exports (it was going to `dist/css/css/`). `setMode()` sets `data-mode` on `<html>`.
+- **Button and IconButton** no longer set inline styles: their CSS reads `--cube-*` variables and picks the look by `data-variant`, `data-size` (and `data-selected` for IconButton). `buttonStyle.ts` and `resolveIconButtonStyle` are gone. The primary Button's border is transparent.
+- **Tests** for these two check the CSS source: every variable it reads exists in the built `theme.css`, and the ones it maps resolve, in light and dark, to the JS token tree. An app must load `theme.css` (Storybook already does).
+
 ## 2026-10-22 — Callout variants, Heading h1–h6, Sidebar group headings and header button
 
 - **Colour tokens**: the saturated highlight colours moved to `base.color.highlight.*` (with dark values), exposed as `display.highlight.*`; `highlight.*` references them. `base.color.gray.7` (the muted text step) darkened from `#888783` to `#747370` so muted text passes 4.5:1 on white and `canvas.inset`; the dark palette is regenerated (the generator now skips `highlight`) and `bgColor.debug.strong`'s dark step moved to `gray.6`.
@@ -12,7 +34,7 @@ Rolling session log for Claude Code continuity. Newest entry on top. Each entry:
 ## 2026-10-21 (and on) — SiteHeader is now Header; Pill `bordered` and `weight`
 
 - **SiteHeader → Header**, built on `Box` (any CSS prop works). Content goes in slots: `Header.Leading`, `Header.Trailing`, `Header.Divider` (was `SiteHeaderDivider`); the `leading`/`trailing` props are gone. Still styled from the `siteHeader` tokens (token names unchanged).
-- **Pill**: `border` is now `bordered` (reads as a boolean), `weight` sets the label weight from a `fontWeight` token (default `medium`), and Pill is built on `Box`, so it takes any CSS prop.
+- **Pill**: `border` is now `bordered` (reads as a boolean), `weight` sets the label weight from a `fontWeight` token (default `medium`). Pill is a plain styled inline element (not a Box), so its visuals sit in a row.
 
 ## 2026-10-21 (latest still) — Popover and ActionMenu rebuilt on the behaviors
 

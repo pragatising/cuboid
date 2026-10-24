@@ -1,12 +1,8 @@
 import React from "react";
 import { clsx } from "clsx";
-import { useTokens } from "../../../mode";
-import type { Tokens } from "../../../mode";
 import { announce } from "../../../utils/announce";
-import { cssVars } from "../../../utils/cssVars";
 import { isDev } from "../../../utils/isDev";
 import { mergeProps } from "../../../utils/mergeProps";
-import { transitionCss } from "../../../utils/motion";
 import { Spinner } from "../Button/Spinner";
 import { Tooltip, useTooltipContext } from "../Tooltip";
 import type { TooltipPlacement } from "../Tooltip";
@@ -14,7 +10,7 @@ import classes from "./IconButton.module.css";
 
 // The variants and sizes are the keys of the iconButton tokens. IconButton.test-d.tsx fails if these drift from them.
 export type IconButtonVariant = "ghost" | "outlined";
-export type IconButtonSize = "xs" | "sm" | "md" | "lg";
+export type IconButtonSize = "sm" | "md" | "lg";
 
 /** A button with no visible text needs an accessible name: exactly one of `aria-label` or `aria-labelledby`. */
 export type IconButtonA11yProps =
@@ -31,7 +27,7 @@ export type IconButtonProps = IconButtonA11yProps & {
   variant?: IconButtonVariant;
   /**
    * The button's square size, the icon size and the radius.
-   * @default "xs"
+   * @default "sm"
    */
   size?: IconButtonSize;
   /** A toggle's pressed state: draws the selected look and sets `aria-pressed`. Leave unset for a plain action. */
@@ -66,35 +62,6 @@ export type IconButtonProps = IconButtonA11yProps & {
 const isTrue = (value: unknown) => value === true || value === "true";
 
 /**
- * Token values as inline styles: the colours of every state (as the `--icon-button-<property>-<state>` variables
- * the CSS reads), the focus ring, and the square geometry. Pure: tokens and options in, style out.
- */
-export function resolveIconButtonStyle(
-  tokens: Tokens,
-  { variant, size, selected }: { variant: IconButtonVariant; size: IconButtonSize; selected: boolean },
-): React.CSSProperties {
-  const colors = tokens.iconButton[variant][selected ? "selected" : "default"];
-  const square = tokens.iconButton[size];
-
-  return {
-    ...cssVars("iconButton", {
-      bg: colors.bgColor,
-      fg: colors.fgColor,
-      border: colors.borderColor,
-      iconSize: square.icon,
-      focusColor: tokens.focusRing.color,
-      focusWidth: tokens.focusRing.width,
-      focusOffset: tokens.focusRing.offset,
-    }),
-    width: square.size,
-    height: square.size,
-    borderRadius: square.borderRadius,
-    borderWidth: tokens.borderWidth.thin,
-    transition: transitionCss(tokens.motion.transition.hover, ["background-color", "border-color", "color"]),
-  };
-}
-
-/**
  * A button that shows only an icon. Colours come from `tokens.iconButton`; the state colours (hover, pressed,
  * disabled) reach the CSS as element-scoped variables because a pseudo-class cannot be an inline style. The
  * `aria-label` is shown as a label `Tooltip` (not inside another tooltip, not while the button's own menu is open).
@@ -102,7 +69,7 @@ export function resolveIconButtonStyle(
 export function IconButton({
   icon,
   variant = "outlined",
-  size = "xs",
+  size = "sm",
   selected,
   disabled,
   inactive,
@@ -115,7 +82,6 @@ export function IconButton({
   className,
   ...props
 }: IconButtonProps) {
-  const tokens = useTokens();
   const { tooltipId: enclosingTooltip } = useTooltipContext();
   const ariaLabel = props["aria-label"];
   const tooltipText = description ?? ariaLabel;
@@ -162,7 +128,6 @@ export function IconButton({
           onClick: (event: React.SyntheticEvent) => {
             if (ariaDisabled) event.preventDefault();
           },
-          style: resolveIconButtonStyle(tokens, { variant, size, selected: Boolean(selected) }),
         },
         buttonProps,
       )}

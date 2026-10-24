@@ -12,7 +12,7 @@
         $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'pill' } },
       },
       borderRadius: {
-        $value: '{borderRadius.sm}',
+        $value: '{borderRadius.lg}',
         $type: 'dimension',
         $description: 'Was a raw {size.4} step; now aliases the functional radius scale so pill rounding tracks the design system rather than a fixed px value.',
         $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'pill' } },

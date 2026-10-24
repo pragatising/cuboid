@@ -5,7 +5,7 @@
         "extraLight": {
           "filled": {
             "bgColor": {
-              "$value": "{display.red.scale.0}",
+              "$value": "{display.red.2}",
               "$type": "color",
               "$extensions": {
                 "org.cuboid.figma": {
@@ -25,7 +25,7 @@
               }
             },
             "fgColor": {
-              "$value": "{display.red.scale.7}",
+              "$value": "{display.red.10}",
               "$type": "color",
               "$extensions": {
                 "org.cuboid.figma": {
@@ -37,7 +37,7 @@
           },
           "bordered": {
             "bgColor": {
-              "$value": "{display.gray.scale.1}",
+              "$value": "{display.red.1}",
               "$type": "color",
               "$extensions": {
                 "org.cuboid.figma": {
@@ -47,7 +47,7 @@
               }
             },
             "borderColor": {
-              "$value": "{display.red.scale.3}",
+              "$value": "{display.red.7}",
               "$type": "color",
               "$extensions": {
                 "org.cuboid.figma": {
@@ -57,7 +57,7 @@
               }
             },
             "fgColor": {
-              "$value": "{display.red.scale.7}",
+              "$value": "{display.red.10}",
               "$type": "color",
               "$extensions": {
                 "org.cuboid.figma": {
@@ -71,7 +71,7 @@
         "light": {
           "filled": {
             "bgColor": {
-              "$value": "{display.red.scale.2}",
+              "$value": "{display.red.4}",
               "$type": "color",
               "$extensions": {
                 "org.cuboid.figma": {
@@ -91,7 +91,7 @@
               }
             },
             "fgColor": {
-              "$value": "{display.red.scale.7}",
+              "$value": "{display.red.10}",
               "$type": "color",
               "$extensions": {
                 "org.cuboid.figma": {
@@ -103,7 +103,7 @@
           },
           "bordered": {
             "bgColor": {
-              "$value": "{display.gray.scale.1}",
+              "$value": "{display.red.3}",
               "$type": "color",
               "$extensions": {
                 "org.cuboid.figma": {
@@ -113,7 +113,7 @@
               }
             },
             "borderColor": {
-              "$value": "{display.red.scale.5}",
+              "$value": "{display.red.8}",
               "$type": "color",
               "$extensions": {
                 "org.cuboid.figma": {
@@ -123,7 +123,7 @@
               }
             },
             "fgColor": {
-              "$value": "{display.red.scale.7}",
+              "$value": "{display.red.10}",
               "$type": "color",
               "$extensions": {
                 "org.cuboid.figma": {
@@ -137,7 +137,7 @@
         "bold": {
           "filled": {
             "bgColor": {
-              "$value": "{display.red.scale.7}",
+              "$value": "{display.red.9}",
               "$type": "color",
               "$extensions": {
                 "org.cuboid.figma": {
@@ -169,7 +169,7 @@
           },
           "bordered": {
             "bgColor": {
-              "$value": "{display.gray.scale.2}",
+              "$value": "{display.red.9}",
               "$type": "color",
               "$extensions": {
                 "org.cuboid.figma": {
@@ -179,7 +179,7 @@
               }
             },
             "borderColor": {
-              "$value": "{display.red.scale.8}",
+              "$value": "{display.red.10}",
               "$type": "color",
               "$extensions": {
                 "org.cuboid.figma": {
@@ -189,7 +189,7 @@
               }
             },
             "fgColor": {
-              "$value": "{display.red.scale.7}",
+              "$value": "{fgColor.neutral.inverted}",
               "$type": "color",
               "$extensions": {
                 "org.cuboid.figma": {
@@ -203,7 +203,7 @@
         "extraBold": {
           "filled": {
             "bgColor": {
-              "$value": "{display.red.scale.10}",
+              "$value": "{display.red.10}",
               "$type": "color",
               "$extensions": {
                 "org.cuboid.figma": {
@@ -235,7 +235,7 @@
           },
           "bordered": {
             "bgColor": {
-              "$value": "{display.gray.scale.1}",
+              "$value": "{display.red.10}",
               "$type": "color",
               "$extensions": {
                 "org.cuboid.figma": {
@@ -245,7 +245,7 @@
               }
             },
             "borderColor": {
-              "$value": "{display.red.scale.10}",
+              "$value": "{display.red.10}",
               "$type": "color",
               "$extensions": {
                 "org.cuboid.figma": {
@@ -255,7 +255,7 @@
               }
             },
             "fgColor": {
-              "$value": "{display.red.scale.10}",
+              "$value": "{fgColor.neutral.inverted}",
               "$type": "color",
               "$extensions": {
                 "org.cuboid.figma": {

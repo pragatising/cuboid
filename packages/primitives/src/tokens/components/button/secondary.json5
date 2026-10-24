@@ -8,9 +8,9 @@
         disabled: { $value: '{bgColor.neutral.light.3}', $type: 'color' },
       },
       borderColor: {
-        rest: { $value: '{borderColor.subtle}', $type: 'color' },
-        hover: { $value: '{borderColor.subtle}', $type: 'color' },
-        pressed: { $value: '{borderColor.subtle}', $type: 'color' },
+        rest: { $value: '{borderColor.default}', $type: 'color' },
+        hover: { $value: '{borderColor.default}', $type: 'color' },
+        pressed: { $value: '{borderColor.default}', $type: 'color' },
         disabled: {
           $value: '{borderColor.subtle}',
           $type: 'color',

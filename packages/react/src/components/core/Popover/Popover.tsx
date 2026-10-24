@@ -1,4 +1,4 @@
-import React, { Children, cloneElement, isValidElement, useCallback, useMemo } from "react";
+import React, { Children, cloneElement, isValidElement, useCallback, useLayoutEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { clsx } from "clsx";
 import { useProvidedRefOrCreate } from "../../../behaviors";
@@ -9,7 +9,6 @@ import { lengthToPx } from "../../../utils/length";
 import { mergeProps } from "../../../utils/mergeProps";
 import { resolved } from "../../../utils/resolved";
 import type { Length, RawLength } from "../../../utils/space";
-import { actionMenuVars } from "../ActionMenu/actionMenuVars";
 import { Box } from "../Box";
 import { Button } from "../Button";
 import type { ButtonProps } from "../Button";
@@ -67,6 +66,14 @@ export type PopoverProps = Omit<React.ComponentPropsWithRef<"div">, "role" | "ch
   returnFocusOnClose?: boolean;
   /** Caps the panel's height (any CSS length). The content scrolls inside it; the header and footer stay put. */
   maxHeight?: Length;
+  /**
+   * Position the panel against this element instead of the trigger, and render the trigger as it is: it is not cloned, so it
+   * gets no toggle on click and no `aria-expanded`, `aria-controls` or `aria-haspopup`. For a combobox, whose input drives
+   * `open` itself and whose anchor is the field's box (not the label and help text around it).
+   */
+  anchorRef?: React.RefObject<HTMLElement | null>;
+  /** Make the panel at least as wide as what it is anchored to. @default false */
+  matchAnchorWidth?: boolean;
 };
 
 function isPart(child: React.ReactNode, part: unknown): child is React.ReactElement<Record<string, unknown>> {
@@ -94,14 +101,16 @@ function PopoverRoot({
   autoFocus = true,
   returnFocusOnClose = true,
   maxHeight,
+  anchorRef,
+  matchAnchorWidth = false,
   className,
   ref,
   "aria-labelledby": ariaLabelledBy,
   ...props
 }: PopoverProps) {
-  const { popover, shadow, zIndex } = useTokens();
+  const { popover, shadow, zIndex, focusRing } = useTokens();
   const titleId = React.useId();
-  const triggerRef = useProvidedRefOrCreate<HTMLElement>((trigger.props as { ref?: React.Ref<HTMLElement> }).ref);
+  const triggerRef = useProvidedRefOrCreate<HTMLElement>(anchorRef ?? (trigger.props as { ref?: React.Ref<HTMLElement> }).ref);
   const panelRef = useProvidedRefOrCreate<HTMLDivElement>(ref);
 
   const { open, panelId, style, toggle } = usePopover({
@@ -109,13 +118,19 @@ function PopoverRoot({
     defaultOpen,
     onOpenChange,
     placement,
-    gap: lengthToPx(popover.sizes.gap, 4),
+    // Anchored to a field (a combobox), the field's focus ring is wider than the usual gap: clear it.
+    gap: lengthToPx(popover.sizes.gap, 4) + (anchorRef ? lengthToPx(focusRing.width, 3) + lengthToPx(focusRing.offset, 2) : 0),
     dismissible,
     returnFocus: returnFocusOnClose,
     autoFocus,
     triggerRef,
     panelRef,
   });
+
+  const [anchorWidth, setAnchorWidth] = useState<number | undefined>();
+  useLayoutEffect(() => {
+    if (matchAnchorWidth && open) setAnchorWidth(triggerRef.current?.getBoundingClientRect().width);
+  }, [matchAnchorWidth, open, triggerRef]);
 
   const parts = Children.toArray(children);
   const header = parts.find((child) => isPart(child, PopoverHeader));
@@ -134,14 +149,16 @@ function PopoverRoot({
     [triggerProps.onClick, toggle],
   );
 
-  const triggerElement = cloneElement(trigger as React.ReactElement<Record<string, unknown>>, {
-    ref: triggerRef,
-    type: triggerProps.type ?? (trigger.type === "button" ? "button" : undefined),
-    "aria-expanded": open,
-    ...(hasPopup ? { "aria-haspopup": hasPopup } : {}),
-    "aria-controls": open ? panelId : undefined,
-    onClick: onTriggerClick,
-  });
+  const triggerElement = anchorRef
+    ? trigger
+    : cloneElement(trigger as React.ReactElement<Record<string, unknown>>, {
+        ref: triggerRef,
+        type: triggerProps.type ?? (trigger.type === "button" ? "button" : undefined),
+        "aria-expanded": open,
+        ...(hasPopup ? { "aria-haspopup": hasPopup } : {}),
+        "aria-controls": open ? panelId : undefined,
+        onClick: onTriggerClick,
+      });
 
   const panel =
     open && typeof document !== "undefined"
@@ -170,7 +187,7 @@ function PopoverRoot({
               overflow="hidden"
               boxSizing="border-box"
               margin={0}
-              minWidth={resolved<Length>(popover.sizes.minWidth)}
+              minWidth={matchAnchorWidth && anchorWidth !== undefined ? (`${anchorWidth}px` as Length) : resolved<Length>(popover.sizes.minWidth)}
               maxWidth={resolved<Length>(popover.sizes.maxWidth)}
               maxHeight={maxHeight}
               backgroundColor={resolved<CssColor>(popover.color.background)}
@@ -208,12 +225,11 @@ export type PopoverHeaderProps = Omit<React.ComponentPropsWithRef<"div">, "title
 
 /** The popover's top row: a title or any content, an optional close button, and a divider below. */
 function PopoverHeader({ children, onClose, closeLabel = "Close", className, ...props }: PopoverHeaderProps) {
-  const tokens = useTokens();
   const { titleId } = usePopoverContext();
   const title = typeof children === "string" || typeof children === "number";
 
   return (
-    <div {...mergeProps({ "data-component": "Popover.Header", className: clsx(classes.Header, className), style: actionMenuVars(tokens) }, props)}>
+    <div {...mergeProps({ "data-component": "Popover.Header", "data-dismissible": onClose ? "" : undefined, className: clsx(classes.Header, className) }, props)}>
       <Box flexDirection="row" alignItems="center" gap="sm" width="100%">
         <Box id={title ? titleId : undefined} flexGrow={1} minWidth="0">
           {title ? (
@@ -224,7 +240,7 @@ function PopoverHeader({ children, onClose, closeLabel = "Close", className, ...
             children
           )}
         </Box>
-        {onClose ? <IconButton aria-label={closeLabel} variant="ghost" size="xs" onClick={onClose} icon={<Icon name="close" />} /> : null}
+        {onClose ? <IconButton aria-label={closeLabel} variant="ghost" size="sm" onClick={onClose} icon={<Icon name="close" />} /> : null}
       </Box>
       <div className={classes.HeaderDivider} role="separator" />
     </div>
@@ -264,16 +280,15 @@ export type PopoverFooterProps = Omit<React.ComponentPropsWithRef<"div">, "child
 
 const footerButton = (action: PopoverAction | undefined, fallback: ButtonVariant) =>
   action ? (
-    <Button variant={action.variant ?? fallback} size="xs" onClick={action.onClick} disabled={action.disabled}>
+    <Button variant={action.variant ?? fallback} size="sm" onClick={action.onClick} disabled={action.disabled}>
       {action.label}
     </Button>
   ) : null;
 
 /** The popover's bottom row: your content, or an action row from `primary` and `secondary`. */
 function PopoverFooter({ primary, secondary, align = "justified", children, className, ...props }: PopoverFooterProps) {
-  const tokens = useTokens();
   return (
-    <div {...mergeProps({ "data-component": "Popover.Footer", className: clsx(classes.Footer, className), style: actionMenuVars(tokens) }, props)}>
+    <div {...mergeProps({ "data-component": "Popover.Footer", className: clsx(classes.Footer, className) }, props)}>
       {children ?? (
         <Box flexDirection="row" justifyContent={align === "left" ? "flex-start" : "space-between"} gap="sm" width="100%">
           {align === "left" ? footerButton(primary, "primary") : footerButton(secondary, "secondary")}

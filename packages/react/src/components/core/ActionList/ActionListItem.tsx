@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useId } from "react";
 import { clsx } from "clsx";
-import { useTokens } from "../../../mode";
 import { mergeProps } from "../../../utils/mergeProps";
 import { Box } from "../Box";
 import { Icon } from "../Icon";
-import { useActionMenuContext } from "./ActionMenuContext";
-import { actionMenuVars } from "./actionMenuVars";
-import classes from "./ActionMenuItem.module.css";
+import { Text } from "../Text";
+import { useActionListContext } from "./ActionListContext";
+import { useActiveOptionContext } from "./ActiveOptionContext";
+import classes from "./ActionListItem.module.css";
 
-export type ActionMenuItemProps = Omit<React.ComponentPropsWithRef<"button">, "children" | "color" | "role"> & {
+export type ActionListItemProps = Omit<React.ComponentPropsWithRef<"button">, "children" | "color" | "role"> & {
   /** The item's label. */
   children: React.ReactNode;
   /** A second line under the label. */
@@ -45,10 +45,11 @@ function decorate(visual: React.ReactNode, className: string) {
 }
 
 /**
- * One row of an action menu. Its colours and sizes are the `actionMenu` tokens, set as element-scoped variables on the row
- * itself (actionMenuVars.ts), so it also works outside an `ActionMenu.List` (a sidebar's nav).
+ * One row of an action menu. Its colours and sizes are the `--cube-actionMenu-*` variables the token build publishes, read in
+ * ActionListItem.module.css, so the row carries no inline style and also works outside an `ActionMenu.List`. Its role follows the
+ * list's: a menu item (or radio, or checkbox) in a `menu`, an `option` in a `listbox`.
  */
-function ActionMenuItem({
+function ActionListItem({
   children,
   description,
   descriptionVisual,
@@ -61,13 +62,19 @@ function ActionMenuItem({
   keepOpenOnSelect = false,
   className,
   disabled,
+  id: idProp,
   "aria-label": ariaLabel,
   ...props
-}: ActionMenuItemProps) {
-  const tokens = useTokens();
-  const { selectionMode } = useActionMenuContext();
+}: ActionListItemProps) {
+  const { selectionMode, role: listRole } = useActionListContext();
+  const search = useActiveOptionContext();
+  const generatedId = useId();
+  const id = idProp ?? generatedId;
+  // With a search field, focus stays in the field: the row is the active option when the field points at it, and is not a tab stop.
+  const active = search !== null && search.activeId === id;
   const checkable = selected !== undefined || selectionMode !== undefined;
-  const role = selectionMode === "single" ? "menuitemradio" : checkable ? "menuitemcheckbox" : "menuitem";
+  const isOption = listRole === "listbox";
+  const role = isOption ? "option" : selectionMode === "single" ? "menuitemradio" : checkable ? "menuitemcheckbox" : "menuitem";
   const checked = selected === true;
   const name = iconOnly ? (ariaLabel ?? (typeof children === "string" ? children : undefined)) : ariaLabel;
 
@@ -78,34 +85,42 @@ function ActionMenuItem({
         {
           "data-component": "ActionMenu.Item",
           type: "button" as const,
+          id,
           role,
+          tabIndex: search ? -1 : undefined,
+          "data-active": active ? "" : undefined,
           className: clsx(
-            classes.ActionMenuItem,
-            checked && classes["ActionMenuItem--selected"],
-            description && classes["ActionMenuItem--withSubtext"],
-            iconOnly && classes["ActionMenuItem--iconOnly"],
+            classes.ActionListItem,
+            checked && classes["ActionListItem--selected"],
+            description && classes["ActionListItem--withSubtext"],
+            iconOnly && classes["ActionListItem--iconOnly"],
             className,
           ),
           disabled,
           "aria-disabled": disabled || undefined,
-          "aria-checked": checkable ? checked : undefined,
+          // An option in a listbox is `aria-selected` (on every option, so the choice is announced); menu items are `aria-checked`.
+          "aria-selected": isOption ? checked : undefined,
+          "aria-checked": !isOption && checkable ? checked : undefined,
           "aria-label": name,
           "data-keep-open": keepOpenOnSelect ? "true" : undefined,
-          style: actionMenuVars(tokens),
         },
         props as object,
       )}
     >
-      <span className={classes.ActionMenuItemInner}>
+      <span className={classes.ActionListItemInner}>
         {leadingVisual ? <span className={classes.IconSlot}>{decorate(leadingVisual, classes.IconSlot)}</span> : null}
 
         {!iconOnly ? (
           <span className={classes.Content}>
-            <span className={classes.Label}>{children}</span>
+            <Text as="span" size="md" color="currentColor" truncate className={classes.Label}>
+              {children}
+            </Text>
             {description ? (
               <span className={classes.SubtextRow}>
                 {descriptionVisual ? <span className={classes.SubtextIconSlot}>{decorate(descriptionVisual, classes.SubtextIconSlot)}</span> : null}
-                <span className={classes.Subtext}>{description}</span>
+                <Text as="span" size="sm" color="var(--cube-actionMenu-item-fgColor-subtext)" truncate className={classes.Subtext}>
+                  {description}
+                </Text>
               </span>
             ) : null}
           </span>
@@ -129,4 +144,4 @@ function ActionMenuItem({
   );
 }
 
-export { ActionMenuItem };
+export { ActionListItem };

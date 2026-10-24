@@ -10,7 +10,6 @@ import { resolveSpace } from "../../../utils/space";
 import type { Space } from "../../../utils/space";
 import { resolved } from "../../../utils/resolved";
 import type { SpaceValue } from "../../../utils/space";
-import { actionMenuVars } from "../ActionMenu/actionMenuVars";
 import { Box } from "../Box";
 import { Heading } from "../Heading";
 import { Icon } from "../Icon";
@@ -260,7 +259,7 @@ function SidebarSection({ label, className, children, ...props }: SidebarSection
       id={labelId}
       className={classes.SectionLabel}
       style={{
-        color: "var(--action-menu-item-fg-color-subtext)",
+        color: "var(--cube-actionMenu-item-fgColor-subtext)",
         letterSpacing: tokens.text.letterSpacing.label,
         paddingBlock: actionMenu.sizes.section.paddingBlock,
         paddingInline: resolveSpace(tokens, "1.5x"),
@@ -423,14 +422,12 @@ export function Sidebar({
             className: clsx(classes.Sidebar, className),
             style: {
               backgroundColor: sidebar.color.background,
-              // The rows are ActionMenu rows: they read the same scoped variables.
-              ...actionMenuVars(tokens),
               ...cssVars("sidebar", {
                 borderColor: sidebar.color.border,
                 borderWidth: borderWidth.thin,
                 padding: layout.padding,
                 footerPadding: layout.footerPadding,
-                toggleSize: size.control.sm.size,
+                toggleSize: size.control.md.size,
               }),
               ...widthStyle,
             },

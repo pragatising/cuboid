@@ -4,7 +4,7 @@ import type { PolymorphicProps } from "../../../utils/polymorphic";
 
 // The variants and sizes are the keys of the button tokens. Button.test-d.tsx fails if these drift from them.
 export type VariantType = "primary" | "secondary" | "ghost" | "danger" | "rounded";
-export type Size = "xs" | "sm" | "md" | "lg";
+export type Size = "sm" | "md" | "lg";
 export type AlignContent = "start" | "center";
 
 export type ButtonBaseProps = {
@@ -15,7 +15,7 @@ export type ButtonBaseProps = {
   variant?: VariantType;
   /**
    * Size of the button: its height, padding, gap, the label font, and the icon and visual size
-   * @default "sm"
+   * @default "md"
    */
   size?: Size;
   /**

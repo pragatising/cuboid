@@ -2,7 +2,7 @@ import React from "react";
 import { clsx } from "clsx";
 import { useTokens } from "../../../mode";
 import type { Tokens } from "../../../mode";
-import { resolveColorValue } from "../../../utils/colorPaths";
+import { colorGroups, resolveColorValue } from "../../../utils/colorPaths";
 import type { CssColor, FgColor } from "../../../utils/colorPaths";
 import { cssVars } from "../../../utils/cssVars";
 import { mergeProps } from "../../../utils/mergeProps";
@@ -67,7 +67,9 @@ export function Link<As extends React.ElementType = "a">({
   ...props
 }: LinkProps<As>) {
   const Component: React.ElementType = as ?? "a";
-  const { link, text, fontWeight, fgColor, focusRing } = useTokens();
+  const tokens = useTokens();
+  const { link, text, fontWeight, focusRing } = tokens;
+  const { fgColor } = colorGroups(tokens);
   const isAnchor = Component === "a";
   const { rel, ...rest } = props as { rel?: string };
   const customColor = color ? resolveColorValue(fgColor, color) : undefined;

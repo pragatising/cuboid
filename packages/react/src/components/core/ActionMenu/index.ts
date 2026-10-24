@@ -1,5 +1,6 @@
 export { ActionMenu } from "./ActionMenu";
 export type { ActionMenuProps } from "./ActionMenu";
-export type { ActionMenuItemProps } from "./ActionMenuItem";
-export type { ActionMenuListProps, ActionMenuSectionProps } from "./ActionMenuList";
-export type { ActionMenuSelectionMode } from "./ActionMenuContext";
+// The parts are the shared list's: `ActionMenu.List`, `.Item`, `.Section` are `ActionList`, `ActionListItem`, `ActionList.Section`.
+export type { ActionListItemProps as ActionMenuItemProps, ActionListProps as ActionMenuListProps, ActionListSectionProps as ActionMenuSectionProps } from "../ActionList";
+export type { ActionMenuSearchProps } from "./ActionMenuSearch";
+export type { ActionListSelectionMode as ActionMenuSelectionMode, ActionListRole as ActionMenuListRole } from "../ActionList";

@@ -39,6 +39,9 @@ export function setMode(mode: ModeName): void {
   }
   if (mode === currentMode) return;
   currentMode = mode;
+  // The token build's CSS publishes each mode's variables under `[data-mode="<mode>"]` (light is the `:root` default), so the
+  // attribute is what switches component CSS that reads them.
+  if (typeof document !== "undefined") document.documentElement.setAttribute("data-mode", mode);
   listeners.forEach((listener) => listener());
 }
 

@@ -6,6 +6,8 @@ import path from "node:path";
 import { readFile } from "node:fs/promises";
 import { build, sizeScaleKeys } from "./build.ts";
 
+const expectTruthy = (value: unknown) => assert.ok(value);
+
 /**
  * Real end-to-end builds into temp dirs (not mocks) — the only thing that
  * proves the two properties ADR-04's amendment depends on: overrides
@@ -43,6 +45,17 @@ describe("build(): modes", () => {
   let baseline: Tokens;
   before(async () => {
     baseline = await run("baseline");
+  });
+
+  it("writes theme.css where package.json exports it, with light on :root and dark under [data-mode=\"dark\"]", async () => {
+    const css = await readFile(path.join(work, "baseline", "css", "theme.css"), "utf8");
+    const darkAt = css.indexOf('[data-mode="dark"]');
+    expectTruthy(css.startsWith(":root"));
+    expectTruthy(darkAt > 0);
+    const [light, dark] = [css.slice(0, darkAt), css.slice(darkAt)];
+    // The first mode's value is on :root, the dark one under the attribute, and a dark-only value differs.
+    const pick = (block: string, name: string) => block.match(new RegExp(`${name}: ([^;]+);`))?.[1];
+    assert.notEqual(pick(light, "--cube-bgColor-canvas-default"), pick(dark, "--cube-bgColor-canvas-default"));
   });
 
   it("emits one tree per mode with identical shape", () => {

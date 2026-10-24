@@ -16,11 +16,11 @@ export const json: PlatformInitializer = (outputFile, prefix, buildPath, options
   //
   // This platform deliberately registers no name transform (matching
   // Primer's json.ts), so every token's `name` defaults to its last path
-  // segment — `size.0` and `display.gray.scale.0` are both named "0".
+  // segment — `size.0` and `display.gray.0` are both named "0".
   // Style Dictionary reports that as a collision, but the
   // `json/nested-prefixed` format never reads `name`: it serializes
   // `dictionary.tokens`, the nested tree, so both tokens land at their own
-  // distinct paths (tokens.size["0"], tokens.display.gray.scale["0"]).
+  // distinct paths (tokens.size["0"], tokens.display.gray["0"]).
   // Verified in the emitted tokens.json.
   //
   // A name transform would silence the warning but is the wrong fix — it

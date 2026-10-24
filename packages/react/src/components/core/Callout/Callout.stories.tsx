@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import tokens from "@sragatiping/cuboid-primitives";
 import { Callout } from "./Callout";
 import { Box } from "../Box";
 import { Text } from "../Text";
@@ -14,7 +13,6 @@ const meta: Meta<typeof Callout> = {
       control: "select",
       options: [undefined, "canvas.inset", "canvas.insetStrong", "neutral.light.2"],
     },
-    variant: { control: "select", options: Object.keys(tokens.light.callout).filter((key) => typeof (tokens.light.callout as Record<string, unknown>)[key] === "object") },
   },
 };
 export default meta;
@@ -61,22 +59,30 @@ export const OtherSurface: Story = {
   ),
 };
 
-export const Variants: Story = {
-  name: "Variants (one per callout colour token)",
-  render: () => {
-    const callout = tokens.light.callout as unknown as Record<string, unknown>;
-    const variants = Object.keys(callout).filter((key) => typeof callout[key] === "object");
-    return (
-      <Box gap="2x" style={{ maxWidth: "36rem" }}>
-        {variants.length === 0 ? <Text color="neutral.muted">No variant colours in the callout tokens yet.</Text> : null}
-        {variants.map((variant) => (
-          <Callout key={variant} variant={variant as never}>
-            <Text color="neutral.contrast">{variant}</Text>
-          </Callout>
-        ))}
-      </Box>
-    );
-  },
+export const Surfaces: Story = {
+  name: "Surfaces: any bgColor token",
+  render: () => (
+    <Box gap="2x" style={{ maxWidth: "36rem" }}>
+      {(["canvas.inset", "canvas.insetStrong", "informational.subtle", "success.subtle", "warning.subtle", "danger.subtle"] as const).map((surface) => (
+        <Callout key={surface} backgroundColor={surface}>
+          <Text color="neutral.contrast">backgroundColor=&quot;{surface}&quot;</Text>
+        </Callout>
+      ))}
+    </Box>
+  ),
+};
+
+export const PaletteSurfaces: Story = {
+  name: "Surfaces: palette colours (indigo.0, green.1 …)",
+  render: () => (
+    <Box gap="2x" style={{ maxWidth: "36rem" }}>
+      {(["indigo.0", "green.1", "orange.1", "purple.1", "highlight.yellow"] as const).map((surface) => (
+        <Callout key={surface} backgroundColor={surface}>
+          <Text color="neutral.contrast">backgroundColor=&quot;{surface}&quot;</Text>
+        </Callout>
+      ))}
+    </Box>
+  ),
 };
 
 export const Playground: Story = {

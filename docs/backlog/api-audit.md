@@ -216,5 +216,11 @@ Direction (2026-10-21): this is a **refactor onto proper behaviours** per `packa
 - **`edge` stays physical: `left | right | top | bottom`** (Sheet, Sidebar, ResizeHandle all use it). Developer expectation wins over right-to-left correctness; the logical `start | end` form is not used.
 - **Link keeps `variant`** (`inline | standalone | inherit`): it says "this is an inline link", the same sense as every other `variant` (pick a preset).
 
+**Made (2026-10-24):**
+- **One size scale for controls: `sm` 24, `md` 28, `lg` 32px**, for Button, IconButton and the form controls (no `xs`, no 40px). Callers shifted pixel-for-pixel.
+- **Form controls put `className`, `style`, `ref` and native props on the control**, not the root (ADR-05); `wrapperClassName`/`wrapperProps` reach the wrapper. `behavesAsFormControl` replaces `behavesAsComponent` for them.
+- **Callbacks keep the plain value: `onXChange(value)`.** Primer's newer components use an object argument; Cuboid's shipped components do not, and it is pre-1.0 (ADR-05).
+- **Form-control chrome is plain elements with CSS modules**, as Primer's `TextInput`, `FormControl` and `Select` are; layout components stay built on `Box`.
+
 **Still open:**
 1. Tooltip anatomy (after the study).

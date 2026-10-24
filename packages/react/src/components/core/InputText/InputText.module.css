@@ -1,0 +1,24 @@
+/* The native input inside the field shell (InputField.module.css): no chrome of its own, it fills the shell and inherits its colour. */
+:where(.Input) {
+  appearance: none;
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font: var(--cube-text-size-md);
+  text-overflow: ellipsis;
+}
+
+:where(.Input)::placeholder {
+  color: var(--cube-input-fgColor-placeholder);
+  opacity: 1;
+}
+
+:where(.Input:disabled) {
+  cursor: not-allowed;
+}

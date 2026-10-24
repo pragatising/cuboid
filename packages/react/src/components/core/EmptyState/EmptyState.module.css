@@ -1,0 +1,32 @@
+/* No tokens of its own: the spacing and radius are the size scale, the type and colours are `Text` props (EmptyState.tsx). */
+:where(.EmptyState) {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  padding: var(--cube-size-8px);
+  border-radius: var(--cube-borderRadius-md);
+  overflow: clip;
+}
+
+:where(.EmptyState[data-layout="default"]) {
+  flex-direction: column;
+  gap: var(--cube-size-10px);
+  text-align: center;
+}
+
+:where(.EmptyState[data-layout="compact"]) {
+  flex-direction: row;
+  gap: var(--cube-size-8px);
+}
+
+:where(.Text) {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--cube-size-4px);
+  width: 100%;
+}
+
+:where(.Heading, .Description) {
+  min-width: 0;
+}

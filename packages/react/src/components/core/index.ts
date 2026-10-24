@@ -44,6 +44,9 @@ export type { ButtonProps } from "./Button";
 export { IconButton } from "./IconButton";
 export type { IconButtonProps } from "./IconButton";
 
+export { InputText } from "./InputText";
+export type { InputTextProps } from "./InputText";
+
 export { Tooltip } from "./Tooltip";
 export type { TooltipProps, TooltipPlacement, TooltipType, TooltipDelay } from "./Tooltip";
 
@@ -102,11 +105,27 @@ export type {
   PopoverFooterProps,
 } from "./Popover";
 
+export { TileIcon } from "./TileIcon";
+export type { TileIconProps } from "./TileIcon";
+
+export { EmptyState } from "./EmptyState";
+export type { EmptyStateProps } from "./EmptyState";
+
+export { Select } from "./Select";
+export type { SelectProps, SelectOptionProps } from "./Select";
+
+export { TextArea } from "./TextArea";
+export type { TextAreaProps } from "./TextArea";
+
+export { Autocomplete } from "./Autocomplete";
+export type { AutocompleteProps } from "./Autocomplete";
+
 export { ActionMenu } from "./ActionMenu";
 export type {
   ActionMenuProps,
   ActionMenuItemProps,
   ActionMenuListProps,
+  ActionMenuSearchProps,
   ActionMenuSectionProps,
   ActionMenuSelectionMode,
 } from "./ActionMenu";

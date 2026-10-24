@@ -3,8 +3,8 @@
     ghost: {
       bgColor: {
         rest: { $value: '{bgColor.canvas.transparent}', $type: 'color' },
-        hover: { $value: '{bgColor.neutral.light.2}', $type: 'color' },
-        pressed: { $value: '{bgColor.neutral.light.2}', $type: 'color' },
+        hover: { $value: '{bgColor.neutral.light.3}', $type: 'color' },
+        pressed: { $value: '{bgColor.neutral.light.3}', $type: 'color' },
         disabled: { $value: '{bgColor.canvas.transparent}', $type: 'color' },
       },
       borderColor: {
@@ -15,7 +15,7 @@
       },
       fgColor: {
         rest: { $value: '{fgColor.neutral.muted}', $type: 'color' },
-        hover: { $value: '{fgColor.neutral.muted}', $type: 'color' },
+        hover: { $value: '{fgColor.neutral.default}', $type: 'color' },
         pressed: { $value: '{fgColor.neutral.default}', $type: 'color' },
         disabled: { $value: '{fgColor.neutral.disabled}', $type: 'color' },
       },

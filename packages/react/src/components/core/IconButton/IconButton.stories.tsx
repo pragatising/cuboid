@@ -12,7 +12,7 @@ const meta: Meta<typeof IconButton> = {
   tags: ["autodocs"],
   parameters: { layout: "padded" },
   argTypes: {
-    size: { control: "radio", options: ["xs", "sm", "md", "lg"] },
+    size: { control: "radio", options: ["sm", "md", "lg"] },
     variant: { control: "radio", options: ["outlined", "ghost"] },
     selected: { control: "boolean" },
     disabled: { control: "boolean" },
@@ -25,7 +25,7 @@ type Story = StoryObj<typeof IconButton>;
 
 export const Playground: Story = {
   args: {
-    size: "xs",
+    size: "sm",
     variant: "outlined",
     selected: false,
     disabled: false,
@@ -53,7 +53,7 @@ export const Matrix: Story = {
 export const Sizes: Story = {
   render: () => (
     <Box flexDirection="row" alignItems="center" gap="1x">
-      {(["xs", "sm", "md", "lg"] as const).map((size) => (
+      {(["sm", "md", "lg"] as const).map((size) => (
         <IconButton key={size} size={size} aria-label={`Favorite (${size})`} icon={star} />
       ))}
     </Box>

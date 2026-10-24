@@ -3,7 +3,7 @@ import { clsx } from "clsx";
 import { useTokens } from "../../../mode";
 import type { Tokens } from "../../../mode";
 import { mergeProps } from "../../../utils/mergeProps";
-import { resolveColorValue } from "../../../utils/colorPaths";
+import { colorGroups, resolveColorValue } from "../../../utils/colorPaths";
 import type { CssColor, FgColor } from "../../../utils/colorPaths";
 import type { PolymorphicProps } from "../../../utils/polymorphic";
 import classes from "./Text.module.css";
@@ -46,7 +46,9 @@ export function Text<As extends React.ElementType = "p">({
   ...props
 }: TextProps<As>) {
   const Component: React.ElementType = as ?? "p";
-  const { text, fgColor, fontWeight } = useTokens();
+  const tokens = useTokens();
+  const { text, fontWeight } = tokens;
+  const { fgColor } = colorGroups(tokens);
 
   return (
     <Component

@@ -1,0 +1,27 @@
+/* The focusable box inside the field shell (InputField.module.css): no chrome of its own, it fills the shell and inherits its colour. */
+:where(.Control) {
+  appearance: none;
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font: var(--cube-text-size-md);
+  text-align: start;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:where(.Control[data-placeholder]) {
+  color: var(--cube-input-fgColor-placeholder);
+}
+
+:where(.Control:disabled) {
+  cursor: not-allowed;
+}

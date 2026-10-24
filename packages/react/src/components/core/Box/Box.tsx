@@ -2,7 +2,7 @@ import React from "react";
 import { clsx } from "clsx";
 import { useTokens } from "../../../mode";
 import type { SizeScale, Tokens } from "../../../mode";
-import { resolveBorderValue, resolveColorValue } from "../../../utils/colorPaths";
+import { colorGroups, resolveBorderValue, resolveColorValue } from "../../../utils/colorPaths";
 import type { BgColor, BorderColor, BorderToken, CssBorder, CssColor, FgColor } from "../../../utils/colorPaths";
 import { mergeProps } from "../../../utils/mergeProps";
 import type { PolymorphicProps } from "../../../utils/polymorphic";
@@ -118,7 +118,7 @@ export type BoxOwnProps = {
 
 export type BoxProps<As extends React.ElementType = "div"> = PolymorphicProps<As, "div", BoxOwnProps>;
 
-type Props = Pick<Tokens, "space" | "size" | "border" | "borderColor" | "borderWidth">;
+type Props = Pick<Tokens, "space" | "size" | "border" | "borderColor" | "borderWidth" | "display">;
 
 const SPACE_PROPS = new Set([...GAP, ...PADDING, ...INSET]);
 const MARGIN_PROPS = new Set(MARGIN);
@@ -138,7 +138,7 @@ function resolveBorderWidth(tokens: Props, value: NonNullable<BorderSideSpec["wi
 
 /** One border described by its parts -> the CSS `border` shorthand value. */
 function borderSpecToCss(tokens: Props, { color, width = "thin", style = "solid" }: BorderSideSpec): string {
-  return `${resolveBorderWidth(tokens, width)} ${style} ${resolveColorValue(tokens.borderColor, color ?? "default")}`;
+  return `${resolveBorderWidth(tokens, width)} ${style} ${resolveColorValue(colorGroups(tokens).borderColor, color ?? "default")}`;
 }
 
 const sideProp = (side: BorderSide) => (side === "all" ? "border" : `border${side[0].toUpperCase()}${side.slice(1)}`);
@@ -240,11 +240,11 @@ export function Box<As extends React.ElementType = "div">({
   const style: Css = {
     flexDirection,
     ...shorthands,
-    ...(backgroundColor ? { backgroundColor: resolveColorValue(tokens.bgColor, backgroundColor) } : {}),
-    ...(color ? { color: resolveColorValue(tokens.fgColor, color) } : {}),
+    ...(backgroundColor ? { backgroundColor: resolveColorValue(colorGroups(tokens).bgColor, backgroundColor) } : {}),
+    ...(color ? { color: resolveColorValue(colorGroups(tokens).fgColor, color) } : {}),
     ...(borderRadius ? { borderRadius: resolveRadius(tokens, borderRadius) } : {}),
     ...(borderColor
-      ? { borderStyle: "solid", borderWidth: tokens.borderWidth.thin, borderColor: resolveColorValue(tokens.borderColor, borderColor) }
+      ? { borderStyle: "solid", borderWidth: tokens.borderWidth.thin, borderColor: resolveColorValue(colorGroups(tokens).borderColor, borderColor) }
       : {}),
     ...(zIndex === undefined ? {} : { zIndex: zIndex in tokens.zIndex ? tokens.zIndex[zIndex as keyof Tokens["zIndex"]] : zIndex }),
     ...token,

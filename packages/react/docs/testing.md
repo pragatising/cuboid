@@ -222,3 +222,9 @@ and downloading the relevant report.
 The browser executables need to be installed so that playwright can run tests
 inside chromium, firefox, etc. They can be installed by running
 `npx playwright install --with-deps`
+
+## Cuboid additions
+
+- **`behavesAsComponent`** (`src/test/testing.tsx`) is called by every component whose root takes the props. **`behavesAsFormControl`** replaces it for a form control (`InputText`, `TextArea`, `Select`, `Autocomplete`): `className`, `style`, `ref`, `id`, `data-*`, `aria-*` go to the control, `wrapperClassName` to the wrapper, and the help text and error are wired to it (ADR-05).
+- **Token variables.** A component whose CSS reads `--cube-*` variables has a test that every variable exists in the built `theme.css` in both modes and resolves to the JS tree's value (`src/test/themeCss.ts`).
+- **Contrast.** jsdom cannot compute it (`expectNoAxeViolations` runs with the rule off). Text colour pairs are checked from the tokens (`InputField/fieldContrast.test.ts`, `src/test/contrast.ts`), and `npm run a11y:sweep` runs axe with contrast **on** in real Chrome against the stories, light and dark, with the popups open.

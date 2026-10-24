@@ -1,7 +1,7 @@
 import React from "react";
 import { clsx } from "clsx";
 import { useTokens } from "../../../mode";
-import { resolveColorValue } from "../../../utils/colorPaths";
+import { colorGroups, resolveColorValue } from "../../../utils/colorPaths";
 import type { CssColor, FgColor } from "../../../utils/colorPaths";
 import { mergeProps } from "../../../utils/mergeProps";
 import type { PolymorphicProps } from "../../../utils/polymorphic";
@@ -33,7 +33,9 @@ export type HeadingProps<As extends HeadingLevel = "h2"> = PolymorphicProps<
 export function Heading<As extends HeadingLevel = "h2">({ as, size, color, className, ...props }: HeadingProps<As>) {
   const Component: React.ElementType = as ?? "h2";
   const visual: HeadingSize = size ?? (as ?? "h2");
-  const { heading, fgColor } = useTokens();
+  const tokens = useTokens();
+  const { heading } = tokens;
+  const { fgColor } = colorGroups(tokens);
 
   return (
     <Component

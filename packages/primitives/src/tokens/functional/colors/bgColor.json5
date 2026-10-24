@@ -144,7 +144,7 @@
         $extensions: {
           'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' },
           // White text sits on this fill, so dark mode needs a darker step than the text-colour use of the same hue.
-          'org.cuboid.overrides': { dark: '{base.color.blue.8}' },
+          'org.cuboid.overrides': { dark: '{base.color.blue.7}' },
         },
       },
     },
@@ -188,7 +188,7 @@
         $extensions: {
           'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' },
           // White text sits on this fill, so dark mode needs a darker step than the text-colour use of the same hue.
-          'org.cuboid.overrides': { dark: '{base.color.blue.8}' },
+          'org.cuboid.overrides': { dark: '{base.color.blue.7}' },
         },
       },
     },
@@ -229,6 +229,16 @@
           'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' },
           // White text sits on this fill, so dark mode needs a darker step than the text-colour use of the same hue.
           'org.cuboid.overrides': { dark: '{base.color.red.8}' },
+        },
+      },
+      strongest: {
+        $value: '{base.color.red.10}',
+        $type: 'color',
+        $extensions: {
+          'org.cuboid.figma': { collection: 'mode', scopes: ['bgColor'], group: 'semantic' },
+          // White text sits on this fill. In dark mode the steps run the other way, so a deeper fill than danger.strong (red.8) is
+          // a lower step: red.9 is lighter than strong and fails the dark-mode readability test.
+          'org.cuboid.overrides': { dark: '{base.color.red.7}' },
         },
       },
     },

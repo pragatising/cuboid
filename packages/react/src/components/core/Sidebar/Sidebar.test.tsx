@@ -52,13 +52,13 @@ describe("Sidebar", () => {
     expect(nav().style.width).toBe(tokens.light.sidebar.sizes.width[stop]);
   });
 
-  it("hands padding, border and toggle size to the CSS as variables, and the actionMenu tokens for its rows", () => {
+  it("hands padding, border and toggle size to the CSS as variables; its rows read the published actionMenu variables", () => {
     shell();
     expect(nav().style.getPropertyValue("--sidebar-padding")).toBe(tokens.light.sidebar.sizes.padding);
     expect(nav().style.getPropertyValue("--sidebar-footer-padding")).toBe(tokens.light.sidebar.sizes.footerPadding);
     expect(nav().style.getPropertyValue("--sidebar-border-color")).toBe(tokens.light.sidebar.color.border);
-    expect(nav().style.getPropertyValue("--sidebar-toggle-size")).toBe(tokens.light.size.control.sm.size);
-    expect(nav().style.getPropertyValue("--action-menu-item-bg-color-rest")).toBe(tokens.light.actionMenu.item.bgColor.rest);
+    expect(nav().style.getPropertyValue("--sidebar-toggle-size")).toBe(tokens.light.size.control.md.size);
+    expect(nav().style.getPropertyValue("--cube-actionMenu-item-bgColor-rest")).toBe("");
   });
 
   it("sits on the chosen edge", () => {
@@ -70,7 +70,6 @@ describe("Sidebar", () => {
     act(() => setMode("dark"));
     shell();
     expect(nav()).toHaveStyle({ backgroundColor: tokens.dark.sidebar.color.background });
-    expect(nav().style.getPropertyValue("--action-menu-item-bg-color-rest")).toBe(tokens.dark.actionMenu.item.bgColor.rest);
   });
 
   it("has no axe violations", async () => {
