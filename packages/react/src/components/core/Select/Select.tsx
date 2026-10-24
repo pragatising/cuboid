@@ -1,7 +1,6 @@
-import React, { Children, createContext, isValidElement, useContext, useMemo } from "react";
+import React, { Children, isValidElement, useMemo } from "react";
 import { useControllableState, useProvidedRefOrCreate } from "../../../behaviors";
-import { ActionList, ActionListItem, ActiveOptionContext, useCombobox } from "../ActionList";
-import type { ActionListItemProps } from "../ActionList";
+import { ActionList, ActiveOptionContext, useCombobox } from "../ActionList";
 import { Icon } from "../Icon";
 import { InputField, useFieldControl } from "../InputField";
 import type { InputFieldProps, InputFieldSize } from "../InputField";
@@ -9,19 +8,10 @@ import { clsx } from "clsx";
 import { Popover } from "../Popover";
 import type { PopoverProps } from "../Popover";
 import classes from "./Select.module.css";
+import { NativeSelect } from "./SelectNative";
+import { SelectContext, SelectOption } from "./SelectOption";
 
-const SelectContext = createContext<{ value: string }>({ value: "" });
-
-export type SelectOptionProps = Omit<ActionListItemProps, "selected" | "value"> & {
-  /** What the select's value is when this option is chosen. */
-  value: string;
-};
-
-/** One choice of a `Select`. It is an `ActionMenu.Item`: it takes the same leading visual, description and `disabled`. */
-function SelectOption({ value, ...props }: SelectOptionProps) {
-  const { value: current } = useContext(SelectContext);
-  return <ActionListItem data-component="Select.Option" {...props} selected={current === value} data-value={value} />;
-}
+export type { SelectOptionProps } from "./SelectOption";
 
 export type SelectProps = Omit<React.ComponentPropsWithRef<"button">, "children" | "value" | "defaultValue" | "onChange" | "color" | "type" | "role" | "name"> &
   Pick<InputFieldProps, "labelHelp" | "descriptionVisual" | "errorVisual"> & {
@@ -51,6 +41,8 @@ export type SelectProps = Omit<React.ComponentPropsWithRef<"button">, "children"
   loading?: boolean;
   /** What the loading row says. @default "Loading…" */
   loadingText?: string;
+  /** Render a real `<select>` (the same field around it) so a phone or tablet shows its own picker. Options become text (`description`, visuals, `loading` and the popup props do not apply). It is chosen per use, not switched automatically. @default false */
+  native?: boolean;
   /** Shown when nothing is chosen. */
   placeholder?: string;
   /** The field's height: `sm` 24px, `md` 28px, `lg` 32px (as Button). @default "md" */
@@ -95,7 +87,7 @@ function labelOf(children: React.ReactNode, value: string): React.ReactNode | un
  * Space open it; the arrows, Home and End, and typing a word move, Enter or Space chooses, Escape and Tab close, and so does focus
  * leaving for outside the popup. A pointer press on an option chooses it.
  */
-function SelectRoot({
+function PopupSelect({
   children,
   value: valueProp,
   defaultValue = "",
@@ -119,6 +111,7 @@ function SelectRoot({
   disabled,
   readOnly,
   maxHeight,
+  native: _native,
   className,
   wrapperClassName,
   ref,
@@ -201,6 +194,11 @@ function SelectRoot({
       </ActiveOptionContext.Provider>
     </SelectContext.Provider>
   );
+}
+
+/** The select: the popup one, or with `native` a real `<select>` in the same field. They are different components, so toggling `native` remounts. */
+function SelectRoot(props: SelectProps) {
+  return props.native ? <NativeSelect {...props} /> : <PopupSelect {...props} />;
 }
 
 export const Select = Object.assign(SelectRoot, {

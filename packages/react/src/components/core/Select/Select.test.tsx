@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { behavesAsFormControl, expectNoAxeViolations } from "../../../test/testing";
@@ -350,5 +350,112 @@ describe("Select: loading", () => {
     expect(screen.getByText("Fetching…")).toBeInTheDocument();
     expect(screen.queryByRole("listbox")).toBeNull();
     expect(screen.queryAllByRole("option")).toHaveLength(0);
+  });
+});
+
+behavesAsFormControl({
+  Component: Select,
+  dataComponent: "Select",
+  props: { native: true, children: <Select.Option value="a">A</Select.Option> },
+  control: "select",
+});
+
+describe("Select: native", () => {
+  const nativeBox = () => screen.getByRole("combobox", { name: "Fruit" }) as HTMLSelectElement;
+
+  it("is a real select in the field, with the options and groups read from the children", () => {
+    render(
+      <Select label="Fruit" native placeholder="Choose one">
+        <Select.Option value="apple">Apple</Select.Option>
+        <>
+          <Select.Option value="banana" disabled>
+            Banana
+          </Select.Option>
+        </>
+        <Select.Section label="Citrus">
+          <Select.Option value="lemon">
+            <b>Lemon</b> sour
+          </Select.Option>
+        </Select.Section>
+      </Select>,
+    );
+    expect(nativeBox().tagName).toBe("SELECT");
+    expect(screen.getAllByRole("option").map((o) => o.textContent)).toEqual(["Choose one", "Apple", "Banana", "Lemon sour"]);
+    expect(screen.getByRole("option", { name: "Choose one" })).toBeDisabled();
+    expect(screen.getByRole("option", { name: "Banana" })).toBeDisabled();
+    expect(screen.getByRole("group", { name: "Citrus" })).toContainElement(screen.getByRole("option", { name: "Lemon sour" }));
+    expect(nativeBox()).toHaveValue("");
+    expect(nativeBox()).toHaveAttribute("data-placeholder");
+  });
+
+  it("chooses with the system picker and keeps its own value", async () => {
+    const onValueChange = vi.fn();
+    render(
+      <Select label="Fruit" native onValueChange={onValueChange}>
+        <Select.Option value="apple">Apple</Select.Option>
+        <Select.Option value="grape">Grape</Select.Option>
+      </Select>,
+    );
+    await userEvent.selectOptions(nativeBox(), "grape");
+    expect(onValueChange).toHaveBeenCalledWith("grape");
+    expect(nativeBox()).toHaveValue("grape");
+    expect(nativeBox()).not.toHaveAttribute("data-placeholder");
+  });
+
+  it("can be controlled, and starts from defaultValue", async () => {
+    const { rerender } = render(
+      <Select label="Fruit" native defaultValue="grape">
+        <Select.Option value="apple">Apple</Select.Option>
+        <Select.Option value="grape">Grape</Select.Option>
+      </Select>,
+    );
+    expect(nativeBox()).toHaveValue("grape");
+    rerender(
+      <Select label="Fruit" native value="apple" onValueChange={() => {}}>
+        <Select.Option value="apple">Apple</Select.Option>
+        <Select.Option value="grape">Grape</Select.Option>
+      </Select>,
+    );
+    expect(nativeBox()).toHaveValue("apple");
+  });
+
+  it("submits its value under name, as a select does", () => {
+    const { container } = render(
+      <form>
+        <Select label="Fruit" native name="fruit" defaultValue="grape">
+          <Select.Option value="apple">Apple</Select.Option>
+          <Select.Option value="grape">Grape</Select.Option>
+        </Select>
+      </form>,
+    );
+    expect(new FormData(container.querySelector("form") as HTMLFormElement).get("fruit")).toBe("grape");
+  });
+
+  it("disabled is disabled, and read-only keeps the picker from opening and the value from changing", () => {
+    const { rerender } = render(
+      <Select label="Fruit" native disabled>
+        <Select.Option value="a">A</Select.Option>
+      </Select>,
+    );
+    expect(nativeBox()).toBeDisabled();
+    rerender(
+      <Select label="Fruit" native readOnly defaultValue="a">
+        <Select.Option value="a">A</Select.Option>
+        <Select.Option value="b">B</Select.Option>
+      </Select>,
+    );
+    expect(nativeBox()).toHaveAttribute("aria-readonly", "true");
+    expect(fireEvent.keyDown(nativeBox(), { key: "ArrowDown" })).toBe(false);
+    expect(fireEvent.keyDown(nativeBox(), { key: "Tab" })).toBe(true);
+    expect(fireEvent.mouseDown(nativeBox())).toBe(false);
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(
+      <Select label="Fruit" native description="Help" error="Required" placeholder="Choose">
+        <Select.Option value="a">A</Select.Option>
+      </Select>,
+    );
+    await expectNoAxeViolations(container);
   });
 });

@@ -25,3 +25,34 @@
 :where(.Control:disabled) {
   cursor: not-allowed;
 }
+
+/* `native`: the real <select> in the shell. It fills it, shows no arrow of its own (the chevron is the shell's) and reads as text. */
+:where(.Native) {
+  appearance: none;
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font: var(--cube-text-size-md);
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+:where(.Native[data-placeholder]) {
+  color: var(--cube-input-fgColor-placeholder);
+}
+
+:where(.Native:disabled) {
+  cursor: not-allowed;
+}
+
+/* An option list is drawn by the system in the page's colours, so it gets the field's own. */
+:where(.Native option) {
+  color: var(--cube-input-fgColor-rest);
+  background-color: var(--cube-input-bgColor-rest);
+}

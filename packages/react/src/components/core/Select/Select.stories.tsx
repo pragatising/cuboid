@@ -111,3 +111,21 @@ export const Loading: Story = {
     );
   },
 };
+
+export const Native: Story = {
+  name: "native (the system picker, for phones and tablets)",
+  render: () => (
+    <Select label="Region" native placeholder="Choose one" description="A real select: the device shows its own picker.">
+      <Select.Section label="Europe">
+        <Select.Option value="fr">France</Select.Option>
+        <Select.Option value="de">Germany</Select.Option>
+      </Select.Section>
+      <Select.Section label="Asia">
+        <Select.Option value="jp">Japan</Select.Option>
+        <Select.Option value="in" disabled>
+          India
+        </Select.Option>
+      </Select.Section>
+    </Select>
+  ),
+};
