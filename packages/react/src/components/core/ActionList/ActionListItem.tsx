@@ -112,7 +112,7 @@ function ActionListItem({
 
         {!iconOnly ? (
           <span className={classes.Content}>
-            <Text as="span" size="md" color="currentColor" truncate className={classes.Label}>
+            <Text as="span" size="md" color="currentColor" truncate className={classes.Label} data-component="ActionList.Label">
               {children}
             </Text>
             {description ? (

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { render, screen } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { behavesAsFormControl, expectNoAxeViolations } from "../../../test/testing";
@@ -224,5 +224,47 @@ describe("Autocomplete: children that render nothing", () => {
     await userEvent.click(field());
     expect(screen.queryByRole("listbox")).toBeNull();
     expect(field()).toHaveAttribute("aria-expanded", "false");
+  });
+});
+
+describe("Autocomplete: focus leaving and announcements", () => {
+  it("closes when focus leaves the field for outside, and calls the consumer's onBlur", async () => {
+    const onBlur = vi.fn();
+    render(
+      <>
+        <Autocomplete label="Fruit" value="" onChange={() => {}} onBlur={onBlur}>
+          <Autocomplete.Item>Apple</Autocomplete.Item>
+        </Autocomplete>
+        <button type="button">outside</button>
+      </>,
+    );
+    await userEvent.click(field());
+    expect(screen.getByRole("listbox")).toBeInTheDocument();
+    act(() => screen.getByRole("button", { name: "outside" }).focus());
+    expect(screen.queryByRole("listbox")).toBeNull();
+    expect(onBlur).toHaveBeenCalled();
+  });
+
+  it("keeps the list open while a suggestion is pressed", async () => {
+    const onSelect = vi.fn();
+    render(
+      <Autocomplete label="Fruit" value="" onChange={() => {}} onSelect={onSelect}>
+        <Autocomplete.Item>Apple</Autocomplete.Item>
+      </Autocomplete>,
+    );
+    await userEvent.click(field());
+    await userEvent.click(option("Apple"));
+    expect(onSelect).toHaveBeenCalledTimes(1);
+  });
+
+  it("announces how many suggestions there are, once typing pauses", async () => {
+    render(<Fruit />);
+    await userEvent.click(field());
+    const region = () => document.querySelector('[data-component="LiveRegion"]');
+    await waitFor(() => expect(region()?.textContent).toBe("3 suggestions available"), { timeout: 3000 });
+    await userEvent.type(field(), "an");
+    await waitFor(() => expect(region()?.textContent).toBe("1 suggestion available"), { timeout: 3000 });
+    await userEvent.type(field(), "zzz");
+    await waitFor(() => expect(region()?.textContent).toBe("No suggestions"), { timeout: 3000 });
   });
 });

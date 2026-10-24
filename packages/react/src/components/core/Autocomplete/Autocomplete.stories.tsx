@@ -29,7 +29,7 @@ export const Default: Story = {
         onSelect={(item) => setValue(item.textContent ?? "")}
         leadingVisual={<Icon name="search" />}
         maxHeight="12rem"
-        empty={<EmptyState role="status" icon="search" heading="No results" description="Try a different word" />}
+        empty={<EmptyState icon="search" heading="No results" description="Try a different word" />}
       >
         {matches.map((name) => (
           <Autocomplete.Item key={name}>{name}</Autocomplete.Item>
@@ -49,7 +49,7 @@ export const WithDescriptions: Story = {
       { name: "Katherine Johnson", role: "Mathematician" },
     ].filter((person) => person.name.toLowerCase().includes(value.toLowerCase()));
     return (
-      <Autocomplete label="Person" value={value} onChange={(event) => setValue(event.target.value)} onSelect={(item) => setValue(item.querySelector('[data-component="Text"]')?.textContent ?? "")}>
+      <Autocomplete label="Person" value={value} onChange={(event) => setValue(event.target.value)} onSelect={(item) => setValue(item.querySelector('[data-component="ActionList.Label"]')?.textContent ?? "")}>
         {people.map((person) => (
           <Autocomplete.Item key={person.name} description={person.role}>
             {person.name}

@@ -1,5 +1,6 @@
 import { useCallback, useLayoutEffect } from "react";
 import type React from "react";
+import { useTypeAhead } from "./useTypeAhead";
 
 export type ActiveDescendantOptions = {
   /** The id of the `role="listbox"` whose options the input points at. */
@@ -16,6 +17,10 @@ export type ActiveDescendantOptions = {
    * @default false
    */
   homeEnd?: boolean;
+  /** Typing finds the next option whose text starts with it (`useTypeAhead`). Off for a text field, where typing is the input. @default false */
+  typeahead?: boolean;
+  /** The text of an option to match when `typeahead` is on. @default its `textContent` */
+  getText?: (option: HTMLElement) => string;
 };
 
 const OPTION = '[role="option"]';
@@ -26,10 +31,13 @@ const isEnabled = (option: HTMLElement) => !(option as HTMLButtonElement).disabl
  * (`aria-activedescendant`, not roving focus). Spread `onKeyDown` on the input: ArrowDown and ArrowUp move the active option
  * and wrap, skipping disabled ones, and Enter clicks it, so the list's own click handling chooses it.
  *
+ * With `typeahead`, typing jumps to the next option that starts with what was typed; `typing()` says a word is in progress.
+ *
  * It also keeps the active option real: whenever the list changes under it, the first option (or, with `initial: "selected"`, the
  * chosen one) becomes active, and none is active when the list is empty. The caller keeps `activeId` in state and renders it as `aria-activedescendant`.
  */
-export function useActiveDescendant({ listId, activeId, setActiveId, enabled = true, initial = "first", homeEnd = false }: ActiveDescendantOptions) {
+export function useActiveDescendant({ listId, activeId, setActiveId, enabled = true, initial = "first", homeEnd = false, typeahead = false, getText }: ActiveDescendantOptions) {
+  const { match, typing } = useTypeAhead({ getText });
   const options = useCallback(() => {
     const list = listId ? document.getElementById(listId) : null;
     return list ? Array.from(list.querySelectorAll<HTMLElement>(OPTION)).filter(isEnabled) : [];
@@ -65,10 +73,17 @@ export function useActiveDescendant({ listId, activeId, setActiveId, enabled = t
       else if (event.key === "Enter" && index >= 0) {
         event.preventDefault();
         all[index].click();
+      } else if (typeahead) {
+        const found = match(event, all, index);
+        if (found) {
+          event.preventDefault();
+          setActiveId(found.id);
+          found.scrollIntoView?.({ block: "nearest" });
+        }
       }
     },
-    [enabled, setActiveId, options, activeId, homeEnd],
+    [enabled, setActiveId, options, activeId, homeEnd, typeahead, match],
   );
 
-  return { onKeyDown };
+  return { onKeyDown, typing };
 }

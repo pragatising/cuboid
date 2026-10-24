@@ -38,7 +38,8 @@ function AutocompleteItem(props: ActionListItemProps) {
  *
  * It is the combobox pattern (`useCombobox`, `kind: "input"`): the field is a combobox and keeps focus the whole time; the
  * suggestions are a `listbox`, and ArrowUp and ArrowDown move the active one (`aria-activedescendant`), Enter chooses it,
- * Escape hides the list and Tab leaves. With nothing to suggest the list is not shown, unless there is an `empty` state to
+ * Escape hides the list, and Tab or focus leaving for outside the popup closes it. It tells a screen reader how many
+ * suggestions there are once typing pauses (so give `empty` no `role="status"`). With nothing to suggest the list is not shown, unless there is an `empty` state to
  * show in its place. The rows are the same ones an `ActionMenu` uses.
  */
 function AutocompleteRoot({
@@ -53,6 +54,7 @@ function AutocompleteRoot({
   ref,
   onChange,
   onFocus,
+  onBlur,
   onKeyDown,
   ...props
 }: AutocompleteProps) {
@@ -87,6 +89,10 @@ function AutocompleteRoot({
             onFocus={(event) => {
               onFocus?.(event);
               if (openOnFocus) combobox.setOpen(true);
+            }}
+            onBlur={(event) => {
+              onBlur?.(event);
+              combobox.controlProps.onBlur(event);
             }}
             onKeyDown={(event) => {
               onKeyDown?.(event);

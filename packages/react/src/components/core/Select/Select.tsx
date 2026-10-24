@@ -87,8 +87,8 @@ function labelOf(children: React.ReactNode, value: string): React.ReactNode | un
  *
  * It is the select-only combobox pattern (`useCombobox`, `kind: "select"`): the box is a focusable `role="combobox"` that keeps
  * focus while the popup is open, and points at the active option with `aria-activedescendant`. ArrowDown, ArrowUp, Enter and
- * Space open it; the arrows and Home and End move, Enter or Space chooses, Escape and Tab close. A pointer press on an option
- * chooses it.
+ * Space open it; the arrows, Home and End, and typing a word move, Enter or Space chooses, Escape and Tab close, and so does focus
+ * leaving for outside the popup. A pointer press on an option chooses it.
  */
 function SelectRoot({
   children,
@@ -115,6 +115,7 @@ function SelectRoot({
   onClick,
   onKeyDown,
   onKeyUp,
+  onBlur,
   "aria-label": ariaLabel,
   "aria-describedby": ariaDescribedBy,
   ...props
@@ -164,6 +165,10 @@ function SelectRoot({
                   onKeyDown={(event) => {
                     onKeyDown?.(event);
                     combobox.controlProps.onKeyDown(event);
+                  }}
+                  onBlur={(event) => {
+                    onBlur?.(event);
+                    combobox.controlProps.onBlur(event);
                   }}
                   onKeyUp={(event) => {
                     onKeyUp?.(event);

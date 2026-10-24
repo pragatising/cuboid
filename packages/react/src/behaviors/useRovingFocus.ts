@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback } from "react";
 import type React from "react";
+import { useTypeAhead } from "./useTypeAhead";
 
 export type RovingFocusOptions = {
   containerRef: React.RefObject<HTMLElement | null>;
@@ -26,11 +27,7 @@ const isSelected = (item: HTMLElement) => item.getAttribute("aria-checked") === 
  * Returns imperative helpers too: `focusFirst` / `focusSelected` for when a menu opens.
  */
 export function useRovingFocus({ containerRef, itemSelector = DEFAULT_ITEMS, orientation = "vertical", loop = true, typeahead = true }: RovingFocusOptions) {
-  const buffer = useRef("");
-  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  useEffect(() => () => {
-    if (timer.current) clearTimeout(timer.current);
-  }, []);
+  const { match } = useTypeAhead({ resetMs: TYPEAHEAD_RESET_MS });
 
   const items = useCallback(() => {
     const container = containerRef.current;
@@ -59,23 +56,15 @@ export function useRovingFocus({ containerRef, itemSelector = DEFAULT_ITEMS, ori
       else if (event.key === previous) move(index <= 0 ? (loop ? -1 : 0) : index - 1);
       else if (event.key === "Home") move(0);
       else if (event.key === "End") move(all.length - 1);
-      else if (typeahead && event.key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey && (event.key !== " " || buffer.current)) {
-        buffer.current += event.key.toLowerCase();
-        if (timer.current) clearTimeout(timer.current);
-        timer.current = setTimeout(() => (buffer.current = ""), TYPEAHEAD_RESET_MS);
-        // One repeated character cycles through the matches; a longer prefix refines the current one.
-        const start = buffer.current.length === 1 ? index + 1 : Math.max(index, 0);
-        for (let i = 0; i < all.length; i++) {
-          const item = all[(start + i) % all.length];
-          if ((item.textContent ?? "").trim().toLowerCase().startsWith(buffer.current)) {
-            event.preventDefault();
-            item.focus();
-            break;
-          }
+      else if (typeahead) {
+        const found = match(event, all, index);
+        if (found) {
+          event.preventDefault();
+          found.focus();
         }
       }
     },
-    [items, loop, orientation, typeahead],
+    [items, loop, orientation, typeahead, match],
   );
 
   return { onKeyDown, focusFirst, focusSelected };

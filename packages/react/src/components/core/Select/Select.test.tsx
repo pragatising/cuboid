@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { behavesAsFormControl, expectNoAxeViolations } from "../../../test/testing";
@@ -242,5 +242,85 @@ describe("Select: accessibility", () => {
     await userEvent.click(box());
     await expectNoAxeViolations(container);
     await expectNoAxeViolations(document.querySelector('[data-component="Popover"]') as HTMLElement);
+  });
+});
+
+describe("Select: typeahead and focus", () => {
+  it("typing a letter moves the active option to the next one that starts with it, skipping disabled ones", async () => {
+    render(<Fruit />);
+    await userEvent.click(box());
+    await userEvent.keyboard("g");
+    expect(box()).toHaveAttribute("aria-activedescendant", option("Grape").id);
+    await userEvent.keyboard("c");
+    expect(box()).toHaveAttribute("aria-activedescendant", option("Grape").id);
+    expect(box()).toHaveFocus();
+  });
+
+  it("a longer word refines, and Space inside a word does not choose", async () => {
+    const onValueChange = vi.fn();
+    render(
+      <Select label="Fruit" onValueChange={onValueChange}>
+        <Select.Option value="1">Blue berry</Select.Option>
+        <Select.Option value="2">Blueberry pie</Select.Option>
+        <Select.Option value="3">Banana</Select.Option>
+      </Select>,
+    );
+    await userEvent.click(box());
+    await userEvent.keyboard("blue ");
+    expect(onValueChange).not.toHaveBeenCalled();
+    expect(box()).toHaveAttribute("aria-activedescendant", option("Blue berry").id);
+    expect(screen.getByRole("listbox")).toBeInTheDocument();
+  });
+
+  it("Space chooses when no word is being typed", async () => {
+    const onValueChange = vi.fn();
+    render(<Fruit onValueChange={onValueChange} />);
+    await userEvent.click(box());
+    await userEvent.keyboard("{ArrowDown} ");
+    expect(onValueChange).toHaveBeenCalledWith("banana");
+  });
+
+  it("matches the label, not the description", async () => {
+    render(
+      <Select label="Fruit">
+        <Select.Option value="1" description="zebra">
+          Apple
+        </Select.Option>
+        <Select.Option value="2">Zucchini</Select.Option>
+      </Select>,
+    );
+    await userEvent.click(box());
+    await userEvent.keyboard("z");
+    expect(box()).toHaveAttribute("aria-activedescendant", option("Zucchini").id);
+  });
+
+  it("typing on a closed select does not open it", async () => {
+    render(<Fruit />);
+    box().focus();
+    await userEvent.keyboard("g");
+    expect(listbox()).toBeNull();
+  });
+
+  it("closes when focus leaves for outside the popup, and calls the consumer's onBlur", async () => {
+    const onBlur = vi.fn();
+    render(
+      <>
+        <Fruit onBlur={onBlur} />
+        <button type="button">outside</button>
+      </>,
+    );
+    await userEvent.click(box());
+    expect(listbox()).toBeInTheDocument();
+    act(() => screen.getByRole("button", { name: "outside" }).focus());
+    expect(listbox()).toBeNull();
+    expect(onBlur).toHaveBeenCalled();
+  });
+
+  it("choosing an option with the pointer does not count as focus leaving", async () => {
+    render(<Fruit />);
+    await userEvent.click(box());
+    await userEvent.click(option("Banana"));
+    expect(box()).toHaveTextContent("Banana");
+    expect(box()).toHaveFocus();
   });
 });
