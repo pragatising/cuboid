@@ -9,7 +9,7 @@ export default defineConfig({
   test: {
     environment: "jsdom",
     setupFiles: ["./src/test/setup.ts"],
-    include: ["src/**/*.test.{ts,tsx}"],
+    include: ["src/**/*.test.{ts,tsx}", "dev/**/*.test.{ts,tsx}"],
     // Type-level tests (`*.test-d.ts(x)`, written with `expectTypeOf`). `ignoreSourceErrors` is on because
     // components not yet migrated off the old theme seam still fail `tsc`; only errors in the test-d files count.
     typecheck: {

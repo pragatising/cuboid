@@ -1,0 +1,34 @@
+.Code {
+  box-sizing: border-box;
+  max-height: 100%;
+  overflow: auto;
+  padding: 4px 0;
+  font: 12px/20px var(--cube-fontStack-monospace);
+  color: var(--cube-fgColor-neutral-default);
+}
+
+.Line {
+  display: flex;
+  min-width: max-content;
+  padding-right: 12px;
+  border-left: 3px solid transparent;
+}
+
+.Number {
+  flex-shrink: 0;
+  width: 32px;
+  padding-right: 12px;
+  text-align: right;
+  color: var(--cube-fgColor-neutral-subtle);
+  user-select: none;
+}
+
+.Text {
+  white-space: pre;
+}
+
+/* The lines of the part under the pointer, in the shell's annotation blue (a shell-layer colour, not a Cuboid token). */
+.Line[data-marked] {
+  border-left-color: #286cfd;
+  background: rgba(40, 108, 253, 0.12);
+}

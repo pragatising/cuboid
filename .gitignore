@@ -11,6 +11,7 @@ storybook-static/
 # Local planning docs (not published)
 docs/plans/
 docs/*.md
+docs/backlog/docs-shell-experiment.md
 
 # Claude Code session working notes (not published, not shared history)
 THREADS.md
@@ -37,3 +38,6 @@ npm-debug.log*
 
 # Claude Code agent worktrees
 .claude/worktrees/
+
+# Docs shell: data generated from the types (npm run build:components-json)
+packages/react/dev/generated/

@@ -1,0 +1,11 @@
+/* A component that takes its font and colour from what surrounds it (a Link, a Heading) needs something to take them from. The
+   shell sets the same body text a page would, so those components are drawn as they would look in use, not in the browser's default. */
+.Pictures {
+  font: var(--cube-text-size-md);
+  color: var(--cube-fgColor-neutral-default);
+}
+
+/* The pictures are read for what they look like at rest in each state, so a transition must not leave them half-way. */
+.Pictures :where(*) {
+  transition: none !important;
+}

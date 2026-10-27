@@ -1,0 +1,46 @@
+/* A group of states: a label pill over a white card (Figma frame 3355:3293). The pill is the same one the interactions use, and the
+   card holds one flow, so each variant (or part) reads as one unit. */
+.Group {
+  display: flex;
+  align-self: stretch;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.Label {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 2px 6px;
+  border: 1px solid var(--cube-borderColor-muted);
+  border-radius: 44px;
+  background: var(--cube-bgColor-canvas-default);
+  color: var(--cube-fgColor-neutral-default);
+  font: 500 12px/16px Inter, sans-serif;
+  letter-spacing: -0.15px;
+  white-space: nowrap;
+}
+
+.Key {
+  color: var(--cube-fgColor-neutral-subtle);
+}
+
+.Value {
+  color: var(--cube-fgColor-neutral-contrast);
+  font-weight: 600;
+}
+
+.Value[data-capitalize] {
+  text-transform: capitalize;
+}
+
+.Card {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  padding: 24px;
+  border: 1px solid var(--cube-borderColor-muted);
+  border-radius: 8px;
+  background: var(--cube-bgColor-canvas-default);
+}

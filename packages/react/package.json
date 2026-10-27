@@ -27,10 +27,11 @@
     "dist"
   ],
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --config dev/vite.config.ts",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "type-check": "tsc --noEmit",
+    "type-check:shell": "tsc --noEmit -p dev",
     "test": "vitest run",
     "check:icons": "node scripts/check-icon-imports.mjs",
     "a11y:sweep": "node scripts/a11y-sweep.mjs",
@@ -39,11 +40,13 @@
     "tokens:theme": "npm run tokens:theme -w @sragatiping/cuboid-primitives",
     "prebuild": "npm run tokens:theme",
     "prepublishOnly": "npm run build",
-    "predev": "npm run tokens:theme",
+    "predev": "npm run tokens:theme && npm run build:components-json",
     "prestorybook": "npm run tokens:theme",
     "prebuild-storybook": "npm run tokens:theme",
     "test:watch": "vitest",
-    "generate:css-properties": "node scripts/generate-css-properties.mjs"
+    "generate:css-properties": "node scripts/generate-css-properties.mjs",
+    "build:components-json": "node scripts/build-components-json.mjs",
+    "pretype-check:shell": "npm run build:components-json"
   },
   "peerDependencies": {
     "react": ">=19",

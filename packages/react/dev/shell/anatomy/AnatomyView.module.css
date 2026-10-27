@@ -1,0 +1,47 @@
+/* The Anatomy view: the component on a stage, and, when "Show Structure" is on, a green overlay over each of its named parts
+   (Figma frames 3359:31709 and 3358:3458). The green marks the shell's own layer and is not a Cuboid token. */
+.View {
+  --structure-line: #319e6b;
+  --structure-container: rgba(49, 158, 107, 0.07);
+  --structure-leaf: #daf0e6;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-height: 0;
+}
+
+.Stage {
+  position: relative;
+  flex-grow: 1;
+  display: flex;
+  align-items: flex-start;
+  padding: 120px 160px 480px;
+}
+
+/* The origin of the boxes. It has no size, so a popup that renders far outside the stage is still measured from the same corner. */
+.Overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Above everything the page draws, including a popup (a portaled layer with its own z-index). */
+.Box {
+  position: fixed;
+  z-index: 100000;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+
+.Box[data-container] {
+  border: 1px solid var(--structure-line);
+  border-radius: 6px;
+  background: var(--structure-container);
+}
+
+.Box[data-leaf] {
+  background: var(--structure-leaf);
+}
