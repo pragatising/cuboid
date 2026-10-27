@@ -120,6 +120,12 @@ export type { EmptyStateProps } from "./components/core/EmptyState";
 export { Select } from "./components/core/Select";
 export type { SelectProps, SelectOptionProps } from "./components/core/Select";
 
+export { Switch } from "./components/core/Switch";
+export type { SwitchProps } from "./components/core/Switch";
+
+export { SegmentedControl } from "./components/core/SegmentedControl";
+export type { SegmentedControlProps, SegmentedControlItemProps } from "./components/core/SegmentedControl";
+
 export { TextArea } from "./components/core/TextArea";
 export type { TextAreaProps } from "./components/core/TextArea";
 

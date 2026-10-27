@@ -2,6 +2,13 @@
 
 Rolling session log for Claude Code continuity. Newest entry on top. Each entry: what changed, why, and anything the next agent needs to know. Keep entries short — skip anything derivable from `git log` or the diff itself.
 
+## 2026-10-26 — `Switch` and `SegmentedControl`, used by the docs shell
+
+- **New:** `Switch` (a native checkbox with the switch role: track and thumb from the `switch` tokens, optional `label`, `checked`/`defaultChecked`/`onCheckedChange`, `readOnly`, form `name`/`value`) and `SegmentedControl` with `SegmentedControl.Item` (`ButtonBase` items in an inset strip, `value`/`defaultValue`/`onValueChange`, `size`, icons, icon-only, `disabled`). New `switch` and `segmentedControl` token groups. 23 + 19 tests, stories, backlog and tracker rows.
+- **Decisions:** `SegmentedControl` is a `group` of `aria-pressed` toggle buttons (Primer's choice), not a radiogroup; `Switch` has no help text or error, so it follows the form-control root contract (ADR-05) without the field chrome. The unselected segment's text is `fgColor.neutral.contrast`, since the ghost Button's text is 4.3:1 on the strip.
+- **Open:** the off switch's border and thumb are under 3:1 against white (WCAG 1.4.11), as drawn in Figma; Figma's on colour (`#3f77da`) is not in the palette (`display.blue.8` stands in).
+- **Docs shell:** the `Tabs` stand-in is gone, and the view switch is the real `SegmentedControl`. The Show Structure toggle is the real `Switch`, in the same row (Figma 3365:32823).
+
 ## 2026-10-24 (later) — The deferred form-control gaps, built
 
 - **`Select`:** typeahead (a word moves the active option, by label; Space is part of a word once one has begun), a native `<select>` fallback (`native`, chosen per use), `loading`/`loadingText`, `labelHelp`, help and error visuals. `Select` is a dispatcher over `PopupSelect` and `NativeSelect`; `Select.Option` is in its own file.

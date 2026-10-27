@@ -1,0 +1,24 @@
+{
+  segmentedControl: {
+    bgColor: {
+      $value: '{bgColor.canvas.insetStrong}',
+      $type: 'color',
+      $description: 'The strip the items sit in. Figma canvas/insetStrong is #f3f2f0; the repo step is #efeeea.',
+      $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'segmentedControl' } },
+    },
+    item: {
+      fgColor: {
+        rest: {
+          $value: '{fgColor.neutral.contrast}',
+          $type: 'color',
+          $description: 'An unselected item, on the strip. Figma uses #525252. The ghost button text (neutral.muted) is 4.3:1 on this strip, under AA, and neutral.default (#6f6f6d) is the same, so the item uses the next step up.',
+          $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'segmentedControl' } },
+        },
+      },
+    },
+    sizes: {
+      padding: { $value: '{size.2}', $type: 'dimension', $description: 'Between the strip and its items, and between the items.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'segmentedControl' } } },
+      borderRadius: { $value: '{borderRadius.md}', $type: 'dimension', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'segmentedControl' } } },
+    },
+  },
+}

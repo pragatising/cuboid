@@ -1,0 +1,82 @@
+{
+  switch: {
+    track: {
+      bgColor: {
+        off: {
+          rest: { $value: '{bgColor.neutral.light.1}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'switch' } } },
+          hover: { $value: '{bgColor.neutral.light.1}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'switch' } } },
+          disabled: { $value: '{bgColor.neutral.light.2}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'switch' } } },
+        },
+        on: {
+          rest: {
+            $value: '{display.blue.8}',
+            $type: 'color',
+            $description: 'Figma color/blue/7 (#3f77da) is not in the palette; blue.8 is the nearest step.',
+            $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'switch' } },
+          },
+          hover: {
+            $value: '{display.blue.8}',
+            $type: 'color',
+            $description: 'The track does not change on hover; the thumb does (off) or nothing does (on).',
+            $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'switch' } },
+          },
+          disabled: { $value: '{display.gray.6}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'switch' } } },
+        },
+      },
+      borderColor: {
+        off: {
+          rest: { $value: '{borderColor.strong}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'switch' } } },
+          hover: { $value: '{borderColor.strong}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'switch' } } },
+          disabled: { $value: '{borderColor.strong}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'switch' } } },
+        },
+        on: {
+          rest: { $value: '{display.blue.8}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'switch' } } },
+          hover: { $value: '{display.blue.8}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'switch' } } },
+          disabled: { $value: '{display.gray.6}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'switch' } } },
+        },
+      },
+    },
+    thumb: {
+      bgColor: {
+        off: {
+          rest: { $value: '{display.gray.5}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'switch' } } },
+          hover: {
+            $value: '{display.gray.6}',
+            $type: 'color',
+            $description: 'The thumb of an off switch darkens on hover, to say it can be pressed.',
+            $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'switch' } },
+          },
+          disabled: { $value: '{display.gray.5}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'switch' } } },
+        },
+        on: {
+          rest: { $value: '{bgColor.neutral.light.1}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'switch' } } },
+          hover: { $value: '{bgColor.neutral.light.1}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'switch' } } },
+          disabled: { $value: '{bgColor.neutral.light.1}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'switch' } } },
+        },
+      },
+      boxShadow: {
+        $value: '{shadow.floating.sm}',
+        $type: 'custom-string',
+        $description: 'The thumb of an on switch lifts off the track (Figma global/boxShadow/1x). Used on the on, enabled switch only.',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'switch' } },
+      },
+    },
+    label: {
+      fgColor: {
+        rest: { $value: '{fgColor.neutral.muted}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'switch' } } },
+        disabled: { $value: '{fgColor.neutral.disabled}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'switch' } } },
+      },
+    },
+    sizes: {
+      trackWidth: { $value: '{size.32}', $type: 'dimension', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'switch' } } },
+      trackHeight: { $value: '{size.20}', $type: 'dimension', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'switch' } } },
+      thumb: {
+        $value: '{size.10}',
+        $type: 'dimension',
+        $description: 'The thumb is a circle this wide. The track padding is what is left of the height: (trackHeight - thumb) / 2.',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'switch' } },
+      },
+      gap: { $value: '{space.md}', $type: 'dimension', $description: 'Between the label and the track.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'switch' } } },
+    },
+  },
+}

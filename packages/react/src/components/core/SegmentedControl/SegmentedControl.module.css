@@ -1,0 +1,22 @@
+/*
+ * The strip and its items. Every value comes from the `--cube-segmentedControl-*` variables the token build publishes (light on
+ * :root, dark under [data-mode="dark"]); the items are Buttons (ButtonBase), so their colours, sizes and states are the
+ * button tokens, with one change: an unselected item's text. The ghost button's text is `neutral.muted`, which is 4.3:1 on the
+ * strip (under AA), so the item reads its own colour. Zero-specificity (:where), except that one override, which must beat
+ * ButtonBase's own rule whichever stylesheet loads last.
+ * SegmentedControl.test.tsx fails if a --cube-* variable used here is missing from the built theme.css.
+ */
+
+:where(.SegmentedControl) {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  gap: var(--cube-segmentedControl-sizes-padding);
+  padding: var(--cube-segmentedControl-sizes-padding);
+  border-radius: var(--cube-segmentedControl-sizes-borderRadius);
+  background-color: var(--cube-segmentedControl-bgColor);
+}
+
+.Item[data-variant="ghost"] {
+  --button-fg-rest: var(--cube-segmentedControl-item-fgColor-rest);
+}
