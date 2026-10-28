@@ -40,13 +40,14 @@
     "tokens:theme": "npm run tokens:theme -w @sragatiping/cuboid-primitives",
     "prebuild": "npm run tokens:theme",
     "prepublishOnly": "npm run build",
-    "predev": "npm run tokens:theme && npm run build:components-json",
+    "predev": "npm run tokens:theme && npm run build:components-json && npm run build:models",
     "prestorybook": "npm run tokens:theme",
     "prebuild-storybook": "npm run tokens:theme",
     "test:watch": "vitest",
     "generate:css-properties": "node scripts/generate-css-properties.mjs",
     "build:components-json": "node scripts/build-components-json.mjs",
-    "pretype-check:shell": "npm run build:components-json"
+    "build:models": "vite-node scripts/build-models.ts",
+    "pretype-check:shell": "npm run build:components-json && npm run build:models"
   },
   "peerDependencies": {
     "react": ">=19",

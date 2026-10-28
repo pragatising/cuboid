@@ -27,8 +27,13 @@
   white-space: pre;
 }
 
-/* The lines of the part under the pointer, in the shell's annotation blue (a shell-layer colour, not a Cuboid token). */
+/* The row of the hovered part gets a quiet edge; the piece itself is marked in the shell's annotation blue (a shell-layer colour,
+   not a Cuboid token). */
 .Line[data-marked] {
   border-left-color: #286cfd;
-  background: rgba(40, 108, 253, 0.12);
+  background: rgba(40, 108, 253, 0.05);
+}
+
+.Mark {
+  background: rgba(40, 108, 253, 0.22);
 }

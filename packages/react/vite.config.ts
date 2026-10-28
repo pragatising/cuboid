@@ -18,7 +18,7 @@ export default defineConfig(({ mode }) => {
       dts({
         insertTypesEntry: true,
         include: ["src"],
-        exclude: ["src/**/*.test.ts", "src/**/*.test.tsx", "src/**/*.test-d.ts", "src/**/*.test-d.tsx", "src/test"],
+        exclude: ["src/**/*.test.ts", "src/**/*.test.tsx", "src/**/*.test-d.ts", "src/**/*.test-d.tsx", "src/**/*.examples.tsx", "src/test"],
       }),
     ],
     build: {

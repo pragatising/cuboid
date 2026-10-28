@@ -278,7 +278,7 @@ export function highlightTypeScript(code: string) {
  * containing more JSX (`{cond && <Child />}`) resolve correctly, and a tag's
  * `{expr}` attribute value nests inside "tag" the same way.
  */
-type JsxMode = "js" | "tag" | "expr";
+type JsxMode = "js" | "tag" | "expr" | "children";
 
 interface JsxHighlightState {
   modeStack: JsxMode[];
@@ -289,6 +289,8 @@ interface JsxHighlightState {
    * position (first vs. later) tells them apart.
    */
   tagNamePending: boolean;
+  /** The tag being read is a closing tag (`</X>` or `</>`): its `>` also ends the element's children. */
+  closing: boolean;
 }
 
 function jsxState(state: HighlightState): JsxHighlightState {
@@ -296,6 +298,7 @@ function jsxState(state: HighlightState): JsxHighlightState {
   const lang = state.lang as Partial<JsxHighlightState>;
   lang.modeStack ??= ["js"];
   lang.tagNamePending ??= false;
+  lang.closing ??= false;
   return lang as JsxHighlightState;
 }
 
@@ -303,17 +306,24 @@ function currentMode(jsx: JsxHighlightState): JsxMode {
   return jsx.modeStack[jsx.modeStack.length - 1] ?? "js";
 }
 
+/**
+ * What a tag name is, from how it is written: `Button` and `ActionMenu.Item` are components (a capital letter or a member
+ * access), `div` is an element of the platform. They get different colours, and the opening and the closing tag of one
+ * element always get the same.
+ */
+const isComponentTag = (name: string) => /^[A-Z]/.test(name) || name.includes(".");
+
 const JSX_TAG_RULES: SourceRule[] = [
   {
     type: (ctx) => {
       const jsx = jsxState(ctx.state);
       if (jsx.tagNamePending) {
         jsx.tagNamePending = false;
-        return "entityTag";
+        return isComponentTag(ctx.value) ? "componentTag" : "entityTag";
       }
-      return "attributeName";
+      return "jsxAttribute";
     },
-    pattern: /^\/?[A-Za-z][\w.-]*/,
+    pattern: /^[A-Za-z_$][\w$:.-]*/,
   },
   {
     type: "string",
@@ -329,6 +339,9 @@ const JSX_TAG_RULES: SourceRule[] = [
   },
 ];
 
+/** The text between an element's tags: not code, so it is not read as code. It ends at the next tag or `{expression}`. */
+const JSX_CHILDREN_RULES: SourceRule[] = [{ type: "jsxText", pattern: /^[^<{]+/ }];
+
 function makeModeRules(ts: boolean): Record<JsxMode, SourceRule[]> {
   const exprRules = ts ? TS_RULES : BASE_RULES;
 
@@ -339,33 +352,58 @@ function makeModeRules(ts: boolean): Record<JsxMode, SourceRule[]> {
   // opens after punctuation, `return`/`=>`/`&&`/`(`, or at line start.
   // Known false positive: `condition<Component/>` (no space, no valid
   // preceding token) is rare enough in practice to accept.
-  const openTag: SourceRule = {
-    type: (ctx) => {
-      const prev = prevSignificant(ctx.tokensSoFar);
-      const looksLikeGeneric =
-        prev &&
-        ((prev.type === "plain" &&
-          /[$\w]$/.test(prev.value) &&
-          !/^(return|typeof|yield|default|do|else|in|of)$/.test(prev.value)) ||
+  const looksLikeGenericAt = (tokensSoFar: readonly SurfaceToken[]) => {
+    const prev = prevSignificant(tokensSoFar);
+    return Boolean(
+      prev &&
+        ((prev.type === "plain" && /[$\w]$/.test(prev.value) && !/^(return|typeof|yield|default|do|else|in|of)$/.test(prev.value)) ||
           prev.type === "typeName" ||
           prev.type === "functionCall" ||
-          (prev.type === "bracket" && (prev.value === ")" || prev.value === "]")));
-      if (!looksLikeGeneric) {
-        const jsx = jsxState(ctx.state);
+          (prev.type === "bracket" && (prev.value === ")" || prev.value === "]"))),
+    );
+  };
+
+  // `<` opens a tag, `</` opens a closing tag (both are one `tagBracket`, so a pair is always the same colour). Between an
+  // element's tags the text is not code, so a `<` there is always a tag; elsewhere it may be a generic (see above).
+  const openTag: SourceRule = {
+    type: (ctx) => {
+      const jsx = jsxState(ctx.state);
+      const closing = ctx.value === "</";
+      if (closing || currentMode(jsx) === "children" || !looksLikeGenericAt(ctx.tokensSoFar)) {
         jsx.modeStack.push("tag");
         jsx.tagNamePending = true;
+        jsx.closing = closing;
+        return "tagBracket";
       }
       return "bracket";
     },
-    pattern: /^<(?=[A-Za-z/])/,
+    pattern: /^<\/?(?=[A-Za-z>])/,
   };
 
-  const selfCloseOrEnd: SourceRule = {
-    type: "bracket",
-    pattern: /^\/?>/,
+  // `/>` ends a tag that has no children; `>` ends an opening tag (its children follow) or a closing tag (they are over).
+  const selfClose: SourceRule = {
+    type: "tagBracket",
+    pattern: /^\/>/,
     onMatch(state) {
       const jsx = jsxState(state);
       if (currentMode(jsx) === "tag") jsx.modeStack.pop();
+      jsx.closing = false;
+    },
+  };
+
+  const tagEnd: SourceRule = {
+    type: "tagBracket",
+    pattern: /^>/,
+    onMatch(state) {
+      const jsx = jsxState(state);
+      if (currentMode(jsx) !== "tag") return;
+      jsx.modeStack.pop();
+      if (jsx.closing) {
+        if (currentMode(jsx) === "children") jsx.modeStack.pop();
+        jsx.closing = false;
+      } else {
+        jsx.modeStack.push("children");
+      }
     },
   };
 
@@ -387,10 +425,12 @@ function makeModeRules(ts: boolean): Record<JsxMode, SourceRule[]> {
   };
 
   return {
-    tag: [selfCloseOrEnd, exprOpen, ...JSX_TAG_RULES],
+    tag: [selfClose, tagEnd, exprOpen, ...JSX_TAG_RULES],
+    children: [openTag, exprOpen, ...JSX_CHILDREN_RULES],
     // Inside a JSX expression we're back in full JS/TS, but must still
     // recognise a NEW `<Tag` opening (nested JSX) and the `}` that closes us.
-    expr: [exprClose, openTag, ...exprRules],
+    // Braces nest: `style={{ a: 1 }}` is two, so each `{` here opens a level and each `}` closes one.
+    expr: [exprClose, exprOpen, openTag, ...exprRules],
     js: [openTag, ...exprRules],
   };
 }
@@ -460,7 +500,7 @@ function makeJsxHighlighter(ts: boolean) {
     return linesFromSource(
       code,
       (line, state) => highlightJsxLine(line, state, modeRules),
-      () => ({ modeStack: ["js"], tagNamePending: false }) satisfies JsxHighlightState,
+      () => ({ modeStack: ["js"], tagNamePending: false, closing: false }) satisfies JsxHighlightState,
     );
   };
 }

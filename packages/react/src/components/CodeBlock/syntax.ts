@@ -127,6 +127,10 @@ const TOKEN_CLASS: Record<string, string> = {
   cssSelector: styles.tokenCssSelector,
   cssProperty: styles.tokenCssProperty,
   cssValue: styles.tokenCssValue,
+  componentTag: styles.tokenComponentTag,
+  tagBracket: styles.tokenTagBracket,
+  jsxText: styles.tokenJsxText,
+  jsxAttribute: styles.tokenJsxAttribute,
 };
 
 const BRACKET_DEPTH_CLASS = [

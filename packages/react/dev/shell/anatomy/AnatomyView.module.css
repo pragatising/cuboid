@@ -1,9 +1,9 @@
 /* The Anatomy view: the component on a stage, and, when "Show Structure" is on, a green overlay over each of its named parts
    (Figma frames 3359:31709 and 3358:3458). The green marks the shell's own layer and is not a Cuboid token. */
 .View {
-  --structure-line: #319e6b;
-  --structure-container: rgba(49, 158, 107, 0.07);
-  --structure-leaf: #daf0e6;
+  --structure-line: #008cff;
+  --structure-container: rgba(199, 225, 255, 0.052);
+  --structure-leaf: #d8eaff04;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -28,20 +28,45 @@
   pointer-events: none;
 }
 
-/* Above everything the page draws, including a popup (a portaled layer with its own z-index). */
+/* Above everything the page draws, including a popup (a portaled layer with its own z-index). The overlay never takes the pointer:
+   the inspector reads what is under it, so the boxes must not be what it finds. */
 .Box {
   position: fixed;
   z-index: 100000;
   box-sizing: border-box;
   border-radius: 4px;
+  pointer-events: none;
 }
 
 .Box[data-container] {
   border: 1px solid var(--structure-line);
-  border-radius: 6px;
+  border-radius: 4px;
   background: var(--structure-container);
 }
 
 .Box[data-leaf] {
   background: var(--structure-leaf);
+}
+
+/* What the pointer is over, as in Figma's inspect mode: an outline in the shell's annotation blue and the part's name. */
+.Inspected {
+  position: fixed;
+  z-index: 100001;
+  box-sizing: border-box;
+  outline: 2px solid #286cfd;
+  border-radius: 4px;
+  background: rgba(40, 108, 253, 0.08);
+  pointer-events: none;
+}
+
+.Chip {
+  position: fixed;
+  z-index: 100002;
+  padding: 0 6px;
+  border-radius: 4px;
+  background: #286cfd;
+  color: #fff;
+  font: 500 11px/18px Inter, sans-serif;
+  white-space: nowrap;
+  pointer-events: none;
 }

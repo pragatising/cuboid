@@ -9,6 +9,8 @@ import { storySource } from "./storySource";
 export default defineConfig({
   root: __dirname,
   plugins: [react({ babel: { plugins: [storySource] } })],
+  // An example imports the package by its name, as an app does; here that name is this source.
+  resolve: { alias: { "@sragatiping/cuboid": path.resolve(__dirname, "../src/index.ts") } },
   css: { postcss: { plugins: [forceStates()] } },
   server: { fs: { allow: [path.resolve(__dirname, "../../..")] } },
 });

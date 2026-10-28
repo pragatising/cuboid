@@ -238,6 +238,22 @@
   color: var(--code-surface-syntax-attribute-name);
 }
 
+:where(.tokenComponentTag) {
+  color: var(--code-surface-syntax-component-tag);
+}
+
+:where(.tokenTagBracket) {
+  color: var(--code-surface-syntax-tag-bracket);
+}
+
+:where(.tokenJsxText) {
+  color: var(--code-surface-syntax-jsx-text);
+}
+
+:where(.tokenJsxAttribute) {
+  color: var(--code-surface-syntax-jsx-attribute);
+}
+
 :where(.tokenCssSelector) {
   color: var(--code-surface-syntax-css-selector);
 }

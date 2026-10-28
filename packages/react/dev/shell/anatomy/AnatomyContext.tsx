@@ -1,16 +1,21 @@
 import React, { createContext, useContext, useMemo, useState } from "react";
 
-/** The story an Anatomy view is drawn from: its code, with the number of its first line in the file. */
-export type StoryCode = { name: string; code: string; firstLine: number };
-/** A range of lines in the story file, as `data-src` writes them. */
-export type LineRange = { from: number; to: number };
+import type { ExampleCode } from "./exampleSource";
+
+/** A place in the example's file: a line (1-based) and a column (0-based), as Babel counts. */
+export type Position = { line: number; column: number };
+/** A piece of the example, from `from` up to but not including `to`. */
+export type SourceRange = { from: Position; to: Position };
+/** What to mark in the example's code: one or more pieces. */
+export type Highlight = SourceRange[];
 
 type AnatomyState = {
-  story: StoryCode | null;
-  setStory: (story: StoryCode | null) => void;
-  /** The lines of the part under the pointer, if it has any. */
-  hover: LineRange | null;
-  setHover: (range: LineRange | null) => void;
+  /** The example the canvas is drawn from, as code. */
+  example: ExampleCode | null;
+  setExample: (example: ExampleCode | null) => void;
+  /** The piece of the example that wrote the part under the pointer, if it has one. */
+  hover: Highlight | null;
+  setHover: (highlight: Highlight | null) => void;
   /** Whether the canvas draws a box over every named part ("Show Structure"). The switch is in the canvas header, the boxes on the stage. */
   structure: boolean;
   setStructure: (on: boolean) => void;
@@ -18,14 +23,14 @@ type AnatomyState = {
 
 const Context = createContext<AnatomyState | null>(null);
 
-/** What the canvas and the right pane share while looking at a component's anatomy: its story code and what is hovered. */
+/** What the canvas and the right pane share while looking at a component's anatomy: its example's code and what is hovered. */
 export function AnatomyProvider({ children }: { children: React.ReactNode }) {
-  const [story, setStory] = useState<StoryCode | null>(null);
-  const [hover, setHover] = useState<LineRange | null>(null);
+  const [example, setExample] = useState<ExampleCode | null>(null);
+  const [hover, setHover] = useState<Highlight | null>(null);
   const [structure, setStructure] = useState(false);
   const value = useMemo(
-    () => ({ story, setStory, hover, setHover, structure, setStructure }),
-    [story, hover, structure],
+    () => ({ example, setExample, hover, setHover, structure, setStructure }),
+    [example, hover, structure],
   );
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
@@ -36,8 +41,29 @@ export function useAnatomy(): AnatomyState {
   return value;
 }
 
-/** `"12-14"` is lines 12 to 14. */
-export function parseRange(text: string | null | undefined): LineRange | null {
-  const match = /^(\d+)-(\d+)$/.exec(text ?? "");
-  return match ? { from: Number(match[1]), to: Number(match[2]) } : null;
+const RANGE = /^(\d+):(\d+)-(\d+):(\d+)$/;
+
+function parseRange(text: string): SourceRange | null {
+  const match = RANGE.exec(text);
+  if (!match) return null;
+  const [, fromLine, fromColumn, toLine, toColumn] = match.map(Number);
+  return {
+    from: { line: fromLine, column: fromColumn },
+    to: { line: toLine, column: toColumn },
+  };
+}
+
+/**
+ * What `data-src` says (see dev/storySource.ts), as the pieces to mark. An element written on one line is marked whole, text
+ * and all (`<Item>Edit</Item>`); one that spans lines is marked at its two tags only, since what is between them is its
+ * children's own.
+ */
+export function parseSource(text: string | null | undefined): Highlight | null {
+  if (!text) return null;
+  const [opening, closing] = text.split(";").map(parseRange);
+  if (!opening) return null;
+  if (!closing) return [opening];
+  return opening.from.line === closing.to.line
+    ? [{ from: opening.from, to: closing.to }]
+    : [opening, closing];
 }

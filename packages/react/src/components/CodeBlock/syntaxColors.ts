@@ -24,7 +24,11 @@ export type SyntaxKey =
   | "attributeName"
   | "cssSelector"
   | "cssProperty"
-  | "cssValue";
+  | "cssValue"
+  | "componentTag"
+  | "tagBracket"
+  | "jsxText"
+  | "jsxAttribute";
 
 export type SyntaxColors = Record<SyntaxKey, string>;
 
@@ -56,6 +60,10 @@ export function resolveSyntaxColors({ syntax }: Pick<Tokens, "syntax">): SyntaxC
     cssSelector: css.cssSelector,
     cssProperty: css.cssProperty,
     cssValue: css.cssValue,
+    componentTag: ts.componentTag,
+    tagBracket: ts.tagBracket,
+    jsxText: ts.jsxText,
+    jsxAttribute: ts.jsxAttribute,
   };
 }
 

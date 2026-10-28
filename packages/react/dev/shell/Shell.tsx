@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import {
   Box,
   Breadcrumbs,
-  EmptyState,
   Header,
   Icon,
   IconButton,
@@ -18,6 +17,7 @@ import { buildNav } from "./nav";
 import { RightPane } from "./panels";
 import { AnatomyProvider, useAnatomy } from "./anatomy/AnatomyContext";
 import { AnatomyView } from "./anatomy/AnatomyView";
+import { ExamplesView } from "./examples/ExamplesView";
 import { StatesView } from "./states/StatesView";
 import { useRoute } from "./useRoute";
 
@@ -26,21 +26,6 @@ const VIEWS = [
   { id: "anatomy", label: "Anatomy" },
   { id: "example", label: "Example" },
 ];
-
-const VIEW_NOTES: Record<
-  string,
-  { icon: "touch_app" | "account_tree" | "code"; text: string }
-> = {
-  states: {
-    icon: "touch_app",
-    text: "Every state side by side, forced, with what drives each: next up.",
-  },
-  anatomy: {
-    icon: "account_tree",
-    text: "The parts it is made of, and where your props land.",
-  },
-  example: { icon: "code", text: "Examples, from the stories, later." },
-};
 
 /** The colour mark before the version, as in the frame. Cuboid has no Avatar yet. */
 function Mark() {
@@ -81,7 +66,6 @@ function ShellFrame() {
 
   const matching = (name: string) =>
     name.toLowerCase().includes(query.trim().toLowerCase());
-  const note = VIEW_NOTES[view];
 
   return (
     <Box
@@ -170,13 +154,7 @@ function ShellFrame() {
             ) : view === "anatomy" ? (
               <AnatomyView component={selected} />
             ) : (
-              <Box flexGrow={1} alignItems="center" justifyContent="center">
-                <EmptyState
-                  icon={note.icon}
-                  heading={`${selected}: ${VIEWS.find((v) => v.id === view)?.label}`}
-                  description={note.text}
-                />
-              </Box>
+              <ExamplesView component={selected} />
             )}
           </Box>
           <RightPane context={{ component: selected, view }} />

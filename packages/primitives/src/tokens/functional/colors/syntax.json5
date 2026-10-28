@@ -36,6 +36,30 @@
         $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'syntax' }, 'org.cuboid.overrides': { dark: '#f33190' } },
       },
       bracketNested: { $value: '{base.color.purple.8}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'syntax' } } },
+      componentTag: {
+        $value: '{base.color.teal.10}',
+        $type: 'color',
+        $description: 'JSX: the name of a component (`Button`, `ActionMenu.Item`), in both its opening and closing tag. 7.5:1 on the code surface in both modes (teal.9 is 4.49:1 in light); platform elements (`div`) use html.entityTag.',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'syntax' } },
+      },
+      tagBracket: {
+        $value: '{base.color.gray.8}',
+        $type: 'color',
+        $description: 'JSX: the `<`, `</`, `>` and `/>` of a tag. One colour for all four, so the two tags of an element match.',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'syntax' } },
+      },
+      jsxText: {
+        $value: '{base.color.gray.9}',
+        $type: 'color',
+        $description: 'JSX: the text between an element\'s tags.',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'syntax' } },
+      },
+      jsxAttribute: {
+        $value: '{base.color.orange.10}',
+        $type: 'color',
+        $description: 'JSX: the name of a prop. orange.7 (the HTML attribute colour) is 2.8:1 on the code surface; this step passes in both modes.',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'syntax' } },
+      },
       constantOtherReferenceLink: {
         $value: '#0a3069',
         $type: 'color',
