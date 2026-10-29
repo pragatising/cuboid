@@ -1,3 +1,4 @@
+import { HTML, ROW_GROUPS, mayHold } from "./content/html";
 import type { ComponentDoc, Fixtures, Node, PartDoc, PropDoc, Value } from "./types";
 
 /**
@@ -79,23 +80,40 @@ function instance(part: PartDoc, text: string, n: number, children?: (Node | str
     if (prop.kind === "enum" && prop.values?.length) props[prop.name] = prop.values[0];
     else if (prop.kind === "value") props[prop.name] = prop.name === "value" ? `value-${n}` : humanise(prop.name);
     else if (prop.kind === "flag") props[prop.name] = true;
+    // A required slot is text named after it (`label="Label"`): a part with no label is not a part in use.
+    else if (prop.kind === "slot") props[prop.name] = humanise(prop.name);
   }
   return { tag: part.tag, ...(Object.keys(props).length ? { props } : {}), children: children ?? [text] };
 }
 
 /**
- * What goes between a compound component's tags, from its parts. Items (parts whose role must sit inside another) go in the part
- * that owns them, when there is one; with no items, each part that takes content appears once. Null when it has no parts to use.
+ * What goes between a compound component's tags, from its parts, nested as HTML needs them (`Table.Row` in `Table.Header`, its cells in
+ * the row). Where a level has items (parts whose role must sit inside another) it is those, `items` of them; otherwise each part that
+ * takes content appears once. A part that holds only elements and has nothing placed in it is left out. Null when there is nothing to use.
  */
 function partsChildren(parts: PartDoc[], items: number): (Node | string)[] | null {
-  const item = parts.find((p) => p.item);
-  if (item) {
-    const list = Array.from({ length: items }, (_, i) => instance(item, `${humanise(item.name)} ${i + 1}`, i + 1));
-    const container = parts.find((p) => p.container);
-    return container ? [instance(container, "", 0, list)] : list;
-  }
-  const content = parts.filter((p) => p.content);
-  return content.length ? content.map((p, i) => instance(p, humanise(p.name), i + 1)) : null;
+  const level = (inside: string | undefined, count: number, trail: PartDoc[], single = false): (Node | string)[] => {
+    const groups = trail.flatMap((p) => (p.element && ROW_GROUPS.includes(p.element) ? [p.element] : []));
+    const here = parts.filter(
+      (p) =>
+        p.placeable &&
+        (p.inside === inside || (inside !== undefined && p.alsoInside?.includes(inside))) &&
+        !trail.includes(p) &&
+        // A header cell is written in the header's rows, a data cell in the body's.
+        !(p.belongsIn && groups.length && !groups.includes(p.belongsIn)),
+    );
+    const chosen = here.some((p) => p.item) ? here.filter((p) => p.item) : here;
+    return chosen.flatMap((part) => {
+      // A part HTML allows one of (a `thead`) holds a single row, not a list; what is in that row is a list again.
+      const nested = level(part.tag, part.item ? Math.min(count, 3) : count, [...trail, part], !!part.element && !!HTML[part.element]?.unique);
+      // Text goes where the part's own element takes it; elsewhere it holds what was placed in it, or nothing and is left out.
+      const text = !part.holds || mayHold(part.holds, "text");
+      if (!nested.length && (!part.content || !text)) return [];
+      return Array.from({ length: part.item && !part.once && !single ? count : 1 }, (_, i) => instance(part, nested.length ? "" : part.item ? `${humanise(part.name)} ${i + 1}` : humanise(part.name), i + 1, nested.length ? nested : undefined));
+    });
+  };
+  const children = level(undefined, items, []);
+  return children.length ? children : null;
 }
 
 /**
@@ -133,8 +151,10 @@ const humanise = (name: string) => {
  */
 function slotDomain(prop: PropDoc, fixtures: Fixtures): Domain | null {
   const filler = fixtures.fillers[prop.name] ?? prop.filler ?? fixtures.fillers["*"] ?? humanise(prop.name);
-  const filled = choice(prop.name, "filled", prop.name, filler, !!prop.required, true);
-  return { prop: prop.name, choices: prop.required ? [filled] : [choice(prop.name, "empty", `${prop.name} empty`, undefined, true, false), filled] };
+  // What names the control is always there: a field without its label is not an example of the field.
+  const always = prop.required || prop.names;
+  const filled = choice(prop.name, "filled", prop.name, filler, !!always, true);
+  return { prop: prop.name, choices: always ? [filled] : [choice(prop.name, "empty", `${prop.name} empty`, undefined, true, false), filled] };
 }
 
 const WHY: Record<string, string> = {
@@ -181,6 +201,8 @@ export function domainsOf(doc: ComponentDoc, fixtures: Fixtures): Domains {
     // A handler or a ref is never needed to draw the component; a required value or slot is.
     (prop.required && !["event", "function", "ref"].includes(prop.kind) ? blocked : skipped).push(entry);
   }
+  // What the host says every example of this component carries.
+  for (const [name, value] of Object.entries(fixtures.attributes?.[doc.name] ?? {})) domains.push({ prop: name, choices: [choice(name, "given", name, value, true, false)] });
   return { domains, skipped, blocked };
 }
 

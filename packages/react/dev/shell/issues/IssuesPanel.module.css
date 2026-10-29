@@ -1,0 +1,59 @@
+.Panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.List {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* A finding: on the inset well the Properties are on. */
+.Item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--cube-bgColor-canvas-inset);
+}
+
+.Head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.Rule {
+  font: 500 12px/16px var(--cube-fontStack-monospace);
+  color: var(--cube-fgColor-neutral-default);
+}
+
+.Count {
+  font: 500 12px/16px Inter, sans-serif;
+  color: var(--cube-fgColor-neutral-muted);
+}
+
+.Meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  font: 400 12px/16px Inter, sans-serif;
+  color: var(--cube-fgColor-neutral-muted);
+}
+
+/* Drawn so it can be checked, and nowhere anyone sees it. */
+.Probe {
+  position: absolute;
+  left: -20000px;
+  top: 0;
+  width: 1200px;
+  font: var(--cube-text-size-md);
+  color: var(--cube-fgColor-neutral-default);
+}

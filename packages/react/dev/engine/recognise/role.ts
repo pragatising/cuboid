@@ -1,7 +1,8 @@
 import { elementRoles as ariaElementRoles, roles as ariaRoles } from "aria-query";
 import type { ComponentModel } from "../Interfaces/ComponentModel/ComponentModel";
+import type { Expr } from "../Interfaces/ComponentModel/Expr";
 import type { TreeElement } from "../Interfaces/ComponentModel/TreeElement";
-import { spreadsProps } from "./flow";
+import { flowEdges, spreadsProps } from "./flow";
 import type { Models } from "./recognise";
 
 /** What the platform says a component is: its ARIA role, read from the element that carries its meaning. */
@@ -83,6 +84,10 @@ function roleChoicesOf(element: TreeElement, model: ComponentModel): string[] {
   return [...new Set(found)];
 }
 
+/** Every outermost element a component can return: both sides of `native ? <NativeSelect /> : <PopupSelect />`. */
+const alternatives = (model: ComponentModel): TreeElement[] =>
+  model.returns.flatMap(({ value }) => (value.kind === "element" ? [value.element] : value.kind === "expression" ? value.expr.elements : []));
+
 /** The outermost element of each return. */
 const roots = (model: ComponentModel): TreeElement[] =>
   model.returns.flatMap(({ value }) => (value.kind === "element" ? [value.element] : value.kind === "expression" ? value.expr.elements.slice(0, 1) : []));
@@ -129,6 +134,83 @@ function* hostsIn(element: TreeElement, model: ComponentModel, models: Models, c
   }
   const nested = element.children.flatMap((child) => (child.kind === "element" ? [child.element] : child.kind === "expression" ? child.expr.elements : []));
   for (const child of nested) yield* hostsIn(child, model, models, {}, visited);
+}
+
+/** The first host element a component renders: the element it is, as far as HTML goes. Its literal attributes are what the caller wrote (`as`). */
+export function rootHostOf(model: ComponentModel, models: Models, attrs: Attributes = {}): { tag: string; attrs: Attributes } | null {
+  const first = hostsOf(model, models, attrs, new Set()).next();
+  return first.done ? null : { tag: first.value.tags[0], attrs: first.value.attrs };
+}
+
+/**
+ * Every place a slot can land: for each, the host elements from the component's root down to the one that holds it (`button` › `span`
+ * › `span`). That is where what a caller puts in `leadingVisual` actually lands in HTML. The slot is followed through what is made from
+ * it (`const leading = loading ? … : leadingVisual`) and through the components it is handed on to, by name when the props are spread,
+ * or by the attribute that carries it. More than one when the component places it differently by prop (Select puts options in a native
+ * `<select>` or in a popup list). Empty when it cannot be found.
+ */
+export function slotChains(model: ComponentModel, models: Models, slot: string, carried: Attributes = {}, visited: Set<string> = new Set(), base: string[] = []): string[][] {
+  if (visited.has(model.declared)) return [];
+  const seen = new Set(visited).add(model.declared);
+  const edges = flowEdges(model, models);
+  const names = new Set([slot]);
+  for (const name of names) for (const next of edges.get(name) ?? []) names.add(next);
+  const reads = (expr: Expr) => expr.reads.some((r) => names.has(r.name));
+  // A prop taken out by name (`{ children, ...props }`) is not among the props that are spread on.
+  const taken = model.params.some((param) => param.bindings.some((b) => !b.rest && (b.key ?? b.name) === slot));
+
+  const walk = (element: TreeElement, chain: string[], carry: Attributes): string[][] => {
+    const attrs = { ...literalAttributes(element), ...carry };
+    let here = chain;
+    // Where what is written between this element's tags lands: its own tag, or for a component, where that component puts its `children`.
+    let homes: string[][] | undefined;
+    const found: string[][] = [];
+    const holds = element.children.some((c) => c.kind === "expression" && reads(c.expr));
+    if (element.type.kind === "host") here = [...chain, element.type.host.tag];
+    else if (element.type.kind === "component") {
+      const as = typeof attrs.as === "string" ? attrs.as : undefined;
+      const inner = element.type.declared ? models[element.type.declared] : undefined;
+      if (inner) {
+        // The component's own tree is where the slot goes; `as` reaches its root through `attrs`.
+        const carrier = element.attributes.find((a) => a.kind === "attribute" && typeof a.value === "object" && reads(a.value));
+        const through = carrier?.kind === "attribute" ? carrier.name : spreadsProps(element, model) && !taken ? slot : undefined;
+        if (through) found.push(...slotChains(inner, models, through, attrs, seen, chain));
+        // Content between this component's tags is its `children`.
+        const inside = element.children.length ? slotChains(inner, models, "children", attrs, seen, chain).filter((c) => c.length > 0) : [];
+        if (inside.length) homes = inside;
+        if (holds) found.push(...(inside.length ? inside : [chain]));
+      } else if (as) here = [...chain, as];
+      else {
+        const tags = chosenTags(model, element.type.name);
+        if (tags.length) here = [...chain, tags[0]];
+      }
+    }
+    // `children` handed to an element through the props it spreads (`<Component {...props} />`) is that element's content.
+    if (slot === "children" && element.children.length === 0 && !taken && spreadsProps(element, model) && (element.type.kind === "host" || (element.type.kind === "component" && !element.type.declared))) found.push(here);
+    // The innermost element that holds it: look inside what is written in the expressions first.
+    const nested = element.children.flatMap((c) => (c.kind === "element" ? [c.element] : c.kind === "expression" ? c.expr.elements : []));
+    const deeper = (homes ?? [here]).flatMap((home) => nested.flatMap((child) => walk(child, home, {})));
+    // Elements written in an attribute (`trigger={<InputText {...props} />}`) are what the component puts where that prop goes.
+    for (const attribute of element.attributes) {
+      if (attribute.kind !== "attribute" || typeof attribute.value !== "object" || attribute.value.elements.length === 0) continue;
+      const inner = element.type.kind === "component" && element.type.declared ? models[element.type.declared] : undefined;
+      const where = inner ? slotChains(inner, models, attribute.name, {}, seen, here).filter((c) => c.length > 0) : [];
+      for (const home of where.length ? where : [here]) for (const child of attribute.value.elements) deeper.push(...walk(child, home, {}));
+    }
+    found.push(...deeper);
+    if (holds && element.type.kind !== "component" && deeper.length === 0) found.push(here);
+    else if (holds && element.type.kind === "component" && !element.type.declared && deeper.length === 0) found.push(here);
+    return found;
+  };
+
+  const all: string[][] = [];
+  let first = true;
+  for (const element of alternatives(model)) {
+    all.push(...walk(element, base, first ? carried : {}));
+    first = false;
+  }
+  const unique = new Map(all.map((chain) => [chain.join(">"), chain]));
+  return [...unique.values()];
 }
 
 type Found = { role: string; source: "explicit" | "implicit"; tag: string; alternatives: string[] };

@@ -11,6 +11,8 @@ export function buildNode(doc: ComponentDoc, picks: Record<string, Choice>): Nod
     if (prop.name === "children") children.push(...(Array.isArray(value) ? value : [value as Node | string]));
     else props[prop.name] = value;
   }
+  // What is not one of the component's props (an attribute the host says every example carries) comes after them.
+  for (const [name, choice] of Object.entries(picks)) if (!doc.props.some((p) => p.name === name) && choice.value !== undefined) props[name] = choice.value;
   return { tag: doc.name, props, ...(children.length ? { children } : {}) };
 }
 

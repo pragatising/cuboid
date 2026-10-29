@@ -13,6 +13,8 @@ export type PropDoc = {
   values?: (string | number)[];
   /** The default as source text (`"\"center\""`), when the types say one. */
   default?: string;
+  /** A slot that gives the control its accessible name (it lands in a `label`): an example always has it, because one without is not usable. */
+  names?: boolean;
   /** A slot that must be one element, because the component puts props on it (it clones it): text would break it. */
   element?: boolean;
   /** What fills this slot, when the model says better than text (for an `element` slot: a button). */
@@ -30,6 +32,20 @@ export type PartDoc = {
   container: boolean;
   /** Takes content between its tags. */
   content: boolean;
+  /** The part it must be written inside, when HTML says (an `li` goes in the part that renders the `ul`); absent for the component itself. */
+  inside?: string;
+  /** Other parts it is also written inside (a row is in the header and in the body). */
+  alsoInside?: string[];
+  /** The HTML element it renders. */
+  element?: string;
+  /** The row group its element belongs in (`thead` for a header cell): it is only written under a part that renders that group. */
+  belongsIn?: string;
+  /** The HTML element its content sits in, so a part that takes only elements is not given text. */
+  holds?: string;
+  /** There is one of it in its parent (a `thead`, or the one `tbody` an example needs), so it is not repeated. */
+  once?: boolean;
+  /** False when nothing the component renders can hold it (a `div` wrapper inside a `table`): it is not part of a composition. */
+  placeable: boolean;
   /** Its required props, so an instance can be written. */
   required: PropDoc[];
 };
@@ -57,4 +73,9 @@ export type Fixtures = {
    * now"). An example turns on at most one of a group. The types cannot say this; the host does.
    */
   exclusive?: string[][];
+  /**
+   * Attributes every example of a component carries, by component name: the host knows what a component cannot say of itself, such as
+   * the `aria-label` an icon-only button is given, which is its whole accessible name.
+   */
+  attributes?: Record<string, Record<string, string>>;
 };

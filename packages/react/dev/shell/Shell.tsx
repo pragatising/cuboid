@@ -17,14 +17,14 @@ import { buildNav } from "./nav";
 import { RightPane } from "./panels";
 import { AnatomyProvider, useAnatomy } from "./anatomy/AnatomyContext";
 import { AnatomyView } from "./anatomy/AnatomyView";
-import { ExamplesView } from "./examples/ExamplesView";
+import { PlaygroundView } from "./playground/PlaygroundView";
 import { StatesView } from "./states/StatesView";
 import { useRoute } from "./useRoute";
 
 const VIEWS = [
   { id: "states", label: "States" },
   { id: "anatomy", label: "Anatomy" },
-  { id: "example", label: "Example" },
+  { id: "playground", label: "Playground" },
 ];
 
 /** The colour mark before the version, as in the frame. Cuboid has no Avatar yet. */
@@ -154,7 +154,7 @@ function ShellFrame() {
             ) : view === "anatomy" ? (
               <AnatomyView component={selected} />
             ) : (
-              <ExamplesView component={selected} />
+              <PlaygroundView component={selected} />
             )}
           </Box>
           <RightPane context={{ component: selected, view }} />

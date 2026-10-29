@@ -1,0 +1,65 @@
+/* The Properties panel (Figma 3346:108517 > Playrgound.CompCard/Props): an inset well, a row to each prop. */
+.List {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  margin: 0;
+  padding: 12px;
+  list-style: none;
+  border-radius: 8px;
+  background: var(--cube-bgColor-canvas-inset);
+  font: 500 12px/16px Inter, sans-serif;
+}
+
+.Row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0 8px;
+  min-height: 20px;
+}
+
+.Name {
+  color: var(--name);
+  white-space: nowrap;
+}
+
+.Colon {
+  color: var(--cube-fgColor-neutral-muted);
+  font: 400 14px/20px var(--cube-fontStack-monospace);
+}
+
+.Values {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px;
+  min-width: 0;
+}
+
+.Chip {
+  max-width: 100%;
+  padding: 0 4px;
+  overflow: hidden;
+  border: 1px solid var(--cube-borderColor-muted);
+  border-radius: 4px;
+  background: var(--cube-bgColor-canvas-default);
+  color: var(--cube-fgColor-neutral-default);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* A type is written in the code's own colour, a choice's value in plain text, and the value that is the default in bold. */
+.Chip[data-type] {
+  color: var(--type);
+}
+
+.Chip[data-default] {
+  font-weight: 700;
+}
+
+.Brace {
+  color: var(--brace);
+}

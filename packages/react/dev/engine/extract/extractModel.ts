@@ -374,7 +374,7 @@ export function createExtractor(program: ts.Program, root: string) {
       }
       return {
         id: idFor(host ? tag : tag.split(".").pop() ?? tag),
-        type: host ? { kind: "host", host: { tag } } : { kind: "component", name: tag, from: importSource(opening.tagName as ts.Expression), declared: declaredOf(opening.tagName) },
+        type: host ? { kind: "host", host: { tag } } : { kind: "component", name: tag, from: importSource(opening.tagName as ts.Expression), declared: declaredOfExpression(opening.tagName) },
         attributes,
         children: ts.isJsxElement(node) ? childrenOf(node.children) : [],
       };

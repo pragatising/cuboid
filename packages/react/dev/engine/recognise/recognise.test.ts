@@ -111,8 +111,25 @@ describe("compound parts and slots that want an element", () => {
     expect(parts("ActionMenu").List).toMatchObject({ item: false, container: true });
     expect(parts("Select").Option.item).toBe(true);
     expect(parts("Header").Leading).toMatchObject({ item: false, content: true });
-    // A table's row owns cells and is itself an item: deeper than one level, so no parts are offered rather than wrong ones.
-    expect(of("Table").doc.parts).toEqual([]);
+  });
+
+  it("places a part by what HTML needs around it: an li in the part that renders the ul, a row in the header, a cell in the row", () => {
+    const inside = (name: string) => Object.fromEntries((of(name).doc.parts ?? []).map((p) => [p.name, p.inside]));
+    expect(inside("Sidebar").Item).toBe("Sidebar.Section");
+    expect(inside("Sidebar").Section).toBeUndefined();
+    expect(inside("Table")).toMatchObject({ Header: undefined, Body: undefined, Row: "Table.Header", Cell: "Table.Row", HeadCell: "Table.Row" });
+    expect((of("Table").doc.parts ?? []).find((p) => p.name === "Row")?.alsoInside).toEqual(["Table.Body"]);
+    // The container a menu's items go in comes from HTML now (an `li` in a `ul`) where the code lets it be read.
+    expect(inside("ActionMenu").Item).toBe("ActionMenu.List");
+  });
+
+  it("leaves out a part nothing the component renders can hold: a div wrapper cannot go in a table", () => {
+    const parts = Object.fromEntries((of("Table").doc.parts ?? []).map((p) => [p.name, p]));
+    expect(parts.Root.placeable).toBe(false);
+    expect(parts.Header.once).toBe(true);
+    expect(parts.Row.once).toBeUndefined();
+    // Select puts its options in a native `<select>` or in a popup list, and either may hold them.
+    expect((of("Select").doc.parts ?? []).every((p) => p.placeable)).toBe(true);
   });
 
   it("finds a slot the component clones props onto, and fills it with a button the library has", () => {
@@ -132,6 +149,18 @@ describe("compound parts and slots that want an element", () => {
     expect(tags(children("ActionMenu"))).toEqual(["ActionMenu.List[ActionMenu.Item,ActionMenu.Item,ActionMenu.Item]"]);
     expect(tags(children("Header"))).toEqual(expect.arrayContaining(["Header.Leading", "Header.Trailing"]));
     expect(tags(children("Select"))).toEqual(["Select.Option", "Select.Option", "Select.Option"]);
+  });
+
+  it("nests them as HTML needs: a table is a header with rows of cells, and no div wrapper or text between its tags", () => {
+    const { doc } = of("Table");
+    const { domains } = domainsOf(doc, fixtures);
+    const children = buildNode(doc, cover(domains, { strength: 1 }).rows[0].picks).children as { tag: string; children: { tag: string; children: { tag: string }[] }[] }[];
+    expect(children.map((c) => c.tag)).toEqual(["Table.Header", "Table.Body"]);
+    // Column labels in one row of the header; data in the rows of the body.
+    expect(children[0].children.map((c) => c.tag)).toEqual(["Table.Row"]);
+    expect(children[0].children[0].children.map((c) => c.tag)).toEqual(["Table.HeadCell", "Table.HeadCell", "Table.HeadCell"]);
+    expect(children[1].children.map((c) => c.tag)).toEqual(["Table.Row", "Table.Row", "Table.Row"]);
+    expect(children[1].children[0].children.map((c) => c.tag)).toEqual(["Table.Cell", "Table.Cell", "Table.Cell"]);
   });
 
   it("gives a required prop of a part a sample, so an instance can be written", () => {

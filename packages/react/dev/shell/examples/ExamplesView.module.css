@@ -1,5 +1,0 @@
-/* What an example is drawn on: the page's own text, as an app would have it, so a component that sets no font of its own (a Header's parts) reads like it would in use. */
-.Stage {
-  font: var(--cube-text-size-md);
-  color: var(--cube-fgColor-neutral-default);
-}

@@ -3,7 +3,8 @@ import type { Prop } from "../Interfaces/ComponentModel/Prop";
 import type { TreeElement } from "../Interfaces/ComponentModel/TreeElement";
 import { allElements } from "../extract/printModel";
 import { flowEdges, spreadsProps } from "./flow";
-import { roleOf, supportsAria } from "./role";
+import { HTML, ROW_GROUPS, holderIn, mayHold } from "../content/html";
+import { roleOf, rootHostOf, slotChains, supportsAria } from "./role";
 import type { ComponentDoc, PartDoc, PropDoc } from "../types";
 
 /** Every component read, by where it is written (`ComponentModel.declared`). */
@@ -164,28 +165,63 @@ function takesContent(model: ComponentModel, models: Models, visited = new Set<s
   });
 }
 
+/** The elements a component's children can sit in, as far as HTML goes: one, or several when it places them by prop. Empty when it cannot be told. */
+function holdersOf(model: ComponentModel, models: Models): string[] {
+  const holders = slotChains(model, models, "children").flatMap((chain) => holderIn(chain) ?? []);
+  return [...new Set(holders)];
+}
+
 /**
  * The parts a compound component carries (its statics), each read from its own model: its role from the standard, so an item (a
- * role that must sit inside another) and a container (a role that owns it) are known without a name table. One level only: if an
- * item also owns something (a table's row owns cells), the nesting is deeper than this reads, and no parts are returned.
+ * `menuitem`) is told from what holds items (a `menu`); and where HTML says it goes. A part that renders an `li` must be inside the
+ * part that renders the `ul`, a `td` inside the one that renders the `tr`; a part nothing the component renders can hold (a `div` in a
+ * `table`) is not placeable. Where HTML cannot say, the standard's container is used.
  */
 export function partsOf(model: ComponentModel, models: Models): PartDoc[] {
   const read = model.statics.flatMap((item) => {
     const part = item.declared ? models[item.declared] : undefined;
     if (!part) return [];
     const role = roleOf(part, models);
-    return [{ item, part, role }];
+    const element = rootHostOf(part, models)?.tag;
+    return [{ item, part, role, element: element && HTML[element] ? element : null, holds: holdersOf(part, models)[0] }];
   });
   const itemRoles = new Set(read.filter(({ role }) => role?.within.length).flatMap(({ role }) => role?.roles ?? []));
-  const parts = read.map(({ item, part, role }) => ({
+  const parts: PartDoc[] = read.map(({ item, part, role, holds, element }) => ({
     tag: `${model.name}.${item.name}`,
     name: item.name,
     item: !!role?.within.length || part.props.some((p) => p.required && p.name === "value"),
     container: !!role?.owns.some((owned) => itemRoles.has(owned)),
     content: takesContent(part, models),
     required: part.props.filter((p) => p.required).map(propDoc),
+    placeable: true,
+    ...(holds ? { holds } : {}),
+    ...(element ? { element } : {}),
+    ...(element && (HTML[element].unique || ROW_GROUPS.includes(element)) ? { once: true } : {}),
+    ...(element && HTML[element].belongsIn ? { belongsIn: HTML[element].belongsIn } : {}),
   }));
-  return parts.some((p) => p.item && p.container) ? [] : parts;
+
+  const owner = holdersOf(model, models);
+  const inside = new Map<string, string>();
+  const within = (tag: string, ancestor: string): boolean => tag === ancestor || (inside.has(tag) && within(inside.get(tag) as string, ancestor));
+  read.forEach(({ element, item }, index) => {
+    const part = parts[index];
+    if (!element || !owner.length) {
+      const container = item ? parts.find((p) => p.container && p !== part) : undefined;
+      if (container) inside.set(part.tag, container.tag);
+      return;
+    }
+    // A part with a parent it requires goes in the part that is that parent; any other goes in the component, if it holds it.
+    const required = HTML[element].parents;
+    const holders = required ? parts.filter((other, i) => other !== part && other.holds && required.includes(other.holds) && mayHold(other.holds, element) && !within(other.tag, part.tag) && read[i].element !== element) : [];
+    const [holder, ...others] = holders;
+    if (holder) {
+      inside.set(part.tag, holder.tag);
+      if (others.length) part.alsoInside = others.map((other) => other.tag);
+    }
+    else if (!owner.some((holder) => mayHold(holder, element))) part.placeable = false;
+  });
+  for (const part of parts) if (inside.has(part.tag)) part.inside = inside.get(part.tag);
+  return parts;
 }
 
 /** Slots the component puts props on by cloning what it is given (`cloneElement(trigger, {…})`): they must be one element. */
@@ -266,6 +302,13 @@ export function recognise(model: ComponentModel, models: Models, exported: Recor
       if (button) doc.filler = { tag: button.tag, children: ["Trigger"] };
     }
   }
+
+  // A role named by its author (a textbox, a combobox, a switch) must be given a name, and where the component has a slot that lands
+  // in a `label` that is where it comes from: WCAG 4.1.2 (name, role, value) and 3.3.2 (labels) need it, so an example always has it.
+  const role = roleOf(model, models);
+  if (role?.nameFrom.includes("author"))
+    for (const doc of docs)
+      if (doc.kind === "slot" && doc.name !== "children" && slotChains(model, models, doc.name).some((chain) => chain.includes("label"))) doc.names = true;
 
   const conditions = new Set(conditionNames(model, models));
   const own = model.props.map((p) => p.name);

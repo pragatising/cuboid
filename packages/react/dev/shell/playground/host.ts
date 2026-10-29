@@ -13,7 +13,11 @@ export const fixtures: Fixtures = {
   fillers: {
     leadingVisual: { tag: "Icon", props: { name: "add" } },
     trailingVisual: { tag: "Icon", props: { name: "arrow_forward" } },
+    // IconButton's whole content: it is an icon, not a label.
+    icon: { tag: "Icon", props: { name: "add" } },
   },
+  // An icon-only button is named by what the caller says it does, and nothing in its types says so: the library warns "pass `aria-label`".
+  attributes: { IconButton: { "aria-label": "Add" } },
 };
 
 /** `ActionMenu.Item` is the `Item` of `ActionMenu`. */
