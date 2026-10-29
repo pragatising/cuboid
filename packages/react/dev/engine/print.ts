@@ -1,3 +1,4 @@
+import { instance } from "./domains";
 import type { Choice } from "./domains";
 import type { ComponentDoc, Node, Value } from "./types";
 
@@ -13,7 +14,10 @@ export function buildNode(doc: ComponentDoc, picks: Record<string, Choice>): Nod
   }
   // What is not one of the component's props (an attribute the host says every example carries) comes after them.
   for (const [name, choice] of Object.entries(picks)) if (!doc.props.some((p) => p.name === name) && choice.value !== undefined) props[name] = choice.value;
-  return { tag: doc.name, props, ...(children.length ? { children } : {}) };
+  const node: Node = { tag: doc.name, props, ...(children.length ? { children } : {}) };
+  // A part that goes around the component (a shell that carries its styling) is written around it.
+  const shell = doc.parts?.find((part) => part.wraps && part.content);
+  return shell ? instance(shell, "", 0, [node]) : node;
 }
 
 export type Printed = {

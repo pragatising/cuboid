@@ -19,24 +19,28 @@ export type UsePopoverOptions = {
   autoFocus: boolean;
   triggerRef: React.RefObject<HTMLElement | null>;
   panelRef: React.RefObject<HTMLElement | null>;
+  /** The height, in px, the panel is capped at by its own `maxHeight`, so the placement can tell how tall it would be. */
+  maxHeight?: number;
 };
 
 /**
  * The behavior of a non-modal anchored overlay (docs/behaviours.md: a component behavior returns props objects to spread):
  *
  * - `open` / `defaultOpen` / `onOpenChange` through `useControllableState`; the trigger toggles it.
- * - Placed against the trigger and kept there on scroll and resize (`useAnchoredPosition`).
+ * - Placed against the trigger and kept there on scroll and resize (`useAnchoredPosition`), and kept inside the window: it flips to the
+ *   side with room, slides along the trigger, and is shortened (it scrolls) when neither side has room for all of it.
  * - Dismissed by Escape (only if it is the top-most layer) and by a press outside (`useDismiss`).
  * - Focus moves into the panel when it opens, and returns to the trigger when it closes, so a keyboard user is neither
  *   stranded at the trigger (the panel is portaled to the end of the page) nor dropped at the top of the page.
  *
  * Returns `triggerProps` for the trigger, the panel's `id` and `style`, and `open` / `setOpen`.
  */
-export function usePopover({ open: openProp, defaultOpen = false, onOpenChange, placement, gap, dismissible, returnFocus, autoFocus, triggerRef, panelRef }: UsePopoverOptions) {
+export function usePopover({ open: openProp, defaultOpen = false, onOpenChange, placement, gap, dismissible, returnFocus, autoFocus, triggerRef, panelRef, maxHeight }: UsePopoverOptions) {
   const panelId = useId();
   const [open, setOpen] = useControllableState({ value: openProp, defaultValue: defaultOpen, onChange: onOpenChange, name: "open" });
 
-  const { style } = useAnchoredPosition({ anchorRef: triggerRef, placement, gap, enabled: open });
+  // Given the panel, it is kept in the window: flipped to the side with room, slid along the trigger, and shortened to the room there is.
+  const { style, placement: placed } = useAnchoredPosition({ anchorRef: triggerRef, floatingRef: panelRef, placement, gap, enabled: open, maxHeight });
   useDismiss({ enabled: open && dismissible, onDismiss: () => setOpen(false), refs: [triggerRef, panelRef] });
 
   useEffect(() => {
@@ -62,5 +66,5 @@ export function usePopover({ open: openProp, defaultOpen = false, onOpenChange, 
 
   const toggle = useCallback(() => setOpen((previous) => !previous), [setOpen]);
 
-  return { open, setOpen, panelId, style, toggle };
+  return { open, setOpen, panelId, style, placement: placed, toggle };
 }

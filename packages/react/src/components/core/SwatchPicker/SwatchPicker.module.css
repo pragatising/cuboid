@@ -1,0 +1,95 @@
+/* No tokens of its own: the spacing and radius are the size scale, the colours are semantic (SwatchPicker.tsx). Every swatch's own colour
+   arrives as `--swatch`, set by the caller from a token it resolved, so no colour is written in this file. */
+:where(.Panel) {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--cube-size-12px);
+  width: 20rem;
+  max-width: 100%;
+  padding: var(--cube-size-12px);
+}
+
+:where(.Group) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cube-size-6px);
+}
+
+:where(.Swatches) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cube-size-6px);
+}
+
+:where(.Swatch) {
+  appearance: none;
+  box-sizing: border-box;
+  width: var(--cube-size-20px);
+  height: var(--cube-size-20px);
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--swatch);
+  border-radius: var(--cube-borderRadius-sm);
+  background: var(--swatch);
+  cursor: pointer;
+}
+
+/* A border only where the colour would be lost on the page (white, near-white, transparent): any other colour's border is its own. */
+:where(.Swatch[data-outline], .Dot[data-outline]) {
+  border-color: var(--cube-borderColor-muted);
+}
+
+/* The one chosen is ringed, set off from the page by a gap of the canvas colour; the one focused has the focus ring. */
+:where(.Swatch[aria-checked="true"]) {
+  box-shadow: 0 0 0 2px var(--cube-bgColor-canvas-default), 0 0 0 4px var(--cube-fgColor-neutral-default);
+}
+
+:where(.Swatch:focus-visible) {
+  outline: var(--cube-focusRing-width) solid var(--cube-focusRing-color);
+  outline-offset: var(--cube-focusRing-offset);
+}
+
+/* What is chosen, in the button and in a row: a round chip of the colour; an empty one is a hollow ring. */
+:where(.Dot) {
+  display: inline-block;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: var(--cube-size-12px);
+  height: var(--cube-size-12px);
+  border: 1px solid var(--swatch);
+  border-radius: var(--cube-borderRadius-full);
+  background: var(--swatch);
+}
+
+:where(.Dot[data-empty]) {
+  border-color: var(--cube-borderColor-muted);
+  background: transparent;
+}
+
+/* "Use #ff0000" and "None": a row that is a button. */
+:where(.Custom) {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  gap: var(--cube-size-8px);
+  width: 100%;
+  margin: 0;
+  padding: var(--cube-size-4px) var(--cube-size-8px);
+  border: 0;
+  border-radius: var(--cube-borderRadius-sm);
+  background: transparent;
+  color: var(--cube-fgColor-neutral-default);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+:where(.Custom:hover) {
+  background: var(--cube-bgColor-canvas-inset);
+}
+
+:where(.Custom:focus-visible) {
+  outline: var(--cube-focusRing-width) solid var(--cube-focusRing-color);
+  outline-offset: var(--cube-focusRing-offset);
+}

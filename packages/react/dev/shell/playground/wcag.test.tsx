@@ -10,6 +10,8 @@ import { buildNode, printExample } from "../../engine/print";
 import { toElement } from "../../engine/render";
 import { recognise } from "../../engine/recognise/recognise";
 import type { Models } from "../../engine/recognise/recognise";
+import { drawsNothing } from "../../engine/content/drawn";
+import { composeExamples } from "./compose";
 import { runAxe } from "../../engine/wcag/axe";
 import { fixtures, resolve } from "./host";
 
@@ -49,6 +51,19 @@ describe("WCAG, by axe, over what the engine composes", () => {
     expect(fixtures.attributes?.IconButton).toEqual({ "aria-label": "Add" });
   });
 
+  it("finds that no component draws nothing when its optional props are unset", () => {
+    const flagged: string[] = [];
+    for (const name of Object.keys(exported)) {
+      const composed = composeExamples(name);
+      const first = composed?.rows[0];
+      if (!composed || !first) continue;
+      const { container } = render(<div>{toElement(first.node, resolve, first.printed.sources)}</div>);
+      if (drawsNothing(container, name, composed.contentFromOptional, [name]).length) flagged.push(name);
+      cleanup();
+    }
+    expect(flagged).toEqual([]);
+  });
+
   it("finds no error or warning in any example of any component", async () => {
     const all: Record<string, Issue[]> = {};
     for (const name of Object.keys(exported)) {
@@ -58,9 +73,10 @@ describe("WCAG, by axe, over what the engine composes", () => {
     const worse = Object.entries(all).flatMap(([name, issues]) => issues.filter((i) => i.severity !== "info").map((i) => `${name}: ${i.rule}: ${i.message}`));
     expect(worse).toEqual([]);
 
-    // What is left is what axe says a person has to check. An icon-only button named "Add" draws an icon whose font ligature is the
-    // text "add": axe cannot tell a glyph from a word, so it asks whether the visible text is part of the name (WCAG 2.5.3).
+    // What is left is what axe says a person has to check (WCAG 2.5.3, the visible text is part of the name). An icon-only button named
+    // "Add" draws an icon whose font ligature is the text "add", and axe cannot tell a glyph from a word; a Tooltip named for what its
+    // trigger does is not the trigger's own text, so axe asks whether that is intended.
     const infos = [...new Set(Object.entries(all).flatMap(([name, issues]) => issues.map((i) => `${name}: ${i.rule}`)))].sort();
-    expect(infos).toEqual(["IconButton: wcag.label-content-name-mismatch", "Sidebar: wcag.label-content-name-mismatch"]);
+    expect(infos).toEqual(["IconButton: wcag.label-content-name-mismatch", "Sidebar: wcag.label-content-name-mismatch", "Tooltip: wcag.label-content-name-mismatch"]);
   }, 300_000);
 });

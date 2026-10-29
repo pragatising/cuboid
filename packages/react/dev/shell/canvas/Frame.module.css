@@ -1,0 +1,53 @@
+.Wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: none;
+}
+
+/* Named and sized above it, as a frame is in Figma. */
+.Label {
+  font: 500 12px/16px Inter, sans-serif;
+  color: var(--cube-fgColor-neutral-muted);
+}
+
+.Frame {
+  position: relative;
+  box-sizing: border-box;
+  min-width: 240px;
+  width: max-content;
+  background: var(--cube-bgColor-canvas-default);
+  color: var(--cube-fgColor-neutral-default);
+  font: var(--cube-text-size-md);
+  border: 1px solid var(--cube-borderColor-muted);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+/* The right edge: wide enough to catch, a thin line when the pointer is near it. The blue is the shell's annotation colour. */
+.Handle {
+  position: absolute;
+  top: 0;
+  right: -8px;
+  width: 16px;
+  height: 100%;
+  cursor: col-resize;
+  touch-action: none;
+  outline: none;
+}
+
+.Handle::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 7px;
+  width: 2px;
+  border-radius: 1px;
+  background: transparent;
+}
+
+.Handle:hover::after,
+.Handle:focus-visible::after,
+.Handle:active::after {
+  background: #286cfd;
+}

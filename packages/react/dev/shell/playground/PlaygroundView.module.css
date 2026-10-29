@@ -1,60 +1,9 @@
-/* The canvas the examples are laid out on (Figma 3346:108485). Each example is a row: the component, a dotted line, its card. Where
-   the card goes (beside, or below) is decided from a measurement (layout.ts), so until that is in nothing is shown. */
-.Column {
-  display: flex;
-  flex-direction: column;
-  gap: 36px;
-  /* As wide as what is on it, never as wide as the pane: the canvas scrolls, the examples do not wrap to fit it. */
-  width: max-content;
-  margin-inline: auto;
-  padding: 48px;
-  visibility: hidden;
-}
-
-.Column[data-ready] {
-  visibility: visible;
-}
-
-.Row {
+/* The component, on the canvas. */
+.Canvas {
   position: relative;
   display: flex;
-}
-
-/* Beside: the component in the shared left column, a line across, the card. */
-.Row[data-layout="beside"] {
-  align-items: center;
-}
-
-.Row[data-layout="beside"] .Stage {
-  width: var(--left);
-}
-
-.Row[data-layout="beside"] .Line {
-  flex: 1 0 48px;
-  height: 0;
-  border-top: 1px dotted #286cfd;
-}
-
-/* Below: the component, a line down, the card; they share the left edge. A component that fills its container is shown in one of a
-   stated width, drawn as a frame, and scrolls inside it as it would in an app. */
-.Row[data-layout="above"] {
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.Row[data-layout="above"] .Line {
-  flex: none;
-  width: 0;
-  height: 32px;
-  margin-left: 16px;
-  border-left: 1px dotted #286cfd;
-}
-
-.Row[data-fluid] .Stage {
-  box-sizing: border-box;
-  width: var(--container);
-  overflow-x: auto;
-  border: 1px dashed var(--cube-borderColor-muted);
+  width: max-content;
+  padding: 48px;
 }
 
 /* What an example is drawn on: the page's own text, as an app would have it, so a component that sets no font of its own (a Header's parts) reads like it would in use. */
@@ -82,15 +31,14 @@
   width: 1200px;
 }
 
-.Card {
+/* In a frame or on a device the content has the room it is given: a margin, and what fills its container fills it. */
+.Canvas[data-on-screen] {
+  width: 100%;
   box-sizing: border-box;
-  /* Wide enough for the longest line an example writes (an icon slot, an import), so the code seldom scrolls; less when the canvas is narrower than that. */
-  flex: 0 0 auto;
-  width: min(600px, max(320px, calc(var(--available) - 96px)));
-  min-width: 0;
+  padding: 24px;
 }
 
-/* The code well: the card's own inset, scrolling sideways rather than widening the card. */
-.Well {
-  overflow-x: auto;
+/* Nothing clips the stage: a focus ring is drawn outside the control, and a clip (overflow) would cut it off on every side. */
+.Canvas[data-on-screen] .Stage[data-fluid] {
+  width: 100%;
 }

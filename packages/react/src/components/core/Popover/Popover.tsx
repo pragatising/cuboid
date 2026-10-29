@@ -76,6 +76,19 @@ export type PopoverProps = Omit<React.ComponentPropsWithRef<"div">, "role" | "ch
   matchAnchorWidth?: boolean;
 };
 
+/** The height cap: the one asked for, and the room the window leaves where the panel is, whichever is less. */
+/** The cap as pixels, or undefined when there is none or it is not a length that can be read (then the panel is measured as it is). */
+function capOf(maxHeight: Length | undefined): number | undefined {
+  if (maxHeight === undefined) return undefined;
+  const px = lengthToPx(maxHeight, Number.NaN);
+  return Number.isFinite(px) ? px : undefined;
+}
+
+function fitHeight(asked: Length | undefined, room: React.CSSProperties["maxHeight"]): Length | undefined {
+  if (typeof room !== "number") return asked;
+  return (asked === undefined ? `${room}px` : `${Math.min(lengthToPx(asked, room), room)}px`) as Length;
+}
+
 function isPart(child: React.ReactNode, part: unknown): child is React.ReactElement<Record<string, unknown>> {
   return isValidElement(child) && child.type === part;
 }
@@ -113,7 +126,7 @@ function PopoverRoot({
   const triggerRef = useProvidedRefOrCreate<HTMLElement>(anchorRef ?? (trigger.props as { ref?: React.Ref<HTMLElement> }).ref);
   const panelRef = useProvidedRefOrCreate<HTMLDivElement>(ref);
 
-  const { open, panelId, style, toggle } = usePopover({
+  const { open, panelId, style, placement: placed, toggle } = usePopover({
     open: openProp,
     defaultOpen,
     onOpenChange,
@@ -125,6 +138,7 @@ function PopoverRoot({
     autoFocus,
     triggerRef,
     panelRef,
+    maxHeight: capOf(maxHeight),
   });
 
   const [anchorWidth, setAnchorWidth] = useState<number | undefined>();
@@ -168,7 +182,7 @@ function PopoverRoot({
               {...mergeProps(
                 {
                   "data-component": "Popover",
-                  "data-placement": placement,
+                  "data-placement": placed,
                   id: panelId,
                   role,
                   "aria-labelledby": ariaLabelledBy ?? (role === "dialog" && titled ? titleId : undefined),
@@ -189,7 +203,7 @@ function PopoverRoot({
               margin={0}
               minWidth={matchAnchorWidth && anchorWidth !== undefined ? (`${anchorWidth}px` as Length) : resolved<Length>(popover.sizes.minWidth)}
               maxWidth={resolved<Length>(popover.sizes.maxWidth)}
-              maxHeight={maxHeight}
+              maxHeight={fitHeight(maxHeight, style.maxHeight)}
               backgroundColor={resolved<CssColor>(popover.color.background)}
               borderRadius={resolved<RawLength>(popover.sizes.borderRadius)}
               boxShadow={shadow.floating[elevation === "4x" ? "lg" : "md"]}

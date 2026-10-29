@@ -1,0 +1,48 @@
+/* The canvas: a field of dots that moves and scales with what is on it, and the layer that holds the content. */
+.Viewport {
+  position: relative;
+  flex-grow: 1;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  touch-action: none;
+  outline-offset: -2px;
+  background-color: var(--cube-bgColor-canvas-subtle);
+  background-image: radial-gradient(circle, var(--cube-borderColor-muted) 1px, transparent 1px);
+  background-size: calc(24px * var(--scale)) calc(24px * var(--scale));
+  background-position: var(--x) var(--y);
+  cursor: default;
+}
+
+.Viewport[data-grab="grab"] {
+  cursor: grab;
+}
+
+.Viewport[data-grab="grabbing"] {
+  cursor: grabbing;
+}
+
+/* The origin is the corner, so the view's position is where the content's corner is on screen. */
+.Layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: max-content;
+  min-width: 480px;
+  transform: translate(var(--x), var(--y)) scale(var(--scale));
+  transform-origin: 0 0;
+}
+
+.Controls {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border: 1px solid var(--cube-borderColor-muted);
+  border-radius: 8px;
+  background: var(--cube-bgColor-canvas-default);
+}

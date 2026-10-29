@@ -1,0 +1,76 @@
+/* A browser window: a bar with the address in it, and a viewport the size of the screen. A tablet and a phone are the same in a bezel. */
+.Device {
+  box-sizing: content-box;
+  flex: none;
+  overflow: hidden;
+  border: 1px solid var(--cube-borderColor-muted);
+  border-radius: 12px;
+  background: var(--cube-bgColor-canvas-default);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.Device[data-kind="tablet"] {
+  border: 12px solid #26262a;
+  border-radius: 32px;
+}
+
+.Device[data-kind="phone"] {
+  border: 12px solid #26262a;
+  border-radius: 44px;
+}
+
+.Bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  height: 40px;
+  padding: 0 14px;
+  border-bottom: 1px solid var(--cube-borderColor-muted);
+  background: var(--cube-bgColor-canvas-subtle);
+}
+
+/* The window's three lights, in neutral grey as Vercel's preview has them: they say "a window", not "a state". */
+.Lights {
+  display: flex;
+  flex: 0 0 52px;
+  gap: 8px;
+}
+
+.Lights i {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--cube-borderColor-muted);
+}
+
+.Address {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+  max-width: 420px;
+  height: 26px;
+  margin-inline: auto;
+  padding: 0 10px;
+  border-radius: 6px;
+  background: var(--cube-bgColor-canvas-default);
+  border: 1px solid var(--cube-borderColor-muted);
+  color: var(--cube-fgColor-neutral-muted);
+  font: 500 12px/16px Inter, sans-serif;
+}
+
+.Address > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.Viewport {
+  overflow: auto;
+  background: var(--cube-bgColor-canvas-default);
+  color: var(--cube-fgColor-neutral-default);
+  font: var(--cube-text-size-md);
+}

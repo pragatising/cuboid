@@ -4,7 +4,7 @@ import { behavesAsComponent, expectNoAxeViolations } from "../../../test/testing
 import { EmptyState } from "./EmptyState";
 import classes from "./EmptyState.module.css";
 
-behavesAsComponent({ Component: EmptyState, dataComponent: "EmptyState", baseClassName: classes.EmptyState, props: { heading: "Nothing here" } });
+behavesAsComponent({ Component: EmptyState, dataComponent: "EmptyState", baseClassName: classes.EmptyState, props: { icon: "celebration", description: "Nothing here" } });
 
 const root = (container: HTMLElement) => container.querySelector('[data-component="EmptyState"]') as HTMLElement;
 
@@ -16,17 +16,17 @@ describe("EmptyState", () => {
     expect(screen.getByText("Try a different search")).toBeInTheDocument();
   });
 
-  it("leaves out the parts it is not given", () => {
-    const { container } = render(<EmptyState description="Only text" />);
-    expect(container.querySelector('[data-component="TileIcon"]')).toBeNull();
-    expect(screen.queryByText("No results")).toBeNull();
+  it("has no heading unless it is given one: the icon and the description are what it needs", () => {
+    const { container } = render(<EmptyState icon="celebration" description="Only text" />);
+    expect(container.querySelector('[data-component="TileIcon"]')).toBeInTheDocument();
+    expect(container.querySelector("p")).toHaveTextContent("Only text");
     expect(screen.getByText("Only text")).toBeInTheDocument();
   });
 
   it("defaults to the stacked layout, and layout is an attribute", () => {
-    const { container, rerender } = render(<EmptyState heading="H" />);
+    const { container, rerender } = render(<EmptyState icon="celebration" heading="H" description="D" />);
     expect(root(container)).toHaveAttribute("data-layout", "default");
-    rerender(<EmptyState heading="H" layout="compact" description="D" />);
+    rerender(<EmptyState icon="celebration" heading="H" layout="compact" description="D" />);
     expect(root(container)).toHaveAttribute("data-layout", "compact");
   });
 
@@ -43,12 +43,12 @@ describe("EmptyState", () => {
   });
 
   it("can be a status region, so it is announced when it appears", () => {
-    render(<EmptyState role="status" heading="No results" />);
+    render(<EmptyState role="status" icon="search_off" description="No results" />);
     expect(screen.getByRole("status")).toHaveTextContent("No results");
   });
 
   it("sets no inline style on the root: the spacing is CSS", () => {
-    const { container } = render(<EmptyState heading="H" />);
+    const { container } = render(<EmptyState icon="celebration" description="D" />);
     expect(root(container).getAttribute("style")).toBeNull();
   });
 

@@ -4,6 +4,7 @@
 import ts from "typescript";
 import fs from "node:fs";
 import path from "node:path";
+import crypto from "node:crypto";
 
 const root = process.cwd();
 const entry = path.join(root, "src/index.ts");
@@ -42,6 +43,52 @@ function classify(name, type) {
   return { kind: "other" };
 }
 
+/** The sets of values a prop's types name (`FgColor`, `SizeScale`), once each: the prop says which, so the list is not written for every prop that uses it. */
+const sets = {};
+const unionOf = (t) => (t.isUnion() ? (t.origin?.isUnion() ? t.origin.types : t.types) : [t]);
+const literalOf = (t) => (t.isStringLiteral() || t.isNumberLiteral() ? t.value : undefined);
+const isFree = (t) => !!(t.flags & (ts.TypeFlags.String | ts.TypeFlags.Number | ts.TypeFlags.TemplateLiteral)) || (t.isIntersection() && t.types.some((x) => x.flags & ts.TypeFlags.String));
+/** `${number}px` as the person would write it: what a free value looks like. */
+const freeLabel = (t) => (t.flags & ts.TypeFlags.Number ? "number" : t.flags & ts.TypeFlags.String || t.isIntersection() ? "text" : text(t).replace(/\$\{[^}]*\}/g, "…").replace(/^`|`$/g, ""));
+
+/**
+ * What a value-typed prop can be, in the parts its type is written in: a named set of values (`FgColor`: pick one), loose values
+ * (`"xs" | "sm"`: pick one), or anything of a shape (`number`, `#${string}`: type it). A prop whose type is only one of these, or no
+ * values at all, has no parts: the types say all there is. Objects (a responsive `SizeSpec`) are left out: they are not a value to pick.
+ */
+function members(kind, type) {
+  if (!["value", "other", "open"].includes(kind)) return undefined;
+  const found = [];
+  const loose = { values: [], free: [] };
+  const parts = unionOf(type);
+  // A union that is one named set (`IconName`): its members are its values, and it is called by its name.
+  const wholly = type.aliasSymbol && parts.every((t) => literalOf(t) !== undefined);
+  for (const part of wholly ? [type] : parts) {
+    if (part.flags & (ts.TypeFlags.Undefined | ts.TypeFlags.Null)) continue;
+    const inner = unionOf(part);
+    if (inner.some((t) => t.flags & (ts.TypeFlags.Object | ts.TypeFlags.NonPrimitive)) && !inner.some((t) => isFree(t) || literalOf(t) !== undefined)) continue;
+    const values = inner.map(literalOf).filter((v) => v !== undefined);
+    const free = [...new Set(inner.filter((t) => literalOf(t) === undefined && isFree(t)).map(freeLabel))].slice(0, 3);
+    const alias = part.aliasSymbol?.name;
+    if (alias && (values.length || free.length)) {
+      if (values.length) sets[alias] = values;
+      found.push({ name: alias, ...(values.length ? { set: alias } : {}), ...(free.length ? { free } : {}) });
+    } else {
+      loose.values.push(...values);
+      loose.free.push(...free);
+    }
+  }
+  if (loose.values.length || loose.free.length) {
+    const free = [...new Set(loose.free)].slice(0, 3);
+    // A long list of loose values is kept once, whichever prop has it.
+    const set = loose.values.length > 20 ? `values-${crypto.createHash("sha1").update(loose.values.join("|")).digest("hex").slice(0, 8)}` : undefined;
+    if (set) sets[set] = loose.values;
+    found.push({ name: "values", ...(set ? { set } : loose.values.length ? { values: loose.values } : {}), ...(free.length ? { free } : {}) });
+  }
+  // Folded to what a person chooses between: a set, loose values, and the shapes typed. Only worth saying when there is something to pick.
+  return found.some((m) => m.set || m.values) ? found : undefined;
+}
+
 /** `x`, `defaultX` and `onXChange` together are one controllable piece of state. */
 function controlled(names) {
   const set = new Set(names);
@@ -67,6 +114,7 @@ function describeProps(propsType, decl, own) {
       required: !(p.flags & ts.SymbolFlags.Optional),
       type: text(type),
       ...classify(p.name, type),
+      members: members(classify(p.name, type).kind, type),
       default: tag("default") ? ts.displayPartsToString(tag("default").text).trim().replace(/^`|`$/g, "") : undefined,
       description: description || undefined,
       deprecated: tag("deprecated") ? ts.displayPartsToString(tag("deprecated").text).trim() || true : undefined,
@@ -106,6 +154,7 @@ for (const exp of checker.getExportsOfModule(checker.getSymbolAtLocation(sf))) {
 
 fs.mkdirSync(path.dirname(outFile), { recursive: true });
 fs.writeFileSync(outFile, `${JSON.stringify(out, null, 2)}\n`);
+fs.writeFileSync(path.join(path.dirname(outFile), "token-sets.json"), JSON.stringify(sets));
 const count = Object.keys(out).length;
 const props = Object.values(out).reduce((n, c) => n + c.props.length, 0);
 console.log(`components.json: ${count} components, ${props} props -> ${path.relative(root, outFile)}`);

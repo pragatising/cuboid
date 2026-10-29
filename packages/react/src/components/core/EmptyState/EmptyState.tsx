@@ -10,18 +10,19 @@ import classes from "./EmptyState.module.css";
 export type EmptyStateProps = Omit<React.ComponentPropsWithRef<"div">, "children" | "title"> & {
   /** `default` stacks the icon, heading and description, centred. `compact` puts the icon beside the description, for a small list. @default "default" */
   layout?: "default" | "compact";
-  /** The glyph in the tile above (or beside) the text. Leave out for no icon. */
-  icon?: TileIconProps["name"];
+  /** The glyph in the tile above (or beside) the text. It says at a glance what kind of empty this is. */
+  icon: TileIconProps["name"];
   /** Passed to the icon's tile: its fill and glyph colour. */
   iconProps?: Omit<TileIconProps, "name">;
   /** The short statement ("No results"). Not shown in the `compact` layout. */
   heading?: React.ReactNode;
   /** What to do about it, or why ("Try a different search"). */
-  description?: React.ReactNode;
+  description: React.ReactNode;
 };
 
 /**
- * What a list, menu or panel shows when it has nothing to show: an optional icon in a tile, a heading and a description. It
+ * What a list, menu or panel shows when it has nothing to show: an icon in a tile and a description, and in the default layout a
+ * heading above it. The icon and the description are required: an empty state with neither says nothing, and is no use to anyone. It
  * has no tokens of its own; the type is `Text` and the spacing is the size scale. Give it a `role="status"` (or put it in a live
  * region) when it should be announced as it appears, as a search with no results is.
  */
@@ -30,7 +31,7 @@ export function EmptyState({ layout = "default", icon, iconProps, heading, descr
 
   return (
     <div {...mergeProps({ "data-component": "EmptyState", "data-layout": layout, className: clsx(classes.EmptyState, className) }, props as object)}>
-      {icon ? <TileIcon {...iconProps} name={icon} /> : null}
+      <TileIcon {...iconProps} name={icon} />
       {compact ? (
         isPresent(description) ? (
           <Text as="span" size="sm" weight="medium" color="neutral.muted" className={classes.Description}>

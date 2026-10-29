@@ -1,11 +1,13 @@
 // @vitest-environment node
 import path from "node:path";
+import ts from "typescript";
 import { describe, expect, it } from "vitest";
 import components from "../../generated/components.json";
 import { cover } from "../cover";
 import { allowedBy, domainsOf } from "../domains";
 import { buildNode } from "../print";
-import { extractLibrary } from "../extract/extractLibrary";
+import { COMPILER_OPTIONS, extractLibrary } from "../extract/extractLibrary";
+import { createExtractor } from "../extract/extractModel";
 import { propDoc, recognise } from "./recognise";
 import { roleOf, supportsAria } from "./role";
 
@@ -128,6 +130,9 @@ describe("compound parts and slots that want an element", () => {
     expect(parts.Root.placeable).toBe(false);
     expect(parts.Header.once).toBe(true);
     expect(parts.Row.once).toBeUndefined();
+    // It is not a child of the table: it is the shell around it, since what it holds (flow content) can hold a `table`.
+    expect(parts.Root.wraps).toBe(true);
+    expect(parts.Header.wraps).toBeUndefined();
     // Select puts its options in a native `<select>` or in a popup list, and either may hold them.
     expect((of("Select").doc.parts ?? []).every((p) => p.placeable)).toBe(true);
   });
@@ -151,10 +156,20 @@ describe("compound parts and slots that want an element", () => {
     expect(tags(children("Select"))).toEqual(["Select.Option", "Select.Option", "Select.Option"]);
   });
 
+  it("writes a part that goes around the component around it: a table inside the shell that carries its styling", () => {
+    const { doc } = of("Table");
+    const { domains } = domainsOf(doc, fixtures);
+    const node = buildNode(doc, cover(domains, { strength: 1 }).rows[0].picks);
+    expect(node.tag).toBe("Table.Root");
+    expect((node.children as { tag: string }[]).map((c) => c.tag)).toEqual(["Table"]);
+  });
+
   it("nests them as HTML needs: a table is a header with rows of cells, and no div wrapper or text between its tags", () => {
     const { doc } = of("Table");
     const { domains } = domainsOf(doc, fixtures);
-    const children = buildNode(doc, cover(domains, { strength: 1 }).rows[0].picks).children as { tag: string; children: { tag: string; children: { tag: string }[] }[] }[];
+    // The table is inside its shell (`Table.Root`): its own children are the header and the body.
+    const shell = buildNode(doc, cover(domains, { strength: 1 }).rows[0].picks);
+    const children = (shell.children as { children: unknown }[])[0].children as { tag: string; children: { tag: string; children: { tag: string }[] }[] }[];
     expect(children.map((c) => c.tag)).toEqual(["Table.Header", "Table.Body"]);
     // Column labels in one row of the header; data in the rows of the body.
     expect(children[0].children.map((c) => c.tag)).toEqual(["Table.Row"]);
@@ -168,6 +183,34 @@ describe("compound parts and slots that want an element", () => {
     const { domains } = domainsOf(doc, fixtures);
     const option = (buildNode(doc, cover(domains, { strength: 1 }).rows[0].picks).children?.[0] ?? {}) as { props?: Record<string, unknown> };
     expect(option.props).toEqual({ value: "value-1" });
+  });
+});
+
+describe("where a component's content comes from", () => {
+  const fixture = path.join(__dirname, "../extract/fixtures/Placeholder.tsx");
+  const program = ts.createProgram([fixture], COMPILER_OPTIONS);
+  const read = (name: string) => {
+    const { model } = createExtractor(program, root).extract(program.getSourceFile(fixture)!, name)!;
+    return recognise(model, { [model.declared]: model }, {}).contentFromOptional;
+  };
+
+  it("finds a component whose content is only optional named props: with none set it has nothing to draw", () => {
+    // An `icon` typed as a free string is a value to be supplied, not content the engine can draw; the slots are.
+    expect(read("Placeholder")).toEqual(["heading", "description"]);
+  });
+
+  it("leaves out a component that needs one of them to exist", () => {
+    expect(read("Notice")).toEqual([]);
+  });
+
+  it("leaves out a component with children, or one that needs a slot to exist", () => {
+    expect(of("Button").contentFromOptional).toEqual([]);
+    expect(of("Box").contentFromOptional).toEqual([]);
+    expect(of("Tooltip").contentFromOptional).toEqual([]);
+  });
+
+  it("is what EmptyState no longer is: it requires an icon and a description", () => {
+    expect(of("EmptyState").contentFromOptional).toEqual([]);
   });
 });
 

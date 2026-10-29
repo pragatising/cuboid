@@ -146,3 +146,5 @@ export type {
 
 export { SplitLayout } from "./SplitLayout";
 export type { SplitLayoutProps, SplitLayoutMainProps } from "./SplitLayout";
+export { SwatchPicker } from "./SwatchPicker";
+export type { Swatch, SwatchGroup, SwatchPickerProps } from "./SwatchPicker";

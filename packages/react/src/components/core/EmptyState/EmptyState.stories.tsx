@@ -16,8 +16,6 @@ export const Default: Story = { args: { icon: "celebration", heading: "Heading",
 
 export const Compact: Story = { args: { layout: "compact", icon: "celebration", description: "Description" } };
 
-export const NoIcon: Story = { args: { heading: "No results", description: "Try a different search" } };
-
 export const IconColours: Story = {
   args: { icon: "celebration", iconProps: { backgroundColor: "informational.subtle", color: "informational.strong" }, heading: "All done", description: "Nothing left to review" },
 };

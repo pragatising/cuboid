@@ -19,6 +19,8 @@ export type UseTooltipOptions = {
   suppress: boolean;
   /** The trigger element the tooltip is placed against. */
   triggerRef: React.RefObject<HTMLElement | null>;
+  /** The tooltip element, which is measured so it can be kept inside the window. */
+  panelRef: React.RefObject<HTMLElement | null>;
 };
 
 /** Keyboard focus shows a tooltip; a mouse click that happens to focus the trigger does not. jsdom has no `:focus-visible`, so it counts as visible there. */
@@ -41,7 +43,7 @@ function isFocusVisible(target: EventTarget): boolean {
  *
  * Returns `triggerProps` for the trigger, `panelProps` for the tooltip element, `style` (its `position: fixed` coordinates) and `open`.
  */
-export function useTooltip({ id, placement, delay, suppress, triggerRef }: UseTooltipOptions) {
+export function useTooltip({ id, placement, delay, suppress, triggerRef, panelRef }: UseTooltipOptions) {
   const generated = useId();
   const tooltipId = id ?? generated;
   const { tooltip, motion } = useTokens();
@@ -75,7 +77,8 @@ export function useTooltip({ id, placement, delay, suppress, triggerRef }: UseTo
     if (suppress) hide();
   }, [suppress, hide]);
 
-  const { style } = useAnchoredPosition({ anchorRef: triggerRef, placement, gap: lengthToPx(tooltip.sizes.gap, 2), enabled: open });
+  // Given the tooltip, it is kept in the window: flipped to the side with room, and slid along the trigger.
+  const { style, placement: placed } = useAnchoredPosition({ anchorRef: triggerRef, floatingRef: panelRef, placement, gap: lengthToPx(tooltip.sizes.gap, 2), enabled: open });
   useEscape(hide, open);
 
   const triggerProps = {
@@ -104,5 +107,5 @@ export function useTooltip({ id, placement, delay, suppress, triggerRef }: UseTo
     onMouseLeave: () => hide(),
   };
 
-  return { tooltipId, open, triggerProps, panelProps, style };
+  return { tooltipId, open, triggerProps, panelProps, style, placement: placed };
 }

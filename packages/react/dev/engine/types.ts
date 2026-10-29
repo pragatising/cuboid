@@ -44,6 +44,8 @@ export type PartDoc = {
   holds?: string;
   /** There is one of it in its parent (a `thead`, or the one `tbody` an example needs), so it is not repeated. */
   once?: boolean;
+  /** It goes around the component, not in it (a `Table.Root` shell around the `table`): what holds the component's own element, and cannot be held by it. */
+  wraps?: boolean;
   /** False when nothing the component renders can hold it (a `div` wrapper inside a `table`): it is not part of a composition. */
   placeable: boolean;
   /** Its required props, so an instance can be written. */
@@ -78,4 +80,12 @@ export type Fixtures = {
    * the `aria-label` an icon-only button is given, which is its whole accessible name.
    */
   attributes?: Record<string, Record<string, string>>;
+  /**
+   * Components that are one control where the engine cannot read that (an icon button renders through a tooltip), or become one with a
+   * prop (a pill given `as="button"`), by name: the props that make them so, or null when they are one as they are. Offered where a slot
+   * must be a single control (a menu's trigger).
+   */
+  controls?: Record<string, Record<string, string> | null>;
+  /** Parts drawn with nothing in them, by tag: a divider takes children as any element does, and nobody puts text in one. */
+  empty?: string[];
 };

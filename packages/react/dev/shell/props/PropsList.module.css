@@ -1,9 +1,9 @@
-/* The Properties panel (Figma 3346:108517 > Playrgound.CompCard/Props): an inset well, a row to each prop. */
+/* The Properties panel (Figma 3374:32985 > Playrgound.CompCard/Props): an inset well, a row to each prop. */
 .List {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
   width: 100%;
   margin: 0;
   padding: 12px;
@@ -13,11 +13,17 @@
   font: 500 12px/16px Inter, sans-serif;
 }
 
+.Empty {
+  margin: 0;
+  font: 400 12px/16px Inter, sans-serif;
+  color: var(--cube-fgColor-neutral-muted);
+}
+
 .Row {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0 8px;
+  gap: 0 4px;
   min-height: 20px;
 }
 
@@ -26,40 +32,166 @@
   white-space: nowrap;
 }
 
-.Colon {
-  color: var(--cube-fgColor-neutral-muted);
-  font: 400 14px/20px var(--cube-fontStack-monospace);
+/* A function's name is in the colour of a bracket: it is called, not read. */
+.Name[data-function] {
+  color: var(--function);
 }
 
-.Values {
+.Colon {
+  color: var(--cube-fgColor-neutral-muted);
+  font: 400 14px/20px Inter, sans-serif;
+}
+
+/* The values of a choice, in a tray; the one in use is lifted out of it. */
+.Tray {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 2px;
   min-width: 0;
+  padding: 1px;
+  border-radius: 6px;
+  background: var(--cube-bgColor-canvas-insetStrong);
+}
+
+.Choice {
+  appearance: none;
+  margin: 0;
+  padding: 0 4px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--cube-fgColor-neutral-muted);
+  font: inherit;
+  text-transform: lowercase;
+  white-space: nowrap;
+}
+
+button.Choice {
+  cursor: pointer;
+}
+
+button.Choice:hover:not([data-on]) {
+  color: var(--cube-fgColor-neutral-default);
+}
+
+.Choice[data-on] {
+  border-color: var(--cube-borderColor-muted);
+  background: var(--cube-bgColor-canvas-default);
+  color: var(--cube-fgColor-neutral-default);
+}
+
+.Choice:focus-visible,
+.Chip:focus-visible,
+.Text:focus-visible {
+  outline: 2px solid #286cfd;
+  outline-offset: 1px;
 }
 
 .Chip {
+  appearance: none;
+  box-sizing: border-box;
   max-width: 100%;
+  margin: 0;
   padding: 0 4px;
   overflow: hidden;
   border: 1px solid var(--cube-borderColor-muted);
   border-radius: 4px;
   background: var(--cube-bgColor-canvas-default);
   color: var(--cube-fgColor-neutral-default);
+  font: inherit;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-/* A type is written in the code's own colour, a choice's value in plain text, and the value that is the default in bold. */
+/* A type is written in the code's own colour. */
 .Chip[data-type] {
   color: var(--type);
 }
 
-.Chip[data-default] {
-  font-weight: 700;
+/* A chip you type in. */
+.Text {
+  box-sizing: content-box;
+  min-width: 4ch;
+  max-width: 100%;
+  margin: 0;
+  padding: 0 4px;
+  border: 1px solid var(--cube-borderColor-muted);
+  border-radius: 4px;
+  background: var(--cube-bgColor-canvas-default);
+  font: inherit;
 }
 
-.Brace {
-  color: var(--brace);
+.Text::placeholder {
+  color: var(--cube-fgColor-neutral-subtle);
+  opacity: 1;
+}
+
+.Function {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.Comma,
+.Arrow {
+  color: var(--cube-fgColor-neutral-muted);
+  white-space: pre;
+}
+
+/* A chip that opens a list: the value, and a chevron, as in the design's `FsColor ⌄`. */
+.Chip[data-select] {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  padding-right: 2px;
+  cursor: pointer;
+}
+
+.Chip[data-select]:hover {
+  background: var(--cube-bgColor-canvas-inset);
+}
+
+.Param {
+  margin-right: 4px;
+}
+
+/* A type that is several parts: one chip each, a thin rule between (Figma 3392:52737). */
+.Members {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  min-width: 0;
+}
+
+.Rule {
+  width: 1px;
+  height: 11px;
+  background: var(--cube-borderColor-muted);
+}
+
+/* A colour in a chip: a round dot, hollow when there is no colour. */
+.Dot {
+  display: inline-block;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: 10px;
+  height: 10px;
+  margin-right: 4px;
+  border: 1px solid var(--swatch);
+  border-radius: 50%;
+  background: var(--swatch);
+  vertical-align: -1px;
+}
+
+/* A border only where the colour would be lost on the white chip; otherwise it is the colour's own. */
+.Dot[data-outline],
+.Dot[data-empty] {
+  border-color: var(--cube-borderColor-muted);
+}
+
+.Dot[data-empty] {
+  background: transparent;
 }

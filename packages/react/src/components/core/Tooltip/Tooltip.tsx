@@ -92,7 +92,8 @@ export function Tooltip({
     [ref, childRef],
   );
 
-  const { tooltipId, open, triggerProps, panelProps, style } = useTooltip({ id, placement, delay, suppress, triggerRef });
+  const panelRef = useRef<HTMLElement>(null);
+  const { tooltipId, open, triggerProps, panelProps, style, placement: placed } = useTooltip({ id, placement, delay, suppress, triggerRef, panelRef });
   const contextValue = useMemo(() => ({ tooltipId }), [tooltipId]);
 
   // The tip is portaled to the body, which does not exist on the server: it appears after mount.
@@ -134,7 +135,7 @@ export function Tooltip({
         {
           "data-component": "Tooltip",
           "data-open": open ? "" : undefined,
-          "data-placement": placement,
+          "data-placement": placed,
           className: clsx(classes.Tooltip, className),
           // Only a description is a tooltip in the ARIA sense; a label is the trigger's name.
           role: type === "description" ? "tooltip" : undefined,
@@ -145,6 +146,7 @@ export function Tooltip({
         },
         props as object,
       )}
+      ref={panelRef as React.Ref<HTMLSpanElement>}
       display={open ? "block" : "none"}
       position="fixed"
       zIndex={zIndex.tooltip}

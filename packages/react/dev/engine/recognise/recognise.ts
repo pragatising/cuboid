@@ -21,6 +21,11 @@ export type Recognised = {
   state: string[];
   /** Whether it takes content though its own types do not declare `children`. */
   contentFromNative: boolean;
+  /**
+   * The props its content comes from when that is only named props (`heading`, `description`, `icon`), every one optional: with none
+   * of them set there is nothing to draw. Empty for a component with `children`, a required slot, or nothing to put in it.
+   */
+  contentFromOptional: string[];
 };
 
 /** Splits `a | b | Foo<x | y>` at the top level only. */
@@ -201,6 +206,7 @@ export function partsOf(model: ComponentModel, models: Models): PartDoc[] {
   }));
 
   const owner = holdersOf(model, models);
+  const ownerElement = rootHostOf(model, models)?.tag;
   const inside = new Map<string, string>();
   const within = (tag: string, ancestor: string): boolean => tag === ancestor || (inside.has(tag) && within(inside.get(tag) as string, ancestor));
   read.forEach(({ element, item }, index) => {
@@ -218,7 +224,11 @@ export function partsOf(model: ComponentModel, models: Models): PartDoc[] {
       inside.set(part.tag, holder.tag);
       if (others.length) part.alsoInside = others.map((other) => other.tag);
     }
-    else if (!owner.some((holder) => mayHold(holder, element))) part.placeable = false;
+    else if (!owner.some((holder) => mayHold(holder, element))) {
+      // Nothing the component renders can hold it. If what it holds can hold the component, it goes around it.
+      part.placeable = false;
+      if (part.holds && ownerElement && mayHold(part.holds, ownerElement)) part.wraps = true;
+    }
   });
   for (const part of parts) if (inside.has(part.tag)) part.inside = inside.get(part.tag);
   return parts;
@@ -295,7 +305,9 @@ export function recognise(model: ComponentModel, models: Models, exported: Recor
 
   // A slot the component clones props onto wants one interactive element, not text.
   const button = buttonOf(models, exported);
-  for (const name of elementSlots(model)) {
+  // A slot typed as one element (`children: React.ReactElement`, a Tooltip's trigger) is one element whatever the code does with it.
+  const typedAsElement = model.props.filter((p) => /^(React\.)?ReactElement\b/.test(p.type) && !/ReactNode/.test(p.type)).map((p) => p.name);
+  for (const name of [...new Set([...elementSlots(model), ...typedAsElement])]) {
     const doc = docs.find((d) => d.name === name);
     if (doc && doc.kind === "slot") {
       doc.element = true;
@@ -313,5 +325,7 @@ export function recognise(model: ComponentModel, models: Models, exported: Recor
   const conditions = new Set(conditionNames(model, models));
   const own = model.props.map((p) => p.name);
   const found = own.filter((name) => conditions.has(name) || (NATIVE_CONDITIONS.includes(name) && reachesHost(model)));
-  return { doc: { name: model.name, props: docs, parts: partsOf(model, models) }, conditions: found, scenarios: scenarioSlots(model, models, found), state, contentFromNative };
+  const content = docs.filter((d) => d.kind === "slot" || (d.kind === "open" && /icon|image|illustration/i.test(d.name)));
+  const contentFromOptional = content.length > 0 && !docs.some((d) => d.name === "children") && !content.some((d) => d.required) ? content.map((d) => d.name) : [];
+  return { doc: { name: model.name, props: docs, parts: partsOf(model, models) }, conditions: found, scenarios: scenarioSlots(model, models, found), state, contentFromNative, contentFromOptional };
 }

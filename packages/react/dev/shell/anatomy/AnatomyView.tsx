@@ -1,4 +1,6 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import { useScreenWidth } from "../canvas/screen";
 import { Box, EmptyState } from "../../../src";
 import { loadPreviewSource } from "../states/source";
 import { parseSource, useAnatomy } from "./AnatomyContext";
@@ -123,6 +125,8 @@ export function AnatomyView({ component }: { component: string }) {
   const stage = useRef<HTMLDivElement>(null);
   const opening = useRef(false);
   const { setExample, setHover, structure: show } = useAnatomy();
+  // On a screen the example has that much room, so the generous margin around it (for the structure to be seen) is cut down.
+  const screen = useScreenWidth();
 
   useLayoutEffect(() => {
     setSource(undefined);
@@ -251,48 +255,56 @@ export function AnatomyView({ component }: { component: string }) {
 
   return (
     <div className={classes.View} data-component="Shell.Anatomy">
-      <div ref={stage} className={classes.Stage}>
+      <div
+        ref={stage}
+        className={classes.Stage}
+        style={screen === null ? undefined : { padding: "48px 24px 160px" }}
+      >
         <source.Example />
-        <div className={classes.Overlay} aria-hidden="true">
-          {parts.map((part) => (
-            <div
-              key={part.key}
-              className={classes.Box}
-              data-part={part.name}
-              data-container={part.container ? "" : undefined}
-              data-leaf={part.container ? undefined : ""}
-              style={{
-                left: part.x,
-                top: part.y,
-                width: part.width,
-                height: part.height,
-              }}
-            />
-          ))}
-          {inspected ? (
-            <>
+        {/* Drawn in the page, not in the canvas: the boxes are placed by where parts are on screen, and a zoomed canvas would move them. */}
+        {createPortal(
+          <div className={classes.Overlay} aria-hidden="true">
+            {parts.map((part) => (
               <div
-                className={classes.Inspected}
-                data-inspected={inspected.name}
+                key={part.key}
+                className={classes.Box}
+                data-part={part.name}
+                data-container={part.container ? "" : undefined}
+                data-leaf={part.container ? undefined : ""}
                 style={{
-                  left: inspected.x,
-                  top: inspected.y,
-                  width: inspected.width,
-                  height: inspected.height,
+                  left: part.x,
+                  top: part.y,
+                  width: part.width,
+                  height: part.height,
                 }}
               />
-              <span
-                className={classes.Chip}
-                style={{
-                  left: inspected.x,
-                  top: Math.max(inspected.y - 22, 4),
-                }}
-              >
-                {inspected.name}
-              </span>
-            </>
-          ) : null}
-        </div>
+            ))}
+            {inspected ? (
+              <>
+                <div
+                  className={classes.Inspected}
+                  data-inspected={inspected.name}
+                  style={{
+                    left: inspected.x,
+                    top: inspected.y,
+                    width: inspected.width,
+                    height: inspected.height,
+                  }}
+                />
+                <span
+                  className={classes.Chip}
+                  style={{
+                    left: inspected.x,
+                    top: Math.max(inspected.y - 22, 4),
+                  }}
+                >
+                  {inspected.name}
+                </span>
+              </>
+            ) : null}
+          </div>,
+          document.body,
+        )}
       </div>
     </div>
   );

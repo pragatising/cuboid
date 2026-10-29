@@ -73,7 +73,7 @@ function flagDomain(prop: PropDoc): Domain {
 }
 
 /** An instance of a part, with what it needs to be written: each required prop gets a sample. */
-function instance(part: PartDoc, text: string, n: number, children?: (Node | string)[]): Node {
+export function instance(part: PartDoc, text: string, n: number, children?: (Node | string)[]): Node {
   const props: Record<string, Value> = {};
   for (const prop of part.required) {
     if (prop.name === "children") continue;
@@ -91,7 +91,7 @@ function instance(part: PartDoc, text: string, n: number, children?: (Node | str
  * the row). Where a level has items (parts whose role must sit inside another) it is those, `items` of them; otherwise each part that
  * takes content appears once. A part that holds only elements and has nothing placed in it is left out. Null when there is nothing to use.
  */
-function partsChildren(parts: PartDoc[], items: number): (Node | string)[] | null {
+function partsChildren(parts: PartDoc[], items: number, empty: string[] = []): (Node | string)[] | null {
   const level = (inside: string | undefined, count: number, trail: PartDoc[], single = false): (Node | string)[] => {
     const groups = trail.flatMap((p) => (p.element && ROW_GROUPS.includes(p.element) ? [p.element] : []));
     const here = parts.filter(
@@ -105,6 +105,8 @@ function partsChildren(parts: PartDoc[], items: number): (Node | string)[] | nul
     const chosen = here.some((p) => p.item) ? here.filter((p) => p.item) : here;
     return chosen.flatMap((part) => {
       // A part HTML allows one of (a `thead`) holds a single row, not a list; what is in that row is a list again.
+      // A part the host says is drawn empty is there, with nothing in it.
+      if (empty.includes(part.tag)) return [instance(part, "", 1, [])];
       const nested = level(part.tag, part.item ? Math.min(count, 3) : count, [...trail, part], !!part.element && !!HTML[part.element]?.unique);
       // Text goes where the part's own element takes it; elsewhere it holds what was placed in it, or nothing and is left out.
       const text = !part.holds || mayHold(part.holds, "text");
@@ -121,13 +123,13 @@ function partsChildren(parts: PartDoc[], items: number): (Node | string)[] | nul
  * short label, and a long one to show wrapping and truncation.
  */
 function labelDomain(prop: PropDoc, fixtures: Fixtures, parts: PartDoc[] = []): Domain {
-  const typical = partsChildren(parts, 3);
+  const typical = partsChildren(parts, 3, fixtures.empty);
   if (typical)
     return {
       prop: prop.name,
       choices: [
         choice(prop.name, "parts", "typical parts", typical, true, false),
-        ...(parts.some((p) => p.item) ? [choice(prop.name, "many", "many items", partsChildren(parts, 8) ?? typical, false, true)] : []),
+        ...(parts.some((p) => p.item) ? [choice(prop.name, "many", "many items", partsChildren(parts, 8, fixtures.empty) ?? typical, false, true)] : []),
       ],
     };
   return {
@@ -140,7 +142,7 @@ function labelDomain(prop: PropDoc, fixtures: Fixtures, parts: PartDoc[] = []): 
 }
 
 /** `descriptionVisual` as words: "Description visual". The text a slot gets when nothing says it wants more than text. */
-const humanise = (name: string) => {
+export const humanise = (name: string) => {
   const words = name.replace(/([a-z0-9])([A-Z])/g, "$1 $2").toLowerCase();
   return words[0].toUpperCase() + words.slice(1);
 };
@@ -189,7 +191,7 @@ export function domainsOf(doc: ComponentDoc, fixtures: Fixtures): Domains {
         : prop.kind === "flag"
           ? flagDomain(prop)
           : prop.kind === "slot"
-            ? prop.name === "children"
+            ? prop.name === "children" && !prop.element
               ? labelDomain(prop, fixtures, doc.parts)
               : slotDomain(prop, fixtures)
             : null;
@@ -197,6 +199,8 @@ export function domainsOf(doc: ComponentDoc, fixtures: Fixtures): Domains {
       domains.push(domain);
       continue;
     }
+    // A prop the host says every example carries (`name="add"` on an Icon) is not a gap: it is added below.
+    if (fixtures.attributes?.[doc.name]?.[prop.name] !== undefined) continue;
     const entry = { prop: prop.name, kind: prop.kind, reason: WHY[prop.kind] ?? "unknown kind" };
     // A handler or a ref is never needed to draw the component; a required value or slot is.
     (prop.required && !["event", "function", "ref"].includes(prop.kind) ? blocked : skipped).push(entry);

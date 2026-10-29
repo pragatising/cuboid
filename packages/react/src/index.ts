@@ -122,6 +122,8 @@ export type { SelectProps, SelectOptionProps } from "./components/core/Select";
 
 export { Switch } from "./components/core/Switch";
 export type { SwitchProps } from "./components/core/Switch";
+export { SwatchPicker } from "./components/core/SwatchPicker";
+export type { Swatch, SwatchGroup, SwatchPickerProps } from "./components/core/SwatchPicker";
 
 export { SegmentedControl } from "./components/core/SegmentedControl";
 export type { SegmentedControlProps, SegmentedControlItemProps } from "./components/core/SegmentedControl";
