@@ -87,6 +87,8 @@
 
 :where(.Footer) {
   flex-shrink: 0;
+  /* At the bottom of the rail also when there is little or no body above it. */
+  margin-block-start: auto;
   padding: var(--sidebar-footer-padding);
 }
 

@@ -37,7 +37,7 @@
   background: transparent;
   color: var(--cube-input-fgColor-icon);
   line-height: 0;
-  cursor: help;
+  cursor: pointer;
 }
 
 :where(.LabelHelp:focus-visible) {

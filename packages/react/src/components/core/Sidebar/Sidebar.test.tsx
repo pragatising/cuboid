@@ -416,3 +416,64 @@ describe("Sidebar.HeaderButton", () => {
     expect(screen.getByRole("menuitem", { name: "Settings" })).toBeInTheDocument();
   });
 });
+
+describe("Sidebar regions", () => {
+  const order = (container: HTMLElement) => [...container.querySelectorAll("nav > [data-component]")].map((el) => el.getAttribute("data-component"));
+
+  it("puts the header, the body and the footer in that order, whatever order they are written in", () => {
+    const { container } = render(
+      <Sidebar aria-label="Nav">
+        <Sidebar.Footer>Foot</Sidebar.Footer>
+        <Sidebar.Body>Body</Sidebar.Body>
+        <Sidebar.Header>Head</Sidebar.Header>
+      </Sidebar>,
+    );
+    expect(order(container)).toEqual(["Sidebar.Header", "Sidebar.Body", "Sidebar.Footer"]);
+  });
+
+  it("puts sections and items written loose in the body, after the footer or not", () => {
+    const { container } = render(
+      <Sidebar aria-label="Nav">
+        <Sidebar.Footer>Foot</Sidebar.Footer>
+        <Sidebar.Section label="Group">
+          <Sidebar.Item href="#a">A</Sidebar.Item>
+        </Sidebar.Section>
+      </Sidebar>,
+    );
+    expect(order(container)).toEqual(["Sidebar.Body", "Sidebar.Footer"]);
+    expect(container.querySelector('[data-component="Sidebar.Body"] [data-component="Sidebar.Section"]')).not.toBeNull();
+  });
+
+  it("adds loose content to a body that is written, after what it holds", () => {
+    const { container } = render(
+      <Sidebar aria-label="Nav">
+        <Sidebar.Body>
+          <Sidebar.Section label="One" />
+        </Sidebar.Body>
+        <Sidebar.Section label="Two" />
+      </Sidebar>,
+    );
+    expect(container.querySelectorAll('[data-component="Sidebar.Body"] [data-component="Sidebar.Section"]')).toHaveLength(2);
+    expect(container.querySelectorAll('[data-component="Sidebar.Body"]')).toHaveLength(1);
+  });
+
+  it("puts a header button written loose inside the header", () => {
+    const { container } = render(
+      <Sidebar aria-label="Nav">
+        <Sidebar.HeaderButton>John Doe</Sidebar.HeaderButton>
+        <Sidebar.Header>Head</Sidebar.Header>
+      </Sidebar>,
+    );
+    expect(container.querySelector('[data-component="Sidebar.Header"] [data-component="Sidebar.HeaderButton"]')).not.toBeNull();
+    expect(order(container)).toEqual(["Sidebar.Header"]);
+  });
+
+  it("makes a header for a header button when there is none", () => {
+    const { container } = render(
+      <Sidebar aria-label="Nav">
+        <Sidebar.HeaderButton>John Doe</Sidebar.HeaderButton>
+      </Sidebar>,
+    );
+    expect(container.querySelector('[data-component="Sidebar.Header"] [data-component="Sidebar.HeaderButton"]')).not.toBeNull();
+  });
+});

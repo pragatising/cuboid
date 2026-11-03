@@ -37,7 +37,7 @@
   background: transparent;
   color: var(--cube-input-fgColor-icon);
   line-height: 0;
-  cursor: help;
+  cursor: pointer;
 }
 
 :where(.LabelHelp:focus-visible) {
@@ -125,6 +125,26 @@
   transition:
     background-color var(--cube-motion-transition-hover),
     border-color var(--cube-motion-transition-hover);
+}
+
+/* The control the shell is given (a native input, select or textarea) has no chrome of its own: the shell draws the border, the background and the focus look. */
+:where(.Shell) > :is(input, select, textarea) {
+  appearance: none;
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font: var(--cube-text-size-md);
+}
+
+:where(.Shell) > :is(input, textarea)::placeholder {
+  color: var(--cube-input-fgColor-placeholder);
+  opacity: 1;
 }
 
 /* A several-line control: the box grows, content starts at the top, and a visual is as tall as the first line so it lines up with it. */

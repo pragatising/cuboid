@@ -356,10 +356,49 @@ function tooltipPlacement(edge: SidebarEdge) {
 }
 
 /**
+ * Puts what the sidebar is given in its three regions, top to bottom, whatever order it was written in: the header (with any
+ * `Sidebar.HeaderButton` inside it), the body (every section and item, and anything else that is not a region) and the footer.
+ * A region you write is used; what it needs and is written loose is added to it, or to one made for it.
+ */
+function inRegions(children: React.ReactNode): React.ReactNode[] {
+  const header: React.ReactElement<{ children?: React.ReactNode }>[] = [];
+  const body: React.ReactElement<{ children?: React.ReactNode }>[] = [];
+  const footer: React.ReactElement[] = [];
+  const buttons: React.ReactNode[] = [];
+  const loose: React.ReactNode[] = [];
+
+  const sort = (nodes: React.ReactNode) => {
+    for (const node of React.Children.toArray(nodes)) {
+      if (!React.isValidElement(node)) loose.push(node);
+      else if (node.type === React.Fragment) sort((node.props as { children?: React.ReactNode }).children);
+      else if (node.type === SidebarHeader) header.push(node as (typeof header)[number]);
+      else if (node.type === SidebarHeaderButton) buttons.push(node);
+      else if (node.type === SidebarBody) body.push(node as (typeof body)[number]);
+      else if (node.type === SidebarFooter) footer.push(node);
+      else loose.push(node);
+    }
+  };
+  sort(children);
+
+  const [firstHeader, ...otherHeaders] = header;
+  const [firstBody, ...otherBodies] = body;
+  const regions: React.ReactNode[] = [];
+  if (firstHeader) regions.push(buttons.length ? React.cloneElement(firstHeader, undefined, firstHeader.props.children, ...buttons) : firstHeader);
+  else if (buttons.length) regions.push(<SidebarHeader key="header">{buttons}</SidebarHeader>);
+  regions.push(...otherHeaders);
+  if (firstBody) regions.push(loose.length ? React.cloneElement(firstBody, undefined, firstBody.props.children, ...loose) : firstBody);
+  else if (loose.length) regions.push(<SidebarBody key="body">{loose}</SidebarBody>);
+  regions.push(...otherBodies, ...footer);
+  return regions;
+}
+
+/**
  * In-flow navigation shell, a `<nav>`: not portaled like {@link Sheet}.
  *
  * Build the nav rail from {@link Sidebar.Header} (a leading visual, a title and the collapse toggle),
  * {@link Sidebar.Body} holding {@link Sidebar.Section}s of {@link Sidebar.Item}s, and {@link Sidebar.Footer}.
+ * Whatever order they are written in, the header comes first, then the body, then the footer, which stays at the bottom.
+ * Sections and items written loose go into the body; a `Sidebar.HeaderButton` written loose goes into the header.
  * Everything inside follows the collapse state (controlled or uncontrolled), so items and sections need no logic of
  * their own.
  */
@@ -445,7 +484,7 @@ export function Sidebar({
             aria-label="Resize sidebar"
           />
         )}
-        {children}
+        {inRegions(children)}
       </Box>
     </SidebarContext.Provider>
   );
