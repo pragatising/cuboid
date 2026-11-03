@@ -1,0 +1,45 @@
+{
+  tablist: {
+    primary: {
+      button: {
+        bgColor: {
+          rest: {
+            $value: '{bgColor.neutral.light.3}',
+            $type: 'color',
+            $description: 'The tab that is open (Figma tablist/primary/button/bgcolor/rest, #f4f4f2). The others have no ground: a tab list has no strip behind it.',
+            $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'tablist' } },
+          },
+        },
+        fgColor: {
+          rest: {
+            $value: '{fgColor.neutral.muted}',
+            $type: 'color',
+            $description: 'A tab that is not open (Figma tablist/primary/button/fgcolor/rest, #6f6f6d).',
+            $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'tablist' } },
+          },
+          hover: {
+            $value: '{fgColor.neutral.default}',
+            $type: 'color',
+            $description: 'A tab that is not open, under the pointer. Not drawn in the Figma (it has only rest and selected): one step darker.',
+            $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'tablist' } },
+          },
+          selected: {
+            $value: '{fgColor.neutral.contrast}',
+            $type: 'color',
+            $description: 'The tab that is open (Figma tablist/primary/button/fgcolor/selected, #2d2d2d).',
+            $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'tablist' } },
+          },
+        },
+        sizes: {
+          paddingInline: { $value: '{size.8}', $type: 'dimension', $description: 'Inline padding of a tab (Figma 8px).', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'tablist' } } },
+          paddingBlock: { $value: '{size.2}', $type: 'dimension', $description: 'Block padding of a tab: with the 16px line it is 20px high.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'tablist' } } },
+          gap: { $value: '{size.8}', $type: 'dimension', $description: 'Between a tab\'s icon and its label (Figma 8px).', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'tablist' } } },
+          borderRadius: { $value: '{size.6}', $type: 'dimension', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'tablist' } } },
+        },
+      },
+    },
+    sizes: {
+      gap: { $value: '{size.4}', $type: 'dimension', $description: 'Between the tabs of a list (Figma PanelTabList: 4px).', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'tablist' } } },
+    },
+  },
+}

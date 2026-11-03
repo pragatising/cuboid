@@ -18,6 +18,8 @@
     "storybook": "npm run storybook -w @sragatiping/cuboid",
     "build-storybook": "npm run build-storybook -w @sragatiping/cuboid",
     "tokens:theme": "npm run tokens:theme -w @sragatiping/cuboid-primitives",
-    "test": "npm run test -w @sragatiping/cuboid-primitives"
+    "test": "npm run test -w @sragatiping/cuboid-primitives",
+    "bench": "npm run bench -w @sragatiping/cuboid",
+    "bench:editor": "npm run bench -w @sragatiping/cuboid-editor"
   }
 }

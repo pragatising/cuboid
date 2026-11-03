@@ -1,159 +1,129 @@
-import { act, render, screen, within } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import type { ColumnDef } from "@tanstack/react-table";
 import tokens from "@sragatiping/cuboid-primitives";
-import { setMode } from "../../../mode";
 import { behavesAsComponent, expectNoAxeViolations } from "../../../test/testing";
-import { SimpleTable, Table } from "./Table";
-import classes from "./Table.module.css";
+import { cubeVariablesRead, readSource, resolveVariable, themeVariables } from "../../../test/themeCss";
+import { Table } from "./Table";
 
-behavesAsComponent({ Component: Table.Root, dataComponent: "Table.Root", baseClassName: classes.TableRoot });
-behavesAsComponent({ Component: Table, dataComponent: "Table", baseClassName: classes.Table });
+behavesAsComponent({ Component: Table, dataComponent: "Table" });
 
-type Row = { name: string; age: number };
-const data: Row[] = [
-  { name: "Cara", age: 30 },
-  { name: "Abe", age: 50 },
-  { name: "Bea", age: 40 },
-];
-const columns: ColumnDef<Row, unknown>[] = [
-  { accessorKey: "name", header: "Name", meta: { width: "40%" } },
-  { accessorKey: "age", header: "Age", meta: { align: "right" } },
-];
+const sample = (props: { density?: "dense" | "spacious"; lines?: "none" | "rows" | "grid"; layout?: "auto" | "fixed" | "scroll"; rowLayout?: "wrap" | "truncate" } = {}) => (
+  <Table {...props}>
+      <Table.Header>
+        <Table.Row>
+          <Table.HeadCell>Shape</Table.HeadCell>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
+        <Table.Row>
+          <Table.Cell>Sphere</Table.Cell>
+        </Table.Row>
+      </Table.Body>
+    </Table>
+);
 
-const names = () => screen.getAllByRole("row").slice(1).map((row) => within(row).getAllByRole("cell")[0].textContent);
-
-describe("Table parts", () => {
+describe("Table: parts", () => {
   it("compose into a real table", () => {
-    render(
-      <Table.Root>
-        <Table>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeadCell>Shape</Table.HeadCell>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            <Table.Row>
-              <Table.Cell>Sphere</Table.Cell>
-            </Table.Row>
-          </Table.Body>
-        </Table>
-      </Table.Root>,
-    );
+    render(sample());
+    expect(screen.getByRole("table")).toBeInTheDocument();
     expect(screen.getByRole("columnheader", { name: "Shape" })).toHaveAttribute("scope", "col");
     expect(screen.getByRole("cell", { name: "Sphere" })).toBeInTheDocument();
   });
 
-  it("hands the spacious token set to the CSS by default, and the dense set when dense", () => {
-    const { container, rerender } = render(<Table.Root />);
-    const root = () => container.querySelector('[data-component="Table.Root"]') as HTMLElement;
-    const spacious = tokens.light.table.sizes.density.spacious;
-    expect(root().style.getPropertyValue("--table-row-height")).toBe(spacious.rowHeight);
-    expect(root().style.getPropertyValue("--table-cell-padding-inline")).toBe(spacious.cellPaddingInline);
-    rerender(<Table.Root density="dense" />);
-    const dense = tokens.light.table.sizes.density.dense;
-    expect(root().style.getPropertyValue("--table-row-height")).toBe(dense.rowHeight);
-    expect(root().style.getPropertyValue("--table-cell-padding-block")).toBe(dense.cellPaddingBlock);
-  });
-
-  it("hands colours, radius and border width to the CSS as variables", () => {
-    const { container } = render(<Table.Root />);
-    const root = container.querySelector('[data-component="Table.Root"]') as HTMLElement;
-    const t = tokens.light.table;
-    expect(root.style.getPropertyValue("--table-header-bg")).toBe(t.color.header.bgColor);
-    expect(root.style.getPropertyValue("--table-body-fg")).toBe(t.color.body.fgColor);
-    expect(root.style.getPropertyValue("--table-container-border")).toBe(t.color.container.borderColor);
-    expect(root.style.getPropertyValue("--table-border-radius")).toBe(t.sizes.borderRadius);
-    expect(root.style.getPropertyValue("--table-border-width")).toBe(tokens.light.borderWidth.thin);
-  });
-
-  it("marks the lines style, grid by default", () => {
-    const { container, rerender } = render(<Table.Root />);
-    const root = () => container.querySelector('[data-component="Table.Root"]') as HTMLElement;
-    expect(root()).toHaveAttribute("data-lines", "grid");
-    rerender(<Table.Root lines="none" />);
-    expect(root()).toHaveAttribute("data-lines", "none");
-  });
-
-  it("marks a cell's alignment and row layout (wrap by default)", () => {
-    render(
-      <table>
-        <tbody>
-          <tr>
-            <Table.Cell align="right">a</Table.Cell>
-            <Table.Cell rowLayout="truncate">b</Table.Cell>
-          </tr>
-        </tbody>
-      </table>,
-    );
-    expect(screen.getByRole("cell", { name: "a" })).toHaveAttribute("data-align", "right");
-    expect(screen.getByRole("cell", { name: "a" })).toHaveAttribute("data-row-layout", "wrap");
-    expect(screen.getByRole("cell", { name: "b" })).toHaveAttribute("data-row-layout", "truncate");
-  });
-
-  it("re-renders with the new mode's tokens when the mode changes while mounted", () => {
-    const { container } = render(<Table.Root />);
-    act(() => setMode("dark"));
-    const root = container.querySelector('[data-component="Table.Root"]') as HTMLElement;
-    expect(root.style.getPropertyValue("--table-header-bg")).toBe(tokens.dark.table.color.header.bgColor);
-  });
-});
-
-describe("SimpleTable", () => {
-  it("renders a header row and a row per datum", () => {
-    render(<SimpleTable columns={columns} data={data} />);
-    expect(screen.getAllByRole("columnheader").map((h) => h.textContent)).toEqual(["Name", "Age"]);
-    expect(names()).toEqual(["Cara", "Abe", "Bea"]);
-  });
-
-  it("sizes columns from meta.width and aligns cells from meta.align", () => {
-    const { container } = render(<SimpleTable columns={columns} data={data} />);
-    expect((container.querySelector("col") as HTMLElement).style.width).toBe("40%");
-    expect(screen.getByRole("cell", { name: "30" })).toHaveAttribute("data-align", "right");
-  });
-
-  it("truncates cells by default and takes a per-column rowLayout", () => {
-    render(
-      <SimpleTable
-        columns={[{ accessorKey: "name", header: "Name", meta: { rowLayout: "wrap" } }, { accessorKey: "age", header: "Age" }]}
-        data={data}
-      />,
-    );
-    expect(screen.getByRole("cell", { name: "Cara" })).toHaveAttribute("data-row-layout", "wrap");
-    expect(screen.getByRole("cell", { name: "30" })).toHaveAttribute("data-row-layout", "truncate");
-  });
-
-  it("has plain headers when sorting is off", () => {
-    render(<SimpleTable columns={columns} data={data} />);
-    expect(screen.queryByRole("button", { name: /sort by/i })).not.toBeInTheDocument();
-  });
-
-  it("sorts ascending, then descending, when a sortable header is clicked", async () => {
-    render(<SimpleTable columns={columns} data={data} enableSorting />);
-    const header = () => screen.getByRole("columnheader", { name: /name/i });
-    expect(header()).toHaveAttribute("aria-sort", "none");
-    await userEvent.click(screen.getByRole("button", { name: "Sort by name" }));
-    expect(names()).toEqual(["Abe", "Bea", "Cara"]);
-    expect(header()).toHaveAttribute("aria-sort", "ascending");
-    await userEvent.click(screen.getByRole("button", { name: "Sort by name" }));
-    expect(names()).toEqual(["Cara", "Bea", "Abe"]);
-    expect(header()).toHaveAttribute("aria-sort", "descending");
-  });
-
-  it("can be sorted from outside with controlled state", async () => {
-    render(<SimpleTable columns={columns} data={data} enableSorting sorting={[{ id: "age", desc: true }]} />);
-    expect(names()).toEqual(["Abe", "Bea", "Cara"]);
-  });
-
-  it("uses getRowId for row identity", () => {
-    render(<SimpleTable columns={columns} data={data} getRowId={(row) => row.name} />);
-    expect(names()).toHaveLength(3);
+  it("names every part by its dotted path", () => {
+    const { container } = render(sample());
+    for (const name of ["Table.Root", "Table", "Table.Header", "Table.Body", "Table.Row", "Table.HeadCell", "Table.Cell"]) {
+      expect(container.querySelector(`[data-component="${name}"]`), name).not.toBeNull();
+    }
   });
 
   it("has no axe violations", async () => {
-    const { container } = render(<SimpleTable columns={columns} data={data} enableSorting />);
+    const { container } = render(sample());
     await expectNoAxeViolations(container);
+  });
+});
+
+describe("Table: the frame and the choices for the whole table", () => {
+  it("marks density, lines and layout: dense, grid and fixed (it truncates) by default", () => {
+    const { container, rerender } = render(sample());
+    const root = () => container.querySelector('[data-component="Table.Root"]') as HTMLElement;
+    expect(root()).toHaveAttribute("data-density", "dense");
+    expect(root()).toHaveAttribute("data-lines", "grid");
+    expect(root()).toHaveAttribute("data-layout", "fixed");
+    rerender(sample({ density: "spacious", lines: "none", layout: "auto" }));
+    expect(root()).toHaveAttribute("data-density", "spacious");
+    expect(root()).toHaveAttribute("data-lines", "none");
+    expect(root()).toHaveAttribute("data-layout", "auto");
+  });
+
+  it("follows rowLayout for the column layout unless it is given: truncating needs columns that share a width", () => {
+    const { container, rerender } = render(sample({ rowLayout: "truncate" }));
+    const root = () => container.querySelector('[data-component="Table.Root"]') as HTMLElement;
+    expect(root()).toHaveAttribute("data-layout", "fixed");
+    rerender(sample({ rowLayout: "truncate", layout: "auto" }));
+    expect(root()).toHaveAttribute("data-layout", "auto");
+    rerender(sample({ rowLayout: "wrap" }));
+    expect(root()).toHaveAttribute("data-layout", "auto");
+  });
+
+  it("sets no inline style: the look is the stylesheet's", () => {
+    const { container } = render(sample());
+    expect(container.querySelector("[style]")).toBeNull();
+  });
+});
+
+describe("Table: the frame", () => {
+  it("puts the table's own className, style and ref on the table, and the frame's on wrapperClassName and wrapperProps", () => {
+    const ref = { current: null as HTMLTableElement | null };
+    const { container } = render(
+      <Table ref={ref} className="on-table" wrapperClassName="on-frame" wrapperProps={{ id: "frame", "data-x": "y" } as object}>
+        <Table.Body />
+      </Table>,
+    );
+    const frame = container.querySelector('[data-component="Table.Root"]') as HTMLElement;
+    expect(frame).toHaveClass("on-frame");
+    expect(frame).toHaveAttribute("id", "frame");
+    expect(frame).toHaveAttribute("data-x", "y");
+    expect(frame).not.toHaveClass("on-table");
+    expect(ref.current).toBe(container.querySelector("table"));
+    expect(ref.current).toHaveClass("on-table");
+  });
+
+  it("is a frame around exactly one table", () => {
+    const { container } = render(sample());
+    const frame = container.querySelector('[data-component="Table.Root"]') as HTMLElement;
+    expect(frame.children).toHaveLength(1);
+    expect(frame.firstElementChild).toBe(container.querySelector("table"));
+  });
+
+  it("takes scroll as a layout, which keeps the columns' own widths", () => {
+    const { container } = render(sample({ layout: "scroll" }));
+    expect((container.querySelector('[data-component="Table.Root"]') as HTMLElement).dataset.layout).toBe("scroll");
+  });
+});
+
+describe("Table: tokens", () => {
+  it("reads only --cube-* variables that exist in the built theme.css, in both modes", () => {
+    const read = cubeVariablesRead(readSource("src/components/core/Table/Table.module.css"));
+    expect(read.length).toBeGreaterThan(0);
+    for (const variable of read) {
+      expect(themeVariables().light.has(variable), `${variable} (light)`).toBe(true);
+      expect(themeVariables().dark.has(variable), `${variable} (dark)`).toBe(true);
+    }
+  });
+
+  it.each(["light", "dark"] as const)("resolves the colours and sizes it reads to tokens.%s.table", (mode) => {
+    const { table } = tokens[mode];
+    expect(resolveVariable("--cube-table-color-header-bgColor", mode)).toBe(table.color.header.bgColor);
+    expect(resolveVariable("--cube-table-color-body-fgColor", mode)).toBe(table.color.body.fgColor);
+    expect(resolveVariable("--cube-table-color-container-borderColor", mode)).toBe(table.color.container.borderColor);
+    expect(resolveVariable("--cube-table-color-skeleton-bgColor", mode)).toBe(table.color.skeleton.bgColor);
+    expect(resolveVariable("--cube-table-sizes-density-dense-rowHeight", mode)).toBe(table.sizes.density.dense.rowHeight);
+    expect(resolveVariable("--cube-table-sizes-density-spacious-cellPaddingInline", mode)).toBe(table.sizes.density.spacious.cellPaddingInline);
+  });
+
+  it("never uses a pseudo-element inside :where(), which would drop the rule", () => {
+    const css = readSource("src/components/core/Table/Table.module.css");
+    expect(css).not.toMatch(/:where\([^)]*::/);
   });
 });

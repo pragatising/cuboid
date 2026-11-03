@@ -1,0 +1,150 @@
+:where(.ActionListItem) {
+  display: flex;
+  width: 100%;
+  min-height: var(--cube-actionMenu-sizes-item-minHeight);
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+}
+
+:where(.ActionListItem:disabled) {
+  cursor: not-allowed;
+}
+
+:where(.ActionListItemInner) {
+  display: flex;
+  flex: 1;
+  align-items: flex-start;
+  gap: var(--cube-actionMenu-sizes-item-slotGap);
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  padding: var(--cube-actionMenu-sizes-item-paddingBlock) var(--cube-actionMenu-sizes-item-paddingInline);
+  border-radius: var(--cube-actionMenu-sizes-item-borderRadius);
+  background-color: var(--cube-actionMenu-item-bgColor-rest);
+  color: var(--cube-actionMenu-item-fgColor-rest);
+  overflow: hidden;
+  transition: background-color 120ms ease, color 120ms ease, box-shadow 120ms ease;
+}
+
+/* Hover — unselected rows only (selected has its own track). */
+:where(.ActionListItem:not(:disabled):not(.ActionListItem--selected):hover .ActionListItemInner) {
+  background-color: var(--cube-actionMenu-item-bgColor-hover);
+  color: var(--cube-actionMenu-item-fgColor-hover);
+}
+
+/* Active option — the one a search field points at (aria-activedescendant); it looks like hover. */
+:where(.ActionListItem[data-active]:not(:disabled):not(.ActionListItem--selected) .ActionListItemInner) {
+  background-color: var(--cube-actionMenu-item-bgColor-hover);
+  color: var(--cube-actionMenu-item-fgColor-hover);
+}
+
+:where(.ActionListItem--selected[data-active]:not(:disabled) .ActionListItemInner) {
+  background-color: var(--cube-actionMenu-item-bgColor-selected-pressed);
+}
+
+/* Pressed / active — momentary pointer-down (Figma `pressed`). */
+:where(.ActionListItem:not(:disabled):not(.ActionListItem--selected):active .ActionListItemInner) {
+  background-color: var(--cube-actionMenu-item-bgColor-pressed);
+  color: var(--cube-actionMenu-item-fgColor-pressed);
+}
+
+/* Selected — current choice (Figma `selected?=true`, persistent). */
+:where(.ActionListItem--selected:not(:disabled) .ActionListItemInner) {
+  background-color: var(--cube-actionMenu-item-bgColor-selected-rest);
+  color: var(--cube-actionMenu-item-fgColor-selected);
+}
+
+:where(.ActionListItem--selected:not(:disabled):hover .ActionListItemInner) {
+  background-color: var(--cube-actionMenu-item-bgColor-selected-pressed);
+}
+
+:where(.ActionListItem--selected:not(:disabled):active .ActionListItemInner) {
+  background-color: var(--cube-actionMenu-item-bgColor-selected-pressed);
+}
+
+:where(.ActionListItem:disabled .ActionListItemInner) {
+  background-color: var(--cube-actionMenu-item-bgColor-disabled);
+  color: var(--cube-actionMenu-item-fgColor-disabled);
+}
+
+:where(.ActionListItem:focus) {
+  outline: none;
+}
+
+:where(.ActionListItem:focus-visible .ActionListItemInner) {
+  box-shadow:
+    0 0 0 1px var(--cube-actionMenu-item-bgColor-rest, #fff),
+    0 0 0 var(--cube-focusRing-width) var(--cube-focusRing-color);
+}
+
+:where(.ActionListItem--selected:focus-visible .ActionListItemInner) {
+  box-shadow:
+    0 0 0 1px var(--cube-actionMenu-item-bgColor-selected-rest, #f4f4f2),
+    0 0 0 var(--cube-focusRing-width) var(--cube-focusRing-color);
+}
+
+:where(.ActionListItem--withSubtext) {
+  min-height: auto;
+}
+
+:where(.ActionListItem--iconOnly) {
+  width: auto;
+}
+
+:where(.ActionListItem--iconOnly .ActionListItemInner) {
+  justify-content: center;
+  gap: 0;
+  width: var(--cube-actionMenu-sizes-item-minHeight);
+  padding-inline: var(--cube-actionMenu-sizes-item-paddingBlock);
+}
+
+:where(.IconSlot, .TrailingSlot) {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--cube-actionMenu-sizes-item-iconSize);
+  height: var(--cube-actionMenu-sizes-item-iconSize);
+  color: currentColor;
+}
+
+:where(.SubtextIconSlot) {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--cube-actionMenu-sizes-item-subtextIconSize);
+  height: var(--cube-actionMenu-sizes-item-subtextIconSize);
+  color: currentColor;
+}
+
+:where(.Content) {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--cube-actionMenu-sizes-item-subtextGap);
+  min-width: 0;
+}
+
+:where(.Label) {
+  min-width: 0;
+}
+
+:where(.SubtextRow) {
+  display: flex;
+  align-items: center;
+  gap: var(--cube-actionMenu-sizes-item-slotGap);
+  min-width: 0;
+}
+
+:where(.Subtext) {
+  flex: 1;
+  min-width: 0;
+}
+

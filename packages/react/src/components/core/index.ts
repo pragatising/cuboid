@@ -1,8 +1,7 @@
 
-export { Table, SimpleTable } from "./Table";
+export { Table } from "./Table";
 export type {
   TableProps,
-  TableRootProps,
   TableHeaderProps,
   TableBodyProps,
   TableRowProps,
@@ -11,9 +10,14 @@ export type {
   TableRowLayout,
   TableCellAlign,
   TableDensity,
+  TableLayout,
   TableLines,
-  SimpleTableProps,
+  TableSort,
 } from "./Table";
+export { useTableColumns } from "./Table";
+export type { ColumnMove, ColumnSort, HeadCellOptions, HeadCellProps, TableColumn, TableColumnLabels, TableColumnsOptions } from "./Table";
+export { SimpleTable } from "./SimpleTable";
+export type { SimpleTableProps } from "./SimpleTable";
 
 export { Container } from "./Container";
 export type { ContainerProps, ContainerWidth } from "./Container";
@@ -44,6 +48,8 @@ export type { ButtonProps } from "./Button";
 export { IconButton } from "./IconButton";
 export type { IconButtonProps } from "./IconButton";
 
+export { InputField } from "./InputField";
+export type { InputFieldProps, InputFieldSize, InputShellProps } from "./InputField";
 export { InputText } from "./InputText";
 export type { InputTextProps } from "./InputText";
 
@@ -63,9 +69,9 @@ export { Link } from "./Link";
 export type { LinkProps, LinkVariant, LinkSize, LinkUnderline } from "./Link";
 
 export { Pill } from "./Pill";
-export type { PillProps, PillShade, PillIntensity, PillSize } from "./Pill";
+export type { PillProps, PillShade, PillIntensity } from "./Pill";
 
-export { BreadcrumbLink, Breadcrumbs } from "./Breadcrumb";
+export { Breadcrumbs } from "./Breadcrumb";
 export type {
   BreadcrumbLinkProps,
   BreadcrumbsProps,
@@ -93,6 +99,8 @@ export type {
   ResizeHandleEdge,
 } from "./ResizeHandle";
 
+export { Prose } from "./Prose";
+export type { ProseProps } from "./Prose";
 export { Popover } from "./Popover";
 export type {
   PopoverProps,
@@ -146,5 +154,37 @@ export type {
 
 export { SplitLayout } from "./SplitLayout";
 export type { SplitLayoutProps, SplitLayoutMainProps } from "./SplitLayout";
-export { SwatchPicker } from "./SwatchPicker";
-export type { Swatch, SwatchGroup, SwatchPickerProps } from "./SwatchPicker";
+export { Image, downloadImage, imageFileExtension, readImageFile } from "./Image";
+export type { ImageProps, ImageChange } from "./Image";
+export { ColorPicker, ColorPanel, ColorSpectrum, SwatchGrid } from "./ColorPicker";
+export type { ColorPickerProps, ColorPanelProps, ColorSpectrumProps, Swatch, SwatchGroup, SwatchGridAppearance, SwatchGridProps } from "./ColorPicker";
+
+export { OutlineTree } from "./OutlineTree";
+export type { OutlineTreeProps, OutlineTreeItemData, OutlineTreeItemProps, OutlineTreeTitleProps } from "./OutlineTree";
+
+export { SmartCard, useSmartLink, useSmartLinkActions, useSmartLinkEvents, useSmartLinkReload, composeClients, genericClient, SmartLinkError, createSmartLinkStore } from "./SmartCard";
+export type {
+  SmartCardProps,
+  SmartCardProviderProps,
+  SmartCardEmbedProps,
+  SmartCardInlineProps,
+  SmartCardBlockProps,
+  SmartCardBlockTitleProps,
+  SmartCardBlockSnippetProps,
+  SmartCardBlockMetadataProps,
+  SmartCardBlockPreviewProps,
+  SmartCardBlockActionsProps,
+  SmartCardBlockFooterProps,
+  EmbedHeight,
+  UseSmartLinkResult,
+  UseSmartLinkActionsResult,
+  SmartLinkActionItem,
+  SmartLinkEvent,
+  SmartLinkClient,
+  SmartLinkStore,
+  LinkData,
+  LinkStatus,
+  LinkSnapshot,
+  LinkAction,
+  LinkMetadata,
+} from "./SmartCard";

@@ -1,0 +1,29 @@
+/* Layout only. Colours, border width, font, padding, radius and height come from the `pill` tokens, set inline by Pill.tsx. */
+.Pill {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  margin: 0;
+  border-style: solid;
+  letter-spacing: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: default;
+}
+
+:where(a.Pill, button.Pill) {
+  cursor: pointer;
+}
+
+:where(.Pill:disabled, .Pill[aria-disabled="true"]) {
+  cursor: not-allowed;
+}
+
+.Visual {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  max-height: 100%;
+}

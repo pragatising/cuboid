@@ -1,0 +1,226 @@
+/* What the selectors share (Figma 3392:49459 Prop.Selectors). Colours are the card's (`--prop-*`, PropsList.module.css). */
+
+/* A type written out: the code's colours, Medium. */
+.Signature {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--prop-punctuation);
+  font: var(--cube-text-size-sm);
+  font-weight: 500;
+}
+
+.Signature [data-kind="string"] {
+  color: var(--prop-string);
+}
+
+.Signature [data-kind="number"] {
+  color: var(--prop-number);
+}
+
+.Signature [data-kind="name"],
+.Signature [data-kind="keyword"] {
+  color: var(--prop-type);
+}
+
+/* A field you type in, as a chip (Figma 5038:92224 String; 3392:49459 React): InputText at its small size, in the colour of its value. */
+.Field {
+  display: inline-flex;
+  max-width: 100%;
+  /* The chips of the props are 4px (Figma 5038:92224), where a small control is 6px. */
+  --cube-size-control-sm-borderRadius: 0.25rem;
+  /* The field's look is the input tokens: the Figma's gray 3 border at rest, the focus blue on hover and while typed in, with no ring. */
+  --cube-input-borderColor-rest: var(--cube-borderColor-strong);
+  --cube-input-borderColor-hover: var(--cube-focusRing-color);
+}
+
+/* A slot's field (Figma 3392:49458 React.ReactNode): gray 2 at rest, and the type's name in full colour. */
+.FieldType {
+  --cube-input-borderColor-rest: var(--cube-borderColor-muted);
+}
+
+.Field:focus-within {
+  --cube-input-borderColor-rest: var(--cube-focusRing-color);
+  --cube-focusRing-width: 0px;
+  --cube-focusRing-offset: 0px;
+}
+
+/* It hugs what it holds: its text, or its placeholder (the name of its datatype) when empty. */
+.FieldInput {
+  field-sizing: content;
+  min-width: 3ch;
+  font-weight: 500;
+}
+
+@supports not (field-sizing: content) {
+  .FieldInput {
+    width: calc(var(--chars) * 1ch);
+  }
+}
+
+/* Its state is its syntax: a value is in the colour of what it is (a string orange, a number blue, a name teal), the empty field is its datatype in teal, and while it is typed in the text is plain. */
+.FieldInput[data-kind="string"] {
+  color: var(--prop-string);
+}
+
+.FieldInput[data-kind="number"] {
+  color: var(--prop-number);
+}
+
+.FieldInput[data-kind="type"] {
+  color: var(--prop-type);
+}
+
+.FieldInput::placeholder {
+  color: var(--prop-type);
+}
+
+.Field:focus-within .FieldInput {
+  color: var(--cube-fgColor-neutral-default);
+}
+
+.FieldChevron {
+  display: inline-flex;
+  color: var(--cube-fgColor-neutral-muted);
+}
+
+/* The values of a choice, in a tray; the one in use is lifted out of it (Figma 3374:33206). */
+.Tray {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px;
+  min-width: 0;
+  padding: 1px;
+  border-radius: 6px;
+  background: var(--cube-bgColor-neutral-light-4);
+}
+
+.Choice {
+  appearance: none;
+  box-sizing: border-box;
+  min-height: 18px;
+  margin: 0;
+  padding: 0 4px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--cube-fgColor-neutral-muted);
+  font: var(--cube-text-size-sm);
+  font-weight: 500;
+  text-transform: lowercase;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.Choice:hover:not([data-on]) {
+  color: var(--cube-fgColor-neutral-default);
+}
+
+.Choice[data-on] {
+  border-color: var(--cube-borderColor-muted);
+  background: var(--cube-bgColor-neutral-light-1);
+  color: var(--cube-fgColor-neutral-default);
+}
+
+.Choice:focus-visible {
+  outline: 2px solid var(--cube-focusRing-color);
+  outline-offset: 1px;
+}
+
+/* Several sets and shapes, a thin rule between (Figma 3392:52737). */
+.TokenSets {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  min-width: 0;
+}
+
+.Rule {
+  width: 1px;
+  height: 11px;
+  background: var(--cube-borderColor-strong);
+}
+
+/* A colour in a chip: a round dot, hollow when there is no colour. */
+.Dot {
+  display: inline-block;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: 10px;
+  height: 10px;
+  margin-right: 4px;
+  border: 1px solid var(--swatch);
+  border-radius: 50%;
+  background: var(--swatch);
+}
+
+.Dot[data-outline],
+.Dot[data-empty] {
+  border-color: var(--cube-borderColor-muted);
+}
+
+.Dot[data-empty] {
+  background: transparent;
+}
+
+/* A function written out (Figma 3392:49178): keyword parens, a parameter's name in the colour of a number, its type and the return in the colour of a variable. */
+.Function {
+  display: inline;
+  font: var(--cube-text-size-sm);
+  font-weight: 500;
+}
+
+.Paren {
+  color: var(--prop-bracket);
+}
+
+.ParamName {
+  color: var(--prop-parameter);
+  white-space: pre;
+}
+
+.ParamType,
+.Returns {
+  color: var(--prop-type);
+}
+
+.Arrow {
+  color: var(--prop-punctuation);
+  white-space: pre;
+}
+
+/* The choice already made, above the list: its name and a check, and the code under it, the width of the list. */
+.Custom {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding: 8px 8px 4px;
+}
+
+.CustomHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px;
+  font: var(--cube-text-size-md);
+  font-weight: 600;
+  color: var(--cube-fgColor-neutral-default);
+}
+
+.Custom > :last-child {
+  max-height: 14rem;
+  overflow: auto;
+}
+
+/* A field that fills the line (content written as code): the text is cut short inside it, not grown to fit. */
+[data-fill].Field {
+  display: flex;
+}
+
+[data-fill] .FieldInput {
+  field-sizing: fixed;
+  width: 100%;
+  text-overflow: ellipsis;
+}

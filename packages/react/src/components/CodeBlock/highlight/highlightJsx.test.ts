@@ -96,7 +96,7 @@ describe("JSX highlighting: text and code", () => {
 
 describe.each(["light", "dark"] as const)("JSX syntax colours, %s", (mode) => {
   const { syntax, bgColor } = tokens[mode];
-  it.each(["componentTag", "tagBracket", "jsxText", "jsxAttribute"] as const)("%s is at least 4.5:1 on the code surface", (key) => {
+  it.each(["componentTag", "htmlTag", "tagBracket", "jsxText", "jsxAttribute", "keyword", "functionCall", "typeName", "propertyAccess", "bracketLevel1", "bracketLevel2", "bracketLevel3", "numberLiteral", "string", "comment"] as const)("%s is at least 4.5:1 on the code surface", (key) => {
     expect(contrastRatio(syntax.typescript[key], bgColor.canvas.subtle)).toBeGreaterThanOrEqual(4.5);
   });
 });

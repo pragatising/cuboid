@@ -91,7 +91,7 @@ export function NativeSelect({
 
   return (
     <InputField data-component="Select" label={label} labelHelp={labelHelp} controlId={controlId} description={description} descriptionVisual={descriptionVisual} error={error} errorVisual={errorVisual} disabled={disabled} className={wrapperClassName}>
-      <InputField.Shell size={size} leadingVisual={leadingVisual} trailingVisual={<Icon name="keyboard_arrow_down" />} invalid={invalid} disabled={disabled} readOnly={readOnly}>
+      <InputField.Shell size={size} leadingVisual={leadingVisual} trailingVisual="keyboard_arrow_down" invalid={invalid} disabled={disabled} readOnly={readOnly}>
         <select
           {...selectProps}
           ref={ref as unknown as React.Ref<HTMLSelectElement>}

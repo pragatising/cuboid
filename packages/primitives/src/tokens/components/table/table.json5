@@ -76,6 +76,18 @@
             }
           }
         }
+      },
+      "skeleton": {
+        "bgColor": {
+          "$value": "{bgColor.neutral.light.2}",
+          "$type": "color",
+          "$extensions": {
+            "org.cuboid.figma": {
+              "collection": "component",
+              "group": "table"
+            }
+          }
+        }
       }
     },
     "sizes": {

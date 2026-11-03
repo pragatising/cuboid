@@ -1,0 +1,33 @@
+/*
+ * Layout and states only. The colours arrive as element-scoped variables (--breadcrumb-fg-rest, …)
+ * set inline from the `breadcrumb` tokens (see BreadcrumbLink.tsx and utils/cssVars.ts). Zero
+ * specificity (:where), so a consumer's own class can override any of it.
+ */
+:where(.BreadcrumbLink) {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  max-width: 100%;
+  border: none;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 120ms ease, color 120ms ease;
+  color: var(--breadcrumb-fg-rest);
+  background-color: var(--breadcrumb-bg-rest);
+}
+
+:where(.BreadcrumbLink:hover:not([data-current])) {
+  color: var(--breadcrumb-fg-hover);
+  background-color: var(--breadcrumb-bg-hover);
+}
+
+:where(.BreadcrumbLink[data-current]) {
+  color: var(--breadcrumb-fg-active);
+  background-color: var(--breadcrumb-bg-active);
+  cursor: default;
+}
+
+:where(.BreadcrumbLink:focus-visible) {
+  outline: var(--breadcrumb-focus-width) solid var(--breadcrumb-focus-color);
+  outline-offset: var(--breadcrumb-focus-offset);
+}

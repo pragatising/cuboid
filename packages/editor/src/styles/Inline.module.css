@@ -1,0 +1,70 @@
+/*
+ * What the editor draws on top of Cuboid's `Prose` (which sets the text itself): its inline atoms (chip, date, pill), the empty-block
+ * placeholder and the `/` query,  Every value is a `--cube-*` token variable.
+ */
+
+/* A chip is as tall as its line (line-height inherits, there is no height), so a paragraph with one does not jump. */
+.Inline [data-chip] {
+  display: inline-block;
+  box-sizing: border-box;
+  border-radius: var(--cube-borderRadius-sm);
+  padding: 0 var(--cube-size-6px);
+  background: var(--cube-bgColor-canvas-inset);
+  /* A colour set on the text (see the textColor mark) reaches the chip through --editor-chip-color, whether the colour is inside the chip or around it. */
+  color: var(--editor-chip-color, var(--cube-fgColor-neutral-default));
+  font-size: var(--cube-text-body-size-sm);
+  font-weight: 600;
+  line-height: inherit;
+}
+
+.Inline [data-date] {
+  appearance: none;
+  display: inline-block;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0 var(--cube-size-2px);
+  border: 0;
+  border-radius: var(--cube-borderRadius-sm);
+  background: transparent;
+  color: var(--cube-fgColor-neutral-contrast);
+  font: inherit;
+  font-weight: 500;
+  /* As tall as the line it is in, so a paragraph with a date does not change height, and the ground on hover is a full line. */
+  line-height: inherit;
+  white-space: nowrap;
+  vertical-align: baseline;
+}
+
+/* In the editor a date can be pressed: it says so (a Pill as a button already does). */
+.Inline :global(.ProseMirror) button[data-date] {
+  cursor: pointer;
+}
+
+.Inline :global(.ProseMirror) button[data-date]:is(:hover, [aria-expanded="true"]) {
+  background: var(--cube-bgColor-canvas-inset);
+}
+
+.Inline :global(.ProseMirror) button[data-date]:focus-visible {
+  outline: var(--cube-focusRing-width) solid var(--cube-focusRing-color);
+  outline-offset: var(--cube-focusRing-offset);
+}
+
+/* An empty block you are in says what to do, on the inset surface the portfolio gives it. The surface is the block itself: its inset is always there,
+   so only the background appears, and nothing moves. Its corners are the small radius (4px). */
+.Inline :global(.ProseMirror) p:global(.is-empty)::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+  color: var(--cube-fgColor-neutral-disabled);
+}
+
+.Inline :global(.ProseMirror) :is(p:global(.is-empty), p:has(.cuboid-slash)) {
+  background: var(--cube-bgColor-canvas-inset);
+  border-radius: var(--cube-borderRadius-sm);
+}
+
+/* A `/query` being typed: the same inset surface, and the query set apart. */
+.Inline :global(.cuboid-slash) {
+  color: var(--cube-fgColor-informational-strong);
+}

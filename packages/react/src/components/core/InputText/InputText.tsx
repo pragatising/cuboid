@@ -2,22 +2,23 @@ import React from "react";
 import { clsx } from "clsx";
 import { InputField, useCharacterCount, useFieldControl } from "../InputField";
 import type { InputFieldProps, InputFieldSize } from "../InputField";
+import type { IconName } from "../Icon";
 import classes from "./InputText.module.css";
 
 export type InputTextProps = Omit<React.ComponentPropsWithRef<"input">, "size" | "color"> &
   Pick<InputFieldProps, "labelHelp" | "descriptionVisual" | "errorVisual"> & {
     /** The visible label, tied to the input. Without one, give the input an `aria-label`. */
-    label?: React.ReactNode;
+    label?: string;
     /** Help text under the field. */
-    description?: React.ReactNode;
+    description?: string;
     /** The validation message under the field. Its presence puts the field in the error state and sets `aria-invalid`. */
-    error?: React.ReactNode;
+    error?: string;
     /** The field's height: `sm` 24px, `md` 28px, `lg` 32px (as Button). @default "md" */
     size?: InputFieldSize;
-    /** A visual before the text, usually an `Icon`. Hidden from assistive technology. */
-    leadingVisual?: React.ReactNode;
-    /** A visual after the text. Hidden from assistive technology. */
-    trailingVisual?: React.ReactNode;
+    /** The name of an icon before the text, Hidden from assistive technology. */
+    leadingVisual?: IconName;
+    /** The name of an icon after the text. Hidden from assistive technology. */
+    trailingVisual?: IconName;
     /** Show how much has been typed under the field: `12 / 100` with a `maxLength`, `12` without. @default false */
     showCount?: boolean;
     /** Merged onto the outer wrapper (label, field, help text); `className` and `style` go to the input. */

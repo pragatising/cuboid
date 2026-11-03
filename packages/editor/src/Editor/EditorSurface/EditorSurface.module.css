@@ -1,0 +1,21 @@
+/* What ProseMirror owns: its editable element and the class it puts on a selected node. Everything else about the surface is Cuboid Box props. */
+.Surface :global(.ProseMirror) {
+  outline: none;
+}
+
+/* The block whose gutter handle was clicked, or that is being moved: a tint over it, reaching 4px past its edge so nothing shifts, multiplied so
+   the block under it (a callout's own colour, code) shows through and is tinted, not covered. Inline atoms (a pill) are not blocks. */
+.Surface :global(.ProseMirror-selectednode):not(span) {
+  position: relative;
+  outline: none;
+}
+
+.Surface :global(.ProseMirror-selectednode):not(span)::after {
+  content: "";
+  position: absolute;
+  inset: calc(-1 * var(--cube-size-4px));
+  border-radius: var(--cube-borderRadius-md);
+  background: var(--cube-highlight-blue-bgColor);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}

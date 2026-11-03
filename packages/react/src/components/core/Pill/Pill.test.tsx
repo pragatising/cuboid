@@ -39,9 +39,10 @@ describe("Pill", () => {
     expect(el.style.paddingInline).toBe(tokens.light.pill.sizes.paddingInline);
   });
 
-  it.each(["sm", "md", "lg"] as const)("sets the %s text font while keeping the height fixed", (size) => {
-    const { container } = render(<Pill size={size}>Label</Pill>);
+  it("is one height and one font, 20px, with a line height of 1, whatever it sits in", () => {
+    const { container } = render(<Pill>Label</Pill>);
     expect(root(container).style.height).toBe(tokens.light.pill.sizes.height);
+    expect(tokens.light.pill.sizes.height).toBe("1.25rem");
     expect(root(container).style.lineHeight).toBe("1");
   });
 

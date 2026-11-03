@@ -1,17 +1,25 @@
 {
   segmentedControl: {
     bgColor: {
-      $value: '{bgColor.canvas.insetStrong}',
+      $value: '{bgColor.neutral.light.3}',
       $type: 'color',
-      $description: 'The strip the items sit in. Figma canvas/insetStrong is #f3f2f0; the repo step is #efeeea.',
+      $description: 'The strip the items sit in (Figma 5008:52715). Figma canvas/insetStrong is #f3f2f0, one step off neutral.light.3 (#f4f4f2) and lighter than the repo canvas.insetStrong (#efeeea), which an item hovered on the strip must differ from.',
       $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'segmentedControl' } },
     },
     item: {
       fgColor: {
         rest: {
-          $value: '{fgColor.neutral.contrast}',
+          $value: '{fgColor.neutral.default}',
           $type: 'color',
-          $description: 'An unselected item, on the strip. Figma uses #525252. The ghost button text (neutral.muted) is 4.3:1 on this strip, under AA, and neutral.default (#6f6f6d) is the same, so the item uses the next step up.',
+          $description: 'An unselected item, on the strip (Figma button/ghost/fgcolor/rest, #525252): the ghost button reads muted (#6f6f6d) everywhere else, but on the strip an unselected item is as dark as the chosen one.',
+          $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'segmentedControl' } },
+        },
+      },
+      bgColor: {
+        hover: {
+          $value: '{bgColor.neutral.light.4}',
+          $type: 'color',
+          $description: 'An unselected item under the pointer (Figma button/ghost/bgcolor/hover, #efeeea): a step darker than the strip.',
           $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'segmentedControl' } },
         },
       },

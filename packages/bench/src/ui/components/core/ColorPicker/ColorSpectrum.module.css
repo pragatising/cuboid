@@ -1,0 +1,83 @@
+/* The area's gradient is the hue at full saturation across, then black up from the bottom; the hue slider's track is the whole wheel.
+   The colours that must be exact (the wheel, white and black over the hue) are the colour model itself, not design colours, so they
+   are written here; the thumb, rings and spacing are the size scale and semantic tokens. */
+:where(.Spectrum) {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--cube-size-8px);
+  width: 100%;
+  flex: 1 1 auto;
+}
+
+:where(.Area) {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: calc(var(--cube-size-22px) * 5);
+  border-radius: var(--cube-borderRadius-md);
+  background:
+    linear-gradient(to top, #000, transparent),
+    linear-gradient(to right, #fff, transparent),
+    hsl(var(--hue) 100% 50%);
+  cursor: crosshair;
+  touch-action: none;
+}
+
+:where(.Area:focus-visible) {
+  outline: var(--cube-focusRing-width) solid var(--cube-focusRing-color);
+  outline-offset: var(--cube-focusRing-offset);
+}
+
+:where(.Thumb) {
+  position: absolute;
+  left: var(--s);
+  bottom: var(--v);
+  box-sizing: border-box;
+  width: var(--cube-size-12px);
+  height: var(--cube-size-12px);
+  transform: translate(-50%, 50%);
+  border: 2px solid #fff;
+  border-radius: var(--cube-borderRadius-full);
+  background: var(--picked);
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 35%);
+  pointer-events: none;
+}
+
+:where(.Hue) {
+  appearance: none;
+  box-sizing: border-box;
+  width: 100%;
+  height: var(--cube-size-12px);
+  margin: 0;
+  border-radius: var(--cube-borderRadius-full);
+  background: linear-gradient(to right, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
+  cursor: pointer;
+}
+
+:where(.Hue)::-webkit-slider-thumb {
+  appearance: none;
+  box-sizing: border-box;
+  width: var(--cube-size-16px);
+  height: var(--cube-size-16px);
+  border: 2px solid #fff;
+  border-radius: var(--cube-borderRadius-full);
+  background: transparent;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 35%);
+}
+
+:where(.Hue)::-moz-range-thumb {
+  box-sizing: border-box;
+  width: var(--cube-size-16px);
+  height: var(--cube-size-16px);
+  border: 2px solid #fff;
+  border-radius: var(--cube-borderRadius-full);
+  background: transparent;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 35%);
+}
+
+:where(.Hue:focus-visible) {
+  outline: var(--cube-focusRing-width) solid var(--cube-focusRing-color);
+  outline-offset: var(--cube-focusRing-offset);
+}

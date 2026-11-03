@@ -41,14 +41,13 @@ const meta: Meta<typeof Pill> = {
     shade: { control: "select", options: SHADES },
     intensity: { control: "select", options: INTENSITIES },
     bordered: { control: "boolean" },
-    size: { control: "inline-radio", options: ["sm", "md", "lg"] },
   },
 };
 export default meta;
 type Story = StoryObj<typeof Pill>;
 
 export const Playground: Story = {
-  args: { shade: "gray", intensity: "light", bordered: false, size: "sm", children: "Pill" },
+  args: { shade: "gray", intensity: "light", bordered: false, children: "Pill" },
 };
 
 export const AllPills: Story = {
@@ -56,16 +55,13 @@ export const AllPills: Story = {
   render: () => <PillMatrix />,
 };
 
-export const Sizes: Story = {
-  name: "Sizes (label font; height stays fixed)",
+/** One size: 20px high, the same in a row of pills and in a line of text. */
+export const InText: Story = {
+  name: "In running text",
   render: () => (
-    <Box flexDirection="row" alignItems="center" gap="1x">
-      {(["sm", "md", "lg"] as const).map((size) => (
-        <Pill key={size} size={size} bordered>
-          {size}
-        </Pill>
-      ))}
-    </Box>
+    <Text>
+      Status <Pill shade="green" bordered>Shipped</Pill> and the line does not change height.
+    </Text>
   ),
 };
 

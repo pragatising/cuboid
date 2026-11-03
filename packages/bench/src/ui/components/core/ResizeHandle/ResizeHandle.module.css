@@ -1,0 +1,78 @@
+/* Only what a prop cannot say: the line the handle draws in the middle of its hit area, and its hover / focus / drag states (pseudo-classes).
+   Geometry, cursor and stacking are Box props set in ResizeHandle.tsx; the line's width and colours are the `--cube-resizeHandle-line-*` token variables. The line is the focus indication too (it turns the focus colour), so the hit area gets no outline. */
+:where(.ResizeHandle) {
+  outline: none;
+  /* A handle always takes the pointer, even inside a layer that ignores it (a row of columns lays its handles over the text). */
+  pointer-events: auto;
+}
+
+:where(.ResizeHandle)::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 50%;
+  width: var(--cube-resizeHandle-line-width-active);
+  transform: translateX(-50%);
+  background: transparent;
+  border-radius: var(--cube-borderRadius-full);
+  pointer-events: none;
+  transition: background-color 120ms;
+}
+
+/* A horizontal handle (top / bottom edge) is a line across. */
+:where(.ResizeHandle[data-orientation="horizontal"])::before {
+  inset-block: auto;
+  inset-inline: 0;
+  inset-block-start: 50%;
+  width: auto;
+  height: var(--cube-resizeHandle-line-width-active);
+  transform: translateY(-50%);
+}
+
+:where(.ResizeHandle[data-indicator="always"])::before {
+  background: var(--cube-resizeHandle-line-color-rest);
+  width: var(--cube-resizeHandle-line-width-rest);
+}
+
+:where(.ResizeHandle[data-indicator="always"][data-orientation="horizontal"])::before {
+  width: auto;
+  height: var(--cube-resizeHandle-line-width-rest);
+}
+
+:where(.ResizeHandle:hover, .ResizeHandle:focus-visible, .ResizeHandle[data-dragging])::before {
+  background: var(--cube-resizeHandle-line-color-active);
+  width: var(--cube-resizeHandle-line-width-active);
+}
+
+:where(.ResizeHandle[data-orientation="horizontal"]:hover, .ResizeHandle[data-orientation="horizontal"]:focus-visible, .ResizeHandle[data-orientation="horizontal"][data-dragging])::before {
+  width: auto;
+  height: var(--cube-resizeHandle-line-width-active);
+}
+
+/* A grip: a short bar on the middle of the edge, always drawn, in place of the line. It is the same pseudo-element, so the hover, focus and drag
+   colour below it is the line's active colour. */
+:where(.ResizeHandle[data-shape="grip"])::before {
+  inset-block: auto;
+  inset-inline-start: 50%;
+  inset-block-start: 50%;
+  width: var(--cube-resizeHandle-grip-width);
+  height: var(--cube-resizeHandle-grip-length);
+  transform: translate(-50%, -50%);
+  background: var(--cube-resizeHandle-grip-color);
+}
+
+:where(.ResizeHandle[data-shape="grip"][data-orientation="horizontal"])::before {
+  width: var(--cube-resizeHandle-grip-length);
+  height: var(--cube-resizeHandle-grip-width);
+}
+
+:where(.ResizeHandle[data-shape="grip"]:hover, .ResizeHandle[data-shape="grip"]:focus-visible, .ResizeHandle[data-shape="grip"][data-dragging])::before {
+  width: var(--cube-resizeHandle-grip-width);
+  height: var(--cube-resizeHandle-grip-length);
+  background: var(--cube-resizeHandle-line-color-active);
+}
+
+:where(.ResizeHandle[data-shape="grip"][data-orientation="horizontal"]:hover, .ResizeHandle[data-shape="grip"][data-orientation="horizontal"]:focus-visible, .ResizeHandle[data-shape="grip"][data-orientation="horizontal"][data-dragging])::before {
+  width: var(--cube-resizeHandle-grip-length);
+  height: var(--cube-resizeHandle-grip-width);
+}

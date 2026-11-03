@@ -1,0 +1,13 @@
+{
+  image: {
+    $description: 'A picture in a document: its empty state, its frame, and how small it may be made.',
+    bgColor: {
+      empty: { $value: '{bgColor.canvas.inset}', $type: 'color', $description: 'The bar that says "Add Image" while there is no picture.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'image' } } },
+    },
+    borderColor: { $value: '{borderColor.muted}', $type: 'color', $description: 'The hairline round a picture that has a border.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'image' } } },
+    sizes: {
+      borderRadius: { $value: '{borderRadius.md}', $type: 'dimension', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'image' } } },
+      minWidth: { $value: 20, $type: 'number', $description: 'The narrowest a picture can be made, as a percentage of its column.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'image' } } },
+    },
+  },
+}

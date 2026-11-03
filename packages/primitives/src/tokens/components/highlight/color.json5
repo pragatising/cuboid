@@ -8,6 +8,10 @@
       bgColor: { $value: '{bgColor.neutral.light.3}', $type: 'color' },
       fgColor: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
     },
+    gray: {
+      bgColor: { $value: '{bgColor.neutral.light.4}', $type: 'color' },
+      fgColor: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
+    },
     green: {
       bgColor: { $value: '{display.highlight.green}', $type: 'color' },
       fgColor: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
@@ -20,6 +24,14 @@
       bgColor: { $value: '{display.highlight.yellow}', $type: 'color' },
       fgColor: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
     },
+    teal: {
+      bgColor: { $value: '{display.highlight.teal}', $type: 'color' },
+      fgColor: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
+    },
+    yellowSoft: {
+      bgColor: { $value: '{display.highlight.yellowSoft}', $type: 'color' },
+      fgColor: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
+    },
     orange: {
       bgColor: { $value: '{display.orange.1}', $type: 'color' },
       fgColor: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
@@ -30,6 +42,10 @@
     },
     lime: {
       bgColor: { $value: '{display.highlight.lime}', $type: 'color' },
+      fgColor: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
+    },
+    magenta: {
+      bgColor: { $value: '{display.highlight.magenta}', $type: 'color' },
       fgColor: { $value: '{fgColor.neutral.contrast}', $type: 'color' },
     },
     purple: {

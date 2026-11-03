@@ -1,0 +1,21 @@
+// Bench's theme: the one place it differs from Cuboid's tokens. Bench is dense (Figma "Bench", 20px controls), so what Cuboid draws at
+// 24px is drawn here at 20px. Everything not named here is Cuboid's own.
+//
+// Partial token tree, deep-merged over Cuboid's before references resolve (primitives `consumerOverrides`, ADR-04), so only `$value` is
+// given and a token's type and dark-mode value are kept. Only tokens that exist can be named: a typo fails the build.
+// Built by `bench generate` into `.theme/`, which Bench loads in place of `@sragatiping/cuboid-primitives`'s own theme (vite.config.ts).
+{
+  size: {
+    control: {
+      // Button, IconButton, SegmentedControl, InputText: the `sm` step is the dense one (20px; its radius stays Cuboid's 6px, as the Figma's buttons have).
+      sm: {
+        size: { $value: '{size.20}' },
+      },
+    },
+  },
+  input: {
+    sizes: {
+      paddingInline: { $value: '{size.4}' },
+    },
+  },
+}

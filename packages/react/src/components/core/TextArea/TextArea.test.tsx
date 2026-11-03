@@ -89,9 +89,9 @@ describe("TextArea: description, error and states", () => {
   });
 
   it("renders the visuals hidden from assistive technology", () => {
-    render(<TextArea label="A" leadingVisual={<svg data-testid="lead" />} trailingVisual={<svg data-testid="trail" />} />);
-    expect(screen.getByTestId("lead").parentElement).toHaveAttribute("aria-hidden", "true");
-    expect(screen.getByTestId("trail").parentElement).toHaveAttribute("aria-hidden", "true");
+    render(<TextArea label="A" leadingVisual="search" trailingVisual="close" />);
+    expect(screen.getByText("search").parentElement).toHaveAttribute("aria-hidden", "true");
+    expect(screen.getByText("close").parentElement).toHaveAttribute("aria-hidden", "true");
   });
 
   it("sets no inline style: the look is in the CSS", () => {
@@ -120,7 +120,7 @@ describe("TextArea CSS reads the published token variables", () => {
 
 describe("TextArea: accessibility", () => {
   it("has no axe violations", async () => {
-    const { container } = render(<TextArea label="Notes" description="Help" error="Required" leadingVisual={<svg />} />);
+    const { container } = render(<TextArea label="Notes" description="Help" error="Required" leadingVisual="search" />);
     await expectNoAxeViolations(container);
   });
 });

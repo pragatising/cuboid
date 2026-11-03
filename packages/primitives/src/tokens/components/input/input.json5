@@ -15,7 +15,7 @@
     },
     fgColor: {
       rest: { $value: '{fgColor.neutral.default}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'input' } } },
-      placeholder: { $value: '{fgColor.neutral.muted}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'input' } } },
+      placeholder: { $value: '{fgColor.neutral.subtle}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'input' } } },
       readOnly: { $value: '{fgColor.neutral.default}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'input' } } },
       disabled: { $value: '{fgColor.neutral.disabled}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'input' } } },
       icon: { $value: '{fgColor.neutral.muted}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'input' } } },

@@ -1,0 +1,114 @@
+/*
+ * Running text as a document: the raw p, h1-h6, ul, ol, blockquote, a and code that rich text produces (an editor, a rendered
+ * document), which cannot be Cuboid components one by one. Every value is a `--cube-prose-*` token variable, or a type token it
+ * points at; a link takes the `link.inline` tokens, so it looks and hovers as a `Link` does. Zero specificity (:where), so a consumer's own class can override any of it.
+ *
+ * Mapped as the portfolio maps it: a paragraph is body text, the level of a heading picks its size from the scale, a text block has
+ * an inset all round, rows are a gap apart, and a heading adds its own space above, more for a higher level.
+ */
+
+:where(.Prose) {
+  font: var(--cube-text-body-shorthand-md);
+  color: var(--cube-prose-fgColor);
+}
+
+:where(.Prose) :where(p, h1, h2, h3, h4, h5, h6, ul, ol, blockquote, pre) {
+  margin: 0;
+}
+
+/* A text block sits in an inset all round, always, so its height does not change between empty and typed. */
+:where(.Prose) :where(p, h1, h2, h3, h4, h5, h6) {
+  padding: var(--cube-prose-sizes-inset);
+}
+
+:where(.Prose) :where(h1, h2, h3, h4, h5, h6) {
+  color: var(--cube-prose-headingFgColor);
+}
+
+:where(.Prose) :where(h1) { font: var(--cube-heading-size-h1); }
+:where(.Prose) :where(h2) { font: var(--cube-heading-size-h2); }
+:where(.Prose) :where(h3) { font: var(--cube-heading-size-h3); }
+:where(.Prose) :where(h4) { font: var(--cube-heading-size-h4); }
+:where(.Prose) :where(h5) { font: var(--cube-heading-size-h5); }
+:where(.Prose) :where(h6) { font: var(--cube-heading-size-h6); }
+
+/* After the shorthand, which resets the line height. */
+:where(.Prose) :where(h1, h2, h3, h4, h5, h6) {
+  line-height: var(--cube-prose-sizes-headingLineHeight);
+}
+
+/*
+ * The space between blocks belongs to the container (the root, or any element marked `data-prose-flow`), not to each kind of block: every child
+ * after the first is set off from the one above by the gap, so a callout, a column row, an image or a block not yet invented is spaced as a
+ * paragraph is, and the first sits flush. Only the top margin is used, so margins never collapse into one another.
+ *
+ * Every block has the same inset round it: a text row (p, h1-h6) as padding, which it has already, and anything else as margin, so two blocks
+ * are the same distance apart whatever they are (inset + gap + inset), and a block's own box (its tint, its handle) does not include it.
+ * A heading adds its own space above, more for a higher level. The three amounts reach the one margin through variables.
+ */
+:where(.Prose, [data-prose-flow]) > * {
+  --prose-lead: 0px;
+  --prose-trail: 0px;
+  --prose-extra: 0px;
+}
+
+:where(.Prose, [data-prose-flow]) > :where(:not(p, h1, h2, h3, h4, h5, h6)) {
+  --prose-lead: var(--cube-prose-sizes-inset);
+}
+
+:where(.Prose, [data-prose-flow]) > :where(:not(p, h1, h2, h3, h4, h5, h6)) + * {
+  --prose-trail: var(--cube-prose-sizes-inset);
+}
+
+:where(.Prose, [data-prose-flow]) > :where(h1) { --prose-extra: var(--cube-prose-sizes-headingInset-h1); }
+:where(.Prose, [data-prose-flow]) > :where(h2) { --prose-extra: var(--cube-prose-sizes-headingInset-h2); }
+:where(.Prose, [data-prose-flow]) > :where(h3) { --prose-extra: var(--cube-prose-sizes-headingInset-h3); }
+:where(.Prose, [data-prose-flow]) > :where(h4) { --prose-extra: var(--cube-prose-sizes-headingInset-h4); }
+:where(.Prose, [data-prose-flow]) > :where(h5) { --prose-extra: var(--cube-prose-sizes-headingInset-h5); }
+:where(.Prose, [data-prose-flow]) > :where(h6) { --prose-extra: var(--cube-prose-sizes-headingInset-h6); }
+
+:where(.Prose, [data-prose-flow]) > * + * {
+  margin-top: calc(var(--cube-prose-sizes-blockGap) + var(--prose-lead) + var(--prose-trail) + var(--prose-extra));
+}
+
+:where(.Prose) :where(ul, ol) {
+  padding-inline-start: var(--cube-prose-sizes-listIndent);
+}
+
+:where(.Prose) li > :where(ul, ol) {
+  margin-top: 0;
+}
+
+:where(.Prose) blockquote {
+  padding-inline-start: var(--cube-prose-sizes-quoteIndent);
+  border-inline-start: var(--cube-prose-sizes-quoteRuleWidth) solid var(--cube-prose-quote-ruleColor);
+}
+
+:where(.Prose) code {
+  font: var(--cube-text-codeInline-shorthand);
+  background: var(--cube-inlineCodeSnippet-bgColor);
+  color: var(--cube-inlineCodeSnippet-fgColor);
+  border-radius: var(--cube-inlineCodeSnippet-borderRadius);
+  padding-inline: var(--cube-inlineCodeSnippet-paddingInline);
+}
+
+:where(.Prose) :where(a) {
+  color: var(--cube-link-inline-fgColor-rest);
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+  cursor: pointer;
+  transition: color 120ms ease;
+}
+
+:where(.Prose) :where(a:visited) {
+  color: var(--cube-link-inline-fgColor-rest);
+}
+
+:where(.Prose) :where(a:hover) {
+  color: var(--cube-link-inline-fgColor-hover);
+}
+
+:where(.Prose) :where(a:focus-visible) {
+  outline: var(--cube-focusRing-width) solid var(--cube-focusRing-color);
+  outline-offset: var(--cube-focusRing-offset);
+}

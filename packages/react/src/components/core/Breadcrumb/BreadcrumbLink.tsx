@@ -17,7 +17,7 @@ export function BreadcrumbLink({ href, current = false, className, children, ref
   const isCurrent = current || !href;
 
   const shared = {
-    "data-component": "BreadcrumbLink",
+    "data-component": "Breadcrumbs.Link",
     "data-current": isCurrent ? "" : undefined,
     className: clsx(classes.BreadcrumbLink, className),
     style: {

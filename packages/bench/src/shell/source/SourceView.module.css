@@ -1,0 +1,72 @@
+/* A component's source (Figma 5048:119969, EditorTab 5105:197310): file tabs over the file's code. */
+.SourceView {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+}
+
+/* The row's line is an inset shadow, so a tab's own line (its inset shadow, drawn over the parent's) lands on the same pixel: the open tab's dark line replaces it. */
+.Tabs {
+  display: flex;
+  gap: 4px;
+  height: 33px;
+  overflow-x: auto;
+  flex-shrink: 0;
+  box-shadow: inset 0 -1px 0 var(--cube-borderColor-muted);
+  background: var(--cube-bgColor-canvas-default);
+}
+
+/* A tab: the file's icon and name, 12px Medium; the one open is darker, on a pale ground, with a line under it. */
+.Tab {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  box-sizing: border-box;
+  height: 100%;
+  margin: 0;
+  padding: 0 8px;
+  border: 0;
+  background: transparent;
+  color: var(--cube-fgColor-neutral-muted);
+  font: var(--cube-text-size-sm);
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.Tab:hover {
+  color: var(--cube-fgColor-neutral-default);
+}
+
+.Tab[aria-selected="true"] {
+  box-shadow: inset 0 -1px 0 var(--cube-fgColor-neutral-contrast);
+  background: var(--cube-bgColor-canvas-subtle);
+  color: var(--cube-fgColor-neutral-contrast);
+}
+
+.Tab:focus-visible {
+  outline: 1px solid var(--cube-focusRing-color);
+  outline-offset: -1px;
+}
+
+.CssMark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  background: var(--cube-bgColor-canvas-subtle);
+  color: var(--cube-display-purple-10);
+  font: 600 8px/1 Inter, sans-serif;
+  text-transform: uppercase;
+}
+
+.Code {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding-top: 8px;
+}

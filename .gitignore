@@ -5,13 +5,17 @@ node_modules/
 dist/
 storybook-static/
 
+# Bench's built theme and what it reads from a library's code (`bench generate`)
+packages/bench/.theme/
+.bench/
+
 # Cursor IDE (local only — not published)
 .cursor/
 
-# Local planning docs (not published)
-docs/plans/
-docs/*.md
-docs/backlog/docs-shell-experiment.md
+# Docs are local: ADRs, backlog, research, roadmaps and notes (not published). Files already committed stay tracked; nothing new is added.
+docs/
+packages/*/docs/
+packages/bench/src/docs/
 
 # Claude Code session working notes (not published, not shared history)
 THREADS.md
@@ -41,3 +45,7 @@ npm-debug.log*
 
 # Docs shell: data generated from the types (npm run build:components-json)
 packages/react/dev/generated/
+packages/editor/bug_tracker.md
+
+# Bench: what is read from the editor's code (npm run bench:generate)
+packages/react/docs/bug_tracker.md

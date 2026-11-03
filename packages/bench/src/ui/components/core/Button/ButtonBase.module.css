@@ -1,0 +1,211 @@
+/*
+ * One generic rule set for every button-shaped control. Every value comes from the token variables the token build
+ * publishes (`--cube-*`, see dist/css/theme.css: light on :root, dark under [data-mode="dark"]), so the element carries
+ * no inline style and the browser picks the state (:hover / :active / :disabled / :focus-visible).
+ *
+ * The per-variant block maps the `button.<variant>` tokens to the short element-scoped variables the rules below read
+ * (--button-bg-rest …). They stay variables so a consumer can still override one with `style` or a class.
+ * Everything is zero-specificity (:where) so a consumer's own class can override any of it.
+ * ButtonBase.test.tsx fails if a --cube-* variable used here is missing from the built theme.css.
+ */
+
+:where(.ButtonBase) {
+  appearance: none;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  user-select: none;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  border-style: solid;
+  border-width: var(--cube-borderWidth-thin);
+  box-shadow: none;
+  color: var(--button-fg-rest);
+  background-color: var(--button-bg-rest);
+  border-color: var(--button-border-rest);
+  transition:
+    background-color var(--cube-motion-transition-hover),
+    border-color var(--cube-motion-transition-hover),
+    color var(--cube-motion-transition-hover);
+}
+
+/* Colours: the variant picks the token set. */
+:where(.ButtonBase[data-variant="primary"]) {
+  --button-bg-rest: var(--cube-button-primary-bgColor-rest);
+  --button-bg-hover: var(--cube-button-primary-bgColor-hover);
+  --button-bg-pressed: var(--cube-button-primary-bgColor-pressed);
+  --button-bg-disabled: var(--cube-button-primary-bgColor-disabled);
+  --button-fg-rest: var(--cube-button-primary-fgColor-rest);
+  --button-fg-hover: var(--cube-button-primary-fgColor-hover);
+  --button-fg-pressed: var(--cube-button-primary-fgColor-pressed);
+  --button-fg-disabled: var(--cube-button-primary-fgColor-disabled);
+  --button-border-rest: var(--cube-button-primary-borderColor-rest);
+  --button-border-hover: var(--cube-button-primary-borderColor-hover);
+  --button-border-pressed: var(--cube-button-primary-borderColor-pressed);
+  --button-border-disabled: var(--cube-button-primary-borderColor-disabled);
+}
+
+:where(.ButtonBase[data-variant="secondary"]) {
+  --button-bg-rest: var(--cube-button-secondary-bgColor-rest);
+  --button-bg-hover: var(--cube-button-secondary-bgColor-hover);
+  --button-bg-pressed: var(--cube-button-secondary-bgColor-pressed);
+  --button-bg-disabled: var(--cube-button-secondary-bgColor-disabled);
+  --button-fg-rest: var(--cube-button-secondary-fgColor-rest);
+  --button-fg-hover: var(--cube-button-secondary-fgColor-hover);
+  --button-fg-pressed: var(--cube-button-secondary-fgColor-pressed);
+  --button-fg-disabled: var(--cube-button-secondary-fgColor-disabled);
+  --button-border-rest: var(--cube-button-secondary-borderColor-rest);
+  --button-border-hover: var(--cube-button-secondary-borderColor-hover);
+  --button-border-pressed: var(--cube-button-secondary-borderColor-pressed);
+  --button-border-disabled: var(--cube-button-secondary-borderColor-disabled);
+}
+
+:where(.ButtonBase[data-variant="ghost"]) {
+  --button-bg-rest: var(--cube-button-ghost-bgColor-rest);
+  --button-bg-hover: var(--cube-button-ghost-bgColor-hover);
+  --button-bg-pressed: var(--cube-button-ghost-bgColor-pressed);
+  --button-bg-disabled: var(--cube-button-ghost-bgColor-disabled);
+  --button-fg-rest: var(--cube-button-ghost-fgColor-rest);
+  --button-fg-hover: var(--cube-button-ghost-fgColor-hover);
+  --button-fg-pressed: var(--cube-button-ghost-fgColor-pressed);
+  --button-fg-disabled: var(--cube-button-ghost-fgColor-disabled);
+  --button-border-rest: var(--cube-button-ghost-borderColor-rest);
+  --button-border-hover: var(--cube-button-ghost-borderColor-hover);
+  --button-border-pressed: var(--cube-button-ghost-borderColor-pressed);
+  --button-border-disabled: var(--cube-button-ghost-borderColor-disabled);
+}
+
+:where(.ButtonBase[data-variant="danger"]) {
+  --button-bg-rest: var(--cube-button-danger-bgColor-rest);
+  --button-bg-hover: var(--cube-button-danger-bgColor-hover);
+  --button-bg-pressed: var(--cube-button-danger-bgColor-pressed);
+  --button-bg-disabled: var(--cube-button-danger-bgColor-disabled);
+  --button-fg-rest: var(--cube-button-danger-fgColor-rest);
+  --button-fg-hover: var(--cube-button-danger-fgColor-hover);
+  --button-fg-pressed: var(--cube-button-danger-fgColor-pressed);
+  --button-fg-disabled: var(--cube-button-danger-fgColor-disabled);
+  --button-border-rest: var(--cube-button-danger-borderColor-rest);
+  --button-border-hover: var(--cube-button-danger-borderColor-hover);
+  --button-border-pressed: var(--cube-button-danger-borderColor-pressed);
+  --button-border-disabled: var(--cube-button-danger-borderColor-disabled);
+}
+
+:where(.ButtonBase[data-variant="rounded"]) {
+  --button-bg-rest: var(--cube-button-rounded-bgColor-rest);
+  --button-bg-hover: var(--cube-button-rounded-bgColor-hover);
+  --button-bg-pressed: var(--cube-button-rounded-bgColor-pressed);
+  --button-bg-disabled: var(--cube-button-rounded-bgColor-disabled);
+  --button-fg-rest: var(--cube-button-rounded-fgColor-rest);
+  --button-fg-hover: var(--cube-button-rounded-fgColor-hover);
+  --button-fg-pressed: var(--cube-button-rounded-fgColor-pressed);
+  --button-fg-disabled: var(--cube-button-rounded-fgColor-disabled);
+  --button-border-rest: var(--cube-button-rounded-borderColor-rest);
+  --button-border-hover: var(--cube-button-rounded-borderColor-hover);
+  --button-border-pressed: var(--cube-button-rounded-borderColor-pressed);
+  --button-border-disabled: var(--cube-button-rounded-borderColor-disabled);
+}
+
+/* Geometry: the size picks the control tokens. */
+:where(.ButtonBase[data-size="sm"]) {
+  --button-gap: var(--cube-size-control-sm-gap);
+  --button-icon-size: var(--cube-size-control-sm-icon);
+  height: var(--cube-size-control-sm-size);
+  padding-block: var(--cube-size-control-sm-paddingBlock);
+  padding-inline: var(--cube-button-paddingInline-sm);
+  border-radius: var(--cube-size-control-sm-borderRadius);
+  font: var(--cube-button-font-sm);
+}
+
+:where(.ButtonBase[data-size="md"]) {
+  --button-gap: var(--cube-size-control-md-gap);
+  --button-icon-size: var(--cube-size-control-md-icon);
+  height: var(--cube-size-control-md-size);
+  padding-block: var(--cube-size-control-md-paddingBlock);
+  padding-inline: var(--cube-button-paddingInline-md);
+  border-radius: var(--cube-size-control-md-borderRadius);
+  font: var(--cube-button-font-md);
+}
+
+:where(.ButtonBase[data-size="lg"]) {
+  --button-gap: var(--cube-size-control-lg-gap);
+  --button-icon-size: var(--cube-size-control-lg-icon);
+  height: var(--cube-size-control-lg-size);
+  padding-block: var(--cube-size-control-lg-paddingBlock);
+  padding-inline: var(--cube-button-paddingInline-lg);
+  border-radius: var(--cube-size-control-lg-borderRadius);
+  font: var(--cube-button-font-lg);
+}
+
+/* The rounded variant is a pill at every size. */
+:where(.ButtonBase[data-variant="rounded"]) {
+  border-radius: var(--cube-borderRadius-full);
+}
+
+/* Hover and pressed only apply while the button can be activated (not disabled, inactive or loading). */
+:where(.ButtonBase:hover:not(:disabled, [aria-disabled="true"])) {
+  color: var(--button-fg-hover);
+  background-color: var(--button-bg-hover);
+  border-color: var(--button-border-hover);
+}
+
+:where(.ButtonBase:active:not(:disabled, [aria-disabled="true"])) {
+  color: var(--button-fg-pressed);
+  background-color: var(--button-bg-pressed);
+  border-color: var(--button-border-pressed);
+}
+
+/* Disabled look: natively disabled, or `inactive`. (A loading button keeps its normal look.) */
+:where(.ButtonBase:disabled, .ButtonBase[data-inactive]) {
+  cursor: not-allowed;
+  color: var(--button-fg-disabled);
+  background-color: var(--button-bg-disabled);
+  border-color: var(--button-border-disabled);
+}
+
+:where(.ButtonBase[data-loading]) {
+  cursor: progress;
+}
+
+:where(.ButtonBase:focus-visible) {
+  outline: var(--cube-focusRing-width) solid var(--cube-focusRing-color);
+  outline-offset: var(--cube-focusRing-offset);
+}
+
+:where(.ButtonBase[data-block]) {
+  width: 100%;
+}
+
+/* Anatomy: buttonContent holds the visuals and the label, so alignContent has something to align. */
+:where(.ButtonContent) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+  min-width: 0;
+  gap: var(--button-gap);
+}
+
+:where(.ButtonContent[data-align="start"]) {
+  justify-content: flex-start;
+}
+
+:where(.Visual) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+/* Visual size follows the button's size (--button-icon-size comes from the size block above). */
+:where(.Visual > *) {
+  width: var(--button-icon-size);
+  height: var(--button-icon-size);
+}
+
+:where(.Label) {
+  min-width: 0;
+}

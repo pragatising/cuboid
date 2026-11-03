@@ -1,0 +1,53 @@
+:where(.ActionList) {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* The `display` above would beat the browser's `[hidden]` default (author rules win over it, whatever their specificity), so a
+   hidden list (kept in the DOM for aria-controls) must say it again. */
+:where(.ActionList[hidden]) {
+  display: none;
+}
+
+:where(.ListItems) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cube-actionMenu-sizes-list-itemGap);
+  padding: var(--cube-actionMenu-sizes-list-paddingBlock) var(--cube-actionMenu-sizes-list-paddingInline);
+}
+
+:where(.Section) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cube-actionMenu-sizes-list-itemGap);
+}
+
+/*
+ * Section spacing: `ListItems` gap handles itemGap between all children.
+ * Add (sectionGap - itemGap) before each section that follows another block
+ * so section groups breathe more than rows within a section.
+ * Future: `ActionList.Divider` can replace/add to this between groups.
+ */
+:where(.ListItems > * + .Section) {
+  margin-block-start: calc(
+    var(--cube-actionMenu-sizes-list-sectionGap) - var(--cube-actionMenu-sizes-list-itemGap)
+  );
+}
+
+:where(.SectionLabel) {
+  padding: var(--cube-actionMenu-sizes-section-paddingBlock)
+    var(--cube-actionMenu-sizes-section-paddingInline);
+  font: var(--cube-text-size-sm);
+  font-weight: 600;
+  color: var(--cube-actionMenu-section-fgColor);
+  white-space: nowrap;
+}
+
+:where(.SectionItems) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cube-actionMenu-sizes-list-itemGap);
+}

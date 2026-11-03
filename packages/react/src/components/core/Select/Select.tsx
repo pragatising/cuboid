@@ -7,6 +7,7 @@ import type { InputFieldProps, InputFieldSize } from "../InputField";
 import { clsx } from "clsx";
 import { Popover } from "../Popover";
 import type { PopoverProps } from "../Popover";
+import type { IconName } from "../Icon";
 import classes from "./Select.module.css";
 import { NativeSelect } from "./SelectNative";
 import { SelectContext, SelectOption } from "./SelectOption";
@@ -16,11 +17,11 @@ export type { SelectOptionProps } from "./SelectOption";
 export type SelectProps = Omit<React.ComponentPropsWithRef<"button">, "children" | "value" | "defaultValue" | "onChange" | "color" | "type" | "role" | "name"> &
   Pick<InputFieldProps, "labelHelp" | "descriptionVisual" | "errorVisual"> & {
   /** The visible label, tied to the select. Without one, give it an `aria-label`. */
-  label?: React.ReactNode;
+  label?: string;
   /** Help text under the field. */
-  description?: React.ReactNode;
+  description?: string;
   /** The validation message under the field. Its presence puts the field in the error state and sets `aria-invalid`. */
-  error?: React.ReactNode;
+  error?: string;
   /** Merged onto the outer wrapper (label, field, help text); `className` and `style` go to the select's box. */
   wrapperClassName?: string;
   /** `Select.Option`s, with optional `Select.Section`s. */
@@ -47,8 +48,8 @@ export type SelectProps = Omit<React.ComponentPropsWithRef<"button">, "children"
   placeholder?: string;
   /** The field's height: `sm` 24px, `md` 28px, `lg` 32px (as Button). @default "md" */
   size?: InputFieldSize;
-  /** A visual before the value, usually an `Icon`. Hidden from assistive technology. */
-  leadingVisual?: React.ReactNode;
+  /** A visual before the value, Hidden from assistive technology. */
+  leadingVisual?: IconName;
   /** Makes the select a field of a form: the chosen value is submitted under this name. */
   name?: string;
   id?: string;
@@ -149,7 +150,7 @@ function PopupSelect({
           maxHeight={maxHeight}
           trigger={
             <InputField data-component="Select" label={label} labelHelp={labelHelp} controlId={controlId} description={description} descriptionVisual={descriptionVisual} error={error} errorVisual={errorVisual} disabled={disabled} className={wrapperClassName}>
-              <InputField.Shell ref={combobox.anchorRef} size={size} leadingVisual={leadingVisual} trailingVisual={<Icon name="keyboard_arrow_down" />} invalid={invalid} disabled={disabled} readOnly={readOnly}>
+              <InputField.Shell ref={combobox.anchorRef} size={size} leadingVisual={leadingVisual} trailingVisual="keyboard_arrow_down" invalid={invalid} disabled={disabled} readOnly={readOnly}>
                 <button
                   {...props}
                   {...combobox.controlProps}

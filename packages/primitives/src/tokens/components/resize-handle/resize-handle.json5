@@ -3,10 +3,53 @@
     "hitArea": {
       "$value": "{size.8}",
       "$type": "dimension",
-      "$extensions": {
-        "org.cuboid.figma": {
-          "collection": "component",
-          "group": "resize-handle"
+      "$extensions": { "org.cuboid.figma": { "collection": "component", "group": "resize-handle" } }
+    },
+    "grip": {
+      "length": {
+        "$value": "{size.24}",
+        "$type": "dimension",
+        "$description": "The short bar a grip-shaped handle draws on the middle of its edge (an image's side handles).",
+        "$extensions": { "org.cuboid.figma": { "collection": "component", "group": "resize-handle" } }
+      },
+      "width": {
+        "$value": "{size.4}",
+        "$type": "dimension",
+        "$extensions": { "org.cuboid.figma": { "collection": "component", "group": "resize-handle" } }
+      },
+      "color": {
+        "$value": "{fgColor.neutral.muted}",
+        "$type": "color",
+        "$description": "The grip at rest; hovered, focused or dragged it takes the line's active (focus) colour.",
+        "$extensions": { "org.cuboid.figma": { "collection": "component", "group": "resize-handle" } }
+      }
+    },
+    "line": {
+      "width": {
+        "rest": {
+          "$value": "{size.1}",
+          "$type": "dimension",
+          "$description": "The line the handle draws down the middle of its hit area, when it is shown.",
+          "$extensions": { "org.cuboid.figma": { "collection": "component", "group": "resize-handle" } }
+        },
+        "active": {
+          "$value": "{size.3}",
+          "$type": "dimension",
+          "$description": "The line while the handle is hovered, focused or being dragged.",
+          "$extensions": { "org.cuboid.figma": { "collection": "component", "group": "resize-handle" } }
+        }
+      },
+      "color": {
+        "rest": {
+          "$value": "{borderColor.muted}",
+          "$type": "color",
+          "$extensions": { "org.cuboid.figma": { "collection": "component", "group": "resize-handle" } }
+        },
+        "active": {
+          "$value": "{focusRing.color}",
+          "$type": "color",
+          "$description": "The focus colour: a handle that is hovered, focused or dragged turns the same blue as a focus ring.",
+          "$extensions": { "org.cuboid.figma": { "collection": "component", "group": "resize-handle" } }
         }
       }
     }

@@ -1,0 +1,4 @@
+/* Cells the table plugin has selected (a range, a whole row or column): the selection's own ground over them. */
+:where(:global(.selectedCell)) {
+  background-color: var(--cube-selection-bgColor);
+}

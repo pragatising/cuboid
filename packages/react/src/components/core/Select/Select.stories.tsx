@@ -43,7 +43,7 @@ export const WithDescriptionAndError: Story = {
 
 export const WithLabelHelp: Story = {
   render: () => (
-    <Select label="Fruit" labelHelp="The one you would pick for a snack." description="You can change it later." descriptionVisual={<Icon name="info" />} placeholder="Choose one">
+    <Select label="Fruit" labelHelp="The one you would pick for a snack." description="You can change it later." descriptionVisual="info" placeholder="Choose one">
       <Select.Option value="apple">Apple</Select.Option>
       <Select.Option value="banana">Banana</Select.Option>
     </Select>
@@ -52,7 +52,7 @@ export const WithLabelHelp: Story = {
 
 export const WithSectionsAndVisuals: Story = {
   render: () => (
-    <Select label="Workspace" defaultValue="personal" leadingVisual={<Icon name="home" />} maxHeight="14rem">
+    <Select label="Workspace" defaultValue="personal" leadingVisual="home" maxHeight="14rem">
       <Select.Section label="Yours">
         <Select.Option value="personal" description="Only you">
           Personal

@@ -1,0 +1,7 @@
+/* Only what a prop cannot say: the native iframe's reset. The frame's border, radius and clipping are Box props (SmartCardEmbed.tsx);
+   its height or aspect ratio is set inline, since it is measured or chosen at run time. */
+:where(.Frame) {
+  display: block;
+  width: 100%;
+  border: 0;
+}

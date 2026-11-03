@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "types": ["vitest/globals"],
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "paths": { "@sragatiping/cuboid": ["../react/src/index.ts"], "@sragatiping/cuboid-editor": ["./src/index.ts"] }
+  },
+  "include": ["src", "dev"]
+}

@@ -3,6 +3,7 @@ import { clsx } from "clsx";
 import { isPresent } from "../../../utils/isPresent";
 import { mergeProps } from "../../../utils/mergeProps";
 import { Icon } from "../Icon";
+import type { IconName } from "../Icon";
 import { Tooltip } from "../Tooltip";
 import classes from "./InputField.module.css";
 
@@ -13,21 +14,21 @@ export type InputFieldProps = Omit<React.ComponentPropsWithRef<"div">, "children
   /** The field itself: an `InputShell` around a control. */
   children: React.ReactNode;
   /** The visible label. It is tied to the control by `controlId`. */
-  label?: React.ReactNode;
+  label?: string;
   /** The id of the control, so the label, help text and error can point at it. */
   controlId: string;
   /** Help text under the field. */
-  description?: React.ReactNode;
+  description?: string;
   /** The validation message under the field; its presence puts the field in the error state. */
-  error?: React.ReactNode;
+  error?: string;
   /** Whether the control is disabled, for the label. */
   disabled?: boolean;
   /** An info icon after the label that explains the field in a tooltip, on hover and keyboard focus. */
   labelHelp?: string;
-  /** A visual before the help text, usually an `Icon`. Hidden from assistive technology. */
-  descriptionVisual?: React.ReactNode;
-  /** A visual before the error, usually an `Icon`. Hidden from assistive technology. */
-  errorVisual?: React.ReactNode;
+  /** The name of an icon before the help text. Hidden from assistive technology. */
+  descriptionVisual?: IconName;
+  /** The name of an icon before the error. Hidden from assistive technology. */
+  errorVisual?: IconName;
   /** A line under the field, for example `12 / 100`. It is read with the help text when the control is focused. */
   count?: React.ReactNode;
 };
@@ -67,7 +68,7 @@ function InputFieldRoot({ children, label, controlId, description, error, disabl
           </label>
           {isPresent(labelHelp) ? (
             <Tooltip text={labelHelp as string}>
-              <button type="button" className={classes.LabelHelp} aria-label={typeof label === "string" ? `More about ${label}` : "More information"} data-component="InputField.LabelHelp">
+              <button type="button" className={classes.LabelHelp} aria-label={`More about ${label}`} data-component="InputField.LabelHelp">
                 <Icon name="info" size="xs" />
               </button>
             </Tooltip>
@@ -77,9 +78,9 @@ function InputFieldRoot({ children, label, controlId, description, error, disabl
       {children}
       {isPresent(description) ? (
         <div id={`${controlId}-description`} className={clsx(classes.Description, classes.Assistive)} data-component="InputField.Description">
-          {isPresent(descriptionVisual) ? (
+          {descriptionVisual ? (
             <span className={classes.AssistiveVisual} aria-hidden="true">
-              {descriptionVisual}
+              <Icon name={descriptionVisual} />
             </span>
           ) : null}
           {description}
@@ -87,9 +88,9 @@ function InputFieldRoot({ children, label, controlId, description, error, disabl
       ) : null}
       {invalid ? (
         <div id={`${controlId}-error`} className={clsx(classes.Error, classes.Assistive)} data-component="InputField.Error">
-          {isPresent(errorVisual) ? (
+          {errorVisual ? (
             <span className={classes.AssistiveVisual} aria-hidden="true">
-              {errorVisual}
+              <Icon name={errorVisual} />
             </span>
           ) : null}
           {error}
@@ -109,10 +110,10 @@ export type InputShellProps = Omit<React.ComponentPropsWithRef<"div">, "children
   children: React.ReactNode;
   /** @default "md" */
   size?: InputFieldSize;
-  /** A visual before the control, usually an `Icon`. Hidden from assistive technology. */
-  leadingVisual?: React.ReactNode;
-  /** A visual after the control. Hidden from assistive technology. */
-  trailingVisual?: React.ReactNode;
+  /** The name of an icon before the control. Hidden from assistive technology. */
+  leadingVisual?: IconName;
+  /** The name of an icon after the control. Hidden from assistive technology. */
+  trailingVisual?: IconName;
   invalid?: boolean;
   disabled?: boolean;
   readOnly?: boolean;
@@ -137,15 +138,15 @@ function InputShell({ children, size = "md", leadingVisual, trailingVisual, inva
         props as object,
       )}
     >
-      {isPresent(leadingVisual) ? (
+      {leadingVisual ? (
         <span className={classes.Visual} aria-hidden="true" data-component="InputField.LeadingVisual">
-          {leadingVisual}
+          <Icon name={leadingVisual} />
         </span>
       ) : null}
       {children}
-      {isPresent(trailingVisual) ? (
+      {trailingVisual ? (
         <span className={classes.Visual} aria-hidden="true" data-component="InputField.TrailingVisual">
-          {trailingVisual}
+          <Icon name={trailingVisual} />
         </span>
       ) : null}
     </div>

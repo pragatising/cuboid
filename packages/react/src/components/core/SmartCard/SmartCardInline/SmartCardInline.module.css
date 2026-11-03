@@ -1,0 +1,50 @@
+/* Only what a prop cannot say: a chip that is text, not a box. It stays `display: inline` and repeats its border and padding on each
+   line it wraps onto (`box-decoration-break`), so a long title runs through the paragraph as the words around it do. The colours, radius
+   and type are the theme's variables, so the chip follows the mode. */
+:where(.Inline) {
+  display: inline;
+  padding: 1px 6px;
+  border: 1px solid var(--cube-borderColor-muted);
+  border-radius: var(--cube-borderRadius-xs);
+  background-color: var(--cube-bgColor-canvas-default);
+  color: var(--cube-fgColor-neutral-default);
+  font: var(--cube-text-size-sm);
+  line-height: 1.9;
+  text-decoration: none;
+  word-break: break-all;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+:where(a.Inline) {
+  cursor: pointer;
+}
+
+:where(a.Inline:hover) {
+  border-color: var(--cube-borderColor-strong);
+}
+
+:where(a.Inline:focus-visible) {
+  outline: var(--cube-focusRing-width) solid var(--cube-focusRing-color);
+  outline-offset: var(--cube-focusRing-offset);
+}
+
+/* Not yet known: the address, quietly, until the title is. */
+:where(.Inline[aria-busy="true"]) {
+  color: var(--cube-fgColor-neutral-muted);
+}
+
+:where(.Icon) {
+  display: inline-block;
+  margin-inline-end: 6px;
+  color: var(--cube-fgColor-neutral-muted);
+  line-height: 0;
+  vertical-align: middle;
+  white-space: nowrap;
+  word-break: normal;
+}
+
+:where(.Note) {
+  color: var(--cube-fgColor-neutral-muted);
+  word-break: normal;
+}

@@ -1,0 +1,43 @@
+/*
+ * The strip and its items. Every value comes from the `--cube-segmentedControl-*` variables the token build publishes (light on
+ * :root, dark under [data-mode="dark"]); the items are Buttons (ButtonBase), so their colours, sizes and states are the
+ * button tokens, with two changes (Figma 5008:51805): an unselected item's text is as dark as the chosen one's (`neutral.default`, where the ghost
+ * button reads muted), and its ground under the pointer is a step darker than the strip. Zero-specificity (:where), except that one override, which must beat
+ * ButtonBase's own rule whichever stylesheet loads last.
+ * SegmentedControl.test.tsx fails if a --cube-* variable used here is missing from the built theme.css.
+ */
+
+:where(.SegmentedControl) {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  gap: var(--cube-segmentedControl-sizes-padding);
+  padding: var(--cube-segmentedControl-sizes-padding);
+  border-radius: var(--cube-segmentedControl-sizes-borderRadius);
+  background-color: var(--cube-segmentedControl-bgColor);
+}
+
+:where(.SegmentedControl[data-block]) {
+  display: flex;
+  width: 100%;
+}
+
+:where(.SegmentedControl[data-block]) > .Item {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.Item[data-variant="ghost"] {
+  --button-fg-rest: var(--cube-segmentedControl-item-fgColor-rest);
+  --button-bg-hover: var(--cube-segmentedControl-item-bgColor-hover);
+}
+
+/*
+ * Bench's own size (Figma 5008:51805): 7px of padding inside a 1px border (8px from the edge, where a Button has 12px), and the 16px line of the
+ * Figma's 12px text, so a segment is as wide as its label needs. Only here, not in Cuboid's: the strip is denser in Bench. Specific enough to
+ * beat ButtonBase's own padding and line-height whichever stylesheet loads last.
+ */
+.Item[data-variant][data-component] {
+  padding-inline: 0.4375rem;
+  line-height: 1rem;
+}

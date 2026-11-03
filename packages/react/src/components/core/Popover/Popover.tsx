@@ -74,6 +74,10 @@ export type PopoverProps = Omit<React.ComponentPropsWithRef<"div">, "role" | "ch
   anchorRef?: React.RefObject<HTMLElement | null>;
   /** Make the panel at least as wide as what it is anchored to. @default false */
   matchAnchorWidth?: boolean;
+  /** The panel's least width (any CSS length), for content that needs more room than the default, such as a menu of long labels. Wins over `matchAnchorWidth`. Defaults to the `popover` token. */
+  minWidth?: Length;
+  /** The panel's greatest width (any CSS length). Defaults to the `popover` token. */
+  maxWidth?: Length;
 };
 
 /** The height cap: the one asked for, and the room the window leaves where the panel is, whichever is less. */
@@ -116,6 +120,8 @@ function PopoverRoot({
   maxHeight,
   anchorRef,
   matchAnchorWidth = false,
+  minWidth,
+  maxWidth,
   className,
   ref,
   "aria-labelledby": ariaLabelledBy,
@@ -201,8 +207,8 @@ function PopoverRoot({
               overflow="hidden"
               boxSizing="border-box"
               margin={0}
-              minWidth={matchAnchorWidth && anchorWidth !== undefined ? (`${anchorWidth}px` as Length) : resolved<Length>(popover.sizes.minWidth)}
-              maxWidth={resolved<Length>(popover.sizes.maxWidth)}
+              minWidth={minWidth ?? (matchAnchorWidth && anchorWidth !== undefined ? (`${anchorWidth}px` as Length) : resolved<Length>(popover.sizes.minWidth))}
+              maxWidth={maxWidth ?? resolved<Length>(popover.sizes.maxWidth)}
               maxHeight={fitHeight(maxHeight, style.maxHeight)}
               backgroundColor={resolved<CssColor>(popover.color.background)}
               borderRadius={resolved<RawLength>(popover.sizes.borderRadius)}

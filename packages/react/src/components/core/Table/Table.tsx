@@ -1,295 +1,72 @@
-import React, { useState } from "react";
-import { clsx } from "clsx";
-import {
-  flexRender,
-  getCoreRowModel,
-  getSortedRowModel,
-  useReactTable,
-  type ColumnDef,
-  type OnChangeFn,
-  type Row,
-  type SortingState,
-  type Table as TanStackTable,
-} from "@tanstack/react-table";
-import { useTokens } from "../../../mode";
-import { cssVars } from "../../../utils/cssVars";
-import { mergeProps } from "../../../utils/mergeProps";
-import { Icon } from "../Icon";
-import classes from "./Table.module.css";
+import React, { useMemo } from "react";
+import { TableBody } from "./TableBody";
+import { TableCell } from "./TableCell";
+import { TableContext } from "./TableContext";
+import { TableHeadCell } from "./TableHeadCell";
+import { TableHeader } from "./TableHeader";
+import { TableRow } from "./TableRow";
+import type { TableDensity, TableLayout, TableLines, TableRowLayout } from "./types";
+// The rules are keyed on the parts' `data-component`, not on a class, so an editor's own DOM is drawn by them too.
+import "./Table.module.css";
 
-export type TableRowLayout = "wrap" | "truncate" | "fixed";
-export type TableCellAlign = "left" | "center" | "right";
-export type TableDensity = "dense" | "spacious";
-/** Internal cell dividers — outer frame stays on {@link TableRoot}. */
-export type TableLines = "none" | "rows" | "grid";
-
-declare module "@tanstack/react-table" {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  interface ColumnMeta<TData, TValue> {
-    rowLayout?: TableRowLayout;
-    align?: TableCellAlign;
-    /** CSS width for `<col>` — e.g. `28%`, `10rem`, `120px`, `max-content`. Omit for flexible remainder. */
-    width?: string;
-  }
-}
-
-export type TableRootProps = React.ComponentPropsWithRef<"div"> & {
-  /** Cell padding + row height: `spacious` (40px) or `dense` (32px), from the `table.sizes.density` tokens. @default "spacious" */
+export type TableProps = React.ComponentPropsWithRef<"table"> & {
+  /** Cell padding and row height: `dense` (32px) or `spacious` (40px), from the `table.sizes.density` tokens. @default "dense" */
   density?: TableDensity;
   /**
    * Internal dividers between cells.
-   * - `grid`: horizontal + vertical
+   * - `grid`: horizontal and vertical
    * - `rows`: horizontal row lines only
-   * - `none`: no internal lines; the outer frame from TableRoot remains
+   * - `none`: no internal lines; the outer frame stays
    * @default "grid"
    */
   lines?: TableLines;
+  /**
+   * What every cell does with content that does not fit, unless a cell says otherwise: `wrap` onto more lines, or `truncate` to one line, cut
+   * off with an ellipsis, with the whole text a hover, click or focus away. Truncating needs the columns to share a width, so it implies
+   * `layout="fixed"` and wants a container that has one.
+   * @default "truncate"
+   */
+  rowLayout?: TableRowLayout;
+  /**
+   * How the columns are sized. `auto` fits the content, anywhere. `fixed` shares the container's width equally (or by `col` widths); in a
+   * container that shrinks to its content it has nothing to share. `scroll` gives every column the width its `col` says and fills a container
+   * wider than them all, or scrolls sideways in a narrower one. Follows `rowLayout` unless given.
+   */
+  layout?: TableLayout;
+  /** Merged onto the frame around the table; `className` and `style` go to the table itself. */
+  wrapperClassName?: string;
+  /** Other attributes for the frame (`data-*`, `id`…): they go there, not to the table. */
+  wrapperProps?: Omit<React.ComponentPropsWithoutRef<"div">, "children">;
 };
+
+function TableRoot({ density = "dense", lines = "grid", rowLayout = "truncate", layout = rowLayout === "truncate" ? "fixed" : "auto", wrapperClassName, wrapperProps, ...props }: TableProps) {
+  const context = useMemo(() => ({ rowLayout }), [rowLayout]);
+  return (
+    <TableContext.Provider value={context}>
+      <div
+        data-component="Table.Root"
+        data-density={density}
+        data-lines={lines}
+        data-layout={layout}
+        {...wrapperProps}
+        className={[wrapperClassName, wrapperProps?.className].filter(Boolean).join(" ") || undefined}
+      >
+        <table data-component="Table" {...props} />
+      </div>
+    </TableContext.Provider>
+  );
+}
 
 /**
- * Scroll + border shell around a {@link Table}. It resolves the `table` tokens for the chosen density once and hands
- * them to the parts below as element-scoped variables (--table-row-height, --table-header-bg, …).
+ * A table: a frame (the border, the rounded corners, the sideways scroll) around a real `table`, and its parts `Header`, `Body`, `Row`,
+ * `HeadCell` and `Cell`. The choices that apply to the whole table (`density`, `lines`, `rowLayout`, `layout`) are its props and reach
+ * the parts as attributes and context; the colours, sizes and states are `--cube-table-*` tokens read in CSS. As attributes on the frame
+ * and the table, the same rules draw a table an editor builds as plain DOM.
  */
-export function TableRoot({ density = "spacious", lines = "grid", className, ...props }: TableRootProps) {
-  const { table, text, fontWeight, borderWidth, focusRing, space } = useTokens();
-  const d = table.sizes.density[density];
-
-  return (
-    <div
-      {...mergeProps(
-        {
-          "data-component": "Table.Root",
-          "data-lines": lines,
-          className: clsx(classes.TableRoot, className),
-          style: cssVars("table", {
-            borderWidth: borderWidth.thin,
-            borderRadius: table.sizes.borderRadius,
-            containerBorder: table.color.container.borderColor,
-            headerBg: table.color.header.bgColor,
-            headerFg: table.color.header.fgColor,
-            headerBorder: table.color.header.borderColor,
-            bodyBg: table.color.body.bgColor,
-            bodyFg: table.color.body.fgColor,
-            bodyBorder: table.color.body.borderColor,
-            headerFont: text.size.md,
-            headerWeight: String(fontWeight.medium),
-            bodyFont: text.size.md,
-            cellPaddingInline: d.cellPaddingInline,
-            cellPaddingBlock: d.cellPaddingBlock,
-            rowHeight: d.rowHeight,
-            sortGap: space.xxs,
-            focusColor: focusRing.color,
-            focusWidth: focusRing.width,
-            focusOffset: focusRing.offset,
-          }),
-        },
-        props,
-      )}
-    />
-  );
-}
-
-export type TableProps = React.ComponentPropsWithRef<"table">;
-
-export function TableElement({ className, ...props }: TableProps) {
-  return <table {...mergeProps({ "data-component": "Table", className: clsx(classes.Table, className) }, props)} />;
-}
-
-export type TableHeaderProps = React.ComponentPropsWithRef<"thead">;
-
-export function TableHeader({ className, ...props }: TableHeaderProps) {
-  return <thead {...mergeProps({ "data-component": "Table.Header", className: clsx(classes.TableHeader, className) }, props)} />;
-}
-
-export type TableBodyProps = React.ComponentPropsWithRef<"tbody">;
-
-export function TableBody({ className, ...props }: TableBodyProps) {
-  return <tbody {...mergeProps({ "data-component": "Table.Body", className: clsx(classes.TableBody, className) }, props)} />;
-}
-
-export type TableRowProps = React.ComponentPropsWithRef<"tr">;
-
-export function TableRow({ className, ...props }: TableRowProps) {
-  return <tr {...mergeProps({ "data-component": "Table.Row", className: clsx(classes.TableRow, className) }, props)} />;
-}
-
-export type TableHeadCellProps = React.ComponentPropsWithRef<"th"> & {
-  align?: TableCellAlign;
-};
-
-export function TableHeadCell({ align, className, ...props }: TableHeadCellProps) {
-  return (
-    <th
-      {...mergeProps(
-        { "data-component": "Table.HeadCell", "data-align": align, scope: "col", className: clsx(classes.TableHeadCell, className) },
-        props,
-      )}
-    />
-  );
-}
-
-export type TableCellProps = React.ComponentPropsWithRef<"td"> & {
-  align?: TableCellAlign;
-  /** How content that does not fit is handled. @default "wrap" */
-  rowLayout?: TableRowLayout;
-};
-
-export function TableCell({ align, rowLayout = "wrap", className, children, ...props }: TableCellProps) {
-  return (
-    <td
-      {...mergeProps(
-        {
-          "data-component": "Table.Cell",
-          "data-align": align,
-          "data-row-layout": rowLayout,
-          className: clsx(classes.TableCell, className),
-        },
-        props,
-      )}
-    >
-      <span className={classes.TableCellInner}>{children}</span>
-    </td>
-  );
-}
-
-/** Composable table parts: use with {@link TableRoot} for manual markup or {@link SimpleTable} for TanStack. */
-export const Table = Object.assign(TableElement, {
-  Root: TableRoot,
+export const Table = Object.assign(TableRoot, {
   Header: TableHeader,
   Body: TableBody,
   Row: TableRow,
   HeadCell: TableHeadCell,
   Cell: TableCell,
 });
-
-export interface SimpleTableProps<TData> {
-  columns: ColumnDef<TData, unknown>[];
-  data: TData[];
-  /** Default cell layout when a column has no `meta.rowLayout`. */
-  rowLayout?: TableRowLayout;
-  /** Cell padding + row height. Default: spacious (40px rows). */
-  density?: TableDensity;
-  /** Internal cell dividers. Default: grid. */
-  lines?: TableLines;
-  className?: string;
-  tableClassName?: string;
-  getRowId?: (originalRow: TData, index: number) => string;
-  /** Enable clickable sortable headers. Default: false. */
-  enableSorting?: boolean;
-  /** Controlled sorting state. When omitted, SimpleTable manages sorting internally. */
-  sorting?: SortingState;
-  /** Called when a sortable header changes the sorting state. */
-  onSortingChange?: OnChangeFn<SortingState>;
-}
-
-/**
- * TanStack-powered table with Cuboid styling. Pass column defs and row data;
- * enable sorting with `enableSorting`; selection and other behaviors can be added
- * through the composable table parts.
- */
-export function SimpleTable<TData>({
-  columns,
-  data,
-  rowLayout = "truncate",
-  density = "spacious",
-  lines = "grid",
-  className,
-  tableClassName,
-  getRowId,
-  enableSorting = false,
-  sorting,
-  onSortingChange,
-}: SimpleTableProps<TData>) {
-  const [internalSorting, setInternalSorting] = useState<SortingState>([]);
-  const activeSorting = sorting ?? internalSorting;
-
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getRowId,
-    enableSorting,
-    state: { sorting: activeSorting },
-    onSortingChange: (updater) => {
-      if (sorting === undefined) setInternalSorting(updater instanceof Function ? updater(activeSorting) : updater);
-      onSortingChange?.(updater);
-    },
-  });
-
-  return (
-    <TableRoot density={density} lines={lines} className={className}>
-      <Table className={tableClassName}>
-        <colgroup>
-          {table.getAllLeafColumns().map((column) => {
-            const width = column.columnDef.meta?.width;
-            return <col key={column.id} style={width ? { width } : undefined} />;
-          })}
-        </colgroup>
-        <TableHeader>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <TableHeadCell
-                  key={header.id}
-                  align={header.column.columnDef.meta?.align}
-                  aria-sort={
-                    header.column.getIsSorted() === "asc"
-                      ? "ascending"
-                      : header.column.getIsSorted() === "desc"
-                        ? "descending"
-                        : enableSorting && header.column.getCanSort()
-                          ? "none"
-                          : undefined
-                  }
-                >
-                  {header.isPlaceholder ? null : enableSorting && header.column.getCanSort() ? (
-                    <button
-                      type="button"
-                      className={classes.TableSortButton}
-                      onClick={header.column.getToggleSortingHandler()}
-                      aria-label={`Sort by ${header.column.id}`}
-                    >
-                      <span>
-                        {flexRender(header.column.columnDef.header, header.getContext())}
-                      </span>
-                      <Icon
-                        size="xs"
-                        name={
-                          header.column.getIsSorted() === "asc"
-                            ? "arrow_upward"
-                            : header.column.getIsSorted() === "desc"
-                              ? "arrow_downward"
-                              : "sort"
-                        }
-                      />
-                    </button>
-                  ) : (
-                    flexRender(header.column.columnDef.header, header.getContext())
-                  )}
-                </TableHeadCell>
-              ))}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows.map((row) => (
-            <TableRow key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-                <TableCell
-                  key={cell.id}
-                  align={cell.column.columnDef.meta?.align}
-                  rowLayout={cell.column.columnDef.meta?.rowLayout ?? rowLayout}
-                >
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </TableCell>
-              ))}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableRoot>
-  );
-}
-
-export type { ColumnDef, Row, TanStackTable };

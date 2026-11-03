@@ -17,6 +17,8 @@ export type SegmentedControlProps = Omit<React.ComponentPropsWithRef<"div">, "ro
   onValueChange?: (value: string) => void;
   /** The height of every item, as Button's: `sm` 24px, `md` 28px, `lg` 32px. @default "sm" */
   size?: "sm" | "md" | "lg";
+  /** Fill the width of the container, the items sharing it equally, so the strip does not change size as the choice does. @default false */
+  block?: boolean;
 };
 
 /**
@@ -25,12 +27,12 @@ export type SegmentedControlProps = Omit<React.ComponentPropsWithRef<"div">, "ro
  * button that reports `aria-pressed` and is reached with Tab. (Switching between panels of content is a `Tabs`, which
  * Cuboid does not have yet.)
  */
-export function SegmentedControl({ children, value: valueProp, defaultValue, onValueChange, size = "sm", className, ...props }: SegmentedControlProps) {
+export function SegmentedControl({ children, value: valueProp, defaultValue, onValueChange, size = "sm", block = false, className, ...props }: SegmentedControlProps) {
   const [value, setValue] = useControllableState<string | undefined>({ value: valueProp, defaultValue, onChange: (next) => next !== undefined && onValueChange?.(next), name: "value" });
   const context = useMemo(() => ({ value, select: setValue, size }), [value, setValue, size]);
 
   return (
-    <div {...mergeProps({ "data-component": "SegmentedControl", role: "group", className: clsx(classes.SegmentedControl, className) }, props as object)}>
+    <div {...mergeProps({ "data-component": "SegmentedControl", "data-block": block ? "" : undefined, role: "group", className: clsx(classes.SegmentedControl, className) }, props as object)}>
       <SegmentedControlContext.Provider value={context}>{children}</SegmentedControlContext.Provider>
     </div>
   );

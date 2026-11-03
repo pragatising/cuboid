@@ -1,0 +1,62 @@
+/* Only what a prop cannot say: the picture's frame and the "Add Image" bar's states. Layout, spacing, the toolbar and the handles are Box
+   props in Image.tsx; every value here is a `--cube-image-*` token variable or the focus ring. */
+:where(.Picture) {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--cube-image-sizes-borderRadius);
+}
+
+:where(.Picture[data-bordered]) {
+  border: var(--cube-borderWidth-thin) solid var(--cube-image-borderColor);
+}
+
+:where(.Empty) {
+  appearance: none;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--cube-size-8px);
+  width: 100%;
+  margin: 0;
+  padding: var(--cube-size-12px) var(--cube-size-16px);
+  border: 0;
+  border-radius: var(--cube-image-sizes-borderRadius);
+  background: var(--cube-image-bgColor-empty);
+  color: var(--cube-fgColor-neutral-muted);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+:where(.Empty:hover, .Empty[data-over]) {
+  background: var(--cube-bgColor-canvas-insetStrong);
+}
+
+:where(.Empty:focus-visible) {
+  /* The ring is the bar's own edge, as a border would be, not a ring set off from it. */
+  outline: var(--cube-focusRing-width) solid var(--cube-focusRing-color);
+  outline-offset: 0;
+}
+
+:where(.Empty:disabled) {
+  cursor: progress;
+}
+
+/* A picture that did not load: the empty bar's surface, tall enough for the toolbar that sits over it. */
+:where(.Failed) {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--cube-size-8px);
+  width: 100%;
+  min-height: calc(var(--cube-size-22px) * 5);
+  border-radius: var(--cube-image-sizes-borderRadius);
+  background: var(--cube-image-bgColor-empty);
+  color: var(--cube-fgColor-neutral-muted);
+}
+
+:where(.Failed[data-bordered]) {
+  border: var(--cube-borderWidth-thin) solid var(--cube-image-borderColor);
+}

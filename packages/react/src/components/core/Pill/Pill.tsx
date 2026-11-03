@@ -12,9 +12,6 @@ import classes from "./Pill.module.css";
 export type PillShade = keyof Tokens["pill"]["color"];
 /** A key of every shade in `tokens.pill.color`: the emphasis step. */
 export type PillIntensity = keyof Tokens["pill"]["color"]["gray"];
-/** A key of `tokens.text.size`. */
-export type PillSize = "sm" | "md" | "lg";
-
 export type PillProps<As extends React.ElementType = "span"> = PolymorphicProps<
   As,
   "span",
@@ -27,8 +24,6 @@ export type PillProps<As extends React.ElementType = "span"> = PolymorphicProps<
     bordered?: boolean;
     /** Which `fontWeight` token sets the label's weight. @default "medium" */
     weight?: keyof Tokens["fontWeight"];
-    /** Which `text.size` token to set the label font from. The pill's height stays fixed. @default "sm" */
-    size?: PillSize;
     /** Override the label colour: a `fgColor` token, a palette colour (`"indigo.7"`) or any CSS colour. */
     color?: FgColor | CssColor;
     /** Override the surface: a `bgColor` token, a palette colour (`"indigo.0"`) or any CSS colour. */
@@ -48,7 +43,6 @@ export function Pill<As extends React.ElementType = "span">({
   intensity = "light",
   bordered = false,
   weight = "medium",
-  size = "sm",
   color,
   backgroundColor,
   borderColor,
@@ -71,8 +65,8 @@ export function Pill<As extends React.ElementType = "span">({
           "data-component": "Pill",
           className: clsx(classes.Pill, className as string | undefined),
           style: {
-            // `lineHeight` comes after the `font` shorthand, which resets it: the pill's height is fixed.
-            font: text.size[size],
+            // `lineHeight` comes after the `font` shorthand, which resets it: the pill is one height, whatever it sits in.
+            font: text.size.sm,
             fontWeight: fontWeight[weight],
             lineHeight: 1,
             color: color ? resolveColorValue(palette.fgColor, color) : colors.fgColor,

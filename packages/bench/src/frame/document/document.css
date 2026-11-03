@@ -1,0 +1,17 @@
+/* The page's own text, as an app would have it, so a component that sets no font of its own (a Header's parts) reads as it would in use. */
+body {
+  font: var(--cube-text-size-md);
+  color: var(--cube-fgColor-neutral-default);
+  background: var(--cube-bgColor-canvas-default);
+}
+
+#root {
+  padding: 24px;
+}
+
+[data-bench-error] {
+  margin: 0;
+  color: var(--cube-fgColor-danger-strong);
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+}

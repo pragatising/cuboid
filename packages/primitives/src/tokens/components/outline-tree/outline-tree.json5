@@ -1,0 +1,24 @@
+{
+  outlineTree: {
+    $description: 'Numbered items with nested items hung from them on connector lines (1, 2 / a, b / a.1). The badge is the number; the line joins the centres of badges.',
+    badge: {
+      height: { $value: '{size.20}', $type: 'dimension', $description: 'The badge is a circle at least this wide; its centre is where every line meets.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'outlineTree' } } },
+      paddingInline: { $value: '{size.3}', $type: 'dimension', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'outlineTree' } } },
+      bgColor: { $value: '{bgColor.canvas.default}', $type: 'color', $description: 'Opaque, so the line passes behind the badge.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'outlineTree' } } },
+      borderColor: { $value: '{borderColor.strong}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'outlineTree' } } },
+      fgColor: { $value: '{fgColor.neutral.default}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'outlineTree' } } },
+      fontWeight: { $value: '{fontWeight.semibold}', $type: 'fontWeight', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'outlineTree' } } },
+    },
+    line: {
+      color: { $value: '{borderColor.muted}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'outlineTree' } } },
+      width: { $value: '{borderWidth.thin}', $type: 'dimension', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'outlineTree' } } },
+    },
+    sizes: {
+      textGap: { $value: '{size.32}', $type: 'dimension', $description: 'Between a badge and its title.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'outlineTree' } } },
+      rootGap: { $value: '{size.32}', $type: 'dimension', $description: 'Between items of the outline itself.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'outlineTree' } } },
+      childGap: { $value: '{size.32}', $type: 'dimension', $description: 'Between nested items.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'outlineTree' } } },
+      innerGap: { $value: '{size.24}', $type: 'dimension', $description: 'Between an items title and the first item under it.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'outlineTree' } } },
+      hookRadius: { $value: '{size.14}', $type: 'dimension', $description: 'The curve where a line turns into a nested item badge.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'outlineTree' } } },
+    },
+  },
+}

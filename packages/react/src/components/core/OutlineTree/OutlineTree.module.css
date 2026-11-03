@@ -1,0 +1,192 @@
+/*
+ * An outline: numbered items, each with nested items hung from it on curved connector lines. All of it is CSS, keyed on the parts'
+ * `data-component`, so the same rules draw a tree built from the parts and one an editor builds as plain DOM. Nothing is measured: the lines
+ * are right on the first paint, at any text size, and follow the text as it wraps or is typed. Every value is a `--cube-outlineTree-*` token.
+ *
+ * An item is a list item. Its badge (its number) is at the item's start, the item is padded to clear it, and what it holds follows: its title
+ * (the first child) and, after that, the outline hung from it. Numbers are CSS counters, one per level: 1, 2 / a, b / a.1, a.2 / a.1.1 (deeper
+ * levels show their own number). A level is how many outlines an item is inside.
+ *
+ * Every rule is `:where()`, zero specificity, so a consumer's one class overrides any of it, and the levels win by coming later in this file
+ * (a deeper level after the one above). The exceptions are the margins and padding `Prose` also sets on the lists and paragraphs it styles (an
+ * outline in a document is inside `Prose`): those are one attribute selector, so they win without depending on which stylesheet comes last.
+ *
+ * The lines meet the badges' centres and are drawn by four pieces:
+ *   - the axis: root items, a straight line from one badge down to the next, behind the badges (the item's background);
+ *   - the stub: from a parent's badge down to the outline under it (the title's )::after;
+ *   - the trunk: a nested item carries the line down past its own badge unless it is its parent's last (the item's background);
+ *   - the hook: a nested item's curve into its own badge (the item's ::after).
+ */
+
+@counter-style outline-alpha {
+  system: alphabetic;
+  symbols: a b c d e f g h i j k l m n o p q r s t u v w x y z;
+}
+
+/* Base. What an item is set in from the line it hangs from, and the space below it: nothing to hang from at the root. */
+:where([data-component="OutlineTree"]) {
+  --outline-lead: 0px;
+  --outline-below: var(--cube-outlineTree-sizes-rootGap);
+
+  list-style: none;
+  counter-reset: outline-0;
+}
+
+:where([data-component="OutlineTree.Item"]) {
+  position: relative;
+  display: block;
+  margin: 0;
+  padding: 0 0 var(--outline-below) calc(var(--outline-lead) + var(--cube-outlineTree-badge-height) + var(--cube-outlineTree-sizes-textGap));
+  counter-increment: outline-0;
+  background-repeat: no-repeat;
+}
+
+:where([data-component="OutlineTree.Item"]:last-child) {
+  padding-bottom: 0;
+}
+
+/* The axis, through the middle of the badges, from under one to the next. */
+:where([data-component="OutlineTree.Item"]:not(:last-child)) {
+  background-image: linear-gradient(var(--cube-outlineTree-line-color), var(--cube-outlineTree-line-color));
+  background-position: calc(var(--cube-outlineTree-badge-height) / 2 - var(--cube-outlineTree-line-width) / 2) var(--cube-outlineTree-badge-height);
+  background-size: var(--cube-outlineTree-line-width) calc(100% - var(--cube-outlineTree-badge-height));
+}
+
+/* The badge. */
+:where([data-component="OutlineTree.Item"])::before {
+  content: counter(outline-0);
+  position: absolute;
+  z-index: 1;
+  inset: 0 auto auto var(--outline-lead);
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--cube-outlineTree-badge-height);
+  height: var(--cube-outlineTree-badge-height);
+  padding: 0 var(--cube-outlineTree-badge-paddingInline);
+  border: var(--cube-outlineTree-line-width) solid var(--cube-outlineTree-badge-borderColor);
+  border-radius: var(--cube-borderRadius-full);
+  background: var(--cube-outlineTree-badge-bgColor);
+  color: var(--cube-outlineTree-badge-fgColor);
+  font: var(--cube-text-caption-shorthand);
+  font-weight: var(--cube-outlineTree-badge-fontWeight);
+  line-height: 1;
+}
+
+/* The title, at least as tall as the badge, so a title of one line is centred on it. Root titles are headings, nested ones body text. */
+:where([data-component="OutlineTree.Item"] > :first-child) {
+  position: relative;
+  min-width: 0;
+  min-height: var(--cube-outlineTree-badge-height);
+  color: var(--cube-fgColor-neutral-contrast);
+  font: var(--cube-heading-size-h5);
+  overflow-wrap: anywhere;
+}
+
+/* Not zero specificity (see the top): what `Prose` also sets. A list has no indent of its own, and a nested one hangs from its parent's badge. */
+[data-component="OutlineTree"] {
+  margin: 0;
+  padding: 0;
+}
+
+[data-component="OutlineTree"] [data-component="OutlineTree"] {
+  margin: var(--cube-outlineTree-sizes-innerGap) 0 0 calc(-1 * (var(--cube-outlineTree-badge-height) / 2 + var(--cube-outlineTree-sizes-textGap)));
+}
+
+[data-component="OutlineTree.Item"] > :first-child {
+  margin: 0;
+  padding: 0;
+}
+
+/* The stub: the line from the badge to the outline under it, through the gap. */
+:where([data-component="OutlineTree.Item"] > :first-child:not(:last-child))::after {
+  content: "";
+  position: absolute;
+  inset: var(--cube-outlineTree-badge-height) auto calc(-1 * var(--cube-outlineTree-sizes-innerGap)) calc(-1 * (var(--cube-outlineTree-badge-height) / 2 + var(--cube-outlineTree-sizes-textGap)) - var(--cube-outlineTree-line-width) / 2);
+  border-inline-start: var(--cube-outlineTree-line-width) solid var(--cube-outlineTree-line-color);
+}
+
+/* Nested: an outline inside an item hangs from the parent's badge. Its left edge is that badge's centre, where the trunk runs. */
+:where([data-component="OutlineTree"] [data-component="OutlineTree"]) {
+  --outline-lead: calc(var(--cube-outlineTree-badge-height) / 2 + var(--cube-outlineTree-sizes-textGap));
+  --outline-below: var(--cube-outlineTree-sizes-childGap);
+}
+
+/* The trunk, down the item and the space below it, unless it is the last. */
+:where([data-component="OutlineTree"] [data-component="OutlineTree"] [data-component="OutlineTree.Item"]) {
+  background-image: linear-gradient(var(--cube-outlineTree-line-color), var(--cube-outlineTree-line-color));
+  background-position: 0 0;
+  background-size: var(--cube-outlineTree-line-width) 100%;
+}
+
+:where([data-component="OutlineTree"] [data-component="OutlineTree"] [data-component="OutlineTree.Item"]:last-child) {
+  background-size: var(--cube-outlineTree-line-width) max(0px, calc(var(--cube-outlineTree-badge-height) / 2 - var(--cube-outlineTree-sizes-hookRadius)));
+}
+
+:where([data-component="OutlineTree"] [data-component="OutlineTree"] [data-component="OutlineTree.Item"])::after {
+  content: "";
+  position: absolute;
+  inset: calc(var(--cube-outlineTree-badge-height) / 2 - var(--cube-outlineTree-sizes-hookRadius)) auto auto 0;
+  box-sizing: border-box;
+  width: var(--outline-lead);
+  height: var(--cube-outlineTree-sizes-hookRadius);
+  border-bottom: var(--cube-outlineTree-line-width) solid var(--cube-outlineTree-line-color);
+  border-bottom-left-radius: var(--cube-outlineTree-sizes-hookRadius);
+  border-left: var(--cube-outlineTree-line-width) solid var(--cube-outlineTree-line-color);
+}
+
+:where([data-component="OutlineTree"] [data-component="OutlineTree"] [data-component="OutlineTree.Item"] > :first-child) {
+  color: var(--cube-fgColor-neutral-default);
+  font: var(--cube-text-body-shorthand-sm);
+}
+
+/* Levels: a counter each, and the label it shows. */
+
+:where([data-component="OutlineTree"] [data-component="OutlineTree"]) {
+  counter-reset: outline-1;
+}
+
+:where([data-component="OutlineTree"] [data-component="OutlineTree"] [data-component="OutlineTree.Item"]) {
+  counter-increment: outline-1;
+}
+
+:where([data-component="OutlineTree"] [data-component="OutlineTree"] [data-component="OutlineTree.Item"])::before {
+  content: counter(outline-1, outline-alpha);
+}
+
+:where([data-component="OutlineTree"] [data-component="OutlineTree"] [data-component="OutlineTree"]) {
+  counter-reset: outline-2;
+}
+
+:where([data-component="OutlineTree"] [data-component="OutlineTree"] [data-component="OutlineTree"] [data-component="OutlineTree.Item"]) {
+  counter-increment: outline-2;
+}
+
+:where([data-component="OutlineTree"] [data-component="OutlineTree"] [data-component="OutlineTree"] [data-component="OutlineTree.Item"])::before {
+  content: counter(outline-1, outline-alpha) "." counter(outline-2);
+}
+
+:where([data-component="OutlineTree"] [data-component="OutlineTree"] [data-component="OutlineTree"] [data-component="OutlineTree"]) {
+  counter-reset: outline-3;
+}
+
+:where([data-component="OutlineTree"] [data-component="OutlineTree"] [data-component="OutlineTree"] [data-component="OutlineTree"] [data-component="OutlineTree.Item"]) {
+  counter-increment: outline-3;
+}
+
+:where([data-component="OutlineTree"] [data-component="OutlineTree"] [data-component="OutlineTree"] [data-component="OutlineTree"] [data-component="OutlineTree.Item"])::before {
+  content: counter(outline-1, outline-alpha) "." counter(outline-2) "." counter(outline-3);
+}
+
+:where([data-component="OutlineTree"] [data-component="OutlineTree"] [data-component="OutlineTree"] [data-component="OutlineTree"] [data-component="OutlineTree"]) {
+  counter-reset: outline-4;
+}
+
+:where([data-component="OutlineTree"] [data-component="OutlineTree"] [data-component="OutlineTree"] [data-component="OutlineTree"] [data-component="OutlineTree"] [data-component="OutlineTree.Item"]) {
+  counter-increment: outline-4;
+}
+
+:where([data-component="OutlineTree"] [data-component="OutlineTree"] [data-component="OutlineTree"] [data-component="OutlineTree"] [data-component="OutlineTree"] [data-component="OutlineTree.Item"])::before {
+  content: counter(outline-4);
+}

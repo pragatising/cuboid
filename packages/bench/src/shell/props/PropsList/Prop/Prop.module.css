@@ -1,0 +1,40 @@
+/* One prop (Figma 3374:33315): 20px a line, key, operator, selectors, 4px apart. It flows as text, so a long type wraps where the line ends. */
+.Prop {
+  display: block;
+  min-height: 20px;
+  line-height: 20px;
+}
+
+.Prop:has(> [data-fill]) {
+  display: flex;
+  align-items: center;
+}
+
+.Prop > [data-fill] {
+  flex: 1;
+  min-width: 0;
+}
+
+.Prop > * {
+  vertical-align: middle;
+}
+
+.Key {
+  color: var(--prop-key);
+  font: var(--cube-text-size-sm);
+  font-weight: 500;
+  white-space: nowrap;
+  margin-right: 4px;
+}
+
+/* A function or an event is yellow (Figma 5038:93104), not the keyword's magenta. */
+.Key[data-function] {
+  color: var(--prop-function);
+}
+
+.Operator {
+  display: inline-block;
+  margin-right: 4px;
+  color: var(--cube-fgColor-neutral-muted);
+  font: 400 14px/20px Inter, sans-serif;
+}

@@ -1,26 +1,11 @@
-export {
-  Table,
-  TableRoot,
-  TableElement,
-  TableHeader,
-  TableBody,
-  TableRow,
-  TableHeadCell,
-  TableCell,
-  SimpleTable,
-} from "./Table";
-export type {
-  TableProps,
-  TableRootProps,
-  TableHeaderProps,
-  TableBodyProps,
-  TableRowProps,
-  TableHeadCellProps,
-  TableCellProps,
-  TableRowLayout,
-  TableCellAlign,
-  TableDensity,
-  TableLines,
-  SimpleTableProps,
-} from "./Table";
-export type { OnChangeFn, SortingState } from "@tanstack/react-table";
+export { Table } from "./Table";
+export type { TableProps } from "./Table";
+export type { TableHeaderProps } from "./TableHeader";
+export type { TableBodyProps } from "./TableBody";
+export type { TableRowProps } from "./TableRow";
+export type { TableHeadCellProps } from "./TableHeadCell";
+export type { TableCellProps } from "./TableCell";
+export type { TableCellAlign, TableDensity, TableLayout, TableLines, TableRowLayout, TableSort } from "./types";
+export { useTableColumns } from "./columns/useTableColumns";
+export type { HeadCellOptions, HeadCellProps, TableColumnsOptions } from "./columns/useTableColumns";
+export type { ColumnMove, ColumnSort, TableColumn, TableColumnLabels } from "./columns/types";

@@ -76,9 +76,30 @@ describe("dark mode: tokens a palette swap cannot fix", () => {
 
   it("hard-coded syntax colours stay readable on the dark canvas", () => {
     const canvas = get(t.dark, "bgColor.canvas.default");
-    for (const key of ["syntax.typescript.bracket", "syntax.typescript.constantOtherReferenceLink", "syntax.json.bracket"]) {
+    for (const key of ["syntax.typescript.constantOtherReferenceLink", "syntax.json.bracket"]) {
       assert.ok(ratio(get(t.dark, key), canvas) >= 4.5, key);
     }
+  });
+
+  it("every TypeScript syntax colour is readable on the code surface in both modes, and the ones that needed their own dark value have one", () => {
+    for (const mode of ["light", "dark"] as const) {
+      const surface = get(t[mode], "bgColor.canvas.subtle");
+      for (const [key, value] of leaves(t[mode].syntax as Tree, "syntax.")) {
+        if (!key.startsWith("syntax.typescript.")) continue;
+        assert.ok(ratio(value, surface) >= 4.5, `${mode} ${key} is ${ratio(value, surface).toFixed(2)}:1 on the code surface`);
+      }
+    }
+    // A step that fails in dark is overridden there, not left to pass in light alone.
+    for (const key of ["keyword", "string", "stringRegexp", "templateInterpolation", "numberLiteral", "bracketLevel1"]) {
+      assert.notEqual(get(t.dark, `syntax.typescript.${key}`), get(t.light, `syntax.typescript.${key}`), key);
+    }
+  });
+
+  it("the TypeScript colours tell their kinds apart: no two kinds that must not be confused share a colour", () => {
+    const light = (key: string) => get(t.light, `syntax.typescript.${key}`);
+    // A keyword is not a function, a type, a string, a number or a bracket; a component is not a platform element; brackets alternate.
+    const apart = [["keyword", "storage"], ["keyword", "functionCall"], ["keyword", "string"], ["storage", "typeName"], ["functionCall", "typeName"], ["string", "numberLiteral"], ["componentTag", "htmlTag"], ["bracketLevel1", "bracketLevel2"], ["bracketLevel2", "bracketLevel3"], ["bracketLevel1", "bracketLevel3"], ["keyword", "bracketLevel1"], ["functionCall", "propertyAccess"]];
+    for (const [a, b] of apart) assert.notEqual(light(a), light(b), `${a} and ${b}`);
   });
 
   it("every highlight keeps its text readable in both modes and is visible against the page", () => {

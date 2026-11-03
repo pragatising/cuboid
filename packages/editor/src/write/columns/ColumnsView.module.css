@@ -1,0 +1,6 @@
+/* The editor puts the columns one element deeper than the content element (ProseMirror's own DOM), so that element is the flex row.
+   Everything else about columns and their dividers is Cuboid Box props and ResizeHandle. */
+.Row > :global([data-node-view-content-react]) {
+  display: flex;
+  gap: var(--cube-size-32px);
+}

@@ -1451,6 +1451,39 @@
               'org.cuboid.overrides': { dark: '#4c3a5c' },
             },
           },
+          teal: {
+            $value: '#d4f0f5',
+            $type: 'color',
+            $description: 'Highlight-marker teal: a light wash for text marking, with no counterpart in the muted teal scale.',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+              'org.cuboid.overrides': { dark: '#2a4a52' },
+            },
+          },
+          magenta: {
+            $value: '#fce4f3',
+            $type: 'color',
+            $description: 'Highlight-marker magenta: a light wash for text marking, with no counterpart in the muted magenta scale.',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+              'org.cuboid.overrides': { dark: '#58354b' },
+            },
+          },
+          yellowSoft: {
+            $value: '#fff3b0',
+            $type: 'color',
+            $description: 'Highlight-marker yellow, soft: the pale one, beside the saturated `yellow`, for text marking.',
+            $extensions: {
+              'org.cuboid.figma': {
+                collection: 'base/color/light',
+              },
+              'org.cuboid.overrides': { dark: '#4a4325' },
+            },
+          },
         },
     },
   },

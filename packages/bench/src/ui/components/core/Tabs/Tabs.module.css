@@ -1,0 +1,50 @@
+/*
+ * A list of tabs (Figma PanelTabList 11071:99509, Tab.Primary 9864:76066). Every value comes from the `--cube-tablist-*` variables the
+ * token build publishes (light on :root, dark under [data-mode="dark"]). There is no strip behind the tabs: the open one has a ground, the
+ * others are plain text. Zero-specificity (:where), so a consumer's own class can override any of it.
+ */
+
+:where(.Tabs) {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cube-tablist-sizes-gap);
+}
+
+:where(.Tab) {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  gap: var(--cube-tablist-primary-button-sizes-gap);
+  margin: 0;
+  padding: var(--cube-tablist-primary-button-sizes-paddingBlock) var(--cube-tablist-primary-button-sizes-paddingInline);
+  border: 0;
+  border-radius: var(--cube-tablist-primary-button-sizes-borderRadius);
+  background: transparent;
+  color: var(--cube-tablist-primary-button-fgColor-rest);
+  font: var(--cube-text-size-sm);
+  font-weight: 500;
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+:where(.Tab:hover:not([aria-selected="true"])) {
+  color: var(--cube-tablist-primary-button-fgColor-hover);
+}
+
+:where(.Tab[aria-selected="true"]) {
+  background: var(--cube-tablist-primary-button-bgColor-rest);
+  color: var(--cube-tablist-primary-button-fgColor-selected);
+}
+
+:where(.Tab:focus-visible) {
+  outline: var(--cube-focusRing-width) solid var(--cube-focusRing-color);
+  outline-offset: var(--cube-focusRing-offset);
+}
+
+:where(.Visual) {
+  display: inline-flex;
+  line-height: 0;
+}

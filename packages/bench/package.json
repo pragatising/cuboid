@@ -1,0 +1,54 @@
+{
+  "name": "@sragatiping/bench",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Bench: the workbench for a component library. Reads the library's code and shows its components, states, anatomy and a playground, as Storybook does, but derived from the code.",
+  "license": "MIT",
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./example": "./src/example.ts"
+  },
+  "bin": {
+    "bench": "./bin/bench.mjs"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:conformance": "BENCH_CONFORMANCE=1 vitest run",
+    "type-check": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": ">=19",
+    "react-dom": ">=19"
+  },
+  "dependencies": {
+    "@codemirror/autocomplete": "^6.20.4",
+    "@codemirror/commands": "^6.11.1",
+    "@codemirror/lang-javascript": "^6.2.5",
+    "@codemirror/language": "^6.13.1",
+    "@codemirror/state": "^6.7.6",
+    "@codemirror/view": "^6.43.15",
+    "@lezer/highlight": "^1.2.5",
+    "@sragatiping/cuboid-primitives": "*",
+    "@tanstack/react-table": "^8.21.3",
+    "@vitejs/plugin-react": "^4.3.1",
+    "axe-core": "^4.14.0",
+    "clsx": "^2.1.1",
+    "typescript": "^5.5.3",
+    "vite": "^5.4.1",
+    "vite-node": "*"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.5.0",
+    "@testing-library/react": "^16.3.3",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "jsdom": "^30.1.3",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "vitest": "^3.2.7"
+  }
+}

@@ -1,0 +1,174 @@
+/* The Properties card (Figma 5090:187398): a section for each piece of the component, each a heading over an inset well of props. */
+.PropsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  /*
+   * What a prop is written in: the same TypeScript syntax colours as the code view (`syntax.typescript`, primitives), so a prop and the line of
+   * code that declares it are the same colours: Dark+ in dark, the same hues darkened to AA in light.
+   */
+  --prop-key: var(--cube-syntax-typescript-propertyAccess);
+  --prop-type: var(--cube-syntax-typescript-typeName);
+  --prop-string: var(--cube-syntax-typescript-string);
+  --prop-number: var(--cube-syntax-typescript-numberLiteral);
+  --prop-parameter: var(--cube-syntax-typescript-parameter);
+  --prop-bracket: var(--cube-syntax-typescript-bracketLevel1);
+  --prop-function: var(--cube-syntax-typescript-functionCall);
+  --prop-punctuation: var(--cube-syntax-typescript-operator);
+}
+
+.Empty {
+  margin: 0;
+  color: var(--cube-fgColor-neutral-muted);
+  font: var(--cube-text-size-sm);
+}
+
+.Section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* The accordion button (Figma AccordionButton 2449:7766): the pill is the toggle (chevron, the component's tile, its name), grey when the pointer is on the row; the arrow to the source is a button of its own beside the pill, not in it, there only while the pointer is on the row. */
+.SectionRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  max-width: 100%;
+  max-height: 32px;
+}
+
+.SectionRow:hover .SectionHeader {
+  background: var(--cube-bgColor-canvas-subtle);
+}
+
+.SectionHeader {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin: 0;
+  padding: 2px 4px;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  color: var(--cube-fgColor-neutral-default);
+  font: var(--cube-text-size-sm);
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+}
+
+.SectionHeader:focus-visible,
+.SectionOpen:focus-visible {
+  outline: 1px solid var(--cube-focusRing-color);
+  outline-offset: 1px;
+}
+
+.SectionChevron {
+  color: var(--cube-fgColor-neutral-muted);
+}
+
+/* The arrow that goes to the source (Figma IconButton, subtle, 20px): there when the pointer is on the header, and only where there is a source to go to. */
+.SectionOpen {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: none;
+  color: var(--cube-fgColor-neutral-muted);
+  cursor: pointer;
+  opacity: 0;
+}
+
+.SectionRow:hover .SectionOpen,
+.SectionRow:has(:focus-visible) .SectionOpen {
+  opacity: 1;
+}
+
+.SectionOpen:hover {
+  background: var(--cube-bgColor-canvas-insetStrong);
+  color: var(--cube-fgColor-neutral-default);
+}
+
+.Section[data-bare] {
+  margin: 4px -4px 0;
+}
+
+.SectionLead {
+  color: var(--cube-fgColor-neutral-muted);
+  font-weight: 400;
+}
+
+.SectionTitle {
+  min-width: 0;
+  padding-left: 2px;
+}
+
+.SectionNote {
+  margin-left: 4px;
+  font-weight: 400;
+}
+
+/* A component's API: its groups, one under another, each an accordion with its props in a well. */
+.Api {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+/* A section's props on the well of Figma's Playrgound.CompCard/Props (5101:8346): 12px in, 8px radius, a group of rows after another. */
+.Well {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  /* Figma's canvas/inset (#f9f9f8) is the kit's canvas.subtle: canvas.inset is a step darker. */
+  background: var(--cube-bgColor-canvas-subtle);
+}
+
+/* What a well holds, said above it when an instance has two (what is set on it, and what it takes). */
+.WellLabel {
+  margin: 4px 0 0;
+  color: var(--cube-fgColor-neutral-muted);
+  font: var(--cube-text-size-sm);
+}
+
+/* A group of props from one place in the code, a row each, 2px apart. */
+.Rows {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* What a component sets itself: `name = value`, as the code writes it. */
+.Fixed {
+  display: block;
+  min-height: 20px;
+  line-height: 20px;
+}
+
+.Fixed > * {
+  vertical-align: middle;
+}
+
+.More {
+  margin: 4px 0 0;
+  color: var(--cube-fgColor-neutral-muted);
+  font: var(--cube-text-size-sm);
+}

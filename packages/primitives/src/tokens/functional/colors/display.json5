@@ -727,6 +727,21 @@
         $type: 'color',
         $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor'] } },
       },
+      teal: {
+        $value: '{base.color.highlight.teal}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor'] } },
+      },
+      magenta: {
+        $value: '{base.color.highlight.magenta}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor'] } },
+      },
+      yellowSoft: {
+        $value: '{base.color.highlight.yellowSoft}',
+        $type: 'color',
+        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'component', scopes: ['bgColor'] } },
+      },
     },
   },
 }

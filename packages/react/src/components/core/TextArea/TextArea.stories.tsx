@@ -23,7 +23,7 @@ export const AutoGrow: Story = {
   args: { label: "Notes", autoGrow: true, maxRows: 6, rows: 2, showCount: true, maxLength: 280, placeholder: "Keep typing: it grows to six lines, then scrolls" },
 };
 
-export const WithLabelHelp: Story = { args: { label: "Notes", labelHelp: "Visible to everyone on the team.", description: "Markdown is supported.", descriptionVisual: <Icon name="info" /> } };
+export const WithLabelHelp: Story = { args: { label: "Notes", labelHelp: "Visible to everyone on the team.", description: "Markdown is supported.", descriptionVisual: "info" } };
 
 export const Error: Story = { args: { label: "Notes", defaultValue: "value", error: "error message (description)" } };
 

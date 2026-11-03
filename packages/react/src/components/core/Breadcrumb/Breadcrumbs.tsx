@@ -16,7 +16,7 @@ export type BreadcrumbsProps = Omit<React.ComponentPropsWithRef<"nav">, "childre
 };
 
 /** A navigation trail. Spacing and the separator come from the `breadcrumb` tokens. */
-export function Breadcrumbs({ items, className, ...props }: BreadcrumbsProps) {
+function BreadcrumbsRoot({ items, className, ...props }: BreadcrumbsProps) {
   const { breadcrumb, text } = useTokens();
   if (items.length === 0) return null;
 
@@ -51,3 +51,5 @@ export function Breadcrumbs({ items, className, ...props }: BreadcrumbsProps) {
     </nav>
   );
 }
+
+export const Breadcrumbs = Object.assign(BreadcrumbsRoot, { Link: BreadcrumbLink });

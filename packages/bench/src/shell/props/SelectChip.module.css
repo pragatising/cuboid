@@ -1,0 +1,46 @@
+/* The select chip (Figma 5038:92511): 20px, 4px radius, gray 3 border, the focus blue on hover. */
+.SelectChip {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  box-sizing: border-box;
+  max-width: 100%;
+  min-height: 20px;
+  margin: 0;
+  padding: 0 4px;
+  overflow: hidden;
+  border: 1px solid var(--cube-borderColor-strong);
+  border-radius: 4px;
+  background: var(--cube-bgColor-canvas-default);
+  color: var(--cube-fgColor-neutral-default);
+  /* A button does not inherit a font, so it is set here. */
+  font: var(--cube-text-size-sm);
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+/* Its syntax (the colours are the Properties card's: PropsList.module.css). */
+.SelectChip[data-tone="type"] {
+  color: var(--prop-type);
+}
+
+.SelectChip[data-tone="string"] {
+  color: var(--prop-string);
+}
+
+.SelectChip[data-tone="number"] {
+  color: var(--prop-number);
+}
+
+.SelectChip:hover,
+.SelectChip[aria-expanded="true"] {
+  border-color: var(--cube-focusRing-color);
+}
+
+.SelectChip:focus-visible {
+  outline: 1px solid var(--cube-focusRing-color);
+  outline-offset: 1px;
+}

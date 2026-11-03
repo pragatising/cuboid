@@ -42,6 +42,13 @@ describe("SegmentedControl: element", () => {
     expect(ref.current).toBe(root);
   });
 
+  it("fills its container, the items sharing it, only with block", () => {
+    const { rerender } = render(<Views />);
+    expect(screen.getByRole("group", { name: "View" })).not.toHaveAttribute("data-block");
+    rerender(<Views block />);
+    expect(screen.getByRole("group", { name: "View" })).toHaveAttribute("data-block");
+  });
+
   it("throws, helpfully, for an item outside a control", () => {
     const quiet = vi.spyOn(console, "error").mockImplementation(() => {});
     expect(() => render(<SegmentedControl.Item value="x">X</SegmentedControl.Item>)).toThrow(/inside a SegmentedControl/);

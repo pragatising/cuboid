@@ -27,7 +27,7 @@ export const Default: Story = {
         value={value}
         onChange={(event) => setValue(event.target.value)}
         onSelect={(item) => setValue(item.textContent ?? "")}
-        leadingVisual={<Icon name="search" />}
+        leadingVisual="search"
         maxHeight="12rem"
         empty={<EmptyState icon="search" heading="No results" description="Try a different word" />}
       >
@@ -111,7 +111,7 @@ export const CreateNew: Story = {
           <Autocomplete.Item key={name}>{name}</Autocomplete.Item>
         ))}
         {value.trim() && !exact ? (
-          <Autocomplete.Item data-create={value.trim()} leadingVisual={<Icon name="add" />}>
+          <Autocomplete.Item data-create={value.trim()} leadingVisual="add">
             Create “{value.trim()}”
           </Autocomplete.Item>
         ) : null}

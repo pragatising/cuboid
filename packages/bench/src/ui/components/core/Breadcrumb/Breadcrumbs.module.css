@@ -1,0 +1,25 @@
+/* Layout only. Gap, separator width and colour, and font come from the `breadcrumb` tokens, set inline by Breadcrumbs.tsx. */
+.Breadcrumbs {
+  min-width: 0;
+}
+
+.List {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.Item {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.Separator {
+  flex-shrink: 0;
+  text-align: center;
+  user-select: none;
+}

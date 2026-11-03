@@ -1,0 +1,1 @@
+export { smartLink } from "./smartLink";

@@ -1,0 +1,27 @@
+/* No tokens of its own: the spacing and radius are the size scale, the colours are semantic (ColorPicker.tsx). Every swatch's own colour
+   arrives as `--swatch`, set by the caller from a token it resolved, so no colour is written in this file. */
+:where(.Panel) {
+  padding: var(--cube-size-12px);
+}
+
+/* A border only where the colour would be lost on the page (white, near-white, transparent): any other colour's border is its own. */
+:where(.Dot[data-outline]) {
+  border-color: var(--cube-borderColor-muted);
+}
+
+/* What is chosen, in the button and in a row: a round chip of the colour; an empty one is a hollow ring. */
+:where(.Dot) {
+  display: inline-block;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: var(--cube-size-12px);
+  height: var(--cube-size-12px);
+  border: 1px solid var(--swatch);
+  border-radius: var(--cube-borderRadius-full);
+  background: var(--swatch);
+}
+
+:where(.Dot[data-empty]) {
+  border-color: var(--cube-borderColor-muted);
+  background: transparent;
+}

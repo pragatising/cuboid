@@ -20,6 +20,17 @@
         },
       },
     },
+    contentMaxWidthWide: {
+      $value: { value: 52, unit: 'rem' },
+      $type: 'dimension',
+      $description: 'The wide reading column: a page set to Wide (between Narrow, the content max width, and Full Width).',
+      $extensions: {
+        'org.cuboid.figma': {
+          collection: 'functional/size',
+          scopes: ['layout'],
+        },
+      },
+    },
     sectionLabelWidth: {
       $value: 'clamp(6.5rem, 25%, 10rem)',
       $type: 'custom-string',

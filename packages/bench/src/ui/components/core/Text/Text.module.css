@@ -1,0 +1,35 @@
+/*
+ * Font and colour are set inline from the `text` tokens (ADR-04). Everything else
+ * is plain CSS, selected by data attributes. `:where()` keeps specificity at zero,
+ * so a consumer's own class always overrides these.
+ */
+.Text {
+  margin: 0;
+  padding: 0;
+}
+
+.Truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.Text:where([data-white-space="normal"]) {
+  white-space: normal;
+}
+
+.Text:where([data-white-space="nowrap"]) {
+  white-space: nowrap;
+}
+
+.Text:where([data-white-space="pre"]) {
+  white-space: pre;
+}
+
+.Text:where([data-white-space="pre-wrap"]) {
+  white-space: pre-wrap;
+}
+
+.Text:where([data-white-space="pre-line"]) {
+  white-space: pre-line;
+}

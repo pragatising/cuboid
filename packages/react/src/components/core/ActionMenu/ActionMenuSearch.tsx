@@ -37,7 +37,7 @@ export function ActionMenuSearch({ className, autoFocus = true, onKeyDown, ...pr
         role="combobox"
         autoComplete="off"
         autoFocus={autoFocus}
-        leadingVisual={<Icon name="search" />}
+        leadingVisual="search"
         aria-expanded
         aria-haspopup="listbox"
         aria-autocomplete="list"

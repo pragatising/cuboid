@@ -34,6 +34,7 @@
     "./css/theme.css": "./dist/css/theme.css",
     "./css/*": "./dist/css/*",
     "./applyOverrides": "./src/applyOverrides.ts",
+    "./build": "./src/build.ts",
     "./package.json": "./package.json",
     "./icons/icon-fonts.css": "./icons/icon-fonts.css",
     "./icons/fonts/*": "./icons/fonts/*",
@@ -47,6 +48,7 @@
     "dist",
     "icons",
     "src/tokens",
-    "src/applyOverrides.ts"
+    "src/applyOverrides.ts",
+    "src/build.ts"
   ]
 }

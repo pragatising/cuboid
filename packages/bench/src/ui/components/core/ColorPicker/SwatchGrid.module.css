@@ -1,0 +1,75 @@
+/* No tokens of its own: the spacing and radius are the size scale, the colours are semantic. Every swatch's own colour arrives as `--swatch`,
+   set by the caller from a token it resolved, so no colour is written in this file. */
+:where(.Grid) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cube-size-4px);
+}
+
+:where(.Group) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cube-size-4px);
+}
+
+:where(.Row) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cube-size-4px);
+}
+
+:where(.Row[data-columns]) {
+  display: grid;
+  grid-template-columns: repeat(var(--columns), var(--cube-size-22px));
+}
+
+:where(.Swatch) {
+  appearance: none;
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  width: var(--cube-size-22px);
+  height: var(--cube-size-22px);
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--swatch);
+  border-radius: var(--cube-borderRadius-sm);
+  background: var(--swatch);
+  color: var(--cube-fgColor-neutral-default);
+  font: var(--cube-text-body-shorthand-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* A text colour: the letter is the colour, on a quiet tile, so what is chosen is the ink and not the paper. */
+:where(.Swatch[data-appearance="text"]) {
+  border-color: var(--cube-borderColor-muted);
+  background: var(--cube-bgColor-canvas-inset);
+  color: var(--swatch);
+}
+
+/* A border only where the colour would be lost on the page (white, near-white, transparent): any other colour's border is its own. */
+:where(.Swatch[data-outline]) {
+  border-color: var(--cube-borderColor-muted);
+}
+
+/* The one chosen, and the one focused, are marked the same way, as the design has it: a ring in the focus colour outside the tile, set off
+   from it by a line of the canvas colour. Together they reach 3px past the tile, so with a 4px gap between tiles the ring clears its
+   neighbours; it follows the tile's rounded corners. No outline is used. */
+:where(.Swatch[aria-checked="true"], .Swatch:focus-visible) {
+  box-shadow:
+    0 0 0 var(--cube-size-1px) var(--cube-bgColor-canvas-default),
+    0 0 0 calc(var(--cube-size-1px) + var(--cube-size-2px)) var(--cube-focusRing-color);
+}
+
+:where(.Swatch:focus-visible) {
+  outline: none;
+}
+
+/* "No colour": a plain tile with a slash through it, in the colour of an error, as a document editor draws it. */
+:where(.Swatch[data-none]) {
+  border-color: var(--cube-borderColor-muted);
+  background:
+    linear-gradient(to top right, transparent calc(50% - 1px), var(--cube-fgColor-danger-strong) calc(50% - 1px), var(--cube-fgColor-danger-strong) calc(50% + 1px), transparent calc(50% + 1px)),
+    var(--cube-bgColor-canvas-default);
+}

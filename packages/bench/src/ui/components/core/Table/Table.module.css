@@ -1,0 +1,146 @@
+/*
+ * Layout, dividers and states only. TableRoot resolves the `table` tokens (for the chosen density) into element-scoped
+ * variables (--table-row-height, --table-header-bg, …; see Table.tsx and utils/cssVars.ts) that the parts below read.
+ * Zero specificity (:where), so a consumer's own class can override any of it.
+ */
+:where(.TableRoot) {
+  box-sizing: border-box;
+  width: 100%;
+  overflow: auto;
+  border: var(--table-border-width) solid var(--table-container-border);
+  border-radius: var(--table-border-radius);
+}
+
+:where(.Table) {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+}
+
+/* lines=grid: full grid (default cell borders) */
+:where(.TableRoot[data-lines="grid"] .TableHeadCell, .TableRoot[data-lines="grid"] .TableCell) {
+  border-right: var(--table-border-width) solid var(--table-header-border);
+  border-bottom: var(--table-border-width) solid var(--table-header-border);
+}
+
+:where(.TableRoot[data-lines="grid"] .TableCell) {
+  border-right-color: var(--table-body-border);
+  border-bottom-color: var(--table-body-border);
+}
+
+:where(.TableRoot[data-lines="grid"] .TableHeadCell:last-child, .TableRoot[data-lines="grid"] .TableCell:last-child) {
+  border-right: none;
+}
+
+/* lines=rows: horizontal dividers only */
+:where(.TableRoot[data-lines="rows"] .TableHeadCell, .TableRoot[data-lines="rows"] .TableCell) {
+  border-right: none;
+  border-bottom: var(--table-border-width) solid var(--table-header-border);
+}
+
+:where(.TableRoot[data-lines="rows"] .TableCell) {
+  border-bottom-color: var(--table-body-border);
+}
+
+/* the last body row never draws a bottom line: the outer frame does */
+:where(.TableRoot[data-lines="grid"] .TableBody .TableRow:last-child .TableCell, .TableRoot[data-lines="rows"] .TableBody .TableRow:last-child .TableCell) {
+  border-bottom: none;
+}
+
+/* lines=none: borderless interior; outer frame on .TableRoot */
+:where(.TableRoot[data-lines="none"] .TableHeadCell, .TableRoot[data-lines="none"] .TableCell) {
+  border-right: none;
+  border-bottom: none;
+}
+
+:where(.TableHeadCell) {
+  box-sizing: border-box;
+  height: var(--table-row-height);
+  padding: var(--table-cell-padding-block) var(--table-cell-padding-inline);
+  text-align: left;
+  vertical-align: middle;
+  font: var(--table-header-font);
+  font-weight: var(--table-header-weight);
+  color: var(--table-header-fg);
+  background-color: var(--table-header-bg);
+}
+
+:where(.TableHeadCell[data-align="center"], .TableCell[data-align="center"]) {
+  text-align: center;
+}
+
+:where(.TableHeadCell[data-align="right"], .TableCell[data-align="right"]) {
+  text-align: right;
+}
+
+:where(.TableSortButton) {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--table-sort-gap);
+  max-width: 100%;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
+}
+
+:where(.TableSortButton:hover) {
+  color: var(--table-body-fg);
+}
+
+:where(.TableSortButton:active) {
+  opacity: 0.72;
+}
+
+:where(.TableSortButton:focus-visible) {
+  outline: var(--table-focus-width) solid var(--table-focus-color);
+  outline-offset: var(--table-focus-offset);
+}
+
+:where(.TableCell) {
+  box-sizing: border-box;
+  padding: var(--table-cell-padding-block) var(--table-cell-padding-inline);
+  text-align: left;
+  vertical-align: middle;
+  font: var(--table-body-font);
+  color: var(--table-body-fg);
+  background-color: var(--table-body-bg);
+}
+
+:where(.TableCell[data-row-layout="truncate"], .TableCell[data-row-layout="fixed"]) {
+  height: var(--table-row-height);
+  max-height: var(--table-row-height);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:where(.TableCell[data-row-layout="wrap"]) {
+  min-height: var(--table-row-height);
+  height: auto;
+  max-height: none;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+:where(.TableCellInner) {
+  display: block;
+  min-width: 0;
+}
+
+:where(.TableCell[data-row-layout="truncate"] .TableCellInner, .TableCell[data-row-layout="fixed"] .TableCellInner) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:where(.TableCell[data-row-layout="wrap"] .TableCellInner) {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}

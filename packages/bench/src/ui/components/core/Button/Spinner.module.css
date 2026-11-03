@@ -1,0 +1,15 @@
+:where(.Spinner) {
+  animation: spinner-rotate 800ms linear infinite;
+}
+
+@keyframes spinner-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.Spinner) {
+    animation-duration: 2400ms;
+  }
+}

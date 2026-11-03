@@ -28,27 +28,47 @@ export type SyntaxKey =
   | "componentTag"
   | "tagBracket"
   | "jsxText"
-  | "jsxAttribute";
+  | "jsxAttribute"
+  // The TypeScript and React vocabulary: what a language with more kinds of name than JSON needs said apart.
+  | "docComment"
+  | "docTag"
+  | "storage"
+  | "functionDeclaration"
+  | "parameter"
+  | "constant"
+  | "stringEscape"
+  | "templateInterpolation"
+  | "operator"
+  | "punctuation"
+  | "bracketLevel1"
+  | "bracketLevel2"
+  | "bracketLevel3"
+  | "htmlTag";
+
+/** Which language's colours the kinds that every language has (a string, a number, a boolean) take. */
+export type SyntaxLanguage = "json" | "typescript";
 
 export type SyntaxColors = Record<SyntaxKey, string>;
 
 /**
- * One colour per `SyntaxKey`: JSON's own for the JSON value kinds, and the shared kinds (string URL / email / UUID,
- * the code-only kinds) from the TypeScript, HTML and CSS groups, since JSON has no tokens of its own for them.
+ * One colour per `SyntaxKey`: the code-only kinds (string URL / email / UUID, keywords, tags) from the TypeScript, HTML and CSS
+ * groups, and the kinds every language has (a string, a number, a boolean, a bracket) from the language asked for: JSON's own for
+ * JSON, which is what a viewer of data draws, and TypeScript's for code, which has its own readable set.
  */
-export function resolveSyntaxColors({ syntax }: Pick<Tokens, "syntax">): SyntaxColors {
+export function resolveSyntaxColors({ syntax }: Pick<Tokens, "syntax">, language: SyntaxLanguage = "json"): SyntaxColors {
   const { json, typescript: ts, html, css } = syntax;
+  const own = language === "typescript" ? ts : json;
   return {
     key: json.key,
-    string: json.string,
+    string: own.string,
     stringUrl: ts.stringUrl,
     stringEmail: ts.stringEmail,
     stringUuid: ts.stringUuid,
-    numberLiteral: json.numberLiteral,
-    booleanLiteral: json.booleanLiteral,
-    nullLiteral: json.nullLiteral,
-    bracket: json.bracket,
-    bracketNested: json.bracketNested,
+    numberLiteral: own.numberLiteral,
+    booleanLiteral: own.booleanLiteral,
+    nullLiteral: own.nullLiteral,
+    bracket: language === "typescript" ? ts.bracketLevel1 : json.bracket,
+    bracketNested: language === "typescript" ? ts.bracketLevel2 : json.bracketNested,
     comment: ts.comment,
     keyword: ts.keyword,
     entityTag: html.entityTag,
@@ -64,6 +84,20 @@ export function resolveSyntaxColors({ syntax }: Pick<Tokens, "syntax">): SyntaxC
     tagBracket: ts.tagBracket,
     jsxText: ts.jsxText,
     jsxAttribute: ts.jsxAttribute,
+    docComment: ts.docComment,
+    docTag: ts.docTag,
+    storage: ts.storage,
+    functionDeclaration: ts.functionDeclaration,
+    parameter: ts.parameter,
+    constant: ts.constant,
+    stringEscape: ts.stringEscape,
+    templateInterpolation: ts.templateInterpolation,
+    operator: ts.operator,
+    punctuation: ts.punctuation,
+    bracketLevel1: ts.bracketLevel1,
+    bracketLevel2: ts.bracketLevel2,
+    bracketLevel3: ts.bracketLevel3,
+    htmlTag: ts.htmlTag,
   };
 }
 

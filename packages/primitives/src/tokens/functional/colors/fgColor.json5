@@ -7,7 +7,7 @@
         $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
       },
       disabled: {
-        $value: '{base.color.gray.5}',
+        $value: '{base.color.gray.6}',
         $type: 'color',
         $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
       },
@@ -18,18 +18,18 @@
         $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
       },
       muted: {
-        $value: '{base.color.gray.7}',
+        $value: '{base.color.gray.8}',
         $type: 'color',
         $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
       },
       default: {
-        $value: '{base.color.gray.8}',
+        $value: '{base.color.gray.9}',
         $type: 'color',
         $description: 'Default text/icon color for most content',
         $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
       },
       contrast: {
-        $value: '{base.color.gray.10}',
+        $value: '{base.color.gray.12}',
         $type: 'color',
         $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
       },
@@ -120,9 +120,13 @@
         $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
       },
       strong: {
-        $value: '{base.color.green.9}',
+        $value: '{base.color.green.10}',
         $type: 'color',
-        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+        $description: 'Text colour: 4.5:1 or better on the canvas in both modes (green.9 is 4.1:1 in light, and the dark default 3.0:1). Light uses green.10. GAP: the dark green scale tops out at 4.2:1, so dark is a literal (#4a9a35, 4.8:1); add a base step and alias it.',
+        $extensions: {
+          'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] },
+          'org.cuboid.overrides': { dark: '#4a9a35' },
+        },
       },
     },
     danger: {
@@ -182,9 +186,13 @@
         $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
       },
       strong: {
-        $value: '{base.color.orange.9}',
+        $value: '{base.color.orange.10}',
         $type: 'color',
-        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+        $description: 'Text colour: 4.5:1 or better on the canvas in both modes (orange.9 is 4.4:1). Light uses orange.10, dark orange.10 (5.0:1).',
+        $extensions: {
+          'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] },
+          'org.cuboid.overrides': { dark: '{base.color.orange.10}' },
+        },
       },
     },
     error: {
@@ -222,9 +230,13 @@
         $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
       },
       strong: {
-        $value: '{base.color.yellow.9}',
+        $value: '{base.color.yellow.10}',
         $type: 'color',
-        $extensions: { 'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] } },
+        $description: 'Text colour: 4.5:1 or better on the canvas in both modes (yellow.9 is 2.7:1 in light, and the dark default 2.7:1). Light uses yellow.10. GAP: the dark yellow scale tops out at 3.6:1, so dark is a literal (#bd8000, 5.1:1); add a base step and alias it.',
+        $extensions: {
+          'org.cuboid.figma': { collection: 'mode', group: 'semantic', scopes: ['fgColor'] },
+          'org.cuboid.overrides': { dark: '#bd8000' },
+        },
       },
     },
   },

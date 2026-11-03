@@ -16,7 +16,7 @@ behavesAsComponent({
 });
 behavesAsComponent({
   Component: BreadcrumbLink,
-  dataComponent: "BreadcrumbLink",
+  dataComponent: "Breadcrumbs.Link",
   baseClassName: linkClasses.BreadcrumbLink,
   props: { href: "/x", children: "Home" },
 });

@@ -1,15 +1,22 @@
 import { defineConfig } from "vitest/config";
+import { fileURLToPath } from "node:url";
 import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  resolve: { dedupe: ["react", "react-dom"] },
+  resolve: {
+    dedupe: ["react", "react-dom"],
+    alias: {
+      // The editor by its name, as its tests and examples import it: this source, not a build.
+      "@sragatiping/cuboid-editor": fileURLToPath(new URL("../editor/src/index.ts", import.meta.url)),
+    },
+  },
   // Keep CSS-module class names as written (`Divider`, not `_Divider_6ff8w_2`) so tests can assert on them.
   css: { modules: { classNameStrategy: "non-scoped" } },
   test: {
     environment: "jsdom",
     setupFiles: ["./src/test/setup.ts"],
-    include: ["src/**/*.test.{ts,tsx}", "dev/**/*.test.{ts,tsx}"],
+    include: ["src/**/*.test.{ts,tsx}"],
     // Type-level tests (`*.test-d.ts(x)`, written with `expectTypeOf`). `ignoreSourceErrors` is on because
     // components not yet migrated off the old theme seam still fail `tsc`; only errors in the test-d files count.
     typecheck: {

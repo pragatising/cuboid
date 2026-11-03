@@ -15,8 +15,10 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "baseUrl": ".",
+    "paths": { "@sragatiping/cuboid": ["src/index.ts"] }
   },
   "include": ["src"],
-  "exclude": ["node_modules", "dist", "dev", "src/**/*.test.ts", "src/**/*.test.tsx", "src/**/*.test-d.ts", "src/**/*.test-d.tsx", "src/**/*.examples.tsx", "src/test"]
+  "exclude": ["node_modules", "dist", "dev", "src/**/*.test.ts", "src/**/*.test.tsx", "src/**/*.test-d.ts", "src/**/*.test-d.tsx", "src/test"]
 }

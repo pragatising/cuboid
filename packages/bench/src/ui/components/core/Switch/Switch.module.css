@@ -1,0 +1,119 @@
+/*
+ * The label and the track. Every value comes from the `--cube-switch-*` variables the token build publishes (light on :root,
+ * dark under [data-mode="dark"]); the browser picks the state (:hover, :checked, :disabled, :focus-visible), so the element
+ * carries no inline style. The input is the track (appearance none) and its ::after is the thumb, so the control and its
+ * look are one element and `className` / `ref` land on what a person sees.
+ * Everything is zero-specificity (:where) so a consumer's own class can override any of it.
+ * Switch.test.tsx fails if a --cube-* variable used here is missing from the built theme.css.
+ */
+
+:where(.Switch) {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cube-switch-sizes-gap);
+  cursor: pointer;
+}
+
+:where(.Switch[data-disabled]) {
+  cursor: not-allowed;
+}
+
+:where(.Label) {
+  flex: 1 1 auto;
+  min-width: 0;
+  color: var(--cube-switch-label-fgColor-rest);
+  font: var(--cube-text-size-md);
+}
+
+:where(.Switch[data-disabled] .Label) {
+  color: var(--cube-switch-label-fgColor-disabled);
+}
+
+/* Colours: off at rest, then what each state changes. Later rules win (all have the same specificity). */
+:where(.Control) {
+  --switch-track-bg: var(--cube-switch-track-bgColor-off-rest);
+  --switch-track-border: var(--cube-switch-track-borderColor-off-rest);
+  --switch-thumb-bg: var(--cube-switch-thumb-bgColor-off-rest);
+  --switch-thumb-shadow: none;
+  /* The thumb sits (track height - thumb - the two borders) / 2 from the inside edge, the same on every side. */
+  --switch-inset: calc((var(--cube-switch-sizes-trackHeight) - var(--cube-switch-sizes-thumb) - 2 * var(--cube-borderWidth-thin)) / 2);
+
+  appearance: none;
+  position: relative;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  width: var(--cube-switch-sizes-trackWidth);
+  height: var(--cube-switch-sizes-trackHeight);
+  margin: 0;
+  border: var(--cube-borderWidth-thin) solid var(--switch-track-border);
+  border-radius: var(--cube-borderRadius-full);
+  background-color: var(--switch-track-bg);
+  cursor: inherit;
+  transition:
+    background-color var(--cube-motion-transition-stateChange),
+    border-color var(--cube-motion-transition-stateChange);
+}
+
+:where(.Control)::after {
+  content: "";
+  position: absolute;
+  top: var(--switch-inset);
+  left: var(--switch-inset);
+  width: var(--cube-switch-sizes-thumb);
+  height: var(--cube-switch-sizes-thumb);
+  border-radius: var(--cube-borderRadius-full);
+  background-color: var(--switch-thumb-bg);
+  box-shadow: var(--switch-thumb-shadow);
+  transition:
+    transform var(--cube-motion-transition-stateChange),
+    background-color var(--cube-motion-transition-stateChange);
+}
+
+:where(.Control:hover:not(:disabled)) {
+  --switch-track-bg: var(--cube-switch-track-bgColor-off-hover);
+  --switch-track-border: var(--cube-switch-track-borderColor-off-hover);
+  --switch-thumb-bg: var(--cube-switch-thumb-bgColor-off-hover);
+}
+
+:where(.Control:checked) {
+  --switch-track-bg: var(--cube-switch-track-bgColor-on-rest);
+  --switch-track-border: var(--cube-switch-track-borderColor-on-rest);
+  --switch-thumb-bg: var(--cube-switch-thumb-bgColor-on-rest);
+  --switch-thumb-shadow: var(--cube-switch-thumb-boxShadow);
+}
+
+/* On: the thumb moves to the other end. */
+:where(.Control:checked)::after {
+  transform: translateX(calc(var(--cube-switch-sizes-trackWidth) - var(--cube-switch-sizes-thumb) - 2 * var(--cube-borderWidth-thin) - 2 * var(--switch-inset)));
+}
+
+:where(.Control:checked:hover:not(:disabled)) {
+  --switch-track-bg: var(--cube-switch-track-bgColor-on-hover);
+  --switch-track-border: var(--cube-switch-track-borderColor-on-hover);
+  --switch-thumb-bg: var(--cube-switch-thumb-bgColor-on-hover);
+}
+
+:where(.Control:disabled) {
+  --switch-track-bg: var(--cube-switch-track-bgColor-off-disabled);
+  --switch-track-border: var(--cube-switch-track-borderColor-off-disabled);
+  --switch-thumb-bg: var(--cube-switch-thumb-bgColor-off-disabled);
+}
+
+:where(.Control:checked:disabled) {
+  --switch-track-bg: var(--cube-switch-track-bgColor-on-disabled);
+  --switch-track-border: var(--cube-switch-track-borderColor-on-disabled);
+  --switch-thumb-bg: var(--cube-switch-thumb-bgColor-on-disabled);
+  --switch-thumb-shadow: none;
+}
+
+:where(.Control:focus-visible) {
+  outline: var(--cube-focusRing-width) solid var(--cube-focusRing-color);
+  outline-offset: var(--cube-focusRing-offset);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.Control),
+  :where(.Control)::after {
+    transition: none;
+  }
+}

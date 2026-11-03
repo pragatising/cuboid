@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Box } from "../Box";
-import { BreadcrumbLink } from "./BreadcrumbLink";
 import { Breadcrumbs } from "./Breadcrumbs";
 
 const meta: Meta<typeof Breadcrumbs> = {
@@ -42,8 +41,8 @@ export const LinkStates: Story = {
   name: "Link states",
   render: () => (
     <Box flexDirection="row" gap="2x">
-      <BreadcrumbLink href="#rest">Rest (link)</BreadcrumbLink>
-      <BreadcrumbLink current>Active (current page)</BreadcrumbLink>
+      <Breadcrumbs.Link href="#rest">Rest (link)</Breadcrumbs.Link>
+      <Breadcrumbs.Link current>Active (current page)</Breadcrumbs.Link>
     </Box>
   ),
 };

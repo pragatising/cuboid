@@ -22,8 +22,8 @@ export const WithVisuals: Story = {
   args: {
     label: "Search",
     placeholder: "placeholder",
-    leadingVisual: <Icon name="search" />,
-    trailingVisual: <Icon name="keyboard_arrow_down" />,
+    leadingVisual: "search",
+    trailingVisual: "keyboard_arrow_down",
   },
 };
 
@@ -31,8 +31,8 @@ export const WithExtras: Story = {
   name: "Label help, count, help and error visuals",
   render: () => (
     <Box flexDirection="column" gap="md">
-      <InputText label="Display name" labelHelp="Shown to everyone on your team." description="As it appears on your ID." descriptionVisual={<Icon name="info" />} showCount maxLength={30} defaultValue="Ada" />
-      <InputText label="Email" error="Enter a valid address" errorVisual={<Icon name="error" />} defaultValue="ada@" />
+      <InputText label="Display name" labelHelp="Shown to everyone on your team." description="As it appears on your ID." descriptionVisual="info" showCount maxLength={30} defaultValue="Ada" />
+      <InputText label="Email" error="Enter a valid address" errorVisual="error" defaultValue="ada@" />
     </Box>
   ),
 };
@@ -46,9 +46,9 @@ export const Disabled: Story = { args: { label: "Name", defaultValue: "value", d
 export const Sizes: Story = {
   render: () => (
     <Box flexDirection="column" gap="md">
-      <InputText size="lg" label="lg (32px)" defaultValue="value" leadingVisual={<Icon name="search" />} />
-      <InputText size="md" label="md (28px)" defaultValue="value" leadingVisual={<Icon name="search" />} />
-      <InputText size="sm" label="sm (24px)" defaultValue="value" leadingVisual={<Icon name="search" />} />
+      <InputText size="lg" label="lg (32px)" defaultValue="value" leadingVisual="search" />
+      <InputText size="md" label="md (28px)" defaultValue="value" leadingVisual="search" />
+      <InputText size="sm" label="sm (24px)" defaultValue="value" leadingVisual="search" />
     </Box>
   ),
 };

@@ -1,0 +1,9 @@
+/*
+ * Colours, spacing, radius and z-index are set inline from the tokens (ADR-04). `display: flex` is
+ * the default and lives here at zero specificity (`:where`), so the `display` prop, `style`, or a
+ * consumer's own class all override it.
+ */
+:where(.Box) {
+  display: flex;
+  box-sizing: border-box;
+}

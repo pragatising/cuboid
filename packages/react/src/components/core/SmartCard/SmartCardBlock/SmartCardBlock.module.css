@@ -1,0 +1,21 @@
+/* Only what a prop cannot say: clamping text to a number of lines, and an image that fills a ratio. The frame, the rows and their
+   spacing are Box props (the parts). */
+:where(.Snippet) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--smartcard-snippet-lines, 3);
+  line-clamp: var(--smartcard-snippet-lines, 3);
+  overflow: hidden;
+}
+
+:where(.Preview) {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+}
+
+:where(.Metadata) {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}

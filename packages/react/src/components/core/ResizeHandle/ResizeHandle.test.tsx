@@ -5,6 +5,7 @@ import tokens from "@sragatiping/cuboid-primitives";
 import { behavesAsComponent, expectNoAxeViolations } from "../../../test/testing";
 import { ResizeHandle } from "./ResizeHandle";
 import type { ResizeHandleProps } from "./ResizeHandle";
+import { cubeVariablesRead, readSource, resolveVariable, themeVariables } from "../../../test/themeCss";
 import classes from "./ResizeHandle.module.css";
 
 const base = { edge: "right", value: 200, min: 100, max: 400, onValueChange: () => {} } as const;
@@ -18,6 +19,45 @@ const capture = () => {
   handle().releasePointerCapture = vi.fn();
 };
 const setup = (props: Partial<ResizeHandleProps> = {}) => render(<ResizeHandle {...base} {...props} />);
+
+describe("ResizeHandle: line", () => {
+  it("draws its line only on hover, focus or drag by default, and always with indicator=always", () => {
+    const { rerender } = setup();
+    expect(handle()).toHaveAttribute("data-indicator", "hover");
+    rerender(<ResizeHandle {...base} indicator="always" />);
+    expect(handle()).toHaveAttribute("data-indicator", "always");
+  });
+
+  it("reads only --cube-* variables that exist in the built theme.css, in both modes, the active colour being the focus colour", () => {
+    const read = cubeVariablesRead(readSource("src/components/core/ResizeHandle/ResizeHandle.module.css"));
+    expect(read).toContain("--cube-resizeHandle-line-color-active");
+    for (const variable of read) {
+      expect(themeVariables().light.has(variable), `${variable} (light)`).toBe(true);
+      expect(themeVariables().dark.has(variable), `${variable} (dark)`).toBe(true);
+    }
+    for (const mode of ["light", "dark"] as const) {
+      expect(resolveVariable("--cube-resizeHandle-line-color-active", mode)).toBe(resolveVariable("--cube-focusRing-color", mode));
+    }
+  });
+});
+
+describe("ResizeHandle: grip", () => {
+  it("draws a line unless it is a grip", () => {
+    const { rerender } = setup();
+    expect(handle()).toHaveAttribute("data-shape", "line");
+    rerender(<ResizeHandle {...base} shape="grip" />);
+    expect(handle()).toHaveAttribute("data-shape", "grip");
+  });
+
+  it("reads the grip tokens, which exist in both modes", () => {
+    const read = cubeVariablesRead(readSource("src/components/core/ResizeHandle/ResizeHandle.module.css"));
+    for (const name of ["--cube-resizeHandle-grip-length", "--cube-resizeHandle-grip-width", "--cube-resizeHandle-grip-color"]) {
+      expect(read).toContain(name);
+      expect(themeVariables().light.has(name), `${name} (light)`).toBe(true);
+      expect(themeVariables().dark.has(name), `${name} (dark)`).toBe(true);
+    }
+  });
+});
 
 describe("ResizeHandle: semantics (the WAI-ARIA window splitter)", () => {
   it("is a focusable separator named Resize by default, with its value and range", () => {

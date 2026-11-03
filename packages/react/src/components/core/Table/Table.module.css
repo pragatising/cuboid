@@ -1,117 +1,78 @@
 /*
- * Layout, dividers and states only. TableRoot resolves the `table` tokens (for the chosen density) into element-scoped
- * variables (--table-row-height, --table-header-bg, …; see Table.tsx and utils/cssVars.ts) that the parts below read.
- * Zero specificity (:where), so a consumer's own class can override any of it.
+ * A table: the frame, the dividers, the cells and their states. All of it is CSS keyed on the parts' `data-component`, so the same
+ * rules draw a table built from the parts and one an editor builds as plain DOM. Every colour and size is a `--cube-table-*` token.
+ * The root picks the density (`data-density`) and hands the chosen row height and padding to the parts as `--table-*` variables.
+ * Every rule is `:where()`, zero specificity, so a consumer's one class overrides any of it.
  */
-:where(.TableRoot) {
+
+/* Base: the frame, and the density it hands down. */
+:where([data-component="Table.Root"]) {
+  --table-row-height: var(--cube-table-sizes-density-spacious-rowHeight);
+  --table-cell-padding-inline: var(--cube-table-sizes-density-spacious-cellPaddingInline);
+  --table-cell-padding-block: var(--cube-table-sizes-density-spacious-cellPaddingBlock);
+
   box-sizing: border-box;
   width: 100%;
   overflow: auto;
-  border: var(--table-border-width) solid var(--table-container-border);
-  border-radius: var(--table-border-radius);
+  border: var(--cube-borderWidth-thin) solid var(--cube-table-color-container-borderColor);
+  border-radius: var(--cube-table-sizes-borderRadius);
 }
 
-:where(.Table) {
+:where([data-component="Table.Root"][data-density="dense"]) {
+  --table-row-height: var(--cube-table-sizes-density-dense-rowHeight);
+  --table-cell-padding-inline: var(--cube-table-sizes-density-dense-cellPaddingInline);
+  --table-cell-padding-block: var(--cube-table-sizes-density-dense-cellPaddingBlock);
+}
+
+:where([data-component="Table"]) {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
+}
+
+/* Fixed shares the container's width, so the columns are equal and a long cell is cut off; it needs a container that has a width. */
+:where([data-layout="fixed"] [data-component="Table"], [data-layout="scroll"] [data-component="Table"]) {
   table-layout: fixed;
 }
 
-/* lines=grid: full grid (default cell borders) */
-:where(.TableRoot[data-lines="grid"] .TableHeadCell, .TableRoot[data-lines="grid"] .TableCell) {
-  border-right: var(--table-border-width) solid var(--table-header-border);
-  border-bottom: var(--table-border-width) solid var(--table-header-border);
+/* Scroll is fixed with a floor: never narrower than the columns' own widths, so it fills a wide container and the frame scrolls in a narrow one. */
+:where([data-layout="scroll"] [data-component="Table"]) {
+  min-width: max-content;
 }
 
-:where(.TableRoot[data-lines="grid"] .TableCell) {
-  border-right-color: var(--table-body-border);
-  border-bottom-color: var(--table-body-border);
-}
-
-:where(.TableRoot[data-lines="grid"] .TableHeadCell:last-child, .TableRoot[data-lines="grid"] .TableCell:last-child) {
-  border-right: none;
-}
-
-/* lines=rows: horizontal dividers only */
-:where(.TableRoot[data-lines="rows"] .TableHeadCell, .TableRoot[data-lines="rows"] .TableCell) {
-  border-right: none;
-  border-bottom: var(--table-border-width) solid var(--table-header-border);
-}
-
-:where(.TableRoot[data-lines="rows"] .TableCell) {
-  border-bottom-color: var(--table-body-border);
-}
-
-/* the last body row never draws a bottom line: the outer frame does */
-:where(.TableRoot[data-lines="grid"] .TableBody .TableRow:last-child .TableCell, .TableRoot[data-lines="rows"] .TableBody .TableRow:last-child .TableCell) {
-  border-bottom: none;
-}
-
-/* lines=none: borderless interior; outer frame on .TableRoot */
-:where(.TableRoot[data-lines="none"] .TableHeadCell, .TableRoot[data-lines="none"] .TableCell) {
-  border-right: none;
-  border-bottom: none;
-}
-
-:where(.TableHeadCell) {
+/* Cells. */
+:where([data-component="Table.HeadCell"]) {
   box-sizing: border-box;
   height: var(--table-row-height);
   padding: var(--table-cell-padding-block) var(--table-cell-padding-inline);
   text-align: left;
   vertical-align: middle;
-  font: var(--table-header-font);
-  font-weight: var(--table-header-weight);
-  color: var(--table-header-fg);
-  background-color: var(--table-header-bg);
+  font: var(--cube-text-size-md);
+  font-weight: var(--cube-fontWeight-medium);
+  color: var(--cube-table-color-header-fgColor);
+  background-color: var(--cube-table-color-header-bgColor);
 }
 
-:where(.TableHeadCell[data-align="center"], .TableCell[data-align="center"]) {
-  text-align: center;
-}
-
-:where(.TableHeadCell[data-align="right"], .TableCell[data-align="right"]) {
-  text-align: right;
-}
-
-:where(.TableSortButton) {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--table-sort-gap);
-  max-width: 100%;
-  padding: 0;
-  border: 0;
-  color: inherit;
-  background: transparent;
-  font: inherit;
-  text-align: inherit;
-  cursor: pointer;
-}
-
-:where(.TableSortButton:hover) {
-  color: var(--table-body-fg);
-}
-
-:where(.TableSortButton:active) {
-  opacity: 0.72;
-}
-
-:where(.TableSortButton:focus-visible) {
-  outline: var(--table-focus-width) solid var(--table-focus-color);
-  outline-offset: var(--table-focus-offset);
-}
-
-:where(.TableCell) {
+:where([data-component="Table.Cell"]) {
   box-sizing: border-box;
   padding: var(--table-cell-padding-block) var(--table-cell-padding-inline);
   text-align: left;
   vertical-align: middle;
-  font: var(--table-body-font);
-  color: var(--table-body-fg);
-  background-color: var(--table-body-bg);
+  font: var(--cube-text-size-md);
+  color: var(--cube-table-color-body-fgColor);
+  background-color: var(--cube-table-color-body-bgColor);
 }
 
-:where(.TableCell[data-row-layout="truncate"], .TableCell[data-row-layout="fixed"]) {
+:where([data-component="Table.HeadCell"][data-align="center"], [data-component="Table.Cell"][data-align="center"]) {
+  text-align: center;
+}
+
+:where([data-component="Table.HeadCell"][data-align="right"], [data-component="Table.Cell"][data-align="right"]) {
+  text-align: right;
+}
+
+/* Row layout: what a cell does with content that does not fit. */
+:where([data-component="Table.Cell"][data-row-layout="truncate"]) {
   height: var(--table-row-height);
   max-height: var(--table-row-height);
   overflow: hidden;
@@ -119,28 +80,133 @@
   white-space: nowrap;
 }
 
-:where(.TableCell[data-row-layout="wrap"]) {
+:where([data-component="Table.Cell"][data-row-layout="wrap"]) {
   min-height: var(--table-row-height);
   height: auto;
   max-height: none;
   white-space: normal;
-  overflow-wrap: anywhere;
-  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
-:where(.TableCellInner) {
+:where([data-component="Table.Cell.Content"]) {
   display: block;
   min-width: 0;
 }
 
-:where(.TableCell[data-row-layout="truncate"] .TableCellInner, .TableCell[data-row-layout="fixed"] .TableCellInner) {
+:where([data-row-layout="truncate"] > [data-component="Table.Cell.Content"]) {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-:where(.TableCell[data-row-layout="wrap"] .TableCellInner) {
+:where([data-row-layout="wrap"] > [data-component="Table.Cell.Content"]) {
   white-space: normal;
-  overflow-wrap: anywhere;
-  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Dividers. The body's colour is the cells'; the header's is its own. */
+:where([data-lines="grid"] [data-component="Table.HeadCell"], [data-lines="grid"] [data-component="Table.Cell"]) {
+  border-right: var(--cube-borderWidth-thin) solid var(--cube-table-color-header-borderColor);
+  border-bottom: var(--cube-borderWidth-thin) solid var(--cube-table-color-header-borderColor);
+}
+
+:where([data-lines="rows"] [data-component="Table.HeadCell"], [data-lines="rows"] [data-component="Table.Cell"]) {
+  border-bottom: var(--cube-borderWidth-thin) solid var(--cube-table-color-header-borderColor);
+}
+
+:where([data-lines="grid"] [data-component="Table.Cell"], [data-lines="rows"] [data-component="Table.Cell"]) {
+  border-bottom-color: var(--cube-table-color-body-borderColor);
+}
+
+:where([data-lines="grid"] [data-component="Table.Cell"]) {
+  border-right-color: var(--cube-table-color-body-borderColor);
+}
+
+/* The last column and the last body row draw no line: the frame does. */
+:where([data-lines="grid"] [data-component="Table.HeadCell"]:last-child, [data-lines="grid"] [data-component="Table.Cell"]:last-child) {
+  border-right: none;
+}
+
+:where([data-lines="grid"] [data-component="Table.Body"] > [data-component="Table.Row"]:last-child > [data-component="Table.Cell"],
+  [data-lines="rows"] [data-component="Table.Body"] > [data-component="Table.Row"]:last-child > [data-component="Table.Cell"]) {
+  border-bottom: none;
+}
+
+/* Header content: the label takes the room there is and is aligned as the column is; the column's menu button or sort mark is at the far end. */
+:where([data-component="Table.HeadCell.Content"]) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--cube-space-xxs);
+  min-width: 0;
+}
+
+:where([data-component="Table.HeadCell.Label"]) {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:where([data-component="Table.HeadCell"][data-align="center"] [data-component="Table.HeadCell.Label"]) {
+  text-align: center;
+}
+
+:where([data-component="Table.HeadCell"][data-align="right"] [data-component="Table.HeadCell.Label"]) {
+  text-align: right;
+}
+
+:where([data-component="Table.HeadCell.SortMark"]) {
+  flex: none;
+}
+
+/* The kebab (an unsorted column's menu button) is out of sight until the header is hovered, holds focus, or its menu is open. A
+   sorted column's arrow is always shown. Where there is no hover, it is always shown. It stays focusable while hidden. */
+:where([data-component="Table.HeadCell.Action"][data-sort="none"]) {
+  flex: none;
+  opacity: 0;
+}
+
+:where(
+  [data-component="Table.HeadCell"]:hover [data-component="Table.HeadCell.Action"],
+  [data-component="Table.HeadCell"]:focus-within [data-component="Table.HeadCell.Action"],
+  [data-component="Table.HeadCell.Action"][aria-expanded="true"]
+) {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  :where([data-component="Table.HeadCell.Action"]) {
+    opacity: 1;
+  }
+}
+
+:where([data-component="Table.HeadCell.Action"]:not([data-sort="none"])) {
+  flex: none;
+}
+
+/* Loading: a bar where the value will be. */
+:where([data-component="Table.Cell.Skeleton"]) {
+  display: block;
+  width: 100%;
+  height: var(--cube-size-10px);
+  border-radius: var(--cube-borderRadius-full);
+  background-color: var(--cube-table-color-skeleton-bgColor);
+}
+
+/* A truncated cell's text is a tab stop that opens the whole text. The box that clips is the whole cell's width, so all of it is the control:
+   a pointer says so, and the ring goes round the whole cell while the text is focused or its popover is open, as the frame draws it. */
+:where([data-component="Table.Cell.Content"][data-truncated]) {
+  cursor: pointer;
+}
+
+:where([data-component="Table.Cell.Reveal"]) {
+  outline: none;
+}
+
+:where([data-component="Table.Cell"]:has([data-component="Table.Cell.Reveal"]:is(:focus, [aria-expanded="true"]))) {
+  outline: var(--cube-focusRing-width) solid var(--cube-focusRing-color);
+  outline-offset: calc(var(--cube-focusRing-width) * -1);
+  border-radius: var(--cube-borderRadius-sm);
 }

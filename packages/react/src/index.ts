@@ -1,9 +1,8 @@
 // ── Core primitives ───────────────────────────────────────────────────────────
 
-export { Table, SimpleTable } from "./components/core/Table";
+export { Table } from "./components/core/Table";
 export type {
   TableProps,
-  TableRootProps,
   TableHeaderProps,
   TableBodyProps,
   TableRowProps,
@@ -12,9 +11,14 @@ export type {
   TableRowLayout,
   TableCellAlign,
   TableDensity,
+  TableLayout,
   TableLines,
-  SimpleTableProps,
+  TableSort,
 } from "./components/core/Table";
+export { useTableColumns } from "./components/core/Table";
+export type { ColumnMove, ColumnSort, HeadCellOptions, HeadCellProps, TableColumn, TableColumnLabels, TableColumnsOptions } from "./components/core/Table";
+export { SimpleTable } from "./components/core/SimpleTable";
+export type { SimpleTableProps } from "./components/core/SimpleTable";
 export type { ColumnDef, OnChangeFn, Row, SortingState } from "@tanstack/react-table";
 
 export { Container } from "./components/core/Container";
@@ -48,6 +52,8 @@ export type { ButtonProps } from "./components/core/Button";
 export { IconButton } from "./components/core/IconButton";
 export type { IconButtonProps } from "./components/core/IconButton";
 
+export { InputField } from "./components/core/InputField";
+export type { InputFieldProps, InputFieldSize, InputShellProps } from "./components/core/InputField";
 export { InputText } from "./components/core/InputText";
 export type { InputTextProps } from "./components/core/InputText";
 
@@ -69,9 +75,9 @@ export { Link } from "./components/core/Link";
 export type { LinkProps, LinkVariant, LinkSize, LinkUnderline } from "./components/core/Link";
 
 export { Pill } from "./components/core/Pill";
-export type { PillProps, PillShade, PillIntensity, PillSize } from "./components/core/Pill";
+export type { PillProps, PillShade, PillIntensity } from "./components/core/Pill";
 
-export { BreadcrumbLink, Breadcrumbs } from "./components/core/Breadcrumb";
+export { Breadcrumbs } from "./components/core/Breadcrumb";
 export type {
   BreadcrumbLinkProps,
   BreadcrumbsProps,
@@ -99,6 +105,8 @@ export type {
   ResizeHandleEdge,
 } from "./components/core/ResizeHandle";
 
+export { Prose } from "./components/core/Prose";
+export type { ProseProps } from "./components/core/Prose";
 export { Popover } from "./components/core/Popover";
 export type {
   PopoverProps,
@@ -111,6 +119,36 @@ export type {
   PopoverFooterProps,
 } from "./components/core/Popover";
 
+export { OutlineTree } from "./components/core/OutlineTree";
+export type { OutlineTreeProps, OutlineTreeItemData, OutlineTreeItemProps, OutlineTreeTitleProps } from "./components/core/OutlineTree";
+
+export { SmartCard, useSmartLink, useSmartLinkActions, useSmartLinkEvents, useSmartLinkReload, composeClients, genericClient, SmartLinkError, createSmartLinkStore } from "./components/core/SmartCard";
+export type {
+  SmartCardProps,
+  SmartCardProviderProps,
+  SmartCardEmbedProps,
+  SmartCardInlineProps,
+  SmartCardBlockProps,
+  SmartCardBlockTitleProps,
+  SmartCardBlockSnippetProps,
+  SmartCardBlockMetadataProps,
+  SmartCardBlockPreviewProps,
+  SmartCardBlockActionsProps,
+  SmartCardBlockFooterProps,
+  EmbedHeight,
+  UseSmartLinkResult,
+  UseSmartLinkActionsResult,
+  SmartLinkActionItem,
+  SmartLinkEvent,
+  SmartLinkClient,
+  SmartLinkStore,
+  LinkData,
+  LinkStatus,
+  LinkSnapshot,
+  LinkAction,
+  LinkMetadata,
+} from "./components/core/SmartCard";
+
 export { TileIcon } from "./components/core/TileIcon";
 export type { TileIconProps } from "./components/core/TileIcon";
 
@@ -122,8 +160,10 @@ export type { SelectProps, SelectOptionProps } from "./components/core/Select";
 
 export { Switch } from "./components/core/Switch";
 export type { SwitchProps } from "./components/core/Switch";
-export { SwatchPicker } from "./components/core/SwatchPicker";
-export type { Swatch, SwatchGroup, SwatchPickerProps } from "./components/core/SwatchPicker";
+export { Image, downloadImage, imageFileExtension, readImageFile } from "./components/core/Image";
+export type { ImageProps, ImageChange, ImageAlign } from "./components/core/Image";
+export { ColorPicker, ColorPanel, ColorSpectrum, SwatchGrid } from "./components/core/ColorPicker";
+export type { ColorPickerProps, ColorPanelProps, ColorSpectrumProps, Swatch, SwatchGroup, SwatchGridAppearance, SwatchGridProps } from "./components/core/ColorPicker";
 
 export { SegmentedControl } from "./components/core/SegmentedControl";
 export type { SegmentedControlProps, SegmentedControlItemProps } from "./components/core/SegmentedControl";

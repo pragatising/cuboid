@@ -3,22 +3,23 @@ import { clsx } from "clsx";
 import { useAutoGrow, useProvidedRefOrCreate } from "../../../behaviors";
 import { InputField, useCharacterCount, useFieldControl } from "../InputField";
 import type { InputFieldProps, InputFieldSize } from "../InputField";
+import type { IconName } from "../Icon";
 import classes from "./TextArea.module.css";
 
 export type TextAreaProps = Omit<React.ComponentPropsWithRef<"textarea">, "color"> &
   Pick<InputFieldProps, "labelHelp" | "descriptionVisual" | "errorVisual"> & {
     /** The visible label, tied to the textarea. Without one, give it an `aria-label`. */
-    label?: React.ReactNode;
+    label?: string;
     /** Help text under the field. */
-    description?: React.ReactNode;
+    description?: string;
     /** The validation message under the field. Its presence puts the field in the error state and sets `aria-invalid`. */
-    error?: React.ReactNode;
+    error?: string;
     /** The field's minimum height, radius and icon size: `sm` 24px, `md` 28px, `lg` 32px (as Button). It grows with its rows. @default "md" */
     size?: InputFieldSize;
-    /** A visual by the first line, usually an `Icon`. Hidden from assistive technology. */
-    leadingVisual?: React.ReactNode;
+    /** A visual by the first line, Hidden from assistive technology. */
+    leadingVisual?: IconName;
     /** A visual by the first line, at the end. Hidden from assistive technology. */
-    trailingVisual?: React.ReactNode;
+    trailingVisual?: IconName;
     /** Show how much has been typed under the field: `12 / 100` with a `maxLength`, `12` without. @default false */
     showCount?: boolean;
     /** Grow with the text, from `rows` lines up to `maxRows` (then scroll). Turns off the resize handle. @default false */

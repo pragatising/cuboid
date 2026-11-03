@@ -1,0 +1,26 @@
+{
+  prose: {
+    $description: 'Running text as a document: the raw p, h1-h6, ul, ol, blockquote, a and code of rich text (an editor, a rendered document), which cannot be Cuboid components one by one.',
+    fgColor: { $value: '{fgColor.neutral.muted}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'prose' } } },
+    headingFgColor: { $value: '{fgColor.neutral.contrast}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'prose' } } },
+    sizes: {
+      inset: { $value: '{size.4}', $type: 'dimension', $description: 'Padding round every text block, always, so its height does not change between empty and typed.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'prose' } } },
+      blockGap: { $value: '{size.8}', $type: 'dimension', $description: 'The space above a block (never below), so a first block sits flush and nothing doubles up.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'prose' } } },
+      headingInset: {
+        h1: { $value: '{size.32}', $type: 'dimension', $description: 'Added to blockGap above a heading: the higher the level, the more.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'prose' } } },
+        h2: { $value: '{size.24}', $type: 'dimension', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'prose' } } },
+        h3: { $value: '{size.20}', $type: 'dimension', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'prose' } } },
+        h4: { $value: '{size.20}', $type: 'dimension', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'prose' } } },
+        h5: { $value: '{size.16}', $type: 'dimension', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'prose' } } },
+        h6: { $value: '{size.16}', $type: 'dimension', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'prose' } } },
+      },
+      headingLineHeight: { $value: 1.2, $type: 'number', $description: 'Tighter than the heading tokens (1.5 to 1.6), which leave room for a paragraph of heading.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'prose' } } },
+      listIndent: { $value: '{size.24}', $type: 'dimension', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'prose' } } },
+      quoteIndent: { $value: '{size.12}', $type: 'dimension', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'prose' } } },
+      quoteRuleWidth: { $value: '{size.3}', $type: 'dimension', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'prose' } } },
+    },
+    quote: {
+      ruleColor: { $value: '{borderColor.default}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'prose' } } },
+    },
+  },
+}

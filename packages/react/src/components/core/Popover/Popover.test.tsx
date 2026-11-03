@@ -68,6 +68,12 @@ describe("Popover", () => {
     expect(panel()!.style.zIndex).toBe(String(tokens.light.zIndex.popover));
   });
 
+  it("takes its width limits from minWidth and maxWidth, over the token defaults", async () => {
+    setup({ minWidth: "240px", maxWidth: "400px" });
+    await open();
+    expect(panel()).toHaveStyle({ minWidth: "240px", maxWidth: "400px" });
+  });
+
   it("uses the md floating shadow for 3x and lg for 4x", async () => {
     const { unmount } = setup({ elevation: "3x" });
     await open();
