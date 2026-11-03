@@ -1,4 +1,5 @@
 :where(.Spinner) {
+  flex-shrink: 0;
   animation: spinner-rotate 800ms linear infinite;
 }
 

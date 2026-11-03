@@ -3,7 +3,7 @@ import { clsx } from "clsx";
 import { announce } from "../../../utils/announce";
 import { isDev } from "../../../utils/isDev";
 import { mergeProps } from "../../../utils/mergeProps";
-import { Spinner } from "./Spinner";
+import { Spinner } from "../Spinner";
 import type { ButtonBaseComponentProps, ButtonProps } from "./types";
 import classes from "./ButtonBase.module.css";
 

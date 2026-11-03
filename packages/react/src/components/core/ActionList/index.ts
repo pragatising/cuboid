@@ -5,7 +5,7 @@ export type { ActionListProps, ActionListSectionProps } from "./ActionList";
 export { ActionListLoading } from "./ActionListLoading";
 export type { ActionListLoadingProps } from "./ActionListLoading";
 export { ActionListItem } from "./ActionListItem";
-export type { ActionListItemProps } from "./ActionListItem";
+export type { ActionListItemProps, ItemVisual } from "./ActionListItem";
 export { useActionListContext } from "./ActionListContext";
 export type { ActionListRole, ActionListSelectionMode } from "./ActionListContext";
 export { ActiveOptionContext, useActiveOptionContext } from "./ActiveOptionContext";

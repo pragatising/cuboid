@@ -68,6 +68,12 @@ export type { VisuallyHiddenProps } from "./VisuallyHidden";
 export { Link } from "./Link";
 export type { LinkProps, LinkVariant, LinkSize, LinkUnderline } from "./Link";
 
+export { Avatar } from "./Avatar";
+export type { AvatarProps, AvatarSize, AvatarShade, AvatarStackProps } from "./Avatar";
+
+export { Spinner } from "./Spinner";
+export type { SpinnerProps, SpinnerSize } from "./Spinner";
+
 export { Pill } from "./Pill";
 export type { PillProps, PillShade, PillIntensity } from "./Pill";
 

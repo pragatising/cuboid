@@ -1,6 +1,6 @@
 import type { Frame } from "@sragatiping/bench/example";
 import { useState } from "react";
-import { ActionMenu, Box, Button, Icon } from "@sragatiping/cuboid";
+import { ActionMenu, Box, Button } from "@sragatiping/cuboid";
 
 export function Default() {
   return (
@@ -57,16 +57,16 @@ WithSections.frame = { height: 300 } satisfies Frame;
 export function ItemVisuals() {
   return (
     <ActionMenu trigger={<Button size="md">File</Button>} aria-label="File" defaultOpen>
-      <ActionMenu.Item leadingVisual={<Icon name="content_copy" />} trailingVisual={<Icon name="keyboard_command_key" />}>
+      <ActionMenu.Item leadingVisual="content_copy" shortcut="Mod+C">
         Copy
       </ActionMenu.Item>
-      <ActionMenu.Item leadingVisual={<Icon name="edit" />} description="Rename this file">
+      <ActionMenu.Item leadingVisual="edit" description="Rename this file">
         Rename
       </ActionMenu.Item>
-      <ActionMenu.Item leadingVisual={<Icon name="folder" />} hasSubmenu>
+      <ActionMenu.Item leadingVisual="folder" hasSubmenu>
         Move to
       </ActionMenu.Item>
-      <ActionMenu.Item leadingVisual={<Icon name="delete" />} disabled>
+      <ActionMenu.Item leadingVisual="delete" disabled>
         Delete
       </ActionMenu.Item>
     </ActionMenu>

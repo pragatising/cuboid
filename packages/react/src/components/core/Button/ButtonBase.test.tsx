@@ -201,7 +201,7 @@ describe("ButtonBase: loading", () => {
       </ButtonBase>,
     );
     expect(screen.queryByTestId("lead")).not.toBeInTheDocument();
-    expect(part("leadingVisual")?.querySelector('[data-component="loadingSpinner"]')).toBeInTheDocument();
+    expect(part("leadingVisual")?.querySelector('[data-component="Spinner"]')).toBeInTheDocument();
     expect(el()).toHaveTextContent("Save");
     expect(el()).toHaveAttribute("data-loading");
     expect(el()).toHaveAttribute("aria-disabled", "true");
@@ -216,11 +216,11 @@ describe("ButtonBase: loading", () => {
 
   it("puts the spinner beside the label when there are no visuals, and in the trailing slot when that is the only visual", () => {
     const { rerender } = render(<ButtonBase data-testid="base" loading>Save</ButtonBase>);
-    expect(part("leadingVisual")?.querySelector('[data-component="loadingSpinner"]')).toBeInTheDocument();
+    expect(part("leadingVisual")?.querySelector('[data-component="Spinner"]')).toBeInTheDocument();
     rerender(<ButtonBase data-testid="base" loading trailingVisual={<svg data-testid="trail" />}>Save</ButtonBase>);
     expect(screen.queryByTestId("trail")).not.toBeInTheDocument();
     expect(part("leadingVisual")).toBeNull();
-    expect(part("trailingVisual")?.querySelector('[data-component="loadingSpinner"]')).toBeInTheDocument();
+    expect(part("trailingVisual")?.querySelector('[data-component="Spinner"]')).toBeInTheDocument();
     expect(part("text")).toHaveTextContent("Save");
   });
 

@@ -1,12 +1,21 @@
-import React, { useId } from "react";
+import React, { useEffect, useId } from "react";
 import { clsx } from "clsx";
+import { isDev } from "../../../utils/isDev";
 import { mergeProps } from "../../../utils/mergeProps";
 import { Box } from "../Box";
 import { Icon } from "../Icon";
+import type { IconName } from "../Icon";
+import { KeybindingHint } from "../KeybindingHint";
 import { Text } from "../Text";
 import { useActionListContext } from "./ActionListContext";
 import { useActiveOptionContext } from "./ActiveOptionContext";
 import classes from "./ActionListItem.module.css";
+
+/**
+ * What goes before or after a row's label: an icon by its name (`"edit"`), or one element for what an icon cannot say (an
+ * avatar, a colour swatch). Text is not a visual, and nothing interactive belongs in a row: a menu item cannot hold a button.
+ */
+export type ItemVisual = IconName | React.ReactElement;
 
 export type ActionListItemProps = Omit<React.ComponentPropsWithRef<"button">, "children" | "color" | "role"> & {
   /** The item's label. */
@@ -14,11 +23,16 @@ export type ActionListItemProps = Omit<React.ComponentPropsWithRef<"button">, "c
   /** A second line under the label. */
   description?: React.ReactNode;
   /** A small visual before the description. */
-  descriptionVisual?: React.ReactNode;
-  /** A visual before the label, usually an `Icon`. Hidden from assistive technology. */
-  leadingVisual?: React.ReactNode;
-  /** A visual after the label. Hidden from assistive technology. */
-  trailingVisual?: React.ReactNode;
+  descriptionVisual?: ItemVisual;
+  /** A visual before the label: an icon's name, or one element. Hidden from assistive technology. */
+  leadingVisual?: ItemVisual;
+  /** A visual after the label: an icon's name, or one element. Hidden from assistive technology. */
+  trailingVisual?: ItemVisual;
+  /**
+   * The keys that do the same as this item (`"Mod+Shift+K"`, as `KeybindingHint` writes them), shown after the label. It is
+   * a reminder: it does not bind the keys. Use it in place of a `trailingVisual` that draws a shortcut.
+   */
+  shortcut?: string;
   /**
    * Whether the item is chosen: shows a trailing check and makes it a checkbox (or a radio, in a `selectionMode="single"`
    * list) with `aria-checked`. Leave unset for a plain action.
@@ -26,7 +40,7 @@ export type ActionListItemProps = Omit<React.ComponentPropsWithRef<"button">, "c
   selected?: boolean;
   /** Show the check when `selected`. @default true */
   showSelectionCheck?: boolean;
-  /** Only the leading visual is shown; the label becomes the accessible name. */
+  /** Only the leading visual is shown, so it needs one; the label becomes the accessible name. */
   iconOnly?: boolean;
   /** Shows a trailing chevron: the item opens something further. */
   hasSubmenu?: boolean;
@@ -34,8 +48,8 @@ export type ActionListItemProps = Omit<React.ComponentPropsWithRef<"button">, "c
   keepOpenOnSelect?: boolean;
 };
 
-function decorate(visual: React.ReactNode, className: string) {
-  if (!React.isValidElement(visual)) return visual;
+function decorate(visual: ItemVisual, className: string) {
+  if (typeof visual === "string") return <Icon name={visual} className={className} aria-hidden />;
   const element = visual as React.ReactElement<{ className?: string }>;
   return React.cloneElement(element, {
     className: clsx(className, element.props.className),
@@ -55,6 +69,7 @@ function ActionListItem({
   descriptionVisual,
   leadingVisual,
   trailingVisual,
+  shortcut,
   selected,
   showSelectionCheck = true,
   iconOnly = false,
@@ -76,6 +91,12 @@ function ActionListItem({
   const isOption = listRole === "listbox";
   const role = isOption ? "option" : selectionMode === "single" ? "menuitemradio" : checkable ? "menuitemcheckbox" : "menuitem";
   const checked = selected === true;
+  useEffect(() => {
+    if (!isDev()) return;
+    if (iconOnly && !leadingVisual) console.warn("An icon-only item shows only its leading visual: pass `leadingVisual`.");
+    if (hasSubmenu && checked) console.warn("An item that opens a submenu is not also chosen: use `selected` or `hasSubmenu`, not both.");
+    if (shortcut && hasSubmenu) console.warn("An item that opens a submenu has no shortcut of its own: drop `shortcut` or `hasSubmenu`.");
+  }, [iconOnly, leadingVisual, hasSubmenu, checked, shortcut]);
   const name = iconOnly ? (ariaLabel ?? (typeof children === "string" ? children : undefined)) : ariaLabel;
 
   return (
@@ -127,6 +148,12 @@ function ActionListItem({
         ) : null}
 
         {trailingVisual ? <span className={classes.TrailingSlot}>{decorate(trailingVisual, classes.TrailingSlot)}</span> : null}
+
+        {shortcut ? (
+          <span className={classes.TrailingSlot}>
+            <KeybindingHint keys={shortcut} size="sm" />
+          </span>
+        ) : null}
 
         {hasSubmenu ? (
           <span className={classes.TrailingSlot}>

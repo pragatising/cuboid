@@ -74,6 +74,12 @@ export type { VisuallyHiddenProps } from "./components/core/VisuallyHidden";
 export { Link } from "./components/core/Link";
 export type { LinkProps, LinkVariant, LinkSize, LinkUnderline } from "./components/core/Link";
 
+export { Avatar } from "./components/core/Avatar";
+export type { AvatarProps, AvatarSize, AvatarShade, AvatarStackProps } from "./components/core/Avatar";
+
+export { Spinner } from "./components/core/Spinner";
+export type { SpinnerProps, SpinnerSize } from "./components/core/Spinner";
+
 export { Pill } from "./components/core/Pill";
 export type { PillProps, PillShade, PillIntensity } from "./components/core/Pill";
 

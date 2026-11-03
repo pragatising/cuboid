@@ -1,0 +1,67 @@
+/*
+ * The circle, its ring and what is in it. The size, the colours and the ring arrive as element-scoped --avatar-* variables (Avatar.tsx,
+ * AvatarStack.tsx); the ring is the border, inside the size. Zero specificity (:where), so a consumer's own class can override any of it.
+ */
+:where(.Avatar, .Count, .Add) {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: var(--avatar-ring-width) solid var(--avatar-ring-color);
+  border-radius: var(--cube-borderRadius-full);
+  font: var(--cube-text-size-xs);
+  font-weight: var(--cube-fontWeight-medium);
+  line-height: 1;
+  user-select: none;
+}
+
+:where(.Avatar[data-size="lg"], .Count[data-size="lg"]) {
+  font: var(--cube-text-size-sm);
+  font-weight: var(--cube-fontWeight-medium);
+}
+
+:where(.Avatar) {
+  background-color: var(--avatar-bg);
+  color: var(--avatar-fg);
+}
+
+:where(.Photo) {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+:where(.Stack) {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Each avatar sits over the one before it, by the width of its ring, so the rings are what separates them. */
+:where(.Stack > :not(:first-child)) {
+  margin-inline-start: calc(var(--avatar-ring-width) * -1);
+}
+
+:where(.Count) {
+  background-color: var(--avatar-count-bg);
+  color: var(--avatar-count-fg);
+  font-weight: var(--cube-fontWeight-semibold);
+}
+
+:where(.Add) {
+  appearance: none;
+  background-color: var(--avatar-add-bg);
+  color: var(--avatar-add-fg);
+  cursor: pointer;
+}
+
+:where(.Add:focus-visible) {
+  outline: var(--cube-focusRing-width) solid var(--cube-focusRing-color);
+  outline-offset: var(--cube-focusRing-offset);
+}

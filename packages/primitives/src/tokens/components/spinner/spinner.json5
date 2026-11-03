@@ -1,0 +1,32 @@
+{
+  spinner: {
+    size: {
+      xs: {
+        $value: '{size.16}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'spinner' } },
+      },
+      sm: {
+        $value: '{size.20}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'spinner' } },
+      },
+      md: {
+        $value: '{size.24}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'spinner' } },
+      },
+      lg: {
+        $value: '{size.80}',
+        $type: 'dimension',
+        $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'spinner' } },
+      },
+    },
+    thickness: {
+      $value: '{borderWidth.thick}',
+      $type: 'dimension',
+      $description: 'The same at every size: the ring does not get thicker as the spinner grows.',
+      $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'spinner' } },
+    },
+  },
+}

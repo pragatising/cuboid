@@ -1,7 +1,7 @@
 import React from "react";
 import { clsx } from "clsx";
 import { mergeProps } from "../../../utils/mergeProps";
-import { Spinner } from "../Button/Spinner";
+import { Spinner } from "../Spinner";
 import { Text } from "../Text";
 import classes from "./ActionListLoading.module.css";
 

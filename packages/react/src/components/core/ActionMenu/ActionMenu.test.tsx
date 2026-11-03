@@ -175,6 +175,39 @@ describe("ActionMenu.List and ActionMenu.Item", () => {
     expect(screen.getByRole("menuitem")).toHaveTextContent("Supporting");
   });
 
+  it("draws a visual written as an icon's name as that icon, hidden from assistive technology", () => {
+    render(
+      <ActionMenu.List aria-label="Things">
+        <ActionMenu.Item leadingVisual="edit" trailingVisual="open_in_new">One</ActionMenu.Item>
+      </ActionMenu.List>,
+    );
+    const item = screen.getByRole("menuitem");
+    expect(item.querySelectorAll('[aria-hidden="true"]').length).toBeGreaterThanOrEqual(2);
+    expect(item).toHaveAccessibleName("One");
+  });
+
+  it("shows a shortcut after the label, outside its accessible name's words", () => {
+    render(
+      <ActionMenu.List aria-label="Things">
+        <ActionMenu.Item shortcut="Mod+C">Copy</ActionMenu.Item>
+      </ActionMenu.List>,
+    );
+    expect(screen.getByRole("menuitem").querySelector("kbd")).not.toBeNull();
+  });
+
+  it("warns, in development, about props that contradict each other", () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    render(
+      <ActionMenu.List aria-label="Things">
+        <ActionMenu.Item iconOnly>Home</ActionMenu.Item>
+        <ActionMenu.Item hasSubmenu selected>More</ActionMenu.Item>
+        <ActionMenu.Item hasSubmenu shortcut="Mod+K">Other</ActionMenu.Item>
+      </ActionMenu.List>,
+    );
+    expect(warn).toHaveBeenCalledTimes(3);
+    warn.mockRestore();
+  });
+
   it("moves between its items with the arrow keys on its own", async () => {
     render(
       <ActionMenu.List aria-label="Things">

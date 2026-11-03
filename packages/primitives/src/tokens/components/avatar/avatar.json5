@@ -1,0 +1,63 @@
+{
+  avatar: {
+    size: {
+      sm: { $value: '{size.20}', $type: 'dimension', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'avatar' } } },
+      md: { $value: '{size.24}', $type: 'dimension', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'avatar' } } },
+      lg: { $value: '{size.32}', $type: 'dimension', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'avatar' } } },
+    },
+    ring: {
+      width: { $value: '{borderWidth.thick}', $type: 'dimension', $description: 'The ring that separates one avatar from the next in a stack. A stack overlaps its avatars by exactly this.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'avatar' } } },
+      color: { $value: '{bgColor.canvas.default}', $type: 'color', $description: 'Figma draws the ring white; it is the surface the avatar is on, so it follows the mode.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'avatar' } } },
+    },
+    color: {
+      purple: {
+        bgColor: { $value: '#a858cd', $type: 'color', $description: 'From the Figma variable avatar/purple; it is not on the display palette.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'avatar' } } },
+        fgColor: { $value: '{fgColor.neutral.inverted}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'avatar' } } },
+      },
+      indigo: {
+        bgColor: { $value: '#7474e0', $type: 'color', $description: 'From the Figma variable avatar/indigo; it is not on the display palette.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'avatar' } } },
+        fgColor: { $value: '{fgColor.neutral.inverted}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'avatar' } } },
+      },
+      blue: {
+        bgColor: { $value: '#5785d5', $type: 'color', $description: 'From the Figma variable avatar/blue; it is not on the display palette.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'avatar' } } },
+        fgColor: { $value: '{fgColor.neutral.inverted}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'avatar' } } },
+      },
+      mag: {
+        bgColor: { $value: '#c63797', $type: 'color', $description: 'From the Figma variable avatar/mag; it is not on the display palette.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'avatar' } } },
+        fgColor: { $value: '{fgColor.neutral.inverted}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'avatar' } } },
+      },
+      red: {
+        bgColor: { $value: '#e34848', $type: 'color', $description: 'From the Figma variable avatar/red; it is not on the display palette.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'avatar' } } },
+        fgColor: { $value: '{fgColor.neutral.inverted}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'avatar' } } },
+      },
+      brick: {
+        bgColor: { $value: '#bd4b04', $type: 'color', $description: 'From the Figma variable avatar/brick; it is not on the display palette.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'avatar' } } },
+        fgColor: { $value: '{fgColor.neutral.inverted}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'avatar' } } },
+      },
+      emerald: {
+        bgColor: { $value: '#29905e', $type: 'color', $description: 'From the Figma variable avatar/emerald; it is not on the display palette.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'avatar' } } },
+        fgColor: { $value: '{fgColor.neutral.inverted}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'avatar' } } },
+      },
+      teal: {
+        bgColor: { $value: '#4599ac', $type: 'color', $description: 'From the Figma variable avatar/teal; it is not on the display palette.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'avatar' } } },
+        fgColor: { $value: '{fgColor.neutral.inverted}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'avatar' } } },
+      },
+      yellow: {
+        bgColor: { $value: '#e4b21d', $type: 'color', $description: 'From the Figma variable avatar/yellow; it is not on the display palette.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'avatar' } } },
+        fgColor: { $value: '{fgColor.neutral.inverted}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'avatar' } } },
+      },
+      lime: {
+        bgColor: { $value: '#729f3b', $type: 'color', $description: 'From the Figma variable avatar/lime; it is not on the display palette.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'avatar' } } },
+        fgColor: { $value: '{fgColor.neutral.inverted}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'avatar' } } },
+      },
+      gray: {
+        bgColor: { $value: '{display.gray.4}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'avatar' } } },
+        fgColor: { $value: '{fgColor.neutral.default}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'avatar' } } },
+      },
+    },
+    count: {
+      bgColor: { $value: '{display.blue.3}', $type: 'color', $description: 'Figma draws #bfddff, which is not on the palette; blue.3 is the nearest step.', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'avatar' } } },
+      fgColor: { $value: '{fgColor.neutral.default}', $type: 'color', $extensions: { 'org.cuboid.figma': { collection: 'component', group: 'avatar' } } },
+    },
+  },
+}

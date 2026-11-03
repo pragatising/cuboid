@@ -191,7 +191,7 @@ describe("IconButton: loading", () => {
     const onClick = vi.fn();
     ib({ loading: true, onClick, "aria-label": "Refresh" });
     expect(screen.queryByTestId("glyph")).not.toBeInTheDocument();
-    expect(part("icon")?.querySelector('[data-component="loadingSpinner"]')).toBeInTheDocument();
+    expect(part("icon")?.querySelector('[data-component="Spinner"]')).toBeInTheDocument();
     expect(el()).toHaveAttribute("data-loading");
     expect(el()).toHaveAttribute("aria-disabled", "true");
     expect(el()).not.toBeDisabled();

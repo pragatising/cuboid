@@ -3,7 +3,7 @@ import { clsx } from "clsx";
 import { announce } from "../../../utils/announce";
 import { isDev } from "../../../utils/isDev";
 import { mergeProps } from "../../../utils/mergeProps";
-import { Spinner } from "../Button/Spinner";
+import { Spinner } from "../Spinner";
 import { Tooltip, useTooltipContext } from "../Tooltip";
 import type { TooltipPlacement } from "../Tooltip";
 import classes from "./IconButton.module.css";
